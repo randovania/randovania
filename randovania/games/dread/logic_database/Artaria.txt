@@ -758,6 +758,8 @@ Extra - asset_id: collision_camera_008
       Trivial
   > Door to EMMI First Chase End (Top)
       Trivial
+  > Lower Room
+      Before Artaria - Thermal Device and Shinesink Clip (Intermediate) and Can SSC
 
 > Dock to Arbitrary Enky Room (Lower); Heals? False
   * Layers: default
@@ -1443,7 +1445,10 @@ Extra - asset_id: collision_camera_013
   > Door to Cold Introduction (Missile)
       Trivial
   > Pickup (Missile Tank)
-      Lay Power Bomb
+      Any of the following:
+          Lay Power Bomb
+          # https://www.youtube.com/watch?v=ea_Ny5vwIQ0
+          Speed Booster Upgrade and Aim Down Clip (Intermediate) and Can SSC
   > Tunnel to Charge Beam Room
       Trivial
 
@@ -1484,8 +1489,12 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Intro Room
       Lay Power Bomb
-  > Tunnel to Cold Introduction
-      Lay Any Bomb
+  > Event - Tunnel Speed Booster Blocks (Right)
+      All of the following:
+          Ballspark and Lay Power Bomb
+          Any of the following:
+              Speed Booster Upgrade
+              Charge Beam and Disabled Door Lock Randomizer
 
 > Event - Charge Beam Access Blob (Above); Heals? False
   * Layers: default
@@ -1528,6 +1537,12 @@ Extra - asset_id: collision_camera_013
   * Layers: default
   * Event Artaria - Charge Beam Access Blob
   > Door to Cold Introduction (Missile)
+      Trivial
+
+> Event - Tunnel Speed Booster Blocks (Right); Heals? False
+  * Layers: default
+  * Event Artaria - Speed Hallway Bottom Speed Boost Blocks
+  > Tunnel to Cold Introduction
       Trivial
 
 ----------------
@@ -4831,6 +4846,11 @@ Extra - asset_id: collision_camera_081
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Freezer (Grapple)
+      All of the following:
+          # https://youtu.be/FvCqCrC-LhM
+          Aim Down Clip (Expert) and Can SSC
+          Speed Booster Upgrade ≥ 4 or Disabled Door Lock Randomizer
   > Door to Shortcut to Screw Attack
       Screw Attack
   > Start Point - Screw Attack
@@ -4852,7 +4872,14 @@ Extra - asset_id: collision_camera_081
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Door to Freezer (Power)
-      Screw Attack
+      Any of the following:
+          Screw Attack
+          All of the following:
+              # https://www.youtube.com/watch?v=BuXn_Mkep20
+              Speed Booster Upgrade ≥ 3 and Shinesink Clip (Intermediate) and Can SSC
+              Any of the following:
+                  Speed Booster Upgrade ≥ 3
+                  Plasma Beam and Disabled Door Lock Randomizer
   > Start Point - Screw Attack
       Morph Ball
   > Next to Upper Tank
@@ -4920,6 +4947,9 @@ Extra - asset_id: collision_camera_081
   * Extra - target_spawn_point: teleporter_cave_000_platform
   * Extra - start_point_actor_name: teleporter_magma_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  > Door to Shortcut to Screw Attack
+      # https://www.youtube.com/watch?v=PCSBYWfYCOU
+      Speed Booster Upgrade and Shinesink Clip (Intermediate) and Can SSC
   > Event - Screw Attack Grapple Block
       Grapple Beam
   > Tunnel to Shortcut to Screw Attack
@@ -5249,18 +5279,24 @@ Extra - asset_id: collision_camera_086
           Speed Booster and Shoot Missile
   > Door to Red Chozo Arena
       Trivial
-  > Tunnel to Cold Introduction
+  > Event - Tunnel Speed Booster Blocks
       Speed Booster and Can Slide
 
 > Tunnel to Cold Introduction; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Cold Introduction/Tunnel to Speed Hallway
   > Door to Cold Introduction
-      Ballspark
+      After Artaria - Speed Hallway Bottom Speed Boost Blocks
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Cold Introduction
+      Trivial
+
+> Event - Tunnel Speed Booster Blocks; Heals? False
+  * Layers: default
+  * Event Artaria - Speed Hallway Bottom Speed Boost Blocks
+  > Tunnel to Cold Introduction
       Trivial
 
 ----------------

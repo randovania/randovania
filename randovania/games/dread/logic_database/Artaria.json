@@ -4172,6 +4172,36 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Lower Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:PRP_CV_ThermalDevice",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can SSC"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SSC",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -8193,8 +8223,46 @@
                             }
                         },
                         "Pickup (Missile Tank)": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=ea_Ny5vwIQ0",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can SSC"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBoostUpgrade",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ADC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Tunnel to Charge Beam Room": {
                             "type": "and",
@@ -8338,9 +8406,64 @@
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
-                        "Tunnel to Cold Introduction": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                        "Event - Tunnel Speed Booster Blocks (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBoostUpgrade",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLocks",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Charge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -8559,6 +8682,31 @@
                     "event_name": "s010_cave:default:PRP_DB_CV_010",
                     "connections": {
                         "Door to Cold Introduction (Missile)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Tunnel Speed Booster Blocks (Right)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6921.67,
+                        "y": -8620.33,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArtariaSpeedHallwayBottomBlocks",
+                    "connections": {
+                        "Tunnel to Cold Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -25811,6 +25959,53 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Freezer (Grapple)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://youtu.be/FvCqCrC-LhM",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can SSC"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ADC",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBoostUpgrade",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLocks",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Shortcut to Screw Attack": {
                             "type": "resource",
                             "data": {
@@ -25933,12 +26128,93 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Freezer (Power)": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Screw",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=BuXn_Mkep20",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can SSC"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBoostUpgrade",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SSC",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBoostUpgrade",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Plasma",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "DoorLocks",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Start Point - Screw Attack": {
@@ -26377,6 +26653,36 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Door to Shortcut to Screw Attack": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://www.youtube.com/watch?v=PCSBYWfYCOU",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can SSC"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBoostUpgrade",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SSC",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Event - Screw Attack Grapple Block": {
                             "type": "resource",
                             "data": {
@@ -28299,15 +28605,11 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Cold Introduction": {
+                        "Event - Tunnel Speed Booster Blocks": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -28316,6 +28618,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
                                     }
                                 ]
                             }
@@ -28349,8 +28655,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Cold Introduction": {
-                            "type": "template",
-                            "data": "Ballspark"
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ArtariaSpeedHallwayBottomBlocks",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -28370,6 +28681,31 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Cold Introduction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Tunnel Speed Booster Blocks": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9464.77,
+                        "y": -8660.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "ArtariaSpeedHallwayBottomBlocks",
+                    "connections": {
+                        "Tunnel to Cold Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
