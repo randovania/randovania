@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: New trick, Cross Bomb Launch.
 
+##### Artaria
+
+- Added: In Screw Attack Room: Shinesink Clip (Intermediate) from Teleporter to Cataris to Door to Shortcut to Screw Attack. Requires one Speed Booster Upgrade. Includes a video.
+- Added: In Screw Attack Room: Shinesink Clip (Intermediate) from Door to Shortcut to Screw Attack to Door to Freezer (Power). Requires three Speed Booster Upgrades or Plasma Beam and Disabled Door Lock Rando. Includes a video.
+- Added: In Screw Attack Room: Aim Down Clip (Intermediate) from Door to Freezer (Power) to Door to Freezer (Grapple). Requires four Speed Booster Upgrades or Disabled Door Lock Randomizer. Includes a video.
+- Added: In Charge Beam Access: Aim Down Clip (Intermediate) from Door to Intro Room to Pickup (Missile Tank). Requires one Speed Booster Upgrade. Includes a video.
+- Added: In Teleport to Dairon: Shinesink Clip (Intermediate) from Door to White EMMI Introduction (Thermal) to Lower Room. Requires Before Artaria - Thermal Device.
+
 ##### Burenia
 
 - Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Intermediate).
