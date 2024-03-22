@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Fixed: DNA placement respects vanilla item placement settings to not assign two items to one location
+
 #### Logic Database
 
 - Added: New trick, Cross Bomb Launch.
