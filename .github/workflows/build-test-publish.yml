@@ -282,7 +282,7 @@ jobs:
           path: packages/
 
       - name: Apt
-        run: sudo apt-get -q update && sudo apt-get -y install flatpak flatpak-builder
+        run: sudo apt-get -q update && sudo apt-get -y install flatpak flatpak-builder gsettings-ubuntu-schemas
 
       - name: Flatpak Dependencies
         run: |
