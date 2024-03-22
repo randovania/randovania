@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
 - Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
 
+### Cave Story
+
+#### Logic Database
+
+##### Ruined Egg Corridor
+
+- Added: Health requirements to the Sisters.
+- Fixed: Breaking the blocks in `Cthulhu's Abode?` now properly accounts for Super Missile Launcher
+
 ### Metroid Dread
 
 #### Logic Database
