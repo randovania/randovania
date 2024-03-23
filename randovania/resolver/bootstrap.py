@@ -4,16 +4,21 @@ from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.state import State, StateGameData
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from random import Random
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_category import PickupCategory
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
@@ -221,6 +226,53 @@ class Bootstrap:
         return patches.assign_own_pickups(pool_results.assignment.items()).assign_extra_starting_pickups(
             pool_results.starting
         )
+
+    def all_artifact_locations(
+        self,
+        game: GameDescription,
+        config: BaseConfiguration,
+        pre_placed_indices: list[PickupIndex],
+        game_specific_check: Callable[[PickupNode, BaseConfiguration], bool],
+    ) -> list[PickupNode]:
+        locations = []
+
+        for node in game.region_list.all_nodes:
+            if (
+                isinstance(node, PickupNode)
+                and node.pickup_index not in pre_placed_indices
+                and game_specific_check(node, config)
+            ):
+                locations.append(node)
+
+        return locations
+
+    def pre_place_artifacts(
+        self,
+        rng: Random,
+        patches: GamePatches,
+        pool_results: PoolResults,
+        game_specific_check: Callable[[PickupNode, BaseConfiguration], bool],
+        artifact_category: PickupCategory,
+    ) -> None:
+        pre_placed_indices = list(pool_results.assignment.keys())
+
+        locations = self.all_artifact_locations(
+            patches.game, patches.configuration, pre_placed_indices, game_specific_check
+        )
+        rng.shuffle(locations)
+
+        all_artifacts = [
+            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is artifact_category
+        ]
+        if len(all_artifacts) > len(locations):
+            raise InvalidConfiguration(
+                f"Has {len(all_artifacts)} {artifact_category.long_name} in the pool, "
+                f"but only {len(locations)} valid locations."
+            )
+
+        for artifact, location in zip(all_artifacts, locations, strict=False):
+            pool_results.to_place.remove(artifact)
+            pool_results.assignment[location.pickup_index] = artifact
 
 
 class MetroidBootstrap(Bootstrap):
