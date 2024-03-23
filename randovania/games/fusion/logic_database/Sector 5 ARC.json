@@ -551,12 +551,29 @@
                                         "data": "Can Climb High Jump Wall"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Needs to check if DLR in case it becomes an open hatch, making this impossible",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2733,7 +2750,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            89
+                            28
                         ]
                     },
                     "valid_starting_location": false,
