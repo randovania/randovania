@@ -1064,7 +1064,7 @@ def _migrate_v74(preset: dict) -> dict:
         if floorClips:
             preset["configuration"]["trick_level"]["specific_levels"]["FloorClip"] = difficultyLevels[min(floorClips)]
 
-        return preset
+    return preset
 
 
 _MIGRATIONS = [
