@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: New trick, Cross Bomb Launch.
+- Changed: The Shinesink Clip and Aim Down Clip tricks are now a single Floor Clip trick.
 
 ##### Burenia
 
@@ -44,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cross Bomb Launch (Beginner) to get the Missile Tank Pickup in Golzuna Tower.
 - Added: Video showing the Climb Sloped Tunnels trick to get from the Missile Tank Pickup to the Save Station Door in Golzuna Tower.
 - Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
+- Changed: The Floor Clip into Golzuna Arena has been reduced from Expert to Intermediate.
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
 ### Metroid Prime 2: Echoes
