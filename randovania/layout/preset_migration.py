@@ -1053,16 +1053,16 @@ def _migrate_v73(preset: dict) -> dict:
 
 def _migrate_v74(preset: dict) -> dict:
     if preset["game"] == "dread":
-        difficultyLevels = ["beginner", "intermediate", "advanced", "expert", "hypermode"]
+        difficulty_levels = ["beginner", "intermediate", "advanced", "expert", "hypermode"]
 
-        floorClips = [
-            difficultyLevels.index(v)
+        floor_clips = [
+            difficulty_levels.index(v)
             for k, v in preset["configuration"]["trick_level"]["specific_levels"].items()
             if k in ["ADC", "SSC"]
         ]
 
-        if floorClips:
-            preset["configuration"]["trick_level"]["specific_levels"]["FloorClip"] = difficultyLevels[min(floorClips)]
+        if floor_clips:
+            preset["configuration"]["trick_level"]["specific_levels"]["FloorClip"] = difficulty_levels[min(floor_clips)]
 
     return preset
 
