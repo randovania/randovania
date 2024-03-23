@@ -13,17 +13,24 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def all_dna_locations(game: GameDescription, config: DreadArtifactConfig):
+def all_dna_locations(
+    game: GameDescription, config: DreadArtifactConfig, pre_placed_indices: list[PickupIndex]
+) -> list[PickupNode]:
     locations = []
 
     for node in game.region_list.all_nodes:
-        if isinstance(node, PickupNode) and "boss_hint_name" in node.extra:
+        if (
+            isinstance(node, PickupNode)
+            and node.pickup_index not in pre_placed_indices
+            and "boss_hint_name" in node.extra
+        ):
             if node.extra["pickup_type"] == "emmi":
                 if config.prefer_emmi:
                     locations.append(node)
@@ -78,8 +85,9 @@ class DreadBootstrap(MetroidBootstrap):
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, DreadConfiguration)
         config = patches.configuration.artifacts
+        pre_placed_indices = list(pool_results.assignment.keys())
 
-        locations = all_dna_locations(patches.game, config)
+        locations = all_dna_locations(patches.game, config, pre_placed_indices)
         rng.shuffle(locations)
 
         all_dna = [
