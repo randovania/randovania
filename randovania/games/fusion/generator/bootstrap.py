@@ -13,8 +13,10 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.games.fusion.layout.fusion_configuration import FusionArtifactConfig
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 def all_metroid_locations(game: GameDescription, config: FusionArtifactConfig) -> list[PickupNode]:
@@ -30,6 +32,14 @@ def all_metroid_locations(game: GameDescription, config: FusionArtifactConfig) -
 
 
 class FusionBootstrap(MetroidBootstrap):
+    def _get_enabled_misc_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> set[str]:
+        enabled_resources = set()
+        if configuration.dock_rando.is_enabled():
+            enabled_resources.add("DoorLockRando")
+        return enabled_resources
+
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, FusionConfiguration)
         config = patches.configuration.artifacts

@@ -22,6 +22,8 @@ Extra - room_id: [0, 63]
 
 > Ship; Heals? True; Spawn Point
   * Layers: default
+  * Extra - X: 25
+  * Extra - Y: 10
   > Door to Docking Bay Access
       Trivial
   > Event - L0
@@ -298,7 +300,7 @@ Extra - room_id: [13, 74, 85]
 > Door to Elevator to Crew Quarters; Heals? False
   * Layers: default
   * L0 Hatch to Elevator to Crew Quarters/Door to Operations Deck
-  * Extra - door_idx: (141, 174)
+  * Extra - door_idx: (141, 174, 204)
   > Door to Operations Deck Navigation Room
       Trivial
   > Door to Operations Deck Recharge Room
@@ -387,7 +389,7 @@ Extra - room_id: [15]
           All of the following:
               Can Freeze Enemies
               Any of the following:
-                  High Jump
+                  Hi-Jump
                   # https://discord.com/channels/119665192110915584/1205560315652349962/1210970374741823499
                   Movement (Intermediate) and Wall Jump (Intermediate)
 
@@ -474,10 +476,14 @@ Extra - room_id: [17, 77]
   * L4 Hatch to Restricted Corridor/Door to Restricted Airlock
   * Extra - door_idx: (34, 183)
   > Pickup (Power Bomb Tank)
-      # Check the connection from item to restricted corridor for way to only go halfway up
-      Speed Booster
+      All of the following:
+          # Check the connection from item to restricted corridor for way to only go halfway up
+          Speed Booster
+          # This can safely not have Door Lock Rando check
+          Disabled Entrance Rando
   > Door to Restricted Navigation Room
-      Speed Booster
+      # This can safely not have Door Lock Rando check
+      Speed Booster and Disabled Entrance Rando
 
 ----------------
 Central Hub
@@ -1245,33 +1251,33 @@ Extra - room_id: [49, 59]
   * Layers: default
   * Open Hatch to Silo Entry/Door to Central Reactor Core
   * Extra - door_idx: (112, 134)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       Trivial
 
 > Door to Scaffolding Access; Heals? False
   * Layers: default
   * Open Hatch to Scaffolding Access/Door to Central Reactor Core
   * Extra - door_idx: (113, 136)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       Trivial
 
-> Door to Reactor Checkpoint; Heals? False
+> Door to Silo Checkpoint; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Checkpoint/Door to Central Reactor Core
+  * Open Hatch to Silo Checkpoint/Door to Central Reactor Core
   * Extra - door_idx: (124, 137)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       Trivial
 
 > Other to Silo Tunnel; Heals? False
   * Layers: default
   * Tunnel to Silo Tunnel/Other to Central Reactor Core
   * Extra - door_idx: (125, 135)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       After Boss Nettori Defeated or Can Use Any Bombs
 
-> Door to Reactor Save Room; Heals? False
+> Door to Silo Save Room; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Save Room/Door to Central Reactor Core
+  * Open Hatch to Silo Save Room/Door to Central Reactor Core
   * Extra - door_idx: (130, 138)
   > Door to Silo Entry
       Any of the following:
@@ -1282,7 +1288,7 @@ Extra - room_id: [49, 59]
               Wave Beam or Wide Beam
   > Door to Scaffolding Access
       Wall Jump (Beginner) or Can Climb High Jump Wall
-  > Door to Reactor Checkpoint
+  > Door to Silo Checkpoint
       Trivial
   > Other to Silo Tunnel
       Space Jump
@@ -1383,19 +1389,19 @@ Extra - room_id: [51]
               Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 ----------------
-Reactor Checkpoint
+Silo Checkpoint
 Extra - map_name: Main Deck52
 Extra - room_id: [52]
 > Door to Auxiliary Navigation Room; Heals? False
   * Layers: default
-  * Open Hatch to Auxiliary Navigation Room/Door to Reactor Checkpoint
+  * Open Hatch to Auxiliary Navigation Room/Door to Silo Checkpoint
   * Extra - door_idx: (118,)
   > Door to Central Reactor Core
       Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core/Door to Reactor Checkpoint
+  * Open Hatch to Central Reactor Core/Door to Silo Checkpoint
   * Extra - door_idx: (119,)
   > Door to Auxiliary Navigation Room
       Wave Beam
@@ -1456,12 +1462,12 @@ Extra - room_id: [56]
   * Layers: default
   * Open Hatch to Auxiliary Power Station/Door to Auxiliary Navigation Room
   * Extra - door_idx: (128,)
-  > Door to Reactor Checkpoint
+  > Door to Silo Checkpoint
       Trivial
 
-> Door to Reactor Checkpoint; Heals? False
+> Door to Silo Checkpoint; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Checkpoint/Door to Auxiliary Navigation Room
+  * Open Hatch to Silo Checkpoint/Door to Auxiliary Navigation Room
   * Extra - door_idx: (129,)
   > Door to Auxiliary Power Station
       Trivial
@@ -1474,7 +1480,7 @@ Extra - room_id: [56]
   * Extra - hint_name: AuxiliaryPower
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: DETAILED
-  > Door to Reactor Checkpoint
+  > Door to Silo Checkpoint
       Trivial
 
 ----------------
@@ -1504,12 +1510,12 @@ Extra - room_id: [57]
       Can Use Bombs or Can Use Springball
 
 ----------------
-Reactor Save Room
+Silo Save Room
 Extra - map_name: Main Deck58
 Extra - room_id: [58]
 > Door to Central Reactor Core; Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core/Door to Reactor Save Room
+  * Open Hatch to Central Reactor Core/Door to Silo Save Room
   * Extra - door_idx: (133,)
   > Save Station
       Trivial
@@ -1704,7 +1710,7 @@ Extra - room_id: [69]
   > Door to Habitation Deck Entrance (Middle)
       Trivial
   > Other to Habitation Ventilation (Upper)
-      After Animals Released
+      Impossible
   > Above Pickup
       Trivial
 
@@ -1720,13 +1726,15 @@ Extra - room_id: [69]
   * Open Passage to Habitation Ventilation/Other to Habitation Deck (Upper)
   * Extra - door_idx: (163,)
   > Door to Habitation Deck Entrance (Upper)
-      After Animals Released
-  > Event - Save the Animals
+      Trivial
+  > Save the Animals
       Trivial
 
-> Event - Save the Animals; Heals? False
+> Save the Animals; Heals? False
   * Layers: default
-  * Event Animals Released
+  * Causes issues with door lock rando.
+
+Generation gets stuck after giving SJ and speed and trying to reach this event.
   > Other to Habitation Ventilation (Upper)
       Trivial
 
@@ -1820,7 +1828,7 @@ Extra - room_id: [73]
   * Open Passage to Elevator to Sector Hub/Other to Main Elevator Cache
   * Extra - door_idx: (170,)
   > Pickup (Missile Tank)
-      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      Speed Booster and Disabled Entrance Rando
 
 ----------------
 Elevator to Habitation Deck

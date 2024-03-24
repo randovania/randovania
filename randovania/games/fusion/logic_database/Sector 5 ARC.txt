@@ -99,30 +99,33 @@ Extra - room_id: [3, 6]
 > Door to Gerubus Gully; Heals? False
   * Layers: default
   * L3 Hatch to Gerubus Gully/Door to Nightmare Training Grounds
-  * Extra - door_idx: (7, 11)
+  * Extra - door_idx: (7,)
   > Door to Arctic Containment
       Trivial
   > Door to Entrance Hub
-      Wall Jump (Advanced) or Can Climb High Jump Wall
+      Any of the following:
+          Can Climb High Jump Wall
+          # Needs to check if DLR in case it becomes an open hatch, making this impossible
+          Wall Jump (Advanced) and Disabled Door Lock Rando
 
 > Door to Aerie; Heals? False
   * Layers: default
   * L0 Hatch to Aerie/Door to Nightmare Training Grounds
-  * Extra - door_idx: (8, 12)
+  * Extra - door_idx: (8,)
   > Door to Entrance Hub
       Trivial
 
 > Door to Arctic Containment; Heals? False
   * Layers: default
   * L0 Hatch to Arctic Containment/Door to Nightmare Training Grounds
-  * Extra - door_idx: (9, 13)
+  * Extra - door_idx: (9,)
   > Door to Gerubus Gully
       Trivial
 
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Nightmare Training Grounds
-  * Extra - door_idx: (78, 80)
+  * Extra - door_idx: (78,)
   > Door to Gerubus Gully
       Trivial
   > Door to Aerie
@@ -130,7 +133,7 @@ Extra - room_id: [3, 6]
           Space Jump
           All of the following:
               Can Freeze Enemies
-              High Jump or Movement (Intermediate)
+              Hi-Jump or Movement (Intermediate)
 
 ----------------
 Aerie
@@ -161,7 +164,8 @@ Extra - room_id: [4]
   * L0 Hatch to Nightmare Training Grounds/Door to Aerie
   * Extra - door_idx: (10,)
   > Pickup (Power Bomb Tank)
-      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      # This can safely not have Door Lock Rando check
+      Speed Booster and Disabled Entrance Rando
   > Pickup (Missile Tank)
       Trivial
 
@@ -172,7 +176,7 @@ Extra - room_id: [7, 15]
 > Door to Nightmare Training Grounds; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Training Grounds/Door to Arctic Containment
-  * Extra - door_idx: (14, 27)
+  * Extra - door_idx: (14,)
   > Door to Data Checkpoint
       # TODO: damage run
       Varia Suit
@@ -183,27 +187,29 @@ Extra - room_id: [7, 15]
 > Door to Geron Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Geron Checkpoint/Door to Arctic Containment
-  * Extra - door_idx: (15, 28)
+  * Extra - door_idx: (15,)
   > Door to Data Checkpoint
       # dmg runs
       Varia Suit
   > Door to Artic Underside
       All of the following:
-          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
           # Damage Run
           Varia Suit
+          # Needed for charging in previous room
+          Can Kill PB Geron
 
 > Door to Waver Ward; Heals? False
   * Layers: default
   * L0 Hatch to Waver Ward/Door to Arctic Containment
-  * Extra - door_idx: (16, 29)
+  * Extra - door_idx: (16,)
   > Door to Artic Underside
       Varia Suit and Can Use Any Bombs
 
 > Door to Data Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Data Checkpoint/Door to Arctic Containment
-  * Extra - door_idx: (30, 31)
+  * Extra - door_idx: (30,)
   > Door to Nightmare Training Grounds
       Any of the following:
           # TODO: varia/damage runs
@@ -224,14 +230,14 @@ Extra - room_id: [7, 15]
 > Door to Ripper Road; Heals? False
   * Layers: default
   * Open Hatch to Ripper Road/Door to Arctic Containment
-  * Extra - door_idx: (56, 57)
+  * Extra - door_idx: (56,)
   > Door to Data Checkpoint
       Can Kill PB Geron
 
 > Door to Artic Underside; Heals? False
   * Layers: default
   * L3 Hatch to Artic Underside/Door to Arctic Containment
-  * Extra - door_idx: (99, 70)
+  * Extra - door_idx: (99,)
   > Door to Geron Checkpoint
       Morph Ball and Varia Suit and Can Climb High Jump Wall
   > Door to Waver Ward
@@ -240,7 +246,7 @@ Extra - room_id: [7, 15]
 > Door to Crow's Nest; Heals? False
   * Layers: default
   * L3 Hatch to Crow's Nest/Door to Arctic Containment
-  * Extra - door_idx: (53,)
+  * Extra - door_idx: (27,)
   > Door to Nightmare Training Grounds
       # TODO: damage run
       Varia Suit
@@ -285,8 +291,7 @@ Extra - room_id: [9]
       All of the following:
           # TODO:  damage reqs
           Varia Suit
-          # TODO: High Jump should also be efficient to climb the room. Test before adding additional option requirement.
-          Wall Jump (Beginner) or Can Use Any Bombs
+          Wall Jump (Beginner) or Can Climb High Jump Wall or Can Use Any Bombs
 
 ----------------
 Level 3 Security Room
@@ -473,7 +478,7 @@ Extra - room_id: [16]
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L3 Hatch to Frozen Tower/Door to Data Room
-  * Extra - door_idx: (89,)
+  * Extra - door_idx: (28,)
   > Door to Data Checkpoint
       Trivial
 
@@ -679,7 +684,7 @@ Extra - room_id: [22, 21]
               Space Jump
               All of the following:
                   Can Freeze Enemies
-                  High Jump or Wall Jump (Intermediate)
+                  Hi-Jump or Wall Jump (Intermediate)
   > Door to Kago Blockade
       # TODO: varia / damage reqs
       Varia Suit
@@ -809,7 +814,7 @@ Extra - room_id: [26]
 
 > Door to Arctic Containment; Heals? False
   * Layers: default
-  * L0 Hatch to Arctic Containment/Door to Ripper Road
+  * Open Hatch to Arctic Containment/Door to Ripper Road
   * Extra - door_idx: (55,)
   > Pickup (Power Bomb Tank)
       All of the following:
@@ -831,14 +836,16 @@ Extra - room_id: [27]
   * L0 Hatch to Nightmare Arena/Door to Nightmare Access
   * Extra - door_idx: (59,)
   > Door to Nightmare Hub West
-      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      # This can safely not have Door Lock Rando check
+      Gravity Suit and Speed Booster and Disabled Entrance Rando
 
 > Door to Nightmare Hub West; Heals? False
   * Layers: default
   * L0 Hatch to Nightmare Hub West/Door to Nightmare Access
   * Extra - door_idx: (60,)
   > Door to Nightmare Arena
-      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      # This can safely not have Door Lock Rando check
+      Gravity Suit and Speed Booster and Disabled Entrance Rando
 
 ----------------
 Flooded Access
@@ -1198,8 +1205,8 @@ Extra - room_id: [42]
   * L0 Hatch to Kago Speedway/Door to Artic Underside
   * Extra - door_idx: (101,)
   > Door to Arctic Containment
-      # Need to charge spark in other room
-      Speed Booster and Varia Suit and Disabled Door Lock Rando and Disabled Entrance Rando and Can Freeze Enemies
+      # Need to charge spark in other room, This can safely not have Door Lock Rando check
+      Speed Booster and Varia Suit and Disabled Entrance Rando and Can Freeze Enemies
 
 ----------------
 Groznyj Grad
@@ -1249,7 +1256,7 @@ Extra - room_id: [45]
       Any of the following:
           Underwater Wall Jump (Expert)
           Gravity Suit and Space Jump
-          High Jump and Can Freeze Enemies
+          Hi-Jump and Can Freeze Enemies
 
 > Beside Missile Block; Heals? False
   * Layers: default
@@ -1373,19 +1380,25 @@ Extra - room_id: [50]
   * L0 Hatch to Zebesian Waters/Door to Flooded Airlock to Sector 4 (AQA)
   * Extra - door_idx: (115,)
   > Pickup (Power Bomb Tank)
-      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      All of the following:
+          # This can safely not have Door Lock Rando check
+          Gravity Suit and Speed Booster and Disabled Entrance Rando
+          # Some way to kill the pirates
+          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
   > Area Transition to Sector 4 (AQA)
       All of the following:
-          Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # This can safely not have Door Lock Rando check
+          Gravity Suit and Speed Booster and Disabled Entrance Rando
           # Some way to kill the pirates
-          Charge Beam or Missiles ≥ 10 or Screw Attack or Can Use Power Bombs
+          Combat (Expert) or Can Kill Tough Beam-Resistant Enemy
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
   * Open Passage to Cargo Hold to Sector 5 (ARC)/Area Transition to Sector 5 (ARC)
   * Extra - door_idx: (123,)
   > Door to Zebesian Waters
-      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      # This can safely not have Door Lock Rando check
+      Gravity Suit and Speed Booster and Disabled Entrance Rando
 
 ----------------
 Transformation Trial
@@ -1412,5 +1425,5 @@ Extra - room_id: [51]
           Varia Suit
           Any of the following:
               Space Jump
-              High Jump and Can Freeze Enemies
+              Hi-Jump and Can Freeze Enemies
 

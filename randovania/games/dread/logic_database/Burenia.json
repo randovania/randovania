@@ -3810,6 +3810,36 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "CBL",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5134,20 +5164,8 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -5742,6 +5760,41 @@
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/0CXWDqGRId8",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Cross",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Slide",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "CBL",
+                                                                    "amount": 3,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -7658,7 +7711,7 @@
                         "Dock to Main Hub Tower Bottom": {
                             "type": "and",
                             "data": {
-                                "comment": "Aim Down Clip - https://youtu.be/xfpOoAN3HVI",
+                                "comment": "Shinesink - https://youtu.be/xfpOoAN3HVI",
                                 "items": [
                                     {
                                         "type": "template",
@@ -7674,29 +7727,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ADC",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SSC",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "FloorClip",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -8741,7 +8777,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "ADC",
+                                            "name": "FloorClip",
                                             "amount": 3,
                                             "negate": false
                                         }
@@ -8968,7 +9004,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/yb_tJYnFFIw",
+                                            "comment": "Without Morph - https://youtu.be/yb_tJYnFFIw",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -8987,7 +9023,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "ADC",
+                                                        "name": "FloorClip",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -10316,20 +10352,8 @@
                             }
                         },
                         "Pickup (Missile Tank)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         },
                         "Life Recharge": {
                             "type": "and",
@@ -10782,29 +10806,12 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ADC",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SSC",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "FloorClip",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -11065,20 +11072,8 @@
                             }
                         },
                         "Top of Enky Shaft": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -13121,7 +13116,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "ADC",
+                                            "name": "FloorClip",
                                             "amount": 4,
                                             "negate": false
                                         }
@@ -15176,29 +15171,12 @@
                                         "data": "Can SSC"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "ADC",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SSC",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "FloorClip",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     }
                                 ]

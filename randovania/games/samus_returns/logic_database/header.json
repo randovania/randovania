@@ -4542,6 +4542,68 @@
                         ]
                     }
                 }
+            },
+            "Defeat Swarms": {
+                "display_name": "Defeat Swarms",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Armor",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 2,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Beam Burst"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -5221,8 +5283,7 @@
             1,
             2,
             3,
-            4,
-            5
+            4
         ],
         "SuperJump": [
             1,
@@ -5245,8 +5306,7 @@
         "UnmorphExtend": [
             1,
             2,
-            3,
-            4
+            3
         ],
         "MissilelessMetroids": [
             1,
@@ -5265,12 +5325,12 @@
         "Walljump": [
             1,
             2,
-            3,
-            4
+            3
         ],
         "Freeze": [
             1,
-            2
+            2,
+            3
         ],
         "Spider Boost": [
             1,
@@ -5299,8 +5359,7 @@
             1,
             2,
             3,
-            4,
-            5
+            4
         ],
         "IceClip": [
             1,
@@ -5336,9 +5395,11 @@
             3,
             4
         ],
-        "PhaseClip": [
+        "HazardRun": [
+            1,
             2,
-            3
+            3,
+            5
         ],
         "Dodge": [
             1,
@@ -5348,6 +5409,10 @@
         ],
         "HazardRun": [
             1,
+            3
+        ],
+        "PhaseClip": [
+            2,
             3
         ]
     },

@@ -231,15 +231,18 @@
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 398.09498892675595,
-                        "y": 82.34895062365888,
+                        "x": 398.09,
+                        "y": 82.35,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "X": 25,
+                        "Y": 10
+                    },
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Docking Bay Access": {
@@ -1662,7 +1665,8 @@
                     "extra": {
                         "door_idx": [
                             141,
-                            174
+                            174,
+                            204
                         ]
                     },
                     "valid_starting_location": false,
@@ -2893,7 +2897,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": "Check the connection from item to restricted corridor for way to only go halfway up",
                                 "items": [
@@ -2905,14 +2909,31 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "This can safely not have Door Lock Rando check",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         },
                         "Door to Restricted Navigation Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2921,6 +2942,15 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -7035,7 +7065,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Reactor Save Room": {
+                        "Door to Silo Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7075,7 +7105,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Reactor Save Room": {
+                        "Door to Silo Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7084,7 +7114,7 @@
                         }
                     }
                 },
-                "Door to Reactor Checkpoint": {
+                "Door to Silo Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7106,7 +7136,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Reactor Checkpoint",
+                        "area": "Silo Checkpoint",
                         "node": "Door to Central Reactor Core"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -7115,7 +7145,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Reactor Save Room": {
+                        "Door to Silo Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7155,7 +7185,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Reactor Save Room": {
+                        "Door to Silo Save Room": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7178,7 +7208,7 @@
                         }
                     }
                 },
-                "Door to Reactor Save Room": {
+                "Door to Silo Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7200,7 +7230,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Reactor Save Room",
+                        "area": "Silo Save Room",
                         "node": "Door to Central Reactor Core"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -7317,7 +7347,7 @@
                                 ]
                             }
                         },
-                        "Door to Reactor Checkpoint": {
+                        "Door to Silo Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8043,7 +8073,7 @@
                 }
             }
         },
-        "Reactor Checkpoint": {
+        "Silo Checkpoint": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck52",
@@ -8074,7 +8104,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Auxiliary Navigation Room",
-                        "node": "Door to Reactor Checkpoint"
+                        "node": "Door to Silo Checkpoint"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -8113,7 +8143,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Central Reactor Core",
-                        "node": "Door to Reactor Checkpoint"
+                        "node": "Door to Silo Checkpoint"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -8456,7 +8486,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Reactor Checkpoint": {
+                        "Door to Silo Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8465,7 +8495,7 @@
                         }
                     }
                 },
-                "Door to Reactor Checkpoint": {
+                "Door to Silo Checkpoint": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8486,7 +8516,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Reactor Checkpoint",
+                        "area": "Silo Checkpoint",
                         "node": "Door to Auxiliary Navigation Room"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -8538,7 +8568,7 @@
                         }
                     },
                     "connections": {
-                        "Door to Reactor Checkpoint": {
+                        "Door to Silo Checkpoint": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8682,7 +8712,7 @@
                 }
             }
         },
-        "Reactor Save Room": {
+        "Silo Save Room": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck58",
@@ -8713,7 +8743,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Central Reactor Core",
-                        "node": "Door to Reactor Save Room"
+                        "node": "Door to Silo Save Room"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -9663,15 +9693,13 @@
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Animals",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": []
                                         }
                                     }
                                 ]
@@ -9756,23 +9784,21 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Habitation Deck Entrance (Upper)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "events",
-                                            "name": "Animals",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": []
                                         }
                                     }
                                 ]
                             }
                         },
-                        "Event - Save the Animals": {
+                        "Save the Animals": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9781,21 +9807,20 @@
                         }
                     }
                 },
-                "Event - Save the Animals": {
-                    "node_type": "event",
+                "Save the Animals": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": 312.28,
                         "y": 410.23,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
                     "layers": [
                         "default"
                     ],
                     "extra": {},
                     "valid_starting_location": false,
-                    "event_name": "Animals",
                     "connections": {
                         "Other to Habitation Ventilation (Upper)": {
                             "type": "and",
@@ -10243,15 +10268,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {

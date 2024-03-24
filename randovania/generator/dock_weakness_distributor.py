@@ -269,6 +269,7 @@ def _determine_valid_weaknesses(
 
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
+        ctx = state.node_context()
 
         exclusions: set[DockWeakness] = set()
         exclusions.update(dock.incompatible_dock_weaknesses)
@@ -284,11 +285,8 @@ def _determine_valid_weaknesses(
                 weakness: 1.0
                 for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
                 if (
-                    weakness.requirement.satisfied(state.resources, state.energy, state.resource_database)
-                    and (
-                        weakness.lock is None
-                        or weakness.lock.requirement.satisfied(state.resources, state.energy, state.resource_database)
-                    )
+                    weakness.requirement.satisfied(ctx, state.energy)
+                    and (weakness.lock is None or weakness.lock.requirement.satisfied(ctx, state.energy))
                 )
             }
         )

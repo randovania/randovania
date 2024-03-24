@@ -126,7 +126,7 @@ Extra - room_id: [3, 30]
 > Door to Entrance Hub; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Hub/Door to Data Hub Access
-  * Extra - door_idx: (9, 68)
+  * Extra - door_idx: (9,)
   > Door to Data Hub
       Trivial
 
@@ -278,7 +278,7 @@ Extra - room_id: [9]
                               Jump Bombjump (Expert)
                               Screw Attack and Knowledge (Beginner)
               All of the following:
-                  High Jump
+                  Hi-Jump
                   Any of the following:
                       Power Bombs
                       All of the following:
@@ -389,7 +389,7 @@ Extra - room_id: [13, 46]
       Any of the following:
           Space Jump
           All of the following:
-              High Jump
+              Hi-Jump
               After Boss Zazabi Defeated or Wall Jump (Beginner)
           Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
           # https://discord.com/channels/914291389293027329/1204806625244872835/1211159157424652318
@@ -433,14 +433,14 @@ Extra - room_id: [13, 46]
 > Door to Reo Room; Heals? False
   * Layers: default
   * L0 Hatch to Reo Room/Door to Central Shaft
-  * Extra - door_idx: (31,)
+  * Extra - door_idx: (68,)
   > Beside Drop
       Can Use Any Bombs
 
 > Door to Ripper Tower; Heals? False
   * Layers: default
   * Open Hatch to Ripper Tower/Door to Central Shaft
-  * Extra - door_idx: (113,)
+  * Extra - door_idx: (31,)
   > Beside Drop
       Morph Ball
 
@@ -559,8 +559,6 @@ Extra - room_id: [18]
   * Layers: default
   * L0 Hatch to Zazabi Speedway/Door to Zazabi Arena
   * Extra - door_idx: (133,)
-  > Door to Zazabi Access
-      Impossible
   > Arena Floor
       Screw Attack
 
@@ -584,7 +582,11 @@ Extra - room_id: [18]
   > Door to Zazabi Access
       After Boss Zazabi Defeated and Can Climb High Jump Wall
   > Door to Zazabi Speedway
-      Screw Attack and Space Jump and After Boss Zazabi Defeated
+      All of the following:
+          Screw Attack and After Boss Zazabi Defeated
+          Any of the following:
+              Space Jump
+              Wall Jump (Advanced) and Can Single Walljump
   > Event - Zazabi
       All of the following:
           All of the following:
@@ -745,7 +747,7 @@ Extra - room_id: [22, 51]
               Combat (Intermediate) and Normal Damage ≥ 500
               Combat (Advanced) and Normal Damage ≥ 200
           # Avoid Samus Eaters
-          High Jump or Combat (Intermediate)
+          Hi-Jump or Combat (Intermediate)
 
 > Pickup (Plasma Beam); Heals? False
   * Layers: default
@@ -802,7 +804,7 @@ Extra - room_id: [24, 36]
               Space Jump
               # Shinespark up
               Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
-              High Jump and Wall Jump (Intermediate)
+              Hi-Jump and Wall Jump (Intermediate)
 
 ----------------
 Oasis Storage
@@ -844,8 +846,17 @@ Extra - room_id: [26]
   > Door to Security Access (Upper)
       Space Jump
   > Door to Crumble City
-      # TODO: Look into requirements further and possibly add SWJ trick. The requirement of space jump makes the advanced tricks in crumble city invalid in non-entrance rando.
-      Screw Attack and Space Jump
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump or Can Single Walljump
+              All of the following:
+                  Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+                  Any of the following:
+                      # TODO: add trick video
+                      Level 1 Locks and Knowledge (Advanced) and Movement (Beginner) and Shinespark Tricks (Expert)
+                      # TODO: add trick video
+                      Shinespark Tricks (Expert) and Wall Jump (Advanced)
   > Event - L1 Locks
       Trivial
 
@@ -968,7 +979,7 @@ Extra - room_id: [31, 7]
 > Door to Data Room; Heals? False
   * Layers: default
   * L1 Hatch to Data Room/Door to Data Hub
-  * Extra - door_idx: (69, 17)
+  * Extra - door_idx: (17,)
   > Door to Data Hub Access
       Trivial
 
@@ -979,14 +990,15 @@ Extra - room_id: [31, 7]
   > Door to Zoro Zig-Zag
       Trivial
   > Door to Data Hub Access
-      All of the following:
-          Can Bounce in Ball
-          Any of the following:
-              Can Use Power Bombs
-              Screw Attack and Knowledge (Beginner)
-              All of the following:
-                  Morph Ball Bomb Data
-                  Jump Bombjump (Advanced) or Can Use Springball
+      After Sector 2 Data Hub Bomb Block Destroyed and Can Bounce in Ball
+  > Event - Bomb Block
+      Any of the following:
+          Can Bounce in Ball and Can Use Power Bombs
+          Screw Attack and Knowledge (Beginner) and Can Bounce in Ball
+          All of the following:
+              Can Use Bombs
+              # JBJ requires using bomb explosions to gain a small bit of height so that a bomb can be placed high enough to break the block, without using spring ball. TODO - video of this
+              Jump Bombjump (Advanced) or Can Use Springball
 
 > Door to Data Hub Access; Heals? False
   * Layers: default
@@ -997,11 +1009,19 @@ Extra - room_id: [31, 7]
   > Door to Data Room
       Trivial
   > Door to Data Save Room
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Can Break Single Bomb Blocks
-              Speed Booster and Knowledge (Intermediate) and Movement (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Morph Ball and After Sector 2 Data Hub Bomb Block Destroyed
+  > Event - Bomb Block
+      Any of the following:
+          Can Break Single Bomb Blocks
+          Speed Booster and Knowledge (Intermediate) and Movement (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+
+> Event - Bomb Block; Heals? False
+  * Layers: default
+  * Event Sector 2 Data Hub Bomb Block Destroyed
+  > Door to Data Save Room
+      Morph Ball
+  > Door to Data Hub Access
+      Trivial
 
 ----------------
 Eastern Shaft
@@ -1046,7 +1066,7 @@ Extra - room_id: [32, 35]
           After Boss Nettori Defeated
           Any of the following:
               Space Jump
-              High Jump and Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies
+              Hi-Jump and Stand On Frozen Enemies (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies
 
 > Door to Overgrown Checkpoint; Heals? False
   * Layers: default
@@ -1076,7 +1096,7 @@ Extra - room_id: [32, 35]
               # Movement Requirements
               Space Jump
               All of the following:
-                  High Jump
+                  Hi-Jump
                   Any of the following:
                       Wall Jump (Beginner)
                       Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
@@ -1108,7 +1128,7 @@ Extra - room_id: [33]
           Screw Attack or Space Jump or Can Freeze Enemies
           All of the following:
               # dmg expectations
-              High Jump
+              Hi-Jump
               Movement (Intermediate) or Normal Damage ≥ 34
           # Kago Jump
           Damage Boosts (Expert) and Wall Jump (Expert) and Normal Damage ≥ 34
@@ -1252,7 +1272,7 @@ Extra - room_id: [42]
           Morph Ball
           Any of the following:
               Underwater Wall Jump (Advanced) or Can Activate Pillar
-              Gravity Suit and High Jump
+              Gravity Suit and Hi-Jump
 
 > Door to Central Shaft; Heals? False
   * Layers: default
@@ -1267,7 +1287,7 @@ Extra - room_id: [42]
           Morph Ball
           Any of the following:
               Underwater Wall Jump (Advanced) or Can Activate Pillar
-              Gravity Suit and High Jump
+              Gravity Suit and Hi-Jump
 
 ----------------
 Maintenance Annex
@@ -1287,7 +1307,7 @@ Extra - room_id: [43]
   > Door to Zoro Zig-Zag
       Any of the following:
           Space Jump
-          High Jump and Jump Extends (Advanced) and Wall Jump (Advanced)
+          Hi-Jump and Jump Extends (Advanced) and Wall Jump (Advanced)
 
 ----------------
 Puyo Palace
@@ -1482,7 +1502,7 @@ Extra - room_id: [54]
       Any of the following:
           Space Jump
           All of the following:
-              High Jump and Wall Jump (Advanced)
+              Hi-Jump and Wall Jump (Advanced)
               Any of the following:
                   Movement (Hypermode)
                   Speed Booster and Movement (Expert) and Shinespark Tricks (Expert)
@@ -1511,6 +1531,8 @@ Extra - room_id: [55]
   * Extra - blocky: 4
   > Door to Zazabi Arena
       Trivial
+  > Bottom of Room
+      Trivial
 
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
@@ -1519,17 +1541,26 @@ Extra - room_id: [55]
   * Extra - room: 55
   * Extra - blockx: 10
   * Extra - blocky: 26
-  > Door to Zazabi Arena
+  > Bottom of Room
       Trivial
 
 > Door to Zazabi Arena; Heals? False
   * Layers: default
   * L0 Hatch to Zazabi Arena/Door to Zazabi Speedway
   * Extra - door_idx: (134,)
+  > Bottom of Room
+      Trivial
+
+> Bottom of Room; Heals? False
+  * Layers: default
   > Pickup (Power Bomb Tank)
       Speed Booster
   > Pickup (Hidden Missile Tank)
       Speed Booster
+  > Door to Zazabi Arena
+      Any of the following:
+          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Speed Booster and Shinespark Tricks (Beginner)
 
 ----------------
 Overgrown Hallway

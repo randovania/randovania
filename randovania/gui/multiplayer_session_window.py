@@ -1017,10 +1017,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         for connector, connected_state in game_connection.connected_states.items():
             if connected_state.status != GameConnectionStatus.Disconnected:
                 connected_worlds[connected_state.id].append(
-                    "{} via {}".format(
-                        connected_state.status.pretty_text,
-                        game_connection.get_builder_for_connector(connector).pretty_text,
-                    )
+                    f"{connected_state.status.pretty_text} via "
+                    f"{game_connection.get_builder_for_connector(connector).pretty_text}"
                 )
 
         connected_worlds = {k: v for k, v in connected_worlds.items() if v}
@@ -1029,10 +1027,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         for uid in user_worlds.keys():
             data = self._multiworld_client.database.get_data_for(uid)
 
-            msg = "- {}: {} collected locations, {} pending uploads.".format(
-                self._session.get_world(uid).name,
-                len(data.collected_locations),
-                len(set(data.collected_locations) - set(data.uploaded_locations)),
+            msg = (
+                f"- {self._session.get_world(uid).name}: {len(data.collected_locations)} collected locations, "
+                f"{len(set(data.collected_locations) - set(data.uploaded_locations))} pending uploads."
             )
 
             if uid in connected_worlds:

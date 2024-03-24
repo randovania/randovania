@@ -123,7 +123,7 @@ Extra - room_id: [3]
   * Open Hatch to Entrance Hub/Door to Security Access
   * Extra - door_idx: (8,)
   > Behind Wall
-      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      Speed Booster and Disabled Entrance Rando
 
 > Door to Level 2 Security Room; Heals? False
   * Layers: default
@@ -240,12 +240,12 @@ Extra - room_id: [6, 24]
 > Door to Checkpoint Shaft; Heals? False
   * Layers: default
   * L2 Hatch to Checkpoint Shaft/Door to Bob Room
-  * Extra - door_idx: (13, 47)
+  * Extra - door_idx: (13,)
   > Door to B.O.X. Access
       Any of the following:
           Can Kill Super Geron
           # Old BOB skip
-          High Jump and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Hi-Jump and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to B.O.X. Access; Heals? False
   * Layers: default
@@ -261,7 +261,7 @@ Extra - room_id: [6, 24]
 > Door to Red Tower; Heals? False
   * Layers: default
   * L0 Hatch to Red Tower/Door to Bob Room
-  * Extra - door_idx: (15, 48)
+  * Extra - door_idx: (15,)
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and Can Break Single Bomb Blocks
@@ -360,7 +360,7 @@ Extra - room_id: [8]
       Any of the following:
           Space Jump
           # Stand on Frozen Enemy and Walljump off
-          High Jump and Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner) and Can Freeze Enemies
+          Hi-Jump and Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner) and Can Freeze Enemies
   > Below E-Tank
       Can Break Single Bomb Blocks
 
@@ -392,7 +392,10 @@ Extra - room_id: [9]
   > Door to Connection to Sector 1 (SRX)
       All of the following:
           Screw Attack
-          Speed Booster or Can Climb High Jump Wall
+          Any of the following:
+              Speed Booster or Can Climb High Jump Wall
+              # https://youtu.be/7dIXfR4dkTA
+              Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
 
 > Other to B.O.X. Arena; Heals? False
   * Layers: default
@@ -548,13 +551,17 @@ Extra - room_id: [14]
   * L0 Hatch to Sova Suite/Door to Pyrochamber Access
   * Extra - door_idx: (28,)
   > Door to Pyrochamber
-      All of the following:
-          # TODO: Possibly add singlewall jump trick difficulty with jump extend as an option if singlewall jump is kept.
-          Any of the following:
-              Space Jump
-              All of the following:
-                  Can Freeze Enemies
-                  High Jump or Wall Jump (Beginner)
+      Any of the following:
+          Space Jump
+          All of the following:
+              Can Freeze Enemies
+              Hi-Jump or Wall Jump (Beginner)
+          All of the following:
+              # Jump Extend SWJ Method
+              Jump Extends (Advanced) and Can Kill Tough Beam-Resistant Enemy
+              Any of the following:
+                  Wall Jump (Advanced)
+                  Hi-Jump and Wall Jump (Intermediate)
 
 > Door to Pyrochamber; Heals? False
   * Layers: default
@@ -770,7 +777,7 @@ Extra - room_id: [22, 7]
 > Door to B.O.X. Arena; Heals? False
   * Layers: default
   * L0 Hatch to B.O.X. Arena/Door to B.O.X. Access
-  * Extra - door_idx: (45, 35)
+  * Extra - door_idx: (45,)
   > Door to Data Save Room
       Trivial
   > Door to Bob Room
@@ -804,7 +811,7 @@ Extra - room_id: [23, 18]
 > Door to B.O.X. Access; Heals? False
   * Layers: default
   * L0 Hatch to B.O.X. Access/Door to B.O.X. Arena
-  * Extra - door_idx: (46, 36)
+  * Extra - door_idx: (36,)
   > Arena
       Trivial
 
@@ -817,7 +824,7 @@ Extra - room_id: [23, 18]
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to B.O.X. Arena
-  * Extra - door_idx: (43,)
+  * Extra - door_idx: (35,)
   > Arena
       Trivial
 
@@ -1072,7 +1079,8 @@ Extra - room_id: [30]
   * Open Passage to Checkpoint Shaft/Other to Namihe's Abode
   * Extra - door_idx: (62,)
   > Door to Red Tower
-      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      # This can safely not have Door Lock Rando check
+      Speed Booster and Disabled Entrance Rando
 
 ----------------
 Data Recharge Room
@@ -1171,7 +1179,7 @@ Extra - room_id: [34]
       Any of the following:
           Space Jump
           All of the following:
-              High Jump
+              Hi-Jump
               Any of the following:
                   Can Freeze Enemies
                   Jump Bombjump (Expert) and Can Use Bombs
@@ -1234,7 +1242,8 @@ Extra - room_id: [35]
   * Extra - door_idx: (79,)
   > Pickup (Power Bomb Tank in Shaft)
       All of the following:
-          Gravity Suit and Screw Attack and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # This can safely not have Door Lock Rando check
+          Gravity Suit and Screw Attack and Speed Booster and Disabled Entrance Rando
           Any of the following:
               Varia Suit
               Damage Runs (Intermediate) and Lava Damage ≥ 75

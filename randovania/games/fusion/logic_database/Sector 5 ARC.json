@@ -518,8 +518,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            7,
-                            11
+                            7
                         ]
                     },
                     "valid_starting_location": false,
@@ -552,12 +551,29 @@
                                         "data": "Can Climb High Jump Wall"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Needs to check if DLR in case it becomes an open hatch, making this impossible",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -579,8 +595,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            8,
-                            12
+                            8
                         ]
                     },
                     "valid_starting_location": false,
@@ -619,8 +634,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            9,
-                            13
+                            9
                         ]
                     },
                     "valid_starting_location": false,
@@ -659,8 +673,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            78,
-                            80
+                            78
                         ]
                     },
                     "valid_starting_location": false,
@@ -854,7 +867,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -863,15 +876,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -921,8 +925,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            14,
-                            27
+                            14
                         ]
                     },
                     "valid_starting_location": false,
@@ -988,8 +991,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            15,
-                            28
+                            15
                         ]
                     },
                     "valid_starting_location": false,
@@ -1070,6 +1072,27 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Needed for charging in previous room",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill PB Geron"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1090,8 +1113,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            16,
-                            29
+                            16
                         ]
                     },
                     "valid_starting_location": false,
@@ -1152,8 +1174,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            30,
-                            31
+                            30
                         ]
                     },
                     "valid_starting_location": false,
@@ -1301,8 +1322,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            56,
-                            57
+                            56
                         ]
                     },
                     "valid_starting_location": false,
@@ -1346,8 +1366,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            99,
-                            70
+                            99
                         ]
                     },
                     "valid_starting_location": false,
@@ -1446,7 +1465,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            53
+                            27
                         ]
                     },
                     "valid_starting_location": false,
@@ -1730,7 +1749,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: High Jump should also be efficient to climb the room. Test before adding additional option requirement.",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1744,6 +1763,10 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Climb High Jump Wall"
                                                 }
                                             ]
                                         }
@@ -2727,7 +2750,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            89
+                            28
                         ]
                     },
                     "valid_starting_location": false,
@@ -4780,7 +4803,7 @@
                         "area": "Arctic Containment",
                         "node": "Door to Ripper Road"
                     },
-                    "default_dock_weakness": "L0 Hatch",
+                    "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4907,7 +4930,7 @@
                         "Door to Nightmare Hub West": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4932,15 +4955,6 @@
                                         "data": {
                                             "type": "misc",
                                             "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -4983,7 +4997,7 @@
                         "Door to Nightmare Arena": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5008,15 +5022,6 @@
                                         "data": {
                                             "type": "misc",
                                             "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -6992,7 +6997,7 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": "Need to charge spark in other room",
+                                "comment": "Need to charge spark in other room, This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -7006,15 +7011,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Freeze Enemies"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -8200,7 +8196,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8218,59 +8214,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Area Transition to Sector 4 (AQA)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -8288,35 +8231,73 @@
                                             "comment": "Some way to kill the pirates",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 10,
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Area Transition to Sector 4 (AQA)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "This can safely not have Door Lock Rando check",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "GravitySuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Some way to kill the pirates",
+                                            "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Use Power Bombs"
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8359,7 +8340,7 @@
                         "Door to Zebesian Waters": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8377,15 +8358,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {

@@ -1129,16 +1129,6 @@
                 "description": "Basic movement ability which can be abused in unintended ways.",
                 "extra": {}
             },
-            "SSC": {
-                "long_name": "Shinesink Clip",
-                "description": "Utilizing Speedbooster, Flash Shift, and Grapple Beam, it is possible to clip through 1-tile floors. Full trick description: https://dreadwiki.hijumpboots.com/en/tricks/clipping#shine-sink-clip",
-                "extra": {}
-            },
-            "ADC": {
-                "long_name": "Aim Down Clip",
-                "description": "A type of shine sink clip that allows you to clip through 2-tile thick floors.",
-                "extra": {}
-            },
             "Suitless": {
                 "long_name": "Heat/Cold Runs",
                 "description": "You can run through heat and cold rooms without a suit. It depends on your health how long you can stay in these rooms.",
@@ -1199,6 +1189,16 @@
             "LedgeWarp": {
                 "long_name": "Ledge Warp",
                 "description": "A frame perfect trick that allows you to warp to a ledge you have previously been at by entering Morph Ball during the mantle animation. See https://youtu.be/3QE0tEC2tgc",
+                "extra": {}
+            },
+            "CBL": {
+                "long_name": "Cross Bomb Launch",
+                "description": "By sliding and morphing as the Cross Bomb is exploding, Samus gains a lot of horizontal momentum. This can be used to reach places where other power ups would otherwise be required.",
+                "extra": {}
+            },
+            "FloorClip": {
+                "long_name": "Floor Clip",
+                "description": "Many floors can be clippped through with some or all of the following items: Speed Booster, Flash Shift, and Grapple Beam. See https://dreadwiki.hijumpboots.com/en/tricks/clipping",
                 "extra": {}
             }
         },
@@ -1596,7 +1596,7 @@
                 }
             },
             "Lay Bomb": {
-                "display_name": "Lay Bomb",
+                "display_name": "Lay Small Bomb",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -5444,6 +5444,78 @@
                         ]
                     }
                 }
+            },
+            "Lay Any Bomb": {
+                "display_name": "Lay Any Bomb",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Cross",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "MainPB",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "PBAmmo",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -6444,19 +6516,19 @@
             1,
             2,
             3,
-            4,
-            5
+            4
+        ],
+        "CBL": [
+            1,
+            2,
+            3
         ],
         "LedgeWarp": [
             2
         ],
-        "ADC": [
+        "FloorClip": [
             2,
             3,
-            4
-        ],
-        "SSC": [
-            2,
             4
         ]
     },
