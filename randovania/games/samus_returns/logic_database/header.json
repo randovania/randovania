@@ -4604,6 +4604,77 @@
                         ]
                     }
                 }
+            },
+            "Deal with Black Gravitt in Low Ceiling": {
+                "display_name": "Deal with Black Gravitt in Low Ceiling",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Armor",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Use Spider Ball"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Defeat Non-Counterable Enemies"
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "DBoost",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "damage",
+                                                "name": "Damage",
+                                                "amount": 45,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "Spin Jump over the Gravitt when it lunges",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Dodge",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -5276,8 +5347,7 @@
             1,
             2,
             3,
-            4,
-            5
+            4
         ],
         "SWJ": [
             1,
@@ -5342,6 +5412,7 @@
             1,
             2,
             3,
+            4,
             5
         ],
         "AirMorph": [
