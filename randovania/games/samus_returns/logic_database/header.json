@@ -4675,6 +4675,39 @@
                         ]
                     }
                 }
+            },
+            "Defeat Gold Autrack": {
+                "display_name": "Defeat Gold Autrack",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MissileAmmo",
+                                    "amount": 20,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SMAmmo",
+                                    "amount": 4,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Defeat Gold Robots"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -5479,6 +5512,7 @@
             4
         ],
         "PhaseClip": [
+            1,
             2,
             3
         ]
