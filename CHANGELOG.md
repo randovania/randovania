@@ -50,6 +50,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Floor Clip into Golzuna Arena has been reduced from Expert to Intermediate.
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Changed: Artifact Temple: Ridley fight logic overhaul
+
 ### Metroid Prime 2: Echoes
 
 - Added: Updated A-Kul's scan with the 2023 CGC Tournament winners.
