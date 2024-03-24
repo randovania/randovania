@@ -78,5 +78,6 @@ class DreadBootstrap(MetroidBootstrap):
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, DreadConfiguration)
-        self.pre_place_artifacts(rng, patches, pool_results, is_dna_node, DREAD_ARTIFACT_CATEGORY)
+        locations = self.all_artifact_locations(patches.game, patches.configuration, is_dna_node)
+        self.pre_place_artifacts(rng, locations, pool_results, DREAD_ARTIFACT_CATEGORY)
         return super().assign_pool_results(rng, patches, pool_results)

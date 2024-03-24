@@ -91,8 +91,7 @@ class EchoesBootstrap(MetroidBootstrap):
         mode = patches.configuration.sky_temple_keys
 
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
-            self.pre_place_artifacts(
-                rng, patches, pool_results, is_boss_location, sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY
-            )
+            locations = self.all_artifact_locations(patches.game, patches.configuration, is_boss_location)
+            self.pre_place_artifacts(rng, locations, pool_results, sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY)
 
         return super().assign_pool_results(rng, patches, pool_results)

@@ -40,5 +40,6 @@ class FusionBootstrap(MetroidBootstrap):
         if config.prefer_anywhere:
             return super().assign_pool_results(rng, patches, pool_results)
 
-        self.pre_place_artifacts(rng, patches, pool_results, is_metroid_location, INFANT_METROID_CATEGORY)
+        locations = self.all_artifact_locations(patches.game, patches.configuration, is_metroid_location)
+        self.pre_place_artifacts(rng, locations, pool_results, INFANT_METROID_CATEGORY)
         return super().assign_pool_results(rng, patches, pool_results)

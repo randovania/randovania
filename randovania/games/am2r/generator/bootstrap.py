@@ -74,6 +74,7 @@ class AM2RBootstrap(MetroidBootstrap):
         if config.prefer_anywhere:
             return super().assign_pool_results(rng, patches, pool_results)
 
-        self.pre_place_artifacts(rng, patches, pool_results, is_dna_node, METROID_DNA_CATEGORY)
+        locations = self.all_artifact_locations(patches.game, patches.configuration, is_dna_node)
+        self.pre_place_artifacts(rng, locations, pool_results, METROID_DNA_CATEGORY)
 
         return super().assign_pool_results(rng, patches, pool_results)
