@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Burenia
 
-- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Intermediate).
+- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch; Intermediate with Spin Boost, Advanced without.
 - Added: Reaching the Missile Tank Pickup in Main Hub Tower Top using Cross Bomb Launch (Advanced).
 - Added: Video: Morph Ball Movement Jump in Main Hub Tower Middle.
 
