@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Changed: Getting across the water in EMMI Zone Exit East with Cross Bombs now additionally requires Cross Bomb Launch (Advanced).
+- Changed: Path to Escue: Getting from Door to Save Station Southeast to Dock to EMMI Zone Exit East is now trivial.
 
 ##### Ghavoran
 
