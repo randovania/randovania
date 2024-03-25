@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New trick, Cross Bomb Launch.
 - Changed: The Shinesink Clip and Aim Down Clip tricks are now a single Floor Clip trick.
 
+##### Artaria
+
+- Changed: Doors into Charge Beam Access are excluded from being randomized into Grapple Beam Doors, in order to fascilitate Ballsparking into Speed Hallway.
+
 ##### Burenia
 
 - Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Intermediate).
