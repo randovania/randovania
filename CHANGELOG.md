@@ -10,6 +10,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
 - Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
 
+### AM2R
+
+#### Logic Database
+
+##### Distribution Center
+
+- Added: Gravity Area Corridor: Getting the item is now logical via a Charge Bomb Spread. This requires Knowledge Beginner and Movement Intermediate.
+- Fixed: Gravity Chamber Access: Going from right to left is now logical with Gravity and Bombs.
+- Fixed: Gravity Chamber Access: Going from right to left is not logical anymore with walljumping.
+
+##### Hydro Station
+- Changed: Shinesparking from Breeding Grounds Alpha Nest West to Breeding Grounds Overgrown Alley now requires an intermediate Shinespark.
+
+##### Industrial Complex
+- Added: Industrial Complex Exterior: It is now possible to get from the right building to the left building. It's an Intermediate Morph Glide with High Jump, and an Advanced without.
+
+##### The Tower
+- Fixed: Plasma Chamber: It is now logical to escape the room through the left tunnel if the Softlock Prevention option is enabled.
+
 ### Metroid Dread
 
 - Fixed: DNA placement respects vanilla item placement settings to not assign two items to one location
