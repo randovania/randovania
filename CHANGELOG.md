@@ -21,12 +21,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Gravity Chamber Access: Going from right to left is not logical anymore with walljumping.
 
 ##### Hydro Station
+
 - Changed: Shinesparking from Breeding Grounds Alpha Nest West to Breeding Grounds Overgrown Alley now requires an intermediate Shinespark.
 
 ##### Industrial Complex
+
 - Added: Industrial Complex Exterior: It is now possible to get from the right building to the left building. It's an Intermediate Morph Glide with High Jump, and an Advanced without.
 
+##### Main Caves
+
+- Fixed: Drill Excavation: Logic does not expect you to need bombs anymore to break the crystal if Cutscene Skips are enabled.
+
 ##### The Tower
+
 - Fixed: Plasma Chamber: It is now logical to escape the room through the left tunnel if the Softlock Prevention option is enabled.
 
 ### Metroid Dread
