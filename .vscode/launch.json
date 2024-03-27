@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    //  "--debug-game-backend",
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Randovania Client",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/randovania/__main__.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "preLaunchTask": "Build UI",
+            "args": [
+                "gui", "--preview", "main"
+            ]
+           
+        },
+        {
+            "name": "Randovania Refresh-Game-Description",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/randovania/__main__.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "database", "refresh-game-description"
+            ]
+           
+        }
+    ]
+}

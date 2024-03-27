@@ -1,0 +1,28 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            
+            "label": "Create venv with all exporters",
+            "type": "shell",
+            "linux": {
+                "command": "${workspaceFolder}/tools/prepare_virtual_env.sh ; ${workspaceFolder}/venv/Scripts/activate ; pip install -r requirements.txt",
+            },
+            "windows": {
+                "command": "@()|${workspaceFolder}/tools/prepare_virtual_env.bat ; ${workspaceFolder}/venv/Scripts/Activate.ps1 ; pip install -r requirements.txt",
+            }
+        },
+        {
+            "label": "Build UI",
+            "type": "shell",
+            "command": "${command:python.interpreterPath} ${workspaceFolder}/setup.py build_ui"
+        },
+        {
+            "label": "Run all tests on all cores",
+            "type": "shell",
+            "command": "${command:python.interpreterPath} -m pytest -n auto ${workspaceFolder}/test"
+        }
+    ]
+}
