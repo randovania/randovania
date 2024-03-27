@@ -9,7 +9,6 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description import data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -19,9 +18,6 @@ from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupModel,
     ResourceLock,
-)
-from randovania.game_description.requirements.resource_requirement import (
-    ResourceRequirement,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import (
@@ -42,12 +38,6 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
         {},
         {"starting_pickup": "Morph Ball"},
         {"elevator": NodeIdentifier.create("Temple Grounds", "Transport to Agon Wastes", "Elevator to Agon Wastes")},
-        {
-            "configurable_nodes": [
-                ("Agon Wastes/Mining Plaza/Translator Gate", "Cobalt"),
-                ("Torvus Bog/Great Bridge/Translator Gate", "Emerald"),
-            ]
-        },
         {"pickup": "Morph Ball Bomb"},
         {
             "hint": [
@@ -69,7 +59,6 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
 )
 def patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_pickup_database):
     game = echoes_game_description
-    db = game.resource_database
 
     gt = "Great Temple"
     tg = "Temple Grounds"
@@ -106,9 +95,9 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
             f"{sf}/Aerie/Elevator to Aerie Transport Station": f"{sf}/Aerie Transport Station/Elevator to Aerie",
         },
         "dock_weakness": {},
-        "configurable_nodes": {},
         "locations": {},
         "hints": {},
+        "game_specific": {},
     }
     patches = dataclasses.replace(echoes_game_patches, player_index=0)
 
@@ -149,15 +138,6 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
             ]
         )
         data["dock_connections"][teleporter.as_string] = "Temple Grounds/Landing Site/Save Station"
-
-    if request.param.get("configurable_nodes"):
-        gates = []
-        for identifier, translator in request.param.get("configurable_nodes"):
-            requirement = ResourceRequirement.simple(db.get_item(translator))
-            gates.append((NodeIdentifier.from_string(identifier), requirement))
-            data["configurable_nodes"][identifier] = data_writer.write_requirement(requirement)
-
-        patches = patches.assign_node_configuration(gates)
 
     if request.param.get("pickup"):
         pickup_name = request.param.get("pickup")

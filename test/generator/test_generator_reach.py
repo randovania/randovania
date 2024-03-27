@@ -269,17 +269,14 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         region_list,
     )
 
-    patches = echoes_game_patches.assign_node_configuration(
-        [
-            (translator_identif, ResourceRequirement.simple(scan_visor)),
-        ]
-    )
+    region_list.configurable_nodes[translator_identif] = ResourceRequirement.simple(scan_visor)
+
     initial_state = State(
         ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
         (),
         99,
         node_a,
-        patches,
+        echoes_game_patches,
         None,
         StateGameData(echoes_resource_database, game.region_list, 100, 99),
     )
@@ -335,7 +332,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
     patches = generator.base_patches_factory.create_base_patches(
         layout_configuration, Random(15000), game, False, player_index=0
     )
-    state = generator.bootstrap.calculate_starting_state(game, patches, default_echoes_configuration)
+    state = generator.bootstrap.calculate_starting_state(game, patches, layout_configuration)
     state.resources.add_resource_gain(
         [
             (item("Combat Visor"), 1),
@@ -350,6 +347,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
             (item("Missile"), 5),
         ]
     )
+    generator.bootstrap.apply_game_specific_patches(layout_configuration, game, patches)
 
     # Run
     reach = OldGeneratorReach.reach_from_state(game, state)

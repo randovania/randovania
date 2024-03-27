@@ -417,7 +417,6 @@ async def test_apply_previous_state(
 async def test_load_multi_starting_location(
     skip_qtbot, tmp_path: Path, default_echoes_configuration, default_echoes_preset, mocker
 ):
-    preset = default_echoes_preset
     new_start_loc = (
         NodeIdentifier.create("Temple Grounds", "Landing Site", "Save Station"),
         NodeIdentifier.create("Temple Grounds", "Temple Transport C", "Elevator to Great Temple"),
@@ -444,7 +443,6 @@ async def test_load_multi_starting_location(
 async def test_load_single_starting_location(
     skip_qtbot, tmp_path: Path, default_echoes_configuration, default_echoes_preset
 ):
-    preset = default_echoes_preset
     new_start_loc = (NodeIdentifier.create("Temple Grounds", "Temple Transport C", "Elevator to Great Temple"),)
     layout_config = dataclasses.replace(
         default_echoes_configuration,
@@ -465,7 +463,6 @@ async def test_load_single_starting_location(
 async def test_preset_without_starting_location(
     skip_qtbot, tmp_path: Path, default_echoes_configuration, default_echoes_preset
 ):
-    preset = default_echoes_preset
     new_start_loc = ()
     layout_config = dataclasses.replace(
         default_echoes_configuration,

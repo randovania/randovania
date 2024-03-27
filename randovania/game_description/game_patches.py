@@ -51,10 +51,10 @@ class GamePatches:
     dock_connection: list[int | None]
     dock_weakness: list[DockWeakness | None]
     weaknesses_to_shuffle: list[bool]
-    configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_equipment: StartingEquipment
     starting_location: NodeIdentifier
     hints: dict[NodeIdentifier, Hint]
+    game_specific: dict
 
     cached_dock_connections_from: list[tuple[tuple[Node, Requirement], ...] | None] = dataclasses.field(
         hash=False, compare=False
@@ -85,11 +85,11 @@ class GamePatches:
             dock_connection=game.get_prefilled_docks(),
             dock_weakness=[None] * len(game.region_list.all_nodes),
             weaknesses_to_shuffle=[False] * len(game.region_list.all_nodes),
-            configurable_nodes={},
             starting_equipment=[],
             starting_location=game.starting_location,
             hints={},
             cached_dock_connections_from=[None] * len(game.region_list.all_nodes),
+            game_specific={},
         )
 
     def assign_new_pickups(self, assignments: Iterable[PickupTargetAssociation]) -> GamePatches:
@@ -200,6 +200,9 @@ class GamePatches:
             new_to_shuffle[node.node_index] = shuffle
 
         return dataclasses.replace(self, weaknesses_to_shuffle=new_to_shuffle)
+
+    def assign_game_specific(self, game_specific: dict) -> GamePatches:
+        return dataclasses.replace(self, game_specific=game_specific)
 
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
         return self.dock_weakness[node.node_index] or node.default_dock_weakness
