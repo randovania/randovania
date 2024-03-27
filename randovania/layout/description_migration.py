@@ -502,6 +502,33 @@ def _migrate_v25(data: dict) -> dict:
     return data
 
 
+def _migrate_v26(data: dict) -> dict:
+    for game in data["game_modifications"]:
+        configurable_nodes: dict[str, dict] = game.pop("configurable_nodes")
+        game["game_specific"] = {}
+
+        if game["game"] != "prime2":
+            continue
+
+        def convert_to_enum(req: dict) -> str:
+            non_scan = [name for it in req["data"]["items"] if (name := it["data"]["name"]) != "Scan"]
+            if non_scan:
+                return {
+                    "Violet": "violet",
+                    "Amber": "amber",
+                    "Emerald": "emerald",
+                    "Cobalt": "cobalt",
+                }[non_scan[0]]
+            else:
+                return "removed"
+
+        game["game_specific"]["translator_gates"] = {
+            identifier: convert_to_enum(requirement) for identifier, requirement in configurable_nodes.items()
+        }
+
+    return data
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -528,6 +555,7 @@ _MIGRATIONS = [
     _migrate_v23,
     _migrate_v24,  # AM2R expansion -> tank rename for solo games
     _migrate_v25,  # AM2R expansion -> tank rename for MW games
+    _migrate_v26,  # configurable nodes -> game_specific
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

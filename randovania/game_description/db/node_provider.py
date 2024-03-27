@@ -99,3 +99,6 @@ class NodeProvider:
 
     def nodes_in_network(self, network_name: str) -> list[TeleporterNetworkNode]:
         raise NotImplementedError
+
+    def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
+        raise NotImplementedError
