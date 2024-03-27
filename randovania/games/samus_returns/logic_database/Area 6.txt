@@ -17,10 +17,11 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_name: LE_Platform_Elevator_FromArea09
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea09
-  > Before Diggernaut Area
+  > Left of Plant Tunnels
       All of the following:
           Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
-          Plasma Beam or Defeat Non-Counterable Enemies
+          # Deal with the Electric Gulluggs and Autoad
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -29,10 +30,8 @@ Extra - asset_id: collision_camera_034
   * Extra - start_point_actor_name: ST_SaveStation004
   > Door to Crumbling Stairwell
       Trivial
-  > Before Diggernaut Area
-      All of the following:
-          Morph Ball
-          Spider Ball or Defeat Non-Counterable Enemies
+  > Above Plant Tunnels
+      Morph Ball and Deal with Black Gravitt in Low Ceiling
 
 > Door to Crumbling Stairwell; Heals? False
   * Layers: default
@@ -47,83 +46,80 @@ Extra - asset_id: collision_camera_034
   * Power Beam Door to Swarm Square/Door to Transport to Area 7
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
-  > Event - Grapple Block Top
-      Grapple Beam and Lay Any Bomb
-  > Before Diggernaut Area
-      All of the following:
-          After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
-          Lightning Armor or Defeat Non-Counterable Enemies
   > Event - Grapple Block Pull
       Grapple Beam
+  > Next to Grapple Block Top
+      Lay Any Bomb
 
 > Door to Diggernaut Arena; Heals? False
   * Layers: default
   * Charge Beam Door to Diggernaut Arena/Door from Transport to Area 7
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
-  > Before Diggernaut Area
+  > Left of Plant Tunnels
       All of the following:
           Lay Any Bomb
-          Plasma Beam or Combat (Intermediate) or Defeat Non-Counterable Enemies
+          # Deal with the Electric Gulluggs
+          Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
   > Start Point
       Trivial
 
 > Event - Grapple Block Top; Heals? False
   * Layers: default
   * Event Area 6 - Transport to Area 7 Grapple Block Top
-  > Door to Swarm Square
-      Lay Any Bomb
+  > Next to Grapple Block Top
+      Trivial
 
-> Before Diggernaut Area; Heals? False
+> Left of Plant Tunnels; Heals? False
   * Layers: default
   > Elevator to Area 7
       All of the following:
           Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
-          Plasma Beam or Defeat Non-Counterable Enemies
-  > Save Station
-      All of the following:
-          Morph Ball
-          Spider Ball or Defeat Non-Counterable Enemies
-  > Door to Swarm Square
-      All of the following:
-          After Area 6 - Transport to Area 7 Grapple Block Top and Lay Any Bomb
-          Lightning Armor or Defeat Non-Counterable Enemies
+          # Deal with the Electric Gulluggs and Autoad
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
   > Door to Diggernaut Arena
       All of the following:
           Lay Any Bomb
-          Plasma Beam or Combat (Intermediate) or Defeat Non-Counterable Enemies
-  > Above Pickup
+          # Deal with the Electric Gulluggs
+          Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
+  > Above Plant Tunnels
+      Morph Ball and Deal with Black Gravitt in Low Ceiling
+  > Next to Grapple Block Top
       All of the following:
-          Morph Ball
-          Any of the following:
-              Lightning Armor
-              All of the following:
-                  Spider Ball
-                  Bomb or Spring Ball
+          Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Top
+          # Deal with the Electric Gulluggs
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
 
 > Above Pickup; Heals? False
   * Layers: default
   > Pickup (Aeion Tank)
       After Area 6 - Transport to Area 7 Grapple Blocks Bottom and Lay Any Bomb
-  > Before Diggernaut Area
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Lightning Armor
-              All of the following:
-                  Spider Ball
-                  Bomb or Spring Ball
   > Event - Grapple Blocks Bottom
       All of the following:
+          # Traversing the puzzle
           Grapple Beam and Morph Ball
+          # Reaching the tunnel
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (No High Jump)
           Any of the following:
-              Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (No High Jump)
-              Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-          Any of the following:
+              # Solving the puzzle
               Power Bomb ≥ 2
               All of the following:
                   Bomb and Shoot Any Missile
-                  Phase Drift or Spider Ball
+                  # Break the tunnel Bomb block
+                  Spider Ball or Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner)
+                  Any of the following:
+                      # Crossing the Crumble blocks
+                      Phase Drift or Spider Ball
+                      Diagonal Bomb Jump (Advanced) and Phase Drift Skip (Intermediate)
+  > Above Plant Tunnels
+      Any of the following:
+          Lightning Armor
+          All of the following:
+              Hazard Runs (Beginner) and Hazard Damage ≥ 65
+              Any of the following:
+                  # Deal with the Gravitt
+                  Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
+                  Damage Boost (Beginner) and Normal Damage ≥ 45
 
 > Event - Grapple Blocks Bottom; Heals? False
   * Layers: default
@@ -137,7 +133,8 @@ Extra - asset_id: collision_camera_034
                   Phase Drift
                   Any of the following:
                       Space Jump
-                      Bomb and Infinite Bomb Jump (Intermediate)
+                      # https://youtu.be/NE8KzPdWa4Y
+                      Bomb and Infinite Bomb Jump (Advanced)
 
 > Start Point; Heals? False
   * Layers: default
@@ -150,6 +147,40 @@ Extra - asset_id: collision_camera_034
   * Event Area 6 - Transport to Area 7 Grapple Block Pull
   > Door to Swarm Square
       Trivial
+
+> Above Plant Tunnels; Heals? False
+  * Layers: default
+  > Save Station
+      Morph Ball and Deal with Black Gravitt in Low Ceiling
+  > Left of Plant Tunnels
+      Morph Ball and Deal with Black Gravitt in Low Ceiling
+  > Above Pickup
+      Any of the following:
+          Lightning Armor
+          All of the following:
+              Hazard Runs (Beginner) and Hazard Damage ≥ 65
+              Any of the following:
+                  # Deal with the Gravitt
+                  Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
+                  Damage Boost (Beginner) and Normal Damage ≥ 45
+
+> Next to Grapple Block Top; Heals? False
+  * Layers: default
+  > Door to Swarm Square
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Spider Ball or Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner)
+                  High Jump Boots and Spring Ball
+  > Event - Grapple Block Top
+      Grapple Beam
+  > Left of Plant Tunnels
+      All of the following:
+          Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Top
+          # Deal with the Electric Gulluggs
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
 
 ----------------
 Teleporter South
@@ -204,6 +235,7 @@ Extra - asset_id: collision_camera_037
   > Room Center
       Any of the following:
           Space Jump or After Area 6 - Omega Metroid
+          # Roll under the Omega
           Morph Ball and Movement (Intermediate)
 
 > Door to Poisonous Tunnel; Heals? False
@@ -214,6 +246,7 @@ Extra - asset_id: collision_camera_037
   > Room Center
       Any of the following:
           Space Jump or After Area 6 - Omega Metroid
+          # Roll under the Omega
           Morph Ball and Movement (Intermediate)
 
 > Dock to Omega Arena Access; Heals? False
@@ -234,13 +267,15 @@ Extra - asset_id: collision_camera_037
   > Door to Zeta Arena Access
       Any of the following:
           Space Jump or After Area 6 - Omega Metroid
+          # Roll under the Omega
           Morph Ball and Movement (Intermediate)
   > Door to Poisonous Tunnel
       Any of the following:
           Space Jump or After Area 6 - Omega Metroid
+          # Roll under the Omega
           Morph Ball and Movement (Intermediate)
   > Event - Omega Metroid
-      After Area 6 - Zeta Metroid and Defeat Omega Metroid
+      Defeat Omega Metroid
 
 > Pickup (DNA); Heals? False
   * Layers: default
@@ -263,7 +298,7 @@ Extra - asset_id: collision_camera_038
   > Door to Omega Arena Access (Bottom)
       Morph Ball and After Area 6 - Hideout Sprawl Grapple Block
   > Middle Level
-      Trivial
+      Lay Any Bomb
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -271,11 +306,7 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_supermissiletank
   > Middle Level
-      All of the following:
-          Grapple Beam and Morph Ball
-          Any of the following:
-              High Jump Boots or Gravity Suit or Spider Ball
-              Underwater Bomb Jump (Beginner) and Lay Bomb
+      Grapple Beam and Use Spider Ball
 
 > Door to Omega Arena Access (Bottom); Heals? False
   * Layers: default
@@ -297,9 +328,7 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Middle Level
-      All of the following:
-          Screw Attack
-          Combat (Beginner) or Normal Damage ≥ 199
+      Screw Attack
 
 > Door to Hideout Entrance; Heals? False
   * Layers: default
@@ -307,7 +336,10 @@ Extra - asset_id: collision_camera_038
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Middle Level
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          # Morph around the corner and unmorph https://youtu.be/q7zQS-J912Y
+          Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -321,22 +353,26 @@ Extra - asset_id: collision_camera_038
   * Layers: default
   > Pickup (Power Bomb Tank)
       All of the following:
-          Morph Ball and Out of Bounds Movement (Intermediate)
+          Morph Ball and Out of Bounds Movement (Advanced)
           Any of the following:
+              # Clip off the Bomb block at the tunnel exit https://youtu.be/TGxXJAqewB4?t=11
               Spider Ball and Spider Ball Clip (Advanced)
-              Screw Attack and Melee Clip (Intermediate)
+              # Clip from on top of the Screw Attack blocks on the right https://youtu.be/TGxXJAqewB4
+              Screw Attack and Melee Clip (Beginner)
           Any of the following:
-              High Jump Boots or Space Jump or Single-wall Wall Jump (Advanced)
+              # Reaching the pickup https://youtu.be/TGxXJAqewB4?t=17
+              High Jump Boots or Space Jump or Single-wall Wall Jump (Advanced) or Super Jump (Advanced)
               Bomb and Infinite Bomb Jump (Advanced)
   > Pickup (Super Missile Tank)
-      Grapple Beam and Power Bomb ≥ 2 and Screw Attack and Spider Boost (Beginner) and Can Spider Boost
+      Grapple Beam and Power Bomb ≥ 3 and Screw Attack and Spider Boost (Beginner) and Can Spider Boost
   > Door to Omega Arena Access (Top)
       All of the following:
           Screw Attack
           Any of the following:
-              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+              # Freeze the upper Drivel
               Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-              Morph Ball and Unmorph Extend (Beginner)
+              Morph Ball and Unmorph Extend (Intermediate)
   > Door to Hideout Entrance
       Trivial
 
@@ -401,11 +437,14 @@ Extra - asset_id: collision_camera_040
               Any of the following:
                   Phase Drift
                   All of the following:
-                      Bomb
+                      Bomb and Diagonal Bomb Jump (Advanced)
                       Any of the following:
-                          Phase Drift Skip (Hypermode)
+                          # Get hit by the Bomb after breaking the Crumble block and Space Jump left<br>https://youtu.be/XS8pmmtEMBY?t=144
                           Space Jump and Phase Drift Skip (Expert)
+                          # Launch left and respin to grab the ledge https://youtu.be/q5720PA4DrE?t=120
+                          Phase Drift Skip (Hypermode)
   > Out of Bounds
+      # Clip before the Crumble blocks and jump over them
       Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Intermediate)
 
 > Door to Zeta Arena; Heals? False
@@ -416,7 +455,16 @@ Extra - asset_id: collision_camera_040
   > Left of Bridge
       Morph Ball
   > Out of Bounds
-      Charge Beam and Ice Beam and Ice Beam Clip (Intermediate) and Out of Bounds Movement (Intermediate)
+      All of the following:
+          # Clip off the Glowfly and jump/move right
+          Ice Beam and Out of Bounds Movement (Intermediate)
+          Any of the following:
+              # https://youtu.be/4-74HVjmYgE
+              Charge Beam and Ice Beam Clip (Intermediate)
+              # https://youtu.be/4-74HVjmYgE?t=14
+              Phase Drift and Ice Beam Clip (Advanced)
+              # https://youtu.be/4-74HVjmYgE?t=28
+              Ice Beam Clip (Expert)
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -446,8 +494,18 @@ Extra - asset_id: collision_camera_040
       Lay Power Bomb
   > Door to Chozo Seal East
       Any of the following:
-          Morph Ball and Phase Drift
           Spider Boost (Intermediate) and Can Spider Boost
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Phase Drift
+                  All of the following:
+                      Bomb and Diagonal Bomb Jump (Advanced)
+                      Any of the following:
+                          # Get hit by the Bomb after breaking the Crumble block and Space Jump right<br>https://youtu.be/XS8pmmtEMBY?t=374
+                          Space Jump and Phase Drift Skip (Expert)
+                          # Launch right and respin to grab the ledge https://youtu.be/rNv9nWRIwP8?t=8704
+                          Phase Drift Skip (Hypermode)
   > Door to Zeta Arena
       Morph Ball
   > Under Bridge
@@ -478,10 +536,27 @@ Extra - asset_id: collision_camera_041
               Screw Attack
               Any of the following:
                   Space Jump
-                  Spider Ball and Movement (Intermediate) and Wall Jump (Intermediate)
+                  All of the following:
+                      # Unmorph under the Screw Attack blocks to Wall Jump
+                      Spider Ball and Wall Jump (Intermediate)
+                      # Climbing back up before the blocks reform https://youtu.be/tpXp8OZCGRo
+                      Phase Drift or Movement (Advanced)
+                  All of the following:
+                      # Freeze the Drivel that flies higher https://youtu.be/XfRK7cccdUM
+                      Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate) and Wall Jump (Intermediate)
+                      High Jump Boots or Super Jump (Intermediate)
+                  # Morph to gain more height https://youtu.be/vd_BXw_crkg
+                  High Jump Boots and Morph Ball and Single-wall Wall Jump (Advanced) and Unmorph Extend (Advanced)
           Space Jump and Lay Power Bomb
           Spider Ball and Lay Any Bomb
-          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  # Break the Bomb block and quickly IBJ back up to enter the tunnel
+                  Infinite Bomb Jump (Advanced)
+                  All of the following:
+                      Infinite Bomb Jump (Intermediate)
+                      Phase Drift or Space Jump or Spider Ball
 
 > Door to Hideout Sprawl; Heals? False
   * Layers: default
@@ -493,7 +568,8 @@ Extra - asset_id: collision_camera_041
           Screw Attack
           All of the following:
               Lay Any Bomb
-              Lightning Armor or Screw Attack or Combat (Beginner) or Normal Damage ≥ 199
+              # Dealing with the Drivels and Glow Fly
+              Lightning Armor or Combat (Beginner) or Dodge Enemies (Beginner) or Normal Damage ≥ 199
   > Start Point
       Trivial
 
@@ -518,15 +594,61 @@ Extra - asset_id: collision_camera_042
   > Door to Transport to Area 7
       Any of the following:
           All of the following:
+              # With Phase Drift
+              Phase Drift
+              Any of the following:
+                  # https://youtu.be/-0LSzLffQdM?t=23
+                  Diagonal Bomb Jump (Advanced) and Lay Bomb
+                  # https://youtu.be/-0LSzLffQdM?t=16
+                  Super Jump (Advanced) and Wall Jump (Advanced)
+                  # https://youtu.be/-0LSzLffQdM?t=44
+                  Movement (Advanced) and Use Spider Ball
+                  All of the following:
+                      High Jump Boots
+                      # https://youtu.be/-0LSzLffQdM
+                      Super Jump (Advanced) or Wall Jump (Advanced)
+          All of the following:
+              # Without Phase Drift
+              Any of the following:
+                  # Deal with the Gulluggs
+                  Lightning Armor
+                  All of the following:
+                      Combat (Beginner)
+                      # Aim up with Wave Beam
+                      Lay Power Bomb or Shoot Wave Beam
+              Any of the following:
+                  # Traverse the Crumble blocks
+                  Space Jump
+                  Spider Ball and Diagonal Bomb Jump (Advanced) and Lay Bomb
+          All of the following:
+              # With Space Jump
               Space Jump
-              Phase Drift or Screw Attack
-          Spider Ball and Diagonal Bomb Jump (Intermediate) and Lay Bomb
+              # Dodging the Gulluggs https://youtu.be/ltG3aeHgzCU
+              Screw Attack or Dodge Enemies (Intermediate)
+          All of the following:
+              # With Bombs
+              Spider Ball and Diagonal Bomb Jump (Advanced) and Lay Bomb
+              Any of the following:
+                  # https://youtu.be/ltG3aeHgzCU?t=37
+                  Dodge Enemies (Advanced)
+                  # Lay Bombs to defeat the top Gullugg https://youtu.be/ltG3aeHgzCU?t=8
+                  Combat (Intermediate)
   > Pickup (Missile Tank)
       Any of the following:
+          Lay Power Bomb
           All of the following:
-              Phase Drift and Lay Any Bomb
-              Spider Ball or Movement (Intermediate)
-          Movement (Beginner) and Lay Power Bomb
+              Lay Bomb
+              Any of the following:
+                  All of the following:
+                      Phase Drift
+                      # Quickly jump off the Crumble blocks after laying a Bomb https://youtu.be/-irhQdOgJOo
+                      Spider Ball or Movement (Beginner)
+                  # Wall Jump after laying the Bomb https://youtu.be/-irhQdOgJOo?t=15
+                  Mid-Air Morph (Intermediate) and Wall Jump (Intermediate)
+                  All of the following:
+                      Spider Ball
+                      # https://youtu.be/-irhQdOgJOo?t=23
+                      Spring Ball or Mid-Air Morph (Beginner) or Diagonal Bomb Jump (Beginner)
 
 > Door to Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
@@ -550,10 +672,19 @@ Extra - asset_id: collision_camera_042
   > Door from Teleporter South
       Any of the following:
           Phase Drift
-          Bomb and Spider Ball and Diagonal Bomb Jump (Beginner)
+          All of the following:
+              Spider Ball
+              Any of the following:
+                  # Unmorph and respin from wall https://youtu.be/ApnRcZo_vxQ?t=10
+                  Phase Drift Skip (Intermediate)
+                  # Bomb Jump from corner https://youtu.be/ApnRcZo_vxQ?t=6
+                  Bomb and Diagonal Bomb Jump (Beginner)
+          # Spring Ball as the Crumble block breakshttps://youtu.be/ApnRcZo_vxQ?t=17
           Spring Ball and Phase Drift Skip (Advanced)
+          # https://youtu.be/ApnRcZo_vxQ
           Spider Boost (Intermediate) and Can Spider Boost
-          Phase Drift Skip (Intermediate) and Wall Jump (Intermediate)
+          # Unmorph and jump from the alcove https://youtu.be/ApnRcZo_vxQ?t=14
+          Phase Drift Skip (Intermediate)
   > Door to Chozo Seal West Intersection Terminal
       Trivial
 
@@ -580,7 +711,7 @@ Extra - asset_id: collision_camera_043
 
 > Door from Transport to Area 7; Heals? False
   * Layers: default
-  * Access Closed to Transport to Area 7/Door to Diggernaut Arena
+  * Access Closed to Transport to Area 7/Door to Diggernaut Arena; Excluded from Dock Lock Rando
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
   > Door to Electric Escalade
@@ -597,11 +728,31 @@ Extra - asset_id: collision_camera_043
           Any of the following:
               # Dealing Damage
               Plasma Beam or Shoot Beam Burst
-              Missile ≥ 24 and Combat (Expert)
-          # Dodging Attacks
-          Space Jump or Infinite Bomb Jump (Hypermode)
-          # Entering Arms
-          Spider Ball or Infinite Bomb Jump (Expert)
+              All of the following:
+                  Combat (Advanced)
+                  Missile ≥ 24 or Super Missile ≥ 15
+          Any of the following:
+              # Dodging Attacks
+              Space Jump
+              All of the following:
+                  Spider Ball
+                  Any of the following:
+                      # Phase Drift gives more time to avoid the lasers
+                      Phase Drift and Dodge Enemies (Advanced)
+                      # Deal damage then IBJ up to the ceiling to avoid the lasers https://youtu.be/XenOF4TceeY?t=8960
+                      Dodge Enemies (Expert) and Infinite Bomb Jump (Expert)
+              # "Tank" the lasers
+              Aeion ≥ 1500 and Lightning Armor and Combat (Advanced)
+          Any of the following:
+              # Entering Arms
+              Spider Ball
+              # Bomb Jump to avoid touching the arms https://youtu.be/rNv9nWRIwP8?t=9632
+              Diagonal Bomb Jump (Expert) and Infinite Bomb Jump (Advanced)
+          Any of the following:
+              # Final Phase
+              Spider Ball
+              # Lay a bomb near a weak point when its on the right or top only
+              Mid-Air Morph (Advanced) or Infinite Bomb Jump (Advanced)
 
 > Event - Diggernaut; Heals? False
   * Layers: default
@@ -630,7 +781,9 @@ Extra - asset_id: collision_camera_044
   > Door to Electric Escalade
       All of the following:
           Lay Power Bomb
-          Lightning Armor or Space Jump or Spider Ball
+          Any of the following:
+              Lightning Armor or Space Jump or Spider Ball
+              Hazard Runs (Beginner) and Hazard Damage ≥ 75
 
 > Door to Electric Escalade; Heals? False
   * Layers: default
@@ -640,7 +793,9 @@ Extra - asset_id: collision_camera_044
   > Door to Transport to Area 7
       All of the following:
           Lay Power Bomb
-          Lightning Armor or Space Jump or Spider Ball
+          Any of the following:
+              Lightning Armor or Space Jump or Spider Ball
+              Hazard Runs (Beginner) and Hazard Damage ≥ 75
 
 ----------------
 Electric Escalade
@@ -662,7 +817,15 @@ Extra - asset_id: collision_camera_045
   > Pickup (Power Bomb Tank)
       Any of the following:
           Spider Boost (Beginner) and Can Spider Boost
-          Infinite Bomb Jump (Expert) and Lay Bomb
+          All of the following:
+              Infinite Bomb Jump (Advanced) and Lay Bomb
+              Any of the following:
+                  # Defeat the Gulluggs
+                  Combat (Advanced)
+                  All of the following:
+                      Combat (Beginner)
+                      Power Bomb or Plasma Beam or Shoot Beam Burst or Shoot Spazer Beam
+                  Combat (Intermediate) and Shoot Wave Beam
   > Door to Diggernaut Arena
       Trivial
   > Top Platform
@@ -670,12 +833,21 @@ Extra - asset_id: collision_camera_045
           Single-wall Wall Jump (Expert)
           All of the following:
               Space Jump
-              Screw Attack or Movement (Beginner)
+              Screw Attack or Dodge Enemies (Beginner)
           All of the following:
               Morph Ball
               Any of the following:
+                  # Spider Ball on the left wall and hold the direction to the top
                   Spider Ball and Movement (Beginner)
-                  Bomb and Infinite Bomb Jump (Expert)
+                  All of the following:
+                      Bomb and Infinite Bomb Jump (Intermediate)
+                      Any of the following:
+                          # Defeat the Gulluggs
+                          Combat (Advanced)
+                          All of the following:
+                              Combat (Beginner)
+                              Power Bomb or Plasma Beam or Shoot Beam Burst or Shoot Spazer Beam
+                          Combat (Intermediate) and Shoot Wave Beam
 
 > Door to Swarm Square; Heals? False
   * Layers: default
@@ -710,8 +882,18 @@ Extra - asset_id: collision_camera_046
   * Pickup 129; Category? Minor
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_missiletank
-  > Next to Pickup
-      Trivial
+  > Door to Omega Arena
+      Any of the following:
+          # Break the Bomb Block and defeat the two Tsumuri
+          Lay Any Bomb
+          Any of the following:
+              # Deal with the red plants
+              Lightning Armor or Spider Ball
+              Hazard Runs (Advanced) and Hazard Damage ≥ 95
+  > Tunnel to Teleporter North Access
+      Morph Ball and After Area 6 - Poisonous Tunnel Grapple Block
+  > Event - Grapple Block
+      Grapple Beam
 
 > Door to Teleporter North Access; Heals? False
   * Layers: default
@@ -726,37 +908,28 @@ Extra - asset_id: collision_camera_046
   * Power Beam Door to Omega Arena/Door to Poisonous Tunnel
   * Extra - actor_name: Door023
   * Extra - actor_type: doorpowerpower
+  > Pickup (Missile Tank)
+      All of the following:
+          # Break the Bomb block and defeat the two Tsumuri
+          Lay Any Bomb
+          Any of the following:
+              # Deal with the red plants
+              Lightning Armor or Spider Ball
+              Hazard Runs (Advanced) and Hazard Damage ≥ 85
   > Door to Teleporter North Access
       Trivial
-  > Next to Pickup
-      All of the following:
-          Lay Any Bomb
-          Lightning Armor or Spider Ball
 
 > Tunnel to Teleporter North Access; Heals? False
   * Layers: default
   * Tunnel to Teleporter North Access/Tunnel to Poisonous Tunnel
-  > Next to Pickup
+  > Pickup (Missile Tank)
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 6 - Poisonous Tunnel Grapple Block
-  > Next to Pickup
-      Trivial
-
-> Next to Pickup; Heals? False
-  * Layers: default
   > Pickup (Missile Tank)
       Trivial
-  > Door to Omega Arena
-      All of the following:
-          Lay Any Bomb
-          Lightning Armor or Spider Ball
-  > Tunnel to Teleporter North Access
-      Morph Ball and After Area 6 - Poisonous Tunnel Grapple Block
-  > Event - Grapple Block
-      Grapple Beam
 
 ----------------
 Zeta Arena Access
@@ -844,7 +1017,7 @@ Extra - asset_id: collision_camera_048
   > Tunnel to Zeta Arena Access
       All of the following:
           Morph Ball and Shoot Any Missile
-          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+          Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (No High Jump)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
 
@@ -874,7 +1047,18 @@ Extra - asset_id: collision_camera_051
           Any of the following:
               # Movement Requirements
               High Jump Boots or Space Jump or Use Spider Ball
-              Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
+              All of the following:
+                  # Freeze the enemies
+                  Ice Beam
+                  Any of the following:
+                      All of the following:
+                          Stand on Frozen Enemy (Intermediate)
+                          # Charge Beam https://youtu.be/an6MvaYq9_o <br>Phase Drift https://youtu.be/an6MvaYq9_o?t=64
+                          Charge Beam or Phase Drift
+                      All of the following:
+                          Stand on Frozen Enemy (Advanced)
+                          # Melee Counter https://youtu.be/an6MvaYq9_o?t=30 <br>Ice Only https://youtu.be/an6MvaYq9_o?t=91
+                          Freeze Enemy with Melee (Advanced) or Movement (Advanced)
               Diagonal Bomb Jump (Intermediate) and Lay Bomb
 
 > Save Station; Heals? False
@@ -889,14 +1073,27 @@ Extra - asset_id: collision_camera_051
           Any of the following:
               # Movement Requirements
               High Jump Boots or Space Jump or Use Spider Ball
-              Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
+              All of the following:
+                  # Freeze the enemies
+                  Ice Beam and Stand on Frozen Enemy (Intermediate)
+                  # Charge Beam https://youtu.be/an6MvaYq9_o?t=113 <br> Phase Drift https://youtu.be/an6MvaYq9_o?t=157 <br> Melee Counter https://youtu.be/an6MvaYq9_o?t=134
+                  Charge Beam or Phase Drift or Freeze Enemy with Melee (Beginner)
+                  # Ice Beam Only https://youtu.be/an6MvaYq9_o?t=179
+                  Stand on Frozen Enemy (Advanced)
               Diagonal Bomb Jump (Intermediate) and Lay Bomb
   > Door to Chozo Seal West Intersection Terminal (Bottom)
-      All of the following:
-          # Energy Requirements
-          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 30
-          # Movement Requirements
-          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+          All of the following:
+              # Freeze the Gullugg
+              Ice Beam
+              Any of the following:
+                  Stand on Frozen Enemy (Advanced)
+                  All of the following:
+                      Stand on Frozen Enemy (Beginner)
+                      Charge Beam or Phase Drift
+                  Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate)
 
 > Door to Chozo Seal West Intersection Terminal (Top); Heals? False
   * Layers: default
@@ -914,8 +1111,7 @@ Extra - asset_id: collision_camera_051
   * Extra - actor_name: Door020
   * Extra - actor_type: doorpowerpower
   > Save Station
-      # Energy Requirements
-      Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 30
+      Trivial
   > Door to Chozo Seal West Intersection Terminal (Top)
       Morph Ball and After Area 6 - Transport to Area 5 Grapple Block
 
@@ -967,7 +1163,16 @@ Extra - asset_id: collision_camera_060
                   Any of the following:
                       # Cross the lower poison plants
                       Lightning Armor
-                      Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+                      All of the following:
+                          # Freeze the Gawrons
+                          Ice Beam
+                          Any of the following:
+                              Stand on Frozen Enemy (Advanced)
+                              All of the following:
+                                  Stand on Frozen Enemy (Intermediate)
+                                  Charge Beam or Phase Drift
+                      # Run through the plants
+                      Hazard Runs (Beginner) and Hazard Damage ≥ 50
 
 > Tunnel to Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
@@ -976,11 +1181,14 @@ Extra - asset_id: collision_camera_060
       All of the following:
           Morph Ball and After Area 6 - Chozo Seal East Grapple Block
           # Dealing with the Gullugg
-          Lightning Armor or Power Bomb or Wave Beam or Combat (Intermediate)
+          Lightning Armor or Power Bomb or Wave Beam or Dodge Enemies (Intermediate)
   > Event - Grapple Block
       All of the following:
           Grapple Beam and Morph Ball and Shoot Any Missile
-          Precise Aiming (Beginner) or Lay Any Bomb
+          Any of the following:
+              Lay Any Bomb
+              # Shoot a Missile/Super Missile through the wall to skip the Bomb block<br>https://youtu.be/yjem-zO6tOM
+              Precise Aiming (Beginner)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -994,15 +1202,20 @@ Extra - asset_id: collision_camera_060
   * Layers: default
   > Pickup (Super Missile Tank)
       Any of the following:
-          Ice Beam and Ice Beam Clip (Intermediate)
+          # Clip with the Hornoad above the item https://youtu.be/CbyK00QNQBI
+          Charge Beam and Ice Beam and Ice Beam Clip (Intermediate)
           All of the following:
+              # Completion requirements
               Grapple Beam and Morph Ball
-              Bomb or Power Bomb ≥ 3
+              # Breaking the Bomb blocks
+              Bomb or Power Bomb ≥ 4
+              # Dealing with the lower Crumble block
               Baby Metroid or Phase Drift or Spider Ball or Movement (Beginner)
   > Door to Crumbling Bridge
       Any of the following:
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-          Ice Beam and Stand on Frozen Enemy (Beginner)
+          # Freeze a Hornoad to reach the higher section, then freeze a Gullugg to reach the door
+          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
           All of the following:
               Wall Jump (Beginner)
               Any of the following:
@@ -1013,7 +1226,16 @@ Extra - asset_id: collision_camera_060
           Morph Ball
           Any of the following:
               Lightning Armor or Space Jump or Spider Ball
-              Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+              # Run through the plants
+              Hazard Runs (Beginner) and Hazard Damage ≥ 50
+              All of the following:
+                  # Freeze the Gawrons
+                  Ice Beam
+                  Any of the following:
+                      Stand on Frozen Enemy (Advanced)
+                      All of the following:
+                          Stand on Frozen Enemy (Intermediate)
+                          Charge Beam or Phase Drift
 
 ----------------
 Omega Arena Access
@@ -1027,8 +1249,16 @@ Extra - asset_id: collision_camera_061
   * Extra - actor_type: doorpowerpower
   > Door to Hideout Sprawl (Top)
       Any of the following:
-          Climb Rooms Vertically (High Jump)
-          Ice Beam and Morph Ball and Stand on Frozen Enemy (Beginner) and Super Jump (Intermediate) and Unmorph Extend (Beginner)
+          Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+          All of the following:
+              # Freeze a Hornoad
+              Ice Beam
+              Any of the following:
+                  Stand on Frozen Enemy (Advanced)
+                  All of the following:
+                      Stand on Frozen Enemy (Beginner)
+                      Charge Beam or Phase Drift or Freeze Enemy with Melee (Beginner)
   > Dock to Omega Arena
       Trivial
 
@@ -1113,12 +1343,22 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge_001
   * Extra - actor_type: weightactivatedplatform
+  > Door to Teleporter South
+      Climb Rooms Vertically (No High Jump)
   > Door from Crumbling Stairwell
       Trivial
   > Next to Bottom Puzzle
       Any of the following:
           Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-          Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+          All of the following:
+              # Freeze the Gullugg near the Ammo Recharge Station
+              Ice Beam
+              Any of the following:
+                  Stand on Frozen Enemy (Advanced)
+                  All of the following:
+                      Stand on Frozen Enemy (Beginner)
+                      Charge Beam or Freeze Enemy with Melee (Beginner)
+                  Phase Drift and Stand on Frozen Enemy (Intermediate)
 
 > Energy Recharge Station; Heals? True
   * Layers: default
@@ -1129,8 +1369,10 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Door to Transport to Area 5 (Top)
       All of the following:
           Morph Ball
+          # Traversing the tunnel
           Bomb or Power Bomb ≥ 2
-          Lightning Armor or Phase Drift or Movement (Intermediate) or Defeat Non-Counterable Enemies
+          # Dealing with the Gravitt
+          Lightning Armor or Phase Drift or Combat (Intermediate) or Defeat Non-Counterable Enemies
   > Door to Transport to Area 5 (Bottom)
       Trivial
 
@@ -1147,10 +1389,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Energy Recharge Station
       Trivial
   > Next to Bottom Puzzle
-      Any of the following:
-          # Bypassing the Gravitt
-          Lightning Armor or Combat (Intermediate) or Defeat Non-Counterable Enemies or Use Spider Ball
-          Combat (Beginner) and Normal Damage ≥ 45
+      Deal with Black Gravitt in Low Ceiling
 
 > Door to Teleporter South; Heals? False
   * Layers: default
@@ -1159,6 +1398,9 @@ Extra - asset_id: collision_camera_Hazard_End_A
   * Extra - actor_type: doorclosedpower
   > Ammo Recharge Station
       Trivial
+  > Next to Bottom Puzzle
+      # Jump the gaps
+      Movement (Beginner)
 
 > Door from Crumbling Stairwell; Heals? False
   * Layers: default
@@ -1184,9 +1426,15 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Chozo Seal
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          Stand on Frozen Enemy (Intermediate) and Wall Jump (Beginner) and Fully Freeze Enemy
+          All of the following:
+              # Freeze a Gullugg at a high point
+              Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
+              # Reach the ledge
+              High Jump Boots or Super Jump (Intermediate) or Wall Jump (Beginner)
+          High Jump Boots and Super Jump (Advanced) and Wall Jump (Intermediate)
   > Energy Recharge Station
       All of the following:
+          # Traversing the tunnel
           Morph Ball
           Bomb or Power Bomb ≥ 2
 
@@ -1224,14 +1472,12 @@ Extra - asset_id: collision_camera_Hazard_End_A
   > Ammo Recharge Station
       Trivial
   > Save Station
-      Any of the following:
-          # Dealing with the Gravitt
-          Lightning Armor or Combat (Intermediate) or Defeat Non-Counterable Enemies or Use Spider Ball
-          Combat (Beginner) and Normal Damage ≥ 45
+      Deal with Black Gravitt in Low Ceiling
   > Door to Teleporter South
       Any of the following:
-          Movement (Intermediate) or Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
-          Morph Ball and Unmorph Extend (Beginner)
+          # Jump the gaps
+          High Jump Boots or Movement (Intermediate) or Super Jump (Advanced)
+          Morph Ball and Unmorph Extend (Intermediate)
 
 ----------------
 Teleporter North
@@ -1246,7 +1492,11 @@ Extra - asset_id: collision_camera_Hazard_End_B
   > Teleporter
       Trivial
   > Door to Hideout Entrance
-      Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Morph Ball and Unmorph Extend (Intermediate)
+          # Freeze the Tsumuri right of the Save Station
+          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
   > Door to Chozo Seal West Intersection Terminal
       Any of the following:
           # Energy Requirements

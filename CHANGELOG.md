@@ -10,6 +10,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
 - Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
 
+### AM2R
+
+#### Logic Database
+
+##### Distribution Center
+
+- Added: Gravity Area Corridor: Getting the item is now logical via a Charge Bomb Spread. This requires Knowledge Beginner and Movement Intermediate.
+- Fixed: Gravity Chamber Access: Going from right to left is now logical with Gravity and Bombs.
+- Fixed: Gravity Chamber Access: Going from right to left is not logical anymore with walljumping.
+
+##### Hydro Station
+
+- Changed: Shinesparking from Breeding Grounds Alpha Nest West to Breeding Grounds Overgrown Alley now requires an intermediate Shinespark.
+
+##### Industrial Complex
+
+- Added: Industrial Complex Exterior: It is now possible to get from the right building to the left building. It's an Intermediate Morph Glide with High Jump, and an Advanced without.
+
+##### Main Caves
+
+- Fixed: Drill Excavation: Logic does not expect you to need bombs anymore to break the crystal if Cutscene Skips are enabled.
+
+##### The Tower
+
+- Fixed: Plasma Chamber: It is now logical to escape the room through the left tunnel if the Softlock Prevention option is enabled.
+
 ### Cave Story
 
 #### Logic Database
@@ -21,9 +47,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Fixed: DNA placement respects vanilla item placement settings to not assign two items to one location
+
 #### Logic Database
 
 - Added: New trick, Cross Bomb Launch.
+- Changed: The Shinesink Clip and Aim Down Clip tricks are now a single Floor Clip trick.
 
 ##### Burenia
 
@@ -53,6 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cross Bomb Launch (Beginner) to get the Missile Tank Pickup in Golzuna Tower.
 - Added: Video showing the Climb Sloped Tunnels trick to get from the Missile Tank Pickup to the Save Station Door in Golzuna Tower.
 - Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
+- Changed: The Floor Clip into Golzuna Arena has been reduced from Expert to Intermediate.
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
 ### Metroid Prime 2: Echoes
