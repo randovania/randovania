@@ -11,9 +11,7 @@ Extra - asset_id: collision_camera_008
   > Tunnel to Metroid Nest Teleporter
       All of the following:
           Morph Ball
-          Any of the following:
-              Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
-              Unmorph Extend (Intermediate) and Wall Jump (Intermediate)
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
   > Start Point
       Screw Attack
 
@@ -46,7 +44,11 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_missiletank
   > Above Left Pickup
-      Lightning Armor and Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Lightning Armor
+              Hazard Runs (Beginner) and Hazard Damage ≥ 75
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -84,51 +86,48 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation_005
   > Dock to Hatchling Room
-      All of the following:
-          Baby Metroid
-          Any of the following:
-              Normal Damage ≥ 199 and Defeat Gold Robots
-              Lightning Armor and Movement (Intermediate)
+      Baby Metroid
   > Above Left Pickup
       All of the following:
           Baby Metroid
           Any of the following:
+              Space Jump
               All of the following:
-                  Space Jump
+                  # Bomb Jump from the red plants
+                  Infinite Bomb Jump (Intermediate) and Lay Bomb
                   Any of the following:
-                      Screw Attack or Movement (Intermediate)
-                      Lightning Armor and Movement (Beginner)
+                      Lightning Armor
+                      Hazard Runs (Intermediate) and Hazard Damage ≥ 120
               All of the following:
-                  Lightning Armor
+                  # Boost up from the red plants
+                  Spider Boost (Advanced) and Can Spider Boost
                   Any of the following:
-                      Spider Boost (Intermediate) and Can Spider Boost
-                      Infinite Bomb Jump (Advanced) and Lay Any Bomb
+                      Lightning Armor
+                      Hazard Runs (Intermediate) and Hazard Damage ≥ 70
 
 > Dock to Hatchling Room; Heals? False
   * Layers: default
   * Open Passage to Hatchling Room/Dock to Transport to Surface
   > Save Station
-      Any of the following:
-          Normal Damage ≥ 199 and Defeat Gold Robots
-          Lightning Armor and Movement (Intermediate)
+      Trivial
 
 > Above Left Pickup; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
-      Lightning Armor and Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Lightning Armor
+              Hazard Runs (Beginner) and Hazard Damage ≥ 75
   > Ammo Recharge Station
       All of the following:
           Baby Metroid
-          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
           Any of the following:
               Screw Attack
+              # Clip using the Screw Attack blocks https://youtu.be/wHbiXozTtg0
               Spider Ball Clip (Intermediate) and Use Spider Ball
   > Save Station
-      All of the following:
-          Baby Metroid
-          Any of the following:
-              Defeat Gold Robots
-              Lightning Armor and Movement (Intermediate)
+      Baby Metroid
 
 ----------------
 Metroid Nest Hallway South
@@ -204,7 +203,7 @@ Extra - asset_id: collision_camera_009
   > Above Tunnels
       All of the following:
           Morph Ball and Screw Attack
-          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          High Jump Boots or Space Jump or Wall Jump (Beginner)
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
@@ -212,16 +211,17 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_powerbombtank
   > Energy Recharge Station
-      Use Spider Ball
+      Spider Ball and Lay Power Bomb
   > Above Save Station
-      Any of the following:
-          Lay Any Bomb
-          Lightning Armor and Morph Ball
+      Lay Power Bomb
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
   * Extra - actor_name: LE_Platform_AmmoCharge_001
   * Extra - actor_type: weightactivatedplatform
+  > Energy Recharge Station
+      # Deal with the Gunzoo
+      Lightning Armor or Missile ≥ 13 or Super Missile ≥ 2 or Space Jump or Defeat Gold Robots or Use Spider Ball
   > Pickup (Missile Tank Hidden)
       Any of the following:
           Spider Ball and Infinite Bomb Jump (Intermediate) and Lay Bomb
@@ -233,20 +233,25 @@ Extra - asset_id: collision_camera_009
                   All of the following:
                       Mid-Air Morph (Intermediate) and Lay Bomb
                       Spider Ball or Movement (Intermediate)
-  > Lower Platforms
-      Trivial
   > Above Tunnels
-      All of the following:
-          Lay Any Bomb
-          Any of the following:
-              Space Jump or Simple IBJ
-              Spider Boost (Intermediate) and Can Spider Boost
+      Any of the following:
+          Simple IBJ
+          Space Jump and Lay Any Bomb
+          Power Bomb ≥ 3 and Spider Boost (Intermediate) and Can Spider Boost
 
 > Energy Recharge Station; Heals? True
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyCharge_001
   * Extra - actor_type: weightactivatedplatform
-  > Lower Platforms
+  > Ammo Recharge Station
+      # Deal with the Gunzoo
+      Lightning Armor or Missile ≥ 13 or Super Missile ≥ 2 or Space Jump or Defeat Gold Robots or Use Spider Ball
+  > Next to Bottom Grapple Block
+      All of the following:
+          Morph Ball and After Area 8 - Amphitheater Grapple Block Bottom
+          # Enter the tunnel
+          Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
+  > Above Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
@@ -258,12 +263,20 @@ Extra - asset_id: collision_camera_009
       Trivial
   > Above Save Station
       Any of the following:
-          Climb Rooms Vertically (No High Jump)
-          Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+          Climb Rooms Vertically (High Jump)
+          All of the following:
+              # Freeze the right Gullugg
+              Ice Beam
+              Any of the following:
+                  Stand on Frozen Enemy (Advanced)
+                  Charge Beam and Stand on Frozen Enemy (Beginner)
+                  All of the following:
+                      Stand on Frozen Enemy (Intermediate)
+                      Phase Drift or Freeze Enemy with Melee (Intermediate)
           All of the following:
               Wall Jump (Intermediate)
               Any of the following:
-                  High Jump Boots or Super Jump (Advanced)
+                  Super Jump (Advanced)
                   Morph Ball and Unmorph Extend (Intermediate)
 
 > Door to Nest Network; Heals? False
@@ -279,10 +292,9 @@ Extra - asset_id: collision_camera_009
   * Power Beam Door to Metroid Nest Teleporter/Door to Amphitheater
   * Extra - actor_name: Door009
   * Extra - actor_type: doorpowerpower
-  > Above Top Pickup
-      Any of the following:
-          Normal Damage ≥ 100 and Defeat Non-Counterable Enemies
-          Lightning Armor and Movement (Intermediate)
+  > Left of Grapple Pickup
+      # Deal with the Gunzoo
+      Lightning Armor or Missile ≥ 13 or Super Missile ≥ 2 or Dodge Enemies (Advanced) or Defeat Gold Robots
 
 > Pickup (Missile Tank Hidden); Heals? False
   * Layers: default
@@ -295,7 +307,7 @@ Extra - asset_id: collision_camera_009
 > Event - Grapple Block Top; Heals? False
   * Layers: default
   * Event Area 8 - Amphitheater Grapple Block Top
-  > Above Top Pickup
+  > Left of Grapple Pickup
       Trivial
 
 > Event - Grapple Block Bottom; Heals? False
@@ -304,117 +316,118 @@ Extra - asset_id: collision_camera_009
   > Next to Bottom Grapple Block
       Trivial
 
-> Lower Platforms; Heals? False
-  * Layers: default
-  > Ammo Recharge Station
-      Trivial
-  > Energy Recharge Station
-      Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
-  > Next to Bottom Grapple Block
-      All of the following:
-          Morph Ball and After Area 8 - Amphitheater Grapple Block Bottom
-          Any of the following:
-              Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
-              Morph Ball and Unmorph Extend (Intermediate)
-  > Above Save Station
-      Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Movement (Intermediate) or Defeat Gold Robots
-
 > Above Tunnels; Heals? False
   * Layers: default
   > Pickup (Super Missile Tank)
       All of the following:
           Morph Ball and Screw Attack
-          Phase Drift or Spider Ball or Movement (Intermediate)
+          Phase Drift or Spider Ball or Phase Drift Skip (Intermediate)
           Bomb or Power Bomb ≥ 2
-  > Ammo Recharge Station
-      Any of the following:
-          Spider Ball and Lay Any Bomb
-          Space Jump and Lay Power Bomb
   > Next to Bottom Grapple Block
       Morph Ball
-  > Above Top Pickup
+  > Left of Grapple Pickup
       All of the following:
           Any of the following:
-              # Climbing
+              # Climb the room
               Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
               Morph Ball and Unmorph Extend (Beginner)
-          Any of the following:
-              # Energy
-              Normal Damage ≥ 299 and Defeat Non-Counterable Enemies
-              Movement (Beginner) and Normal Damage ≥ 199
-              Lightning Armor and Movement (Intermediate)
+          # Deal with the Autrack and Gunzoos
+          Lightning Armor or Defeat Non-Counterable Enemies
 
 > Next to Bottom Grapple Block; Heals? False
   * Layers: default
+  > Ammo Recharge Station
+      Any of the following:
+          Simple IBJ
+          Spider Ball and Lay Any Bomb
+          All of the following:
+              Any of the following:
+                  Lay Power Bomb
+                  Mid-Air Morph (Beginner) and Lay Bomb
+              Space Jump or Wall Jump (Beginner)
+  > Energy Recharge Station
+      Morph Ball and After Area 8 - Amphitheater Grapple Block Bottom
   > Event - Grapple Block Bottom
       Grapple Beam
-  > Lower Platforms
-      Morph Ball and After Area 8 - Amphitheater Grapple Block Bottom
   > Above Tunnels
       All of the following:
           Morph Ball
           Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
 
-> Above Top Pickup; Heals? False
+> Left of Grapple Pickup; Heals? False
   * Layers: default
   > Pickup (Missile Tank Top)
       Morph Ball and After Area 8 - Amphitheater Grapple Block Top
   > Door to Metroid Nest Teleporter
       All of the following:
+          # Deal with the Gunzoo
+          Lightning Armor or Missile ≥ 13 or Super Missile ≥ 2 or Dodge Enemies (Advanced) or Defeat Gold Robots
           Any of the following:
-              Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
-              Lightning Armor and Movement (Intermediate)
-          Any of the following:
-              All of the following:
-                  Space Jump
-                  Screw Attack or Movement (Beginner)
+              # Reach the door
+              Space Jump or Super Jump (Intermediate) or Wall Jump (Beginner) or Simple IBJ
+              # Unmorph and grab the right ledge
               Movement (Beginner) and Use Spider Ball
-              Infinite Bomb Jump (Intermediate) and Lay Bomb
               Spider Boost (Intermediate) and Can Spider Boost
+              Morph Ball and Unmorph Extend (Beginner)
   > Event - Grapple Block Top
       Grapple Beam
   > Above Tunnels
       Any of the following:
-          Normal Damage ≥ 299 and Defeat Non-Counterable Enemies
-          Movement (Beginner) and Normal Damage ≥ 199
-          Lightning Armor and Movement (Intermediate)
+          # Deal with the Autrack and Gunzoo
+          Lightning Armor or Defeat Non-Counterable Enemies or Use Spider Ball
+          All of the following:
+              # Go over the Autrack and defeat the Gunzoo
+              Dodge Enemies (Intermediate) and Defeat Gold Robots
+              Space Jump or Wall Jump (Beginner)
 
 > Above Save Station; Heals? False
   * Layers: default
   > Pickup (Missile Tank Left)
       All of the following:
           Any of the following:
+              # Reach the pickup
+              Space Jump or Use Spider Ball
               Single-wall Wall Jump (Intermediate) and Wall Jump (Intermediate)
-              All of the following:
-                  Space Jump
-                  Lightning Armor or Screw Attack
-              Spider Boost (Advanced) and Can Spider Boost
               Infinite Bomb Jump (Intermediate) and Lay Bomb
           Any of the following:
-              Missile ≥ 20 or Plasma Beam or Super Missile ≥ 4 or Shoot Beam Burst
-              Morph Ball and Power Bomb ≥ 2
+              # Deal with the Gunzoo on the left side
+              Lightning Armor or Defeat Gold Robots
+              All of the following:
+                  # Go high enough to trigger the Gunzoo, then go back down and wait so it moves higher, then go back up
+                  Movement (Intermediate)
+                  # Defeat the Gunzoo as it moves down the second time
+                  Missile ≥ 13 or Plasma Beam or Super Missile ≥ 2 or Shoot Beam Burst
   > Pickup (Power Bomb Tank)
       All of the following:
           # Traversing the tunnel
-          Lightning Armor and Lay Power Bomb
-          # Avoiding the crumble block
-          Phase Drift or Spider Ball or Melee Clip (Intermediate) or Movement (Beginner)
+          Power Bomb ≥ 2 and Lay Power Bomb
           Any of the following:
-              # Climbing the right side
+              Lightning Armor
+              Hazard Runs (Advanced) and Hazard Damage ≥ 190
+          # Avoiding the crumble block
+          Phase Drift or Spider Ball or Melee Clip (Intermediate) or Phase Drift Skip (Beginner)
+          Any of the following:
+              # Reaching the tunnels
+              Space Jump or Spider Ball
               Single-wall Wall Jump (Intermediate) and Wall Jump (Intermediate)
-              Spider Boost (Advanced) and Can Spider Boost
-              Infinite Bomb Jump (Intermediate) and Lay Bomb
-              All of the following:
-                  Space Jump
-                  Lightning Armor or Screw Attack
-          # Dealing with enemies
-          Missile ≥ 20 or Plasma Beam or Super Missile ≥ 4 or Shoot Beam Burst
+              Bomb and Infinite Bomb Jump (Intermediate)
+  > Energy Recharge Station
+      Any of the following:
+          Space Jump
+          # IBJ in Mid-Air because of the slope and to avoid the Gulluggs
+          Mid-Air Morph (Beginner) and Infinite Bomb Jump (Advanced) and Lay Bomb
+          All of the following:
+              Use Spider Ball
+              Any of the following:
+                  # Deal with the Gunzoo on the right side
+                  Lightning Armor or Power Bomb
+                  All of the following:
+                      # Go high enough to trigger the Gunzoo, then go back down and wait so it moves higher, then go back up
+                      Movement (Intermediate)
+                      # Defeat the Gunzoo as it moves down the second time
+                      Missile ≥ 13 or Plasma Beam or Super Missile ≥ 2 or Shoot Beam Burst
   > Save Station
       Trivial
-  > Lower Platforms
-      All of the following:
-          Climb Rooms Vertically (No High Jump)
-          Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Movement (Intermediate) or Defeat Gold Robots
 
 ----------------
 Nest Network
@@ -426,12 +439,18 @@ Extra - asset_id: collision_camera_010
   * Pickup 160; Category? Minor
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_missiletank
+  > Door to Entrance Teleporter
+      Any of the following:
+          # Drop through left pit
+          Lightning Armor
+          Hazard Runs (Beginner) and Hazard Damage ≥ 70
   > Door to Nest Nodule (Bottom)
       Trivial
   > Above Grapple Block
       Any of the following:
           Lightning Armor
           Spider Boost (Beginner) and Can Spider Boost
+          Hazard Runs (Intermediate) and Hazard Damage ≥ 110
 
 > Pickup (Missile Tank Baby Locked); Heals? False
   * Layers: default
@@ -447,7 +466,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
   > Door to Nest Nodule (Bottom)
-      Lightning Armor or Movement (Intermediate) or Normal Damage ≥ 199 or Defeat Non-Counterable Enemies
+      Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
 
 > Door to Nest Nodule (Bottom); Heals? False
   * Layers: default
@@ -455,7 +474,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
   > Door to Entrance Teleporter
-      Lightning Armor or Movement (Intermediate) or Normal Damage ≥ 199 or Defeat Non-Counterable Enemies
+      Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
 
 > Door to Nest Nodule (Top); Heals? False
   * Layers: default
@@ -467,9 +486,8 @@ Extra - asset_id: collision_camera_010
   > Dock to Nest Nodule
       Screw Attack
   > Above Screw Attack Blocks
-      All of the following:
-          Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
-          Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+      # Deal with the enemies
+      Dodge Enemies (Intermediate) or Defeat Swarms
 
 > Door to Amphitheater; Heals? False
   * Layers: default
@@ -481,15 +499,16 @@ Extra - asset_id: collision_camera_010
           Defeat Non-Counterable Enemies
           Any of the following:
               Baby Metroid
+              # Clip through the Baby blocks
               Morph Ball and Melee Clip (Beginner)
   > Above Screw Attack Blocks
-      Screw Attack
+      Trivial
 
 > Dock to Nest Nodule; Heals? False
   * Layers: default
   * Open Passage to Nest Nodule/Dock to Nest Network
   > Door to Nest Nodule (Bottom)
-      Trivial
+      Screw Attack
 
 > Tunnel to Entrance Teleporter; Heals? False
   * Layers: default
@@ -509,8 +528,12 @@ Extra - asset_id: collision_camera_010
       Any of the following:
           Lightning Armor
           Spider Boost (Beginner) and Can Spider Boost
+          Hazard Runs (Intermediate) and Hazard Damage ≥ 110
   > Door to Entrance Teleporter
-      Lightning Armor
+      Any of the following:
+          # Drop through left pit
+          Lightning Armor
+          Hazard Runs (Beginner) and Hazard Damage ≥ 50
   > Tunnel to Entrance Teleporter
       Morph Ball and After Area 8 - Nest Network Grapple Block
   > Event - Grapple Block
@@ -518,28 +541,34 @@ Extra - asset_id: collision_camera_010
   > Above Screw Attack Blocks
       All of the following:
           Screw Attack
-          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          High Jump Boots or Space Jump or Super Jump (Intermediate) or Wall Jump (Beginner)
 
 > Above Screw Attack Blocks; Heals? False
   * Layers: default
   > Door to Nest Nodule (Top)
-      All of the following:
-          Lightning Armor or Movement (Beginner) or Normal Damage ≥ 100
-          Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+      # Deal with the enemies
+      Dodge Enemies (Intermediate) or Defeat Swarms
   > Door to Amphitheater
-      Any of the following:
-          Space Jump or Single-wall Wall Jump (Intermediate) or Use Spider Ball
-          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-          High Jump Boots and Wall Jump (Beginner)
-          All of the following:
-              Lay Bomb
-              Any of the following:
-                  Diagonal Bomb Jump (Intermediate)
-                  All of the following:
-                      Infinite Bomb Jump (Beginner)
-                      Gravity Suit or Spring Ball or Mid-Air Morph (Beginner)
+      All of the following:
+          # Deal with the Gulluggs
+          Lightning Armor or Combat (Intermediate) or Defeat Gold Robots
+          Any of the following:
+              # Climb the room
+              Space Jump or Single-wall Wall Jump (Advanced) or Use Spider Ball
+              High Jump Boots and Wall Jump (Beginner)
+              All of the following:
+                  # Bomb Jump from the water
+                  Lay Bomb
+                  Any of the following:
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Gravity Suit or Mid-Air Morph (Beginner)
+                      Spring Ball and Infinite Bomb Jump (Intermediate)
   > Above Grapple Block
-      Screw Attack
+      Any of the following:
+          Screw Attack
+          # Freeze the left Gullugg next the wall and Melee Clip left https://youtu.be/j76i95WqpZ4
+          Lightning Armor and Charge Beam and Morph Ball and Melee Clip (Advanced)
 
 ----------------
 Entrance Teleporter
@@ -555,9 +584,25 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Morph Ball
           Any of the following:
-              Defeat Non-Counterable Enemies
-              Lightning Armor and Movement (Intermediate)
-          Baby Metroid or Spider Ball or Movement (Beginner)
+              # Exit the tunnel
+              All of the following:
+                  # Baby blocks are broken
+                  Baby Metroid
+                  Any of the following:
+                      # Deal with the Autrack
+                      Lightning Armor or Defeat Non-Counterable Enemies
+                      Phase Drift and Dodge Enemies (Beginner)
+                  # Reach the door
+                  Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          All of the following:
+              # No Baby
+              Any of the following:
+                  # Deal with the red plants
+                  Lightning Armor or Spider Ball
+                  # Unmorph from tunnel and ledge grab the lower ledge
+                  Movement (Beginner)
+              # Deal with the Autrack
+              Lightning Armor or Phase Drift or Dodge Enemies (Intermediate)
 
 > Teleporter; Heals? False; Default Node
   * Layers: default
@@ -576,34 +621,37 @@ Extra - asset_id: collision_camera_011
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
+          # Break the Missile Blocks
           Missile ≥ 2 or Super Missile ≥ 2
-          Lightning Armor or Baby Metroid or Combat (Intermediate)
+          Any of the following:
+              # Reach the Missile blocks
+              Lightning Armor or Baby Metroid
+              # Ledge grabs and shooting the blocks in mid-air between ledge grabs
+              Movement (Intermediate)
   > Teleporter
       Trivial
-  > Door to Nest Network
-      All of the following:
-          Screw Attack
-          Any of the following:
-              High Jump Boots or Space Jump or Super Jump (Intermediate)
-              Infinite Bomb Jump (Intermediate) and Lay Bomb
-              Charge Beam and Ice Beam and Stand on Frozen Enemy (Beginner)
-  > Event - Teleporter Unlocked
+  > Event - Teleporter Unlocked From Below
       Trivial
+  > Above Screw Attack Blocks
+      Any of the following:
+          Screw Attack
+          # Clip with the Screw Attack blocks https://youtu.be/6MG6hxNBhJo
+          Spider Ball Clip (Advanced) and Use Spider Ball
 
 > Door to Nest Network; Heals? False
   * Layers: default
   * Power Beam Door to Nest Network/Door to Entrance Teleporter
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerpower
-  > Door to Nest Vestibule
-      Screw Attack
   > Tunnel to Nest Network
       All of the following:
           Morph Ball and After Area 8 - Nest Network Grapple Block
+          # Reach the tunnel
           Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-          Any of the following:
-              Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
-              Lightning Armor and Movement (Intermediate)
+          # Deal with the Gulluggs
+          Lightning Armor or Ice Beam or Super Missile ≥ 4 or Combat (Intermediate) or Defeat Gold Robots
+  > Above Screw Attack Blocks
+      Trivial
 
 > Tunnel to Nest Network; Heals? False
   * Layers: default
@@ -611,14 +659,55 @@ Extra - asset_id: collision_camera_011
   > Door to Nest Network
       All of the following:
           Morph Ball
-          Any of the following:
-              Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
-              Lightning Armor and Movement (Intermediate)
+          Lightning Armor or Ice Beam or Super Missile ≥ 2 or Combat (Intermediate) or Defeat Gold Robots
 
-> Event - Teleporter Unlocked; Heals? False
+> Event - Teleporter Unlocked From Below; Heals? False
   * Layers: default
   * Event Area 8 - Teleporter Unlocked (Lower)
   > Door to Nest Vestibule
+      Trivial
+
+> Above Screw Attack Blocks; Heals? False
+  * Layers: default
+  > Door to Nest Vestibule
+      Any of the following:
+          Screw Attack
+          # Freeze the Gullugg next to the wall and Melee Clip right https://youtu.be/IyM56zKAbRs
+          Charge Beam and Ice Beam and Morph Ball and Melee Clip (Advanced)
+  > Door to Nest Network
+      All of the following:
+          Any of the following:
+              # Climb the room
+              High Jump Boots or Space Jump or Use Spider Ball
+              All of the following:
+                  Morph Ball and Unmorph Extend (Intermediate)
+                  Super Jump (Advanced) or Wall Jump (Beginner)
+              All of the following:
+                  # Manipulate the Gulluggs to freeze them
+                  Ice Beam
+                  Any of the following:
+                      # https://youtu.be/Nle0Tzr7-bA?t=13
+                      Stand on Frozen Enemy (Advanced)
+                      # https://youtu.be/Nle0Tzr7-bA
+                      Charge Beam and Stand on Frozen Enemy (Intermediate)
+              All of the following:
+                  Lay Bomb
+                  Any of the following:
+                      # Bomb Jump from the Water
+                      Infinite Bomb Jump (Intermediate)
+                      All of the following:
+                          Infinite Bomb Jump (Beginner)
+                          Gravity Suit or Spring Ball or Mid-Air Morph (Beginner)
+              Super Jump (Intermediate) and Wall Jump (Beginner)
+          # Deal with the Gulluggs
+          Lightning Armor or Dodge Enemies (Advanced) or Defeat Gold Robots
+  > Event - Teleporter Unlocked From Above
+      Trivial
+
+> Event - Teleporter Unlocked From Above; Heals? False
+  * Layers: default
+  * Event Area 8 - Teleporter Unlocked (Lower)
+  > Above Screw Attack Blocks
       Trivial
 
 ----------------
@@ -649,8 +738,12 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_type: doorpowerpower
   > Door to Nest Network (Top)
       All of the following:
-          Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
-          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          # Deal with the enemies
+          Lightning Armor or Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+          Any of the following:
+              # Reach the door
+              Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+              Morph Ball and Unmorph Extend (Beginner)
 
 > Door to Nest Network (Top); Heals? False
   * Layers: default
@@ -668,7 +761,8 @@ Extra - asset_id: collision_camera_012
                   Lightning Armor and Power Bomb
                   Phase Drift or Spider Ball
   > Door to Nest Network (Bottom)
-      Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
+      # Deal with the enemies
+      Lightning Armor or Ice Beam or Super Missile ≥ 2 or Defeat Gold Robots
 
 > Dock to Nest Network; Heals? False
   * Layers: default
@@ -942,7 +1036,11 @@ Extra - asset_id: collision_camera_018
   > Event - Larva Metroid Top
       All of the following:
           Defeat Larva Metroid
-          Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Any of the following:
+              # Reach the Larva
+              Climb Rooms Vertically (High Jump)
+              Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Intermediate)
+              High Jump Boots and Wall Jump (Beginner)
   > Event - Larva Metroid Middle
       Defeat Larva Metroid
   > Room Bottom
@@ -974,8 +1072,9 @@ Extra - asset_id: collision_camera_019
       Any of the following:
           Lightning Armor or High Jump Boots or Space Jump
           Spider Boost (Intermediate) and Can Spider Boost
-          Diagonal Bomb Jump (Intermediate) and Lay Bomb
-          Morph Ball and Unmorph Extend (Intermediate)
+          Diagonal Bomb Jump (Beginner) and Lay Bomb
+          Morph Ball and Unmorph Extend (Advanced)
+          Hazard Runs (Beginner) and Hazard Damage ≥ 60
   > Dock to Queen Arena
       Trivial
 
@@ -988,6 +1087,8 @@ Extra - asset_id: collision_camera_019
       Any of the following:
           Lightning Armor or High Jump Boots or Space Jump or Use Spider Ball
           Diagonal Bomb Jump (Beginner) and Lay Bomb
+          Hazard Runs (Beginner) and Normal Damage ≥ 60
+          Morph Ball and Unmorph Extend (Advanced)
 
 > Dock to Queen Arena; Heals? False
   * Layers: default
@@ -1015,7 +1116,15 @@ Extra - asset_id: collision_camera_021
           Screw Attack
           Any of the following:
               Space Jump
-              Spider Boost (Advanced) and Wall Jump (Intermediate) and Can Spider Boost
+              All of the following:
+                  Wall Jump (Advanced)
+                  Any of the following:
+                      # Wall Jump to break the blocks https://youtu.be/z2FJy23SN_4
+                      Use Spider Ball
+                      # Avoid the Autracks https://youtu.be/z2FJy23SN_4?t=81
+                      Dodge Enemies (Intermediate) and Infinite Bomb Jump (Advanced) and Lay Bomb
+                      # Stagger freeze the first pair of Gullugs to climb up https://youtu.be/z2FJy23SN_4?t=174
+                      Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced) and Single-wall Wall Jump (Advanced)
 
 > Save Station; Heals? False
   * Layers: default
@@ -1027,10 +1136,8 @@ Extra - asset_id: collision_camera_021
           Screw Attack
           All of the following:
               Morph Ball
-              Any of the following:
-                  Movement (Advanced)
-                  Normal Damage ≥ 199 and Defeat Non-Counterable Enemies
-                  Lightning Armor and Movement (Intermediate)
+              # Deal with the enemies
+              Lightning Armor or Combat (Advanced) or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
   > Door to Nest Vestibule
       Trivial
 
@@ -1053,9 +1160,7 @@ Extra - asset_id: collision_camera_020
   > Before Queen
       After Area 8 - Larva Metroid 1 and After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 2 and After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4 and After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6 and After Area 8 - Larva Metroid 7 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
   > Dock to Hatchling Room
-      Any of the following:
-          After Area 8 - Queen Metroid
-          Before Area 8 - Queen Metroid and Enabled Remove Queen Wall
+      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
 
 > Tunnel to Queen Arena Access; Heals? False
   * Layers: default
@@ -1105,7 +1210,12 @@ Extra - asset_id: collision_camera_020
   * Layers: default
   * Open Passage to Hatchling Room/Dock to Queen Arena
   > Tunnel to Queen Arena Access
-      Screw Attack and Space Jump
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump and Lay Any Bomb
+              # IBJ and unmorph respin to break the blocks then IBJ again https://youtu.be/gL8hrjKpF4k
+              Infinite Bomb Jump (Advanced) and Lay Bomb
 
 ----------------
 Hatchling Room
@@ -1160,7 +1270,8 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerpower
   > Below Pickup
-      Ice Beam or Super Missile ≥ 2 or Movement (Beginner) or Defeat Gold Robots
+      # Deal with the Electric Gulluggs
+      Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
 
 > Door to Entrance Teleporter; Heals? False
   * Layers: default
@@ -1169,25 +1280,30 @@ Extra - asset_id: collision_camera_023
   * Extra - actor_type: doorpowerpower
   > Below Pickup
       Any of the following:
+          # Deal with the Black Autrack and Gunzoos
           Defeat Non-Counterable Enemies
-          All of the following:
-              Space Jump and Movement (Beginner)
-              Lightning Armor or Screw Attack
+          Screw Attack and Space Jump
+          # Jump over the Autrack
+          Lightning Armor and Dodge Enemies (Intermediate)
 
 > Below Pickup; Heals? False
   * Layers: default
   > Pickup (Energy Tank)
       All of the following:
+          # Enter the tunnel
           Morph Ball and Screw Attack and Space Jump
-          Phase Drift or Spider Ball or Movement (Beginner)
+          # Cross the Crumble block
+          Phase Drift or Spider Ball or Phase Drift Skip (Beginner)
   > Door to Transport to Area 7
-      Ice Beam or Super Missile ≥ 2 or Movement (Beginner) or Defeat Gold Robots
+      # Deal with the Electric Gulluggs
+      Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
   > Door to Entrance Teleporter
       Any of the following:
-          Defeat Non-Counterable Enemies
+          # Deal with the Black Autrack
+          Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
           All of the following:
-              Space Jump and Movement (Beginner)
-              Lightning Armor or Screw Attack
+              Space Jump
+              Lightning Armor or Screw Attack or Dodge Enemies (Intermediate)
 
 ----------------
 Metroid Nest Teleporter
