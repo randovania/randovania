@@ -32,9 +32,9 @@ def read_dict(path: Path) -> dict:
     return result
 
 
-def write_path(path: Path, data: Any) -> None:
+def write_path(path: Path, data: Any, *, compress: bool = False) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=4, separators=(",", ": ")))
+    path.write_text(json.dumps(data, indent=1 if compress else 4, separators=(",", ": ")))
 
 
 async def read_path_async(path: Path, *, raise_on_duplicate_keys: bool = False) -> dict | list:

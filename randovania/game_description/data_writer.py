@@ -449,12 +449,6 @@ def write_as_split_files(data: dict, base_path: Path) -> None:
     for region in regions:
         name = REGION_NAME_TO_FILE_NAME_RE.sub(r"", region["name"])
         data["regions"].append(f"{name}.json")
-        json_lib.write_path(
-            base_path.joinpath(f"{name}.json"),
-            region,
-        )
+        json_lib.write_path(base_path.joinpath(f"{name}.json"), region, compress=True)
 
-    json_lib.write_path(
-        base_path.joinpath("header.json"),
-        data,
-    )
+    json_lib.write_path(base_path.joinpath("header.json"), data, compress=True)
