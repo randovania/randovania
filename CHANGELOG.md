@@ -36,6 +36,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Plasma Chamber: It is now logical to escape the room through the left tunnel if the Softlock Prevention option is enabled.
 
+### Cave Story
+
+#### Logic Database
+
+##### Ruined Egg Corridor
+
+- Added: Health requirements to the Sisters.
+- Fixed: Breaking the blocks in `Cthulhu's Abode?` now properly accounts for Super Missile Launcher
+
 ### Metroid Dread
 
 - Fixed: DNA placement respects vanilla item placement settings to not assign two items to one location
