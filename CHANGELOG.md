@@ -70,7 +70,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Artaria
 
 - Added: Video: Ballsparking into Speed Hallway from the right, charging speed from Energy Recharge Station South.
-- Changed: Doors into Charge Beam Access are excluded from being randomized into Grapple Beam Doors, in order to fascilitate Ballsparking into Speed Hallway.
 
 ##### Burenia
 
