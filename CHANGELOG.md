@@ -52,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Phendrana Drifts
 
-- Added: Ruined Courtyard: Scan/X-Ray Beginner dash to Specimen Storage
+- Added: Ruined Courtyard: Scan/X-Ray Beginner dash to and from Specimen Storage
 
 ##### Tallon Overworld
 
