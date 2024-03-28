@@ -5,6 +5,7 @@ import math
 from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
+from randovania.game_description import default_database
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
@@ -72,6 +73,41 @@ def generic_credits(
         pickup_name_format.format(pickup.name): "\n".join(major_pickups_spoiler[pickup]) or "Nowhere"
         for pickup in sorted(major_pickups_spoiler.keys(), key=sort_pickup)
     }
+
+
+def credits_elements(
+    standard_pickup_configuration: StandardPickupConfiguration,
+    all_patches: dict[int, GamePatches],
+    players_config: PlayersConfiguration,
+) -> dict[str, list]:
+    results = {}
+
+    major_pickup_name_order = {
+        pickup.name: index for index, pickup in enumerate(standard_pickup_configuration.pickups_state.keys())
+    }
+
+    def sort_pickup(p: str) -> (float, str):
+        return major_pickup_name_order.get(p, math.inf), p
+
+    details = get_locations_for_major_pickups_and_keys(all_patches, players_config)
+
+    for pickup, entries in details.items():
+        locations = []
+        for entry in entries:
+            region_list = default_database.game_description_for(entry.location.game).region_list
+            locations.append(
+                {
+                    "World": entry.player_name,
+                    "Region": region_list.region_name_from_node(
+                        region_list.node_from_pickup_index(entry.location.location), True
+                    ),
+                    "Area": region_list.nodes_to_area(region_list.node_from_pickup_index(entry.location.location)).name,
+                }
+            )
+        if len(locations) > 0:
+            results[pickup.name] = locations
+
+    return {pickup: results[pickup] for pickup in sorted(results.keys(), key=sort_pickup)}
 
 
 def prime_trilogy_credits(
