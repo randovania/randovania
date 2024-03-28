@@ -3714,7 +3714,7 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Fully freeze with Charge Beam or fire Missiles/Supers while briefly frozen",
                                     "items": [
                                         {
                                             "type": "and",
@@ -3809,6 +3809,27 @@
                                                         }
                                                     }
                                                 ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Removing the Larva if grabbed or dodge it",
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Lay Bomb"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Dodge",
+                                                "amount": 2,
+                                                "negate": false
                                             }
                                         }
                                     ]

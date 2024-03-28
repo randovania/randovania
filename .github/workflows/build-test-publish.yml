@@ -551,7 +551,7 @@ jobs:
           known_hosts: ${{ secrets.SERVER_KNOWN_HOSTS }}
 
       - name: start deployment
-        uses: bobheadxi/deployments@v1.4.0
+        uses: bobheadxi/deployments@v1.5.0
         id: deployment
         if: ${{ !startsWith(github.ref, 'refs/heads/stable') }}
         with:
@@ -564,7 +564,7 @@ jobs:
         run: python tools/deploy_server.py
 
       - name: update deployment status
-        uses: bobheadxi/deployments@v1.4.0
+        uses: bobheadxi/deployments@v1.5.0
         if: always() && !startsWith(github.ref, 'refs/heads/stable')
         with:
           step: finish
