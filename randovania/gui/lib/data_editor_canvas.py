@@ -227,9 +227,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return self.visible_nodes is None or node in self.visible_nodes
 
     def is_connection_visible(self, requirement: Requirement) -> bool:
-        return self.state is None or requirement.satisfied(
-            self.state.resources, self.state.energy, self.state.resource_database
-        )
+        return self.state is None or requirement.satisfied(self.state.node_context(), self.state.energy)
 
     def _update_scale_variables(self):
         self.border_x = self.rect().width() * 0.05
