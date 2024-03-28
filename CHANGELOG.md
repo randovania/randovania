@@ -5,12 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.5.0] - 2024-04-??
+## [7.6.0] - 2024-05-??
+
+- Nothing yet! Add changes here.
+
+## [7.5.1] - 2024-04-??
+
+- Nothing yet. Space reserved in case needed.
+
+## [7.5.0] - 2024-04-01
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
 - Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
 
 ### AM2R
+
+- Fixed: Hitting Zetas with Charge Beam works again.
 
 #### Logic Database
 
@@ -37,6 +47,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Plasma Chamber: It is now logical to escape the room through the left tunnel if the Softlock Prevention option is enabled.
 
 ### Cave Story
+
+- Fixed: Cave Story exports with CS:Tweaked now prioritize the mod-specific files over Freeware's. This solves several issues with missing graphics when exporting over a Freeeware game.
+- Fixed: Missing graphical assets for rando-exclusive inventory entries in Cave Story: Tweaked exports
 
 #### Logic Database
 
@@ -107,6 +120,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Torvus Bog
 
 - Added: The reverse air underwater in Training Chamber now has a method with and without Space Jump (Advanced and Expert respectively). This can be used to get to the bomb slot as well as the door to Fortress Transport Access.
+
+## [7.4.2] - 2024-03-13
+
+This release is identical to 7.4.0 and was released to revert 7.4.1.
 
 ## [7.4.1] - 2024-03-13
 
