@@ -67,10 +67,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New trick, Cross Bomb Launch.
 - Changed: The Shinesink Clip and Aim Down Clip tricks are now a single Floor Clip trick.
 
+##### Artaria
+
+- Added: Video: Ballsparking into Speed Hallway from the right, charging speed from Energy Recharge Station South.
+
 ##### Burenia
 
-- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Intermediate).
+- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch; Intermediate with Spin Boost, Advanced without.
 - Added: Reaching the Missile Tank Pickup in Main Hub Tower Top using Cross Bomb Launch (Advanced).
+- Added: Video: Morph Ball Movement Jump in Main Hub Tower Middle.
 
 ##### Cataris
 
@@ -88,12 +93,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Changed: Getting across the water in EMMI Zone Exit East with Cross Bombs now additionally requires Cross Bomb Launch (Advanced).
+- Changed: Path to Escue: Getting from Door to Save Station Southeast to Dock to EMMI Zone Exit East is now trivial.
 
 ##### Ghavoran
 
 - Added: Cross Bomb Launch (Advanced) to get to the Save Station Door in Golzuna Tower from the Missile Tank Pickup.
 - Added: Cross Bomb Launch (Beginner) to get the Missile Tank Pickup in Golzuna Tower.
 - Added: Video showing the Climb Sloped Tunnels trick to get from the Missile Tank Pickup to the Save Station Door in Golzuna Tower.
+- Added: Wall Jump using Spin Boost in Left Entrance.
 - Added: Water Space Jump (Intermediate) in Energy Recharge Station, getting up through the Screw Attack Blocks.
 - Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
 - Changed: The Floor Clip into Golzuna Arena has been reduced from Expert to Intermediate.
