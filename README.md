@@ -122,7 +122,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [KirbymastaH](https://www.twitch.tv/kirbymastah)
   * [Dyceron](https://www.twitch.tv/dyceron)
   * [XenoWars](https://www.twitch.tv/xenowars1)
-  * [Mayberry](https://github.com/Isachu)
+  * [Mayberry](https://github.com/MayberryZoom)
   * [Hugoshido](https://twitch.tv/hugoshido)
   * [Tyranisaur](https://github.com/Tyranisaur)
 
