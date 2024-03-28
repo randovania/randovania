@@ -5,12 +5,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.area_identifier import AreaIdentifier
-from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.dock_node import DockNode
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources import search
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.generator.teleporter_distributor import get_teleporter_connections_echoes
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
@@ -21,7 +16,6 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
     from random import Random
 
-    from randovania.game_description.assignment import NodeConfigurationAssociation
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
@@ -118,16 +112,7 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
 
         yield from dock_assignment
 
-    def configurable_node_assignment(
-        self, configuration: EchoesConfiguration, game: GameDescription, rng: Random
-    ) -> Iterable[NodeConfigurationAssociation]:
-        """
-        :param configuration:
-        :param game:
-        :param rng:
-        :return:
-        """
-
+    def create_game_specific(self, configuration: EchoesConfiguration, game: GameDescription, rng: Random) -> dict:
         all_choices = list(LayoutTranslatorRequirement)
         all_choices.remove(LayoutTranslatorRequirement.RANDOM)
         all_choices.remove(LayoutTranslatorRequirement.RANDOM_WITH_REMOVED)
@@ -135,38 +120,22 @@ class EchoesBasePatchesFactory(BasePatchesFactory):
         without_removed.remove(LayoutTranslatorRequirement.REMOVED)
         random_requirements = {LayoutTranslatorRequirement.RANDOM, LayoutTranslatorRequirement.RANDOM_WITH_REMOVED}
 
-        result = []
+        translator_gates = {}
 
-        scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
-        scan_visor_req = ResourceRequirement.simple(scan_visor)
-
-        for node in game.region_list.iterate_nodes():
-            if not isinstance(node, ConfigurableNode):
-                continue
-
-            identifier = game.region_list.identifier_for_node(node)
-            requirement = configuration.translator_configuration.translator_requirement[identifier]
+        for identifier, requirement in configuration.translator_configuration.translator_requirement.items():
             if requirement in random_requirements:
                 if rng is None:
                     raise MissingRng("Translator")
+
                 requirement = rng.choice(
                     all_choices if requirement == LayoutTranslatorRequirement.RANDOM_WITH_REMOVED else without_removed
                 )
 
-            translator = game.resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_name)
-            result.append(
-                (
-                    identifier,
-                    RequirementAnd(
-                        [
-                            scan_visor_req,
-                            ResourceRequirement.simple(translator),
-                        ]
-                    ),
-                )
-            )
+            translator_gates[identifier.as_string] = requirement.value
 
-        return result
+        return {
+            "translator_gates": translator_gates,
+        }
 
     def assign_save_door_weaknesses(
         self, patches: GamePatches, configuration: EchoesConfiguration, game: GameDescription

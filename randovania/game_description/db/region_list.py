@@ -41,6 +41,7 @@ class RegionList(NodeProvider):
     _patches_dock_open_requirements: list[Requirement] | None
     _patches_dock_lock_requirements: list[Requirement | None] | None
     _teleporter_network_cache: dict[str, list[TeleporterNetworkNode]]
+    configurable_nodes: dict[NodeIdentifier, Requirement]
 
     def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
@@ -52,6 +53,7 @@ class RegionList(NodeProvider):
         self._patched_node_connections = None
         self._patches_dock_open_requirements = None
         self._patches_dock_lock_requirements = None
+        self.configurable_nodes = {}
         self.invalidate_node_cache()
 
     def _refresh_node_cache(self) -> _NodesTuple:
@@ -299,6 +301,9 @@ class RegionList(NodeProvider):
             ]
             self._teleporter_network_cache[network_name] = network
         return network
+
+    def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
+        return self.configurable_nodes[identifier]
 
 
 def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:

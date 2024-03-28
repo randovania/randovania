@@ -5,8 +5,9 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.games.prime2.exporter import patch_data_factory
+from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import gate_data
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
 from randovania.lib.container_lib import iterate_key_sorted
@@ -41,18 +42,18 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         patches = all_patches[players.player_index]
 
         gate_index_to_name, identifier_to_gate = gate_data()
-
         resource_db = game.resource_database
-        items_by_id = {item.extra["item_id"]: item.long_name for item in resource_db.item if "item_id" in item.extra}
 
         per_region: dict[str, dict[str, str]] = collections.defaultdict(dict)
 
-        for source_loc, requirement in patches.configurable_nodes.items():
+        for source_loc, requirement in patches.game_specific["translator_gates"].items():
+            source_loc = NodeIdentifier.from_string(source_loc)
+            requirement = LayoutTranslatorRequirement(requirement)
+
             source_region = region_list.region_by_area_location(source_loc.area_identifier)
             source_name = gate_index_to_name[identifier_to_gate[source_loc]]
 
-            index = patch_data_factory.translator_index_for_requirement(requirement)
-            per_region[source_region.name][source_name] = items_by_id[index]
+            per_region[source_region.name][source_name] = resource_db.get_item(requirement.item_name).long_name
 
         for region_name, region_contents in iterate_key_sorted(per_region):
             region_item = QtWidgets.QTreeWidgetItem(self.tree_widget)

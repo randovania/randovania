@@ -26,6 +26,7 @@ def test_init(tmpdir):
         test_db.create_tables(database.all_classes)
 
 
+@pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize("has_description", [False, True])
 def test_multiplayer_session_create_session_entry(clean_database, has_description, test_files_dir, default_game_list):
     # Setup
@@ -50,9 +51,9 @@ def test_multiplayer_session_create_session_entry(clean_database, has_descriptio
         s.layout_description = description
         s.save()
         game_details = GameDetails(
-            seed_hash="55SQZAV4",
+            seed_hash="XXXXXXXX",
             spoiler=True,
-            word_hash="Screw Poison Eyon",
+            word_hash="Some Words",
         )
         worlds.append(MultiplayerWorld(id=w1.uuid, name="Prime 1", preset_raw=w1.preset))
         worlds.append(MultiplayerWorld(id=w2.uuid, name="Prime 2", preset_raw=w2.preset))
