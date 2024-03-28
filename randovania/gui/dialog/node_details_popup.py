@@ -142,7 +142,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for region in sorted(game.region_list.regions, key=lambda x: x.name):
             self.dock_connection_region_combo.addItem(region.name, userData=region)
             self.teleporter_destination_region_combo.addItem(region.name, userData=region)
-        refresh_if_needed(self.teleporter_destination_region_combo, self.on_dock_connection_region_combo)
+        refresh_if_needed(self.dock_connection_region_combo, self.on_dock_connection_region_combo)
         refresh_if_needed(self.teleporter_destination_region_combo, self.on_teleporter_destination_region_combo)
 
         for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
@@ -409,7 +409,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.set_teleporter_network_activated_by(requirement)
 
     async def _open_connections_editor(self, requirement: Requirement) -> Requirement | None:
-        self._edit_popup = ConnectionsEditor(self, self.game.resource_database, requirement)
+        self._edit_popup = ConnectionsEditor(self, self.game.resource_database, self.game.region_list, requirement)
         self._edit_popup.setModal(True)
         try:
             result = await async_dialog.execute_dialog(self._edit_popup)

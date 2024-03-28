@@ -119,6 +119,7 @@ ConstructResourceRequirement = Struct(
 requirement_type_map = {
     "resource": ConstructResourceRequirement,
     "template": String,
+    "node": ConstructNodeIdentifier,
 }
 
 ConstructRequirement = Struct(

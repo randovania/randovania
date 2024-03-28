@@ -293,7 +293,7 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
 
     def edit_template(self, name: str) -> None:
         template = self.db.requirement_template[name]
-        editor = ConnectionsEditor(self, self.db, template.requirement)
+        editor = ConnectionsEditor(self, self.db, self.region_list, template.requirement)
         result = editor.exec_()
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             final_req = editor.final_requirement

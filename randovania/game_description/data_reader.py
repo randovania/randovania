@@ -27,6 +27,7 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_description import GameDescription, IndexWithReason, MinimalLogicData
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -145,6 +146,10 @@ def read_requirement_template(data: dict, resource_database: ResourceDatabase) -
     return RequirementTemplate(data["data"])
 
 
+def read_node_requirement(data: dict, resource_database: ResourceDatabase) -> NodeRequirement:
+    return NodeRequirement(NodeIdentifier.from_json(data["data"]))
+
+
 def read_requirement(data: dict, resource_database: ResourceDatabase) -> Requirement:
     req_type = data["type"]
     if req_type == "resource":
@@ -158,6 +163,9 @@ def read_requirement(data: dict, resource_database: ResourceDatabase) -> Require
 
     elif req_type == "template":
         return read_requirement_template(data, resource_database)
+
+    elif req_type == "node":
+        return read_node_requirement(data, resource_database)
 
     else:
         raise ValueError(f"Unknown requirement type: {req_type}")
