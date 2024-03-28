@@ -22,6 +22,8 @@ Extra - room_id: [0, 63]
 
 > Ship; Heals? True; Spawn Point
   * Layers: default
+  * Extra - X: 25
+  * Extra - Y: 10
   > Door to Docking Bay Access
       Trivial
   > Event - L0
@@ -1249,33 +1251,33 @@ Extra - room_id: [49, 59]
   * Layers: default
   * Open Hatch to Silo Entry/Door to Central Reactor Core
   * Extra - door_idx: (112, 134)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       Trivial
 
 > Door to Scaffolding Access; Heals? False
   * Layers: default
   * Open Hatch to Scaffolding Access/Door to Central Reactor Core
   * Extra - door_idx: (113, 136)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       Trivial
 
-> Door to Reactor Checkpoint; Heals? False
+> Door to Silo Checkpoint; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Checkpoint/Door to Central Reactor Core
+  * Open Hatch to Silo Checkpoint/Door to Central Reactor Core
   * Extra - door_idx: (124, 137)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       Trivial
 
 > Other to Silo Tunnel; Heals? False
   * Layers: default
   * Tunnel to Silo Tunnel/Other to Central Reactor Core
   * Extra - door_idx: (125, 135)
-  > Door to Reactor Save Room
+  > Door to Silo Save Room
       After Boss Nettori Defeated or Can Use Any Bombs
 
-> Door to Reactor Save Room; Heals? False
+> Door to Silo Save Room; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Save Room/Door to Central Reactor Core
+  * Open Hatch to Silo Save Room/Door to Central Reactor Core
   * Extra - door_idx: (130, 138)
   > Door to Silo Entry
       Any of the following:
@@ -1286,7 +1288,7 @@ Extra - room_id: [49, 59]
               Wave Beam or Wide Beam
   > Door to Scaffolding Access
       Wall Jump (Beginner) or Can Climb High Jump Wall
-  > Door to Reactor Checkpoint
+  > Door to Silo Checkpoint
       Trivial
   > Other to Silo Tunnel
       Space Jump
@@ -1387,19 +1389,19 @@ Extra - room_id: [51]
               Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 ----------------
-Reactor Checkpoint
+Silo Checkpoint
 Extra - map_name: Main Deck52
 Extra - room_id: [52]
 > Door to Auxiliary Navigation Room; Heals? False
   * Layers: default
-  * Open Hatch to Auxiliary Navigation Room/Door to Reactor Checkpoint
+  * Open Hatch to Auxiliary Navigation Room/Door to Silo Checkpoint
   * Extra - door_idx: (118,)
   > Door to Central Reactor Core
       Trivial
 
 > Door to Central Reactor Core; Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core/Door to Reactor Checkpoint
+  * Open Hatch to Central Reactor Core/Door to Silo Checkpoint
   * Extra - door_idx: (119,)
   > Door to Auxiliary Navigation Room
       Wave Beam
@@ -1460,12 +1462,12 @@ Extra - room_id: [56]
   * Layers: default
   * Open Hatch to Auxiliary Power Station/Door to Auxiliary Navigation Room
   * Extra - door_idx: (128,)
-  > Door to Reactor Checkpoint
+  > Door to Silo Checkpoint
       Trivial
 
-> Door to Reactor Checkpoint; Heals? False
+> Door to Silo Checkpoint; Heals? False
   * Layers: default
-  * Open Hatch to Reactor Checkpoint/Door to Auxiliary Navigation Room
+  * Open Hatch to Silo Checkpoint/Door to Auxiliary Navigation Room
   * Extra - door_idx: (129,)
   > Door to Auxiliary Power Station
       Trivial
@@ -1478,7 +1480,7 @@ Extra - room_id: [56]
   * Extra - hint_name: AuxiliaryPower
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: DETAILED
-  > Door to Reactor Checkpoint
+  > Door to Silo Checkpoint
       Trivial
 
 ----------------
@@ -1508,12 +1510,12 @@ Extra - room_id: [57]
       Can Use Bombs or Can Use Springball
 
 ----------------
-Reactor Save Room
+Silo Save Room
 Extra - map_name: Main Deck58
 Extra - room_id: [58]
 > Door to Central Reactor Core; Heals? False
   * Layers: default
-  * Open Hatch to Central Reactor Core/Door to Reactor Save Room
+  * Open Hatch to Central Reactor Core/Door to Silo Save Room
   * Extra - door_idx: (133,)
   > Save Station
       Trivial

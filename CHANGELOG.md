@@ -5,16 +5,67 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.5.0] - 2024-04-??
+## [7.6.0] - 2024-05-??
+
+- Nothing yet! Add changes here.
+
+## [7.5.1] - 2024-04-??
+
+- Nothing yet. Space reserved in case needed.
+
+## [7.5.0] - 2024-04-01
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
 - Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
 
+### AM2R
+
+- Fixed: Hitting Zetas with Charge Beam works again.
+
+#### Logic Database
+
+##### Distribution Center
+
+- Added: Gravity Area Corridor: Getting the item is now logical via a Charge Bomb Spread. This requires Knowledge Beginner and Movement Intermediate.
+- Fixed: Gravity Chamber Access: Going from right to left is now logical with Gravity and Bombs.
+- Fixed: Gravity Chamber Access: Going from right to left is not logical anymore with walljumping.
+
+##### Hydro Station
+
+- Changed: Shinesparking from Breeding Grounds Alpha Nest West to Breeding Grounds Overgrown Alley now requires an intermediate Shinespark.
+
+##### Industrial Complex
+
+- Added: Industrial Complex Exterior: It is now possible to get from the right building to the left building. It's an Intermediate Morph Glide with High Jump, and an Advanced without.
+
+##### Main Caves
+
+- Fixed: Drill Excavation: Logic does not expect you to need bombs anymore to break the crystal if Cutscene Skips are enabled.
+
+##### The Tower
+
+- Fixed: Plasma Chamber: It is now logical to escape the room through the left tunnel if the Softlock Prevention option is enabled.
+
+### Cave Story
+
+- Fixed: Cave Story exports with CS:Tweaked now prioritize the mod-specific files over Freeware's. This solves several issues with missing graphics when exporting over a Freeeware game.
+- Fixed: Missing graphical assets for rando-exclusive inventory entries in Cave Story: Tweaked exports
+
+#### Logic Database
+
+##### Ruined Egg Corridor
+
+- Added: Health requirements to the Sisters.
+- Fixed: Breaking the blocks in `Cthulhu's Abode?` now properly accounts for Super Missile Launcher
+
 ### Metroid Dread
+
+- Fixed: DNA placement respects vanilla item placement settings to not assign two items to one location
 
 #### Logic Database
 
 - Added: New trick, Cross Bomb Launch.
+- Changed: The Shinesink Clip and Aim Down Clip tricks are now a single Floor Clip trick.
 
 ##### Burenia
 
@@ -43,7 +94,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cross Bomb Launch (Advanced) to get to the Save Station Door in Golzuna Tower from the Missile Tank Pickup.
 - Added: Cross Bomb Launch (Beginner) to get the Missile Tank Pickup in Golzuna Tower.
 - Added: Video showing the Climb Sloped Tunnels trick to get from the Missile Tank Pickup to the Save Station Door in Golzuna Tower.
+- Added: Water Space Jump (Intermediate) in Energy Recharge Station, getting up through the Screw Attack Blocks.
 - Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
+- Changed: The Floor Clip into Golzuna Arena has been reduced from Expert to Intermediate.
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
 
 ### Metroid Prime
@@ -67,6 +120,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Torvus Bog
 
 - Added: The reverse air underwater in Training Chamber now has a method with and without Space Jump (Advanced and Expert respectively). This can be used to get to the bomb slot as well as the door to Fortress Transport Access.
+
+## [7.4.2] - 2024-03-13
+
+This release is identical to 7.4.0 and was released to revert 7.4.1.
 
 ## [7.4.1] - 2024-03-13
 
