@@ -16,19 +16,25 @@ Extra - asset_id: collision_camera_000
           All of the following:
               Morph Ball
               Any of the following:
-                  # https://youtu.be/NzXfFnGwZkc
-                  Melee Clip (Intermediate)
+                  # Melee Clip: https://youtu.be/NzXfFnGwZkc
+                  Melee Clip (Intermediate) and Out of Bounds Movement (Intermediate)
                   All of the following:
                       Any of the following:
                           # Dealing with the crumbles
                           Spider Ball or Enabled Remove Area 1 Crumble Blocks
                           # https://youtu.be/eVkMBrWB0Wk
                           Phase Drift Skip (Advanced)
+                          All of the following:
+                              # Phase Drift
+                              Phase Drift
+                              Mid-Air Morph (Beginner) or Movement (Beginner) or Lay Bomb or Use Spring Ball
                       Any of the following:
                           # Reaching the elevator
                           Power Bomb or Screw Attack
-                          # Break the shot blocks by using Free Aim while crouching
-                          Shoot Any Missile
+                          All of the following:
+                              Shoot Any Missile
+                              # Break the shot blocks
+                              Precise Aiming (Beginner) or Lay Any Bomb
   > Save Station
       Trivial
   > Door to Moheek Mount
@@ -90,7 +96,11 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Elevator to Area 2 - Dam Entryway
-      Morph Ball or Screw Attack
+      Any of the following:
+          Screw Attack
+          All of the following:
+              Morph Ball
+              Precise Aiming (Beginner) or Lay Bomb
 
 ----------------
 Moheek Mount
@@ -252,11 +262,8 @@ Extra - asset_id: collision_camera_012
   > Door to Destroyed Armory
       Trivial
   > Door to Temple Exterior
-      Any of the following:
-          # SWJ: https://youtu.be/n_gpWjN5Px0
-          Ice Beam or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-          # Jump as late as possible from the ledge
-          High Jump Boots and Movement (Beginner)
+      # SWJ: https://youtu.be/n_gpWjN5Px0
+      Ice Beam or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
 
 > Dock to Ice Beam Chamber Access; Heals? False
   * Layers: default
@@ -286,9 +293,35 @@ Extra - asset_id: collision_camera_014
       All of the following:
           Morph Ball
           Any of the following:
-              Ice Beam or Space Jump or Simple IBJ
-              Spider Ball and Lay Any Bomb
-              High Jump Boots and Gravity Suit
+              Space Jump
+              All of the following:
+                  # Spider Ball up
+                  Spider Ball
+                  Any of the following:
+                      Lay Any Bomb
+                      All of the following:
+                          # Shoot Block before spidering up
+                          Precise Aiming (Beginner)
+                          Mid-Air Morph (Beginner) or Use Spring Ball
+              All of the following:
+                  # Gravity methods
+                  Gravity Suit
+                  Any of the following:
+                      Simple IBJ
+                      High Jump Boots and Super Jump (Intermediate)
+              All of the following:
+                  # IBJ methods
+                  Lay Bomb
+                  Any of the following:
+                      Infinite Bomb Jump (Intermediate)
+                      All of the following:
+                          # IBJ from mid air
+                          Infinite Bomb Jump (Beginner)
+                          Spring Ball or Mid-Air Morph (Beginner)
+              All of the following:
+                  # Freeze Chute-Leech
+                  Ice Beam
+                  Charge Beam or Stand on Frozen Enemy (Beginner)
   > Tunnel to Spider Ball Chamber
       Lay Any Bomb
 
@@ -317,7 +350,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: LE_PowerUp_SpiderBall
   * Extra - actor_type: powerup_spiderball
   > Room Bottom
-      Trivial
+      Morph Ball
 
 > Door to Temple Exterior; Heals? False
   * Layers: default
@@ -325,7 +358,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: Door017
   * Extra - actor_type: doorclosedpower
   > Pickup (Missile Tank)
-      # https://youtu.be/sneRCyFDt-Q
+      # https://youtu.be/sneRCyFDt-Q - TODO: revise once remote activation nodes are in
       Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
   > Room Bottom
       Morph Ball
@@ -350,8 +383,8 @@ Extra - asset_id: collision_camera_016
   > Door to Temple Exterior
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          # https://youtu.be/QmXq9hl-oB4?t=80
-          Morph Ball and Melee Clip (Advanced) and Single-wall Wall Jump (Advanced)
+          # Melee Clip OoB: https://youtu.be/QmXq9hl-oB4?t=80
+          Morph Ball and Melee Clip (Advanced) and Out of Bounds Movement (Advanced) and Single-wall Wall Jump (Advanced)
 
 ----------------
 Exterior Alpha Arena
@@ -445,8 +478,6 @@ Extra - asset_id: collision_camera_018
       Lay Any Bomb and Shoot Any Missile
   > Energy Recharge Station
       Trivial
-  > Above Wall
-      Morph Ball
 
 > Energy Recharge Station; Heals? True
   * Layers: default
@@ -454,6 +485,8 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: weightactivatedplatform
   > Ammo Recharge Station
       Trivial
+  > Above Wall
+      Morph Ball
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -461,20 +494,26 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation004
   > Pickup (Missile Tank Crevice)
-      Morph Ball and Climb Rooms Vertically (High Jump)
+      All of the following:
+          Morph Ball
+          # Get up
+          Super Jump (Intermediate) or Underwater Bomb Jump (Intermediate) or Climb Rooms Vertically (High Jump)
   > Door to Inner Temple East Hall
       Trivial
   > Door to Exterior Alpha Arena
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          # https://youtu.be/r8Pb-3bIPGc
+          # HJ + SuperJump + UE: https://youtu.be/r8Pb-3bIPGc
           High Jump Boots and Morph Ball and Super Jump (Expert) and Unmorph Extend (Advanced)
   > Door to Spider Ball Chamber
       Trivial
   > Tunnel to Spider Ball Chamber
       Morph Ball
   > Above Wall
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Climb Rooms Vertically (No High Jump, No IBJ)
+          # IBJ
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
 
 > Door to Inner Temple East Hall; Heals? False
   * Layers: default
@@ -493,6 +532,7 @@ Extra - asset_id: collision_camera_018
       Trivial
   > Tunnel to Exterior Alpha Arena
       All of the following:
+          # Clip OoB
           Morph Ball and Melee Clip (Beginner)
           Any of the following:
               Climb Rooms Vertically (No High Jump)
@@ -552,7 +592,7 @@ Extra - asset_id: collision_camera_018
 
 > Above Wall; Heals? False
   * Layers: default
-  > Ammo Recharge Station
+  > Energy Recharge Station
       Morph Ball and Climb Rooms Vertically (No High Jump)
   > Save Station
       Trivial
@@ -597,7 +637,11 @@ Extra - asset_id: collision_camera_023
   > Tunnel to Metroid Caverns Energy Recharge Station
       All of the following:
           Lay Any Bomb
-          Space Jump or Spider Ball or Movement (Beginner)
+          Any of the following:
+              # Get up
+              Climb Rooms Vertically (High Jump)
+              # Shoot block, jump from its hole
+              Movement (Beginner)
   > Dock to Metroid Caverns Alpha Arena South West Access
       Trivial
 
@@ -631,18 +675,20 @@ Extra - asset_id: collision_camera_024
   * Open Passage to Metroid Caverns Lobby/Dock to Metroid Caverns Alpha Arena South West Access
   > Left Pillar
       Any of the following:
-          Gravity Suit or Ice Beam or Space Jump or Super Jump (Intermediate) or Unmorph Extend (Intermediate)
+          Gravity Suit or Ice Beam or Space Jump or Super Jump (Intermediate)
           All of the following:
               Lay Bomb
               Any of the following:
                   Diagonal Bomb Jump (Intermediate)
                   All of the following:
-                      Infinite Bomb Jump (Intermediate)
-                      Spring Ball or Mid-Air Morph (Intermediate)
-          # Launch diagonally twice
+                      Infinite Bomb Jump (Beginner)
+                      Spring Ball or Mid-Air Morph (Beginner)
+          # Spider Boost: Launch diagonally twice
           Power Bomb ≥ 2 and Spider Boost (Intermediate) and Can Spider Boost
-          # https://youtu.be/o9YeN0y5DeA
+          # Damage Boost: https://youtu.be/o9YeN0y5DeA
           Damage Boost (Intermediate) and Normal Damage ≥ 50
+          # Umorph Extend
+          Morph Ball and Unmorph Extend (Intermediate)
 
 > Tunnel to Metroid Caverns Alpha Arena South West (Top); Heals? False
   * Layers: default
@@ -652,7 +698,7 @@ Extra - asset_id: collision_camera_024
   * Layers: default
   * Tunnel with Bomb Block to Metroid Caverns Alpha Arena South West/Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom)
   > Left Pillar
-      Trivial
+      Morph Ball
 
 > Left Pillar; Heals? False; Default Node
   * Layers: default
@@ -665,13 +711,17 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Ice Beam or Space Jump
               All of the following:
-                  # https://youtu.be/HWWMrswtNFg
-                  Infinite Bomb Jump (Intermediate) and Lay Bomb
-                  Spring Ball or Mid-Air Morph (Intermediate)
-              # https://youtu.be/HWWMrswtNFg?t=18
+                  # IBJ up: https://youtu.be/HWWMrswtNFg
+                  Infinite Bomb Jump (Beginner) and Lay Bomb
+                  Spring Ball or Mid-Air Morph (Beginner)
+              # Spider Boost: https://youtu.be/HWWMrswtNFg?t=18
               Spider Boost (Advanced) and Can Spider Boost
-              # https://youtu.be/HWWMrswtNFg?t=28
+              # Umorph extend: https://youtu.be/HWWMrswtNFg?t=28
               Unmorph Extend (Advanced)
+              # HJ+UE+Super Jump
+              High Jump Boots and Super Jump (Advanced) and Unmorph Extend (Intermediate)
+  > Tunnel to Metroid Caverns Alpha Arena South West (Bottom)
+      Lay Power Bomb
 
 ----------------
 Metroid Caverns Alpha Arena South East
@@ -747,6 +797,7 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_type: doorclosedpower
   > Next to Pickup
       All of the following:
+          # TODO: comment all these blocks better
           Morph Ball and Shoot Any Missile
           Any of the following:
               All of the following:
@@ -910,8 +961,11 @@ Extra - asset_id: collision_camera_033
               Varia Suit
               Space Jump or Use Spider Ball
           All of the following:
+              # Gravity way
               Gravity Suit
               Wall Jump (Beginner) or Simple IBJ
+              # Super Jump + Unmorph Extend
+              Morph Ball and Super Jump (Advanced) and Unmorph Extend (Advanced)
   > Door to Gullugg Gangway
       Any of the following:
           Gravity Suit
@@ -939,11 +993,13 @@ Extra - asset_id: collision_camera_033
                       # https://youtu.be/41wPJZOtWfg
                       Damage Boost (Intermediate) and Normal Damage ≥ 10
               All of the following:
-                  Spider Ball
-                  Spring Ball or Mid-Air Morph (Beginner)
+                  # Spider Ball up
+                  Spider Ball and Mid-Air Morph (Beginner)
                   # Get enough height to use Spider Ball
                   High Jump Boots or Super Jump (Intermediate)
               Spider Boost (Intermediate) and Can Spider Boost
+              # Jump up with only HJ
+              High Jump Boots and Super Jump (Advanced)
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
@@ -951,7 +1007,7 @@ Extra - asset_id: collision_camera_033
   * Extra - actor_name: HiddenPowerup002
   * Extra - actor_type: item_supermissiletank
   > Door to Gullugg Gangway
-      Trivial
+      Gravity Suit and Varia Suit
 
 ----------------
 Inner Temple West Hall
@@ -996,7 +1052,12 @@ Extra - asset_id: collision_camera_035
   > Tunnel to Metroid Caverns Hub
       All of the following:
           Morph Ball
-          Melee Clip (Beginner) or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          Any of the following:
+              Melee Clip (Beginner) or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+              All of the following:
+                  # Get up with HJ
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
 
 > Dock to Inner Temple Save Station; Heals? False
   * Layers: default
@@ -1029,12 +1090,18 @@ Extra - asset_id: collision_camera_041
   > Tunnel to Water Maze
       All of the following:
           Morph Ball and After Area 1 - Water Maze Grapple Block
-          Gravity Suit or Spider Ball
+          Any of the following:
+              # Get up
+              Gravity Suit or Spider Ball
+              # UE+SuperJump
+              Super Jump (Intermediate) and Unmorph Extend (Beginner)
+              # Underwater Bomb Jump
+              Underwater Bomb Jump (Beginner) and Lay Bomb
   > Dock to Metroid Caverns Hub
       Trivial
   > Dock to Water Maze (OoB)
       All of the following:
-          # https://youtu.be/quVim9n0C80
+          # https://youtu.be/quVim9n0C80 - TODO: move all of theese requirements to the dock below
           Morph Ball and Out of Bounds Movement (Intermediate)
           Any of the following:
               # To clip Out of Bounds
@@ -1100,10 +1167,6 @@ Extra - asset_id: collision_camera_042
   > Room Center
       Morph Ball
 
-> Dock to Inner Temple Teleporter; Heals? False
-  * Layers: default
-  * Open Passage to Inner Temple Teleporter/Dock from Inner Temple Teleporter Access
-
 > Room Center; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_CutsceneTeleport
@@ -1111,9 +1174,6 @@ Extra - asset_id: collision_camera_042
       Trivial
   > Tunnel to Inner Temple Teleporter
       Lay Any Bomb
-  > Dock to Inner Temple Teleporter
-      # https://youtu.be/FrVzIPVMaBw
-      Morph Ball and Melee Clip (Intermediate) and Out of Bounds Movement (Beginner) and Fully Freeze Enemy
 
 ----------------
 Inner Temple Ventilation Shaft
@@ -1171,7 +1231,16 @@ Extra - asset_id: collision_camera_044
   * Layers: default
   * Open Passage to Metroid Caverns Save Station/Dock to Metroid Caverns Hub
   > Tunnel to Metroid Caverns Save Station
-      Lay Any Bomb
+      All of the following:
+          # Destroy Blocks
+          Lay Any Bomb
+          Any of the following:
+              # Get up
+              Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
+              All of the following:
+                  # Get up via bombs only methods
+                  Lay Bomb
+                  Mid-Air Morph (Beginner) or Use Spring Ball
   > Tunnel to Inner Temple West Hall
       Morph Ball
   > Dock to Metroid Caverns Alpha Arena North East Access
@@ -1181,7 +1250,7 @@ Extra - asset_id: collision_camera_044
   * Layers: default
   * Tunnel to Metroid Caverns Save Station/Tunnel to Metroid Caverns Hub
   > Dock to Metroid Caverns Save Station
-      Lay Power Bomb
+      Morph Ball
 
 > Tunnel to Inner Temple West Hall; Heals? False
   * Layers: default
@@ -1240,6 +1309,8 @@ Extra - asset_id: collision_camera_046
   * Missile Door to Bomb Chamber/Door to Bomb Chamber Access
   * Extra - actor_name: Door004
   * Extra - actor_type: doorpowerpower
+  > Dock to Inner Temple West Hall
+      Trivial
 
 > Dock to Inner Temple West Hall; Heals? False
   * Layers: default
@@ -1347,12 +1418,6 @@ Extra - asset_id: collision_camera_049
   > Dock to Inner Temple East Hall
       Trivial
 
-> Dock from Inner Temple Teleporter Access; Heals? False
-  * Layers: default
-  * Blocked Passage to Inner Temple Teleporter Access/Dock to Inner Temple Teleporter
-  > Dock to Inner Temple East Hall
-      Trivial
-
 ----------------
 Ice Beam Chamber Access
 Extra - total_boundings: {'x1': 5900.0, 'x2': 8000.0, 'y1': 2300.0, 'y2': 3800.0}
@@ -1365,9 +1430,13 @@ Extra - asset_id: collision_camera_050
   * Extra - actor_type: doorpowerpower
   > Dock to Inner Temple East Hall
       Any of the following:
-          High Jump Boots or Ice Beam or Space Jump or Damage Boost (Intermediate) or Super Jump (Intermediate) or Simple IBJ
+          High Jump Boots or Ice Beam or Space Jump or Super Jump (Intermediate) or Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
+          # Umorph Extend
           Morph Ball and Unmorph Extend (Beginner)
+          # Damage Boost off of Chute Leech
+          Damage Boost (Beginner) and Normal Damage ≥ 25
 
 > Dock to Inner Temple East Hall; Heals? False
   * Layers: default
