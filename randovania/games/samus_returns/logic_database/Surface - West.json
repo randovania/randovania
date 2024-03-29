@@ -561,43 +561,94 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Spider Boost",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spider Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Spider Boost",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Baby",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": "IBJ+Spider",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Spider Boost",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spider Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spider Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spider Ball"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Spider at the Ceiling",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Simple IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Space",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "AirMorph",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1420,7 +1471,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "TODO: Freeze the Gullug",
+                                                        "comment": "TODO: Freeze the Gullugg",
                                                         "items": []
                                                     }
                                                 },
@@ -1471,7 +1522,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Boost off the Gullug",
+                                                        "comment": "Damage Boost off the Gullugg",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
