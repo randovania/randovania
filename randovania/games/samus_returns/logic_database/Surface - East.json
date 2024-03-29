@@ -89,26 +89,6 @@
                                 "items": []
                             }
                         },
-                        "Top of Mountain": {
-                            "type": "template",
-                            "data": "Climb Rooms Vertically (No High Jump)"
-                        },
-                        "Dock to Surface Crumble Block Challenge (Top)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
-                            }
-                        },
                         "Dock to Surface - West": {
                             "type": "resource",
                             "data": {
@@ -116,6 +96,48 @@
                                 "name": "Baby",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Top Left Midair": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ up. (IBJ up to the individual cliffs on the left, then to the ceiling and from there move to the right)",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -225,16 +247,46 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
                                             "name": "SWJ",
                                             "amount": 3,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spider Ball"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "IBJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -257,18 +309,39 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Save Station": {
+                        "Ship": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Ship": {
+                        "Dock to Surface Crumble Block Challenge (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Top Left Midair": {
+                            "type": "and",
+                            "data": {
+                                "comment": "DBJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DBJ",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -304,6 +377,27 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Top Left Midair": {
+                            "type": "and",
+                            "data": {
+                                "comment": "DBJ",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DBJ",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -370,6 +464,49 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Top Left Midair": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -21535.544744213475,
+                        "y": 12682.669910069291,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Top of Mountain": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Surface Crumble Block Challenge (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Surface Crumble Block Challenge (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -778,7 +915,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Short Freeze https://youtu.be/QJIMaZ8Qjpk",
+                                                                    "comment": "Freezing the Gullugg: https://youtu.be/QJIMaZ8Qjpk",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -858,7 +995,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Kill by touching with Lightning Armor",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -884,7 +1021,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=lwQG4kqXaoM",
+                                                        "comment": "Lure and Counter: https://www.youtube.com/watch?v=lwQG4kqXaoM",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1118,12 +1255,20 @@
                     "location_category": "minor",
                     "connections": {
                         "Tunnel to Transport to Area 1": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": "TODO: gravitt requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1155,6 +1300,29 @@
                         }
                     },
                     "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: you can do some scuffed ice clip with the gullug to get to the item OoB. with space jump it is \"free\".",
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Morph Ball Chamber": {
                             "type": "and",
                             "data": {
@@ -1321,7 +1489,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/UJFVyaOImNQ",
+                                            "comment": "Freeze Gullugg: https://youtu.be/UJFVyaOImNQ",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1482,12 +1650,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": "TODO: gravitt requirements",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2066,7 +2242,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Charge Beam Chamber Access",
-                        "node": "Door to Charge Beam Chamber (Upper)"
+                        "node": "Door to Charge Beam Chamber (Top)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2104,7 +2280,7 @@
                     "default_connection": {
                         "region": "Surface - East",
                         "area": "Charge Beam Chamber Access",
-                        "node": "Door to Charge Beam Chamber (Lower)"
+                        "node": "Door to Charge Beam Chamber (Bottom)"
                     },
                     "default_dock_weakness": "Charge Beam Door",
                     "exclude_from_dock_rando": false,
@@ -2159,7 +2335,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "SuperJump",
-                                            "amount": 1,
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
@@ -2790,7 +2966,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "CornerClip",
+                                            "name": "OoB",
                                             "amount": 2,
                                             "negate": false
                                         }
@@ -3010,52 +3186,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Dock to Charge Beam Chamber Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://youtu.be/Wgw4WEGnvCQ",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "OoB",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
                         }
                     }
-                },
-                "Dock to Charge Beam Chamber Access": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 453.58,
-                        "y": -5480.46,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Surface - East",
-                        "area": "Charge Beam Chamber Access",
-                        "node": "Dock from Scan Pulse Chamber"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
                 }
             }
         },
@@ -3141,7 +3273,7 @@
                         "area": "Alpha Arena",
                         "node": "Door to Chozo Cache West"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Plasma Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3375,7 +3507,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "HJ combinations",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3387,12 +3519,46 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SuperJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Morph",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UnmorphExtend",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -3401,7 +3567,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze https://youtu.be/8ehWaf87lqM",
+                                                        "comment": "Lure Moheek to the right and freeze it: https://youtu.be/8ehWaf87lqM",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -3469,7 +3635,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "HJ combinations",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3481,12 +3647,46 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SuperJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Morph",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UnmorphExtend",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -3657,11 +3857,21 @@
                     "pickup_index": 8,
                     "location_category": "major",
                     "connections": {
-                        "Door to Charge Beam Chamber (Lower)": {
-                            "type": "and",
+                        "Door to Ammo Recharge Station": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3704,12 +3914,12 @@
                         }
                     }
                 },
-                "Door to Charge Beam Chamber (Upper)": {
+                "Door to Charge Beam Chamber (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1449.1498405951113,
-                        "y": -9410.449876018421,
+                        "x": 1449.15,
+                        "y": -9410.45,
                         "z": 0.0
                     },
                     "description": "",
@@ -3739,24 +3949,15 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Tunnel to Chozo Cache East": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
-                "Door to Charge Beam Chamber (Lower)": {
+                "Door to Charge Beam Chamber (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1449.1498405951113,
-                        "y": -10101.912858660999,
+                        "x": 1449.15,
+                        "y": -10101.91,
                         "z": 0.0
                     },
                     "description": "",
@@ -3780,15 +3981,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
@@ -3827,6 +4019,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Scan Pulse Chamber": {
                             "type": "and",
                             "data": {
@@ -3834,14 +4043,14 @@
                                 "items": []
                             }
                         },
-                        "Door to Charge Beam Chamber (Upper)": {
+                        "Door to Charge Beam Chamber (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Charge Beam Chamber (Lower)": {
+                        "Door to Charge Beam Chamber (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3892,41 +4101,6 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Dock from Scan Pulse Chamber": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 684.01,
-                        "y": -5522.39,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Surface - East",
-                        "area": "Scan Pulse Chamber",
-                        "node": "Dock to Charge Beam Chamber Access"
-                    },
-                    "default_dock_weakness": "Blocked Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Scan Pulse Chamber": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -3987,8 +4161,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3038.622754491018,
-                        "y": 1269.316260058009,
+                        "x": 3038.62,
+                        "y": 1269.32,
                         "z": 0.0
                     },
                     "description": "",
@@ -4006,7 +4180,7 @@
                         "area": "Twisty Tunnel",
                         "node": "Door to Hornoad Hallway"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Power Beam Door",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4075,15 +4249,32 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=GvmhC45kbAw",
+                                            "comment": "Walljump up: https://www.youtube.com/watch?v=GvmhC45kbAw",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -4096,6 +4287,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -4181,6 +4381,70 @@
                                             "name": "SMAmmo",
                                             "amount": 2,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "HJ Combinations",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4271,6 +4535,99 @@
                     "pickup_index": 1,
                     "location_category": "minor",
                     "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Phase Drift Skip - TODO: add videos",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "PhaseSkip",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Space",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "PhaseSkip",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Below Right Crumble Blocks": {
                             "type": "resource",
                             "data": {
@@ -4286,8 +4643,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -18956.4116188452,
-                        "y": 5639.07190931633,
+                        "x": -18956.41,
+                        "y": 5639.07,
                         "z": 0.0
                     },
                     "description": "",
@@ -4307,7 +4664,9 @@
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
+                    "incompatible_dock_weaknesses": [
+                        "Access Open"
+                    ],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -4439,7 +4798,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4488,6 +4847,36 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Spider Boost",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spider Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spider Boost",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4495,7 +4884,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get past crumble blocks - TODO: add videos",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4518,7 +4907,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Phase Drift Skip",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4602,7 +4991,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get to the Door",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4616,17 +5005,17 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "TODO: get video",
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Spider Boost"
+                                                                "data": "Lay Bomb"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Spider Boost",
+                                                                    "name": "DBJ",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -4643,16 +5032,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
+                                                                    "name": "Space",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -4661,9 +5041,24 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "DBJ",
-                                                                    "amount": 2,
+                                                                    "name": "PhaseSkip",
+                                                                    "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "TODO: other phase drift skips",
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": []
                                                                 }
                                                             }
                                                         ]
@@ -4865,6 +5260,23 @@
                     "pickup_index": 2,
                     "location_category": "minor",
                     "connections": {
+                        "Dock to Landing Site (Top)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Dock to Landing Site (Bottom)": {
                             "type": "and",
                             "data": {
@@ -4901,10 +5313,67 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Just hold right",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Spider Boost from left side",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spider Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Spider Boost",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5196,7 +5665,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Door to Cavern Cavity": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5223,8 +5692,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 1,
+                                                        "name": "SuperJump",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -5232,7 +5701,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "SuperJump",
+                                                        "name": "UnmorphExtend",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -5283,6 +5752,23 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
+                        "Energy Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
