@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Cave Story
 
-- Changed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
+- Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
 
 
 ## [7.5.0] - 2024-04-01
