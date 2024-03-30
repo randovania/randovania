@@ -334,6 +334,15 @@
                                                                                                             {
                                                                                                                 "type": "template",
                                                                                                                 "data": "Lay Any Bomb"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Wave",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
                                                                                                             }
                                                                                                         ]
                                                                                                     }
@@ -813,6 +822,15 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "PreciseAiming",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Wave",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -1844,6 +1862,15 @@
                                                                                                     "data": {
                                                                                                         "type": "tricks",
                                                                                                         "name": "AirMorph",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Phase",
                                                                                                         "amount": 1,
                                                                                                         "negate": false
                                                                                                     }
@@ -3018,7 +3045,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "UBJ",
+                                                        "name": "UnmorphExtend",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -3220,7 +3247,7 @@
                         "Tunnel to Exterior Alpha Arena": {
                             "type": "and",
                             "data": {
-                                "comment": "Clip OoB",
+                                "comment": "Melee Clip OoB above the tunnel",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4475,6 +4502,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -6364,15 +6400,6 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Varia",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
                                             "name": "Gravity",
                                             "amount": 1,
                                             "negate": false
@@ -7459,12 +7486,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Room Center": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7494,8 +7529,55 @@
                             }
                         },
                         "Tunnel to Inner Temple Teleporter": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Melee Clip OoB using Gullugg: https://youtu.be/FrVzIPVMaBw",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MeleeClip",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Fully Freeze Enemy"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -7842,81 +7924,89 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "Destroy Blocks",
+                                            "comment": "Power Bomb methods",
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Any Bomb"
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Get up",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Climb Rooms Vertically (High Jump)"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SWJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "Get up",
+                                            "comment": "Bomb methods",
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Climb Rooms Vertically (High Jump)"
+                                                    "data": "Lay Bomb"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Get up via bombs only methods",
+                                                        "comment": "Get up",
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Lay Bomb"
+                                                                "data": "Use Spider Ball"
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "template",
+                                                                "data": "Use Spring Ball"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Spring Ball"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "AirMorph",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "AirMorph",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -8781,8 +8871,21 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Dock to Inner Temple East Hall": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -8820,8 +8923,16 @@
                             }
                         },
                         "Tunnel to Inner Temple Teleporter Access": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Event - Teleporter Unlocked": {
                             "type": "and",
