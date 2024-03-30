@@ -1565,10 +1565,6 @@
                                                     "data": "Lay Any Bomb"
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
@@ -2800,7 +2796,7 @@
                                                                                     {
                                                                                         "type": "or",
                                                                                         "data": {
-                                                                                            "comment": "Dealing with the Wall Fire",
+                                                                                            "comment": "Dealing with the Wallfire",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -4042,18 +4038,26 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "IBJ",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": "IBJ by transitioning from water physics to normal physics",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "IBJ without water physics",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -4076,6 +4080,15 @@
                                                                                                 {
                                                                                                     "type": "template",
                                                                                                     "data": "Use Spring Ball"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Gravity",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
                                                                                                 }
                                                                                             ]
                                                                                         }
