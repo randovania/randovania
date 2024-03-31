@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
 
+from randovania.exporter.pickup_exporter import _conditional_resources_for_pickup
 from randovania.game_connection.connector.remote_connector import (
     PickupEntryWithOwner,
     PlayerLocationEvent,
@@ -15,11 +16,39 @@ from randovania.game_connection.connector.remote_connector import (
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.games.dread.exporter.patch_data_factory import get_resources_for_details
 from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_connection.executor.msr_executor import MSRExecutor
     from randovania.game_description.db.region import Region
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.resources.resource_database import ResourceDatabase
+
+
+def format_received_item(item_name: str, player_name: str) -> str:
+    generic = "Received {item_name} from {provider_name}."
+    return generic.format(item_name=item_name, provider_name=player_name)
+
+
+def resources_to_give_for_pickup(
+    db: ResourceDatabase,
+    pickup: PickupEntry,
+    inventory: Inventory,
+) -> tuple[str, list[list[dict]]]:
+    inventory_resources = ResourceCollection.with_database(db)
+    inventory_resources.add_resource_gain(inventory.as_resource_gain())
+    conditional = pickup.conditional_for_resources(inventory_resources)
+    if conditional.name is not None:
+        item_name = conditional.name
+    else:
+        item_name = pickup.name
+
+    conditional_resources = _conditional_resources_for_pickup(pickup)
+    resources = get_resources_for_details(pickup, conditional_resources, False)
+
+    return item_name, resources
 
 
 class MSRRemoteConnector(RemoteConnector):
@@ -117,13 +146,58 @@ class MSRRemoteConnector(RemoteConnector):
 
     @asyncSlot()
     async def new_received_pickups_received(self, new_received_pickups: str) -> None:
-        raise NotImplementedError
+        new_recv_as_int = int(new_received_pickups)
+        self.logger.debug("Received Pickups: %s", new_received_pickups)
+        self.in_cooldown = False
+        self.received_pickups = new_recv_as_int
+        await self.receive_remote_pickups()
 
     async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
-        raise NotImplementedError
+        self.remote_pickups = remote_pickups
+        await self.receive_remote_pickups()
 
     async def receive_remote_pickups(self) -> None:
-        raise NotImplementedError
+        remote_pickups = self.remote_pickups
+        inventory = self.last_inventory
+
+        # in that case we never received the numbers (at least 0) from the game
+        if self.received_pickups is None or self.inventory_index is None:
+            return
+
+        num_pickups = self.received_pickups
+
+        if num_pickups >= len(remote_pickups) or self.in_cooldown:
+            return
+
+        self.in_cooldown = True
+
+        provider_name, pickup = remote_pickups[num_pickups]
+        item_name, items_list = resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
+
+        self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
+
+        # from open_samus_returns_rando.misc_patches.lua_util import lua_convert
+
+        # progression_as_lua = lua_convert(items_list, True)
+        message = format_received_item(item_name, provider_name)
+
+        self.logger.info("%d permanent pickups, magic %d. Next pickup: %s", len(remote_pickups), num_pickups, message)
+
+        main_item_id = items_list[0][0]["item_id"]
+        self.logger.info("I should send %s", main_item_id)
+
+        # TODO: Implement receiving
+        # from open_dread_rando.pickups.lua_editor import LuaEditor
+
+        # parent = LuaEditor.get_parent_for(None, main_item_id)
+
+        # execute_string = (
+        #     f"RL.ReceivePickup({repr(message)},{parent},{repr(progression_as_lua)},"
+        #     f"{num_pickups},{self.inventory_index})"
+        # )
+
+        # await self.executor.run_lua_code(execute_string)
+        return
 
     async def display_arbitrary_message(self, message: str) -> None:
         raise NotImplementedError

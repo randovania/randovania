@@ -1,6 +1,14 @@
+function RL.GetGameStateAndSend()
+    local current_state = Game.GetCurrentGameModeID()
+    if current_state == 'INGAME' then
+        RL.SendNewGameState(Game.GetScenarioID())
+    else
+        RL.SendNewGameState(current_state)
+    end
+end
+
 function RL.UpdateRDVClient(new_scenario)
-    -- TODO:...
-    -- RL.GetGameStateAndSend()
+    RL.GetGameStateAndSend()
     if Game.GetCurrentGameModeID() == 'INGAME' then
         local playerSection =  Game.GetPlayerBlackboardSectionName()
         local currentSaveRandoIdentifier = Blackboard.GetProp(playerSection, "THIS_RANDO_IDENTIFIER")

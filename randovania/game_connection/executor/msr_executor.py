@@ -39,7 +39,7 @@ class PacketType(IntEnum):
     PACKET_NEW_INVENTORY = b"5"
     PACKET_COLLECTED_INDICES = b"6"
     # PACKET_RECEIVED_PICKUPS = b"7"
-    # PACKET_GAME_STATE = b"8"
+    PACKET_GAME_STATE = b"8"
     # PACKET_MALFORMED = b"9"
 
 
@@ -263,6 +263,8 @@ class MSRExecutor:
                     self.signals.new_inventory.emit(response.decode("utf-8"))
                 elif packet_type == PacketType.PACKET_COLLECTED_INDICES:
                     self.signals.new_collected_locations.emit(response)
+                elif packet_type == PacketType.PACKET_GAME_STATE:
+                    self.signals.new_player_location.emit(response.decode("utf-8"))
                 elif packet_type == PacketType.PACKET_LOG_MESSAGE:
                     self.logger.debug(response.decode("utf-8"))
         return response
