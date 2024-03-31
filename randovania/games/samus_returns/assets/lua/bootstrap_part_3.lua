@@ -20,9 +20,8 @@ function RL.UpdateRDVClient(new_scenario)
         end
         Game.AddSF(0, "RL.GetInventoryAndSend", "")
         Game.AddSF(0.05, "RL.GetCollectedIndicesAndSend", "")
-        -- TODO:...
-        -- if RL.PendingPickup == nil then
-        --     Game.AddSF(0.05, "RL.GetReceivedPickupsAndSend", "b", false)
-        -- end
+        if RL.PendingPickup == nil then
+            Game.AddSF(0.05, "RL.GetReceivedPickupsAndSend", "b", false)
+        end
     end
 end
