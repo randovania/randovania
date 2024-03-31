@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Hydro Station
 
 - Changed: Shinesparking from Breeding Grounds Alpha Nest West to Breeding Grounds Overgrown Alley now requires an intermediate Shinespark.
+- Fixed: Hydro Station Exterior: It's now impossible for the Water Turbine to shuffle to a Spider Ball door or a Screw Attack door.
 
 ##### Industrial Complex
 
