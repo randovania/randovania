@@ -195,12 +195,8 @@ async def _inner_advance_depth(
             rest_of_actions.append(action_tuple)
 
     actions = list(
-        reach.satisfiable_actions(
-            state,
-            logic.victory_condition(state),
-            itertools.chain(
-                major_pickup_actions, lock_actions, rest_of_actions, point_of_no_return_actions, dangerous_actions
-            ),
+        itertools.chain(
+            major_pickup_actions, lock_actions, rest_of_actions, point_of_no_return_actions, dangerous_actions
         )
     )
     logic.log_checking_satisfiable_actions(state, actions)

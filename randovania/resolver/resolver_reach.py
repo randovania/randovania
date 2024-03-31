@@ -7,7 +7,6 @@ from collections import defaultdict
 
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.requirements import fast_as_set
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -186,25 +185,6 @@ class ResolverReach:
                     additional_requirements.alternatives
                 )
                 self._logic.log_skip_action_missing_requirement(node, self._logic.game)
-
-    def satisfiable_actions(
-        self,
-        state: State,
-        victory_condition: Requirement,
-        actions: typing.Iterable[tuple[ResourceNode, int]],
-    ) -> Iterator[tuple[ResourceNode, int]]:
-        interesting_resources = calculate_interesting_resources(
-            self._satisfiable_requirements.union(victory_condition.as_set(state.node_context()).alternatives),
-            state.node_context(),
-            state.energy,
-        )
-
-        # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
-        for action, energy in actions:
-            for resource, amount in action.resource_gain_on_collect(state.node_context()):
-                if resource in interesting_resources:
-                    yield action, energy
-                    break
 
     def collectable_resource_nodes(self, context: NodeContext) -> Iterator[ResourceNode]:
         for node in self.nodes:
