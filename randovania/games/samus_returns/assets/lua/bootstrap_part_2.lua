@@ -14,23 +14,22 @@ function RL.GetReceivedPickupsAndSend(reset)
 end
 function RL.GivePendingPickup()
     if Scenario.IsUserInteractionEnabled(true) then
-        -- Scenario.QueueAsyncPopup(RL.PendingPickup.msg, 7.0)
-        -- Game.AddSF(7.5, "RL.GetReceivedPickupsAndSend", "b", true)
+        Scenario.ShowAsyncPopup(RL.PendingPickup.msg, 7.0)
+        Game.AddSF(7.5, "RL.GetReceivedPickupsAndSend", "b", true)
         RL.ConfirmPickup()
     else
         Game.AddSF(0.5, "RL.GivePendingPickup", "")
     end
 end
 function RL.ConfirmPickup()
-    -- RL.PendingPickup.cls.OnPickedUp(nil,RL.PendingPickup.progression)
-    Scenario.WriteToPlayerBlackboard("ReceivedPickups","f",RL.ReceivedPickups()+1)
+    RL.PendingPickup.code()
+    local playerSection = Game.GetPlayerBlackboardSectionName()
+    Blackboard.SetProp(playerSection, "ReceivedPickups", "f", RL.ReceivedPickups()+1)
 end
-function RL.ReceivePickup(msg,cls,progression_string,receivedPickupIndex,inventoryIndex)
+function RL.ReceivePickup(msg,lua_code,receivedPickupIndex,inventoryIndex)
     if not RL.PendingPickup then
         if receivedPickupIndex == RL.ReceivedPickups() and inventoryIndex == RL.InventoryIndex() then
-            progression = assert(loadstring("return " .. progression_string))()
-            -- RL.PendingPickup={cls=cls,progression=progression,msg=msg}
-            RL.PendingPickup="yes"
+            RL.PendingPickup={msg=msg, code=assert(loadstring(lua_code))}
             Game.AddSF(0, "RL.GivePendingPickup", "")
         else
             Game.AddSF(0, "RL.GetInventoryAndSend", "")

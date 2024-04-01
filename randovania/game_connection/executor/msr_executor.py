@@ -253,6 +253,7 @@ class MSRExecutor:
                     self.logger.debug("Lua executed")
                 else:
                     self.logger.debug("Running lua code throw an error. Try again.")
+                    self.logger.debug(data)
                     raise MSRLuaException
             case _:
                 response = await asyncio.wait_for(self._socket.reader.read(4), timeout=15)

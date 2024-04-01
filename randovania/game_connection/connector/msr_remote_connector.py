@@ -176,28 +176,19 @@ class MSRRemoteConnector(RemoteConnector):
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
-        # from open_samus_returns_rando.misc_patches.lua_util import lua_convert
-
-        # progression_as_lua = lua_convert(items_list, True)
         message = format_received_item(item_name, provider_name)
 
         self.logger.info("%d permanent pickups, magic %d. Next pickup: %s", len(remote_pickups), num_pickups, message)
 
-        main_item_id = items_list[0][0]["item_id"]
-        self.logger.info("I should send %s", main_item_id)
+        from open_samus_returns_rando.multiworld_integration import get_lua_for_item
 
-        # TODO: Implement receiving
-        # from open_dread_rando.pickups.lua_editor import LuaEditor
+        lua_code = get_lua_for_item(items_list)
+        execute_string = f"RL.ReceivePickup({repr(message)},'{lua_code}'," f"{num_pickups},{self.inventory_index})"
+        await self.executor.run_lua_code(execute_string)
 
-        # parent = LuaEditor.get_parent_for(None, main_item_id)
-
-        # execute_string = (
-        #     f"RL.ReceivePickup({repr(message)},{parent},{repr(progression_as_lua)},"
-        #     f"{num_pickups},{self.inventory_index})"
-        # )
-
-        # await self.executor.run_lua_code(execute_string)
         return
 
     async def display_arbitrary_message(self, message: str) -> None:
-        raise NotImplementedError
+        escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
+        execute_string = f"Game.AddSF(0, 'Scenario.ShowAsyncPopup', 'si', '{escaped_message}', 10.0)"
+        await self.executor.run_lua_code(execute_string)
