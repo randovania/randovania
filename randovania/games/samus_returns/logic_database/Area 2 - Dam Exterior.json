@@ -317,7 +317,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Spider Boost",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -338,7 +338,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -349,7 +349,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "IBJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -399,7 +399,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -410,7 +410,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "IBJ",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -425,7 +425,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Spider Boost",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -768,7 +768,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Spider Boost",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -789,7 +789,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -810,7 +810,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Spider Ball",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -886,7 +886,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "IBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1126,6 +1126,27 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Door to Exterior Alpha+ Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DBJ",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1666,15 +1687,6 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
                                                             }
                                                         ]
                                                     }
@@ -2207,13 +2219,8 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Boots",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Climb Rooms Vertically (High Jump)"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -2223,10 +2230,6 @@
                                                                                 "amount": 3,
                                                                                 "negate": false
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Simple IBJ"
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -2309,6 +2312,49 @@
                                                         "name": "FrozenEnemy",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Get up with HJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2569,6 +2615,19 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spring Ball"
                                                 }
                                             ]
                                         }
@@ -2788,7 +2847,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2860,27 +2929,6 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spider Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Spider Boost",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
                                         "type": "template",
                                         "data": "Simple IBJ"
                                     }
@@ -2942,15 +2990,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -2974,7 +3013,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DBoost",
-                                                                    "amount": 3,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -2983,7 +3022,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "AirMorph",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -2992,7 +3031,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Movement",
-                                                                    "amount": 3,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -3024,6 +3063,36 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "Armor",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Spider Boost",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Spider Boost"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Spider Boost",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -3727,7 +3796,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "IBJ",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -3917,6 +3986,24 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DBJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spring",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "AirMorph",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -4820,7 +4907,26 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -4898,55 +5004,17 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Power Bomb"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "BeamBurstBuff",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Any Bomb"
                                                 },
                                                 {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Bomb"
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Shoot Beam Burst"
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Destroy Blob Throwers/Steel Orbs"
                                                 }
                                             ]
                                         }
@@ -5393,92 +5461,10 @@
                             }
                         },
                         "Door to Dam Exterior": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Jump right from a ledge grab",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Boots",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SuperJump",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Morph",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "UnmorphExtend",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Event - Alpha Metroid+": {
@@ -5572,7 +5558,32 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "At one point in the future, we should probably list out the requirements to esccape. However at this moment, this is not needed.",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": []
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5668,6 +5679,15 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SWJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -5678,13 +5698,8 @@
                                                         "comment": "Collecting the pickup",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bomb",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
                                                             },
                                                             {
                                                                 "type": "and",
@@ -5715,21 +5730,16 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Power Bomb Way",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Lay Power Bomb"
                                                                         },
                                                                         {
                                                                             "type": "or",
                                                                             "data": {
-                                                                                "comment": "TODO: Add trick to Phase Drift Jump",
+                                                                                "comment": null,
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -6582,12 +6592,20 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "AirMorph",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "AirMorph",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     {
@@ -6616,24 +6634,6 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Boots",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "tricks",
                                                                     "name": "SWJ",
                                                                     "amount": 1,
@@ -6641,13 +6641,8 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SuperJump",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Climb Rooms Vertically (High Jump)"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -6656,6 +6651,27 @@
                                                                     "name": "UnmorphExtend",
                                                                     "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Bomb"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "AirMorph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
