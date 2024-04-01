@@ -40,7 +40,7 @@ class PacketType(IntEnum):
     PACKET_COLLECTED_INDICES = b"6"
     PACKET_RECEIVED_PICKUPS = b"7"
     PACKET_GAME_STATE = b"8"
-    # PACKET_MALFORMED = b"9"
+    PACKET_MALFORMED = b"9"
 
 
 class ClientInterests(IntEnum):
@@ -171,14 +171,6 @@ class MSRExecutor:
             self._socket.api_version = int(api_version)
             self._socket.buffer_size = int(buffer_size)
 
-            # game = default_database.game_description_for(RandovaniaGame.METROID_SAMUS_RETURNS)
-            # replacements = {
-            #     "inventory": "{{{}}}".format(
-            #         ",".join(repr(r.extra["item_id"]) for r in game.resource_database.item if "item_id" in r.extra)
-            #     ),
-            # }
-            # print(replacements)
-
             # always bootstrap, so we can change code with leaving the game open
             self.logger.debug("Send bootstrap code")
             await self.bootstrap()
@@ -237,6 +229,19 @@ class MSRExecutor:
     async def _parse_packet(self, packet_type: int) -> bytes | None:
         response = None
         match packet_type:
+            case PacketType.PACKET_MALFORMED:
+                # ouch! Whatever happend, just disconnect!
+                response = await asyncio.wait_for(self._socket.reader.read(9), timeout=15)
+                recv_packet_type = response[0]
+                msr_received_bytes = struct.unpack("<l", response[1:4] + b"\x00")[0]
+                msr_should_bytes = struct.unpack("<l", response[5:8] + b"\x00")[0]
+                self.logger.warning(
+                    "MSR received a malformed packet. Type %d, received bytes %d, should receive bytes %d",
+                    recv_packet_type,
+                    msr_received_bytes,
+                    msr_should_bytes,
+                )
+                raise MSRLuaException
             case PacketType.PACKET_HANDSHAKE:
                 await self._check_header()
                 self._socket.request_number = (self._socket.request_number + 1) % 256
