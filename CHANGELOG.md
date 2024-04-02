@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet. Space reserved in case needed.
 
+### AM2R
+
+##### Hydro Station
+
+- Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
+
 ## [7.5.0] - 2024-04-01
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
