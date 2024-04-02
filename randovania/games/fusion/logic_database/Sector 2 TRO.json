@@ -1460,7 +1460,7 @@
                             }
                         },
                         "Event - Break Bomb Blocks": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1577,6 +1577,15 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MidAirMorph",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -1605,6 +1614,13 @@
                     "valid_starting_location": false,
                     "event_name": "S2ZigZagBombBlocks",
                     "connections": {
+                        "Door to Data Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Maintenance Annex": {
                             "type": "and",
                             "data": {
