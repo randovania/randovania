@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.6.0] - 2024-05-??
 
-- Nothing yet! Add changes here.
+### Resolver
+
+- Fixed: Some cases of seeds being wrongly considered as impossible.
 
 ## [7.5.1] - 2024-04-??
 
