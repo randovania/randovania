@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.5.1] - 2024-04-??
 
+- Changed: The output after verifying the installation has been made less misleading.
 - Nothing yet. Space reserved in case needed.
 
 ### AM2R
