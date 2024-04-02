@@ -818,13 +818,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if bad_files or extra_files:
             errors = []
             if bad_files:
-                errors.append(f"- {len(bad_files)} files are incorrect")
+                errors.append(f"* {len(bad_files)} files are incorrect")
 
             if missing_files:
-                errors.append(f"- {len(missing_files)} files are missing")
+                errors.append(f"* {len(missing_files)} files are missing")
 
             if extra_files:
-                errors.append(f"- {len(extra_files)} files are unexpected")
+                errors.append(f"* {len(extra_files)} files are unexpected")
 
             for m in bad_files:
                 logging.warning("Bad file: %s", m)

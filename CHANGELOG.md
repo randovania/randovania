@@ -7,11 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.6.0] - 2024-05-??
 
-- Nothing yet! Add changes here.
+### Resolver
+
+- Fixed: Some cases of seeds being wrongly considered as impossible.
 
 ## [7.5.1] - 2024-04-??
 
+- Changed: The output after verifying the installation has been made less misleading.
 - Nothing yet. Space reserved in case needed.
+
+### AM2R
+
+##### Hydro Station
+
+- Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
 
 ## [7.5.0] - 2024-04-01
 
