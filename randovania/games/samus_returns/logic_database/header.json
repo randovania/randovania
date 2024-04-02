@@ -3714,7 +3714,7 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Fully freeze with Charge Beam or fire Missiles/Supers while briefly frozen",
                                     "items": [
                                         {
                                             "type": "and",
@@ -3809,6 +3809,27 @@
                                                         }
                                                     }
                                                 ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": "Removing the Larva if grabbed or dodge it",
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Lay Bomb"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Dodge",
+                                                "amount": 2,
+                                                "negate": false
                                             }
                                         }
                                     ]
@@ -4604,6 +4625,110 @@
                         ]
                     }
                 }
+            },
+            "Deal with Black Gravitt in Low Ceiling": {
+                "display_name": "Deal with Black Gravitt in Low Ceiling",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Armor",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Use Spider Ball"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Defeat Non-Counterable Enemies"
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "DBoost",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "damage",
+                                                "name": "Damage",
+                                                "amount": 45,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "Spin Jump over the Gravitt when it lunges",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Dodge",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Defeat Gold Autrack": {
+                "display_name": "Defeat Gold Autrack",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MissileAmmo",
+                                    "amount": 20,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SMAmmo",
+                                    "amount": 4,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Defeat Gold Robots"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -5276,15 +5401,13 @@
             1,
             2,
             3,
-            4,
-            5
+            4
         ],
         "SWJ": [
             1,
             2,
             3,
-            4,
-            5
+            4
         ],
         "SuperJump": [
             1,
@@ -5307,8 +5430,7 @@
         "UnmorphExtend": [
             1,
             2,
-            3,
-            4
+            3
         ],
         "MissilelessMetroids": [
             1,
@@ -5322,7 +5444,8 @@
         "OoB": [
             1,
             2,
-            3
+            3,
+            4
         ],
         "Walljump": [
             1,
@@ -5344,6 +5467,7 @@
             1,
             2,
             3,
+            4,
             5
         ],
         "AirMorph": [
@@ -5352,6 +5476,7 @@
             3
         ],
         "PhaseSkip": [
+            1,
             2,
             3,
             4,
@@ -5361,8 +5486,7 @@
             1,
             2,
             3,
-            4,
-            5
+            4
         ],
         "IceClip": [
             1,
@@ -5400,12 +5524,15 @@
         ],
         "HazardRun": [
             1,
-            2
+            2,
+            3,
+            5
         ],
         "Dodge": [
             1,
             2,
-            3
+            3,
+            4
         ],
         "PhaseClip": [
             2,

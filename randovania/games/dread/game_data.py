@@ -62,6 +62,11 @@ game_data: game.GameData = game.GameData(
     ],
     faq=[
         (
+            "What Switch Emulators does Randovania support?",
+            "Randovania only officially supports Ryujinx as an emulator, "
+            "with no plans to support additional emulators.",
+        ),
+        (
             "Why does this missile door not open after I shoot a missile at it?",
             "Shoot another missile at the door. In the process of making certain missile doors possible to open from "
             "both sides, this issue shows up.",
