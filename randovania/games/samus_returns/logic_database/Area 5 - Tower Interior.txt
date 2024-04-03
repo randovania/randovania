@@ -90,7 +90,7 @@ Extra - asset_id: collision_camera_003
                       # Space Jump: https://youtu.be/FD9VDKqt-MY?t=21
                       Space Jump
               # DBJ: https://youtu.be/FD9VDKqt-MY?t=6
-              Diagonal Bomb Jump (Advanced) and Lay Bomb
+              Diagonal Bomb Jump (Advanced) and Phase Drift Skip (Intermediate) and Lay Bomb
   > Underwater
       Morph Ball
 
@@ -126,7 +126,7 @@ Extra - asset_id: collision_camera_003
           Any of the following:
               Grapple Beam
               All of the following:
-                  Lay Bomb
+                  Phase Drift Skip (Intermediate) and Lay Bomb
                   Any of the following:
                       # DBJ: https://youtu.be/FD9VDKqt-MY
                       Diagonal Bomb Jump (Advanced)
@@ -221,13 +221,13 @@ Extra - asset_id: collision_camera_003
                           # Mid Air Morph: https://youtu.be/FD9VDKqt-MY?t=43
                           Mid-Air Morph (Intermediate)
                           # Spring Ball: https://youtu.be/FD9VDKqt-MY?t=52
-                          Spring Ball and Infinite Bomb Jump (Intermediate)
+                          Infinite Bomb Jump (Intermediate) and Use Spring Ball
                   All of the following:
                       # Get out with IBJ:
                       Infinite Bomb Jump (Advanced)
                       Any of the following:
                           # Spring Ball: https://youtu.be/FD9VDKqt-MY?t=58
-                          Spring Ball
+                          Use Spring Ball
                           # Mid Air Morph: https://youtu.be/FD9VDKqt-MY?t=47
                           Mid-Air Morph (Advanced)
 
@@ -273,7 +273,7 @@ Extra - asset_id: collision_camera_005
   > Door to Grapple Shuffler
       Any of the following:
           # Deal with the Gunzoo
-          Lightning Armor or Missile ≥ 12 or Super Missile ≥ 2 or Defeat Gold Robots
+          Lightning Armor or Defeat Gold Autrack
           # Spin Jump over it
           Dodge Enemies (Intermediate)
   > Door to Meboid Marina
@@ -285,7 +285,15 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: Door002
   * Extra - actor_type: doorpowerpower
   > Door to Grapple Shuffler
-      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          # Autrack only spawns on the right from here, so you can't reach elevator
+          Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          All of the following:
+              # HJ
+              High Jump Boots
+              Any of the following:
+                  Super Jump (Advanced)
+                  Morph Ball and Underwater Bomb Jump (Intermediate)
 
 > Door to Grapple Shuffler; Heals? False
   * Layers: default
@@ -295,7 +303,7 @@ Extra - asset_id: collision_camera_005
   > Elevator to Area 5 - Tower Exterior
       Any of the following:
           # Deal with the Gunzoo
-          Lightning Armor or Missile ≥ 12 or Super Missile ≥ 2 or Defeat Gold Robots
+          Lightning Armor or Defeat Gold Autrack
           # Spin Jump over it
           Dodge Enemies (Intermediate)
   > Door to Transport to Tower Lobby East
@@ -414,21 +422,29 @@ Extra - asset_id: collision_camera_007
       Ice Beam and Morph Ball and Ice Beam Clip (Expert) and Out of Bounds Movement (Intermediate)
   > Above Pickup
       All of the following:
-          # https://youtu.be/eI3DtHqx5dU
           Morph Ball and Screw Attack
           Any of the following:
               All of the following:
                   Movement (Beginner)
                   Any of the following:
+                      # Phase Drift: https://www.youtube.com/watch?v=eI3DtHqx5dU
                       Phase Drift
-                      # Spider Boost
+                      # Spider Boost: https://youtu.be/eI3DtHqx5dU?t=28
                       Spider Boost (Intermediate) and Can Spider Boost
                       All of the following:
+                          # Spider Ball: https://youtu.be/eI3DtHqx5dU?t=21
                           Use Spider Ball
                           Lay Bomb or Use Spring Ball
-                  # Use koyote time to jump out
-                  Movement (Intermediate) and Use Spring Ball
-              Screw Attack and Movement (Expert)
+                  All of the following:
+                      # Use koyote time to jump out
+                      Movement (Intermediate)
+                      Any of the following:
+                          # Spring Ball only: https://youtu.be/eI3DtHqx5dU?t=7
+                          Use Spring Ball
+                          # Bombs only: https://youtu.be/eI3DtHqx5dU?t=37
+                          Lay Bomb
+              # Screw only: https://youtu.be/eI3DtHqx5dU?t=43
+              Movement (Expert)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -472,6 +488,10 @@ Extra - asset_id: collision_camera_008
               Climb Rooms Vertically (No High Jump)
               # Wall Jump for lower exit, Super Jump for upper exit
               Super Jump (Intermediate) and Unmorph Extend (Intermediate) and Wall Jump (Intermediate)
+              All of the following:
+                  # HJ
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
 
 > Door to Interior Teleporter; Heals? False
   * Layers: default
@@ -487,18 +507,14 @@ Extra - asset_id: collision_camera_008
               # Climb to the crumble blocks
               Space Jump or Spider Ball
               All of the following:
+                  # IBJ up
                   Simple IBJ
-                  Any of the following:
-                      # Autrack can damage Samus if the Bomb Jumps are too slow
-                      Lightning Armor or Power Bomb or Plasma Beam or Dodge Enemies (Intermediate) or Shoot Beam Burst
-                      All of the following:
-                          # Aim up at the Autrack
-                          Combat (Beginner)
-                          Missile ≥ 20 or Super Missile ≥ 4
-                      # https://youtu.be/8oR5WIFwcSc
-                      High Jump Boots and Wall Jump (Intermediate)
-                      # https://youtu.be/8oR5WIFwcSc?t=3
-                      Unmorph Extend (Advanced) and Defeat Gold Autrack
+                  # Autrack can damage Samus if the Bomb Jumps are too slow
+                  Dodge Enemies (Intermediate) or Defeat Gold Autrack
+              # Get up with HJ: https://youtu.be/8oR5WIFwcSc
+              High Jump Boots and Wall Jump (Intermediate)
+              # Unmorph Extend: https://youtu.be/8oR5WIFwcSc?t=3
+              Unmorph Extend (Advanced) and Defeat Gold Autrack
           Any of the following:
               # Traverse the crumble blocks
               Phase Drift or Spider Ball
@@ -534,11 +550,11 @@ Extra - asset_id: collision_camera_008
               All of the following:
                   Gravity Suit
                   Any of the following:
-                      Simple IBJ
+                      Infinite Bomb Jump (Intermediate) and Lay Bomb
                       # Wall Jump over the Gunzoo
                       Wall Jump (Intermediate)
-              # IBJ: https://youtu.be/dvVoKN_oOas
-              Infinite Bomb Jump (Intermediate) and Lay Bomb
+              # IBJ from within the water: https://youtu.be/dvVoKN_oOas
+              Infinite Bomb Jump (Advanced) and Lay Bomb
               # Wall Jump over the Gunzoo
               Single-wall Wall Jump (Advanced)
               # Wall Jump over the Gunzoo
@@ -843,18 +859,15 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Left Platform
-      All of the following:
-          # Deal with the Meboids
-          Dodge Enemies (Beginner) or Defeat Swarms
-          Any of the following:
-              # Climb out of the water
-              Use Spider Ball
-              All of the following:
-                  Gravity Suit
-                  Any of the following:
-                      Space Jump or Single-wall Wall Jump (Intermediate) or Wall Jump (Intermediate) or Simple IBJ
-                      # HJ+WJ
-                      High Jump Boots and Wall Jump (Beginner)
+      Any of the following:
+          # Climb out of the water
+          Use Spider Ball
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Space Jump or Single-wall Wall Jump (Intermediate) or Wall Jump (Intermediate) or Simple IBJ
+                  # HJ+WJ
+                  High Jump Boots and Wall Jump (Beginner)
 
 > Door to Zeta+ Arena; Heals? False
   * Layers: default
@@ -898,7 +911,7 @@ Extra - asset_id: collision_camera_017
               Space Jump
               All of the following:
                   # Jump from ledge grabs
-                  High Jump Boots
+                  High Jump Boots and Movement (Beginner)
                   Any of the following:
                       # Get through vines
                       Lightning Armor
@@ -937,7 +950,7 @@ Extra - asset_id: collision_camera_017
                       Lightning Armor
                       Hazard Runs (Intermediate) and Hazard Damage ≥ 115
               All of the following:
-                  # Jump from ledge grabs
+                  # Jump to the platform
                   High Jump Boots
                   All of the following:
                       # Go through vines
@@ -959,8 +972,7 @@ Extra - asset_id: collision_camera_017
 > Left Platform; Heals? False
   * Layers: default
   > Door to Meboid Marina
-      # Deal with the Meboids
-      Dodge Enemies (Beginner) or Defeat Swarms
+      Trivial
   > Center Platform
       All of the following:
           Any of the following:
@@ -979,7 +991,7 @@ Extra - asset_id: collision_camera_017
                       Lightning Armor
                       Hazard Runs (Intermediate) and Hazard Damage ≥ 40
               All of the following:
-                  # Jump from ledge grabs
+                  # Jump to the platform
                   High Jump Boots
                   Any of the following:
                       # Vines on left side of platform
@@ -1010,7 +1022,7 @@ Extra - asset_id: collision_camera_017
               Morph Ball and Shoot Any Missile
               Any of the following:
                   # Get up right path
-                  Wall Jump (Beginner)
+                  Space Jump or Single-wall Wall Jump (Beginner) or Wall Jump (Beginner)
                   All of the following:
                       # Manipulate where the Gullugg ends up and freeze it
                       Ice Beam
@@ -1019,6 +1031,8 @@ Extra - asset_id: collision_camera_017
                           All of the following:
                               Stand on Frozen Enemy (Intermediate)
                               Charge Beam or Phase Drift
+                  # HJ
+                  High Jump Boots and Super Jump (Advanced)
   > Door to Zeta+ Arena
       # TODO: damage boost
       Lightning Armor and Screw Attack and Use Spider Ball
@@ -1051,8 +1065,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06B_02
   > Door to Gravity Suit Chamber Access
-      # Deal with the Blob Swarm
-      Dodge Enemies (Intermediate) or Defeat Swarms
+      Trivial
 
 > Door to Gravity Suit Chamber Access; Heals? False
   * Layers: default
@@ -1060,42 +1073,30 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Elevator to Area 5 - Tower Exterior
-      # Deal with the Blob Swarm
-      Dodge Enemies (Intermediate) or Defeat Swarms
+      Trivial
   > Tunnel to Autrack Acropolis
-      Any of the following:
-          Lay Power Bomb
-          All of the following:
-              Lay Bomb
-              # Deal with the Blob Swarm
-              Dodge Enemies (Intermediate) or Defeat Swarms
+      Lay Any Bomb
   > Tunnel to Phase Drift Trial Entrance
       All of the following:
           Morph Ball
-          # Climb to the tunnel
-          Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
-          # Deal with the Blob Swarm
-          Dodge Enemies (Intermediate) or Defeat Swarms
+          Any of the following:
+              # Climb to the tunnel
+              Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+              All of the following:
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
 
 > Tunnel to Autrack Acropolis; Heals? False
   * Layers: default
   * Tunnel to Autrack Acropolis/Tunnel to Transport to Tower Exterior West
   > Door to Gravity Suit Chamber Access
-      Any of the following:
-          Lay Power Bomb
-          All of the following:
-              Lay Bomb
-              # Deal with the Blob Swarm
-              Dodge Enemies (Intermediate) or Defeat Swarms
+      Lay Any Bomb
 
 > Tunnel to Phase Drift Trial Entrance; Heals? False
   * Layers: default
   * Tunnel to Phase Drift Trial Entrance/Tunnel to Transport to Tower Exterior West
   > Door to Gravity Suit Chamber Access
-      All of the following:
-          Morph Ball
-          # Deal with the Blob Swarm
-          Dodge Enemies (Intermediate) or Defeat Swarms
+      Morph Ball
 
 > Dock from Phase Drift Trial West; Heals? False
   * Layers: default

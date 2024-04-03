@@ -571,6 +571,15 @@
                                                                     "amount": 3,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "PhaseSkip",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -866,6 +875,15 @@
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "PhaseSkip",
+                                                                    "amount": 2,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -1599,13 +1617,8 @@
                                                                                             "comment": "Spring Ball: https://youtu.be/FD9VDKqt-MY?t=52",
                                                                                             "items": [
                                                                                                 {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Spring",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
+                                                                                                    "type": "template",
+                                                                                                    "data": "Use Spring Ball"
                                                                                                 },
                                                                                                 {
                                                                                                     "type": "resource",
@@ -1650,13 +1663,8 @@
                                                                                             "comment": "Spring Ball: https://youtu.be/FD9VDKqt-MY?t=58",
                                                                                             "items": [
                                                                                                 {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Spring",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
+                                                                                                    "type": "template",
+                                                                                                    "data": "Use Spring Ball"
                                                                                                 }
                                                                                             ]
                                                                                         }
@@ -2023,25 +2031,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gold Robots"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 12,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -2118,7 +2108,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Autrack only spawns on the right from here, so you can't reach elevator",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2140,6 +2130,66 @@
                                                         "name": "SWJ",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "HJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Morph",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UBJ",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2186,25 +2236,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gold Robots"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 12,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -3008,7 +3040,7 @@
                         "Above Pickup": {
                             "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/eI3DtHqx5dU",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3053,18 +3085,26 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "Phase",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "Phase Drift: https://www.youtube.com/watch?v=eI3DtHqx5dU",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Phase",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Spider Boost",
+                                                                                "comment": "Spider Boost: https://youtu.be/eI3DtHqx5dU?t=28",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -3085,7 +3125,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "Spider Ball: https://youtu.be/eI3DtHqx5dU?t=21",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -3128,8 +3168,36 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Use Spring Ball"
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "Spring Ball only: https://youtu.be/eI3DtHqx5dU?t=7",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Use Spring Ball"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "Bombs only: https://youtu.be/eI3DtHqx5dU?t=37",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Lay Bomb"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -3140,7 +3208,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Screw only: https://youtu.be/eI3DtHqx5dU?t=43",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3148,15 +3216,6 @@
                                                                     "type": "tricks",
                                                                     "name": "Movement",
                                                                     "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Screw",
-                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -3200,8 +3259,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -3803.2495676272633,
-                        "y": 2602.0726108367544,
+                        "x": -3661.34662820352,
+                        "y": 2726.6162186267543,
                         "z": 0.0
                     },
                     "description": "",
@@ -3439,6 +3498,49 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "HJ",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3524,7 +3626,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "IBJ up",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -3536,35 +3638,8 @@
                                                                     "comment": "Autrack can damage Samus if the Bomb Jumps are too slow",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Armor",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Plasma",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
                                                                             "type": "template",
-                                                                            "data": "Shoot Beam Burst"
+                                                                            "data": "Defeat Gold Autrack"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -3574,99 +3649,56 @@
                                                                                 "amount": 2,
                                                                                 "negate": false
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Aim up at the Autrack",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Combat",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "MissileAmmo",
-                                                                                                        "amount": 20,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "SMAmmo",
-                                                                                                        "amount": 4,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "https://youtu.be/8oR5WIFwcSc",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Boots",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Walljump",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "https://youtu.be/8oR5WIFwcSc?t=3",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "UnmorphExtend",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Defeat Gold Autrack"
-                                                                                    }
-                                                                                ]
-                                                                            }
                                                                         }
                                                                     ]
                                                                 }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Get up with HJ: https://youtu.be/8oR5WIFwcSc",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Unmorph Extend: https://youtu.be/8oR5WIFwcSc?t=3",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Defeat Gold Autrack"
                                                             }
                                                         ]
                                                     }
@@ -3878,8 +3910,25 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Simple IBJ"
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Lay Bomb"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -3907,7 +3956,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "IBJ: https://youtu.be/dvVoKN_oOas",
+                                                        "comment": "IBJ from within the water: https://youtu.be/dvVoKN_oOas",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -3918,7 +3967,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "IBJ",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -6069,27 +6118,6 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Deal with the Meboids",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Defeat Swarms"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Dodge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
                                             "comment": "Climb out of the water",
                                             "items": [
                                                 {
@@ -6519,6 +6547,15 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -6829,7 +6866,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump from ledge grabs",
+                                                        "comment": "Jump to the platform",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7039,24 +7076,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Meboid Marina": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "Deal with the Meboids",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Swarms"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Dodge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Center Platform": {
@@ -7219,7 +7242,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Jump from ledge grabs",
+                                                        "comment": "Jump to the platform",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -7603,6 +7626,50 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SWJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "HJ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boots",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -7830,24 +7897,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Gravity Suit Chamber Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "Deal with the Blob Swarm",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Swarms"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Dodge",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7882,24 +7935,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Elevator to Area 5 - Tower Exterior": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "Deal with the Blob Swarm",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Defeat Swarms"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Dodge",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tunnel to Autrack Acropolis": {
@@ -7909,40 +7948,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Deal with the Blob Swarm",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Defeat Swarms"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dodge",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -7978,26 +7984,48 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Deal with the Blob Swarm",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Defeat Swarms"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Dodge",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boots",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -8041,40 +8069,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Deal with the Blob Swarm",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Defeat Swarms"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dodge",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "data": "Lay Any Bomb"
                                     }
                                 ]
                             }
@@ -8119,27 +8114,6 @@
                                             "name": "Morph",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Deal with the Blob Swarm",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Defeat Swarms"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Dodge",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
