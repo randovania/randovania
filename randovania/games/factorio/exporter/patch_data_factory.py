@@ -27,7 +27,7 @@ class FactorioPatchDataFactory(PatchDataFactory):
             self.players_config.player_index,
         )
 
-        technologies = {}
+        technologies = []
 
         for exported in pickup_exporter.export_all_indices(
             self.patches,
@@ -47,25 +47,29 @@ class FactorioPatchDataFactory(PatchDataFactory):
                 if req == Requirement.trivial() and isinstance(other_node, PickupNode):
                     prerequisites.append(other_node.extra["tech_name"])
 
-            technologies[node.extra["tech_name"]] = {
-                "locale_name": exported.name,
-                "description": exported.description,
-                "icon": exported.model.name,
-                "cost": {
-                    "count": 100,
-                    "time": 30,
-                    "ingredients": node.extra["ingredients"],
-                },
-                "prerequisites": prerequisites,
-                "unlocks": [
-                    conditional.resources[0][0].short_name
-                    for conditional in exported.conditional_resources
-                    if conditional.resources
-                ],
-            }
+            technologies.append(
+                {
+                    "tech_name": node.extra["tech_name"],
+                    "locale_name": exported.name,
+                    "description": exported.description,
+                    "icon": exported.model.name,
+                    "cost": {
+                        "count": node.extra["count"],
+                        "time": node.extra["time"],
+                        "ingredients": node.extra["ingredients"],
+                    },
+                    "prerequisites": prerequisites,
+                    "unlocks": [
+                        conditional.resources[0][0].short_name
+                        for conditional in exported.conditional_resources
+                        if conditional.resources
+                    ],
+                }
+            )
 
         return {
             "technologies": technologies,
+            "recipes": self.patches.game_specific["recipes"],
             "starting_tech": [
                 # TODO: care about amount decently
                 resource.short_name
