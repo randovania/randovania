@@ -1,5 +1,5 @@
 {
-    "schema_version": 23,
+    "schema_version": 26,
     "game": "factorio",
     "resource_database": {
         "items": {
@@ -3017,6 +3017,37 @@
                     }
                 }
             },
+            "craft-lab": {
+                "display_name": "Craft Electric lab",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "craft-electronic-circuit"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-iron-gear-wheel"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-transport-belt"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
             "craft-electric-mining-drill": {
                 "display_name": "Craft Electric mining drill",
                 "requirement": {
@@ -4574,37 +4605,6 @@
                                         {
                                             "type": "template",
                                             "data": "craft-iron-plate"
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-lab": {
-                "display_name": "Craft Lab",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "template",
-                                            "data": "craft-electronic-circuit"
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "craft-iron-gear-wheel"
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "craft-transport-belt"
                                         }
                                     ]
                                 }
@@ -9266,7 +9266,7 @@
             "perform-crafting": {
                 "display_name": "Perform crafting",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
                         "items": []
@@ -9340,6 +9340,195 @@
                             {
                                 "type": "template",
                                 "data": "use-electric-furnace"
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-1": {
+                "display_name": "Tech Tier 1",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": []
+                    }
+                }
+            },
+            "tech-tier-10": {
+                "display_name": "Tech Tier 10",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "productivity-module-3",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-2": {
+                "display_name": "Tech Tier 2",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": []
+                    }
+                }
+            },
+            "tech-tier-3": {
+                "display_name": "Tech Tier 3",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "craft-transport-belt"
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-4": {
+                "display_name": "Tech Tier 4",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "craft-assembling-machine-1"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-inserter"
+                            },
+                            {
+                                "type": "template",
+                                "data": "has-electricity"
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-5": {
+                "display_name": "Tech Tier 5",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "craft-fast-transport-belt"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-fast-inserter"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "railway",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-6": {
+                "display_name": "Tech Tier 6",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "construction-robotics",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-assembling-machine-2"
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-7": {
+                "display_name": "Tech Tier 7",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "craft-stack-inserter"
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-8": {
+                "display_name": "Tech Tier 8",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "research-speed-6",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-assembling-machine-3"
+                            }
+                        ]
+                    }
+                }
+            },
+            "tech-tier-9": {
+                "display_name": "Tech Tier 9",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "logistic-system",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -10264,6 +10453,16 @@
                     }
                 }
             },
+            "has-lab": {
+                "display_name": "Unlocked Electric lab",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": []
+                    }
+                }
+            },
             "has-electric-mining-drill": {
                 "display_name": "Unlocked Electric mining drill",
                 "requirement": {
@@ -11025,16 +11224,6 @@
             },
             "has-iron-stick": {
                 "display_name": "Unlocked Iron stick",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            },
-            "has-lab": {
-                "display_name": "Unlocked Lab",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -13510,6 +13699,7 @@
         }
     },
     "used_trick_levels": {},
+    "flatten_to_set_on_patch": true,
     "regions": [
         "Tech.json"
     ]
