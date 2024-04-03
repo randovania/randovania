@@ -160,6 +160,11 @@ def decode_single(
 
     initial_pickup_assignment = all_pools[player_index].assignment
 
+    if "custom_patcher_data" in game_modifications:
+        custom_patcher_data = game_modifications["custom_patcher_data"]
+    else:
+        custom_patcher_data = []
+
     # Starting Location
     starting_location = NodeIdentifier.from_string(game_modifications["starting_location"])
 
@@ -267,6 +272,7 @@ def decode_single(
         starting_equipment=starting_equipment,
         starting_location=starting_location,  # NodeIdentifier
         hints=hints,
+        custom_patcher_data=custom_patcher_data,
     )
 
 

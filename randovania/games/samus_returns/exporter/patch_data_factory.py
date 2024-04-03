@@ -410,7 +410,7 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return cosmetic_patches
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()

@@ -618,7 +618,7 @@ class PrimePatchDataFactory(PatchDataFactory):
             "swapBeamControls": cosmetic_patches.user_preferences.swap_beam_controls,
         }
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         # Setup
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
