@@ -33,7 +33,7 @@ class CSPresetItemPool(PresetItemPool):
 
         if bad_ending:
             explosive_box.setVisible(False)
-            explosive_box._update_for_state(StandardPickupState(True, 0, 0))
+            explosive_box._update_for_state(StandardPickupState(True, 1, 0))
         else:
             explosive_box.setVisible(True)
             explosive_box._update_for_state(StandardPickupState(False, 1, 0))

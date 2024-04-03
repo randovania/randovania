@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
 
+### Cave Story
+
+- Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
+
+
 ## [7.5.0] - 2024-04-01
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
