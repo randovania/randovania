@@ -109,6 +109,10 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         ),
         "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
     }
+
+    if patches.custom_patcher_data:
+        result["custom_patcher_data"] = patches.custom_patcher_data
+
     return result
 
 
