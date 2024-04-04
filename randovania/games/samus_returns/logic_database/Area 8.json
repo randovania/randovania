@@ -188,7 +188,25 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -385,7 +403,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -416,7 +444,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Spider Boost",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -437,7 +465,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Phase Drift",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -703,6 +731,15 @@
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 5,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -1191,7 +1228,38 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Left of Grapple Pickup": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Armor",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Defeat Non-Counterable Enemies"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1303,6 +1371,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1397,25 +1474,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gold Robots"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 13,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -1685,25 +1744,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gold Robots"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 13,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "data": "Defeat Gold Autrack"
                                     }
                                 ]
                             }
@@ -2059,25 +2100,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gold Robots"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MissileAmmo",
-                                            "amount": 13,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -2126,8 +2149,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -1721.8207580588028,
-                        "y": 6321.525563820994,
+                        "x": -1348.866777224986,
+                        "y": 6389.402195372344,
                         "z": 0.0
                     },
                     "description": "",
@@ -2251,21 +2274,28 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PBAmmo",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2365,8 +2395,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -1283.5163537607746,
-                        "y": 2582.2411146534414,
+                        "x": -1308.7013042236922,
+                        "y": 2830.8822189419207,
                         "z": 0.0
                     },
                     "description": "",
@@ -2555,8 +2585,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -2064.061832778205,
-                        "y": 6660.602954991886,
+                        "x": -2627.417335093241,
+                        "y": 6513.723897519207,
                         "z": 0.0
                     },
                     "description": "",
@@ -2604,25 +2634,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Gold Robots"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MissileAmmo",
-                                                        "amount": 13,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2687,7 +2699,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Spider Boost",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -2726,7 +2738,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "UE",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2747,6 +2759,15 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -2905,7 +2926,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "IBJ",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -2933,7 +2954,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Gold Robots"
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2964,35 +2985,8 @@
                                                                     "comment": "Defeat the Gunzoo as it moves down the second time",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "MissileAmmo",
-                                                                                "amount": 13,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SMAmmo",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Plasma",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
                                                                             "type": "template",
-                                                                            "data": "Shoot Beam Burst"
+                                                                            "data": "Defeat Gold Autrack"
                                                                         }
                                                                     ]
                                                                 }
@@ -3244,13 +3238,8 @@
                                                         "comment": "Deal with the Gunzoo on the right side",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PBAmmo",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -3281,35 +3270,8 @@
                                                                                 "comment": "Defeat the Gunzoo as it moves down the second time",
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "MissileAmmo",
-                                                                                            "amount": 13,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "SMAmmo",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Plasma",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
                                                                                         "type": "template",
-                                                                                        "data": "Shoot Beam Burst"
+                                                                                        "data": "Defeat Gold Robots"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -3466,7 +3428,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Spider Boost",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -3487,7 +3449,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Hazard run",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3923,7 +3885,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3960,7 +3932,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Spider Boost",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -3981,7 +3953,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Hazard run",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4156,6 +4128,41 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "UE",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4222,7 +4229,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Gold Robots"
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -4502,7 +4509,7 @@
                         "Door to Nest Vestibule": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: simplify this",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4596,6 +4603,15 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -4617,13 +4633,8 @@
                                                         "comment": "Deal with the red plants",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
                                                             },
                                                             {
                                                                 "type": "and",
@@ -4647,6 +4658,15 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Armor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -4685,6 +4705,10 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Defeat Non-Counterable Enemies"
                                                             }
                                                         ]
                                                     }
@@ -4991,25 +5015,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Gold Robots"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5087,29 +5093,11 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Deal with the electric Gullugs",
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Gold Robots"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5529,7 +5517,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5615,7 +5613,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5644,7 +5652,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5690,25 +5708,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Gold Robots"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SMAmmo",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5752,7 +5752,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "UE",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5773,6 +5773,15 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -5834,7 +5843,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Baby path",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5877,7 +5886,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "PB path",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -5885,13 +5894,8 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "PBAmmo",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Lay Power Bomb"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -5920,13 +5924,8 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Spider",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Use Spider Ball"
                                                                         }
                                                                     ]
                                                                 }
@@ -5947,25 +5946,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Defeat Gold Robots"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ice",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -7371,29 +7352,12 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Boots",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -7997,7 +7961,7 @@
                         "Save Station": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: can climb with clips w/o screw",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8617,34 +8581,34 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "Dodging Head Slam",
+                                            "comment": "Dodging Attacks - TODO: put low% methods in",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Use Spider Ball"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
+                                                                    "name": "SWJ",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8846,48 +8810,6 @@
                                                                             }
                                                                         }
                                                                     ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Dodging Plasma Balls/Fire",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spider Ball"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Launch into head to end attack early",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Spider Boost"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Spider Boost",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -9244,7 +9166,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9294,7 +9226,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Defeat Non-Counterable Enemies"
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -9360,32 +9292,6 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Screw",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
                                             "comment": "Jump over the Autrack",
                                             "items": [
                                                 {
@@ -9432,7 +9338,7 @@
                         "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "Enter the tunnel",
+                                "comment": "Enter the tunnel - TODO: get up via IBJ? spider?",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9524,7 +9430,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Defeat Non-Counterable Enemies"
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -9834,10 +9740,29 @@
                             }
                         },
                         "Event - Teleporter Unlocked": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Screw",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
