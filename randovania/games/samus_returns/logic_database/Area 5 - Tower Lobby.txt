@@ -67,18 +67,15 @@ Extra - asset_id: collision_camera_001
 
 > Dock to Phase Drift Chamber; Heals? False
   * Layers: default
-  * Open Passage to Phase Drift Chamber/Dock from Lobby Save Station
+  * Open Passage to Phase Drift Chamber/Dock to Lobby Save Station
+  > Door to Meboid Millpond
+      # Corner Clip from Phase Drift Chamber
+      Out of Bounds Movement (Intermediate)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 5 (Tower Lobby) - Lobby Save Station Grapple Block
   > Save Station
-      Trivial
-
-> Dock from Phase Drift Chamber; Heals? False
-  * Layers: default
-  * Blocked Passage to Phase Drift Chamber/Dock to Lobby Save Station
-  > Door to Meboid Millpond
       Trivial
 
 ----------------
@@ -100,14 +97,15 @@ Extra - asset_id: collision_camera_002
   > Top of Room
       Any of the following:
           # Deal with the top Wallfire
-          Space Jump or Lay Power Bomb or Use Spider Ball
+          Space Jump or Use Spider Ball
           All of the following:
               Any of the following:
-                  # Jump from next to the Wallfire
+                  # Jump up from next to the Wallfire
                   High Jump Boots
                   Morph Ball and Unmorph Extend (Advanced)
               Any of the following:
-                  Shoot Beam Burst
+                  # Deal with the Wallfire
+                  Defeat Non-Counterable Enemies
                   Phase Drift and Dodge Enemies (Advanced)
 
 > Door to Lobby Teleporter West; Heals? False
@@ -123,9 +121,9 @@ Extra - asset_id: collision_camera_002
   > Top of Room
       Any of the following:
           # Deal with the top Wallfire
-          Phase Drift or Space Jump or Defeat Non-Counterable Enemies or Use Spider Ball
+          Lightning Armor or Space Jump or Defeat Non-Counterable Enemies or Use Spider Ball
           # Land next to the Wallfire
-          Lightning Armor and Movement (Intermediate)
+          Phase Drift and Dodge Enemies (Intermediate)
 
 > Door to Lobby Save Station; Heals? False
   * Layers: default
@@ -135,23 +133,25 @@ Extra - asset_id: collision_camera_002
   > Top of Room
       Any of the following:
           All of the following:
+              # Climb room by defeating Wallfires
               Any of the following:
                   # Defeat the Wallfires
                   Shoot Beam Burst
-                  Morph Ball and Power Beam ≥ 3
+                  Morph Ball and Power Bomb ≥ 3
               # Climb the room
               Space Jump or Use Spider Ball
           All of the following:
+              # Get up without being able to destroy Wallfires (SJ)
               Space Jump
               Any of the following:
-                  Phase Drift
+                  Lightning Armor or Phase Drift
                   # Grab the ledges to avoid getting hit
                   Dodge Enemies (Advanced) and Phase Drift Skip (Advanced)
           All of the following:
-              # https://youtu.be/q5720PA4DrE?t=68
+              # Get up without being able to destroy Wallfires (Morph)
               Mid-Air Morph (Advanced) and Single-wall Wall Jump (Expert)
               Any of the following:
-                  # Avoiding the Wallfires
+                  # Avoiding the Wallfires: https://youtu.be/q5720PA4DrE?t=68
                   Phase Drift and Dodge Enemies (Advanced)
                   Dodge Enemies (Expert) and Phase Drift Skip (Hypermode)
               Any of the following:
@@ -197,8 +197,10 @@ Extra - asset_id: collision_camera_004
           Any of the following:
               # Reaching the ledge
               Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
-              # Freeze the Gullugg
+              # Freeze the Gullugg - TODO: get rid of template
               Stand on Frozen Enemy (Beginner) and Wall Jump (Beginner) and Fully Freeze Enemy
+              # Get up with HJ
+              High Jump Boots or Super Jump (Intermediate)
   > Chozo Seal
       Any of the following:
           Climb Rooms Vertically (No High Jump)
@@ -475,8 +477,6 @@ Extra - asset_id: collision_camera_006
               Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
   > Teleporter
       Trivial
-  > Door to Transport to Tower Interior West
-      Climb Rooms Vertically (No High Jump)
   > Event - Teleporter Unlocked
       Trivial
   > Next to Left Pool
@@ -488,12 +488,10 @@ Extra - asset_id: collision_camera_006
               Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
               # UE
               Morph Ball and Unmorph Extend (Intermediate)
-              # Freeze some enemy: TODO which one? video?
+              # Freeze Ramulken: TODO: video?
               Ice Beam and Freeze Enemy with Melee (Beginner) and Stand on Frozen Enemy (Beginner)
-          Any of the following:
-              # Deal with the Wallfire
-              Missile ≥ 10 or Super Missile ≥ 2 or Defeat Gold Robots
-              Lightning Armor and Dodge Enemies (Beginner)
+          # Deal with the Wallfire
+          Lightning Armor or Dodge Enemies (Beginner) or Defeat Gold Autrack
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default
@@ -521,40 +519,40 @@ Extra - asset_id: collision_camera_006
               Gravity Suit and Screw Attack
               Any of the following:
                   Space Jump
-                  # https://youtu.be/6bqa76pcjMQ
-                  Bomb and Infinite Bomb Jump (Advanced) and Movement (Intermediate) and Spider Boost (Intermediate) and Can Spider Boost
+                  # IBJ+Spider Boost: https://youtu.be/6bqa76pcjMQ
+                  Infinite Bomb Jump (Advanced) and Movement (Intermediate) and Spider Boost (Intermediate) and Can Spider Boost and Lay Bomb
           All of the following:
+              # Freeze Moheek on right wall and go OoB
               Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Advanced) and Melee Clip (Advanced)
               Any of the following:
                   All of the following:
+                      # Reach Moheek with Gravity
                       Gravity Suit
                       Any of the following:
-                          # https://youtu.be/jGgq1W3Rt3w?t=19
+                          # Space Jump: https://youtu.be/jGgq1W3Rt3w?t=19
                           Space Jump and Out of Bounds Movement (Intermediate)
                           All of the following:
                               Out of Bounds Movement (Advanced)
                               Any of the following:
-                                  # https://youtu.be/jGgq1W3Rt3w
+                                  # HJ: https://youtu.be/jGgq1W3Rt3w
                                   High Jump Boots
-                                  # https://youtu.be/jGgq1W3Rt3w?t=35
-                                  Bomb and Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Advanced)
+                                  # IBJ: https://youtu.be/jGgq1W3Rt3w?t=35
+                                  Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Advanced) and Lay Bomb
                   All of the following:
-                      # https://youtu.be/jGgq1W3Rt3w?t=49
-                      Spider Ball and Out of Bounds Movement (Advanced) and Lay Bomb
+                      # Reach Moheek with Spider Ball: https://youtu.be/jGgq1W3Rt3w?t=49
+                      Out of Bounds Movement (Advanced) and Lay Bomb and Use Spider Ball
                       Any of the following:
-                          # https://youtu.be/jGgq1W3Rt3w?t=80
+                          # UBJ: https://youtu.be/jGgq1W3Rt3w?t=80
                           Underwater Bomb Jump (Expert)
-                          # https://youtu.be/jGgq1W3Rt3w?t=70
+                          # UBJ+HJ: https://youtu.be/jGgq1W3Rt3w?t=70
                           High Jump Boots and Underwater Bomb Jump (Advanced)
   > Next to Teleporter
       All of the following:
           Morph Ball
           # Climb the room
           Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
-          Any of the following:
-              # Deal with the Wallfire
-              Missile ≥ 10 or Super Missile ≥ 2 or Dodge Enemies (Intermediate) or Defeat Gold Robots
-              Lightning Armor and Dodge Enemies (Beginner)
+          # Deal with the Wallfire
+          Lightning Armor or Dodge Enemies (Beginner) or Dodge Enemies (Intermediate) or Defeat Gold Autrack
 
 > Top Platform; Heals? False
   * Layers: default
@@ -568,7 +566,7 @@ Extra - asset_id: collision_camera_006
   > Door to Transport to Tower Interior West
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          # Freeze the Ramulken - TODO: video
+          # Freeze the Ramulken - TODO: connection doesnt make sense, needs to be fixed.
           High Jump Boots and Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate) and Single-wall Wall Jump (Beginner) and Super Jump (Intermediate)
   > Next to Teleporter
       Trivial
@@ -670,6 +668,7 @@ Extra - asset_id: collision_camera_011
                           Fleech Swarm Damage ≥ 150
                           # Defeating the Ramulkens
                           Plasma Beam or Super Missile ≥ 2 or Lay Power Bomb or Shoot Beam Burst
+                      # Spider Boost
                       Spider Boost (Advanced) and Fleech Swarm Damage ≥ 95 and Can Spider Boost
 
 > Door to Alpha+ Arena; Heals? False
@@ -730,7 +729,7 @@ Extra - asset_id: collision_camera_011
           Lay Power Bomb
           All of the following:
               Lay Bomb
-              High Jump Boots or Mid-Air Morph (Beginner) or Simple IBJ or Use Spider Ball
+              Mid-Air Morph (Beginner) or Simple IBJ or Use Spider Ball or Use Spring Ball
 
 > Next to Pickup; Heals? False
   * Layers: default
@@ -869,9 +868,9 @@ Extra - asset_id: collision_camera_014
               # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
 
-> Dock from Lobby Save Station; Heals? False
+> Dock to Lobby Save Station; Heals? False
   * Layers: default
-  * Blocked Passage to Lobby Save Station/Dock to Phase Drift Chamber
+  * Open Passage to Lobby Save Station/Dock to Phase Drift Chamber
   > Left of Statue
       Trivial
 
@@ -914,12 +913,8 @@ Extra - asset_id: collision_camera_014
           # Corner Clip: https://youtu.be/P18XiY9K36o
           Corner Clip (Intermediate) and Out of Bounds Movement (Intermediate)
   > Dock to Lobby Save Station
-      # https://youtu.be/P18XiY9K36o
-      Corner Clip (Intermediate) and Out of Bounds Movement (Intermediate)
-
-> Dock to Lobby Save Station; Heals? False
-  * Layers: default
-  * Open Passage to Lobby Save Station/Dock from Phase Drift Chamber
+      # Corner Clip OoB: https://youtu.be/P18XiY9K36o
+      Out of Bounds Movement (Intermediate)
 
 ----------------
 Meboid Millpond
@@ -1027,9 +1022,7 @@ Extra - asset_id: collision_camera_016
           Lay Power Bomb
           All of the following:
               Lay Bomb
-              Any of the following:
-                  Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner) or Use Spider Ball
-                  High Jump Boots and Use Spring Ball
+              Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner) or Use Spider Ball or Use Spring Ball
   > Event - Gamma Metroid+
       Defeat Gamma Metroid+
 
@@ -1054,14 +1047,14 @@ Extra - asset_id: collision_camera_017
   > Room Center
       All of the following:
           # Deal with the Wallfire
-          Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Combat (Intermediate) or Defeat Gold Robots
+          Lightning Armor or Combat (Intermediate) or Defeat Gold Autrack
           Any of the following:
               # Reach the intersection
               Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
               All of the following:
                   Super Jump (Intermediate)
                   Any of the following:
-                      # Freeze the Ramulken
+                      # Freeze the Ramulken - TODO: more ways of freezing
                       Ice Beam and Freeze Enemy with Melee (Beginner)
                       Morph Ball and Unmorph Extend (Intermediate)
 
@@ -1091,7 +1084,7 @@ Extra - asset_id: collision_camera_017
       Morph Ball and After Area 5 (Tower Lobby) - Lobby Teleporter East Grapple Block
   > Dock to Transport to Areas 4 and 6
       # Deal with the Wallfire
-      Lightning Armor or Missile ≥ 10 or Super Missile ≥ 2 or Combat (Intermediate) or Defeat Gold Robots
+      Lightning Armor or Dodge Enemies (Intermediate) or Defeat Gold Autrack
   > Tunnel to Transport to Areas 4 and 6
       Morph Ball
 
