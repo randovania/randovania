@@ -87,8 +87,6 @@ Extra - asset_id: collision_camera_001
   * Power Beam Door to Space Jump Chamber/Door to Mines Intersection Terminal
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Tunnel to Space Jump Chamber
-      Morph Ball
   > Above Aeion Refill
       Trivial
 
@@ -163,7 +161,7 @@ Extra - asset_id: collision_camera_001
           Any of the following:
               Baby Metroid or Phase Drift
               Spider Boost (Advanced) and Can Spider Boost
-  > Door to Space Jump Chamber (Top)
+  > Above Aeion Refill
       Morph Ball
 
 > Next to Upper Pickup; Heals? False
@@ -219,6 +217,8 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Tunnel to Mines Teleporter
       Morph Ball and After Area 4 (Crystal Mines) - Mines Teleporter Grapple Block
+  > Tunnel to Space Jump Chamber
+      Morph Ball
 
 ----------------
 Super Missile Chamber
@@ -350,7 +350,7 @@ Extra - asset_id: collision_camera_003
                   # Super Jump + UE: https://youtu.be/UJD_mURPVjE?t=107
                   Super Jump (Intermediate) and Unmorph Extend (Intermediate)
                   All of the following:
-                      # Damage Boost of left spikes: https://youtu.be/UJD_mURPVjE?t=115
+                      # Damage Boost off of left spikes: https://youtu.be/UJD_mURPVjE?t=115
                       Damage Boost (Intermediate)
                       Lightning Armor or Normal Damage ≥ 20
   > Dock to Gemstone Gorge
@@ -485,7 +485,7 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_type: item_powerbombtank
   > Tunnel to Mines Intersection Terminal
       All of the following:
-          Morph Ball and Lay Power Bomb
+          Lay Power Bomb
           Any of the following:
               Grapple Beam
               # Spider Boost
@@ -773,14 +773,18 @@ Extra - asset_id: collision_camera_012
       Any of the following:
           Space Jump or Use Spider Ball
           All of the following:
-              # IBJ from water
+              # IBJ
               Lay Bomb
-              # With gravity
-              Grapple Beam and Simple IBJ
-              # Without gravity
-              Infinite Bomb Jump (Intermediate)
-          # IBJ from outside of water
-          Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Beginner) and Lay Bomb
+              Any of the following:
+                  # Without Gravity from water
+                  Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      Simple IBJ
+                      Any of the following:
+                          # With Gravity from water
+                          Gravity Suit
+                          # Without Gravity from outside of water
+                          Mid-Air Morph (Intermediate)
 
 > Tunnel to Mines Intersection Terminal; Heals? False
   * Layers: default
@@ -797,14 +801,18 @@ Extra - asset_id: collision_camera_012
           # TODO: update map
           Space Jump or Use Spider Ball
           All of the following:
-              # IBJ from water
+              # IBJ
               Lay Bomb
-              # With Gravity
-              Gravity Suit and Simple IBJ
-              # Without Gravity
-              Infinite Bomb Jump (Intermediate)
-          # IBJ from outside of water
-          Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Beginner) and Lay Bomb
+              Any of the following:
+                  # Without Gravity from water
+                  Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      Simple IBJ
+                      Any of the following:
+                          # With Gravity from water
+                          Gravity Suit
+                          # Without Gravity from outside of water
+                          Mid-Air Morph (Intermediate)
   > Tunnel to Mines Intersection Terminal
       Morph Ball and After Area 4 (Crystal Mines) - Mines Teleporter Grapple Block
   > Event - Grapple Block
@@ -1085,6 +1093,8 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Extra - actor_type: doorpowerpower
   > Save Station
       Morph Ball
+  > TODO: Simplify and remove extra nodes
+      Trivial
 
 > Tunnel to Space Jump Chamber (Middle); Heals? False
   * Layers: default
@@ -1196,9 +1206,14 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Layers: default
   > Pickup (Missile Tank Middle)
       Any of the following:
-          Lay Bomb
+          Lay Power Bomb
           # Stagger the Bomb blocks to climb up
           Movement (Intermediate) and Lay Bomb
   > At Middle Shaft
       Morph Ball or Movement (Intermediate)
+
+> TODO: Simplify and remove extra nodes; Heals? False
+  * Layers: default
+  > Door to Mines Entrance
+      Trivial
 
