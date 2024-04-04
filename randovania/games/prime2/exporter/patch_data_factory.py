@@ -927,21 +927,6 @@ class EchoesPatchDataFactory(PatchDataFactory):
         ]
 
 
-def generate_patcher_data(
-    description: LayoutDescription,
-    players_config: PlayersConfiguration,
-    cosmetic_patches: EchoesCosmeticPatches,
-) -> dict:
-    """
-
-    :param description:
-    :param players_config:
-    :param cosmetic_patches:
-    :return:
-    """
-    return EchoesPatchDataFactory(description, players_config, cosmetic_patches).create_game_specific_data()
-
-
 def _create_pickup_list(
     cosmetic_patches: EchoesCosmeticPatches,
     configuration: BaseConfiguration,
