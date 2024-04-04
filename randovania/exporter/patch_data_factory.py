@@ -3,7 +3,7 @@ from __future__ import annotations
 from random import Random
 from typing import TYPE_CHECKING
 
-from json_delta import patch
+import json_delta
 
 from randovania.game_description import default_database
 from randovania.layout import filtered_database
@@ -56,4 +56,4 @@ class PatchDataFactory:
     def create_data(self) -> dict:
         game_data = self.create_game_specific_data()
 
-        return patch(game_data, self.patches.custom_patcher_data, False)
+        return json_delta.patch(game_data, self.patches.custom_patcher_data, False)
