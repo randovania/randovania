@@ -2762,10 +2762,24 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Collapsed Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "NormalDamage",
+                                            "amount": 199,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Beam-Weak Enemy"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2802,10 +2816,24 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Central Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": "TODO: damage reqs for this dessgeega?",
-                                "items": []
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "NormalDamage",
+                                            "amount": 199,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Tough Beam-Weak Enemy"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5290,7 +5318,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "TODO: add trick video",
+                                                                                "comment": "https://youtu.be/pEP-Sys6cJI",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -5334,7 +5362,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "TODO: add trick video",
+                                                                                "comment": "https://youtu.be/A0e_o5otNC4",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
