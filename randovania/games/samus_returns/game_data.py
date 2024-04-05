@@ -60,7 +60,6 @@ game_data: game.GameData = game.GameData(
     faq=[
         (
             "What are the icons on the bottom of the HUD?",
-            "These elements are present in the vanilla game, but they have been slightly revamped. "
             "From left to right the HUD shows: the amount of DNA you currently have, the amount of DNA "
             "collected per area out of how many in that area, "
             "and the amount of Metroids that are still alive. ",
@@ -81,7 +80,7 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "How do I access Proteus Ridley?",
-            "You access Proteus Ridley, by going through the Area 8 to Surface transition with the baby "
+            "By going through the Area 8 to Surface transition with the Baby "
             "and all DNA collected. Going through the transition without the requirements will make you access the "
             "Ship instead.",
         ),
@@ -90,7 +89,7 @@ game_data: game.GameData = game.GameData(
             "All Chozo Seals have been repurposed to provide a hint to "
             "an item somewhere in the world. The region the item is located "
             "will be specified."
-            "\n"
+            "\n\n"
             "New seals have been added in all areas, which hint at the location "
             "of DNA. Additionally, the HUD also shows how much DNA is located in each area. "
             "See the `Hints` tab for more information.",
