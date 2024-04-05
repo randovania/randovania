@@ -1119,47 +1119,31 @@
                                         }
                                     },
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Unmorph from wall to grab ledge",
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Unmorph from wall to grab ledge",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Spider Ball"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spider Ball"
                                                 }
                                             ]
                                         }
@@ -1214,7 +1198,7 @@
                         "Pickup (Super Missile Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: there's a way to do this whole puzzle with spider boost",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1226,12 +1210,50 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Lay a PB just above the rightmost Crumble, then use Phase Drift and launch up",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Phase",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Spider Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Spider Boost",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1240,13 +1262,45 @@
                         "Door from Caves Intersection Terminal": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: completely irrevelant for now, but should have a connection back",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Phase",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
-                                            "items": []
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Spider Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Spider Boost",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3254,20 +3308,12 @@
                             }
                         },
                         "Chozo Seal Top": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": "TODO: going back should also have requirements technically",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Event - Grapple Block Pull Right": {
@@ -3369,7 +3415,7 @@
                         "Tunnel to Alpha+ Arena Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: missing goo on walls",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -6005,9 +6051,9 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "and",
+                                                                            "type": "or",
                                                                             "data": {
-                                                                                "comment": "Freeze the Gawron - TODO: freeze enemy without charge",
+                                                                                "comment": "Freeze the Gawron",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -6015,6 +6061,15 @@
                                                                                             "type": "items",
                                                                                             "name": "Charge",
                                                                                             "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "FrozenEnemy",
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -6031,7 +6086,16 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "Freeze",
-                                                                                            "amount": 2,
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "FrozenEnemy",
+                                                                                            "amount": 1,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
