@@ -9,7 +9,7 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_name: LE_Item_014
   * Extra - actor_type: item_senergytank
   > Above Pickup
-      Trivial
+      Morph Ball and After Area 6 - Transport to Area 7 Grapple Blocks Bottom
 
 > Elevator to Area 7; Heals? False
   * Layers: default
@@ -60,7 +60,7 @@ Extra - asset_id: collision_camera_034
       All of the following:
           Lay Any Bomb
           # Deal with the Electric Gulluggs
-          Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
+          Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Gold Autrack
   > Start Point
       Trivial
 
@@ -81,14 +81,14 @@ Extra - asset_id: collision_camera_034
       All of the following:
           Lay Any Bomb
           # Deal with the Electric Gulluggs
-          Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
+          Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Gold Autrack
   > Above Plant Tunnels
       Morph Ball and Deal with Black Gravitt in Low Ceiling
   > Next to Grapple Block Top
       All of the following:
           Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Top
           # Deal with the Electric Gulluggs
-          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Gold Autrack
 
 > Above Pickup; Heals? False
   * Layers: default
@@ -99,7 +99,7 @@ Extra - asset_id: collision_camera_034
           # Traversing the puzzle
           Grapple Beam and Morph Ball
           # Reaching the tunnel
-          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (No High Jump)
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
           Any of the following:
               # Solving the puzzle
               Power Bomb ≥ 2 and Lay Power Bomb
@@ -114,12 +114,7 @@ Extra - asset_id: collision_camera_034
   > Above Plant Tunnels
       Any of the following:
           Lightning Armor
-          All of the following:
-              Hazard Runs (Beginner) and Hazard Damage ≥ 65
-              Any of the following:
-                  # Deal with the Gravitt
-                  Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
-                  Damage Boost (Beginner) and Normal Damage ≥ 45
+          Hazard Runs (Beginner) and Hazard Damage ≥ 65 and Deal with Black Gravitt in Low Ceiling
 
 > Event - Grapple Blocks Bottom; Heals? False
   * Layers: default
@@ -128,12 +123,14 @@ Extra - asset_id: collision_camera_034
       All of the following:
           Lay Any Bomb
           Any of the following:
+              # Crossing the Crumble blocks
               Use Spider Ball
               All of the following:
+                  # TODO: get back with HJ?
                   Phase Drift
                   Any of the following:
                       Space Jump
-                      # https://youtu.be/NE8KzPdWa4Y
+                      # IBJ: https://youtu.be/NE8KzPdWa4Y
                       Infinite Bomb Jump (Advanced) and Lay Bomb
 
 > Start Point; Heals? False
@@ -157,12 +154,7 @@ Extra - asset_id: collision_camera_034
   > Above Pickup
       Any of the following:
           Lightning Armor
-          All of the following:
-              Hazard Runs (Beginner) and Hazard Damage ≥ 65
-              Any of the following:
-                  # Deal with the Gravitt
-                  Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
-                  Damage Boost (Beginner) and Normal Damage ≥ 45
+          Hazard Runs (Beginner) and Hazard Damage ≥ 65 and Deal with Black Gravitt in Low Ceiling
 
 > Next to Grapple Block Top; Heals? False
   * Layers: default
@@ -172,15 +164,15 @@ Extra - asset_id: collision_camera_034
           All of the following:
               Lay Bomb
               Any of the following:
-                  Spider Ball or Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner)
-                  High Jump Boots and Spring Ball
+                  Mid-Air Morph (Beginner) or Simple IBJ or Use Spider Ball
+                  High Jump Boots and Use Spring Ball
   > Event - Grapple Block Top
       Grapple Beam
   > Left of Plant Tunnels
       All of the following:
           Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Top
           # Deal with the Electric Gulluggs
-          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Gold Autrack
 
 ----------------
 Teleporter South
@@ -702,7 +694,7 @@ Extra - asset_id: collision_camera_043
   * Pickup 139; Category? Major
   * Extra - actor_name: LE_PowerUp_Powerbomb
   * Extra - actor_type: itemsphere_powerbomb
-  > Door from Transport to Area 7
+  > Before Diggernaut
       Trivial
 
 > Door to Electric Escalade; Heals? False
@@ -718,10 +710,9 @@ Extra - asset_id: collision_camera_043
   * Access Closed to Transport to Area 7/Door to Diggernaut Arena; Excluded from Dock Lock Rando
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
-  > Door to Electric Escalade
-      After Area 6 - Diggernaut and Lay Power Bomb
   > Before Diggernaut
       All of the following:
+          # TODO: move this to event, also have a second look
           Lay Bomb
           Any of the following:
               # Energy Requirements
@@ -767,8 +758,8 @@ Extra - asset_id: collision_camera_043
 > Before Diggernaut; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_009
-  > Door from Transport to Area 7
-      Trivial
+  > Door to Electric Escalade
+      After Area 6 - Diggernaut and Lay Power Bomb
   > Event - Diggernaut
       Trivial
 
@@ -1039,7 +1030,7 @@ Extra - asset_id: collision_camera_051
   > Save Station
       All of the following:
           # Energy Requirements
-          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 99
+          Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 99 or Defeat Gold Autrack
           Any of the following:
               # Movement Requirements
               High Jump Boots or Space Jump or Use Spider Ball
@@ -1065,7 +1056,7 @@ Extra - asset_id: collision_camera_051
   > Elevator to Area 5 - Tower Lobby
       All of the following:
           # Energy Requirements
-          Lightning Armor or Combat (Beginner) or Normal Damage ≥ 99
+          Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 99 or Defeat Gold Autrack
           Any of the following:
               # Movement Requirements
               High Jump Boots or Space Jump or Use Spider Ball
@@ -1175,9 +1166,9 @@ Extra - asset_id: collision_camera_060
   * Tunnel to Chozo Seal West Intersection Terminal/Tunnel to Chozo Seal East
   > Chozo Seal
       All of the following:
-          Morph Ball and After Area 6 - Chozo Seal East Grapple Block
+          Grapple Beam and Morph Ball and After Area 6 - Chozo Seal East Grapple Block
           # Dealing with the Gullugg
-          Lightning Armor or Power Bomb or Wave Beam or Dodge Enemies (Intermediate)
+          Lightning Armor or Dodge Enemies (Intermediate) or Defeat Gold Autrack
   > Event - Grapple Block
       All of the following:
           Grapple Beam and Morph Ball and Shoot Any Missile
@@ -1507,10 +1498,8 @@ Extra - asset_id: collision_camera_Hazard_End_B
           # Freeze the Tsumuri right of the Save Station
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
   > Door to Chozo Seal West Intersection Terminal
-      Any of the following:
-          # Energy Requirements
-          Lightning Armor or Normal Damage ≥ 150
-          Combat (Beginner) and Normal Damage ≥ 70
+      # Enemy Requirements
+      Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 150 or Defeat Gold Autrack
   > Event - Teleporter Unlocked
       Trivial
 
@@ -1547,10 +1536,8 @@ Extra - asset_id: collision_camera_Hazard_End_B
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Save Station
-      Any of the following:
-          # Energy Requirements
-          Lightning Armor or Normal Damage ≥ 150
-          Combat (Beginner) and Normal Damage ≥ 70
+      # Energy Requirements
+      Lightning Armor or Combat (Intermediate) or Normal Damage ≥ 150 or Defeat Gold Autrack
 
 > Event - Teleporter Unlocked; Heals? False
   * Layers: default

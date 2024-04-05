@@ -99,7 +99,26 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Area 6 - Transport to Area 7 Grapple Block Bottom",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -386,7 +405,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Non-Counterable Enemies"
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -416,8 +435,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15825.1,
-                        "y": -5734.8,
+                        "x": -16241.132565187385,
+                        "y": -5830.973170616702,
                         "z": 0.0
                     },
                     "description": "",
@@ -542,7 +561,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Non-Counterable Enemies"
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -628,7 +647,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Non-Counterable Enemies"
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -713,7 +732,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Climb Rooms Vertically (No High Jump)"
+                                                    "data": "Climb Rooms Vertically (High Jump)"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -899,51 +918,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Deal with the Gravitt",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dodge",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Defeat Non-Counterable Enemies"
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "DBoost",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "Damage",
-                                                                                "amount": 45,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Deal with Black Gravitt in Low Ceiling"
                                                 }
                                             ]
                                         }
@@ -981,7 +957,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Crossing the Crumble blocks",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -990,7 +966,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "TODO: get back with HJ?",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1018,7 +994,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/NE8KzPdWa4Y",
+                                                                                "comment": "IBJ: https://youtu.be/NE8KzPdWa4Y",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -1080,8 +1056,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15566.07,
-                        "y": -5143.13,
+                        "x": -15146.940386395949,
+                        "y": -5146.558116290691,
                         "z": 0.0
                     },
                     "description": "",
@@ -1196,51 +1172,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Deal with the Gravitt",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dodge",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Defeat Non-Counterable Enemies"
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "DBoost",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "Damage",
-                                                                                "amount": 45,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Deal with Black Gravitt in Low Ceiling"
                                                 }
                                             ]
                                         }
@@ -1254,8 +1187,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -15841.153127917834,
-                        "y": -5544.000933706816,
+                        "x": -15815.394532103957,
+                        "y": -5478.920566336175,
                         "z": 0.0
                     },
                     "description": "",
@@ -1289,22 +1222,12 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spider",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
                                                             },
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -1330,13 +1253,8 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Spring",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Use Spring Ball"
                                                                         }
                                                                     ]
                                                                 }
@@ -1416,7 +1334,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Defeat Non-Counterable Enemies"
+                                                    "data": "Defeat Gold Autrack"
                                                 }
                                             ]
                                         }
@@ -5225,7 +5143,7 @@
                     "pickup_index": 139,
                     "location_category": "major",
                     "connections": {
-                        "Door from Transport to Area 7": {
+                        "Before Diggernaut": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5301,31 +5219,10 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Electric Escalade": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Diggernaut",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Before Diggernaut": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: move this to event, also have a second look",
                                 "items": [
                                     {
                                         "type": "template",
@@ -5761,11 +5658,25 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Door from Transport to Area 7": {
+                        "Door to Electric Escalade": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Diggernaut",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Event - Diggernaut": {
@@ -7420,7 +7331,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -7432,6 +7343,10 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Defeat Gold Autrack"
                                                 }
                                             ]
                                         }
@@ -7646,7 +7561,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -7658,6 +7573,10 @@
                                                         "amount": 99,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Defeat Gold Autrack"
                                                 }
                                             ]
                                         }
@@ -8609,22 +8528,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PBAmmo",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -8636,6 +8541,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -11272,7 +11186,7 @@
                         "Door to Chozo Seal West Intersection Terminal": {
                             "type": "or",
                             "data": {
-                                "comment": "Energy Requirements",
+                                "comment": "Enemy Requirements",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -11293,29 +11207,16 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "template",
+                                        "data": "Defeat Gold Autrack"
+                                    },
+                                    {
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 70,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -11520,30 +11421,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 70,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Defeat Gold Autrack"
                                     },
                                     {
                                         "type": "resource",
@@ -11551,6 +11430,15 @@
                                             "type": "items",
                                             "name": "Armor",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }
