@@ -2420,7 +2420,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_Checkpoint_007"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Spider Ball)": {
                             "type": "resource",
@@ -2432,53 +2432,61 @@
                             }
                         },
                         "Door to Temple Exterior": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": "Melee Clip OoB: https://youtu.be/QmXq9hl-oB4?t=80",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Climb Rooms Vertically (No High Jump)"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "MeleeClip",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "OoB",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": "Melee Clip OoB: https://youtu.be/QmXq9hl-oB4?t=80",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MeleeClip",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SWJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "OoB",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4891,7 +4899,7 @@
                         "Next to Pickup": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: comment all these blocks better",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -4951,7 +4959,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/GHRfKKATcNU",
+                                                                                "comment": "Shoot block through wall then jump up: https://youtu.be/GHRfKKATcNU",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -4998,7 +5006,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "https://youtu.be/GHRfKKATcNU?t=19",
+                                                                                                        "comment": "Shoot block through wall then Spider Boost up: https://youtu.be/GHRfKKATcNU?t=19",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -5024,7 +5032,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "https://youtu.be/2uAFWMA8Vco",
+                                                                                                        "comment": "Break the Baby blocks, jump from water to shoot block, then Spider Boost right: https://youtu.be/2uAFWMA8Vco",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
@@ -5110,7 +5118,7 @@
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "Precise Aiming https://youtu.be/GHRfKKATcNU?t=11",
+                                                                                                        "comment": "Shoot block through wall then UBJ up: https://youtu.be/GHRfKKATcNU?t=11",
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "template",
@@ -5145,7 +5153,7 @@
                                                                                                             {
                                                                                                                 "type": "or",
                                                                                                                 "data": {
-                                                                                                                    "comment": "Precise Aiming https://youtu.be/GHRfKKATcNU?t=43",
+                                                                                                                    "comment": "Shoot block through wall then jump up: https://youtu.be/GHRfKKATcNU?t=43",
                                                                                                                     "items": [
                                                                                                                         {
                                                                                                                             "type": "resource",
@@ -5217,7 +5225,7 @@
                                                                                                             {
                                                                                                                 "type": "or",
                                                                                                                 "data": {
-                                                                                                                    "comment": "https://youtu.be/GHRfKKATcNU?t=27",
+                                                                                                                    "comment": "Shoot block through wall and Spider Ball up: https://youtu.be/GHRfKKATcNU?t=27",
                                                                                                                     "items": [
                                                                                                                         {
                                                                                                                             "type": "resource",
@@ -5359,7 +5367,7 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Metroid Caverns Save Station",
-                        "node": "Dock to Water Maze (Top)"
+                        "node": "Dock to Water Maze"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -5514,41 +5522,6 @@
                                 "name": "Grapple",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Dock from Metroid Caverns Save Station": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4221.1,
-                        "y": 2822.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Area 1",
-                        "area": "Metroid Caverns Save Station",
-                        "node": "Dock to Water Maze (OoB)"
-                    },
-                    "default_dock_weakness": "Blocked Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Next to Pickup": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -6968,7 +6941,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Water Maze (Top)": {
+                        "Dock to Water Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6990,58 +6963,90 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Area 1 - Water Maze Grapple Block",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get up",
+                                            "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spider",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "UE+SuperJump",
+                                                        "comment": "Inbounds Path",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SuperJump",
-                                                                    "amount": 2,
+                                                                    "type": "events",
+                                                                    "name": "Area 1 - Water Maze Grapple Block",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "UnmorphExtend",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Get up",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spider Ball"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "UE+SuperJump",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SuperJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UnmorphExtend",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Underwater Bomb Jump",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Lay Bomb"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UBJ",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -7050,19 +7055,99 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Underwater Bomb Jump",
+                                                        "comment": "Out of Bounds Path",
                                                         "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Bomb"
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "UBJ",
-                                                                    "amount": 1,
+                                                                    "name": "OoB",
+                                                                    "amount": 2,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "To clip OoB",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "https://youtu.be/quVim9n0C80?t=9",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "MeleeClip",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Spider Ball Clip off the Save Station https://youtu.be/quVim9n0C80",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Use Spider Ball"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SpiderClip",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "To reach the dock",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "UBJ",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Lay Bomb"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UBJ",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -7080,117 +7165,15 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Dock to Water Maze (OoB)": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://youtu.be/quVim9n0C80 - TODO: move all of theese requirements to the dock below",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "To clip Out of Bounds",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MeleeClip",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Use Spider Ball"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SpiderClip",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "To reach the dock",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Bomb"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "UBJ",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "OoB",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
-                "Dock to Water Maze (Top)": {
+                "Dock to Water Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4252.248677248677,
-                        "y": 3079.3320105820103,
+                        "x": -4252.25,
+                        "y": 3079.33,
                         "z": 0.0
                     },
                     "description": "",
@@ -7332,33 +7315,6 @@
                             }
                         }
                     }
-                },
-                "Dock to Water Maze (OoB)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4252.248677248677,
-                        "y": 2834.292328042328,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Area 1",
-                        "area": "Water Maze",
-                        "node": "Dock from Metroid Caverns Save Station"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
                 }
             }
         },

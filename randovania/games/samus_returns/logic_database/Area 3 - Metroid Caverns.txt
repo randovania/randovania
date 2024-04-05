@@ -274,21 +274,21 @@ Extra - asset_id: collision_camera_009
       Any of the following:
           Baby Metroid
           All of the following:
-              # Get this item via OoB: TODO: comment
+              # Get this item via OoB with Phase Drift Clip
               Phase Drift and Out of Bounds Movement (Advanced) and Phase Drift Clip (Intermediate)
               Any of the following:
                   All of the following:
                       Gravity Suit and Lay Any Bomb
                       Any of the following:
                           High Jump Boots or Space Jump or Super Jump (Advanced)
-                          # https://youtu.be/D7HtfaVof1s
+                          # WJ off the right wall while OoB: https://youtu.be/D7HtfaVof1s
                           Wall Jump (Intermediate)
                   All of the following:
                       Mid-Air Morph (Advanced) and Lay Bomb
                       Any of the following:
-                          # https://youtu.be/Y3upUucT0L0
+                          # UBJ: https://youtu.be/Y3upUucT0L0
                           Underwater Bomb Jump (Advanced)
-                          # https://youtu.be/SjhO_4CmYJI
+                          # IBJ with Gravity: https://youtu.be/SjhO_4CmYJI
                           Gravity Suit and Infinite Bomb Jump (Intermediate)
   > Below Pickup
       Lay Any Bomb
@@ -456,8 +456,17 @@ Extra - asset_id: collision_camera_024
   > Tunnel to Ramulken Rollway
       Lay Any Bomb
   > Left of Grapple Block
-      # TODO: we're currently requiring grapple, because if you're going this way, you want to pull the grapple block. At one point, we should *not* assume that.
-      Grapple Beam and Morph Ball and Shoot Any Missile
+      All of the following:
+          Morph Ball and Shoot Any Missile
+          Any of the following:
+              # Get up
+              Grapple Beam or Space Jump or Simple IBJ
+              # Avoid goo
+              Spider Boost (Intermediate) and Can Spider Boost
+              All of the following:
+                  # Climb with HJ
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Intermediate)
 
 > Tunnel to Ramulken Rollway; Heals? False
   * Layers: default
@@ -466,8 +475,14 @@ Extra - asset_id: collision_camera_024
       All of the following:
           Morph Ball and Shoot Any Missile
           Any of the following:
+              # Get up
               Grapple Beam or Space Jump or Simple IBJ
+              # Avoid the goo
               Spider Boost (Intermediate) and Can Spider Boost
+              All of the following:
+                  # Climb with HJ
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Intermediate)
 
 > Tunnel to Quarry Shaft; Heals? False
   * Layers: default
@@ -612,10 +627,20 @@ Extra - asset_id: collision_camera_026
           Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
           # Jump off the ledge
           Mid-Air Morph (Beginner)
-          Any of the following:
-              # TODO: freeze the Gullug
-              # UE
-              Morph Ball and Unmorph Extend (Intermediate)
+          # UE
+          Morph Ball and Unmorph Extend (Intermediate)
+          All of the following:
+              # Freeze the Gullugg
+              Ice Beam
+              Any of the following:
+                  All of the following:
+                      Stand on Frozen Enemy (Beginner)
+                      # Fully freeze
+                      Charge Beam or Freeze Enemy with Melee (Beginner)
+                  # Use Phase Drift to extend freeze timer
+                  Phase Drift and Stand on Frozen Enemy (Intermediate)
+                  # Quickly jump while temporarily frozen
+                  Stand on Frozen Enemy (Advanced)
 
 > Teleporter; Heals? False
   * Layers: default
@@ -671,8 +696,16 @@ Extra - asset_id: collision_camera_026
   > Door to Ramulken Rollway
       Any of the following:
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-          # Freeze the Gullugg: https://youtu.be/6knVhkzcL9Q - TODO: expand on freezing options
-          Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+          All of the following:
+              # Manipulate the Gullugg to move higher then freeze: https://youtu.be/6knVhkzcL9Q
+              Ice Beam
+              Any of the following:
+                  # Fully Freeze
+                  Charge Beam and Stand on Frozen Enemy (Intermediate)
+                  # Use Phase Drift to extend freeze timer
+                  Phase Drift and Stand on Frozen Enemy (Advanced)
+                  # Quickly jump while temporarily frozen
+                  Stand on Frozen Enemy (Expert)
   > Event - Teleporter Unlocked
       Trivial
 
@@ -708,8 +741,18 @@ Extra - asset_id: collision_camera_027
               Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
               # Fall from above and  unmorph during fall
               Movement (Intermediate)
-              # Freeze the Gullug: https://youtu.be/KHAZvT3Q-t0 - TODO: list more cases
-              Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
+              All of the following:
+                  # Freeze the Gullugg: https://youtu.be/KHAZvT3Q-t0
+                  Ice Beam
+                  Any of the following:
+                      All of the following:
+                          # Fully Freeze
+                          Stand on Frozen Enemy (Beginner)
+                          Charge Beam or Freeze Enemy with Melee (Beginner)
+                      # Use Phase Drift to extend freeze timer
+                      Phase Drift and Stand on Frozen Enemy (Intermediate)
+                  # Quickly jump while temporarily frozen
+                  Stand on Frozen Enemy (Advanced)
 
 > Door to Lonely Loop; Heals? False
   * Layers: default
@@ -761,7 +804,6 @@ Extra - asset_id: collision_camera_028
   * Tunnel to Quarry Shaft/Tunnel to Lonely Loop
   > Door to Quarry Shaft
       All of the following:
-          # TODO: walls are goo
           Morph Ball
           Any of the following:
               # Get up
@@ -842,8 +884,8 @@ Extra - asset_id: collision_camera_032
               Morph Ball
               Any of the following:
                   After Area 3 (Metroid Caverns) - Transport to Area 3 Factory Interior Grapple Block
-                  # Freeze Ramulken in corner and Melee Clip right: https://youtu.be/RJkXLo_UohI - TODO: find more ways
-                  Stand on Frozen Enemy (Beginner) and Melee Clip (Advanced) and Fully Freeze Enemy
+                  # Freeze Ramulken in corner and Melee Clip right: https://youtu.be/RJkXLo_UohI
+                  Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Beginner) and Melee Clip (Advanced)
   > Door to Quarry Tunnel
       Trivial
 
