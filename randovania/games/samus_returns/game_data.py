@@ -80,9 +80,9 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "How do I access Proteus Ridley?",
-            "By going through the Area 8 to Surface transition with the Baby "
-            "and all DNA collected. Going through the transition without the requirements will make you access the "
-            "Ship instead.",
+            "After having collected the Baby and all DNA, enter the transition between the Surface Teleporter and "
+            "Landing Site. Going through the transition without the requirements will give you "
+            "access to the Ship instead.",
         ),
         (
             "Are there any hints?",
