@@ -652,25 +652,56 @@
                             }
                         },
                         "Tunnel to Factory Exterior (Bottom)": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
-                        },
-                        "Dock to Factory Exterior": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": "Softlock risk without Bombs https://youtu.be/NciAGjkvQMM - TODO: move Oob to dock node",
+                                "comment": "Inbounds Path",
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Phase Drift Clip"
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "PhaseClip",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "OoB Path with Phase Drift Clip off the Crumble blocks: https://youtu.be/NciAGjkvQMM",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Phase",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "PhaseClip",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -859,33 +890,6 @@
                         "node": "Tunnel to Exterior Maze (Bottom)"
                     },
                     "default_dock_weakness": "Tunnel with Bomb Block",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                },
-                "Dock to Factory Exterior": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9366.25,
-                        "y": 11029.25,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Area 3 - Factory Exterior",
-                        "area": "Factory Exterior",
-                        "node": "Dock from Exterior Maze"
-                    },
-                    "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2066,12 +2070,26 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Below Crumble Blocks": {
+                        "Door to Halzyn Hangout": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Path if clipped OoB in Exterior Maze with Phase Drift Clip",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
+                        },
+                        "Below Crumble Blocks": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -2201,43 +2219,6 @@
                             "data": {
                                 "type": "items",
                                 "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Dock from Exterior Maze": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9366.25,
-                        "y": 11029.25,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Area 3 - Factory Exterior",
-                        "area": "Exterior Maze",
-                        "node": "Dock to Factory Exterior"
-                    },
-                    "default_dock_weakness": "Blocked Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Halzyn Hangout": {
-                            "type": "resource",
-                            "data": {
-                                "type": "tricks",
-                                "name": "OoB",
                                 "amount": 1,
                                 "negate": false
                             }

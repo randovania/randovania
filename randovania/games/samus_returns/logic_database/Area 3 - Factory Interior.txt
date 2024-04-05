@@ -10,10 +10,15 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_type: item_powerbombtank
   > Door to Gamma Arena South
       Any of the following:
+          # Baby Path
           Baby Metroid
           All of the following:
+              # Tunnel Path
               Lay Any Bomb
-              Lightning Armor or Grapple Beam
+              Any of the following:
+                  Lightning Armor or Grapple Beam
+                  # Roll through tunnels and tank Wallfire fireball
+                  Hazard Runs (Advanced) and Hazard Damage ≥ 295
 
 > Door to Gamma Arena South; Heals? False
   * Layers: default
@@ -22,11 +27,15 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_type: doorpowerpower
   > Pickup (Power Bomb Tank)
       Any of the following:
+          # Baby Path
           Baby Metroid
           All of the following:
+              # Tunnel
               Lay Any Bomb
-              # TODO: Damage Boost
-              Lightning Armor
+              Any of the following:
+                  Lightning Armor
+                  # Roll through plants
+                  Hazard Runs (Advanced) and Hazard Damage ≥ 265
 
 ----------------
 Gamma Arena South Access
@@ -169,8 +178,20 @@ Extra - asset_id: collision_camera_017
   > Tunnel to Transport to Factory Exterior East
       All of the following:
           Morph Ball
-          # Get up - TODO: freeze logic for hornoad
-          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Any of the following:
+              Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+              All of the following:
+                  # Freeze Hornoad to reach tunnel
+                  Ice Beam
+                  Any of the following:
+                      All of the following:
+                          # Fully freeze
+                          Stand on Frozen Enemy (Beginner)
+                          Charge Beam or Freeze Enemy with Melee (Beginner)
+                      # Use Phase Drift to extend freeze timer
+                      Phase Drift and Stand on Frozen Enemy (Intermediate)
+                      # Quickly jump off it while its temporarily frozen
+                      Stand on Frozen Enemy (Advanced)
   > Tunnel to Factory Intersection (Bottom)
       After Area 3 (Factory Interior) - Grapple Circuit Grapple Block Right and Lay Any Bomb
   > Event - Grapple Block Left
@@ -568,8 +589,8 @@ Extra - asset_id: collision_camera_025
                   Morph Ball
                   Any of the following:
                       Space Jump or Simple IBJ
-                      # Freeze Ramulken and Gullugg: https://youtu.be/RyHEb6OY2sM - TODO: don't use template, hasnt been tested.
-                      Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+                      # Freeze Ramulken and Gullugg: https://youtu.be/RyHEb6OY2sM
+                      Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate)
                       All of the following:
                           # High Jump
                           High Jump Boots

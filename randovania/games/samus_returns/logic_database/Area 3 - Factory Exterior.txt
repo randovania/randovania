@@ -111,10 +111,11 @@ Extra - asset_id: collision_camera_016
                   High Jump Boots or Space Jump
                   Phase Drift or Movement (Intermediate)
   > Tunnel to Factory Exterior (Bottom)
-      Lay Any Bomb
-  > Dock to Factory Exterior
-      # Softlock risk without Bombs https://youtu.be/NciAGjkvQMM - TODO: move Oob to dock node
-      Phase Drift Clip (Advanced) and Can Phase Drift Clip
+      Any of the following:
+          # Inbounds Path
+          Lay Any Bomb
+          # OoB Path with Phase Drift Clip off the Crumble blocks: https://youtu.be/NciAGjkvQMM
+          Morph Ball and Phase Drift and Out of Bounds Movement (Intermediate) and Phase Drift Clip (Advanced)
 
 > Tunnel to Factory Exterior (Top); Heals? False
   * Layers: default
@@ -135,10 +136,6 @@ Extra - asset_id: collision_camera_016
 > Tunnel to Factory Exterior (Bottom); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Factory Exterior/Tunnel to Exterior Maze (Bottom)
-
-> Dock to Factory Exterior; Heals? False
-  * Layers: default
-  * Open Passage to Factory Exterior/Dock from Exterior Maze
 
 ----------------
 Grapple Beam Chamber
@@ -324,8 +321,11 @@ Extra - asset_id: collision_camera_030
 > Tunnel to Exterior Maze (Bottom); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Exterior Maze/Tunnel to Factory Exterior (Bottom)
+  > Door to Halzyn Hangout
+      # Path if clipped OoB in Exterior Maze with Phase Drift Clip
+      Out of Bounds Movement (Intermediate)
   > Below Crumble Blocks
-      Trivial
+      Lay Any Bomb
 
 > Below Crumble Blocks; Heals? False
   * Layers: default
@@ -344,12 +344,6 @@ Extra - asset_id: collision_camera_030
       Trivial
   > Tunnel to Exterior Maze (Top)
       Morph Ball
-
-> Dock from Exterior Maze; Heals? False
-  * Layers: default
-  * Blocked Passage to Exterior Maze/Dock to Factory Exterior
-  > Door to Halzyn Hangout
-      Out of Bounds Movement (Beginner)
 
 ----------------
 Transport to Metroid Caverns West
