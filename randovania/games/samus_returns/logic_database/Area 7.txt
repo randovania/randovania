@@ -75,8 +75,8 @@ Extra - asset_id: collision_camera_005
                           High Jump Boots
                           # Super Jump + UE: https://youtu.be/Q2KdixiI2ss?t=11
                           Morph Ball and Super Jump (Advanced) and Unmorph Extend (Advanced)
-  > Event - Teleporter Unlocked Mid-Air
-      Power Bomb ≥ 3 and Knowledge (Beginner) and Spider Boost (Beginner) and Can Spider Boost
+  > In Mid-Air
+      Power Bomb ≥ 3 and Spider Boost (Beginner) and Can Spider Boost
 
 > Door to Robot Retreat; Heals? False
   * Layers: default
@@ -88,6 +88,8 @@ Extra - asset_id: collision_camera_005
           Morph Ball
           # Deal with the Wallfire
           Lightning Armor or Phase Drift or Dodge Enemies (Beginner) or Defeat Gold Autrack
+  > Save Station
+      Impossible
   > Next to Pickup
       # Melee Clip under the Shot blocks and do a low-height jump right https://youtu.be/KOpITHzY1uY
       Morph Ball and Melee Clip (Intermediate) and Out of Bounds Movement (Advanced)
@@ -211,7 +213,7 @@ Extra - asset_id: collision_camera_005
 > Event - Teleporter Unlocked Mid-Air; Heals? False
   * Layers: default
   * Event Area 7 - Teleporter Unlocked (West)
-  > Next to Pickup
+  > In Mid-Air
       Trivial
 
 > Next to Pickup; Heals? False
@@ -233,6 +235,18 @@ Extra - asset_id: collision_camera_005
           # Boost left then boost right through the plants
           Power Bomb ≥ 2 and Spider Boost (Intermediate) and Can Spider Boost
           Lightning Armor or Normal Damage ≥ 55
+
+> In Mid-Air; Heals? False
+  * Layers: default
+  > Next to Teleporter
+      All of the following:
+          # Spider Boost low through the plants
+          Spider Boost (Intermediate) and Can Spider Boost
+          Lightning Armor or Normal Damage ≥ 55
+  > Event - Teleporter Unlocked Mid-Air
+      Knowledge (Beginner)
+  > Next to Pickup
+      Trivial
 
 ----------------
 Grapple Puzzle Madness
@@ -269,7 +283,10 @@ Extra - asset_id: collision_camera_006
               Space Jump
               All of the following:
                   Precise Aiming (Intermediate)
-                  Spider Ball or Simple IBJ
+                  Any of the following:
+                      Simple IBJ or Use Spider Ball
+                      # HJ+WJ
+                      High Jump Boots and Wall Jump (Intermediate)
 
 > Tunnel to Grapple Puzzle Foyer; Heals? False
   * Layers: default
@@ -305,7 +322,7 @@ Extra - asset_id: collision_camera_006
   * Layers: default
   * Event Area 7 - Grapple Puzzle Madness Grapple Block Right
   > Middle Level
-      Lay Any Bomb
+      Lay Any Bomb or Shoot Any Missile
 
 ----------------
 Spider Boost Tunnel South
@@ -332,10 +349,7 @@ Extra - asset_id: collision_camera_007
               Lay Bomb
               Any of the following:
                   # Deal with the Autrack
-                  Plasma Beam or Screw Attack or Shoot Beam Burst
-                  All of the following:
-                      Combat (Beginner)
-                      Missile ≥ 21 or Super Missile ≥ 4
+                  Defeat Gold Autrack
                   # Enter the tunnel while the Autrack adjusts its angle
                   Phase Drift and Dodge Enemies (Beginner)
                   # "Tank" the laser shots from the Autrack
@@ -349,8 +363,12 @@ Extra - asset_id: collision_camera_007
       Any of the following:
           Lay Any Bomb and Use Spider Ball
           All of the following:
-              Lay Bomb and Simple IBJ
+              # Beginner IBJ
+              Simple IBJ
               Gravity Suit or Mid-Air Morph (Beginner)
+          All of the following:
+              # Intermediate IBJ
+              Lay Bomb
               Any of the following:
                   # Quick Bomb placements to exit the water
                   Infinite Bomb Jump (Intermediate)
@@ -381,8 +399,8 @@ Extra - asset_id: collision_camera_007
               Spider Boost (Intermediate) and Can Spider Boost
               All of the following:
                   # Shoot the block and enter the tunnel before the block reforms
-                  Spider Ball
-                  Mid-Air Morph (Beginner) or Lay Bomb or Use Spider Ball or Use Spring Ball
+                  Use Spider Ball
+                  Phase Drift or Mid-Air Morph (Beginner) or Lay Bomb or Use Spring Ball
   > Central Water Pool
       Morph Ball
 
@@ -394,8 +412,6 @@ Extra - asset_id: collision_camera_007
   > Central Water Pool
       All of the following:
           Morph Ball
-          # Deal with the Blob Swarm
-          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Swarms
           Any of the following:
               # Reach the pool
               High Jump Boots or Gravity Suit or Super Jump (Beginner) or Unmorph Extend (Beginner) or Use Spider Ball
@@ -446,8 +462,6 @@ Extra - asset_id: collision_camera_007
   > Door to Robot Regime
       All of the following:
           Morph Ball
-          # Deal with the Blob Swarm
-          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Swarms
           Any of the following:
               # Reach the door
               High Jump Boots or Gravity Suit or Super Jump (Beginner) or Unmorph Extend (Beginner) or Use Spider Ball
@@ -633,7 +647,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation003
   > Energy Recharge Station
-      Morph Ball
+      Morph Ball or Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
   > Door to Spider Boost Tunnel South
       # Deal with the Gunzoo
       Lightning Armor or Dodge Enemies (Intermediate) or Defeat Gold Autrack
@@ -684,7 +698,7 @@ Extra - asset_id: collision_camera_010
   * Open Passage to Spider Boost Tunnel South/Dock to Robot Regime
   > Pickup (Aeion Tank)
       # Boost from "Spider Boost Tunnel South"
-      After Area 7 - Spider Boost Tunnel South Grapple Block Top and Spider Boost (Beginner) and Can Spider Boost
+      After Area 7 - Spider Boost Tunnel South Grapple Block Top and Spider Boost (Beginner) and Disabled Entrance Rando and Can Spider Boost
   > Door to Spider Boost Tunnel South
       Trivial
 
@@ -943,6 +957,13 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Super Missile and Lay Any Bomb
           Phase Drift or Spider Ball or Wall Jump (Intermediate)
+          Any of the following:
+              # Get up
+              Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+              All of the following:
+                  # Get up with HJ
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
 
 ----------------
 Omega Arena South Access
@@ -967,8 +988,20 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_type: doorpowerpower
   > Door to Omega Arena South
       Any of the following:
+          # TODO: under screw blocks there arent plants ingame
           Lightning Armor or Screw Attack
-          Hazard Runs (Intermediate) and Hazard Damage ≥ 125
+          Hazard Runs (Intermediate) and Hazard Damage ≥ 75
+          # Get through lower part
+          Lightning Armor and Screw Attack and Hazard Runs (Intermediate) and Hazard Damage ≥ 75
+          All of the following:
+              # Jump to the ledge - TODO: test freezing with gullugg
+              Single-wall Wall Jump (Beginner) and Wall Jump (Beginner) and Climb Rooms Vertically (No High Jump, No IBJ)
+              All of the following:
+                  # High Jump
+                  High Jump Boots
+                  Any of the following:
+                      Super Jump (Advanced)
+                      Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Intermediate)
 
 > Door to Omega Arena South; Heals? False
   * Layers: default
@@ -980,7 +1013,7 @@ Extra - asset_id: collision_camera_012
   > Door to Laboratory Teleporter East
       Any of the following:
           Lightning Armor or Screw Attack
-          Hazard Runs (Intermediate) and Hazard Damage ≥ 125
+          Hazard Runs (Intermediate) and Hazard Damage ≥ 75
   > Start Point
       Trivial
 
@@ -1273,10 +1306,16 @@ Extra - asset_id: collision_camera_016
           Any of the following:
               # Reach the door
               Climb Rooms Vertically (No High Jump)
-              # Wall Jump then Unmoprh Extend
+              # Wall Jump then Unmorph Extend
               Morph Ball and Unmorph Extend (Intermediate) and Wall Jump (Beginner)
               # Melee Freeze the Ramulken when its on the lower part of the wall - TODO: freeze via different ways
               Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Advanced)
+              All of the following:
+                  # High Jump
+                  High Jump Boots
+                  Any of the following:
+                      Super Jump (Advanced)
+                      Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Intermediate)
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
@@ -1366,15 +1405,23 @@ Extra - asset_id: collision_camera_017
   > Door to Transport to Area 8
       All of the following:
           Screw Attack
-          Space Jump or Wall Jump (Beginner)
+          Any of the following:
+              # TODO: maybe can get this with IBJ/spider?
+              Space Jump or Wall Jump (Beginner)
+              High Jump Boots and Super Jump (Advanced)
   > Tunnel to Grapple Puzzle Madness
       All of the following:
           After Area 7 - Grapple Puzzle Madness Grapple Block Left
           Any of the following:
-              Simple IBJ
+              # Break the Bomb block - TODO: try to change this more. look at a1 MC for reference
+              # Power Bomb way
+              Lay Power Bomb
               All of the following:
-                  Lay Any Bomb
-                  Space Jump or Spider Ball
+                  # Bomb way
+                  Lay Bomb
+                  Mid-Air Morph (Beginner) or Climb Rooms Vertically (No High Jump) or Simple IBJ or Use Spring Ball
+              # Break with Spider
+              Lay Any Bomb and Use Spider Ball
 
 ----------------
 Robot Retreat
@@ -1514,23 +1561,7 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_supermissiletank
   > Tunnel to Robot Retreat (Bottom)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Power Bomb ≥ 2
-              All of the following:
-                  Bomb
-                  Any of the following:
-                      # Deal with the Autrack
-                      Plasma Beam or Screw Attack
-                      All of the following:
-                          Combat (Beginner)
-                          Any of the following:
-                              Super Missile ≥ 4
-                              Missile ≥ 20 and Phase Drift
-                      All of the following:
-                          Damage Boost (Beginner)
-                          Lightning Armor or Normal Damage ≥ 90
+      Lay Any Bomb
 
 > Tunnel to Robot Retreat (Top); Heals? False
   * Layers: default
@@ -1594,8 +1625,13 @@ Extra - asset_id: collision_camera_021
           Morph Ball and After Area 7 - Transport to Area 8 Grapple Block
           # Deal with the enemies
           Lightning Armor or Combat (Intermediate) or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
-          # Climb the room
-          Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Any of the following:
+              # Climb the room
+              Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+              All of the following:
+                  # HJ
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
   > Event - Grapple Block
       All of the following:
           # Move the Grapple block
