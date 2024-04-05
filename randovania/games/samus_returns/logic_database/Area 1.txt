@@ -380,16 +380,18 @@ Extra - asset_id: collision_camera_016
   > Door to Temple Exterior
       Enabled Door Type Randomizer or Disabled Door Lock Randomizer
 
-> Room Bottom; Heals? False; Default Node
+> Room Bottom; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_007
   > Pickup (Spider Ball)
       Morph Ball
   > Door to Temple Exterior
-      Any of the following:
-          Climb Rooms Vertically (No High Jump)
-          # Melee Clip OoB: https://youtu.be/QmXq9hl-oB4?t=80
-          Morph Ball and Melee Clip (Advanced) and Out of Bounds Movement (Advanced) and Single-wall Wall Jump (Advanced)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Climb Rooms Vertically (No High Jump)
+              # Melee Clip OoB: https://youtu.be/QmXq9hl-oB4?t=80
+              Melee Clip (Advanced) and Out of Bounds Movement (Advanced) and Single-wall Wall Jump (Advanced)
 
 ----------------
 Exterior Alpha Arena
@@ -802,7 +804,6 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_type: doorclosedpower
   > Next to Pickup
       All of the following:
-          # TODO: comment all these blocks better
           Morph Ball and Shoot Any Missile
           Any of the following:
               All of the following:
@@ -810,7 +811,7 @@ Extra - asset_id: collision_camera_028
                   Gravity Suit
                   Any of the following:
                       Baby Metroid or Phase Drift
-                      # https://youtu.be/GHRfKKATcNU
+                      # Shoot block through wall then jump up: https://youtu.be/GHRfKKATcNU
                       Precise Aiming (Beginner)
               All of the following:
                   # Without Gravity Suit
@@ -818,18 +819,18 @@ Extra - asset_id: collision_camera_028
                       All of the following:
                           Can Spider Boost
                           Any of the following:
-                              # https://youtu.be/GHRfKKATcNU?t=19
+                              # Shoot block through wall then Spider Boost up: https://youtu.be/GHRfKKATcNU?t=19
                               Precise Aiming (Intermediate) and Spider Boost (Intermediate)
-                              # https://youtu.be/2uAFWMA8Vco
+                              # Break the Baby blocks, jump from water to shoot block, then Spider Boost right: https://youtu.be/2uAFWMA8Vco
                               Baby Metroid and Mid-Air Morph (Intermediate) and Spider Boost (Advanced) and Super Jump (Advanced)
                       All of the following:
                           Phase Drift or Precise Aiming (Intermediate)
                           Any of the following:
-                              # Precise Aiming https://youtu.be/GHRfKKATcNU?t=11
+                              # Shoot block through wall then UBJ up: https://youtu.be/GHRfKKATcNU?t=11
                               Underwater Bomb Jump (Beginner) and Lay Bomb
                               All of the following:
                                   High Jump Boots
-                                  # Precise Aiming https://youtu.be/GHRfKKATcNU?t=43
+                                  # Shoot block through wall then jump up: https://youtu.be/GHRfKKATcNU?t=43
                                   Super Jump (Intermediate) or Unmorph Extend (Beginner)
                       All of the following:
                           Use Spider Ball
@@ -837,7 +838,7 @@ Extra - asset_id: collision_camera_028
                               Phase Drift
                               All of the following:
                                   Precise Aiming (Intermediate)
-                                  # https://youtu.be/GHRfKKATcNU?t=27
+                                  # Shoot block through wall and Spider Ball up: https://youtu.be/GHRfKKATcNU?t=27
                                   Mid-Air Morph (Intermediate) or Movement (Advanced)
 
 > Dock to Gullugg Gangway; Heals? False
@@ -852,7 +853,7 @@ Extra - asset_id: collision_camera_028
 
 > Dock to Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Open Passage to Metroid Caverns Save Station/Dock to Water Maze (Top)
+  * Open Passage to Metroid Caverns Save Station/Dock to Water Maze
   > Dock to Gullugg Gangway
       Trivial
 
@@ -878,12 +879,6 @@ Extra - asset_id: collision_camera_028
       Morph Ball and After Area 1 - Water Maze Grapple Block
   > Event - Grapple Block
       Grapple Beam
-
-> Dock from Metroid Caverns Save Station; Heals? False
-  * Layers: default
-  * Blocked Passage to Metroid Caverns Save Station/Dock to Water Maze (OoB)
-  > Next to Pickup
-      Trivial
 
 ----------------
 Ice Beam Chamber
@@ -1090,34 +1085,40 @@ Extra - asset_id: collision_camera_041
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation001
-  > Dock to Water Maze (Top)
+  > Dock to Water Maze
       Trivial
   > Tunnel to Water Maze
       All of the following:
-          Morph Ball and After Area 1 - Water Maze Grapple Block
+          Morph Ball
           Any of the following:
-              # Get up
-              Gravity Suit or Spider Ball
-              # UE+SuperJump
-              Super Jump (Intermediate) and Unmorph Extend (Beginner)
-              # Underwater Bomb Jump
-              Underwater Bomb Jump (Beginner) and Lay Bomb
+              All of the following:
+                  # Inbounds Path
+                  After Area 1 - Water Maze Grapple Block
+                  Any of the following:
+                      # Get up
+                      Gravity Suit or Use Spider Ball
+                      # UE+SuperJump
+                      Super Jump (Intermediate) and Unmorph Extend (Beginner)
+                      # Underwater Bomb Jump
+                      Underwater Bomb Jump (Beginner) and Lay Bomb
+              All of the following:
+                  # Out of Bounds Path
+                  Out of Bounds Movement (Intermediate)
+                  Any of the following:
+                      # To clip OoB
+                      # https://youtu.be/quVim9n0C80?t=9
+                      Melee Clip (Intermediate)
+                      # Spider Ball Clip off the Save Station https://youtu.be/quVim9n0C80
+                      Spider Ball Clip (Intermediate) and Use Spider Ball
+                  Any of the following:
+                      # To reach the dock
+                      Gravity Suit
+                      # UBJ
+                      Underwater Bomb Jump (Expert) and Lay Bomb
   > Dock to Metroid Caverns Hub
       Trivial
-  > Dock to Water Maze (OoB)
-      All of the following:
-          # https://youtu.be/quVim9n0C80 - TODO: move all of theese requirements to the dock below
-          Morph Ball and Out of Bounds Movement (Intermediate)
-          Any of the following:
-              # To clip Out of Bounds
-              Melee Clip (Intermediate)
-              Spider Ball Clip (Intermediate) and Use Spider Ball
-          Any of the following:
-              # To reach the dock
-              Gravity Suit
-              Underwater Bomb Jump (Expert) and Lay Bomb
 
-> Dock to Water Maze (Top); Heals? False
+> Dock to Water Maze; Heals? False
   * Layers: default
   * Open Passage to Water Maze/Dock to Metroid Caverns Save Station
   > Save Station
@@ -1142,10 +1143,6 @@ Extra - asset_id: collision_camera_041
   * Tunnel to Metroid Caverns Hub/Tunnel to Metroid Caverns Save Station
   > Pickup (Missile Tank)
       Morph Ball
-
-> Dock to Water Maze (OoB); Heals? False
-  * Layers: default
-  * Open Passage to Water Maze/Dock from Metroid Caverns Save Station
 
 ----------------
 Inner Temple Teleporter Access
