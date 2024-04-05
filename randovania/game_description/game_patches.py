@@ -55,6 +55,7 @@ class GamePatches:
     starting_equipment: StartingEquipment
     starting_location: NodeIdentifier
     hints: dict[NodeIdentifier, Hint]
+    custom_patcher_data: list
 
     cached_dock_connections_from: list[tuple[tuple[Node, Requirement], ...] | None] = dataclasses.field(
         hash=False, compare=False
@@ -90,6 +91,7 @@ class GamePatches:
             starting_location=game.starting_location,
             hints={},
             cached_dock_connections_from=[None] * len(game.region_list.all_nodes),
+            custom_patcher_data=[],
         )
 
     def assign_new_pickups(self, assignments: Iterable[PickupTargetAssociation]) -> GamePatches:
