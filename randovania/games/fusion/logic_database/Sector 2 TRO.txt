@@ -258,6 +258,8 @@ Extra - room_id: [9]
               # Stand on Frozen Reo
               Combat (Beginner) and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Maintenance Annex
+      After Sector 2 Zoro Zig-Zag Bomb Blocks Broken and Can Bounce in Ball
+  > Event - Break Bomb Blocks
       Can Bounce in Ball and Can Use Any Bombs
 
 > Door to Maintenance Annex; Heals? False
@@ -266,26 +268,31 @@ Extra - room_id: [9]
   * Extra - door_idx: (21,)
   > Door to Data Hub
       All of the following:
+          Morph Ball and After Sector 2 Zoro Zig-Zag Bomb Blocks Broken
+          Any of the following:
+              Space Jump
+              Hi-Jump and Wall Jump (Intermediate)
+  > Event - Break Bomb Blocks
+      All of the following:
           Morph Ball
           Any of the following:
-              All of the following:
-                  Space Jump
-                  Any of the following:
-                      Power Bombs
-                      All of the following:
-                          Morph Ball Bomb Data
-                          Any of the following:
-                              Jump Bombjump (Expert)
-                              Screw Attack and Knowledge (Beginner)
-              All of the following:
-                  Hi-Jump
-                  Any of the following:
-                      Power Bombs
-                      All of the following:
-                          Morph Ball Bomb Data
-                          Any of the following:
-                              Jump Bombjump (Advanced)
-                              Screw Attack and Knowledge (Beginner) and Wall Jump (Intermediate)
+              # Climbing Requirement
+              Space Jump
+              Hi-Jump and Wall Jump (Intermediate)
+          Any of the following:
+              # Break Blocks
+              Can Use Power Bombs
+              Screw Attack and Knowledge (Beginner)
+              # Cursed Method: https://youtu.be/Cqf5mZg1NZc
+              Hi-Jump and Jump Bombjump (Hypermode) and Mid-Air Morph (Intermediate) and Can Use Bombs and Can Use Springball
+
+> Event - Break Bomb Blocks; Heals? False
+  * Layers: default
+  * Event Sector 2 Zoro Zig-Zag Bomb Blocks Broken
+  > Door to Data Hub
+      Trivial
+  > Door to Maintenance Annex
+      Trivial
 
 ----------------
 Cultivation Station
@@ -464,14 +471,14 @@ Extra - room_id: [14]
   * L0 Hatch to Central Shaft/Door to Dessgeega Dormitory
   * Extra - door_idx: (33,)
   > Door to Collapsed Shaft
-      Trivial
+      Normal Damage ≥ 199 or Can Kill Tough Beam-Weak Enemy
 
 > Door to Collapsed Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Collapsed Shaft/Door to Dessgeega Dormitory
   * Extra - door_idx: (34, 100)
   > Door to Central Shaft
-      Trivial
+      Normal Damage ≥ 199 or Can Kill Tough Beam-Weak Enemy
 
 ----------------
 Southern Save Access
@@ -853,9 +860,9 @@ Extra - room_id: [26]
               All of the following:
                   Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
                   Any of the following:
-                      # TODO: add trick video
+                      # https://youtu.be/pEP-Sys6cJI
                       Level 1 Locks and Knowledge (Advanced) and Movement (Beginner) and Shinespark Tricks (Expert)
-                      # TODO: add trick video
+                      # https://youtu.be/A0e_o5otNC4
                       Shinespark Tricks (Expert) and Wall Jump (Advanced)
   > Event - L1 Locks
       Trivial
@@ -1013,7 +1020,8 @@ Extra - room_id: [31, 7]
   > Event - Bomb Block
       Any of the following:
           Can Break Single Bomb Blocks
-          Speed Booster and Knowledge (Intermediate) and Movement (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # https://youtu.be/JaTjNuOdVlY
+          Speed Booster and Knowledge (Intermediate) and Movement (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Event - Bomb Block; Heals? False
   * Layers: default

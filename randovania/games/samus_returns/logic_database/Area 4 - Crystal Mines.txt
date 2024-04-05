@@ -9,7 +9,7 @@ Extra - asset_id: collision_camera_001
   * Extra - actor_name: LE_Item_009
   * Extra - actor_type: item_supermissiletank
   > Next to Upper Pickup
-      Trivial
+      Morph Ball
 
 > Energy Recharge Station; Heals? True
   * Layers: default
@@ -32,8 +32,9 @@ Extra - asset_id: collision_camera_001
   > Energy Recharge Station
       Any of the following:
           Super Jump (Advanced) or Climb Rooms Vertically (High Jump)
+          # UE
           Morph Ball and Unmorph Extend (Beginner)
-          # Freeze the pink Gullugg
+          # Freeze the pink Gullugg - TODO: video. also get rid of template
           Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
   > Door to Gemstone Gorge
       Trivial
@@ -42,7 +43,7 @@ Extra - asset_id: collision_camera_001
 
 > Door to Space Jump Chamber (Bottom); Heals? False
   * Layers: default
-  * Power Beam Door to Space Jump Chamber/Door from Mines Intersection Terminal
+  * Power Beam Door to Space Jump Chamber/Door from Mines Intersection Terminal; Excluded from Dock Lock Rando
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerclosed
   > Pickup (Super Missile Tank Bottom)
@@ -73,9 +74,11 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Next to Upper Pickup
       Any of the following:
-          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          # UE
+          Morph Ball and Unmorph Extend (Beginner)
           All of the following:
-              # Freeze the Moto
+              # Freeze the Moto - TODO: video. also maybe phase drift?
               Ice Beam and Stand on Frozen Enemy (Intermediate)
               Charge Beam or Freeze Enemy with Melee (Beginner)
 
@@ -112,9 +115,14 @@ Extra - asset_id: collision_camera_001
   * Extra - actor_type: doorpowerpower
   > Above Aeion Refill
       Any of the following:
-          High Jump Boots or Morph Ball or Space Jump or Wall Jump (Beginner)
+          Single-wall Wall Jump (Beginner) or Wall Jump (Beginner)
+          # Right Path (through tunnel)
+          Morph Ball
+          # Left path
+          Climb Rooms Vertically (High Jump)
+          # Super Jump + UE:
           Super Jump (Intermediate) and Unmorph Extend (Beginner)
-          # https://youtu.be/r47HNUC9HEY
+          # Freeze the Tsumuri: https://youtu.be/r47HNUC9HEY - TODO: get rid of template
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
 
 > Pickup (Super Missile Tank Bottom); Heals? False
@@ -137,9 +145,9 @@ Extra - asset_id: collision_camera_001
   > Above Aeion Refill
       Morph Ball
 
-> Dock to Green Cystal Dugout; Heals? False
+> Dock to Green Crystal Dugout; Heals? False
   * Layers: default
-  * Open Passage to Green Cystal Dugout/Dock to Mines Intersection Terminal
+  * Open Passage to Green Crystal Dugout/Dock to Mines Intersection Terminal
   > Next to Upper Pickup
       Trivial
 
@@ -148,7 +156,7 @@ Extra - asset_id: collision_camera_001
   * Tunnel to Space Jump Chamber/Tunnel to Mines Intersection Terminal
   > Door to Space Jump Chamber (Bottom)
       All of the following:
-          Morph Ball and Disabled Door Lock Randomizer
+          Morph Ball
           Power Bomb or Shoot Wave Beam
           Any of the following:
               Baby Metroid or Phase Drift
@@ -162,24 +170,34 @@ Extra - asset_id: collision_camera_001
       All of the following:
           Super Missile
           Any of the following:
+              # Get Up
+              # Spider Boost
               Spider Boost (Beginner) and Can Spider Boost
               All of the following:
                   Morph Ball
                   Any of the following:
                       Grapple Beam
                       All of the following:
+                          # Jump up with Gravity
                           Gravity Suit
                           Any of the following:
                               High Jump Boots or Super Jump (Intermediate) or Simple IBJ
-                              # https://youtu.be/v6T3tlUezFk
+                              # Use I-Frames from spikes: https://youtu.be/v6T3tlUezFk
                               Damage Boost (Expert) and Wall Jump (Advanced) and Normal Damage ≥ 15
-                      Infinite Bomb Jump (Intermediate) and Lay Bomb
-                      Mid-Air Morph (Beginner) and Simple IBJ
+                      All of the following:
+                          # Get up via Bombs
+                          Lay Bomb
+                          Any of the following:
+                              # IBJ gravless from water
+                              Infinite Bomb Jump (Intermediate)
+                              # Get hit by bomb outside of water
+                              Mid-Air Morph (Intermediate)
   > Door to Super Missile Chamber (Top)
       Trivial
-  > Dock to Green Cystal Dugout
+  > Dock to Green Crystal Dugout
       Any of the following:
           Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          # UE
           Morph Ball and Unmorph Extend (Beginner)
 
 > Above Aeion Refill; Heals? False
@@ -189,9 +207,10 @@ Extra - asset_id: collision_camera_001
   > Door to Mines Teleporter
       Any of the following:
           Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          # UE
           Morph Ball and Unmorph Extend (Intermediate)
           All of the following:
-              # https://youtu.be/r47HNUC9HEY?t=10
+              # Freeze the Gullugg: https://youtu.be/r47HNUC9HEY?t=10 - TODO: phase drift?
               Ice Beam and Stand on Frozen Enemy (Intermediate)
               Charge Beam or Freeze Enemy with Melee (Intermediate)
   > Door to Tsumuri Tunnel
@@ -214,7 +233,9 @@ Extra - asset_id: collision_camera_002
   > Door to Mines Intersection Terminal (Top)
       Any of the following:
           Climb Rooms Vertically (No High Jump)
-          High Jump Boots and Wall Jump (Beginner)
+          All of the following:
+              High Jump Boots
+              Single-wall Wall Jump (Beginner) or Wall Jump (Beginner)
   > Start Point
       Trivial
 
@@ -227,7 +248,7 @@ Extra - asset_id: collision_camera_002
       Any of the following:
           Climb Rooms Vertically (No High Jump)
           All of the following:
-              Wall Jump (Beginner)
+              Single-wall Wall Jump (Beginner) or Wall Jump (Beginner)
               High Jump Boots or Super Jump (Intermediate)
 
 > Door to Mines Intersection Terminal (Top); Heals? False
@@ -257,7 +278,7 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: LE_Item_012
   * Extra - actor_type: item_missiletank
   > Under Pickup
-      Trivial
+      Morph Ball
 
 > Door to Zeta Arena; Heals? False
   * Layers: default
@@ -277,8 +298,9 @@ Extra - asset_id: collision_camera_003
   > Under Pickup
       Any of the following:
           Space Jump
-          # https://youtu.be/UJD_mURPVjE?t=14
+          # Freeze the Gullugs: https://youtu.be/UJD_mURPVjE?t=14 - TODO: different possibilities?
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           # Jump across gap
           High Jump Boots and Use Spider Ball
@@ -287,7 +309,7 @@ Extra - asset_id: collision_camera_003
   * Layers: default
   * Tunnel to Zeta Arena/Tunnel to Pink Crystal Preserve
   > Room Bottom
-      Trivial
+      Morph Ball
 
 > Room Bottom; Heals? False
   * Layers: default
@@ -295,61 +317,67 @@ Extra - asset_id: collision_camera_003
       Any of the following:
           High Jump Boots or Space Jump or Simple IBJ
           All of the following:
+              # Spider Ball
               Use Spider Ball
               # Latching onto the opposite wall
-              Bomb or Spring Ball or Mid-Air Morph (Beginner)
+              Mid-Air Morph (Beginner) or Lay Bomb or Use Spring Ball
           All of the following:
+              # Freeze the enemies
               Ice Beam
               Any of the following:
-                  # https://youtu.be/UJD_mURPVjE?t=77
+                  # Phase Drift off of Gawron: https://youtu.be/UJD_mURPVjE?t=77
                   Phase Drift and Stand on Frozen Enemy (Beginner)
                   All of the following:
                       Stand on Frozen Enemy (Intermediate)
                       Any of the following:
-                          # https://youtu.be/UJD_mURPVjE?t=69
+                          # Charge Beam off of Gawron: https://youtu.be/UJD_mURPVjE?t=69
                           Charge Beam
                           All of the following:
+                              # Freeze the Moto and jump off of it
                               Freeze Enemy with Melee (Intermediate)
                               Any of the following:
-                                  # https://youtu.be/UJD_mURPVjE?t=95
+                                  # Super Jump: https://youtu.be/UJD_mURPVjE?t=95
                                   Super Jump (Intermediate)
-                                  # https://youtu.be/UJD_mURPVjE?t=101
+                                  # UE: https://youtu.be/UJD_mURPVjE?t=101
                                   Morph Ball and Unmorph Extend (Intermediate)
-                  # https://youtu.be/UJD_mURPVjE?t=87
+                  # Jump off of Gawron: https://youtu.be/UJD_mURPVjE?t=87
                   Stand on Frozen Enemy (Advanced)
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Morph Ball
               Any of the following:
-                  # https://youtu.be/UJD_mURPVjE?t=107
+                  # Super Jump + UE: https://youtu.be/UJD_mURPVjE?t=107
                   Super Jump (Intermediate) and Unmorph Extend (Intermediate)
                   All of the following:
-                      # https://youtu.be/UJD_mURPVjE?t=115
+                      # Damage Boost off of left spikes: https://youtu.be/UJD_mURPVjE?t=115
                       Damage Boost (Intermediate)
                       Lightning Armor or Normal Damage ≥ 20
   > Dock to Gemstone Gorge
       Any of the following:
           Space Jump
           All of the following:
-              # https://youtu.be/UJD_mURPVjE?t=121
+              # Spider Boost: https://youtu.be/UJD_mURPVjE?t=121
               Spider Boost (Advanced) and Can Spider Boost
               Lightning Armor or Normal Damage ≥ 20
           # Dodge the Gulluggs
           Infinite Bomb Jump (Intermediate) and Lay Bomb
           All of the following:
+              # Jump up with HJ
               High Jump Boots
               Any of the following:
-                  # https://youtu.be/UJD_mURPVjE?t=128
+                  # Freeze the Moto: https://youtu.be/UJD_mURPVjE?t=128
                   Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate) and Super Jump (Advanced)
                   All of the following:
+                      # WJ off of left wall
                       Morph Ball and Unmorph Extend (Intermediate) and Wall Jump (Advanced)
                       Any of the following:
-                          # https://youtu.be/UJD_mURPVjE?t=148
+                          # Super Jump: https://youtu.be/UJD_mURPVjE?t=148
                           Super Jump (Advanced)
-                          # https://youtu.be/UJD_mURPVjE?t=137
+                          # Freeze the Moto: https://youtu.be/UJD_mURPVjE?t=137
                           Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate)
                   All of the following:
-                      # https://youtu.be/UJD_mURPVjE?t=155
+                      # SWJ of the spikes on the right wall: https://youtu.be/UJD_mURPVjE?t=155
                       Damage Boost (Intermediate) and Single-wall Wall Jump (Advanced)
                       Lightning Armor or Normal Damage ≥ 20
 
@@ -358,20 +386,24 @@ Extra - asset_id: collision_camera_003
   > Pickup (Missile Tank)
       Any of the following:
           Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Morph Ball
               Any of the following:
+                  # Get up
                   Space Jump
                   All of the following:
+                      # Freeze the Gulluggs
                       Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
                       # https://youtu.be/UJD_mURPVjE?t=14
                       High Jump Boots or Super Jump (Advanced)
-                  # https://youtu.be/UJD_mURPVjE
+                  # WJ to ceiling and spider there: https://youtu.be/UJD_mURPVjE
                   High Jump Boots and Spider Ball and Mid-Air Morph (Intermediate) and Wall Jump (Beginner)
   > Dock to Gemstone Gorge
       Any of the following:
           High Jump Boots
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
   > Room Bottom
       Trivial
@@ -415,7 +447,7 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_name: LE_Item_013
   * Extra - actor_type: item_missiletank
   > Door to Gemstone Gorge
-      Trivial
+      Varia Suit
   > Door to Mines Intersection Terminal
       Gravity Suit
 
@@ -425,7 +457,7 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_name: Door003
   * Extra - actor_type: doorclosedpower
   > Pickup (Missile Tank)
-      Trivial
+      Varia Suit
 
 > Door to Mines Intersection Terminal; Heals? False
   * Layers: default
@@ -436,7 +468,9 @@ Extra - asset_id: collision_camera_006
       All of the following:
           Gravity Suit
           Any of the following:
+              # Get up
               Space Jump or Simple IBJ
+              # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
 
 ----------------
@@ -450,9 +484,12 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: LE_Item_005
   * Extra - actor_type: item_powerbombtank
   > Tunnel to Mines Intersection Terminal
-      Any of the following:
-          Grapple Beam
-          Spider Boost (Beginner) and Can Spider Boost
+      All of the following:
+          Lay Power Bomb
+          Any of the following:
+              Grapple Beam
+              # Spider Boost
+              Spider Boost (Beginner) and Can Spider Boost
 
 > Tunnel to Mines Intersection Terminal; Heals? False
   * Layers: default
@@ -483,7 +520,7 @@ Extra - asset_id: collision_camera_008
   * Layers: default
   * Tunnel to Pink Crystal Preserve/Tunnel to Zeta Arena
   > Start Point
-      Trivial
+      Morph Ball
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -497,7 +534,12 @@ Extra - asset_id: collision_camera_008
           Morph Ball and Shoot Any Missile
           Any of the following:
               Space Jump or Single-wall Wall Jump (Advanced) or Simple IBJ
+              # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
+              All of the following:
+                  # Get up with HJ
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
 
 > Pickup (DNA); Heals? False
   * Layers: default
@@ -547,9 +589,9 @@ Gawron Groove
 Extra - total_boundings: {'x1': 5500.0, 'x2': 14600.0, 'y1': 5900.0, 'y2': 11000.0}
 Extra - polygon: [[7500.0, 11000.0], [7500.0, 8600.0], [5500.0, 8600.0], [5500.0, 5900.0], [11600.0, 5900.0], [11600.0, 8350.0], [11800.0, 9300.0], [12850.0, 9300.0], [12850.0, 8350.0], [14600.0, 8350.0], [14600.0, 11000.0]]
 Extra - asset_id: collision_camera_009
-> Door to Green Cystal Dugout; Heals? False
+> Door to Green Crystal Dugout; Heals? False
   * Layers: default
-  * Power Beam Door to Green Cystal Dugout/Door to Gawron Groove
+  * Power Beam Door to Green Crystal Dugout/Door to Gawron Groove
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Tunnel to Basalt Basin (Left)
@@ -558,6 +600,7 @@ Extra - asset_id: collision_camera_009
       All of the following:
           Varia Suit
           Any of the following:
+              # Get up
               Single-wall Wall Jump (Intermediate) or Super Jump (Intermediate) or Unmorph Extend (Intermediate) or Climb Rooms Vertically (High Jump)
               All of the following:
                   # Freeze the left Gawron
@@ -567,17 +610,19 @@ Extra - asset_id: collision_camera_009
                       All of the following:
                           Stand on Frozen Enemy (Beginner)
                           Charge Beam or Phase Drift
+  > TODO: future dock
+      Trivial
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 100; Category? Minor
   * Extra - actor_name: HiddenPowerup001
   * Extra - actor_type: item_supermissiletank
-  > Door to Green Cystal Dugout
+  > Door to Green Crystal Dugout
       Morph Ball and Varia Suit
   > Above Pickup
       # Unmorph exiting tunnel and jump left
-      Varia Suit and Movement (Beginner)
+      Morph Ball and Varia Suit and Movement (Beginner)
 
 > Tunnel to Gamma Arena; Heals? False
   * Layers: default
@@ -585,35 +630,46 @@ Extra - asset_id: collision_camera_009
   > Tunnel to Basalt Basin (Right)
       All of the following:
           Morph Ball and Super Missile and Varia Suit
-          Bomb or Power Bomb ≥ 2
+          Any of the following:
+              # Break Bomb Block
+              Lay Bomb
+              Power Bomb ≥ 2 and Lay Power Bomb
   > Above Pickup
       All of the following:
           Varia Suit and Lay Any Bomb
           Any of the following:
               Super Jump (Beginner) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
               # Jump late to get around the overhang
-              Movement (Beginner)
+              Movement (Intermediate)
 
 > Tunnel to Basalt Basin (Left); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Basalt Basin/Tunnel to Gawron Groove (Left)
-  > Door to Green Cystal Dugout
+  > Door to Green Crystal Dugout
       Varia Suit
 
 > Tunnel to Basalt Basin (Right); Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Basalt Basin/Tunnel to Gawron Groove (Right)
   > Tunnel to Gamma Arena
-      Varia Suit and Lay Any Bomb
+      All of the following:
+          Varia Suit and Lay Any Bomb
+          # Get up
+          Super Jump (Intermediate) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Above Pickup; Heals? False
   * Layers: default
-  > Door to Green Cystal Dugout
+  > Door to Green Crystal Dugout
       Varia Suit
   > Pickup (Super Missile Tank)
       Morph Ball and Super Missile and Varia Suit
   > Tunnel to Gamma Arena
       Morph Ball and Varia Suit
+
+> TODO: future dock; Heals? False
+  * Layers: default
+  > Door to Green Crystal Dugout
+      Trivial
 
 ----------------
 Basalt Basin
@@ -631,6 +687,13 @@ Extra - asset_id: collision_camera_017
   * Tunnel with Bomb Block to Gawron Groove/Tunnel to Basalt Basin (Right)
   > Tunnel to Gawron Groove (Left)
       Varia Suit and Lay Any Bomb
+  > TODO: future dock
+      Trivial
+
+> TODO: future dock; Heals? False
+  * Layers: default
+  > Tunnel to Gawron Groove (Right)
+      Trivial
 
 ----------------
 Mines Entrance
@@ -663,6 +726,7 @@ Extra - asset_id: collision_camera_010
   > Door to Tsumuri Tunnel
       Any of the following:
           Space Jump or Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
 
 ----------------
@@ -708,10 +772,19 @@ Extra - asset_id: collision_camera_012
   > Next to Teleporter
       Any of the following:
           Space Jump or Use Spider Ball
-          Gravity Suit and Simple IBJ
           All of the following:
-              Infinite Bomb Jump (Intermediate) and Lay Bomb
-              Spring Ball or Mid-Air Morph (Intermediate)
+              # IBJ
+              Lay Bomb
+              Any of the following:
+                  # Without Gravity from water
+                  Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      Simple IBJ
+                      Any of the following:
+                          # With Gravity from water
+                          Gravity Suit
+                          # Without Gravity from outside of water
+                          Mid-Air Morph (Intermediate)
 
 > Tunnel to Mines Intersection Terminal; Heals? False
   * Layers: default
@@ -725,11 +798,21 @@ Extra - asset_id: collision_camera_012
       Trivial
   > Door to Mines Intersection Terminal
       Any of the following:
+          # TODO: update map
           Space Jump or Use Spider Ball
-          Gravity Suit and Simple IBJ
           All of the following:
-              Infinite Bomb Jump (Intermediate) and Lay Bomb
-              Spring Ball or Mid-Air Morph (Intermediate)
+              # IBJ
+              Lay Bomb
+              Any of the following:
+                  # Without Gravity from water
+                  Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      Simple IBJ
+                      Any of the following:
+                          # With Gravity from water
+                          Gravity Suit
+                          # Without Gravity from outside of water
+                          Mid-Air Morph (Intermediate)
   > Tunnel to Mines Intersection Terminal
       Morph Ball and After Area 4 (Crystal Mines) - Mines Teleporter Grapple Block
   > Event - Grapple Block
@@ -750,13 +833,13 @@ Extra - asset_id: collision_camera_012
       Trivial
 
 ----------------
-Green Cystal Dugout
+Green Crystal Dugout
 Extra - total_boundings: {'x1': 2500.0, 'x2': 7600.0, 'y1': 8500.0, 'y2': 10200.0}
 Extra - polygon: [[2500.0, 10200.0], [2500.0, 8500.0], [7600.0, 8500.0], [7600.0, 10200.0]]
 Extra - asset_id: collision_camera_013
 > Door to Gawron Groove; Heals? False
   * Layers: default
-  * Access Open to Gawron Groove/Door to Green Cystal Dugout
+  * Access Open to Gawron Groove/Door to Green Crystal Dugout
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Dock to Mines Intersection Terminal
@@ -766,7 +849,7 @@ Extra - asset_id: collision_camera_013
 
 > Dock to Mines Intersection Terminal; Heals? False
   * Layers: default
-  * Open Passage to Mines Intersection Terminal/Dock to Green Cystal Dugout
+  * Open Passage to Mines Intersection Terminal/Dock to Green Crystal Dugout
   > Door to Gawron Groove
       Trivial
 
@@ -787,7 +870,7 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: LE_Item_006
   * Extra - actor_type: item_energytank
   > Door to Mines Intersection Terminal
-      Trivial
+      Screw Attack and Lay Any Bomb
 
 > Door to Mines Intersection Terminal; Heals? False
   * Layers: default
@@ -798,8 +881,9 @@ Extra - asset_id: collision_camera_014
       All of the following:
           Screw Attack and Lay Any Bomb
           Any of the following:
+              # Get up
               Space Jump
-              # https://youtu.be/FV92e59Kis4?t=15
+              # SWJ: https://youtu.be/FV92e59Kis4?t=15
               Single-wall Wall Jump (Advanced)
   > Dock to Pink Crystal Preserve
       Any of the following:
@@ -807,13 +891,16 @@ Extra - asset_id: collision_camera_014
           All of the following:
               Morph Ball
               Any of the following:
+                  # Get up
                   Space Jump
                   All of the following:
-                      # https://youtu.be/FV92e59Kis4
+                      # HJ + SWJ: https://youtu.be/FV92e59Kis4
                       High Jump Boots and Single-wall Wall Jump (Advanced)
                       Any of the following:
                           Super Jump (Advanced)
+                          # Freeze the Gullugg - TODO: get rid of template?
                           Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
 
 > Door from Lava Reservoir; Heals? False
@@ -847,7 +934,7 @@ Extra - asset_id: collision_camera_AfterChase
 
 > Door from Mines Intersection Terminal; Heals? False
   * Layers: default
-  * Access Closed to Mines Intersection Terminal/Door to Space Jump Chamber (Bottom)
+  * Access Closed to Mines Intersection Terminal/Door to Space Jump Chamber (Bottom); Excluded from Dock Lock Rando
   * Extra - actor_name: Door001
   * Extra - actor_type: doorpowerclosed
   > Tunnel to Mines Intersection Terminal
@@ -873,6 +960,7 @@ Extra - asset_id: collision_camera_AfterChase
   > Bottom Floor
       All of the following:
           Morph Ball
+          # Get up
           Super Jump (Beginner) or Unmorph Extend (Beginner) or Climb Rooms Vertically (High Jump)
 
 > Tunnel to Diggernaut Excavation Tunnels (Top); Heals? False
@@ -885,13 +973,14 @@ Extra - asset_id: collision_camera_AfterChase
   * Layers: default
   * Tunnel to Mines Intersection Terminal/Tunnel to Space Jump Chamber
   > Door from Mines Intersection Terminal
-      Morph Ball and Disabled Door Type Randomizer and Enabled Door Lock Randomizer
+      Morph Ball
 
 > Bottom of Shaft; Heals? False
   * Layers: default
   > Door to Mines Intersection Terminal
       Any of the following:
           Space Jump or Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
   > Tunnel to Diggernaut Excavation Tunnels (Top)
       Morph Ball and Super Missile
@@ -905,7 +994,10 @@ Extra - asset_id: collision_camera_AfterChase
       Morph Ball and After Area 4 (Crystal Mines) - Diggernaut Chase Arena Grapple Block
   > Bottom of Shaft
       Any of the following:
-          Space Jump or Simple IBJ
+          Space Jump
+          # IBJ
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
   > Bottom Floor
       Trivial
@@ -920,6 +1012,7 @@ Extra - asset_id: collision_camera_AfterChase
   > Under Grapple Block
       Any of the following:
           Space Jump or Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
 
 ----------------
@@ -933,7 +1026,10 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
   > Top Level
-      Baby Metroid
+      Any of the following:
+          Baby Metroid
+          # Unmorph at ledge and jump left
+          Movement (Intermediate) and Lay Any Bomb
   > Middle Level
       Lay Any Bomb
 
@@ -946,6 +1042,7 @@ Extra - asset_id: collision_camera_AfterChase_001
       All of the following:
           Lay Any Bomb
           Any of the following:
+              # Go through vines
               Lightning Armor
               Hazard Runs (Intermediate) and Hazard Damage ≥ 115
 
@@ -956,9 +1053,11 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Extra - actor_type: item_missiletank
   > Bottom Level
       Lay Any Bomb
-  > Left of Top Paraby Swarm
+  > At Middle Shaft
       # Jump from alcove ledge
       Movement (Intermediate) and Lay Bomb
+  > Next to Middle item
+      Lay Any Bomb
 
 > Pickup (Missile Tank Bottom); Heals? False
   * Layers: default
@@ -966,7 +1065,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
   > Right of Bottom Paraby Swarm
-      Trivial
+      Lay Any Bomb
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
@@ -994,6 +1093,8 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Extra - actor_type: doorpowerpower
   > Save Station
       Morph Ball
+  > TODO: Simplify and remove extra nodes
+      Trivial
 
 > Tunnel to Space Jump Chamber (Middle); Heals? False
   * Layers: default
@@ -1005,7 +1106,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Layers: default
   * Tunnel to Space Jump Chamber/Tunnel to Diggernaut Excavation Tunnels (Bottom)
   > Right of Bottom Paraby Swarm
-      Spider Ball or Lay Any Bomb
+      Spider Ball and Lay Any Bomb
 
 > Tunnel to Space Jump Chamber (Top); Heals? False
   * Layers: default
@@ -1019,12 +1120,16 @@ Extra - asset_id: collision_camera_AfterChase_001
       All of the following:
           Morph Ball
           Any of the following:
+              # TODO: phase drift skip?
               Baby Metroid
+              # Go across crumbles
               Phase Drift and Lay Any Bomb
+              # Spider Boost across crumbles
               Spider Boost (Intermediate) and Can Spider Boost
   > Save Station
       Any of the following:
           Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Morph Ball
@@ -1040,23 +1145,23 @@ Extra - asset_id: collision_camera_AfterChase_001
       All of the following:
           Lay Any Bomb
           Any of the following:
+              # Go through vines
               Lightning Armor
               Hazard Runs (Beginner) and Hazard Damage ≥ 45
   > Tunnel to Space Jump Chamber (Middle)
       Morph Ball and After Area 4 (Crystal Mines) - Diggernaut Chase Arena Grapple Block
   > Top Level
       Any of the following:
-          Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
           All of the following:
               High Jump Boots
               Super Jump (Intermediate) or Unmorph Extend (Intermediate)
   > Event - Grapple Block
       Grapple Beam
-  > Left of Top Paraby Swarm
-      Any of the following:
-          # Roll under or defeat the Paraby swarm
-          Defeat Swarms
-          Morph Ball and Dodge Enemies (Beginner)
+  > At Middle Shaft
+      Trivial
+  > Next to Middle item
+      Morph Ball and Movement (Beginner)
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -1067,34 +1172,26 @@ Extra - asset_id: collision_camera_AfterChase_001
 > Bottom Level; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_ManicMinerBot_Stage3
-  > Left of Top Paraby Swarm
+  > At Middle Shaft
       Any of the following:
-          Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          # UE
           Morph Ball and Unmorph Extend (Intermediate)
-          # Freeze the Red Tsumuri
+          # Freeze the Red Tsumuri - TODO: video. also maybe different possibilities?
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
   > Right of Bottom Paraby Swarm
-      Any of the following:
-          # Roll under or defeat Paraby swarm
-          Defeat Swarms
-          Morph Ball and Dodge Enemies (Intermediate)
+      Trivial
 
-> Left of Top Paraby Swarm; Heals? False
+> At Middle Shaft; Heals? False
   * Layers: default
-  > Pickup (Missile Tank Middle)
-      Any of the following:
-          Lay Power Bomb
-          # Stagger the Bomb blocks to climb up
-          Movement (Intermediate) and Lay Bomb
   > Ammo Recharge Station
       Trivial
   > Middle Level
-      Any of the following:
-          # Roll under or defeat the Paraby swarm
-          Defeat Swarms
-          Morph Ball and Dodge Enemies (Beginner)
+      Trivial
   > Bottom Level
       Trivial
+  > Next to Middle item
+      Morph Ball
 
 > Right of Bottom Paraby Swarm; Heals? False
   * Layers: default
@@ -1103,8 +1200,20 @@ Extra - asset_id: collision_camera_AfterChase_001
   > Tunnel to Space Jump Chamber (Bottom)
       Super Missile and Lay Any Bomb
   > Bottom Level
+      Trivial
+
+> Next to Middle item; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank Middle)
       Any of the following:
-          # Roll under or defeat Paraby swarm
-          Defeat Swarms
-          Morph Ball and Dodge Enemies (Intermediate)
+          Lay Power Bomb
+          # Stagger the Bomb blocks to climb up
+          Movement (Intermediate) and Lay Bomb
+  > At Middle Shaft
+      Morph Ball or Movement (Intermediate)
+
+> TODO: Simplify and remove extra nodes; Heals? False
+  * Layers: default
+  > Door to Mines Entrance
+      Trivial
 

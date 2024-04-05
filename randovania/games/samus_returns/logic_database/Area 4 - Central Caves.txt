@@ -22,9 +22,11 @@ Extra - asset_id: collision_camera_001
   > Door to Lava Pond
       Baby Metroid or Morph Ball
   > Door to Crumble Catwalk
-      Grapple Beam and Morph Ball
+      Morph Ball and After Area 4 (Central Caves) - Caves Intersection Terminal Grapple Block
   > Tunnel to Fleech Swarm Cave
       Lay Any Bomb
+  > Event - Grapple Block
+      Grapple Beam
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -70,6 +72,8 @@ Extra - asset_id: collision_camera_001
   * Plasma Beam Door to Crumble Catwalk/Door from Caves Intersection Terminal
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerclosed
+  > Ammo Recharge Station
+      Morph Ball and After Area 4 (Central Caves) - Caves Intersection Terminal Grapple Block
 
 > Door to Transport to Area 3 and Crystal Mines (Bottom); Heals? False
   * Layers: default
@@ -115,6 +119,12 @@ Extra - asset_id: collision_camera_001
   * Layers: default
   * Event Area 4 (Central Caves) - Teleporter Unlocked
   > Door to Transit Tunnel
+      Trivial
+
+> Event - Grapple Block; Heals? False
+  * Layers: default
+  * Event Area 4 (Central Caves) - Caves Intersection Terminal Grapple Block
+  > Ammo Recharge Station
       Trivial
 
 ----------------
@@ -176,16 +186,13 @@ Extra - asset_id: collision_camera_004
   * Access Closed to Caves Intersection Terminal/Door to Crumble Catwalk
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerclosed
+  > Tunnel to Caves Intersection Terminal
+      Grapple Beam and Morph Ball
   > Hang Ledge
       Any of the following:
-          Phase Drift
-          All of the following:
-              # Dealing with the Mumbo swarm
-              Defeat Swarms
-              Any of the following:
-                  Space Jump
-                  # Unmorph from wall to grab ledge
-                  Movement (Intermediate) and Use Spider Ball
+          Phase Drift or Space Jump
+          # Unmorph from wall to grab ledge
+          Movement (Intermediate) and Use Spider Ball
 
 > Tunnel to Caves Intersection Terminal; Heals? False
   * Layers: default
@@ -194,7 +201,10 @@ Extra - asset_id: collision_camera_004
 > Hang Ledge; Heals? False
   * Layers: default
   > Pickup (Super Missile Tank)
+      # TODO: there's a way to do this whole puzzle with spider boost
       Grapple Beam and Morph Ball
+  > Door from Caves Intersection Terminal
+      Impossible
 
 ----------------
 Lava Pond
@@ -211,11 +221,14 @@ Extra - asset_id: collision_camera_005
           Morph Ball and Varia Suit
           Any of the following:
               Grapple Beam or Space Jump
-              Gravity Suit and Simple IBJ
+              All of the following:
+                  # Gravity
+                  Gravity Suit
+                  High Jump Boots or Simple IBJ
               # Unmorph after hitting the wall
               Spider Boost (Advanced) and Can Spider Boost
   > Start Point
-      Trivial
+      Varia Suit
 
 > Door to Gamma Arena Access South; Heals? False
   * Layers: default
@@ -253,13 +266,14 @@ Extra - asset_id: collision_camera_006
   > Chozo Seal Top
       Any of the following:
           All of the following:
-              # Low ceiling
+              # Jump across the low ceiling pond
               Space Jump and Movement (Beginner)
               # Deal with the Halzyn
               Lightning Armor or Missile ≥ 3 or Super Missile or Defeat Gold Robots
-          All of the following:
-              Morph Ball
-              Spider Ball or After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Left
+          # Spider Ball across pond
+          Use Spider Ball
+          # Go through Grapple Pull Path
+          Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Left
   > Event - Grapple Block Right
       Grapple Beam and Morph Ball
 
@@ -274,7 +288,8 @@ Extra - asset_id: collision_camera_006
           Morph Ball
           Any of the following:
               After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Right
-              Spider Ball and Out of Bounds Movement (Beginner) and Spider Ball Clip (Intermediate)
+              # Spider Ball Clip
+              Out of Bounds Movement (Beginner) and Spider Ball Clip (Intermediate) and Use Spider Ball
 
 > Chozo Seal Top; Heals? False
   * Layers: default
@@ -284,42 +299,43 @@ Extra - asset_id: collision_camera_006
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Elevator to Area 3 - Factory Exterior
       Any of the following:
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
-              # Low ceiling
+              # Jump across the low ceiling pond
               Space Jump and Movement (Beginner)
               # Deal with the Halzyn
               Lightning Armor or Missile ≥ 3 or Super Missile or Defeat Gold Robots
+          # Go through the Grapple Pull Path
+          Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Left
           All of the following:
-              Morph Ball
-              Any of the following:
-                  After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Left
-                  All of the following:
-                      Spider Ball
-                      Bomb or Spring Ball or Mid-Air Morph (Beginner)
+              # Get across large pond via Spider Ball
+              Use Spider Ball
+              # Reach ceiling
+              Mid-Air Morph (Beginner) or Lay Bomb or Use Spring Ball
   > Chozo Seal Bottom
       Any of the following:
           Use Spider Ball
           All of the following:
-              # Low ceiling
+              # Jump across the low ceiling pond
               Space Jump and Movement (Beginner)
               # Deal with the Halzyn
               Lightning Armor or Missile ≥ 3 or Super Missile or Defeat Gold Robots
-          Spider Boost (Intermediate) and Can Spider Boost
   > Door to Caves Intersection Terminal (Bottom)
       Any of the following:
           Space Jump or Simple IBJ
           All of the following:
+              # Intended Path
               Use Spider Ball
               Any of the following:
+                  # Get to the little edge
                   Grapple Beam
-                  # Attach to the Grapple Point
+                  # Start Spider Balling at the Grapple Point and then hold right
                   Mid-Air Morph (Beginner)
                   All of the following:
                       High Jump Boots
                       Super Jump (Intermediate) or Unmorph Extend (Intermediate)
-              # Blob Swarm
-              Dodge Enemies (Intermediate) or Defeat Swarms
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
   > Tunnel to Transit Tunnel
       Morph Ball and Super Missile and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Left
@@ -329,7 +345,8 @@ Extra - asset_id: collision_camera_006
       All of the following:
           Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Right
           Any of the following:
-              Space Jump or Spider Ball
+              # Cross little pond
+              Space Jump or Use Spider Ball
               All of the following:
                   # Freeze the Gawron
                   Ice Beam
@@ -352,17 +369,20 @@ Extra - asset_id: collision_camera_006
       All of the following:
           Morph Ball and After Area 4 (Central Caves) - Transport to Area 3 and Crystal Mines Grapple Block Pull Right
           Any of the following:
-              Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+              # Get up
+              Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
               Super Jump (Intermediate) and Unmorph Extend (Beginner)
   > Chozo Seal Top
       Any of the following:
           All of the following:
-              # Low ceiling
+              # Jump across the low ceiling pond
               Space Jump and Movement (Beginner)
               # Deal with the Halzyn
               Lightning Armor or Missile ≥ 3 or Super Missile or Defeat Gold Robots
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
+              # Spider Ball across
               Use Spider Ball
               Any of the following:
                   Bomb or Mid-Air Morph (Beginner)
@@ -390,11 +410,14 @@ Extra - asset_id: collision_camera_006
   > Door to Caves Intersection Terminal (Top)
       Any of the following:
           Space Jump or Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
-              # https://youtu.be/7hFrHkxY4t8
+              # Freeze Halzyn: https://youtu.be/7hFrHkxY4t8
               High Jump Boots and Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Intermediate) and Super Jump (Advanced)
-              Wall Jump (Intermediate) or Use Spider Ball
+              Any of the following:
+                  Wall Jump (Intermediate)
+                  Mid-Air Morph (Beginner) and Use Spider Ball
 
 > Door to Transport to Area 5; Heals? False
   * Layers: default
@@ -445,11 +468,12 @@ Extra - asset_id: collision_camera_006
 > Next to Pickup; Heals? False
   * Layers: default
   > Pickup (Energy Tank)
-      Morph Ball
-  > Chozo Seal Top
       Trivial
+  > Chozo Seal Top
+      # TODO: going back should also have requirements technically
+      Morph Ball
   > Event - Grapple Block Pull Right
-      Grapple Beam and Morph Ball
+      Grapple Beam
 
 > Event - Grapple Block Left; Heals? False
   * Layers: default
@@ -468,7 +492,17 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_missiletank
   > Tunnel to Alpha+ Arena Access
-      Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+      All of the following:
+          # TODO: missing goo on walls
+          Morph Ball
+          Any of the following:
+              Space Jump or Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Simple IBJ
+              # Spider Boost
+              Spider Boost (Intermediate) and Use Spider Ball
+              All of the following:
+                  # High Jump
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Intermediate)
   > Start Point
       Trivial
 
@@ -491,14 +525,17 @@ Extra - asset_id: collision_camera_007
   * Tunnel to Alpha+ Arena Access/Tunnel to Alpha+ Arena
   > Pickup (Missile Tank)
       Morph Ball
+  > Start Point
+      Morph Ball
 
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
   > Door to Alpha+ Arena Access
       Any of the following:
-          High Jump Boots or Gravity Suit or Space Jump or Super Jump (Beginner) or Unmorph Extend (Intermediate)
-          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          High Jump Boots or Gravity Suit or Space Jump or Super Jump (Beginner) or Unmorph Extend (Intermediate) or Use Spider Ball
+          # IBJ
+          Mid-Air Morph (Beginner) and Lay Bomb and Use Spring Ball
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
 
@@ -549,7 +586,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: HiddenPowerup004
   * Extra - actor_type: item_missiletank
   > Next to Pickup
-      Trivial
+      Morph Ball
 
 > Tunnel to Transport to Area 3 and Crystal Mines; Heals? False
   * Layers: default
@@ -705,7 +742,9 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_name: LE_Item_008
   * Extra - actor_type: item_senergytank
   > Door to Lava Pond
-      Trivial
+      All of the following:
+          Morph Ball
+          Baby Metroid or Lay Any Bomb
 
 > Door to Lava Pond; Heals? False
   * Layers: default
@@ -716,27 +755,26 @@ Extra - asset_id: collision_camera_014
       All of the following:
           Morph Ball
           Any of the following:
-              Baby Metroid or Power Bomb
+              Baby Metroid or Lay Power Bomb
               All of the following:
-                  Bomb
+                  # Through red plants
+                  Lay Bomb
                   Any of the following:
                       Lightning Armor
+                      # Damage Boost
                       Hazard Runs (Beginner) and Hazard Damage ≥ 120
   > Dock to Outward Climb
       Any of the following:
           Lightning Armor
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
-          All of the following:
-              # Crossing the plants
-              Grapple Beam or Space Jump
-              # Dealing with the Mumbo swarms
-              Dodge Enemies (Advanced) or Defeat Swarms
-          # Avoiding the Mumbo swarms and running through red plants
-          Dodge Enemies (Intermediate) and Hazard Runs (Beginner) and Hazard Damage ≥ 45
+          # Crossing the plants
+          Grapple Beam or Space Jump
+          # Running through red plants
+          Hazard Runs (Beginner) and Hazard Damage ≥ 45
           All of the following:
               # Spider along the Grapple Points to avoid the Mumbo Swarms and red plants
               Use Spider Ball
-              Dodge Enemies (Intermediate) or Defeat Swarms
               Any of the following:
                   Mid-Air Morph (Beginner)
                   Diagonal Bomb Jump (Intermediate) and Lay Bomb
@@ -755,18 +793,15 @@ Extra - asset_id: collision_camera_014
   > Door to Lava Pond
       Any of the following:
           Lightning Armor
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
-          All of the following:
-              # Crossing the plants
-              Grapple Beam or Space Jump
-              # Dealing with the Mumbo swarms
-              Dodge Enemies (Advanced) or Defeat Swarms
-          # Avoiding the Mumbo swarms and running through red plants
-          Dodge Enemies (Intermediate) and Hazard Runs (Beginner) and Hazard Damage ≥ 45
+          # Crossing the plants
+          Grapple Beam or Space Jump
+          # Running through red plants
+          Hazard Runs (Beginner) and Hazard Damage ≥ 45
           All of the following:
               # Spider along the Grapple Points to avoid the Mumbo Swarms and red plants
               Use Spider Ball
-              Dodge Enemies (Intermediate) or Defeat Swarms
               Any of the following:
                   Mid-Air Morph (Beginner)
                   Diagonal Bomb Jump (Intermediate) and Lay Bomb
@@ -833,7 +868,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: HiddenPowerup001
   * Extra - actor_type: item_missiletank
   > Below Pickup
-      Trivial
+      Morph Ball
 
 > Dock to Caves Intersection Terminal; Heals? False
   * Layers: default
@@ -849,15 +884,21 @@ Extra - asset_id: collision_camera_016
       All of the following:
           Morph Ball and Shoot Any Missile
           Any of the following:
+              # Get up -  TODO: add videos
               Space Jump or Simple IBJ
               All of the following:
                   Ice Beam
                   Any of the following:
-                      # Freeze the Gawron
+                      # Freeze the Gawron - TODO: freeze enemy without charge
                       Charge Beam
                       # Freeze the Halzyn
                       Freeze Enemy with Melee (Intermediate)
+              # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
+              All of the following:
+                  # High Jump
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Intermediate)
   > Dock to Caves Intersection Terminal
       Trivial
 
@@ -874,9 +915,10 @@ Extra - asset_id: collision_camera_018
   > Dock to Outward Climb
       Any of the following:
           Lightning Armor
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
-          # Avoiding the Mumbo swarms and running through red plants
-          Dodge Enemies (Intermediate) and Hazard Runs (Beginner) and Hazard Damage ≥ 95
+          # Running through red plants
+          Hazard Runs (Beginner) and Hazard Damage ≥ 70
           All of the following:
               # Crossing the plants
               Grapple Beam or Space Jump
@@ -898,21 +940,18 @@ Extra - asset_id: collision_camera_018
   > Door to Gamma Arena
       Any of the following:
           Lightning Armor
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
-          # Avoiding the Mumbo swarms and running through red plants
-          Dodge Enemies (Intermediate) and Hazard Runs (Beginner) and Hazard Damage ≥ 95
+          # Crossing the plants
+          Grapple Beam or Space Jump
           All of the following:
-              # Crossing the plants
-              Grapple Beam or Space Jump
-              # Dealing with the Mumbo swarms
-              Dodge Enemies (Advanced) or Defeat Swarms
-          All of the following:
-              # Spider along the Grapple Points to avoid the Mumbo Swarms and red plants
+              # Spider along the Grapple Points to avoid the plants
               Use Spider Ball
-              Dodge Enemies (Intermediate) or Defeat Swarms
               Any of the following:
                   Mid-Air Morph (Beginner)
                   Diagonal Bomb Jump (Intermediate) and Lay Bomb
+          # Running through the plants
+          Hazard Runs (Beginner) and Hazard Damage ≥ 70
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -978,6 +1017,7 @@ Extra - asset_id: collision_camera_022
   > Next to Acid Pool
       Any of the following:
           Space Jump
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
 
 > Tunnel to Transport to Area 3 and Crystal Mines; Heals? False
@@ -991,8 +1031,9 @@ Extra - asset_id: collision_camera_022
   > Door to Transport to Area 5
       Any of the following:
           Space Jump
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
-          # https://youtu.be/rNv9nWRIwP8?t=3988
+          # Freeze the Gawron and get midway across https://youtu.be/rNv9nWRIwP8?t=3988
           Charge Beam and Ice Beam and Diagonal Bomb Jump (Hypermode) and Stand on Frozen Enemy (Intermediate) and Hazard Runs (Hypermode) and Hazard Damage ≥ 85 and Lay Bomb
   > Tunnel to Transport to Area 3 and Crystal Mines
       All of the following:
@@ -1065,7 +1106,7 @@ Extra - asset_id: collision_camera_023
   > Elevator to Area 5 - Tower Lobby
       Any of the following:
           Screw Attack
-          # https://youtu.be/m85VNBCp2L4
+          # Freeze and clip off the Tsumuri: https://youtu.be/m85VNBCp2L4
           Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Intermediate) and Melee Clip (Advanced) and Out of Bounds Movement (Beginner)
   > Door to Transport to Area 3 and Crystal Mines
       Morph Ball and After Area 4 (Central Caves) - Transport to Area 5 Grapple Block

@@ -20,7 +20,7 @@ Extra - asset_id: collision_camera009
   > Save Station
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation
   * Extra - actor_type: weightactivatedplatform
@@ -182,17 +182,11 @@ Extra - asset_id: collision_camera040
 
 > Dock to Interior Intersection Terminal; Heals? False
   * Layers: default
-  * Open Passage to Interior Intersection Terminal/Dock to Varia Suit Chamber (Blocks)
+  * Open Passage to Interior Intersection Terminal/Dock to Varia Suit Chamber
   > Door to Wallfire Corridor
-      Screw Attack
+      Screw Attack or Out of Bounds Movement (Advanced)
   > Pickup (Super Missile Tank)
       Lay Any Bomb
-
-> Dock from Interior Intersection Terminal; Heals? False
-  * Layers: default
-  * Blocked Passage to Interior Intersection Terminal/Dock to Varia Suit Chamber (OoB)
-  > Door to Wallfire Corridor
-      Trivial
 
 ----------------
 Interior Intersection Terminal
@@ -222,13 +216,13 @@ Extra - asset_id: collision_camera011
   > Right Shaft
       # Clip off the platform and release spider on the right underside https://youtu.be/UQe0WO500mI?t=12
       Out of Bounds Movement (Intermediate) and Spider Ball Clip (Intermediate) and Use Spider Ball
-  > Dock to Varia Suit Chamber (OoB)
+  > Dock to Varia Suit Chamber
       All of the following:
           # Clip off the platform and unmorph in the tunnel, then clip the wall corner under the platform<br>https://youtu.be/wsBQPUYwblc
           Out of Bounds Movement (Advanced) and Spider Ball Clip (Intermediate) and Use Spider Ball
           Any of the following:
               # Dealing with the Gravitt
-              Lightning Armor or Bomb or Power Bomb or Dodge Enemies (Advanced) or Shoot Any Missile
+              Lightning Armor or Dodge Enemies (Advanced) or Lay Any Bomb or Shoot Any Missile
               # Enter the tunnel to bait it to attack, then exit and quickly Melee Counter it
               Combat (Intermediate)
               Damage Boost (Beginner) and Normal Damage ≥ 30
@@ -322,18 +316,14 @@ Extra - asset_id: collision_camera011
       Trivial
   > Bottom of Morph Ball Shaft
       Screw Attack
-  > Dock to Varia Suit Chamber (Blocks)
+  > Dock to Varia Suit Chamber
       Screw Attack
 
-> Dock to Varia Suit Chamber (Blocks); Heals? False
+> Dock to Varia Suit Chamber; Heals? False
   * Layers: default
   * Open Passage to Varia Suit Chamber/Dock to Interior Intersection Terminal
   > Right Shaft
       Screw Attack
-
-> Dock to Varia Suit Chamber (OoB); Heals? False
-  * Layers: default
-  * Open Passage to Varia Suit Chamber/Dock from Interior Intersection Terminal
 
 > Out of Bounds in Tunnel; Heals? False
   * Layers: default
@@ -366,7 +356,7 @@ Extra - asset_id: collision_camera012
   > Under Pickup
       Varia Suit
   > Start Point
-      Trivial
+      Varia Suit
 
 > Door to Crumble Cavern; Heals? False
   * Layers: default
@@ -390,7 +380,7 @@ Extra - asset_id: collision_camera012
   * Extra - actor_name: HP_Item_001
   * Extra - actor_type: item_missiletank
   > Under Pickup
-      Lay Any Bomb
+      Varia Suit and Lay Any Bomb
 
 > Under Pickup; Heals? False
   * Layers: default
@@ -414,8 +404,8 @@ Extra - asset_id: collision_camera012
                       All of the following:
                           # Breaking the Bomb block
                           Spring Ball or Mid-Air Morph (Intermediate)
-                          # Dealing with the Wall Fire
-                          Missile ≥ 6 or Plasma Beam or Super Missile ≥ 2 or Screw Attack or Shoot Beam Burst
+                          # Dealing with the Wallfire
+                          Missile ≥ 6 or Super Missile ≥ 2 or Defeat Gold Robots
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -454,6 +444,10 @@ Extra - asset_id: collision_camera013
                       All of the following:
                           Movement (Advanced)
                           Bomb or Power Bomb ≥ 3 or Space Jump
+                  All of the following:
+                      # Space Jump over
+                      Space Jump and Damage Boost (Advanced) and Phase Drift Skip (Advanced)
+                      Lightning Armor or Normal Damage ≥ 110
 
 ----------------
 Whimsical Waterwheels
@@ -462,7 +456,7 @@ Extra - polygon: [[-300.0, -1700.0], [-300.0, -2339.639892578125], [-1700.0, -23
 Extra - asset_id: collision_camera015
 > Door to Interior Intersection Terminal; Heals? False
   * Layers: default
-  * Access Open to Interior Intersection Terminal/Door to Whimsical Waterwheels
+  * Power Beam Door to Interior Intersection Terminal/Door to Whimsical Waterwheels
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Tunnel to Interior Teleporter
@@ -502,6 +496,8 @@ Extra - asset_id: collision_camera016
   * Wave Beam Door to Fleech Fire Containment/Door to Interior Teleporter
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
+  > Door to Teleporter Storage
+      Trivial
   > Under Teleporter
       Trivial
 
@@ -510,7 +506,7 @@ Extra - asset_id: collision_camera016
   * Plasma Beam Door to Teleporter Storage/Door to Interior Teleporter
   * Extra - actor_name: Door017
   * Extra - actor_type: doorpowerpower
-  > Under Teleporter
+  > Door to Fleech Fire Containment
       Trivial
 
 > Tunnel to High Jump Boots Chamber Access; Heals? False
@@ -528,8 +524,6 @@ Extra - asset_id: collision_camera016
 > Under Teleporter; Heals? False
   * Layers: default
   > Door to Fleech Fire Containment
-      Trivial
-  > Door to Teleporter Storage
       Trivial
   > Tunnel to High Jump Boots Chamber Access
       Morph Ball
@@ -575,9 +569,24 @@ Extra - asset_id: collision_camera017
       All of the following:
           Morph Ball
           Any of the following:
-              Space Jump or Spider Ball or Wall Jump (Beginner)
-              High Jump Boots and Gravity Suit
-              Bomb and Infinite Bomb Jump (Intermediate)
+              Space Jump or Spider Ball or Single-wall Wall Jump (Beginner) or Wall Jump (Beginner)
+              All of the following:
+                  # Jump up with Gravity
+                  Gravity Suit
+                  Any of the following:
+                      High Jump Boots
+                      # UE+SuperJump
+                      Super Jump (Intermediate) and Unmorph Extend (Intermediate)
+              All of the following:
+                  # IBJ up
+                  Lay Bomb
+                  Any of the following:
+                      # IBJ by transitioning from water physics to normal physics
+                      Infinite Bomb Jump (Intermediate)
+                      All of the following:
+                          # IBJ without water physics
+                          Simple IBJ
+                          Gravity Suit or Mid-Air Morph (Beginner) or Use Spring Ball
 
 > Door to Interior Teleporter; Heals? False
   * Layers: default
@@ -707,9 +716,9 @@ Extra - asset_id: collision_camera022
           Any of the following:
               Space Jump
               Spider Boost (Intermediate) and Can Spider Boost
-              Bomb and Infinite Bomb Jump (Intermediate)
+              Infinite Bomb Jump (Intermediate) and Lay Bomb
               All of the following:
-                  Spider Ball
+                  Use Spider Ball
                   Any of the following:
                       High Jump Boots or Super Jump (Intermediate) or Unmorph Extend (Intermediate)
                       # Jump over the Black Wallfires
@@ -717,6 +726,7 @@ Extra - asset_id: collision_camera022
                       # Defeat the Black Wallfires
                       Defeat Non-Counterable Enemies
               All of the following:
+                  # Jump up with HJ only
                   High Jump Boots
                   Single-wall Wall Jump (Intermediate) or Super Jump (Intermediate) or Unmorph Extend (Intermediate)
               # Jump over the Black Wallfires https://youtu.be/XZq_Bb2m5_U

@@ -12,7 +12,7 @@ Extra - asset_id: collision_camera_006
   > Door to Alpha+ Arena West
       Trivial
 
-> Save Station; Heals? False
+> Save Station; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
@@ -58,7 +58,7 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_name: Door016
   * Extra - actor_type: doorpowerpower
   > Elevator to Area 3 - Factory Exterior
-      Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Door to Gamma Arena Center
       Trivial
 
@@ -77,8 +77,10 @@ Extra - asset_id: collision_camera_006
       All of the following:
           Morph Ball
           Any of the following:
-              High Jump Boots or Gravity Suit or Spider Ball
-              Bomb and Underwater Bomb Jump (Beginner)
+              # Get up mini shaft
+              High Jump Boots or Gravity Suit or Super Jump (Beginner) or Unmorph Extend (Beginner) or Use Spider Ball
+              # UBJ
+              Underwater Bomb Jump (Beginner) and Lay Bomb
 
 ----------------
 Alpha+ Arena West
@@ -233,14 +235,17 @@ Extra - asset_id: collision_camera_009
       Morph Ball and Super Missile
   > Left of Missile Block
       Any of the following:
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
               Morph Ball
               Any of the following:
                   All of the following:
+                      # Get up
                       Gravity Suit
                       High Jump Boots or Space Jump or Unmorph Extend (Intermediate) or Simple IBJ
-                  Bomb and Underwater Bomb Jump (Intermediate)
+                  # UBJ
+                  Underwater Bomb Jump (Intermediate) and Lay Bomb
 
 > Left of Missile Block; Heals? False
   * Layers: default
@@ -249,10 +254,10 @@ Extra - asset_id: collision_camera_009
           Morph Ball and Shoot Any Missile
           Any of the following:
               Phase Drift
-              # https://youtu.be/FGtnq3_1ECc
+              # Aim at Missile block: https://youtu.be/FGtnq3_1ECc
               Precise Aiming (Advanced)
               All of the following:
-                  # https://youtu.be/uS3bJrchBzY
+                  # Spider Boost: https://youtu.be/uS3bJrchBzY
                   Can Spider Boost
                   Spring Ball or Mid-Air Morph (Intermediate)
                   Any of the following:
@@ -269,6 +274,7 @@ Extra - asset_id: collision_camera_009
       Any of the following:
           Baby Metroid
           All of the following:
+              # Get this item via OoB: TODO: comment
               Phase Drift and Out of Bounds Movement (Advanced) and Phase Drift Clip (Intermediate)
               Any of the following:
                   All of the following:
@@ -299,11 +305,8 @@ Extra - asset_id: collision_camera_009
 
 > Outside Arena; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Gamma_002
   > Door to Ramulken Rollway
       Trivial
-  > Inside Arena
-      Lay Any Bomb
   > Right of Tunnels
       Trivial
 
@@ -317,12 +320,26 @@ Extra - asset_id: collision_camera_009
 
 > Right of Tunnels; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_002
   > Door to Transport to Factory Exterior North
       Morph Ball
   > Left of Fan
       Lay Power Bomb
+  > Inside Arena
+      Lay Any Bomb
   > Outside Arena
-      Gravity Suit or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Gravity Suit or Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          All of the following:
+              # IBJ
+              Lay Bomb
+              Any of the following:
+                  # From water
+                  Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      # Outside of water
+                      Infinite Bomb Jump (Beginner)
+                      Mid-Air Morph (Beginner) or Use Spring Ball
 
 ----------------
 Save Station North
@@ -333,7 +350,11 @@ Extra - asset_id: collision_camera_010
   * Layers: default
   * Extra - actor_name: LE_Platform_EnergyCharge
   * Extra - actor_type: weightactivatedplatform
+  > Save Station
+      Trivial
   > Door to Gravitt Garden
+      Trivial
+  > Door to Quarry Tunnel
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
@@ -341,7 +362,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_SaveStation001
-  > Door to Gravitt Garden
+  > Energy Recharge Station
       Trivial
 
 > Door to Gravitt Garden; Heals? False
@@ -351,17 +372,13 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_type: doorpowerpower
   > Energy Recharge Station
       Trivial
-  > Save Station
-      Trivial
-  > Door to Quarry Tunnel
-      Trivial
 
 > Door to Quarry Tunnel; Heals? False
   * Layers: default
   * Power Beam Door to Quarry Tunnel/Door to Save Station North
   * Extra - actor_name: Door006
   * Extra - actor_type: doorpowerpower
-  > Door to Gravitt Garden
+  > Energy Recharge Station
       Trivial
 
 ----------------
@@ -375,7 +392,7 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_name: Door005
   * Extra - actor_type: doorpowerpower
   > Door to Alpha+ Arena North
-      Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
   > Below Grapple Point
       Trivial
 
@@ -410,7 +427,7 @@ Extra - asset_id: collision_camera_012
           High Jump Boots or Grapple Beam or Space Jump or Simple IBJ
           Spider Boost (Intermediate) and Can Spider Boost
           All of the following:
-              # Freeze the Drivel
+              # Freeze the Drivel: TODO: add a video
               Ice Beam
               Any of the following:
                   Stand on Frozen Enemy (Advanced)
@@ -439,6 +456,7 @@ Extra - asset_id: collision_camera_024
   > Tunnel to Ramulken Rollway
       Lay Any Bomb
   > Left of Grapple Block
+      # TODO: we're currently requiring grapple, because if you're going this way, you want to pull the grapple block. At one point, we should *not* assume that.
       Grapple Beam and Morph Ball and Shoot Any Missile
 
 > Tunnel to Ramulken Rollway; Heals? False
@@ -505,8 +523,28 @@ Extra - asset_id: collision_camera_025
               Space Jump or Simple IBJ
               Spider Boost (Intermediate) and Can Spider Boost
               All of the following:
+                  # Get up via Grapple
                   Grapple Beam
-                  Spider Ball or Movement (Beginner)
+                  Any of the following:
+                      Spider Ball or Single-wall Wall Jump (Beginner)
+                      # Grapple while jumping
+                      Movement (Beginner)
+              All of the following:
+                  # Get up via HJ
+                  High Jump Boots
+                  Any of the following:
+                      All of the following:
+                          # Repeatedly jump into spikes
+                          Damage Boost (Advanced)
+                          Lightning Armor or Normal Damage ≥ 140
+                      All of the following:
+                          # Get hit once at the peak, and then unmorph to reach ledge
+                          Morph Ball and Mid-Air Morph (Intermediate) and Damage Boost (Beginner) and Super Jump (Advanced)
+                          Lightning Armor or Normal Damage ≥ 20
+                      # Super Jump to right edge, then grapple over
+                      Grapple Beam and Super Jump (Intermediate)
+                      # SWJ below the spikes
+                      Single-wall Wall Jump (Advanced)
 
 > Door to Caverns Teleporter East; Heals? False
   * Layers: default
@@ -518,19 +556,26 @@ Extra - asset_id: collision_camera_025
           Morph Ball
           Any of the following:
               All of the following:
-                  Power Bomb
+                  # Destroy Bomb Block way
+                  Lay Power Bomb
                   Any of the following:
-                      Spider Ball or Movement (Intermediate)
+                      # Reach Ledge
+                      Use Spider Ball
+                      # Unmorph in mid-air
+                      Movement (Beginner)
                       All of the following:
+                          # Jump up after fallen down
                           Gravity Suit
                           High Jump Boots or Space Jump or Simple IBJ
               All of the following:
+                  # Intended path
                   Missile ≥ 2 or Super Missile ≥ 2
                   Any of the following:
                       Gravity Suit
+                      # Spider Boost
                       Spider Boost (Beginner) and Can Spider Boost
-                      # https://youtu.be/DujhE75I-oA
-                      Bomb and Underwater Bomb Jump (Advanced)
+                      # UBJ: https://youtu.be/DujhE75I-oA
+                      Underwater Bomb Jump (Advanced) and Lay Bomb
   > Door to Gamma Arena South
       Trivial
 
@@ -551,7 +596,7 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_name: LE_Item_003
   * Extra - actor_type: item_missiletank
   > Door to Ramulken Rollway
-      Trivial
+      Morph Ball and Destroy Blob Throwers/Steel Orbs
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -563,7 +608,14 @@ Extra - asset_id: collision_camera_026
   > Door to Waterfall Cavern
       Trivial
   > Above Teleporter
-      Movement (Beginner) or Climb Rooms Vertically (High Jump)
+      Any of the following:
+          Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
+          # Jump off the ledge
+          Mid-Air Morph (Beginner)
+          Any of the following:
+              # TODO: freeze the Gullug
+              # UE
+              Morph Ball and Unmorph Extend (Intermediate)
 
 > Teleporter; Heals? False
   * Layers: default
@@ -619,7 +671,7 @@ Extra - asset_id: collision_camera_026
   > Door to Ramulken Rollway
       Any of the following:
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-          # https://youtu.be/6knVhkzcL9Q
+          # Freeze the Gullugg: https://youtu.be/6knVhkzcL9Q - TODO: expand on freezing options
           Stand on Frozen Enemy (Intermediate) and Fully Freeze Enemy
   > Event - Teleporter Unlocked
       Trivial
@@ -646,14 +698,17 @@ Extra - asset_id: collision_camera_027
       All of the following:
           Morph Ball
           Any of the following:
-              Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+              Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+              # Super Jump + UE
               Super Jump (Intermediate) and Unmorph Extend (Intermediate)
   > Tunnel to Lonely Loop
       All of the following:
           Morph Ball
           Any of the following:
-              Movement (Intermediate) or Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-              # https://youtu.be/KHAZvT3Q-t0
+              Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+              # Fall from above and  unmorph during fall
+              Movement (Intermediate)
+              # Freeze the Gullug: https://youtu.be/KHAZvT3Q-t0 - TODO: list more cases
               Stand on Frozen Enemy (Beginner) and Fully Freeze Enemy
 
 > Door to Lonely Loop; Heals? False
@@ -680,7 +735,7 @@ Extra - asset_id: collision_camera_027
   > Door to Transport to Factory Interior South
       All of the following:
           Morph Ball
-          Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
 
 > Tunnel to Lonely Loop; Heals? False
   * Layers: default
@@ -706,12 +761,16 @@ Extra - asset_id: collision_camera_028
   * Tunnel to Quarry Shaft/Tunnel to Lonely Loop
   > Door to Quarry Shaft
       All of the following:
+          # TODO: walls are goo
           Morph Ball
           Any of the following:
+              # Get up
               Grapple Beam or Space Jump
               All of the following:
-                  Bomb and High Jump Boots and Mid-Air Morph (Intermediate) and Infinite Bomb Jump (Intermediate)
-                  Super Jump (Advanced) or Unmorph Extend (Beginner)
+                  High Jump Boots
+                  Super Jump (Intermediate) or Unmorph Extend (Beginner)
+              # Get higher with a bomb explosion
+              Mid-Air Morph (Intermediate) and Lay Bomb
 
 ----------------
 Quarry Tunnel
@@ -776,12 +835,14 @@ Extra - asset_id: collision_camera_032
   > Elevator to Area 3 - Factory Interior
       Any of the following:
           Phase Drift
+          # Spider Boost
           Spider Boost (Beginner) and Can Spider Boost
           All of the following:
+              # Bottom Path
               Morph Ball
               Any of the following:
                   After Area 3 (Metroid Caverns) - Transport to Area 3 Factory Interior Grapple Block
-                  # https://youtu.be/RJkXLo_UohI
+                  # Freeze Ramulken in corner and Melee Clip right: https://youtu.be/RJkXLo_UohI - TODO: find more ways
                   Stand on Frozen Enemy (Beginner) and Melee Clip (Advanced) and Fully Freeze Enemy
   > Door to Quarry Tunnel
       Trivial
@@ -814,7 +875,9 @@ Extra - asset_id: collision_camera_033
 > Start Point; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Gamma_004A_Checkpoint
-  > Tunnel to Gamma+ Arena South Access
+  > Tunnel to Gamma+ Arena South Access (Bottom)
+      Lay Any Bomb
+  > Tunnel to Gamma+ Arena South Access (Top)
       Lay Any Bomb
 
 > Pickup (DNA); Heals? False
@@ -822,14 +885,22 @@ Extra - asset_id: collision_camera_033
   * Pickup 193; Category? Major
   * Extra - pickup_type: metroid
   * Extra - spawngroup: SG_Gamma_004_B
-  > Tunnel to Gamma+ Arena South Access
+  > Tunnel to Gamma+ Arena South Access (Bottom)
       Lay Any Bomb
 
-> Tunnel to Gamma+ Arena South Access; Heals? False
+> Tunnel to Gamma+ Arena South Access (Bottom); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Gamma+ Arena South Access/Tunnel to Gamma+ Arena South
+  * Tunnel with Bomb Block to Gamma+ Arena South Access/Tunnel to Gamma+ Arena South (Bottom)
   > Event - Gamma Metoid+
       Defeat Gamma Metroid+ and Lay Any Bomb
+  > Start Point
+      Impossible
+
+> Tunnel to Gamma+ Arena South Access (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Gamma+ Arena South Access/Tunnel to Gamma+ Arena South (Top)
+  > Start Point
+      Trivial
 
 ----------------
 Gamma+ Arena South Access
@@ -841,14 +912,22 @@ Extra - asset_id: collision_camera_034
   * Power Beam Door to Waterfall Cavern/Door to Gamma+ Arena South Access
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Tunnel to Gamma+ Arena South
+  > Tunnel to Gamma+ Arena South (Bottom)
       Lay Any Bomb
 
-> Tunnel to Gamma+ Arena South; Heals? False
+> Tunnel to Gamma+ Arena South (Bottom); Heals? False
   * Layers: default
-  * Tunnel with Bomb Block to Gamma+ Arena South/Tunnel to Gamma+ Arena South Access
+  * Tunnel with Bomb Block to Gamma+ Arena South/Tunnel to Gamma+ Arena South Access (Bottom)
   > Door to Waterfall Cavern
       Morph Ball
+  > Tunnel to Gamma+ Arena South (Top)
+      Lay Any Bomb
+
+> Tunnel to Gamma+ Arena South (Top); Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Gamma+ Arena South/Tunnel to Gamma+ Arena South Access (Top)
+  > Tunnel to Gamma+ Arena South (Bottom)
+      Lay Any Bomb
 
 ----------------
 Waterfall Cavern
@@ -892,7 +971,10 @@ Extra - asset_id: collision_camera_036
   > Start Point (Right)
       All of the following:
           Morph Ball and Varia Suit
-          Bomb or Power Bomb ≥ 3
+          Any of the following:
+              Lay Bomb
+              # Need to go in a circle to trigger the Gamma
+              Power Bomb ≥ 3 and Lay Power Bomb
           Gravity Suit or Spider Ball
   > Start Point (Left)
       Trivial

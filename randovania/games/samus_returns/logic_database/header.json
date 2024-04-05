@@ -1035,6 +1035,14 @@
             "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door": {
                 "long_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
                 "extra": {}
+            },
+            "Area 2 (Dam Entry) - Chozo Grapple Block": {
+                "long_name": "Area 2 (Dam Entryway) - Chozo Seal Grapple Block",
+                "extra": {}
+            },
+            "Area 4 (Central Caves) - Caves Intersection Terminal Grapple Block": {
+                "long_name": "Area 4 (Central Caves) - Caves Intersection Terminal Grapple Block",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1247,6 +1255,10 @@
             },
             "BeamBurstBuff": {
                 "long_name": "Buff Beam Burst",
+                "extra": {}
+            },
+            "EntranceRando": {
+                "long_name": "Entrance Rando",
                 "extra": {}
             }
         },
@@ -1541,13 +1553,8 @@
                                 "data": "Lay Power Bomb"
                             },
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Spider",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Use Spider Ball"
                             }
                         ]
                     }
@@ -3878,29 +3885,15 @@
                             {
                                 "type": "resource",
                                 "data": {
-                                    "type": "items",
-                                    "name": "Bomb",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Morph",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
                                     "type": "tricks",
                                     "name": "IBJ",
                                     "amount": 1,
                                     "negate": false
                                 }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Lay Bomb"
                             }
                         ]
                     }
@@ -4503,7 +4496,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "TODO: potentially rename to \"Defeat Weak Robots\"",
                         "items": [
                             {
                                 "type": "resource",
@@ -4702,7 +4695,7 @@
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "TODO: potentially rename to \"Defeat Strong Robots\"",
                         "items": [
                             {
                                 "type": "resource",
@@ -4725,6 +4718,30 @@
                             {
                                 "type": "template",
                                 "data": "Defeat Gold Robots"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Climb Rooms Vertically (No High Jump, No IBJ)": {
+                "display_name": "Climb Rooms Vertically (No High Jump, No IBJ)",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Space",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Use Spider Ball"
                             }
                         ]
                     }
@@ -5409,6 +5426,13 @@
             3,
             4
         ],
+        "DBJ": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ],
         "SuperJump": [
             1,
             2,
@@ -5420,6 +5444,11 @@
             2,
             3
         ],
+        "UnmorphExtend": [
+            1,
+            2,
+            3
+        ],
         "Combat": [
             1,
             2,
@@ -5427,19 +5456,11 @@
             4,
             5
         ],
-        "UnmorphExtend": [
-            1,
-            2,
-            3
-        ],
         "MissilelessMetroids": [
             1,
             2,
             3,
             4
-        ],
-        "CornerClip": [
-            2
         ],
         "OoB": [
             1,
@@ -5457,30 +5478,23 @@
             2,
             3
         ],
-        "Spider Boost": [
-            1,
-            2,
-            3,
-            4
-        ],
-        "DBJ": [
-            1,
-            2,
-            3,
-            4,
-            5
-        ],
-        "AirMorph": [
-            1,
-            2,
-            3
-        ],
         "PhaseSkip": [
             1,
             2,
             3,
             4,
             5
+        ],
+        "Spider Boost": [
+            1,
+            2,
+            3,
+            4
+        ],
+        "AirMorph": [
+            1,
+            2,
+            3
         ],
         "Movement": [
             1,
@@ -5499,16 +5513,16 @@
             2,
             3
         ],
+        "PreciseAiming": [
+            1,
+            2,
+            3
+        ],
         "DBoost": [
             1,
             2,
             3,
             4
-        ],
-        "PreciseAiming": [
-            1,
-            2,
-            3
         ],
         "UBJ": [
             1,

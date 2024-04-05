@@ -639,7 +639,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
             "hud_color": self.cosmetic_patches.hud_color if self.cosmetic_patches.use_hud_color else None,
         }
 
-    def create_data(self) -> dict[str, typing.Any]:
+    def create_game_specific_data(self) -> dict[str, typing.Any]:
         result: dict[str, typing.Any] = {}
         _add_header_data_to_result(self.description, result)
 
@@ -925,21 +925,6 @@ class EchoesPatchDataFactory(PatchDataFactory):
             {"asset_id": 326, "connections": [124, 194, 241, 327]},
             {"asset_id": 327, "connections": [46, 275]},
         ]
-
-
-def generate_patcher_data(
-    description: LayoutDescription,
-    players_config: PlayersConfiguration,
-    cosmetic_patches: EchoesCosmeticPatches,
-) -> dict:
-    """
-
-    :param description:
-    :param players_config:
-    :param cosmetic_patches:
-    :return:
-    """
-    return EchoesPatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
 
 def _create_pickup_list(

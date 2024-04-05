@@ -10,6 +10,9 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_type: item_supermissiletank
   > Door to Overgrown Maze
       Screw Attack
+  > Below Ceiling Pickup
+      # Spinjump onto ledge, then use spider
+      Screw Attack and Movement (Intermediate) and Use Spider Ball
 
 > Pickup (Super Missile Tank Bottom); Heals? False
   * Layers: default
@@ -53,7 +56,7 @@ Extra - asset_id: collision_camera_002
   > Door to Gamma Arena
       Trivial
 
-> Save Station Left; Heals? False
+> Save Station Left; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation001
   * Extra - actor_type: weightactivatedplatform
@@ -63,13 +66,14 @@ Extra - asset_id: collision_camera_002
           Screw Attack
           Any of the following:
               Space Jump
-              # https://youtu.be/f7SZju61ZlI
-              Bomb and Infinite Bomb Jump (Advanced) and Spider Boost (Advanced) and Can Spider Boost
+              # Break the blocks, then spider boost up: https://youtu.be/f7SZju61ZlI - TODO: try with spider boost / phase drift?
+              Infinite Bomb Jump (Advanced) and Spider Boost (Advanced) and Can Spider Boost and Lay Bomb
+  > Door to Transport to Tower Interior West
+      Impossible
   > Underwater
-      # Meboid Swarm
-      Dodge Enemies (Intermediate) or Defeat Swarms
+      Trivial
 
-> Save Station Right; Heals? False
+> Save Station Right; Heals? False; Spawn Point
   * Layers: default
   * Extra - actor_name: LE_Platform_SaveStation002
   * Extra - actor_type: weightactivatedplatform
@@ -104,15 +108,16 @@ Extra - asset_id: collision_camera_002
           Screw Attack
           Any of the following:
               Space Jump
-              # https://youtu.be/uze9OiibjUM
-              Bomb and Infinite Bomb Jump (Expert) and Spider Boost (Advanced) and Can Spider Boost
+              # IBJ, unmorph and destroy Screw blocks. Then spider boost up: https://youtu.be/uze9OiibjUM
+              Infinite Bomb Jump (Expert) and Spider Boost (Advanced) and Can Spider Boost and Lay Bomb
   > Next to Teleporter
       Any of the following:
           High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs
           All of the following:
-              # https://youtu.be/xM7_Mlvgp_g
+              # Damage Boost over the Blob Thrower: https://youtu.be/xM7_Mlvgp_g
               Damage Boost (Advanced)
               Lightning Armor or Normal Damage ≥ 85
+          # IBJ over the Blob Thrower
           Infinite Bomb Jump (Intermediate) and Lay Bomb
           # Jump over the Blob Thrower
           Phase Drift and Dodge Enemies (Intermediate)
@@ -120,9 +125,10 @@ Extra - asset_id: collision_camera_002
       Any of the following:
           High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs
           All of the following:
-              # https://youtu.be/xM7_Mlvgp_g
+              # Damage Boost over the Blob Thrower: https://youtu.be/xM7_Mlvgp_g
               Damage Boost (Advanced)
               Lightning Armor or Normal Damage ≥ 85
+          # IBJ over the Blob Thrower
           Infinite Bomb Jump (Intermediate) and Lay Bomb
           # Jump over the Blob Thrower
           Phase Drift and Dodge Enemies (Intermediate)
@@ -137,7 +143,10 @@ Extra - asset_id: collision_camera_002
   > Door to Zeta Arena Access
       High Jump Boots or Space Jump or Single-wall Wall Jump (Intermediate) or Use Spider Ball
   > Upper Right Ledge
-      Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Space Jump or Use Spider Ball
+          # IBJ
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
 
 > Door to Transport to Tower Interior West; Heals? False
   * Layers: default
@@ -153,7 +162,10 @@ Extra - asset_id: collision_camera_002
           # Reach the tunnel ledge
           Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
   > Next to Teleporter
-      Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (No High Jump)
+      Any of the following:
+          Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (No High Jump)
+          # SWJ+HJ
+          High Jump Boots and Single-wall Wall Jump (Intermediate)
 
 > Door to Gamma+ Arena Access; Heals? False
   * Layers: default
@@ -163,7 +175,9 @@ Extra - asset_id: collision_camera_002
   > Upper Right Ledge
       Any of the following:
           Lightning Armor or Space Jump
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
+          # Hazard run
           Hazard Runs (Beginner) and Hazard Damage ≥ 75
 
 > Door to Gamma Arena; Heals? False
@@ -183,6 +197,7 @@ Extra - asset_id: collision_camera_002
       Any of the following:
           High Jump Boots or Destroy Blob Throwers/Steel Orbs
           All of the following:
+              # Damage Boost over the Blob Thrower
               Damage Boost (Advanced)
               Lightning Armor or Normal Damage ≥ 85
           # Jump over the Blob Thrower
@@ -206,7 +221,9 @@ Extra - asset_id: collision_camera_002
   > Door to Gamma+ Arena Access
       Any of the following:
           Lightning Armor or Space Jump
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
+          # Hazard run
           Hazard Runs (Beginner) and Hazard Damage ≥ 75
   > Top of Tower Right Side
       Trivial
@@ -216,7 +233,7 @@ Extra - asset_id: collision_camera_002
           All of the following:
               Use Spider Ball
               # Grab onto the wall
-              Bomb or Spring Ball or Mid-Air Morph (Beginner)
+              Spring Ball or Mid-Air Morph (Beginner) or Lay Bomb
 
 > Underwater; Heals? False
   * Layers: default
@@ -233,7 +250,7 @@ Extra - asset_id: collision_camera_002
                       Infinite Bomb Jump (Beginner)
                       Gravity Suit or Mid-Air Morph (Beginner)
           All of the following:
-              # https://youtu.be/JE_9y06JTk4
+              # SWJ: https://youtu.be/JE_9y06JTk4
               Morph Ball
               Any of the following:
                   Single-wall Wall Jump (Advanced)
@@ -242,9 +259,11 @@ Extra - asset_id: collision_camera_002
       Any of the following:
           Use Spider Ball
           All of the following:
+              # Jump up
               Space Jump or Wall Jump (Beginner)
               High Jump Boots or Gravity Suit or Super Jump (Intermediate)
           All of the following:
+              # IBJ up
               Lay Bomb
               Any of the following:
                   All of the following:
@@ -261,16 +280,18 @@ Extra - asset_id: collision_camera_002
       Trivial
   > Door to Overgrown Maze
       Any of the following:
+          # Get over the Blob Thrower
           Space Jump
           Infinite Bomb Jump (Intermediate) and Lay Bomb
   > Door to Transport to Tower Interior West
       Trivial
   > Pickup (Missile Tank Hidden)
       Any of the following:
+          # IBJ to right ledge, then IBJ to item ledge
           Infinite Bomb Jump (Intermediate) and Lay Bomb
           All of the following:
               Lay Any Bomb
-              Space Jump or Spider Ball
+              Space Jump or Use Spider Ball
   > Event - Teleporter Unlocked
       Trivial
 
@@ -300,13 +321,14 @@ Extra - asset_id: collision_camera_002
                   All of the following:
                       Grapple Beam
                       Any of the following:
+                          # Deal with Blob Thrower
                           Destroy Blob Throwers/Steel Orbs
                           # Jump over the Blob Thrower
-                          High Jump Boots and Phase Drift and Spring Ball and Mid-Air Morph (Advanced) and Damage Boost (Beginner) and Dodge Enemies (Intermediate)
+                          Phase Drift and Dodge Enemies (Intermediate)
                       Any of the following:
                           # Cross the Crumble blocks
-                          Phase Drift or Spider Ball
-                          # https://youtu.be/Ngh3cBoy3e8
+                          Phase Drift or Use Spider Ball
+                          # Skip with SJ: https://youtu.be/Ngh3cBoy3e8
                           Gravity Suit and Space Jump and Phase Drift Skip (Advanced)
 
 > Top of Tower Right Side; Heals? False
@@ -315,20 +337,23 @@ Extra - asset_id: collision_camera_002
       Any of the following:
           High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs
           All of the following:
-              # https://youtu.be/xM7_Mlvgp_g
+              # Damage boost over the Blob Thrower: https://youtu.be/xM7_Mlvgp_g
               Damage Boost (Advanced)
               Lightning Armor or Normal Damage ≥ 85
+          # IBJ over the Blob Thrower
           Infinite Bomb Jump (Intermediate) and Lay Bomb
           # Jump over the Blob Thrower
           Phase Drift and Dodge Enemies (Intermediate)
   > Door to Red Plant Maze
       Trivial
+  > Upper Right Ledge
+      Simple IBJ
 
 > Below Ceiling Pickup; Heals? False
   * Layers: default
   > Door to Overgrown Maze
       # Fall from above
-      Knowledge (Beginner)
+      Movement (Beginner)
   > Pickup (Missile Tank Hidden)
       Use Spider Ball
   > Upper Right Ledge
@@ -354,8 +379,8 @@ Extra - asset_id: collision_camera_004
               Any of the following:
                   Grapple Beam
                   All of the following:
-                      # Bomb Jump from the corner
-                      Bomb and Spider Ball and Diagonal Bomb Jump (Advanced) and Damage Boost (Beginner)
+                      # Bomb Jump from the corner and hit the spike
+                      Diagonal Bomb Jump (Advanced) and Damage Boost (Beginner) and Lay Bomb and Use Spider Ball
                       Lightning Armor or Normal Damage ≥ 35
 
 > Pickup (Power Bomb Tank); Heals? False
@@ -375,13 +400,15 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_type: doorpowerpower
   > Pickup (Energy Tank)
       Any of the following:
+          # Spider Boost from right path
           Spider Boost (Beginner) and Can Spider Boost
           All of the following:
+              # Left path
               Morph Ball
               Any of the following:
                   Grapple Beam
                   # Bomb Jump from corner
-                  Bomb and Spider Ball and Diagonal Bomb Jump (Beginner)
+                  Diagonal Bomb Jump (Beginner) and Lay Bomb and Use Spider Ball
                   All of the following:
                       # Jump through the spikes
                       Damage Boost (Advanced)
@@ -457,9 +484,9 @@ Extra - asset_id: collision_camera_006
                   All of the following:
                       Gravity Suit
                       # Reach the tunnel
-                      Space Jump or Wall Jump (Beginner)
+                      Space Jump or Single-wall Wall Jump (Beginner) or Wall Jump (Beginner)
           All of the following:
-              # Reach the tunnel
+              # Reach the tunnel via bomb jump methods
               Infinite Bomb Jump (Beginner) and Lay Bomb
               # Escape the water
               Gravity Suit or Underwater Bomb Jump (Beginner)
@@ -506,8 +533,13 @@ Extra - asset_id: collision_camera_008
       All of the following:
           Morph Ball
           Any of the following:
-              Lightning Armor or Bomb or Power Bomb ≥ 2
+              # Top path
+              Lightning Armor
               Hazard Runs (Advanced) and Hazard Damage ≥ 500
+              Any of the following:
+                  # Bottom path
+                  Lay Bomb
+                  Power Bomb ≥ 2 and Lay Power Bomb
 
 > Door to Tower Exterior; Heals? False
   * Layers: default
@@ -517,10 +549,12 @@ Extra - asset_id: collision_camera_008
   > Pickup (Aeion Tank)
       Any of the following:
           All of the following:
+              # Top path
               Morph Ball
               Any of the following:
                   Lightning Armor
                   Hazard Runs (Advanced) and Hazard Damage ≥ 500
+          # Bottom path
           Baby Metroid and Lay Any Bomb
 
 ----------------
@@ -570,7 +604,9 @@ Extra - asset_id: collision_camera_012
   > Door to Zeta Arena Access
       Any of the following:
           High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
+          # UE
           Morph Ball and Unmorph Extend (Beginner)
   > Event - Zeta Metroid
       Defeat Zeta Metroid
@@ -594,20 +630,14 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_name: Door008
   * Extra - actor_type: doorpowerpower
   > Tunnel to Zeta Arena Access
-      All of the following:
-          Lay Any Bomb
-          # Paraby Swarm
-          Dodge Enemies (Beginner) or Defeat Swarms
+      Lay Any Bomb
 
 > Tunnel to Zeta Arena Access; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Zeta Arena Access/Tunnel to Paraby Parlor
   > Door to Screw Attack Chamber Access
-      All of the following:
-          # Climb the room
-          Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
-          # Paraby Swarm
-          Dodge Enemies (Beginner) or Defeat Swarms
+      # Climb the room
+      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
 
 ----------------
 Gamma Arena
@@ -620,16 +650,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
   > Bottom of Climb
-      Any of the following:
-          Lay Bomb and Shoot Beam Burst
-          All of the following:
-              Lay Power Bomb
-              Any of the following:
-                  Shoot Beam Burst
-                  Knowledge (Beginner) and Disabled Buff Beam Burst
+      Destroy Blob Throwers/Steel Orbs and Lay Any Bomb
   > Room Bottom
-      # Meboid Swarm
-      Morph Ball and Defeat Swarms
+      Morph Ball
 
 > Energy Recharge Station; Heals? True
   * Layers: default
@@ -640,8 +663,7 @@ Extra - asset_id: collision_camera_015
   > Bottom of Climb
       Space Jump or Use Spider Ball
   > Room Bottom
-      # Meboid Swarm
-      Defeat Swarms
+      Trivial
 
 > Door to Tower Exterior; Heals? False
   * Layers: default
@@ -651,8 +673,7 @@ Extra - asset_id: collision_camera_015
   > Energy Recharge Station
       Space Jump or Use Spider Ball
   > Room Bottom
-      # Meboid Swarm
-      Defeat Swarms
+      Trivial
 
 > Event - Gamma Metroid; Heals? False
   * Layers: default
@@ -663,13 +684,7 @@ Extra - asset_id: collision_camera_015
 > Bottom of Climb; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
-      Any of the following:
-          Lay Bomb and Shoot Beam Burst
-          All of the following:
-              Lay Power Bomb
-              Any of the following:
-                  Shoot Beam Burst
-                  Knowledge (Beginner) and Disabled Buff Beam Burst
+      Destroy Blob Throwers/Steel Orbs and Lay Any Bomb
   > Energy Recharge Station
       Space Jump or Use Spider Ball
   > Top of Climb
@@ -682,8 +697,7 @@ Extra - asset_id: collision_camera_015
                   # Jump around the overhang
                   Single-wall Wall Jump (Intermediate)
   > Room Bottom
-      # Meboid Swarm
-      Defeat Swarms
+      Trivial
   > Out of Bounds in Tunnel
       All of the following:
           # Freeze the Moheek https://youtu.be/H-IFsJD02bo
@@ -705,7 +719,7 @@ Extra - asset_id: collision_camera_015
           All of the following:
               Lay Bomb
               Any of the following:
-                  Spider Ball
+                  Use Spider Ball
                   # Bomb Jump from ledge or bottom of climb
                   Infinite Bomb Jump (Intermediate)
                   All of the following:
@@ -758,7 +772,7 @@ Extra - asset_id: collision_camera_015
           Lay Power Bomb
           All of the following:
               Lay Bomb
-              Spider Ball or Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner)
+              Mid-Air Morph (Beginner) or Simple IBJ or Use Spider Ball
 
 > Pickup (DNA); Heals? False
   * Layers: default
@@ -807,14 +821,15 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_type: doorpowerpower
   > Door to Screw Attack Chamber
       Any of the following:
+          # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
-          # https://youtu.be/jMV40L8UISU
+          # UBJ: https://youtu.be/jMV40L8UISU
           Underwater Bomb Jump (Advanced) and Lay Bomb
           All of the following:
               Gravity Suit
               Any of the following:
                   Space Jump or Simple IBJ
-                  # https://youtu.be/3XIUkQcTIPg
+                  # SWJ: https://youtu.be/3XIUkQcTIPg
                   Morph Ball and Single-wall Wall Jump (Advanced)
 
 > Dock to Screw Attack Chamber; Heals? False
@@ -825,7 +840,7 @@ Extra - asset_id: collision_camera_016
           Screw Attack
           Any of the following:
               High Jump Boots or Space Jump or Wall Jump (Beginner)
-              # https://youtu.be/VHSysPvOGV0
+              # Super Jump + UE: https://youtu.be/VHSysPvOGV0
               Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Beginner)
 
 ----------------
@@ -843,7 +858,9 @@ Extra - asset_id: collision_camera_014
           Varia Suit
           Any of the following:
               Lightning Armor or Space Jump
+              # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
+              # Hazard Run
               Hazard Runs (Beginner) and Hazard Damage ≥ 90
 
 > Door to Gamma+ Arena; Heals? False
@@ -853,13 +870,16 @@ Extra - asset_id: collision_camera_014
   * Extra - actor_type: doorpowerpower
   > Door to Tower Exterior
       All of the following:
+          # TODO: freeze gulluggs to get across? for BOTH sides
           Varia Suit
           Any of the following:
               Lightning Armor or Space Jump
+              # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
+              # Hazard Run
               Hazard Runs (Beginner) and Hazard Damage ≥ 90
   > Start Point
-      Trivial
+      Varia Suit
 
 > Start Point; Heals? False; Default Node
   * Layers: default
@@ -883,7 +903,9 @@ Extra - asset_id: collision_camera_014
           Any of the following:
               # Gamma trigger is across the lava
               Gravity Suit or Space Jump
+              # Spider Boost across
               Spider Boost (Intermediate) and Can Spider Boost
+              # DBJ
               Diagonal Bomb Jump (Intermediate) and Lay Bomb
   > Start Point
       Varia Suit
@@ -910,6 +932,8 @@ Extra - asset_id: collision_camera_014
           Varia Suit
           Any of the following:
               Gravity Suit or Space Jump
+              # Spider Boost
               Spider Boost (Intermediate) and Can Spider Boost
+              # DBJ
               Diagonal Bomb Jump (Intermediate) and Lay Bomb
 

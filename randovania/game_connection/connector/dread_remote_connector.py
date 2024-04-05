@@ -28,9 +28,8 @@ if TYPE_CHECKING:
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
-    special = {}
     generic = "Received {item_name} from {provider_name}."
-    return special.get(item_name, generic).format(item_name=item_name, provider_name=player_name)
+    return generic.format(item_name=item_name, provider_name=player_name)
 
 
 def resources_to_give_for_pickup(
@@ -75,33 +74,33 @@ class DreadRemoteConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self._game_enum
 
-    def description(self):
+    def description(self) -> str:
         return f"{self.game_enum.long_name}: {self.executor.version}"
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         return (self.in_cooldown, self.current_region)
 
-    def connection_lost(self):
+    def connection_lost(self) -> None:
         self.logger.info("Finishing connector")
         # TODO: Finished signal is never used. Remove it everywhere?
         self.Finished.emit()
 
-    async def force_finish(self):
+    async def force_finish(self) -> None:
         self.executor.disconnect()
 
     def is_disconnected(self) -> bool:
         return not self.executor.is_connected()
 
     # reset all values on init, disconnect or after switching back to main menu
-    def reset_values(self):
-        self.remote_pickups = ()
+    def reset_values(self) -> None:
+        self.remote_pickups: tuple[PickupEntryWithOwner, ...] = ()
         self.last_inventory = Inventory.empty()
         self.in_cooldown = True
-        self.received_pickups = None
+        self.received_pickups: int | None = None
         self.inventory_index = None
-        self.current_region = None
+        self.current_region: Region | None = None
 
-    def new_player_location_received(self, state_or_region: str):
+    def new_player_location_received(self, state_or_region: str) -> None:
         if state_or_region == "MAINMENU":
             self.reset_values()
             self.current_region = None
@@ -112,7 +111,7 @@ class DreadRemoteConnector(RemoteConnector):
             )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 
-    def new_collected_locations_received(self, new_indices: bytes):
+    def new_collected_locations_received(self, new_indices: bytes) -> None:
         locations = set()
         start_of_bytes = b"locations:"
         if new_indices.startswith(start_of_bytes):
@@ -128,14 +127,14 @@ class DreadRemoteConnector(RemoteConnector):
         for location in locations:
             self.PickupIndexCollected.emit(location)
 
-    def new_inventory_received(self, json_string: str):
+    def new_inventory_received(self, json_string: str) -> None:
         try:
             inventory_json = json.loads(json_string)
             self.inventory_index = inventory_json["index"]
             inventory_ints: list[int] = inventory_json["inventory"]
         except Exception as e:
             self.logger.error("Unknown response: %s (got %s)", json_string, e)
-            return {}
+            return
 
         items = [r for r in self.game.resource_database.item if "item_id" in r.extra]
 
@@ -146,14 +145,14 @@ class DreadRemoteConnector(RemoteConnector):
         self.InventoryUpdated.emit(inventory)
 
     @asyncSlot()
-    async def new_received_pickups_received(self, new_received_pickups: str):
+    async def new_received_pickups_received(self, new_received_pickups: str) -> None:
         new_recv_as_int = int(new_received_pickups)
         self.logger.debug("Received Pickups: %s", new_received_pickups)
         self.in_cooldown = False
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
         self.remote_pickups = remote_pickups
         await self.receive_remote_pickups()
 
@@ -197,7 +196,7 @@ class DreadRemoteConnector(RemoteConnector):
         await self.executor.run_lua_code(execute_string)
         return
 
-    async def display_arbitrary_message(self, message: str):
+    async def display_arbitrary_message(self, message: str) -> None:
         escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
         execute_string = f"Game.AddSF(0, 'Scenario.QueueAsyncPopup', 'si', '{escaped_message}', 10.0)"
         await self.executor.run_lua_code(execute_string)

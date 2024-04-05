@@ -2,9 +2,12 @@ from __future__ import annotations
 
 JOKE_HINTS = [
     "The Chozo have Sealed this hint away.",
+    'You hear a voice in the distance...\n"March Stabilization Rejected".'
     "Spider Boosting can quickly cover large distances.\nTake advantage whenever possible!",
-    "The Spider Boost can be used while in Spider Ball form.\n"
-    "It will launch you forward, damaging enemies you make contact with.",
+    (
+        "The Spider Boost can be used while in Spider Ball form.\n"
+        "It will launch you forward, damaging enemies you make contact with."
+    ),
     "Drag pins onto the map to mark points of interest.",
     "Samus, we cannot Return this hint to you.",
     "Rumor has it, that walls are only a suggestion.",
