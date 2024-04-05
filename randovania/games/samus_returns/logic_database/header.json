@@ -1113,11 +1113,6 @@
                 "description": "Samus can clip through walls if she stands on a crumble block with Phase Drift active, grabbing an adjacent ledge, and deactivate Phase Drift mid-climb.",
                 "extra": {}
             },
-            "CornerClip": {
-                "long_name": "Corner Clip",
-                "description": "Forcing Samus into a tight space can cause her to clip Out of Bounds.",
-                "extra": {}
-            },
             "MeleeClip": {
                 "long_name": "Melee Clip",
                 "description": "With a specific setup, Samus can clip through walls that are two tiles high using the Melee.",
@@ -1263,6 +1258,30 @@
             }
         },
         "requirement_template": {
+            "Climb Rooms Vertically (No High Jump, No IBJ)": {
+                "display_name": "Climb Rooms Vertically (No High Jump, No IBJ)",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Space",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Use Spider Ball"
+                            }
+                        ]
+                    }
+                }
+            },
             "Climb Rooms Vertically (No High Jump)": {
                 "display_name": "Climb Rooms Vertically (No High Jump)",
                 "requirement": {
@@ -1610,14 +1629,14 @@
                                 "data": {
                                     "type": "items",
                                     "name": "SMAmmo",
-                                    "amount": 6,
+                                    "amount": 5,
                                     "negate": false
                                 }
                             },
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": "Farming drops",
+                                    "comment": "Farming drops - one ammo only",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -1778,7 +1797,7 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Damage requirements (can't farm ammo)",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -1801,7 +1820,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No Missiles",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -1820,7 +1839,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Ice Beam",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -1863,7 +1882,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Beam Burst",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -1974,7 +1993,7 @@
                                             "data": {
                                                 "type": "damage",
                                                 "name": "Damage",
-                                                "amount": 199,
+                                                "amount": 195,
                                                 "negate": false
                                             }
                                         },
@@ -2019,7 +2038,7 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Damage requirements",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -2035,14 +2054,14 @@
                                             "data": {
                                                 "type": "items",
                                                 "name": "SMAmmo",
-                                                "amount": 9,
+                                                "amount": 7,
                                                 "negate": false
                                             }
                                         },
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": "Farming drops",
+                                                "comment": "Farming drops - one ammo only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2104,7 +2123,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Ice Beam",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -2147,7 +2166,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Beam Burst",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -2303,7 +2322,7 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Damage requirements (can't farm ammo)",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -2326,7 +2345,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No Missiles",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2345,7 +2364,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Ice Beam",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -2388,7 +2407,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Beam Burst",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -2579,12 +2598,12 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Damage requirements",
                                     "items": [
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Kill with Grapple",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2601,21 +2620,72 @@
                                                             "comment": null,
                                                             "items": [
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "or",
                                                                     "data": {
-                                                                        "type": "items",
-                                                                        "name": "MissileAmmo",
-                                                                        "amount": 1,
-                                                                        "negate": false
+                                                                        "comment": "Intended way",
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "MissileAmmo",
+                                                                                    "amount": 30,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "SMAmmo",
+                                                                                    "amount": 7,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "items",
-                                                                        "name": "SMAmmo",
-                                                                        "amount": 1,
-                                                                        "negate": false
+                                                                        "comment": "Farming drops - one ammo only",
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "or",
+                                                                                "data": {
+                                                                                    "comment": null,
+                                                                                    "items": [
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "items",
+                                                                                                "name": "MissileAmmo",
+                                                                                                "amount": 1,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "items",
+                                                                                                "name": "SMAmmo",
+                                                                                                "amount": 1,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 }
                                                             ]
@@ -2627,14 +2697,14 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No farming ammo",
                                                 "items": [
                                                     {
                                                         "type": "resource",
                                                         "data": {
                                                             "type": "tricks",
                                                             "name": "Combat",
-                                                            "amount": 3,
+                                                            "amount": 2,
                                                             "negate": false
                                                         }
                                                     },
@@ -2670,7 +2740,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No Missiles",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2689,7 +2759,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Ice Beam",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -2715,7 +2785,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "Beam Burst",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -2852,12 +2922,12 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Damage requirements",
                                     "items": [
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Kill with Grapple",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2874,21 +2944,72 @@
                                                             "comment": null,
                                                             "items": [
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "or",
                                                                     "data": {
-                                                                        "type": "items",
-                                                                        "name": "MissileAmmo",
-                                                                        "amount": 1,
-                                                                        "negate": false
+                                                                        "comment": "Intended way",
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "MissileAmmo",
+                                                                                    "amount": 40,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "SMAmmo",
+                                                                                    "amount": 10,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "items",
-                                                                        "name": "SMAmmo",
-                                                                        "amount": 1,
-                                                                        "negate": false
+                                                                        "comment": "Farming drops - one ammo only",
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Combat",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "or",
+                                                                                "data": {
+                                                                                    "comment": null,
+                                                                                    "items": [
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "items",
+                                                                                                "name": "MissileAmmo",
+                                                                                                "amount": 1,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "items",
+                                                                                                "name": "SMAmmo",
+                                                                                                "amount": 1,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 }
                                                             ]
@@ -2900,14 +3021,14 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No farming ammo",
                                                 "items": [
                                                     {
                                                         "type": "resource",
                                                         "data": {
                                                             "type": "tricks",
                                                             "name": "Combat",
-                                                            "amount": 3,
+                                                            "amount": 2,
                                                             "negate": false
                                                         }
                                                     },
@@ -2943,7 +3064,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No Missiles",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2999,7 +3120,7 @@
                                             "data": {
                                                 "type": "damage",
                                                 "name": "Damage",
-                                                "amount": 399,
+                                                "amount": 395,
                                                 "negate": false
                                             }
                                         },
@@ -3136,6 +3257,15 @@
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "SWJ",
+                                                "amount": 4,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -3143,7 +3273,7 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Damage requirements",
                                     "items": [
                                         {
                                             "type": "and",
@@ -3160,7 +3290,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "MissileAmmo",
-                                                                        "amount": 12,
+                                                                        "amount": 6,
                                                                         "negate": false
                                                                     }
                                                                 },
@@ -3169,7 +3299,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "SMAmmo",
-                                                                        "amount": 6,
+                                                                        "amount": 3,
                                                                         "negate": false
                                                                     }
                                                                 },
@@ -3188,22 +3318,8 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "type": "resource",
-                                                                                "data": {
-                                                                                    "type": "items",
-                                                                                    "name": "Morph",
-                                                                                    "amount": 1,
-                                                                                    "negate": false
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "type": "resource",
-                                                                                "data": {
-                                                                                    "type": "items",
-                                                                                    "name": "PBAmmo",
-                                                                                    "amount": 2,
-                                                                                    "negate": false
-                                                                                }
+                                                                                "type": "template",
+                                                                                "data": "Lay Power Bomb"
                                                                             }
                                                                         ]
                                                                     }
@@ -3281,7 +3397,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "MissileAmmo",
-                                                                        "amount": 70,
+                                                                        "amount": 60,
                                                                         "negate": false
                                                                     }
                                                                 },
@@ -3290,7 +3406,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "SMAmmo",
-                                                                        "amount": 32,
+                                                                        "amount": 20,
                                                                         "negate": false
                                                                     }
                                                                 }
@@ -3303,7 +3419,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No Missiles",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -3496,6 +3612,15 @@
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "SWJ",
+                                                "amount": 4,
+                                                "negate": false
+                                            }
                                         }
                                     ]
                                 }
@@ -3520,7 +3645,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "MissileAmmo",
-                                                                        "amount": 16,
+                                                                        "amount": 8,
                                                                         "negate": false
                                                                     }
                                                                 },
@@ -3529,7 +3654,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "SMAmmo",
-                                                                        "amount": 8,
+                                                                        "amount": 4,
                                                                         "negate": false
                                                                     }
                                                                 },
@@ -3548,22 +3673,8 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "type": "resource",
-                                                                                "data": {
-                                                                                    "type": "items",
-                                                                                    "name": "Morph",
-                                                                                    "amount": 1,
-                                                                                    "negate": false
-                                                                                }
-                                                                            },
-                                                                            {
-                                                                                "type": "resource",
-                                                                                "data": {
-                                                                                    "type": "items",
-                                                                                    "name": "PBAmmo",
-                                                                                    "amount": 2,
-                                                                                    "negate": false
-                                                                                }
+                                                                                "type": "template",
+                                                                                "data": "Lay Bomb"
                                                                             }
                                                                         ]
                                                                     }
@@ -3641,7 +3752,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "MissileAmmo",
-                                                                        "amount": 90,
+                                                                        "amount": 70,
                                                                         "negate": false
                                                                     }
                                                                 },
@@ -3650,7 +3761,7 @@
                                                                     "data": {
                                                                         "type": "items",
                                                                         "name": "SMAmmo",
-                                                                        "amount": 40,
+                                                                        "amount": 30,
                                                                         "negate": false
                                                                     }
                                                                 }
@@ -3663,7 +3774,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "No Missiles",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -3721,7 +3832,7 @@
                             {
                                 "type": "or",
                                 "data": {
-                                    "comment": "Fully freeze with Charge Beam or fire Missiles/Supers while briefly frozen",
+                                    "comment": "Fully freeze with Charge Beam",
                                     "items": [
                                         {
                                             "type": "and",
@@ -3769,7 +3880,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Fire Supers while briefly frozen",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -3795,7 +3906,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Fire Missiles while briefly frozen",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -4472,31 +4583,45 @@
                     }
                 }
             },
-            "Defeat Non-Counterable Enemies": {
-                "display_name": "Defeat Non-Counterable Enemies",
+            "Defeat Gold Autrack": {
+                "display_name": "Defeat Weak Enemies",
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "Defeat Weak Enemies",
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Lay Power Bomb"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MissileAmmo",
+                                    "amount": 20,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SMAmmo",
+                                    "amount": 4,
+                                    "negate": false
+                                }
                             },
                             {
                                 "type": "template",
-                                "data": "Shoot Beam Burst"
+                                "data": "Defeat Gold Robots"
                             }
                         ]
                     }
                 }
             },
             "Defeat Gold Robots": {
-                "display_name": "Defeat Gold Robots",
+                "display_name": "Defeat Strong Enemies",
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": "TODO: potentially rename to \"Defeat Weak Robots\"",
+                        "comment": "Defeat Strong Enemies",
                         "items": [
                             {
                                 "type": "resource",
@@ -4528,92 +4653,20 @@
                     }
                 }
             },
-            "Can Phase Drift Clip": {
-                "display_name": "Can Phase Drift Clip",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Morph",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Phase",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Defeat Swarms": {
-                "display_name": "Defeat Swarms",
+            "Defeat Non-Counterable Enemies": {
+                "display_name": "Defeat Non-Counterable Enemies",
                 "requirement": {
                     "type": "or",
                     "data": {
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Armor",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Lay Power Bomb"
                             },
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "tricks",
-                                    "name": "Combat",
-                                    "amount": 2,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Combat",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "template",
-                                                        "data": "Lay Power Bomb"
-                                                    },
-                                                    {
-                                                        "type": "template",
-                                                        "data": "Shoot Beam Burst"
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
+                                "type": "template",
+                                "data": "Shoot Beam Burst"
                             }
                         ]
                     }
@@ -4690,58 +4743,92 @@
                     }
                 }
             },
-            "Defeat Gold Autrack": {
-                "display_name": "Defeat Gold Autrack",
+            "Can Phase Drift Clip": {
+                "display_name": "Can Phase Drift Clip",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
-                        "comment": "TODO: potentially rename to \"Defeat Strong Robots\"",
+                        "comment": "TODO: remove this after the other todos",
                         "items": [
                             {
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "MissileAmmo",
-                                    "amount": 20,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "SMAmmo",
-                                    "amount": 4,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "Defeat Gold Robots"
-                            }
-                        ]
-                    }
-                }
-            },
-            "Climb Rooms Vertically (No High Jump, No IBJ)": {
-                "display_name": "Climb Rooms Vertically (No High Jump, No IBJ)",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Space",
+                                    "name": "Morph",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Use Spider Ball"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Phase",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Defeat Swarms": {
+                "display_name": "Defeat Swarms",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": "TODO: remove this after the other todos",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Armor",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 2,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Beam Burst"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         ]
                     }
