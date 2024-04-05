@@ -4583,31 +4583,45 @@
                     }
                 }
             },
-            "Defeat Non-Counterable Enemies": {
-                "display_name": "Defeat Non-Counterable Enemies",
+            "Defeat Gold Autrack": {
+                "display_name": "Defeat Weak Enemies",
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": null,
+                        "comment": "Defeat Weak Enemies",
                         "items": [
                             {
-                                "type": "template",
-                                "data": "Lay Power Bomb"
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MissileAmmo",
+                                    "amount": 20,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SMAmmo",
+                                    "amount": 4,
+                                    "negate": false
+                                }
                             },
                             {
                                 "type": "template",
-                                "data": "Shoot Beam Burst"
+                                "data": "Defeat Gold Robots"
                             }
                         ]
                     }
                 }
             },
             "Defeat Gold Robots": {
-                "display_name": "Defeat Weak Enemies",
+                "display_name": "Defeat Strong Enemies",
                 "requirement": {
                     "type": "or",
                     "data": {
-                        "comment": "Defeat Weak Enemies",
+                        "comment": "Defeat Strong Enemies",
                         "items": [
                             {
                                 "type": "resource",
@@ -4639,92 +4653,20 @@
                     }
                 }
             },
-            "Can Phase Drift Clip": {
-                "display_name": "Can Phase Drift Clip",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Morph",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Phase",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "Defeat Swarms": {
-                "display_name": "Defeat Swarms",
+            "Defeat Non-Counterable Enemies": {
+                "display_name": "Defeat Non-Counterable Enemies",
                 "requirement": {
                     "type": "or",
                     "data": {
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Armor",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Lay Power Bomb"
                             },
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "tricks",
-                                    "name": "Combat",
-                                    "amount": 2,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "tricks",
-                                                "name": "Combat",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "template",
-                                                        "data": "Lay Power Bomb"
-                                                    },
-                                                    {
-                                                        "type": "template",
-                                                        "data": "Shoot Beam Burst"
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
+                                "type": "template",
+                                "data": "Shoot Beam Burst"
                             }
                         ]
                     }
@@ -4801,19 +4743,19 @@
                     }
                 }
             },
-            "Defeat Gold Autrack": {
-                "display_name": "Defeat Strong Enemies",
+            "Can Phase Drift Clip": {
+                "display_name": "Can Phase Drift Clip",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
-                        "comment": "Defeat Strong Enemies",
+                        "comment": "TODO: remove this after the other todos",
                         "items": [
                             {
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "MissileAmmo",
-                                    "amount": 20,
+                                    "name": "Morph",
+                                    "amount": 1,
                                     "negate": false
                                 }
                             },
@@ -4821,14 +4763,72 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "SMAmmo",
-                                    "amount": 4,
+                                    "name": "Phase",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Defeat Swarms": {
+                "display_name": "Defeat Swarms",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": "TODO: remove this after the other todos",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Armor",
+                                    "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Defeat Gold Robots"
+                                "type": "resource",
+                                "data": {
+                                    "type": "tricks",
+                                    "name": "Combat",
+                                    "amount": 2,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Lay Power Bomb"
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Shoot Beam Burst"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         ]
                     }
