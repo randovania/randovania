@@ -410,11 +410,11 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return cosmetic_patches
 
-    def _door_patches(self):
+    def _door_patches(self) -> list[dict[str, str]]:
         wl = self.game.region_list
 
         result = []
-        used_actors = {}
+        used_actors: dict[str, str] = {}
 
         for node, weakness in self.patches.all_dock_weaknesses():
             if "type" not in weakness.extra:
