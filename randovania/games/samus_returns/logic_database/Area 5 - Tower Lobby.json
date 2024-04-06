@@ -1550,17 +1550,8 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze the Gullugg - TODO: get rid of template",
+                                                        "comment": "Freeze the Gullugg",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "FrozenEnemy",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "template",
                                                                 "data": "Fully Freeze Enemy"
@@ -2428,20 +2419,11 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze the Gullugg - TODO: get rid of template?",
+                                                        "comment": "Freeze the Gullugg",
                                                         "items": [
                                                             {
                                                                 "type": "template",
                                                                 "data": "Fully Freeze Enemy"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "FrozenEnemy",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
                                                             }
                                                         ]
                                                     }
@@ -4310,7 +4292,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze the Ramulken - TODO: connection doesnt make sense, needs to be fixed.",
+                                            "comment": "Climb with High Jump - TODO: videos",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4324,46 +4306,88 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Freeze",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "FrozenEnemy",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
                                                         "type": "tricks",
                                                         "name": "SWJ",
-                                                        "amount": 1,
+                                                        "amount": 2,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Super Jump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "UE barely reaches the wall",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Freeze the Ramulken",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Ice",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Freeze",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -7467,7 +7491,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Freeze the Ramulken - TODO: more ways of freezing",
+                                                                                "comment": "Freeze the Ramulken",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -7493,7 +7517,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "UE",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
