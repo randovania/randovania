@@ -96,10 +96,9 @@ game_data: game.GameData = game.GameData(
             "NTSC 0-00, meaning that all versions of Prime are guaranteed to be logically completable when randomized.",
         ),
         (
-            "Why are some rooms in Magmoor Caverns not superheated?",
+            "What rooms in Magmoor Caverns not superheated?",
             "Elevator rooms, Storage Cavern, and every room between Twin Fires and the Phazon Mines and "
-            "Phendrana Drifts elevators (Far Magmoor) are not superheated, not including Burning Trail "
-            "and Lake Access which can be encountered without Varia Suit in a vanilla playthrough.",
+            "Phendrana Drifts elevators (Far Magmoor), Burning Trail, and Lake Access.",
         ),
     ],
     web_info=game.GameWebInfo(
