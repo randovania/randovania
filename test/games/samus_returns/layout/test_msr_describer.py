@@ -60,7 +60,7 @@ def test_msr_format_params(artifacts):
             "Progressive Beam, Progressive Suit, Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
-        "Gameplay": ["Starts at Surface - East - Landing Site"],
+        "Gameplay": ["Starts at Surface East - Landing Site"],
         "Difficulty": [],
         "Goal": (
             [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
