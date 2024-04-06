@@ -68,7 +68,7 @@ def test_msr_format_params(artifacts):
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
             "Charge Beam Door Buff, Beam Door Buff, Beam Burst Buff",
-            "Open Area 3 Factory Interior East Shortcut, Remove Area Exit Grapple Blocks",
+            "Open Area 3 Factory Interior East Shortcut",
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
         "Hints": ["DNA Hints: Area and room"],
