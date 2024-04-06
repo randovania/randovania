@@ -24,7 +24,7 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
                 f"{artifacts.required_artifacts} Metroid DNA": True,
             },
             {
-                "Place anywhere": artifacts.prefer_anywhere,
+                "Place at any item location": artifacts.prefer_anywhere,
             },
         ]
     elif has_artifacts:

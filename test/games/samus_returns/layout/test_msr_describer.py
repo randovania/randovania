@@ -37,7 +37,7 @@ def test_msr_format_params(artifacts):
     result = RandovaniaGame.METROID_SAMUS_RETURNS.data.layout.preset_describer.format_params(configuration)
 
     if artifacts.prefer_anywhere:
-        dna_where = "Place anywhere"
+        dna_where = "Place at any item location"
     elif artifacts.prefer_metroids and artifacts.prefer_stronger_metroids and artifacts.prefer_bosses:
         dna_where = "Prefers Standard Metroids, Prefers Stronger Metroids, Prefers Bosses"
     elif artifacts.prefer_metroids and artifacts.prefer_stronger_metroids:
