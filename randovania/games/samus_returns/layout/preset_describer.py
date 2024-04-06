@@ -104,7 +104,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     },
                 ),
                 {
-                    "Charge Door Buff": configuration.charge_door_buff,
+                    "Charge Beam Door Buff": configuration.charge_door_buff,
                     "Beam Door Buff": configuration.beam_door_buff,
                     "Beam Burst Buff": configuration.beam_burst_buff,
                     "Missile Door Buff": configuration.nerf_super_missiles,
