@@ -468,7 +468,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze the Moto - TODO: video. also maybe phase drift?",
+                                            "comment": "Freeze the Moto - TODO: video",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -507,6 +507,15 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Freeze",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Phase",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -753,7 +762,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze the Tsumuri: https://youtu.be/r47HNUC9HEY - TODO: get rid of template",
+                                            "comment": "Freeze the Tsumuri: https://youtu.be/r47HNUC9HEY",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5551,7 +5560,7 @@
                         "Door to Mines Intersection Terminal": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: update map",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6132,7 +6141,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": "Freeze the Gullugg - TODO: get rid of template?",
+                                                                                            "comment": "Freeze the Gullugg",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -6144,8 +6153,39 @@
                                                                                                     }
                                                                                                 },
                                                                                                 {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Fully Freeze Enemy"
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Ice",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "or",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Charge",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Freeze",
+                                                                                                                    "amount": 2,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
                                                                                                 }
                                                                                             ]
                                                                                         }
@@ -6617,20 +6657,12 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door from Mines Intersection Terminal": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -7153,31 +7185,6 @@
                     "pickup_index": 91,
                     "location_category": "minor",
                     "connections": {
-                        "Bottom Level": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
-                        },
-                        "At Middle Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": "Jump from alcove ledge",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    }
-                                ]
-                            }
-                        },
                         "Next to Middle item": {
                             "type": "or",
                             "data": {
@@ -7212,17 +7219,9 @@
                     "pickup_index": 95,
                     "location_category": "minor",
                     "connections": {
-                        "Right of Bottom Paraby Swarm": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    }
-                                ]
-                            }
+                        "Bottom Level": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -7360,13 +7359,6 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        },
-                        "TODO: Simplify and remove extra nodes": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -7433,23 +7425,18 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Right of Bottom Paraby Swarm": {
+                        "Bottom Level": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Spider",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Any Bomb"
+                                        "data": "Use Spider Ball"
                                     }
                                 ]
                             }
@@ -7765,6 +7752,13 @@
                                 ]
                             }
                         },
+                        "Ammo Recharge Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel to Space Jump Chamber (Middle)": {
                             "type": "and",
                             "data": {
@@ -7873,7 +7867,7 @@
                                 "negate": false
                             }
                         },
-                        "At Middle Shaft": {
+                        "Bottom Level": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7881,29 +7875,12 @@
                             }
                         },
                         "Next to Middle item": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -7950,7 +7927,32 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "At Middle Shaft": {
+                        "Pickup (Missile Tank Bottom)": {
+                            "type": "template",
+                            "data": "Lay Any Bomb"
+                        },
+                        "Tunnel to Space Jump Chamber (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SMAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    }
+                                ]
+                            }
+                        },
+                        "Middle Level": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7959,10 +7961,32 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
+                                            "name": "SWJ",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
                                             "name": "SuperJump",
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (High Jump)"
                                     },
                                     {
                                         "type": "and",
@@ -7991,32 +8015,10 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (High Jump)"
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze the Red Tsumuri - TODO: video. also maybe different possibilities?",
+                                            "comment": "Freeze the Red Tsumuri - TODO: video",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Charge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -8027,138 +8029,69 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "FrozenEnemy",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Fully Freeze",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Charge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Quickly jump while temporarily frozen",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Phase",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SWJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
-                            }
-                        },
-                        "Right of Bottom Paraby Swarm": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "At Middle Shaft": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 474.39074476222686,
-                        "y": -7403.382412584002,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Ammo Recharge Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Middle Level": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Bottom Level": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Next to Middle item": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Right of Bottom Paraby Swarm": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6065.172613867131,
-                        "y": -8203.154917319407,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Missile Tank Bottom)": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
-                        },
-                        "Tunnel to Space Jump Chamber (Bottom)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SMAmmo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Bottom Level": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -8211,20 +8144,11 @@
                                 ]
                             }
                         },
-                        "At Middle Shaft": {
-                            "type": "or",
+                        "Middle Level": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -8233,32 +8157,26 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "TODO: Simplify and remove extra nodes": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4239.54707719768,
-                        "y": -2958.0321285140562,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Mines Entrance": {
-                            "type": "and",
+                        },
+                        "Bottom Level": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

@@ -78,9 +78,9 @@ Extra - asset_id: collision_camera_001
           # UE
           Morph Ball and Unmorph Extend (Beginner)
           All of the following:
-              # Freeze the Moto - TODO: video. also maybe phase drift?
+              # Freeze the Moto - TODO: video
               Ice Beam and Stand on Frozen Enemy (Intermediate)
-              Charge Beam or Freeze Enemy with Melee (Beginner)
+              Charge Beam or Phase Drift or Freeze Enemy with Melee (Beginner)
 
 > Door to Space Jump Chamber (Top); Heals? False
   * Layers: default
@@ -122,7 +122,7 @@ Extra - asset_id: collision_camera_001
           Climb Rooms Vertically (High Jump)
           # Super Jump + UE:
           Super Jump (Intermediate) and Unmorph Extend (Beginner)
-          # Freeze the Tsumuri: https://youtu.be/r47HNUC9HEY - TODO: get rid of template
+          # Freeze the Tsumuri: https://youtu.be/r47HNUC9HEY
           Charge Beam and Ice Beam and Stand on Frozen Enemy (Advanced)
 
 > Pickup (Super Missile Tank Bottom); Heals? False
@@ -796,7 +796,6 @@ Extra - asset_id: collision_camera_012
       Trivial
   > Door to Mines Intersection Terminal
       Any of the following:
-          # TODO: update map
           Space Jump or Use Spider Ball
           All of the following:
               # IBJ
@@ -896,8 +895,10 @@ Extra - asset_id: collision_camera_014
                       High Jump Boots and Single-wall Wall Jump (Advanced)
                       Any of the following:
                           Super Jump (Advanced)
-                          # Freeze the Gullugg - TODO: get rid of template?
-                          Stand on Frozen Enemy (Intermediate) and Freeze Enemy to Climb Higher
+                          All of the following:
+                              # Freeze the Gullugg
+                              Ice Beam and Stand on Frozen Enemy (Intermediate)
+                              Charge Beam or Freeze Enemy with Melee (Intermediate)
           # Spider Boost
           Spider Boost (Intermediate) and Can Spider Boost
 
@@ -1049,11 +1050,6 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Pickup 91; Category? Minor
   * Extra - actor_name: LE_Item_004
   * Extra - actor_type: item_missiletank
-  > Bottom Level
-      Lay Any Bomb
-  > At Middle Shaft
-      # Jump from alcove ledge
-      Movement (Intermediate) and Lay Bomb
   > Next to Middle item
       Lay Any Bomb
 
@@ -1062,7 +1058,7 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Pickup 95; Category? Minor
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
-  > Right of Bottom Paraby Swarm
+  > Bottom Level
       Lay Any Bomb
 
 > Ammo Recharge Station; Heals? False
@@ -1091,8 +1087,6 @@ Extra - asset_id: collision_camera_AfterChase_001
   * Extra - actor_type: doorpowerpower
   > Save Station
       Morph Ball
-  > TODO: Simplify and remove extra nodes
-      Trivial
 
 > Tunnel to Space Jump Chamber (Middle); Heals? False
   * Layers: default
@@ -1103,8 +1097,8 @@ Extra - asset_id: collision_camera_AfterChase_001
 > Tunnel to Space Jump Chamber (Bottom); Heals? False
   * Layers: default
   * Tunnel to Space Jump Chamber/Tunnel to Diggernaut Excavation Tunnels (Bottom)
-  > Right of Bottom Paraby Swarm
-      Spider Ball and Lay Any Bomb
+  > Bottom Level
+      Lay Any Bomb and Use Spider Ball
 
 > Tunnel to Space Jump Chamber (Top); Heals? False
   * Layers: default
@@ -1146,6 +1140,8 @@ Extra - asset_id: collision_camera_AfterChase_001
               # Go through vines
               Lightning Armor
               Hazard Runs (Beginner) and Hazard Damage ≥ 45
+  > Ammo Recharge Station
+      Trivial
   > Tunnel to Space Jump Chamber (Middle)
       Morph Ball and After Area 4 (Crystal Mines) - Diggernaut Chase Arena Grapple Block
   > Top Level
@@ -1156,10 +1152,10 @@ Extra - asset_id: collision_camera_AfterChase_001
               Super Jump (Intermediate) or Unmorph Extend (Intermediate)
   > Event - Grapple Block
       Grapple Beam
-  > At Middle Shaft
+  > Bottom Level
       Trivial
   > Next to Middle item
-      Morph Ball and Movement (Beginner)
+      Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
@@ -1170,35 +1166,23 @@ Extra - asset_id: collision_camera_AfterChase_001
 > Bottom Level; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_ManicMinerBot_Stage3
-  > At Middle Shaft
-      Any of the following:
-          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-          # UE
-          Morph Ball and Unmorph Extend (Intermediate)
-          # Freeze the Red Tsumuri - TODO: video. also maybe different possibilities?
-          Charge Beam and Ice Beam and Stand on Frozen Enemy (Intermediate)
-  > Right of Bottom Paraby Swarm
-      Trivial
-
-> At Middle Shaft; Heals? False
-  * Layers: default
-  > Ammo Recharge Station
-      Trivial
-  > Middle Level
-      Trivial
-  > Bottom Level
-      Trivial
-  > Next to Middle item
-      Morph Ball
-
-> Right of Bottom Paraby Swarm; Heals? False
-  * Layers: default
   > Pickup (Missile Tank Bottom)
       Lay Any Bomb
   > Tunnel to Space Jump Chamber (Bottom)
       Super Missile and Lay Any Bomb
-  > Bottom Level
-      Trivial
+  > Middle Level
+      Any of the following:
+          Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
+          # UE
+          Morph Ball and Unmorph Extend (Intermediate)
+          All of the following:
+              # Freeze the Red Tsumuri - TODO: video
+              Ice Beam
+              Any of the following:
+                  # Fully Freeze
+                  Charge Beam and Stand on Frozen Enemy (Intermediate)
+                  # Quickly jump while temporarily frozen
+                  Phase Drift and Stand on Frozen Enemy (Advanced)
 
 > Next to Middle item; Heals? False
   * Layers: default
@@ -1207,11 +1191,8 @@ Extra - asset_id: collision_camera_AfterChase_001
           Lay Power Bomb
           # Stagger the Bomb blocks to climb up
           Movement (Intermediate) and Lay Bomb
-  > At Middle Shaft
-      Morph Ball or Movement (Intermediate)
-
-> TODO: Simplify and remove extra nodes; Heals? False
-  * Layers: default
-  > Door to Mines Entrance
-      Trivial
+  > Middle Level
+      Morph Ball and Movement (Intermediate)
+  > Bottom Level
+      Morph Ball
 

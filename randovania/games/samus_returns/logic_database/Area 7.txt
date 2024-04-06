@@ -384,8 +384,19 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_type: doorchargecharge
   > Dock to Robot Regime
       Any of the following:
-          # Exiting via walking - TODO: hazard run
-          Lightning Armor and Morph Ball
+          All of the following:
+              # Exiting via walking
+              Morph Ball
+              Any of the following:
+                  Lightning Armor
+                  # Run through plants
+                  Hazard Runs (Advanced) and Hazard Damage ≥ 295
+              Any of the following:
+                  # Spikes prevent jumping so use Spider Ball or Spring Ball to enter plant section
+                  Use Spider Ball
+                  All of the following:
+                      Use Spring Ball
+                      Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
           # Exiting via boosting
           After Area 7 - Spider Boost Tunnel South Grapple Block Top and Spider Boost (Beginner) and Can Spider Boost
   > Event - Grapple Block Top
@@ -422,7 +433,12 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Open Passage to Robot Regime/Dock to Spider Boost Tunnel South
   > Door to Robot Retreat
-      Lightning Armor and Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Lightning Armor
+              # Run through plants
+              Hazard Runs (Advanced) and Hazard Damage ≥ 300
 
 > Tunnel to Robot Retreat; Heals? False
   * Layers: default
@@ -489,10 +505,12 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_type: doorpowerpower
   > Door to Wallfire Workstation (Top)
       Any of the following:
-          # Deal with the Gunzoos - TODO: damage boost
+          # Deal with the Gunzoos
           Lightning Armor or Defeat Strong Enemies
           # Roll under the upper Gunzoo<br>Trigger the lower Gunzoo then hide in the alcove above the right Screw Attack blocks
           Morph Ball and Dodge Enemies (Beginner)
+          # Forced damage from the Gunzoos
+          Damage Boost (Intermediate) and Normal Damage ≥ 230
 
 > Door to Wallfire Workstation (Top); Heals? False
   * Layers: default
@@ -501,10 +519,12 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_type: doorclosedpower
   > Door to Robot Regime
       Any of the following:
-          # Deal with the Gunzoos - TODO: damage boost?
+          # Deal with the Gunzoos
           Lightning Armor or Defeat Weak Enemies
           # Trigger the lower Gunzoo then hide in the alcove above the right Screw Attack blocks<br>Jump over the upper Gunzoo
           Dodge Enemies (Beginner)
+          # Forced damage from the Gunzoos
+          Damage Boost (Intermediate) and Normal Damage ≥ 230
   > Door to Omega Arena South Access
       Trivial
 
@@ -518,7 +538,7 @@ Extra - asset_id: collision_camera_008
           Morph Ball
           Any of the following:
               Super Jump (Intermediate) or Unmorph Extend (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
-              # Freeze the Ramulken - TODO: more ways to freeze
+              # Freeze the Ramulken
               Ice Beam and Freeze Enemy with Melee (Beginner) and Stand on Frozen Enemy (Intermediate)
 
 > Door to Omega Arena South Access; Heals? False
@@ -762,7 +782,7 @@ Extra - asset_id: collision_camera_011
           Single-wall Wall Jump (Beginner) or Super Jump (Intermediate) or Climb Rooms Vertically (High Jump)
           # UE
           Morph Ball and Unmorph Extend (Beginner)
-          # Freeze a Ramulken - TODO: more ways of freezing?
+          # Freeze a Ramulken
           Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Beginner)
   > Below West Pickup
       Trivial
@@ -927,7 +947,7 @@ Extra - asset_id: collision_camera_011
           # UE
           Morph Ball and Unmorph Extend (Beginner)
           All of the following:
-              # Get up by freezing enemies - TODO: more freezing ways?
+              # Get up by freezing enemies
               Ice Beam
               Any of the following:
                   All of the following:
@@ -987,7 +1007,6 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_type: doorpowerpower
   > Door to Omega Arena South
       Any of the following:
-          # TODO: under screw blocks there arent plants ingame
           Any of the following:
               # Get through lower part
               Lightning Armor or Screw Attack
@@ -1282,7 +1301,7 @@ Extra - asset_id: collision_camera_016
               Super Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
               # UE
               Morph Ball and Unmorph Extend (Beginner)
-              # Freeze the Ramulken - TODO: more ways
+              # Freeze the Ramulken
               Ice Beam and Freeze Enemy with Melee (Beginner) and Stand on Frozen Enemy (Intermediate)
 
 > Pickup (Missile Tank); Heals? False
@@ -1307,7 +1326,7 @@ Extra - asset_id: collision_camera_016
               Climb Rooms Vertically (No High Jump)
               # Wall Jump then Unmorph Extend
               Morph Ball and Unmorph Extend (Intermediate) and Wall Jump (Beginner)
-              # Melee Freeze the Ramulken when its on the lower part of the wall - TODO: freeze via different ways
+              # Melee Freeze the Ramulken when its on the lower part of the wall
               Ice Beam and Freeze Enemy with Melee (Intermediate) and Stand on Frozen Enemy (Advanced)
               All of the following:
                   # High Jump
@@ -1412,12 +1431,19 @@ Extra - asset_id: collision_camera_017
       All of the following:
           After Area 7 - Grapple Puzzle Madness Grapple Block Left
           Any of the following:
-              # Break the Bomb block - TODO: try to change this more. look at a1 MC for reference
-              # Power Bomb way
-              Lay Power Bomb
+              # Break the Bomb block
+              All of the following:
+                  # Power Bomb way
+                  Lay Power Bomb
+                  Any of the following:
+                      # Get up
+                      High Jump Boots or Space Jump
+                      # Super Jump + UE
+                      Super Jump (Intermediate) and Unmorph Extend (Intermediate)
               All of the following:
                   # Bomb way
                   Lay Bomb
+                  # Get up
                   Mid-Air Morph (Beginner) or Climb Rooms Vertically (No High Jump) or Simple IBJ or Use Spring Ball
               # Break with Spider
               Lay Any Bomb and Use Spider Ball
@@ -1617,7 +1643,7 @@ Extra - asset_id: collision_camera_021
                   After Area 7 - Transport to Area 8 Grapple Block
                   # Deal with the enemies
                   Lightning Armor or Combat (Intermediate) or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
-              # Freeze the Ramulken under the Crumble block and Melee Clip https://youtu.be/yRtf2823ueI - TODO: more ways of frfeezing?
+              # Freeze the Ramulken under the Crumble block and Melee Clip https://youtu.be/yRtf2823ueI
               Ice Beam and Freeze Enemy with Melee (Intermediate) and Melee Clip (Advanced) and Out of Bounds Movement (Beginner)
 
 > Door to Grapple Puzzle Foyer; Heals? False
