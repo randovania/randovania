@@ -2923,17 +2923,8 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Exiting via walking - TODO: hazard run",
+                                            "comment": "Exiting via walking",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -2941,6 +2932,121 @@
                                                         "name": "Morph",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Armor",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Run through plants",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "HazardRun",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Hazard",
+                                                                                "amount": 295,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Spikes prevent jumping so use Spider Ball or Spring Ball to enter plant section",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spider Ball"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spring Ball"
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Climb Rooms Vertically (High Jump)"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SWJ",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SuperJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UnmorphExtend",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3270,12 +3376,46 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Armor",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Run through plants",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "HazardRun",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Hazard",
+                                                                    "amount": 300,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3655,7 +3795,7 @@
                         "Door to Wallfire Workstation (Top)": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with the Gunzoos - TODO: damage boost",
+                                "comment": "Deal with the Gunzoos",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3690,6 +3830,32 @@
                                                         "type": "tricks",
                                                         "name": "Dodge",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Forced damage from the Gunzoos",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 230,
                                                         "negate": false
                                                     }
                                                 }
@@ -3733,7 +3899,7 @@
                         "Door to Robot Regime": {
                             "type": "or",
                             "data": {
-                                "comment": "Deal with the Gunzoos - TODO: damage boost?",
+                                "comment": "Deal with the Gunzoos",
                                 "items": [
                                     {
                                         "type": "template",
@@ -3759,6 +3925,32 @@
                                                         "type": "tricks",
                                                         "name": "Dodge",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Forced damage from the Gunzoos",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoost",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 230,
                                                         "negate": false
                                                     }
                                                 }
@@ -3859,7 +4051,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze the Ramulken - TODO: more ways to freeze",
+                                                        "comment": "Freeze the Ramulken",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5569,7 +5761,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze a Ramulken - TODO: more ways of freezing?",
+                                            "comment": "Freeze a Ramulken",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6779,7 +6971,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Get up by freezing enemies - TODO: more freezing ways?",
+                                            "comment": "Get up by freezing enemies",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7286,7 +7478,7 @@
                         "Door to Omega Arena South": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: under screw blocks there arent plants ingame",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -9457,7 +9649,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze the Ramulken - TODO: more ways",
+                                                        "comment": "Freeze the Ramulken",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -9650,7 +9842,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Melee Freeze the Ramulken when its on the lower part of the wall - TODO: freeze via different ways",
+                                                        "comment": "Melee Freeze the Ramulken when its on the lower part of the wall",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -10397,7 +10589,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Break the Bomb block - TODO: try to change this more. look at a1 MC for reference",
+                                            "comment": "Break the Bomb block",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -10407,6 +10599,58 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Get up",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Space",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boots",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Super Jump + UE",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SuperJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UnmorphExtend",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -10423,7 +10667,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Get up",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -12007,7 +12251,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Freeze the Ramulken under the Crumble block and Melee Clip https://youtu.be/yRtf2823ueI - TODO: more ways of frfeezing?",
+                                                        "comment": "Freeze the Ramulken under the Crumble block and Melee Clip https://youtu.be/yRtf2823ueI",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
