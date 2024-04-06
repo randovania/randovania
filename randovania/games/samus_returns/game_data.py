@@ -59,7 +59,7 @@ def _hash_words() -> list[str]:
 game_data: game.GameData = game.GameData(
     short_name="MSR",
     long_name="Metroid: Samus Returns",
-    development_state=game.DevelopmentState.EXPERIMENTAL,
+    development_state=game.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
@@ -127,6 +127,17 @@ game_data: game.GameData = game.GameData(
             "the reserve will activate even if you have no usable Missiles.",
         ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items including ones normally locked behind amiibo",
+            "Starting locations",
+            "A new goal has been added (DNA Hunt)",
+        ],
+        need_to_play=[
+            "A modded 3DS with Luma3DS, or Citra",
+            "A dumped RomFS of your original game. Any region works.",
+        ],
+    ),
     hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.MSRConfiguration,

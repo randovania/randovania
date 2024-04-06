@@ -14,6 +14,7 @@ New here or looking to install? Check [our website](https://randovania.github.io
  - Metroid Dread
  - Metroid Prime
  - Metroid Prime 2: Echoes
+- Metroid: Samus Returns
 
 <!-- End SUPPORTED -->
 
@@ -21,7 +22,6 @@ New here or looking to install? Check [our website](https://randovania.github.io
 
 ### Experimental Games
  - Metroid Prime 3: Corruption
- - Metroid: Samus Returns
  - Super Metroid
 
 <!-- End EXPERIMENTAL -->
@@ -145,6 +145,19 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * Morph Ball, and the Missile Launcher sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
   * Power Grip and the Shiny Nothing Orb were made by ShirtyScarab554, used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), modified by [AbyssalCreature](https://github.com/AbyssalCreature) and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
   * New door sprites and other AM2R item sprites were made by [AbyssalCreature](https://github.com/AbyssalCreature) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+### Metroid: Samus Returns
+* Game Patching by:
+  * [Dyceron](https://www.twitch.tv/dyceron)
+  * [Thanatos](https://github.com/ThanatosGit)
+  * [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/)
+  * [duncathan_salt](https://twitter.com/duncathan_salt)
+  * [Merikatt]()
+
+* Logic Database by:
+  * [Dyceron](https://www.twitch.tv/dyceron)
+  * [Miepee](https://github.com/Miepee)
+  * [Haxaplax]()
 
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
