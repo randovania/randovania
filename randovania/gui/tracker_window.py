@@ -438,7 +438,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 self._area_name_to_item[(region.name, area.name)].setHidden(not area_is_visible)
 
         self.map_canvas.set_state(state)
-        self.map_canvas.set_visible_nodes({node for node in nodes_in_reach if not self._node_to_item[node].isHidden()})
+        self.map_canvas.set_visible_nodes(nodes_in_reach)
 
         # Persist the current state
         self.persist_current_state()
