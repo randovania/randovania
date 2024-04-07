@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
 
+### Metroid Dread
+
+- Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
 
 ## [7.5.0] - 2024-04-01
 
