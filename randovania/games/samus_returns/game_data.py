@@ -129,7 +129,7 @@ game_data: game.GameData = game.GameData(
     ],
     web_info=game.GameWebInfo(
         what_can_randomize=[
-            "All items including ones normally locked behind amiibo",
+            "All items, including ones normally locked behind amiibo",
             "Starting locations",
             "A new goal has been added (DNA Hunt)",
         ],

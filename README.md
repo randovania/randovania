@@ -14,7 +14,7 @@ New here or looking to install? Check [our website](https://randovania.github.io
  - Metroid Dread
  - Metroid Prime
  - Metroid Prime 2: Echoes
-- Metroid: Samus Returns
+ - Metroid: Samus Returns
 
 <!-- End SUPPORTED -->
 
@@ -152,12 +152,12 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [Thanatos](https://github.com/ThanatosGit)
   * [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/)
   * [duncathan_salt](https://twitter.com/duncathan_salt)
-  * [Merikatt]()
+  * Merikatt
 
 * Logic Database by:
   * [Dyceron](https://www.twitch.tv/dyceron)
   * [Miepee](https://github.com/Miepee)
-  * [Haxaplax]()
+  * [Haxaplax](https://github.com/haxaplax)
 
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
