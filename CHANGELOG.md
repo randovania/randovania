@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The output after verifying the installation has been made less misleading.
 - Nothing yet. Space reserved in case needed.
+- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
 
 ### AM2R
 
