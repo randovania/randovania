@@ -353,7 +353,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 text.append(f"<li>{wl.node_name(p, with_region=True, distinguish_dark_aether=True)}</li>")
             text.append("</ul>")
 
-            dialog = ScrollLabelDialog("".join(text), "Path to node", self)
+            dialog = ScrollLabelDialog(self, "".join(text), "Path to node")
             dialog.exec_()
         else:
             QtWidgets.QMessageBox.warning(
