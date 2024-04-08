@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.6.0] - 2024-05-??
 
+- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
+
 ### Resolver
 
 - Fixed: Some cases of seeds being wrongly considered as impossible.
@@ -15,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The output after verifying the installation has been made less misleading.
 - Nothing yet. Space reserved in case needed.
+- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
 
 ### AM2R
 
@@ -26,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
 
+### Metroid Dread
+
+- Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
 
 ## [7.5.0] - 2024-04-01
 

@@ -114,8 +114,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>661</width>
-         <height>636</height>
+         <width>665</width>
+         <height>646</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -150,8 +150,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>644</width>
-      <height>1188</height>
+      <width>651</width>
+      <height>876</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -198,15 +198,15 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>661</width>
-         <height>636</height>
+         <width>651</width>
+         <height>849</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="hints_label">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid: Samus Returns, you can find hints by using &lt;span style=&quot; font-weight:600;&quot;&gt;Chozo Seals&lt;/span&gt;.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Seals found at the start of each area provide one hint to where an item is located.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In Metroid: Samus Returns, you can find hints by using &lt;span style=&quot; font-weight:600;&quot;&gt;Chozo Seals&lt;/span&gt;.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;Seals found at the start of each area provide one hint to where an &lt;span style=&quot; font-weight:600;&quot;&gt;item&lt;/span&gt; is located.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -217,16 +217,24 @@
          </widget>
         </item>
         <item>
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+         <widget class="QTreeWidget" name="hint_locations_tree_widget">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>340</height>
+           </size>
           </property>
+          <column>
+           <property name="text">
+            <string>Location</string>
+           </property>
+          </column>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="hints_label_2">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom Chozo Seals have also been added to all areas, which provide hints to Metroid DNA. Each seal provides hints randomly between zero and a set maximum. If no hints are provided, a joke hint is provided instead. These custom seals and their maximum amount of hints are as follows:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;hr&gt;&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Custom Chozo Seals have also been added to all areas, which provide hints to where&lt;span style=&quot; font-weight:600;&quot;&gt; Metroid DNA&lt;/span&gt; is located. Each seal provides hints randomly between zero and a set maximum. If no hints are provided, a joke hint is provided instead. These custom seals and their maximum amount of hints are as follows:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -585,7 +593,7 @@
          <x>0</x>
          <y>0</y>
          <width>665</width>
-         <height>640</height>
+         <height>646</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -628,73 +636,6 @@
           <column>
            <property name="text">
             <string>Broad Category</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="hint_locations_tab">
-   <attribute name="title">
-    <string>Hints Locations</string>
-   </attribute>
-   <layout class="QVBoxLayout" name="hint_tab_layout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QScrollArea" name="hint_locations_scroll_area">
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <widget class="QWidget" name="hint_locations_scroll_contents">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>665</width>
-         <height>640</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="hint_scroll_layout">
-        <item>
-         <widget class="QLabel" name="hint_locations_label">
-          <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hints
-                                                are placed in the game by replacing Logbook scans. The
-                                                following are the scans that may have a hint added to
-                                                them:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-                                            </string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QTreeWidget" name="hint_locations_tree_widget">
-          <column>
-           <property name="text">
-            <string>Location</string>
            </property>
           </column>
          </widget>

@@ -190,9 +190,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         # FIXME: Wild hack. This actually requires a patcher change to be able to export the locked text
         # and the unlocked text
         hud_text = detail.collection_text[0]
-        if hud_text.startswith("Locked"):
-            hud_text = detail.collection_text[1]
-        elif len(set(detail.collection_text)) > 1:
+        if len(set(detail.collection_text)) > 1:
             hud_text = self.memo_data[detail.original_pickup.name]
 
         details = {"pickup_type": pickup_type, "caption": hud_text, "resources": resources}
@@ -505,11 +503,18 @@ class MSRAcquiredMemo(dict):
     @classmethod
     def with_expansion_text(cls) -> MSRAcquiredMemo:
         result = cls()
-        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
+        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity {MissileChanged} by {Missile}."
+        result["Locked Missile Tank"] = result["Missile Tank"].replace("{Missile", "{Locked Missile")
         result["Super Missile Tank"] = (
-            "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
+            "Super Missile Tank acquired.\nSuper Missile capacity {Super MissileChanged} by {Super Missile}."
         )
-        result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
-        result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
+        result["Locked Super Missile Tank"] = result["Super Missile Tank"].replace(
+            "{Super Missile", "{Locked Super Missile"
+        )
+        result["Power Bomb Tank"] = (
+            "Power Bomb Tank acquired.\nPower Bomb capacity {Power BombChanged} by {Power Bomb}."
+        )
+        result["Locked Power Bomb Tank"] = result["Power Bomb Tank"].replace("{Power Bomb", "{Locked Power Bomb")
+        result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity {EnergyChanged} by {Energy}."
         result["Aeion Tank"] = "Aeion Tank acquired.\nAeion Gauge expanded."
         return result
