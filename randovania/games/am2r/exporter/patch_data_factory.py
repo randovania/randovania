@@ -115,7 +115,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
     # Effect, sprite, header => new_sprite, new_header
     SHINIES = {
-        ("Missile Expansion", "sItemMissile", "Got Missile Tank"): ("sItemShinyMissile", "Got Shiny Missile Tank"),
+        ("Missile Tank", "sItemMissile", "Got Missile Tank"): ("sItemShinyMissile", "Got Shiny Missile Tank"),
         ("Hi-Jump Boots", "sItemHijump", "Hi-Jump Boots acquired"): (
             "sItemShinyHijump",
             "Shiny Air Jordan Boots acquired",
@@ -235,9 +235,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 break
             return text
 
-        missile_text = get_locked_ammo_text("Missile Expansion")
-        super_text = get_locked_ammo_text("Super Missile Expansion")
-        pb_text = get_locked_ammo_text("Power Bomb Expansion")
+        missile_text = get_locked_ammo_text("Missile Tank")
+        super_text = get_locked_ammo_text("Super Missile Tank")
+        pb_text = get_locked_ammo_text("Power Bomb Tank")
 
         game_patches = {
             "septogg_helpers": config.septogg_helpers,
@@ -255,23 +255,23 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "screw_blocks": config.screw_blocks,
             "sabre_designed_skippy": rng.randint(0, self._EASTER_EGG_SHINY) == 0,
             "locked_missile_text": {
-                "header": text_data["Locked Missile Expansion"]["text_header"],
+                "header": text_data["Locked Missile Tank"]["text_header"],
                 "description": missile_text,
             },
             "locked_super_text": {
-                "header": text_data["Locked Super Missile Expansion"]["text_header"],
+                "header": text_data["Locked Super Missile Tank"]["text_header"],
                 "description": super_text,
             },
             "locked_pb_text": {
-                "header": text_data["Locked Power Bomb Expansion"]["text_header"],
+                "header": text_data["Locked Power Bomb Tank"]["text_header"],
                 "description": pb_text,
             },
         }
         for item, state in config.ammo_pickup_configuration.pickups_state.items():
             launcher_dict = {
-                "Missile Expansion": "require_missile_launcher",
-                "Super Missile Expansion": "require_super_launcher",
-                "Power Bomb Expansion": "require_pb_launcher",
+                "Missile Tank": "require_missile_launcher",
+                "Super Missile Tank": "require_super_launcher",
+                "Power Bomb Tank": "require_pb_launcher",
             }
             key = launcher_dict.get(item.name)
 
@@ -364,9 +364,9 @@ class AM2RPatchDataFactory(PatchDataFactory):
         for i in range(1, 47):
             text_data[f"Metroid DNA {i}"] = text_data["Metroid DNA"]
 
-        text_data["Missiles"] = text_data["Missile Expansion"]
-        text_data["Super Missiles"] = text_data["Super Missile Expansion"]
-        text_data["Power Bombs"] = text_data["Power Bomb Expansion"]
+        text_data["Missiles"] = text_data["Missile Tank"]
+        text_data["Super Missiles"] = text_data["Super Missile Tank"]
+        text_data["Power Bombs"] = text_data["Power Bomb Tank"]
         text_data["EnergyTransferModule"] = text_data["Nothing"]
         return text_data
 

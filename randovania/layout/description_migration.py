@@ -442,6 +442,34 @@ def _migrate_v23(data: dict) -> dict:
     return data
 
 
+def _migrate_v24(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "am2r":
+            continue
+
+        new_ammo_mapping = {
+            "Missile Expansion": "Missile Tank",
+            "Super Missile Expansion": "Super Missile Tank",
+            "Power Bomb Expansion": "Power Bomb Tank",
+        }
+
+        starting_items = game["starting_equipment"]["pickups"]
+        for pickup in starting_items:
+            if pickup in new_ammo_mapping:
+                starting_items.remove(pickup)
+                starting_items.append(new_ammo_mapping[pickup])
+
+        for area, locations in game["locations"].items():
+            for node, item in locations.items():
+                if item in new_ammo_mapping:
+                    locations[node] = new_ammo_mapping[item]
+
+    return data
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -466,6 +494,7 @@ _MIGRATIONS = [
     _migrate_v21,
     _migrate_v22,
     _migrate_v23,
+    _migrate_v24,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
