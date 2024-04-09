@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.6.0] - 2024-05-??
 
 - Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
+- Added: Highlighting nodes in the Map view of the Map tracker will now update the current location.
 
 ### Resolver
 

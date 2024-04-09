@@ -180,6 +180,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.map_area_combo.currentIndexChanged.connect(self.on_map_area_combo)
         self.map_canvas.set_edit_mode(False)
         self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
+        self.map_canvas.SelectNodeRequest.connect(self._add_new_action)
 
         # Graph Map
         from randovania.gui.widgets.tracker_map import MatplotlibWidget
