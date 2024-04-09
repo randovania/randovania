@@ -156,7 +156,7 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
         logging.info(f"Invalid preset '{versioned_preset.name}' from {message.author.display_name}: {e}")
         return
 
-    embed = discord.Embed(title=preset.name, description=preset.description)
+    embed = discord.Embed(title=preset.name, description=f"{preset.game.long_name}\n{preset.description}")
     _add_preset_description_to_embed(embed, preset)
 
     try:
