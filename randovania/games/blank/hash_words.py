@@ -1,4 +1,4 @@
-[
+HASH_WORDS = [
     "Arugula",
     "Assimilate",
     "Bourgeousie",
@@ -50,5 +50,5 @@
     "Yearly",
     "Yowl",
     "Zealous",
-    "Zephyr"
+    "Zephyr",
 ]

@@ -1,4 +1,4 @@
-[
+HASH_WORDS = [
     "Animals",
     "Arachnus",
     "B.O.X.",
@@ -109,5 +109,5 @@
     "Red",
     "Adam",
     "Bob",
-    "Vaccine"
+    "Vaccine",
 ]

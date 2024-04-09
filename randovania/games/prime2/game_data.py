@@ -60,6 +60,12 @@ def _exporter():
     return EchoesGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.prime2.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 # ruff: noqa: E501
 
 game_data: game.GameData = game.GameData(
@@ -124,6 +130,7 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "A modded Wii, or Dolphin Emulator",
         ],
     ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,

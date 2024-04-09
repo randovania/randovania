@@ -50,6 +50,12 @@ def _generator() -> game.GameGenerator:
     )
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.samus_returns.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="MSR",
     long_name="Metroid: Samus Returns",
@@ -121,6 +127,7 @@ game_data: game.GameData = game.GameData(
             "the reserve will activate even if you have no usable Missiles.",
         ),
     ],
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.MSRConfiguration,
         cosmetic_patches=layout.MSRCosmeticPatches,

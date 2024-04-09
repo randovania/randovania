@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import typing
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -171,6 +170,9 @@ class GameData:
     web_info: GameWebInfo = GameWebInfo()
     """Contains a handful of fields displayed primarily on the website."""
 
+    hash_words: list[str] | None = None
+    """Contains a list of hash words, which are used as a human readable way to identify generated games"""
+
 
 class RandovaniaGame(BitPackEnum, Enum):
     BLANK = "blank"
@@ -216,11 +218,7 @@ class RandovaniaGame(BitPackEnum, Enum):
 
     @cached_property
     def hash_words(self) -> list[str] | None:
-        hash_file = self.data_path.joinpath("assets", "hash_words.json")
-        if hash_file.exists():
-            with hash_file.open() as words:
-                return json.load(words)
-        return None
+        return self.data.hash_words
 
     @property
     def short_name(self) -> str:

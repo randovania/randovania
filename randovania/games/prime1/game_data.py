@@ -61,6 +61,12 @@ def _exporter():
     return PrimeGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.prime1.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
@@ -108,6 +114,7 @@ game_data: game.GameData = game.GameData(
             "A modded Wii, or Dolphin Emulator",
         ],
     ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,
