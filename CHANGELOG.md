@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
+- Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
 
 ## [7.5.0] - 2024-04-01
 
