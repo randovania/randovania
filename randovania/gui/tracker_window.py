@@ -96,6 +96,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     _region_name_to_item: dict[str, QtWidgets.QTreeWidgetItem]
     _area_name_to_item: dict[tuple[str, str], QtWidgets.QTreeWidgetItem]
     _node_to_item: dict[Node, QtWidgets.QTreeWidgetItem]
+    _item_to_node: dict[QtWidgets.QTreeWidgetItem, Node]
     _widget_for_pickup: dict[PickupEntry, QtWidgets.QCheckBox | ScrollProtectedSpinBox]
     _during_setup = False
 
@@ -124,6 +125,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self._region_name_to_item = {}
         self._area_name_to_item = {}
         self._node_to_item = {}
+        self._item_to_node = {}
         self.preset = preset
         self.game_configuration = preset.configuration
         self.persistence_path = persistence_path
@@ -435,6 +437,20 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                         is_visible = False
 
                     node_item.setHidden(not is_visible)
+                    node_text = self._item_to_node[node_item].name
+                    # Check if you can reach back to current node from that node
+                    if is_visible:
+                        state_from_other_node = state.copy()
+                        state_from_other_node.node = node
+                        if node.is_resource_node:
+                            state_from_other_node.resources.add_resource_gain(
+                                node.resource_gain_on_collect(state_from_other_node.node_context())
+                            )
+                        nodes_reachable_from_other_node = self.current_nodes_in_reach(state_from_other_node)
+                        if state.node not in nodes_reachable_from_other_node:
+                            node_text = "[Point of no Return] " + node_text
+
+                    node_item.setText(0, node_text)
                     area_is_visible = area_is_visible or is_visible
                 self._area_name_to_item[(region.name, area.name)].setHidden(not area_is_visible)
 
@@ -491,11 +507,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
                 for node in area.nodes:
                     node_item = QtWidgets.QTreeWidgetItem(area_item)
+
                     node_item.setText(0, node.name)
                     node_item.node = node
                     if node.is_resource_node:
                         node_item.setFlags(node_item.flags() & ~Qt.ItemIsUserCheckable)
                     self._node_to_item[node] = node_item
+                    self._item_to_node[node_item] = node
 
     def setup_teleporters(self):
         self._teleporter_id_to_combo = {}
