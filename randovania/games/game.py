@@ -170,7 +170,7 @@ class GameData:
     web_info: GameWebInfo = GameWebInfo()
     """Contains a handful of fields displayed primarily on the website."""
 
-    hash_words: list[str] | None = None
+    hash_words: list[str] = None
     """Contains a list of hash words, which are used as a human readable way to identify generated games"""
 
 
@@ -217,7 +217,7 @@ class RandovaniaGame(BitPackEnum, Enum):
         return randovania.get_file_path().joinpath("games", self.value)
 
     @cached_property
-    def hash_words(self) -> list[str] | None:
+    def hash_words(self) -> list[str]:
         return self.data.hash_words
 
     @property
