@@ -100,7 +100,7 @@ game_data: game.GameData = game.GameData(
             "Some rooms in Magmoor are not coded to be superheated. These include:\n"
             "- Elevator Rooms\n"
             "- Storage Cavern\n"
-            "- Every room between Twin Fires and the Phazon Mines/Phendrana Drifts elevators\n"
+            "- Every room including and past Twin Fires\n"
             "- Burning Trail\n"
             "- Lake Access",
         ),
