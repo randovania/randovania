@@ -97,8 +97,9 @@ game_data: game.GameData = game.GameData(
         ),
         (
             "Why do I not take heat damage in some rooms in Magmoor, despite not having Varia Suit?",
-            "Elevator rooms, Storage Cavern, and every room between Twin Fires and the Phazon Mines and "
-            "Phendrana Drifts elevators (Far Magmoor), Burning Trail, and Lake Access are not coded to be superheated.",
+            "Some rooms in Magmoor are not coded to be superheated. These include elevator rooms, "
+            "Storage Cavern, every room between Twin Fires and the Phazon Mines and "
+            "Phendrana Drifts elevators (Far Magmoor), Burning Trail, and Lake Access.",
         ),
     ],
     web_info=game.GameWebInfo(
