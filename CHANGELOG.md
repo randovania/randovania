@@ -9,11 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Resolver
 
+- Fixed: Some cases of seeds being wrongly considered as impossible.
+
 ### Metroid Prime
 
 - Added: FAQ Entry about non-Superheated rooms
-
-- Fixed: Some cases of seeds being wrongly considered as impossible.
 
 ## [7.5.1] - 2024-04-??
 
