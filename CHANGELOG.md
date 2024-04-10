@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some cases of seeds being wrongly considered as impossible.
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+##### Agon Wastes
+
+- Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.
+- Added: Screw Attack from the cannons to get the item in Central Mining Station before the Pirate fight.
+- Removed: Roll Jump and NSJ extended dash to get from the center platforms to the item in Central Mining Station.
+
 ## [7.5.1] - 2024-04-??
 
 - Changed: The output after verifying the installation has been made less misleading.
