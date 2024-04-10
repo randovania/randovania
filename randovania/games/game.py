@@ -143,6 +143,9 @@ class GameData:
     layout: GameLayout
     """Contains game-specific settings available for presets."""
 
+    hash_words: list[str]
+    """Contains a list of hash words, which are used as a human readable way to identify generated games"""
+
     options: Callable[[], type[PerGameOptions]]
     """Contains game-specific persisted values."""
 
@@ -169,9 +172,6 @@ class GameData:
 
     web_info: GameWebInfo = GameWebInfo()
     """Contains a handful of fields displayed primarily on the website."""
-
-    hash_words: list[str] = None
-    """Contains a list of hash words, which are used as a human readable way to identify generated games"""
 
 
 class RandovaniaGame(BitPackEnum, Enum):
