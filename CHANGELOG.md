@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Some cases of seeds being wrongly considered as impossible.
 
+### Metroid Prime
+
+- Added: FAQ Entry about non-Superheated rooms
+
 ## [7.5.1] - 2024-04-??
 
 - Changed: The output after verifying the installation has been made less misleading.
