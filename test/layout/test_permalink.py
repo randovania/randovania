@@ -16,7 +16,7 @@ from randovania.layout.permalink import Permalink, UnsupportedPermalink
 @pytest.fixture()
 def fake_generator_parameters() -> GeneratorParameters:
     parameters = MagicMock(spec=GeneratorParameters)
-    parameters.as_bytes = b"\xA0\xB0\xC0"
+    parameters.as_bytes = b"\xa0\xb0\xc0"
     return parameters
 
 
@@ -117,7 +117,7 @@ def test_round_trip(seed_hash, fake_generator_parameters, mocker):
 
     # Assert
     assert link == after
-    mock_from_bytes.assert_called_once_with(b"\xA0\xB0\xC0")
+    mock_from_bytes.assert_called_once_with(b"\xa0\xb0\xc0")
 
 
 @pytest.mark.parametrize(

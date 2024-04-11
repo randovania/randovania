@@ -61,6 +61,12 @@ def _exporter():
     return PrimeGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.prime1.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
@@ -96,6 +102,19 @@ game_data: game.GameData = game.GameData(
             "NTSC 0-00, meaning that all versions of Prime are guaranteed to be logically completable when randomized.",
         ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items including Artifacts",
+            "Elevator destinations",
+            "Starting locations",
+            "Door locks",
+        ],
+        need_to_play=[
+            "An ISO of any Gamecube release of the game",
+            "A modded Wii, or Dolphin Emulator",
+        ],
+    ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,

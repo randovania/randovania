@@ -190,9 +190,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         # FIXME: Wild hack. This actually requires a patcher change to be able to export the locked text
         # and the unlocked text
         hud_text = detail.collection_text[0]
-        if hud_text.startswith("Locked"):
-            hud_text = detail.collection_text[1]
-        elif len(set(detail.collection_text)) > 1:
+        if len(set(detail.collection_text)) > 1:
             hud_text = self.memo_data[detail.original_pickup.name]
 
         details = {"pickup_type": pickup_type, "caption": hud_text, "resources": resources}
@@ -307,9 +305,9 @@ class MSRPatchDataFactory(PatchDataFactory):
             )
 
         # Intro Text
-        text[
-            "GUI_CUTSCENE_OPENING_1"
-        ] = "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
+        text["GUI_CUTSCENE_OPENING_1"] = (
+            "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
+        )
         text["GUI_CUTSCENE_OPENING_2"] = (
             "All of the hazardous liquid has been drained. You can thus freely explore the planet.|"
             "Metroids now also drop items."
@@ -331,16 +329,16 @@ class MSRPatchDataFactory(PatchDataFactory):
             "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
             "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
         )
-        text[
-            "GUI_CUTSCENE_OPENING_7"
-        ] = "If you're interested in knowing more on how the DNA Seals work, you can check the Hint page in Randovania."
+        text["GUI_CUTSCENE_OPENING_7"] = (
+            "If you're interested in knowing more on how the DNA Seals work, you can check the Hint page in Randovania."
+        )
         text["GUI_CUTSCENE_OPENING_8"] = (
             "Some other helpful tips:|You can warp to your starting location by cancelling the save at a Save Station.|"
             "Scan Pulse can be used to reveal more of your map."
         )
-        text[
-            "GUI_CUTSCENE_OPENING_9"
-        ] = "If you still have more questions, check out the FAQ and Differences pages in Randovania."
+        text["GUI_CUTSCENE_OPENING_9"] = (
+            "If you still have more questions, check out the FAQ and Differences pages in Randovania."
+        )
         text["GUI_CUTSCENE_OPENING_10"] = "Good luck and have fun!"
 
         return text
@@ -410,7 +408,7 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return cosmetic_patches
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()
@@ -472,11 +470,18 @@ class MSRAcquiredMemo(dict):
     @classmethod
     def with_expansion_text(cls) -> MSRAcquiredMemo:
         result = cls()
-        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missile}."
-        result[
-            "Super Missile Tank"
-        ] = "Super Missile Tank acquired.\nSuper Missile capacity increased by {Super Missile}."
-        result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bomb}."
-        result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
+        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity {MissileChanged} by {Missile}."
+        result["Locked Missile Tank"] = result["Missile Tank"].replace("{Missile", "{Locked Missile")
+        result["Super Missile Tank"] = (
+            "Super Missile Tank acquired.\nSuper Missile capacity {Super MissileChanged} by {Super Missile}."
+        )
+        result["Locked Super Missile Tank"] = result["Super Missile Tank"].replace(
+            "{Super Missile", "{Locked Super Missile"
+        )
+        result["Power Bomb Tank"] = (
+            "Power Bomb Tank acquired.\nPower Bomb capacity {Power BombChanged} by {Power Bomb}."
+        )
+        result["Locked Power Bomb Tank"] = result["Power Bomb Tank"].replace("{Power Bomb", "{Locked Power Bomb")
+        result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity {EnergyChanged} by {Energy}."
         result["Aeion Tank"] = "Aeion Tank acquired.\nAeion Gauge expanded."
         return result

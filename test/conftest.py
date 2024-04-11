@@ -19,6 +19,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
+from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
@@ -103,6 +104,11 @@ def blank_game_description() -> GameDescription:
 @pytest.fixture(scope="session")
 def blank_resource_db(blank_game_description) -> ResourceDatabase:
     return blank_game_description.resource_database
+
+
+@pytest.fixture()
+def blank_game_patches(default_blank_configuration, blank_game_description) -> GamePatches:
+    return GamePatches.create_from_game(blank_game_description, 0, default_blank_configuration)
 
 
 @pytest.fixture(scope="session")
@@ -207,6 +213,22 @@ def msr_game_description() -> GameDescription:
 @pytest.fixture(scope="session")
 def fusion_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.FUSION)
+
+
+@pytest.fixture(scope="session")
+def default_fusion_preset() -> Preset:
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.FUSION).get_preset()
+
+
+@pytest.fixture(scope="session")
+def default_fusion_configuration(default_fusion_preset) -> FusionConfiguration:
+    assert isinstance(default_fusion_preset.configuration, FusionConfiguration)
+    return default_fusion_preset.configuration
+
+
+@pytest.fixture()
+def fusion_game_patches(default_fusion_configuration, fusion_game_description) -> GamePatches:
+    return GamePatches.create_from_game(fusion_game_description, 0, default_fusion_configuration)
 
 
 @pytest.fixture(scope="session")

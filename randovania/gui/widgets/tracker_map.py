@@ -76,7 +76,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
                     continue
 
                 for other_node, requirement in node.connections_from(context):
-                    if requirement.satisfied(state.resources, state.energy, state.resource_database):
+                    if requirement.satisfied(context, state.energy):
                         other_area = self.region_list.nodes_to_area(other_node)
                         if other_area in region.areas:
                             nearby_areas.add(other_area)

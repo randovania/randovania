@@ -9,9 +9,8 @@ from randovania.game_description.requirements.requirement_list import Requiremen
 if typing.TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
+    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-    from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
@@ -83,17 +82,16 @@ class RequirementSet:
         # No alternatives makes satisfied always return False
         return cls([])
 
-    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, context: NodeContext, current_energy: int) -> bool:
         """
         Checks if at least one alternative is satisfied with the given resources.
         In particular, an empty RequirementSet is *never* considered satisfied.
-        :param current_resources:
+        :param context:
         :param current_energy:
-        :param database:
         :return:
         """
         for requirement_list in self.alternatives:
-            if requirement_list.satisfied(current_resources, current_energy, database):
+            if requirement_list.satisfied(context, current_energy):
                 return True
         return False
 
@@ -123,11 +121,11 @@ class RequirementSet:
         for alternative in self.alternatives:
             yield from alternative.values()
 
-    def patch_requirements(self, resources: ResourceCollection, database: ResourceDatabase) -> RequirementSet:
+    def patch_requirements(self, context: NodeContext) -> RequirementSet:
         from randovania.game_description.requirements.requirement_and import RequirementAnd
         from randovania.game_description.requirements.requirement_or import RequirementOr
 
         return RequirementOr(
-            RequirementAnd(individual.patch_requirements(resources, 1, database) for individual in alternative.values())
+            RequirementAnd(individual.patch_requirements(1, context) for individual in alternative.values())
             for alternative in self.alternatives
-        ).as_set(database)
+        ).as_set(context)

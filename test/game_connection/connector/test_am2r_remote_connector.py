@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock, call
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from PySide6 import QtCore
 
 from randovania.game_connection.connector.am2r_remote_connector import AM2RRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
@@ -27,9 +26,11 @@ async def test_general_class_content(connector: AM2RRemoteConnector):
     assert connector.game_enum == RandovaniaGame.AM2R
     assert connector.description() == f"{RandovaniaGame.AM2R.long_name}"
 
-    connector.Finished = MagicMock(QtCore.SignalInstance)
+    emit_listener = MagicMock()
+    connector.Finished.connect(emit_listener)
+
     connector.connection_lost()
-    connector.Finished.emit.assert_called_once()
+    emit_listener.assert_called_once_with()
 
     await connector.force_finish()
     connector.executor.disconnect.assert_called_once()
@@ -39,45 +40,50 @@ async def test_general_class_content(connector: AM2RRemoteConnector):
     assert connector.is_disconnected() is True
     assert connector.is_disconnected() is False
 
-    await connector.current_game_status() == (False, None)
+    assert await connector.current_game_status() == (True, None)
 
 
 async def test_new_player_location(connector: AM2RRemoteConnector):
-    connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
+    location_changed = MagicMock()
+    connector.PlayerLocationChanged.connect(location_changed)
 
     assert connector.current_region is None
     connector.new_player_location_received("rm_a1a01")
-    connector.PlayerLocationChanged.emit.assert_called_once()
     assert isinstance(connector.current_region, Region)
     assert connector.current_region.name == "Golden Temple"
-    connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
-    connector.new_player_location_received("rm_loading")
-    connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
-    await connector.current_game_status() == (False, connector.current_region)
+    location_changed.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
 
-    connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
+    location_changed.reset_mock()
+    connector.new_player_location_received("rm_loading")
+    location_changed.assert_not_called()
+    assert await connector.current_game_status() == (True, connector.current_region)
+
+    location_changed.reset_mock()
     connector.new_player_location_received("rm_titlescreen")
-    connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(None, None))
+    location_changed.assert_called_once_with(PlayerLocationEvent(None, None))
 
 
 async def test_new_inventory_received(connector: AM2RRemoteConnector):
-    connector.InventoryUpdated = MagicMock(QtCore.SignalInstance)
+    inventory_updated = MagicMock()
+    connector.InventoryUpdated.connect(inventory_updated)
 
     connector.current_region = None
     assert connector.last_inventory == Inventory.empty()
     connector.new_inventory_received("items:Missiles|10")
     assert connector.last_inventory == Inventory.empty()
-    connector.InventoryUpdated.emit.assert_not_called()
+    inventory_updated.assert_not_called()
 
     connector.current_region = Region(name="Golden Temple", areas=[], extra={})
     connector.new_inventory_received("items:")
     assert connector.last_inventory == Inventory.empty()
-    connector.InventoryUpdated.emit.assert_called_with(Inventory(raw={}))
+    inventory_updated.assert_called_once_with(Inventory(raw={}))
 
+    inventory_updated.reset_mock()
     connector.new_inventory_received(
         "items:Missiles|5,Missile Expansion|20,Progressive Jump|1,Progressive Jump|1,"
         "Speed Booster|1,Missile Launcher|1,Missiles|5,Progressive Suit|5,"
     )
+    inventory_updated.assert_called_once()
 
     # Check Missiles
     missiles = connector.game.resource_database.get_item_by_name("Missiles")
@@ -151,18 +157,20 @@ async def test_new_collected_locations_received_wrong_answer(connector: AM2RRemo
 
 
 async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
+    collected_mock = MagicMock()
+
     connector.logger = MagicMock()
-    connector.PickupIndexCollected = MagicMock()
+    connector.PickupIndexCollected.connect(collected_mock)
     new_indices = "locations:1"
 
     connector.current_region = None
     connector.new_collected_locations_received(new_indices)
-    connector.PickupIndexCollected.emit.assert_not_called()
+    collected_mock.assert_not_called()
 
     connector.current_region = "Golden Temple"
     connector.new_collected_locations_received(new_indices)
     connector.logger.warning.assert_not_called()
-    connector.PickupIndexCollected.emit.assert_has_calls([call(PickupIndex(1))])
+    collected_mock.assert_called_once_with(PickupIndex(1))
 
 
 async def test_display_arbitrary_message(connector: AM2RRemoteConnector):

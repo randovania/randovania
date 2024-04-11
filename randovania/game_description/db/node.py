@@ -33,7 +33,7 @@ class NodeLocation:
 
 @dataclasses.dataclass(frozen=True)
 class NodeContext:
-    patches: GamePatches
+    patches: GamePatches | None  # this shouldn't be None, but certain places can't provide one
     current_resources: ResourceCollection
     database: ResourceDatabase
     node_provider: NodeProvider

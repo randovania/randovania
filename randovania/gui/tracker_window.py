@@ -180,6 +180,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.map_area_combo.currentIndexChanged.connect(self.on_map_area_combo)
         self.map_canvas.set_edit_mode(False)
         self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
+        self.map_canvas.SelectNodeRequest.connect(self._add_new_action)
 
         # Graph Map
         from randovania.gui.widgets.tracker_map import MatplotlibWidget
@@ -353,7 +354,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 text.append(f"<li>{wl.node_name(p, with_region=True, distinguish_dark_aether=True)}</li>")
             text.append("</ul>")
 
-            dialog = ScrollLabelDialog("".join(text), "Path to node", self)
+            dialog = ScrollLabelDialog(self, "".join(text), "Path to node")
             dialog.exec_()
         else:
             QtWidgets.QMessageBox.warning(
@@ -438,7 +439,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 self._area_name_to_item[(region.name, area.name)].setHidden(not area_is_visible)
 
         self.map_canvas.set_state(state)
-        self.map_canvas.set_visible_nodes({node for node in nodes_in_reach if not self._node_to_item[node].isHidden()})
+        self.map_canvas.set_visible_nodes(nodes_in_reach)
 
         # Persist the current state
         self.persist_current_state()

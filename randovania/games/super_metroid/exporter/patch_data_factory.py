@@ -98,7 +98,7 @@ class SuperMetroidPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.SUPER_METROID
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         db = self.game
         useless_target = PickupTarget(
             pickup_creator.create_nothing_pickup(db.resource_database), self.players_config.player_index

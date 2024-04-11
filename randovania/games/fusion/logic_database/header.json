@@ -102,7 +102,7 @@
                 }
             },
             "Hi-Jump": {
-                "long_name": "High Jump",
+                "long_name": "Hi-Jump",
                 "max_capacity": 1,
                 "extra": {
                     "item": "HiJump"
@@ -412,10 +412,6 @@
                 "long_name": "Sector 4 Water Level Lowered",
                 "extra": {}
             },
-            "Animals": {
-                "long_name": "Animals Released",
-                "extra": {}
-            },
             "Wide X": {
                 "long_name": "Boss Wide Core-X Defeated",
                 "extra": {}
@@ -472,7 +468,7 @@
                 "long_name": "Main Deck Power Bomb Geron Destroyed",
                 "extra": {}
             },
-            "S1MissileBlock": {
+            "S1ChargeEscMissileBlock": {
                 "long_name": "Sector 1 Charge Core Escape Missile Block Destroyed",
                 "extra": {}
             },
@@ -480,8 +476,16 @@
                 "long_name": "Sector 1 Yameba Corridor Missile Geron Destroyed",
                 "extra": {}
             },
-            "S1ShotBlock": {
+            "S1SaveShotBlock": {
                 "long_name": "Sector 1 Save Room East Shot Block Destroyed",
+                "extra": {}
+            },
+            "S2DHubBombBlock": {
+                "long_name": "Sector 2 Data Hub Bomb Block Destroyed",
+                "extra": {}
+            },
+            "S2ZigZagBombBlocks": {
+                "long_name": "Sector 2 Zoro Zig-Zag Bomb Blocks Broken",
                 "extra": {}
             }
         },
@@ -562,6 +566,10 @@
             },
             "ElectricDamage": {
                 "long_name": "Electrified Water Damage",
+                "extra": {}
+            },
+            "ColdDamage": {
+                "long_name": "Cold Damage",
                 "extra": {}
             }
         },
@@ -1875,7 +1883,9 @@
                 "extra": {},
                 "items": {
                     "Open Hatch": {
-                        "extra": {},
+                        "extra": {
+                            "type": "Open"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -1885,8 +1895,23 @@
                         },
                         "lock": null
                     },
+                    "Locked Hatch": {
+                        "extra": {
+                            "type": "Locked"
+                        },
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
                     "L0 Hatch": {
-                        "extra": {},
+                        "extra": {
+                            "type": "Level0"
+                        },
                         "requirement": {
                             "type": "resource",
                             "data": {
@@ -1899,7 +1924,9 @@
                         "lock": null
                     },
                     "L1 Hatch": {
-                        "extra": {},
+                        "extra": {
+                            "type": "Level1"
+                        },
                         "requirement": {
                             "type": "resource",
                             "data": {
@@ -1912,7 +1939,9 @@
                         "lock": null
                     },
                     "L2 Hatch": {
-                        "extra": {},
+                        "extra": {
+                            "type": "Level2"
+                        },
                         "requirement": {
                             "type": "resource",
                             "data": {
@@ -1925,7 +1954,9 @@
                         "lock": null
                     },
                     "L3 Hatch": {
-                        "extra": {},
+                        "extra": {
+                            "type": "Level3"
+                        },
                         "requirement": {
                             "type": "resource",
                             "data": {
@@ -1938,7 +1969,9 @@
                         "lock": null
                     },
                     "L4 Hatch": {
-                        "extra": {},
+                        "extra": {
+                            "type": "Level4"
+                        },
                         "requirement": {
                             "type": "resource",
                             "data": {
@@ -1953,7 +1986,7 @@
                 },
                 "dock_rando": {
                     "unlocked": "Open Hatch",
-                    "locked": "Open Hatch",
+                    "locked": "Locked Hatch",
                     "change_from": [
                         "L0 Hatch",
                         "L1 Hatch",
@@ -1968,6 +2001,7 @@
                         "L2 Hatch",
                         "L3 Hatch",
                         "L4 Hatch",
+                        "Locked Hatch",
                         "Open Hatch"
                     ]
                 }
@@ -2099,6 +2133,7 @@
             1,
             2,
             3,
+            4,
             5
         ],
         "DamageRuns": [

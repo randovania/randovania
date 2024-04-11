@@ -48,6 +48,12 @@ def _exporter():
     return AM2RGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.am2r.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="AM2R",
     long_name="Another Metroid 2 Remake",
@@ -122,6 +128,18 @@ game_data: game.GameData = game.GameData(
             "In a multiworld game, only your own items can be shiny.",
         ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items",
+            "Starting locations",
+            "Door locks",
+            "A new goal has been added (DNA Hunt)",
+        ],
+        need_to_play=[
+            "AM2R version 1.5.5",
+        ],
+    ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.AM2RConfiguration,
         cosmetic_patches=layout.AM2RCosmeticPatches,

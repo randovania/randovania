@@ -8,5 +8,5 @@ class BlankPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.BLANK
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         return {}

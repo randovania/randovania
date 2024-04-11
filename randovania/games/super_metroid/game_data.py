@@ -49,6 +49,12 @@ def _exporter():
     return SuperMetroidGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.blank.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="SM",
     long_name="Super Metroid",
@@ -93,6 +99,7 @@ game_data: game.GameData = game.GameData(
         ),
         ("Will you support SMZ3?", "No."),
     ],
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=SuperMetroidConfiguration,
         cosmetic_patches=SuperMetroidCosmeticPatches,

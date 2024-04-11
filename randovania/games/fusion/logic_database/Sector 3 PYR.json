@@ -4,7 +4,7 @@
         "area_id": 3
     },
     "areas": {
-        "Entrance Hub": {
+        "Entrance Lobby": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 30",
@@ -35,7 +35,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Entrance Recharge Room",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -50,7 +50,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Checkpoint Shaft": {
+                        "Door to Checkpoint Crossing": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -166,7 +166,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Security Access",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -183,7 +183,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint Shaft": {
+                "Door to Checkpoint Crossing": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -204,8 +204,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Checkpoint Shaft",
-                        "node": "Door to Entrance Hub"
+                        "area": "Checkpoint Crossing",
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -244,7 +244,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Alcove",
-                        "node": "Other to Entrance Hub"
+                        "node": "Other to Entrance Lobby"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -283,7 +283,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Monkey Bars of Fire",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -597,7 +597,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -618,7 +618,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Security Access"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -639,15 +639,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -826,7 +817,7 @@
                                 ]
                             }
                         },
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1089,7 +1080,7 @@
                 }
             }
         },
-        "Checkpoint Shaft": {
+        "Checkpoint Crossing": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 35",
@@ -1098,7 +1089,7 @@
                 ]
             },
             "nodes": {
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1119,8 +1110,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Entrance Hub",
-                        "node": "Door to Checkpoint Shaft"
+                        "area": "Entrance Lobby",
+                        "node": "Door to Checkpoint Crossing"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1128,14 +1119,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bob Room": {
+                        "Door to Bob's Abode": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Other to Namihe's Abode": {
+                        "Other to Namihe's Lair": {
                             "type": "or",
                             "data": {
                                 "comment": "Get past wall enemy. For simplicity's sake, we assume the enemies are always there.",
@@ -1243,7 +1234,7 @@
                         }
                     }
                 },
-                "Door to Bob Room": {
+                "Door to Bob's Abode": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1264,8 +1255,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Bob Room",
-                        "node": "Door to Checkpoint Shaft"
+                        "area": "Bob's Abode",
+                        "node": "Door to Checkpoint Crossing"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1273,7 +1264,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1282,7 +1273,7 @@
                         }
                     }
                 },
-                "Other to Namihe's Abode": {
+                "Other to Namihe's Lair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1303,8 +1294,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Namihe's Abode",
-                        "node": "Other to Checkpoint Shaft"
+                        "area": "Namihe's Lair",
+                        "node": "Other to Checkpoint Crossing"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1312,7 +1303,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1323,7 +1314,7 @@
                 }
             }
         },
-        "Bob Room": {
+        "Bob's Abode": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 36",
@@ -1369,7 +1360,7 @@
                         }
                     }
                 },
-                "Door to Checkpoint Shaft": {
+                "Door to Checkpoint Crossing": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1383,16 +1374,15 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            13,
-                            47
+                            13
                         ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Checkpoint Shaft",
-                        "node": "Door to Bob Room"
+                        "area": "Checkpoint Crossing",
+                        "node": "Door to Bob's Abode"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1489,7 +1479,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "B.O.X. Access",
-                        "node": "Door to Bob Room"
+                        "node": "Door to Bob's Abode"
                     },
                     "default_dock_weakness": "L2 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1514,7 +1504,7 @@
                                 ]
                             }
                         },
-                        "Door to Checkpoint Shaft": {
+                        "Door to Checkpoint Crossing": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1559,8 +1549,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            15,
-                            48
+                            15
                         ]
                     },
                     "valid_starting_location": false,
@@ -1568,7 +1557,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Red Tower",
-                        "node": "Door to Bob Room"
+                        "node": "Door to Bob's Abode"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1646,7 +1635,7 @@
                                 ]
                             }
                         },
-                        "Other to Namihe's Abode": {
+                        "Other to Namihe's Lair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1669,7 +1658,7 @@
                         }
                     }
                 },
-                "Other to Namihe's Abode": {
+                "Other to Namihe's Lair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1691,8 +1680,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Namihe's Abode",
-                        "node": "Other to Bob Room"
+                        "area": "Namihe's Lair",
+                        "node": "Other to Bob's Abode"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -1734,7 +1723,7 @@
                     "pickup_index": 44,
                     "location_category": "minor",
                     "connections": {
-                        "Other to Entrance Hub": {
+                        "Other to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1793,7 +1782,7 @@
                         }
                     }
                 },
-                "Other to Entrance Hub": {
+                "Other to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1814,7 +1803,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Other to Alcove"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -2103,7 +2092,7 @@
                                 ]
                             }
                         },
-                        "Other to Entrance Hub": {
+                        "Other to Entrance Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2374,7 +2363,7 @@
                         "Other to B.O.X. Arena": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: trivial to get past enemies?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -2409,7 +2398,7 @@
                                 ]
                             }
                         },
-                        "Door to Connection to Sector 1 (SRX)": {
+                        "Door to Glass Tube to Sector 1 (SRX)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2439,6 +2428,27 @@
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/7dIXfR4dkTA",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "StandOnFrozenEnemies",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2482,7 +2492,7 @@
                         "Door to Alcove": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: trivial to get past enemies?",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -2551,7 +2561,7 @@
                         }
                     }
                 },
-                "Door to Connection to Sector 1 (SRX)": {
+                "Door to Glass Tube to Sector 1 (SRX)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2572,7 +2582,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Connection to Sector 1 (SRX)",
+                        "area": "Glass Tube to Sector 1 (SRX)",
                         "node": "Door to Deserted Runway"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2611,7 +2621,7 @@
                 ]
             },
             "nodes": {
-                "Door to Bob Room": {
+                "Door to Bob's Abode": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2632,7 +2642,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Bob Room",
+                        "area": "Bob's Abode",
                         "node": "Door to Red Tower"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2641,7 +2651,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Namihe's Abode": {
+                        "Door to Namihe's Lair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2680,7 +2690,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Namihe's Abode": {
+                        "Door to Namihe's Lair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2696,7 +2706,7 @@
                         }
                     }
                 },
-                "Door to Namihe's Abode": {
+                "Door to Namihe's Lair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2717,7 +2727,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Namihe's Abode",
+                        "area": "Namihe's Lair",
                         "node": "Door to Red Tower"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2726,7 +2736,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Bob Room": {
+                        "Door to Bob's Abode": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3393,7 +3403,7 @@
                         "Door to Pyrochamber": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Possibly add singlewall jump trick difficulty with jump extend as an option if singlewall jump is kept.",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -3443,6 +3453,78 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Jump Extend SWJ Method",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "JumpExtends",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Kill Tough Beam-Resistant Enemy"
                                                             }
                                                         ]
                                                     }
@@ -3977,7 +4059,7 @@
                         "Door to Boiler Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia suit?",
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -4857,8 +4939,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            45,
-                            35
+                            45
                         ]
                     },
                     "valid_starting_location": false,
@@ -4881,7 +4962,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Bob Room": {
+                        "Door to Bob's Abode": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4929,7 +5010,7 @@
                         }
                     }
                 },
-                "Door to Bob Room": {
+                "Door to Bob's Abode": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4950,7 +5031,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Bob Room",
+                        "area": "Bob's Abode",
                         "node": "Door to B.O.X. Access"
                     },
                     "default_dock_weakness": "L2 Hatch",
@@ -5043,7 +5124,6 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            46,
                             36
                         ]
                     },
@@ -5108,7 +5188,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            43
+                            35
                         ]
                     },
                     "valid_starting_location": false,
@@ -5763,7 +5843,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5784,7 +5864,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Entrance Recharge Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5824,7 +5904,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5844,7 +5924,7 @@
                 ]
             },
             "nodes": {
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5865,7 +5945,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Monkey Bars of Fire"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6233,7 +6313,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6686,7 +6766,7 @@
                         }
                     }
                 },
-                "Door to Connection to Sector 5 (ARC)": {
+                "Door to Glass Tube to Sector 5 (ARC)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6707,7 +6787,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Connection to Sector 5 (ARC)",
+                        "area": "Glass Tube to Sector 5 (ARC)",
                         "node": "Door to Fiery Storage"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6821,7 +6901,7 @@
                                 ]
                             }
                         },
-                        "Door to Connection to Sector 5 (ARC)": {
+                        "Door to Glass Tube to Sector 5 (ARC)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6842,7 +6922,7 @@
                 }
             }
         },
-        "Namihe's Abode": {
+        "Namihe's Lair": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 330",
@@ -6942,7 +7022,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Red Tower",
-                        "node": "Door to Namihe's Abode"
+                        "node": "Door to Namihe's Lair"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7001,7 +7081,7 @@
                         }
                     }
                 },
-                "Other to Bob Room": {
+                "Other to Bob's Abode": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7022,8 +7102,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Bob Room",
-                        "node": "Other to Namihe's Abode"
+                        "area": "Bob's Abode",
+                        "node": "Other to Namihe's Lair"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -7031,7 +7111,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Other to Checkpoint Shaft": {
+                        "Other to Checkpoint Crossing": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7040,7 +7120,7 @@
                         }
                     }
                 },
-                "Other to Checkpoint Shaft": {
+                "Other to Checkpoint Crossing": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7061,8 +7141,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Checkpoint Shaft",
-                        "node": "Other to Namihe's Abode"
+                        "area": "Checkpoint Crossing",
+                        "node": "Other to Namihe's Lair"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -7073,7 +7153,7 @@
                         "Door to Red Tower": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -7082,15 +7162,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -7934,7 +8005,7 @@
                         "Pickup (Power Bomb Tank in Shaft)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -7961,15 +8032,6 @@
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -8342,7 +8404,7 @@
                 }
             }
         },
-        "Connection to Sector 5 (ARC)": {
+        "Glass Tube to Sector 5 (ARC)": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 337",
@@ -8404,7 +8466,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Fiery Storage",
-                        "node": "Door to Connection to Sector 5 (ARC)"
+                        "node": "Door to Glass Tube to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8496,7 +8558,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Connection to Sector 3 (PYR)",
+                        "area": "Glass Tube to Sector 3 (PYR)",
                         "node": "Area Transition to Sector 3 (PYR)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -8516,7 +8578,7 @@
                 }
             }
         },
-        "Connection to Sector 1 (SRX)": {
+        "Glass Tube to Sector 1 (SRX)": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 338",
@@ -8547,7 +8609,7 @@
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
                         "area": "Deserted Runway",
-                        "node": "Door to Connection to Sector 1 (SRX)"
+                        "node": "Door to Glass Tube to Sector 1 (SRX)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8585,7 +8647,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 1 (SRX)",
-                        "area": "Connection to Sector 3 (PYR)",
+                        "area": "Glass Tube to Sector 3 (PYR)",
                         "node": "Area Transition to Sector 3 (PYR)"
                     },
                     "default_dock_weakness": "Open Passage",

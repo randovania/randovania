@@ -8,8 +8,10 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
+from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -21,32 +23,33 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
     from randovania.games.game import RandovaniaGame
 
 
+def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:
+    for individual in requirement.iterate_resource_requirements(context):
+        if individual.negate:
+            yield individual.resource
+
+
 def _calculate_dangerous_resources_in_db(
-    rl: RegionList,
     db: DockWeaknessDatabase,
-    database: ResourceDatabase,
+    context: NodeContext,
 ) -> Iterator[ResourceInfo]:
     for dock_type in db.dock_types:
         for dock_weakness in db.weaknesses[dock_type].values():
-            yield from rl.open_requirement_for(dock_weakness).as_set(database).dangerous_resources
+            yield from _requirement_dangerous(context.node_provider.open_requirement_for(dock_weakness), context)
             if dock_weakness.lock is not None:
-                yield from rl.lock_requirement_for(dock_weakness).as_set(database).dangerous_resources
+                yield from _requirement_dangerous(context.node_provider.lock_requirement_for(dock_weakness), context)
 
 
-def _calculate_dangerous_resources_in_areas(
-    rl: RegionList,
-    database: ResourceDatabase,
-) -> Iterator[ResourceInfo]:
-    for area in rl.all_areas:
+def _calculate_dangerous_resources_in_areas(context: NodeContext) -> Iterator[ResourceInfo]:
+    for area in context.node_provider.all_areas:
         for node in area.nodes:
-            for _, requirement in rl.area_connections_from(node):
-                yield from requirement.as_set(database).dangerous_resources
+            for _, requirement in context.node_provider.area_connections_from(node):
+                yield from _requirement_dangerous(requirement, context)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -118,12 +121,20 @@ class GameDescription:
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
 
+    def create_node_context(self, resources: ResourceCollection) -> NodeContext:
+        return NodeContext(
+            None,
+            resources,
+            self.resource_database,
+            self.region_list,
+        )
+
     def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float) -> None:
         if not self.mutable:
             raise ValueError("self is not mutable")
 
         self.region_list.patch_requirements(
-            resources, damage_multiplier, self.resource_database, self.dock_weakness_database
+            damage_multiplier, self.create_node_context(resources), self.dock_weakness_database
         )
         self._dangerous_resources = None
 
@@ -141,10 +152,9 @@ class GameDescription:
     @property
     def dangerous_resources(self) -> frozenset[ResourceInfo]:
         if self._dangerous_resources is None:
-            first = _calculate_dangerous_resources_in_areas(self.region_list, self.resource_database)
-            second = _calculate_dangerous_resources_in_db(
-                self.region_list, self.dock_weakness_database, self.resource_database
-            )
+            context = self.create_node_context(ResourceCollection())
+            first = _calculate_dangerous_resources_in_areas(context)
+            second = _calculate_dangerous_resources_in_db(self.dock_weakness_database, context)
             self._dangerous_resources = frozenset(first) | frozenset(second)
 
         return self._dangerous_resources
@@ -154,9 +164,10 @@ class GameDescription:
             return self._used_trick_levels
 
         result = collections.defaultdict(set)
+        context = self.create_node_context(ResourceCollection())
 
         def process(req: Requirement) -> None:
-            for resource_requirement in req.iterate_resource_requirements(self.resource_database):
+            for resource_requirement in req.iterate_resource_requirements(context):
                 resource = resource_requirement.resource
                 if resource.resource_type == ResourceType.TRICK:
                     assert isinstance(resource, TrickResourceInfo)
@@ -211,9 +222,8 @@ def _damage_resource_from_list(requirements: RequirementList) -> SimpleResourceI
 
 def calculate_interesting_resources(
     satisfiable_requirements: SatisfiableRequirements,
-    resources: ResourceCollection,
+    context: NodeContext,
     energy: int,
-    database: ResourceDatabase,
 ) -> frozenset[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList"""
 
@@ -221,24 +231,26 @@ def calculate_interesting_resources(
         # For each possible requirement list
         for requirement_list in satisfiable_requirements:
             # If it's not satisfied, there's at least one IndividualRequirement in it that can be collected
-            if not requirement_list.satisfied(resources, energy, database):
+            if not requirement_list.satisfied(context, energy):
                 current_energy = energy
                 for individual in requirement_list.values():
                     # Ignore those with the `negate` flag. We can't "uncollect" a resource to satisfy these.
                     # Finally, if it's not satisfied then we're interested in collecting it
-                    if not individual.negate and not individual.satisfied(resources, current_energy, database):
+                    if not individual.negate and not individual.satisfied(context, current_energy):
                         if individual.is_damage:
                             assert isinstance(individual.resource, SimpleResourceInfo)
-                            yield from _resources_for_damage(individual.resource, database, resources)
+                            yield from _resources_for_damage(
+                                individual.resource, context.database, context.current_resources
+                            )
                         else:
                             yield individual.resource
-                    elif individual.is_damage and individual.satisfied(resources, current_energy, database):
-                        current_energy -= individual.damage(resources, database)
+                    elif individual.is_damage and individual.satisfied(context, current_energy):
+                        current_energy -= individual.damage(context)
             elif damage_resource := _damage_resource_from_list(requirement_list):
                 # This part is here to make sure that resources for damage are considered interesting for cases where
                 # damage constraints are combined from multiple nodes. Each requirement in isolation might be satisfied,
                 # but when combined, the energy might not be sufficient. The satisfiable requirements are assumed to be
                 # unsatisfied.
-                yield from _resources_for_damage(damage_resource, database, resources)
+                yield from _resources_for_damage(damage_resource, context.database, context.current_resources)
 
     return frozenset(helper())

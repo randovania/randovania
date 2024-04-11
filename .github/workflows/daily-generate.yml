@@ -11,6 +11,7 @@ on:
           - blank
           - cave_story
           - dread
+          - fusion
           - prime1
           - prime2
           - samus_returns
@@ -32,6 +33,7 @@ on:
     - cron: '0 16 * * 1'  # Prime 2
     - cron: '0 16 * * 4'  # Samus Returns
     - cron: '0 10 * * 1,5' # AM2R
+    - cron: '0 10 * * 2,6' # Fusion
 
 jobs:
   report:
@@ -76,6 +78,12 @@ jobs:
         if: inputs.game == 'dread' || github.event.schedule == '0 16 * * 5'
         env:
           WEBHOOK_URL: ${{ secrets.DREAD_DEV_TALK_WEBHOOK }}
+
+      - name: Bulk Generate (Fusion)
+        run: venv/bin/python tools/bulk_generate_for_discord.py --game fusion
+        if: inputs.game == 'fusion' || github.event.schedule == '0 10 * * 2,6'
+        env:
+          WEBHOOK_URL: ${{ secrets.FUSION_DEV_TALK_WEBHOOK }}
 
       - name: Bulk Generate (Prime 1)
         run: venv/bin/python tools/bulk_generate_for_discord.py --game prime1

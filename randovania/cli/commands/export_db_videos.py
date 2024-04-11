@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import datetime
-from typing import TYPE_CHECKING
-
-from htmlmin import minify
+from typing import TYPE_CHECKING, Any
 
 from randovania.game_description import default_database
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -19,6 +17,8 @@ if TYPE_CHECKING:
 
     from randovania.game_description.requirements.base import Requirement
     from randovania.games.game import RandovaniaGame
+
+# ruff: noqa: E731
 
 # (tab title, page title, time)
 HTML_HEADER_FORMAT = """
@@ -276,11 +276,68 @@ def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tu
 
     html = header + toc + body + HTML_FOOTER
 
+    from htmlmin import minify
+
     return minify(html, remove_comments=True, remove_all_empty_space=True)
 
 
 def filename_friendly_game_name(game: RandovaniaGame):
     return "".join(x for x in game.long_name if x.isalnum() or x in [" "])
+
+
+def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
+    def add_entry(arr: list, key: str, value: Any):
+        arr.append({"key": key, "value": value})
+
+    regions = collect_game_info(game)
+
+    output = []
+    for region, areas in sorted(regions.items()):
+        sorted_region = []
+        add_entry(output, region, sorted_region)
+        for area, nodes in sorted(areas.items()):
+            sorted_area = []
+            add_entry(sorted_region, area, sorted_area)
+            all_area_vids = set()
+            for node, connections in sorted(nodes.items()):
+                sorted_node = []
+
+                for connection, videos in sorted(connections.items()):
+                    sorted_vids = []
+
+                    for video in sorted(videos, key=lambda x: x[2]):
+                        if video in all_area_vids:
+                            continue
+                        all_area_vids.add(video)
+
+                        yt_id, start_time, highest_diff = video
+                        sorted_vids.append(
+                            {
+                                "video_id": yt_id,
+                                "start_time": start_time,
+                                "difficulty": LayoutTrickLevel.from_number(highest_diff).long_name,
+                            }
+                        )
+
+                    if sorted_vids:
+                        add_entry(sorted_node, connection, sorted_vids)
+
+                if sorted_node:
+                    add_entry(sorted_area, node, sorted_node)
+
+    output = {"regions": output}
+
+    tr = lambda s: s
+    fmt = "yml"
+    if as_frontmatter:
+        tr = lambda s: f"---\n{s}---\n"
+        fmt = "md"
+
+    from ruamel.yaml import YAML
+
+    yaml = YAML(typ="safe")
+    with out_dir.joinpath(f"{game.value}.{fmt}").open("w") as out_file:
+        yaml.dump(output, out_file, transform=tr)
 
 
 def export_videos(game: RandovaniaGame, out_dir: Path):

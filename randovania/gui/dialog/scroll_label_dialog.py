@@ -7,7 +7,7 @@ from randovania.gui.lib import common_qt_lib
 
 
 class ScrollLabelDialog(QtWidgets.QDialog, Ui_ScrollLabelDialog):
-    def __init__(self, text: str, title: str, parent: QtWidgets.QWidget):
+    def __init__(self, parent: QtWidgets.QWidget, text: str, title: str):
         super().__init__(parent)
         self.setupUi(self)
         common_qt_lib.set_default_window_icon(self)

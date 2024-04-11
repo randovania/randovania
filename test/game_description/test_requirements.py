@@ -48,12 +48,22 @@ def database() -> ResourceDatabase:
     )
 
 
-def _empty_col():
-    return ResourceCollection()
+def _empty_context():
+    return NodeContext(
+        MagicMock(),
+        ResourceCollection(),
+        MagicMock(),
+        MagicMock(),
+    )
 
 
-def _col_for(db: ResourceDatabase, *args: ResourceInfo):
-    return ResourceCollection.from_dict(db, {resource: 1 for resource in args})
+def _ctx_for(db: ResourceDatabase, *args: ResourceInfo):
+    return NodeContext(
+        MagicMock(),
+        ResourceCollection.from_dict(db, {resource: 1 for resource in args}),
+        db,
+        MagicMock(),
+    )
 
 
 def make_req_a(db: ResourceDatabase):
@@ -76,18 +86,17 @@ def make_single_set(id_req: tuple[ResourceInfo, ResourceRequirement]) -> Require
 
 
 def test_empty_requirement_set_satisfied():
-    assert not RequirementSet([]).satisfied(_empty_col(), 99, MagicMock())
+    assert not RequirementSet([]).satisfied(_empty_context(), 99)
 
 
 def test_empty_requirement_list_satisfied():
-    assert RequirementList([]).satisfied(_empty_col(), 99, MagicMock())
+    assert RequirementList([]).satisfied(_empty_context(), 99)
 
 
-def test_simplify_requirement_set_static(blank_game_description):
+def test_simplify_requirement_set_static(blank_game_description, blank_game_patches):
     db = blank_game_description.resource_database
     res_a, id_req_a = make_req_a(db)
     res_b, id_req_b = make_req_b(db)
-    fd = ResourceCollection.from_dict
 
     the_set = RequirementOr(
         [
@@ -96,13 +105,18 @@ def test_simplify_requirement_set_static(blank_game_description):
         ]
     )
 
-    simple_1 = the_set.patch_requirements(fd(db, {res_a: 0, res_b: 0}), 1, db)
-    simple_2 = the_set.patch_requirements(fd(db, {res_a: 0, res_b: 1}), 1, db)
-    simple_3 = the_set.patch_requirements(fd(db, {res_a: 1, res_b: 1}), 1, db)
+    def ctx(resources):
+        return NodeContext(
+            blank_game_patches, ResourceCollection.from_dict(db, resources), db, blank_game_description.region_list
+        )
 
-    assert simple_1.as_set(db).alternatives == frozenset()
-    assert simple_2.as_set(db).alternatives == frozenset([RequirementList([])])
-    assert simple_3.as_set(db).alternatives == frozenset([RequirementList([])])
+    simple_1 = the_set.patch_requirements(1.0, ctx({res_a: 0, res_b: 0}))
+    simple_2 = the_set.patch_requirements(1.0, ctx({res_a: 0, res_b: 1}))
+    simple_3 = the_set.patch_requirements(1.0, ctx({res_a: 1, res_b: 1}))
+
+    assert simple_1.as_set(ctx({})).alternatives == frozenset()
+    assert simple_2.as_set(ctx({})).alternatives == frozenset([RequirementList([])])
+    assert simple_3.as_set(ctx({})).alternatives == frozenset([RequirementList([])])
 
 
 def test_prevent_redundant(blank_game_description):
@@ -439,11 +453,11 @@ def test_impossible_requirement_as_set():
 
 
 def test_impossible_requirement_satisfied():
-    assert not Requirement.impossible().satisfied(_empty_col(), 99, MagicMock())
+    assert not Requirement.impossible().satisfied(_empty_context(), 99)
 
 
 def test_impossible_requirement_damage():
-    assert Requirement.impossible().damage(_empty_col(), MagicMock()) == MAX_DAMAGE
+    assert Requirement.impossible().damage(_empty_context()) == MAX_DAMAGE
 
 
 def test_impossible_requirement_str():
@@ -455,11 +469,11 @@ def test_trivial_requirement_as_set():
 
 
 def test_trivial_requirement_satisfied():
-    assert Requirement.trivial().satisfied(_empty_col(), 99, MagicMock())
+    assert Requirement.trivial().satisfied(_empty_context(), 99)
 
 
 def test_trivial_requirement_damage():
-    assert Requirement.trivial().damage(_empty_col(), MagicMock()) == 0
+    assert Requirement.trivial().damage(_empty_context()) == 0
 
 
 def test_trivial_requirement_str():
@@ -629,7 +643,7 @@ def test_requirement_template(database):
     use_a = RequirementTemplate("Use A")
 
     # Run
-    as_set = use_a.as_set(database)
+    as_set = use_a.as_set(_ctx_for(database))
 
     # Assert
     assert as_set == make_single_set(_make_req("A"))
@@ -649,7 +663,7 @@ def test_requirement_template_nested(database):
     database.requirement_template["Use B"] = NamedRequirementTemplate("Use B", RequirementOr([use_a, _req("B")]))
 
     # Run
-    as_set = use_b.as_set(database)
+    as_set = use_b.as_set(_ctx_for(database))
 
     # Assert
     assert as_set == RequirementSet(
@@ -742,7 +756,7 @@ def test_requirement_damage(damage, items, requirement, echoes_resource_database
         echoes_resource_database, {echoes_resource_database.get_item(item): 1 for item in items}
     )
 
-    assert req.damage(collection, echoes_resource_database) == damage
+    assert req.damage(NodeContext(MagicMock(), collection, echoes_resource_database, MagicMock())) == damage
 
 
 def test_simple_echoes_damage(echoes_resource_database):
@@ -755,9 +769,9 @@ def test_simple_echoes_damage(echoes_resource_database):
     d_suit = db.get_item_by_name("Dark Suit")
     l_suit = db.get_item_by_name("Light Suit")
 
-    assert req.damage(_empty_col(), db) == 50
-    assert req.damage(_col_for(db, d_suit), db) == 11
-    assert req.damage(_col_for(db, l_suit), db) == 0
+    assert req.damage(_ctx_for(db)) == 50
+    assert req.damage(_ctx_for(db, d_suit)) == 11
+    assert req.damage(_ctx_for(db, l_suit)) == 0
 
 
 def test_requirement_list_constructor(echoes_resource_database):
@@ -835,8 +849,8 @@ def test_node_resource_info_as_requirement(blank_game_description):
     nri = NodeResourceInfo.from_node
     req = ResourceRequirement.simple(nri(node, context))
 
-    assert not req.satisfied(_empty_col(), 0, db)
-    assert req.satisfied(_col_for(db, nri(node, context)), 0, db)
+    assert not req.satisfied(_ctx_for(db), 0)
+    assert req.satisfied(_ctx_for(db, nri(node, context)), 0)
 
 
 def test_set_as_str_impossible():
@@ -926,4 +940,4 @@ def test_and_damage_satisfied(echoes_resource_database):
     )
     and_req = RequirementAnd([req, req])
 
-    assert not and_req.satisfied(_empty_col(), 99, db)
+    assert not and_req.satisfied(_ctx_for(db), 99)

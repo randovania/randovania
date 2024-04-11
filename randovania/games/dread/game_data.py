@@ -52,6 +52,12 @@ def _generator() -> game.GameGenerator:
     )
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.dread.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
@@ -61,6 +67,11 @@ game_data: game.GameData = game.GameData(
         {"path": "april_fools_2023.rdvpreset"},
     ],
     faq=[
+        (
+            "What Switch Emulators does Randovania support?",
+            "Randovania only officially supports Ryujinx as an emulator, "
+            "with no plans to support additional emulators.",
+        ),
         (
             "Why does this missile door not open after I shoot a missile at it?",
             "Shoot another missile at the door. In the process of making certain missile doors possible to open from "
@@ -74,11 +85,6 @@ game_data: game.GameData = game.GameData(
             "Why is this pickup not animating, or displaying visual effects?",
             "While progressive pickups update to have the correct model, "
             "due to limitations these models are not animated or have any additional effects.",
-        ),
-        (
-            "Can I play on Yuzu?",
-            "Yuzu is not officially supported so you're on your own.\n\n"
-            "It has been reported to work fine, but there are planned features that are known to be incompatible.",
         ),
         (
             "Can I use other mods?",
@@ -111,12 +117,21 @@ game_data: game.GameData = game.GameData(
             "Reload from checkpoint immediately to fix the issue. "
             "Your checkpoint was saved after killing the E.M.M.I., so you will not lose progress.",
         ),
-        (
-            "Why are items, hints, and the seed hash not displaying properly in my game?",
-            "Currently, English is the only officially supported language.\n\n"
-            "You must set your language to English to see all the text the randomizer changes.",
-        ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items",
+            "Elevator and shuttle destinations",
+            "Starting locations",
+            "Door locks",
+            "A new goal has been added (DNA Hunt)",
+        ],
+        need_to_play=[
+            "A modded Switch with Atmosphere and SimpleModManager; or Ryujinx",
+            "A dumped RomFS of your original game. Either version 1.0.0 or 2.1.0",
+        ],
+    ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=DreadConfiguration, cosmetic_patches=DreadCosmeticPatches, preset_describer=DreadPresetDescriber()
     ),

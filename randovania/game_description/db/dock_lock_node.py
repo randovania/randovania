@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node, NodeContext
+    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 
@@ -53,7 +54,8 @@ class DockLockNode(ResourceNode):
     def can_collect(self, context: NodeContext) -> bool:
         dock = self.dock
 
-        front_weak = context.patches.get_dock_weakness_for(dock)
+        patches: GamePatches = context.patches  # type: ignore
+        front_weak = patches.get_dock_weakness_for(dock)
         if not context.has_resource(self.resource(context)):
             if front_weak.lock is not None:
                 return True
@@ -73,7 +75,8 @@ class DockLockNode(ResourceNode):
         dock_resource = self.resource(context)
         target_resource = NodeResourceInfo.from_node(dock.get_target_node(context), context)
 
-        front_weak = context.patches.get_dock_weakness_for(dock)
+        patches: GamePatches = context.patches  # type: ignore
+        front_weak = patches.get_dock_weakness_for(dock)
         if not context.has_resource(dock_resource) and front_weak.lock is not None:
             yield dock_resource, 1
 

@@ -8322,7 +8322,33 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Tower Exterior West": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SoftlockPrevention",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "High Mid-Air Morph Tunnel Climb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tunnel to Tower Exterior West": {
                     "node_type": "dock",

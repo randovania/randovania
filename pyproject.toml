@@ -65,8 +65,8 @@ dependencies = [
     # error reports
     "sentry-sdk",
 
-    # Database Video html Site Generator 
-    "htmlmin",
+    # Patch GamesPatches JSON from rdvgame
+    "json-delta"
 ]
 
 [project.optional-dependencies]
@@ -75,7 +75,7 @@ exporters = [
     "am2r-yams>=1.2.0",
 
     # Cave Story
-    "cave-story-randomizer>=2.3.2",
+    "cave-story-randomizer>=2.3.3",
     "tsc-utils>=0.2.5",
 
     # Metroid Dread
@@ -105,7 +105,7 @@ gui = [
     "pyqtdarktheme-fork>=2.3.0",
     "markdown",
     "qasync",
-    
+
     "appdirs",
     # Minimum version compatible with PySide 6.4. 3.6 is also needed for Python 3.11
     "matplotlib>=3.6.2",
@@ -146,6 +146,11 @@ typing = [
     "construct-typing",
     "types-aiofiles",
     "types-peewee",
+]
+
+website = [
+    "htmlmin",
+    "ruamel.yaml",
 ]
 
 [project.readme]

@@ -138,9 +138,7 @@ class PlayerState:
         return result
 
     def victory_condition_satisfied(self) -> bool:
-        return self.game.victory_condition.satisfied(
-            self.reach.state.resources, self.reach.state.energy, self.reach.state.resource_database
-        )
+        return self.game.victory_condition.satisfied(self.reach.state.node_context(), self.reach.state.energy)
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget) -> None:
         self.num_assigned_pickups += 1
@@ -166,16 +164,13 @@ class PlayerState:
 
         wl = self.reach.game.region_list
         s = self.reach.state
+        ctx = s.node_context()
 
         paths_to_be_opened = set()
         for node, requirement in self.reach.unreachable_nodes_with_requirements().items():
             for alternative in requirement.alternatives:
                 if any(
-                    r.negate
-                    or (
-                        r.resource.resource_type != ResourceType.ITEM
-                        and not r.satisfied(s.resources, s.energy, self.game.resource_database)
-                    )
+                    r.negate or (r.resource.resource_type != ResourceType.ITEM and not r.satisfied(ctx, s.energy))
                     for r in alternative.values()
                 ):
                     continue
@@ -184,11 +179,7 @@ class PlayerState:
                     "* {}: {}".format(
                         wl.node_name(node, with_region=True),
                         " and ".join(
-                            sorted(
-                                r.pretty_text
-                                for r in alternative.values()
-                                if not r.satisfied(s.resources, s.energy, self.game.resource_database)
-                            )
+                            sorted(r.pretty_text for r in alternative.values() if not r.satisfied(ctx, s.energy))
                         ),
                     )
                 )

@@ -8,5 +8,5 @@ class CorruptionPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_CORRUPTION
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         return {}

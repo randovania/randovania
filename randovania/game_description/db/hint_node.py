@@ -51,9 +51,8 @@ class HintNode(ResourceNode):
             return False
 
         return self.requirement_to_collect.satisfied(
-            context.current_resources,
+            context,
             0,
-            context.database,
         )
 
     def is_collected(self, context: NodeContext) -> bool:

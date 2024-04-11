@@ -36,7 +36,6 @@ def test_possible_actions_no_resources():
     assert options == []
     prop_a.assert_called_once_with()
     prop_b.assert_called_once_with()
-    state.node_context.assert_called_once_with()
     node_b.can_collect.assert_called_once_with(state.node_context.return_value)
 
 
@@ -58,9 +57,6 @@ def test_possible_actions_with_event():
     # Assert
     assert options == [event]
     prop.assert_called_once_with()
-    state.node_context.assert_called_once_with()
     event.can_collect.assert_called_once_with(state.node_context.return_value)
     logic.get_additional_requirements.assert_called_once_with(event)
-    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
-        state.resources, 1, state.resource_database
-    )
+    logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(state.node_context(), 1)

@@ -55,7 +55,7 @@ def print_arguments(args):
 subprocess.run(
     print_arguments(
         [
-            "--extra=gui,exporters,server,test,typing",
+            "--extra=gui,exporters,server,test,typing,website",
             "--strip-extras",
             "--output-file",
             "requirements.txt",

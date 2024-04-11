@@ -41,7 +41,7 @@ class CSPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         game_description = self.game
         seed_number = self.description.get_seed_for_player(self.players_config.player_index)
         music_rng = Random(seed_number)

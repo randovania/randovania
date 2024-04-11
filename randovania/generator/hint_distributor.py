@@ -208,9 +208,8 @@ class HintDistributor(ABC):
         possible_indices -= hinted_indices
 
         debug.debug_print(
-            "fill_unassigned_hints had {} decent indices for {} hint locations".format(
-                len(possible_indices), len(potential_hint_locations)
-            )
+            f"fill_unassigned_hints had {len(possible_indices)} decent indices "
+            f"for {len(potential_hint_locations)} hint locations"
         )
 
         if debug.debug_level() > 1:

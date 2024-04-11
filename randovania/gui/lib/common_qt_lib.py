@@ -6,6 +6,7 @@ import re
 import subprocess
 import typing
 from pathlib import Path
+from subprocess import CalledProcessError
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
@@ -258,11 +259,11 @@ def open_directory_in_explorer(path: Path, fallback_dialog: FallbackDialog | Non
         if platform.system() == "Windows":
             os.startfile(path)
         elif platform.system() == "Darwin":
-            subprocess.run(["open", path], check=False)
+            subprocess.run(["open", path], check=True)
         else:
-            subprocess.run(["xdg-open", path], check=False)
+            subprocess.run(["xdg-open", path], check=True)
 
-    except OSError:
+    except (OSError, CalledProcessError):
         if fallback_dialog is None:
             raise
         else:

@@ -3,7 +3,6 @@ from __future__ import annotations
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
-from PySide6 import QtCore
 
 from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
@@ -27,9 +26,11 @@ async def test_general_class_content(connector: DreadRemoteConnector):
     assert connector.game_enum == RandovaniaGame.METROID_DREAD
     assert connector.description() == f"{RandovaniaGame.METROID_DREAD.long_name}: 2.1.0"
 
-    connector.Finished = MagicMock(QtCore.SignalInstance)
+    emit_listener = MagicMock()
+    connector.Finished.connect(emit_listener)
+
     connector.connection_lost()
-    connector.Finished.emit.assert_called_once()
+    emit_listener.assert_called_once_with()
 
     await connector.force_finish()
     connector.executor.disconnect.assert_called_once()
@@ -39,11 +40,12 @@ async def test_general_class_content(connector: DreadRemoteConnector):
     assert connector.is_disconnected() is True
     assert connector.is_disconnected() is False
 
-    await connector.current_game_status() == (False, None)
+    assert await connector.current_game_status() == (True, None)
 
 
 async def test_new_player_location(connector: DreadRemoteConnector):
-    connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
+    location_changed = MagicMock()
+    connector.PlayerLocationChanged.connect(location_changed)
 
     assert connector.inventory_index is None
     connector.inventory_index = 1
@@ -51,24 +53,24 @@ async def test_new_player_location(connector: DreadRemoteConnector):
 
     assert connector.current_region is None
     connector.new_player_location_received("s010_cave")
-    connector.PlayerLocationChanged.emit.assert_called_once()
     assert connector.current_region.name == "Artaria"
-    connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
-    await connector.current_game_status() == (False, connector.current_region)
+    location_changed.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
+    assert await connector.current_game_status() == (True, connector.current_region)
 
-    connector.PlayerLocationChanged = MagicMock(QtCore.SignalInstance)
+    location_changed.reset_mock()
     connector.new_player_location_received("MAINMENU")
     assert connector.inventory_index is None
-    connector.PlayerLocationChanged.emit.assert_called_once_with(PlayerLocationEvent(None, None))
+    location_changed.assert_called_once_with(PlayerLocationEvent(None, None))
 
 
 async def test_new_inventory_received(connector: DreadRemoteConnector):
-    connector.InventoryUpdated = MagicMock(QtCore.SignalInstance)
+    inventory_updated = MagicMock()
+    connector.InventoryUpdated.connect(inventory_updated)
 
     assert connector.last_inventory == Inventory.empty()
     connector.new_inventory_received("{}")
     assert connector.last_inventory == Inventory.empty()
-    connector.InventoryUpdated.emit.assert_not_called()
+    inventory_updated.assert_not_called()
 
     assert connector.inventory_index is None
     connector.new_inventory_received('{"index": 69, "inventory": [0,1,0]}')
@@ -86,7 +88,7 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
     assert connector.last_inventory.get(wave_beam) == InventoryItem(0, 0)
 
-    connector.InventoryUpdated.emit.assert_called_once()
+    inventory_updated.assert_called_once()
 
 
 async def test_new_received_pickups_received(connector: DreadRemoteConnector):
@@ -147,12 +149,12 @@ async def test_new_collected_locations_received_wrong_answer(connector: DreadRem
 
 
 async def test_new_collected_locations_received(connector: DreadRemoteConnector):
+    collected_mock = MagicMock()
+
     connector.logger = MagicMock()
-    connector.PickupIndexCollected = MagicMock()
+    connector.PickupIndexCollected.connect(collected_mock)
     new_indices = b"locations:1"
     connector.new_collected_locations_received(new_indices)
 
     connector.logger.warning.assert_not_called
-    connector.PickupIndexCollected.emit.assert_has_calls(
-        [call(PickupIndex(0)), call(PickupIndex(4)), call(PickupIndex(5))]
-    )
+    collected_mock.assert_has_calls([call(PickupIndex(0)), call(PickupIndex(4)), call(PickupIndex(5))])

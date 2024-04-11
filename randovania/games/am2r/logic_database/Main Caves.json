@@ -10071,17 +10071,34 @@
                     "event_name": "A0DrillCrystal",
                     "connections": {
                         "Horizontal Dock to Drill Excavation Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Use Any Bombs"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Tunnel Climb"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Tunnel Climb"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "SkipCutscenes",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }

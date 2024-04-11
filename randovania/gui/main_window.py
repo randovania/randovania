@@ -428,13 +428,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             return
 
         if permalink.seed_hash is not None and permalink.seed_hash != new_layout.shareable_hash_bytes:
+            expected = base64.b32encode(permalink.seed_hash).decode()
             response = await async_dialog.warning(
                 self,
                 "Unexpected hash",
-                "Expected has to be {}. got {}. Do you wish to continue?".format(
-                    base64.b32encode(permalink.seed_hash).decode(),
-                    new_layout.shareable_hash,
-                ),
+                f"Expected has to be {expected}. got {new_layout.shareable_hash}. Do you wish to continue?",
                 QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
             )
             if response != QtWidgets.QMessageBox.StandardButton.Yes:
@@ -820,13 +818,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if bad_files or extra_files:
             errors = []
             if bad_files:
-                errors.append(f"- {len(bad_files)} files are incorrect")
+                errors.append(f"* {len(bad_files)} files are incorrect")
 
             if missing_files:
-                errors.append(f"- {len(missing_files)} files are missing")
+                errors.append(f"* {len(missing_files)} files are missing")
 
             if extra_files:
-                errors.append(f"- {len(extra_files)} files are unexpected")
+                errors.append(f"* {len(extra_files)} files are unexpected")
 
             for m in bad_files:
                 logging.warning("Bad file: %s", m)
@@ -853,7 +851,9 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.changelog_window is None:
             from randovania.gui.widgets.changelog_widget import ChangeLogWidget
 
-            self.changelog_tab = ChangeLogWidget(self.all_change_logs)
+            tab = ChangeLogWidget(self.all_change_logs)
+            tab.start_fetching_data()
+            self.changelog_tab = tab
             self.changelog_window = self._create_generic_window(self.changelog_tab, "Change Log")
 
         self.changelog_window.show()

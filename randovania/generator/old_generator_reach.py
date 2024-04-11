@@ -103,10 +103,11 @@ class OldGeneratorReach(GeneratorReach):
         return reach
 
     def _potential_nodes_from(self, node: Node) -> Iterator[tuple[Node, RequirementSet]]:
-        extra_requirement = _extra_requirement_for_node(self._game, self.node_context(), node)
-        requirement_to_leave = node.requirement_to_leave(self._state.node_context())
+        context = self._state.node_context()
+        extra_requirement = _extra_requirement_for_node(self._game, context, node)
+        requirement_to_leave = node.requirement_to_leave(context)
 
-        for target_node, requirement in self._game.region_list.potential_nodes_from(node, self.node_context()):
+        for target_node, requirement in self._game.region_list.potential_nodes_from(node, context):
             if target_node is None:
                 continue
 
@@ -118,11 +119,7 @@ class OldGeneratorReach(GeneratorReach):
 
             yield (
                 target_node,
-                requirement.patch_requirements(
-                    self._state.resources,
-                    1.0,
-                    self._state.resource_database,
-                ).as_set(self._state.resource_database),
+                requirement.patch_requirements(1.0, context).as_set(context),
             )
 
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
@@ -139,7 +136,7 @@ class OldGeneratorReach(GeneratorReach):
             path.add_to_graph(self._digraph)
 
             for target_node, requirement in self._potential_nodes_from(path.node):
-                if requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database):
+                if requirement.satisfied(self._state.node_context(), self._state.energy):
                     # print("* Queue path to", self.game.region_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
@@ -201,7 +198,7 @@ class OldGeneratorReach(GeneratorReach):
             return _is_collected(target)
 
         self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
-            {self.state.node.node_index},
+            {self._state.node.node_index},
             weight=weight,
         )
 
@@ -281,7 +278,7 @@ class OldGeneratorReach(GeneratorReach):
         new_state: State,
         is_safe: bool = False,
     ) -> None:
-        assert new_state.previous_state == self.state
+        assert new_state.previous_state == self._state
         # assert self.is_reachable_node(new_state.node)
 
         if is_safe or self.is_safe_node(new_state.node):
@@ -303,7 +300,7 @@ class OldGeneratorReach(GeneratorReach):
         # Check if we can expand the corners of our graph
         # TODO: check if expensive. We filter by only nodes that depends on a new resource
         for edge, requirement in self._unreachable_paths.items():
-            if requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database):
+            if requirement.satisfied(self._state.node_context(), self._state.energy):
                 from_index, to_index = edge
                 paths_to_check.append(GraphPath(all_nodes[from_index], all_nodes[to_index], requirement))
                 edges_to_remove.append(edge)
@@ -316,16 +313,16 @@ class OldGeneratorReach(GeneratorReach):
     def act_on(self, node: ResourceNode) -> None:
         new_dangerous_resources = {
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.node_context())
+            for resource, quantity in node.resource_gain_on_collect(self._state.node_context())
             if resource in self.game.dangerous_resources
         }
-        new_state = self.state.act_on_node(node)
+        new_state = self._state.act_on_node(node)
 
         if new_dangerous_resources:
             edges_to_remove = []
             for source, target, requirement in self._digraph.edges_data():
                 if not new_dangerous_resources.isdisjoint(requirement.dangerous_resources):
-                    if not requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database):
+                    if not requirement.satisfied(new_state.node_context(), new_state.energy):
                         edges_to_remove.append((source, target))
 
             for edge in edges_to_remove:
@@ -336,13 +333,14 @@ class OldGeneratorReach(GeneratorReach):
     def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
         results: dict[Node, RequirementSet] = {}
         all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        context = self._state.node_context()
 
         for (_, node_index), requirement in self._unreachable_paths.items():
             node = all_nodes[node_index]
             if self.is_reachable_node(node):
                 continue
 
-            requirements = requirement.patch_requirements(self.state.resources, self.state.resource_database)
+            requirements = requirement.patch_requirements(context)
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
@@ -350,6 +348,4 @@ class OldGeneratorReach(GeneratorReach):
         return results
 
     def victory_condition_satisfied(self) -> bool:
-        return self.game.victory_condition.satisfied(
-            self.state.resources, self.state.energy, self.state.resource_database
-        )
+        return self.game.victory_condition.satisfied(self._state.node_context(), self._state.energy)

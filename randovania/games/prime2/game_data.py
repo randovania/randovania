@@ -60,6 +60,12 @@ def _exporter():
     return EchoesGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.prime2.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 # ruff: noqa: E501
 
 game_data: game.GameData = game.GameData(
@@ -111,6 +117,20 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door.",
         ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items including Temple Keys",
+            "Elevator destinations",
+            "Starting locations",
+            "Door locks",
+            "Translator gate requirements",
+        ],
+        need_to_play=[
+            "An ISO of any NTSC-U or PAL Gamecube release of the game",
+            "A modded Wii, or Dolphin Emulator",
+        ],
+    ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,

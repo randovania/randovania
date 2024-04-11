@@ -5,6 +5,7 @@ import dataclasses
 import logging
 import re
 import struct
+import typing
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
@@ -131,7 +132,7 @@ class DreadExecutor:
         self.version = "Unknown version"
 
     @property
-    def ip(self):
+    def ip(self) -> str:
         return self._ip
 
     @property
@@ -165,7 +166,7 @@ class DreadExecutor:
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
-            response = await self._read_response()
+            response = typing.cast(bytes, await self._read_response())
             (api_version, buffer_size, bootstrap, self.layout_uuid_str, self.version) = response.decode("ascii").split(
                 ","
             )
@@ -211,7 +212,7 @@ class DreadExecutor:
             self._socket_error = e
             return message
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         socket = self._socket
         self._socket = None
         if socket is not None:
@@ -222,21 +223,25 @@ class DreadExecutor:
         return self._socket is not None
 
     def _build_packet(self, type: PacketType, msg: bytes | None) -> bytes:
-        retBytes: bytearray = bytearray()
-        retBytes.append(type.value)
-        if type == PacketType.PACKET_REMOTE_LUA_EXEC:
-            retBytes.extend(len(msg).to_bytes(length=4, byteorder="little"))
-        if type in [PacketType.PACKET_REMOTE_LUA_EXEC, PacketType.PACKET_HANDSHAKE]:
-            retBytes.extend(msg)
+        retBytes: bytearray = bytearray(type.to_bytes())
+        if msg is not None:
+            if type == PacketType.PACKET_REMOTE_LUA_EXEC:
+                retBytes.extend(len(msg).to_bytes(length=4, byteorder="little"))
+            if type in [PacketType.PACKET_REMOTE_LUA_EXEC, PacketType.PACKET_HANDSHAKE]:
+                retBytes.extend(msg)
         return retBytes
 
     async def _read_response(self) -> bytes | None:
+        if self._socket is None:
+            return None
         packet_type: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
         if len(packet_type) == 0:
             raise OSError("missing packet type")
         return await self._parse_packet(packet_type[0])
 
     async def _parse_packet(self, packet_type: int) -> bytes | None:
+        if self._socket is None:
+            return None
         response = None
         match packet_type:
             case PacketType.PACKET_MALFORMED:
@@ -288,12 +293,17 @@ class DreadExecutor:
                     self.logger.debug(response.decode("utf-8"))
         return response
 
-    async def _check_header(self):
+    async def _check_header(self) -> None:
+        if self._socket is None:
+            return None
         received_number: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
         if received_number[0] != self._socket.request_number:
-            raise DreadLuaException(f"Expected response {self._socket.request_number}, got {received_number}")
+            num_as_string = received_number.decode("ascii")
+            raise DreadLuaException(f"Expected response {self._socket.request_number}, got {num_as_string}")
 
-    async def _send_keep_alive(self) -> bytes:
+    async def _send_keep_alive(self) -> None:
+        if self._socket is None:
+            return None
         while self.is_connected():
             try:
                 await asyncio.sleep(2)
@@ -305,12 +315,16 @@ class DreadExecutor:
                 )
                 self.disconnect()
 
-    async def run_lua_code(self, current: str):
+    async def run_lua_code(self, current: str) -> None:
+        if self._socket is None:
+            return
         self.code = current
         self._socket.writer.write(self._build_packet(PacketType.PACKET_REMOTE_LUA_EXEC, current.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
 
-    async def bootstrap(self):
+    async def bootstrap(self) -> None:
+        assert self._socket is not None, "Bootstrap code should only be send when connected to Dread."
+
         game = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
         all_code = get_bootstrapper_for(game)
 
@@ -334,7 +348,7 @@ class DreadExecutor:
         await self.run_lua_code(current)
         await self._read_response()
 
-    async def read_loop(self):
+    async def read_loop(self) -> None:
         while self.is_connected():
             try:
                 await self._read_response()

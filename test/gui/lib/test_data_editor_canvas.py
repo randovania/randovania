@@ -48,15 +48,18 @@ def test_mouseDoubleClickEvent_node(skip_qtbot, canvas):
 
     expected_node = canvas.area.node_with_name("Door to Charge Tutorial")
 
-    canvas.SelectNodeRequest = MagicMock()
-    canvas.SelectAreaRequest = MagicMock()
+    select_node = MagicMock()
+    select_area = MagicMock()
+
+    canvas.SelectNodeRequest.connect(select_node)
+    canvas.SelectAreaRequest.connect(select_area)
 
     # Run
     canvas.mouseDoubleClickEvent(event)
 
     # Assert
-    canvas.SelectNodeRequest.emit.assert_called_once_with(expected_node)
-    canvas.SelectAreaRequest.emit.assert_not_called()
+    select_node.assert_called_once_with(expected_node)
+    select_area.assert_not_called()
 
 
 def test_contextMenuEvent(skip_qtbot, canvas, mocker):

@@ -56,6 +56,12 @@ def _exporter() -> GameExporter:
     return BlankGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.blank.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Blank",
     long_name="Blank Development Game",
@@ -64,6 +70,17 @@ game_data: game.GameData = game.GameData(
         {"path": "starter_preset.rdvpreset"},
     ],
     faq=[],
+    web_info=game.GameWebInfo(
+        what_can_randomize=(
+            "Everything",
+            "Nothing",
+        ),
+        need_to_play=(
+            "A Nintendo Virtual Boy",
+            "Your original Virtual Boy Game Cartridge",
+        ),
+    ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.BlankConfiguration,
         cosmetic_patches=layout.BlankCosmeticPatches,

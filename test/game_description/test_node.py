@@ -46,8 +46,8 @@ def test_logbook_node_requirements_to_leave(logbook_node, empty_patches):
     rc2 = ResourceCollection.from_resource_gain(db, [])
     rc3 = ResourceCollection.from_resource_gain(db, [(translator, 1)])
 
-    assert to_leave.satisfied(rc2, 99, None) != has_translator
-    assert to_leave.satisfied(rc3, 99, None)
+    assert to_leave.satisfied(ctx(rc2), 99) != has_translator
+    assert to_leave.satisfied(ctx(rc3), 99)
 
 
 def test_logbook_node_can_collect(logbook_node, empty_patches):

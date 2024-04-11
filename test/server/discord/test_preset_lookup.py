@@ -180,7 +180,7 @@ async def test_reply_for_preset(mocker):
     await preset_lookup.reply_for_preset(message, versioned_preset)
 
     # Assert
-    mock_embed.assert_called_once_with(title=preset.name, description=preset.description)
+    mock_embed.assert_called_once_with(title=preset.name, description=f"{preset.game.long_name}\n{preset.description}")
     embed.add_field.assert_has_calls(
         [
             call(name="General", value="Foo\nBar", inline=True),

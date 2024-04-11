@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import typing
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -96,6 +95,15 @@ class GameGenerator:
     """Use AllJokesDistributor if not using hints."""
 
 
+@dataclass(frozen=True)
+class GameWebInfo:
+    what_can_randomize: Iterable[str] = ()
+    """What can be randomized?"""
+
+    need_to_play: Iterable[str] = ()
+    """What do you need to play?"""
+
+
 class DevelopmentState(Enum):
     STABLE = "stable"
     EXPERIMENTAL = "experimental"
@@ -135,6 +143,9 @@ class GameData:
     layout: GameLayout
     """Contains game-specific settings available for presets."""
 
+    hash_words: list[str]
+    """Contains a list of hash words, which are used as a human readable way to identify generated games"""
+
     options: Callable[[], type[PerGameOptions]]
     """Contains game-specific persisted values."""
 
@@ -158,6 +169,9 @@ class GameData:
 
     multiple_start_nodes_per_area: bool = False
     """If this game allows multiple start nodes per area."""
+
+    web_info: GameWebInfo = GameWebInfo()
+    """Contains a handful of fields displayed primarily on the website."""
 
 
 class RandovaniaGame(BitPackEnum, Enum):
@@ -203,12 +217,8 @@ class RandovaniaGame(BitPackEnum, Enum):
         return randovania.get_file_path().joinpath("games", self.value)
 
     @cached_property
-    def hash_words(self) -> list[str] | None:
-        hash_file = self.data_path.joinpath("assets", "hash_words.json")
-        if hash_file.exists():
-            with hash_file.open() as words:
-                return json.load(words)
-        return None
+    def hash_words(self) -> list[str]:
+        return self.data.hash_words
 
     @property
     def short_name(self) -> str:

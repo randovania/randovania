@@ -4,7 +4,7 @@ import typing
 
 from randovania.games import game
 from randovania.games.fusion import layout
-from randovania.layout.preset_describer import GamePresetDescriber
+from randovania.games.fusion.layout.preset_describer import FusionPresetDescriber
 
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -27,19 +27,19 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.FusionCosmeticPatchesDialog,
         export_dialog=gui.FusionGameExportDialog,
         progressive_item_gui_tuples=(),
-        spoiler_visualizer=(),
+        spoiler_visualizer=(gui.FusionHintDetailsTab,),
     )
 
 
 def _generator() -> game.GameGenerator:
     from randovania.games.fusion import generator
-    from randovania.generator.hint_distributor import AllJokesHintDistributor
+    from randovania.games.fusion.generator.hint_distributor import FusionHintDistributor
 
     return game.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
-        hint_distributor=AllJokesHintDistributor(),
+        hint_distributor=FusionHintDistributor(),
     )
 
 
@@ -53,6 +53,12 @@ def _exporter() -> GameExporter:
     from randovania.games.fusion.exporter.game_exporter import FusionGameExporter
 
     return FusionGameExporter()
+
+
+def _hash_words() -> list[str]:
+    from randovania.games.fusion.hash_words import HASH_WORDS
+
+    return HASH_WORDS
 
 
 game_data: game.GameData = game.GameData(
@@ -80,10 +86,11 @@ game_data: game.GameData = game.GameData(
             "Please note that this is never logical.",
         ),
     ],
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.FusionConfiguration,
         cosmetic_patches=layout.FusionCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=FusionPresetDescriber(),
     ),
     options=_options,
     gui=_gui,

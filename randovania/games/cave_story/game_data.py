@@ -55,6 +55,12 @@ def _exporter():
     return CSGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.cave_story.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="CS",
     long_name="Cave Story",
@@ -65,6 +71,16 @@ game_data: game.GameData = game.GameData(
         {"path": "classic.rdvpreset"},
     ],
     faq=[],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items",
+            "Starting locations",
+        ],
+        need_to_play=[
+            "Windows, Linux, or Wine. The game is included with Randovania",
+        ],
+    ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=CSConfiguration,
         cosmetic_patches=CSCosmeticPatches,

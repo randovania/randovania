@@ -22,8 +22,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 NodeType = typing.TypeVar("NodeType", bound=Node)
 
@@ -185,25 +183,23 @@ class RegionList(NodeProvider):
 
     def patch_requirements(
         self,
-        static_resources: ResourceCollection,
         damage_multiplier: float,
-        database: ResourceDatabase,
+        context: NodeContext,
         dock_weakness_database: DockWeaknessDatabase,
     ) -> None:
         """
         Patches all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
         All damage requirements are multiplied by the given multiplier.
-        :param static_resources:
         :param damage_multiplier:
-        :param database:
+        :param context:
         :param dock_weakness_database
         :return:
         """
         # Area Connections
         self._patched_node_connections = {
             node.node_index: {
-                target.node_index: value.patch_requirements(static_resources, damage_multiplier, database).simplify()
+                target.node_index: value.patch_requirements(damage_multiplier, context).simplify()
                 for target, value in area.connections[node].items()
             }
             for _, area, node in self.all_regions_areas_nodes
@@ -226,15 +222,13 @@ class RegionList(NodeProvider):
         for weakness in sorted(dock_weakness_database.all_weaknesses, key=operator.attrgetter("weakness_index")):
             assert len(self._patches_dock_open_requirements) == weakness.weakness_index
             self._patches_dock_open_requirements.append(
-                weakness.requirement.patch_requirements(static_resources, damage_multiplier, database).simplify()
+                weakness.requirement.patch_requirements(damage_multiplier, context).simplify()
             )
             if weakness.lock is None:
                 self._patches_dock_lock_requirements.append(None)
             else:
                 self._patches_dock_lock_requirements.append(
-                    weakness.lock.requirement.patch_requirements(
-                        static_resources, damage_multiplier, database
-                    ).simplify()
+                    weakness.lock.requirement.patch_requirements(damage_multiplier, context).simplify()
                 )
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:

@@ -4,7 +4,7 @@
         "area_id": 6
     },
     "areas": {
-        "Entrance Hub": {
+        "Entrance Lobby": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 60",
@@ -66,7 +66,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Entrance Recharge Room",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -81,7 +81,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Connection to Sector 4 (AQA)": {
+                        "Door to Glass Tube to Sector 4 (AQA)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -126,7 +126,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Geron's Crossing",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -165,7 +165,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Geron's Crossing",
-                        "node": "Other to Entrance Hub"
+                        "node": "Other to Entrance Lobby"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -182,7 +182,7 @@
                         }
                     }
                 },
-                "Door to Connection to Sector 4 (AQA)": {
+                "Door to Glass Tube to Sector 4 (AQA)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -203,8 +203,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Connection to Sector 4 (AQA)",
-                        "node": "Door to Entrance Hub"
+                        "area": "Glass Tube to Sector 4 (AQA)",
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -568,7 +568,7 @@
                 ]
             },
             "nodes": {
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -589,7 +589,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Geron's Crossing"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -679,7 +679,7 @@
                                 ]
                             }
                         },
-                        "Other to Entrance Hub": {
+                        "Other to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -696,7 +696,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Store a Shinespark using Entrance Hub Room",
+                                                        "comment": "Store a Shinespark using Entrance Lobby Room",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -822,7 +822,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -940,7 +940,7 @@
                         }
                     }
                 },
-                "Other to Entrance Hub": {
+                "Other to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -961,7 +961,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Other to Geron's Crossing"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -970,7 +970,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1179,7 +1179,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Missile Access": {
+                        "Door to Mimic Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1200,7 +1200,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Connection to Sector 5 (ARC)": {
+                        "Door to Glass Tube to Sector 5 (ARC)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1219,7 +1219,7 @@
                         }
                     }
                 },
-                "Door to Missile Access": {
+                "Door to Mimic Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1240,7 +1240,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Missile Access",
+                        "area": "Mimic Access",
                         "node": "Door to Nocturnal Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1513,6 +1513,15 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1572,7 +1581,7 @@
                         }
                     }
                 },
-                "Door to Connection to Sector 5 (ARC)": {
+                "Door to Glass Tube to Sector 5 (ARC)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1593,7 +1602,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Connection to Sector 5 (ARC)",
+                        "area": "Glass Tube to Sector 5 (ARC)",
                         "node": "Door to Nocturnal Shaft"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -1654,7 +1663,7 @@
                         "Door to Forbidden Entrance": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1702,7 +1711,7 @@
                 }
             }
         },
-        "Missile Access": {
+        "Mimic Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 66",
@@ -1733,7 +1742,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Nocturnal Shaft",
-                        "node": "Door to Missile Access"
+                        "node": "Door to Mimic Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -1741,7 +1750,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Missile Storage": {
+                        "Door to Mimic Storage": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1830,7 +1839,7 @@
                         }
                     }
                 },
-                "Door to Missile Storage": {
+                "Door to Mimic Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1851,8 +1860,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Missile Storage",
-                        "node": "Door to Missile Access"
+                        "area": "Mimic Storage",
+                        "node": "Door to Mimic Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2487,7 +2496,7 @@
                         "Door to Nocturnal Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Likely needs to have Varia/Movement requirements since this has potential Blue-X in the way.",
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -2567,7 +2576,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            17
+                            17,
+                            72
                         ]
                     },
                     "valid_starting_location": false,
@@ -2583,10 +2593,10 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Menu Corridor": {
+                        "Door to Cavern Save Access": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2625,7 +2635,8 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            18
+                            18,
+                            73
                         ]
                     },
                     "valid_starting_location": false,
@@ -2641,7 +2652,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Menu Corridor": {
+                        "Door to Cavern Save Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2650,7 +2661,7 @@
                         }
                     }
                 },
-                "Door to Menu Corridor": {
+                "Door to Cavern Save Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2664,14 +2675,15 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            46
+                            46,
+                            74
                         ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Menu Corridor",
+                        "area": "Cavern Save Access",
                         "node": "Door to Clogged Cavern"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5797,7 +5809,7 @@
                 }
             }
         },
-        "Menu Save Room": {
+        "Cavern Save Room": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 623",
@@ -5806,7 +5818,7 @@
                 ]
             },
             "nodes": {
-                "Door to Menu Corridor": {
+                "Door to Cavern Save Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5827,8 +5839,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Menu Corridor",
-                        "node": "Door to Menu Save Room"
+                        "area": "Cavern Save Access",
+                        "node": "Door to Cavern Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5863,7 +5875,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Door to Menu Corridor": {
+                        "Door to Cavern Save Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5874,7 +5886,7 @@
                 }
             }
         },
-        "Missile Storage": {
+        "Mimic Storage": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 624",
@@ -5905,7 +5917,7 @@
                     "pickup_index": 92,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Missile Access": {
+                        "Door to Mimic Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5919,7 +5931,7 @@
                         }
                     }
                 },
-                "Door to Missile Access": {
+                "Door to Mimic Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5940,8 +5952,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Missile Access",
-                        "node": "Door to Missile Storage"
+                        "area": "Mimic Access",
+                        "node": "Door to Mimic Storage"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6298,19 +6310,91 @@
                         "Door to Shell Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Add jump extend and single wall jump template options after confirmation. 98% sure this is doable. -Herc.",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Possible with Single Wall Jumping Physics going up the left side.",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Screw Single Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Possible without Single Wall Jumping physics by jumping off both walls. Height gain per jump is small.",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6438,7 +6522,7 @@
                 ]
             },
             "nodes": {
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6459,7 +6543,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Entrance Recharge Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6531,7 +6615,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7489,7 +7573,7 @@
                 }
             }
         },
-        "Connection to Sector 4 (AQA)": {
+        "Glass Tube to Sector 4 (AQA)": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 636",
@@ -7498,7 +7582,7 @@
                 ]
             },
             "nodes": {
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7519,8 +7603,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Entrance Hub",
-                        "node": "Door to Connection to Sector 4 (AQA)"
+                        "area": "Entrance Lobby",
+                        "node": "Door to Glass Tube to Sector 4 (AQA)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7558,7 +7642,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 4 (AQA)",
-                        "area": "Connection to Sector 6 (NOC)",
+                        "area": "Glass Tube to Sector 6 (NOC)",
                         "node": "Area Transition to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -7567,7 +7651,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7578,7 +7662,7 @@
                 }
             }
         },
-        "Connection to Sector 5 (ARC)": {
+        "Glass Tube to Sector 5 (ARC)": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 637",
@@ -7609,7 +7693,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Nocturnal Shaft",
-                        "node": "Door to Connection to Sector 5 (ARC)"
+                        "node": "Door to Glass Tube to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -7647,7 +7731,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Connection to Sector 6 (NOC)",
+                        "area": "Glass Tube to Sector 6 (NOC)",
                         "node": "Area Transition to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -8099,7 +8183,7 @@
                 }
             }
         },
-        "Menu Corridor": {
+        "Cavern Save Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 640",
@@ -8130,7 +8214,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Clogged Cavern",
-                        "node": "Door to Menu Corridor"
+                        "node": "Door to Cavern Save Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -8138,7 +8222,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Menu Save Room": {
+                        "Door to Cavern Save Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8147,7 +8231,7 @@
                         }
                     }
                 },
-                "Door to Menu Save Room": {
+                "Door to Cavern Save Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8168,8 +8252,8 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Menu Save Room",
-                        "node": "Door to Menu Corridor"
+                        "area": "Cavern Save Room",
+                        "node": "Door to Cavern Save Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,

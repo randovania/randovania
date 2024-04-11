@@ -1052,6 +1052,21 @@ def _migrate_v73(preset: dict) -> dict:
 
 
 def _migrate_v74(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        difficulty_levels = ["beginner", "intermediate", "advanced", "expert", "hypermode"]
+
+        floor_clips = [
+            difficulty_levels.index(v)
+            for k, v in preset["configuration"]["trick_level"]["specific_levels"].items()
+            if k in ["ADC", "SSC"]
+        ]
+
+        if floor_clips:
+            preset["configuration"]["trick_level"]["specific_levels"]["FloorClip"] = difficulty_levels[min(floor_clips)]
+    return preset
+
+
+def _migrate_v75(preset: dict) -> dict:
     if preset["game"] == "prime1":
         state = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
         item_list = [("Health Refill", 20), ("Missile Refill", 5), ("Power Bomb Refill", 1)]
@@ -1135,6 +1150,7 @@ _MIGRATIONS = [
     _migrate_v72,
     _migrate_v73,
     _migrate_v74,
+    _migrate_v75,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

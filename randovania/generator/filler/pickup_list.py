@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 import itertools
 from typing import TYPE_CHECKING
 
@@ -36,7 +37,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
         )
     )
     return game_description.calculate_interesting_resources(
-        satisfiable_requirements, reach.state.resources, reach.state.energy, reach.state.resource_database
+        satisfiable_requirements, reach.state.node_context(), reach.state.energy
     )
 
 
@@ -45,13 +46,14 @@ def _unsatisfied_item_requirements_in_list(
 ) -> Iterator[list[ResourceRequirement]]:
     items = []
     damage = []
+    context = state.node_context()
 
     for individual in alternative.values():
         if individual.resource.resource_type == ResourceType.DAMAGE:
             damage.append(individual)
             continue
 
-        if individual.satisfied(state.resources, state.energy, state.resource_database):
+        if individual.satisfied(context, state.energy):
             continue
 
         if individual.negate or (
@@ -65,7 +67,7 @@ def _unsatisfied_item_requirements_in_list(
 
         items.append(individual)
 
-    sum_damage = sum(req.damage(state.resources, state.resource_database) for req in damage)
+    sum_damage = sum(req.damage(context) for req in damage)
     if state.energy <= sum_damage:
         # A requirement for many "Energy Tanks" is added,
         # which is then decreased by how many tanks is in the state by pickups_to_solve_list
@@ -115,31 +117,33 @@ def pickups_to_solve_list(
     pickups = []
 
     db = state.resource_database
-    resources = state.resources.duplicate()
+    context = dataclasses.replace(state.node_context(), current_resources=state.resources.duplicate())
     pickups_for_this = list(pickup_pool)
 
     # Check pickups that give less items in total first
     # This means we test for expansions before the standard pickups, in case both give the same resource
     # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
-    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True)))
+    pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(context.current_resources, force_lock=True)))
 
     for individual in sorted(requirement_list.values()):
-        if individual.satisfied(resources, state.energy, state.resource_database):
+        if individual.satisfied(context, state.energy):
             continue
 
         # Create another copy of the list, so we can remove elements while iterating
         for pickup in list(pickups_for_this):
-            new_resources = ResourceCollection.from_resource_gain(db, pickup.resource_gain(resources, force_lock=True))
+            new_resources = ResourceCollection.from_resource_gain(
+                db, pickup.resource_gain(context.current_resources, force_lock=True)
+            )
             pickup_progression = ResourceCollection.from_resource_gain(db, pickup.progression)
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
-                resources.add_resource_gain(new_resources.as_resource_gain())
+                context.current_resources.add_resource_gain(new_resources.as_resource_gain())
 
-            if individual.satisfied(resources, state.energy, state.resource_database):
+            if individual.satisfied(context, state.energy):
                 break
 
-        if not individual.satisfied(resources, state.energy, state.resource_database):
+        if not individual.satisfied(context, state.energy):
             return None
 
     return pickups
@@ -157,8 +161,8 @@ def get_pickups_that_solves_unreachable(
     """
     state = reach.state
     possible_sets = [v for v in reach.unreachable_nodes_with_requirements().values() if v.alternatives]
-    possible_sets.append(reach.game.victory_condition.as_set(reach.game.resource_database))
     context = reach.node_context()
+    possible_sets.append(reach.game.victory_condition.as_set(context))
 
     uncollected_resources = set()
     for node in uncollected_resource_nodes:

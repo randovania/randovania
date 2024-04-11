@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import dataclasses
 from typing import TYPE_CHECKING
+from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description.db.node import NodeContext
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.pickup.pickup_entry import ResourceLock
 from randovania.game_description.requirements.requirement_list import RequirementList
@@ -111,10 +113,13 @@ def test_resources_for_unsatisfied_damage_as_interesting(echoes_resource_databas
         100,
         False,
     )
-
-    interesting_resources = calculate_interesting_resources(
-        frozenset([RequirementList([req])]), ResourceCollection(), 99, db
+    context = NodeContext(
+        MagicMock(),
+        ResourceCollection(),
+        db,
+        MagicMock(),
     )
+    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
     d_suit = db.get_item_by_name("Dark Suit")
     l_suit = db.get_item_by_name("Light Suit")
     e_tank = db.get_item_by_name("Energy Tank")
@@ -132,9 +137,13 @@ def test_resources_for_satisfied_damage_as_interesting(echoes_resource_database)
         False,
     )
 
-    interesting_resources = calculate_interesting_resources(
-        frozenset([RequirementList([req])]), ResourceCollection(), 99, db
+    context = NodeContext(
+        MagicMock(),
+        ResourceCollection(),
+        db,
+        MagicMock(),
     )
+    interesting_resources = calculate_interesting_resources(frozenset([RequirementList([req])]), context, 99)
     d_suit = db.get_item_by_name("Dark Suit")
     l_suit = db.get_item_by_name("Light Suit")
     e_tank = db.get_item_by_name("Energy Tank")

@@ -404,7 +404,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         return spoiler
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         db = self.game
 
         useless_target = PickupTarget(

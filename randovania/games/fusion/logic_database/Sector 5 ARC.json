@@ -4,7 +4,7 @@
         "area_id": 5
     },
     "areas": {
-        "Entrance Hub": {
+        "Entrance Lobby": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 50",
@@ -35,7 +35,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Entrance Recharge Room",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -74,7 +74,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Magic Box",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L3 Hatch",
                     "exclude_from_dock_rando": false,
@@ -162,7 +162,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Training Grounds",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -220,7 +220,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Gerubus Gully",
-                        "node": "Door to Entrance Hub"
+                        "node": "Door to Entrance Lobby"
                     },
                     "default_dock_weakness": "L3 Hatch",
                     "exclude_from_dock_rando": false,
@@ -518,8 +518,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            7,
-                            11
+                            7
                         ]
                     },
                     "valid_starting_location": false,
@@ -542,7 +541,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -552,12 +551,29 @@
                                         "data": "Can Climb High Jump Wall"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Needs to check if DLR in case it becomes an open hatch, making this impossible",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -565,7 +581,7 @@
                         }
                     }
                 },
-                "Door to Aerie": {
+                "Door to Training Aerie": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -579,15 +595,14 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            8,
-                            12
+                            8
                         ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Aerie",
+                        "area": "Training Aerie",
                         "node": "Door to Nightmare Training Grounds"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -596,7 +611,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -619,8 +634,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            9,
-                            13
+                            9
                         ]
                     },
                     "valid_starting_location": false,
@@ -645,7 +659,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -659,15 +673,14 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            78,
-                            80
+                            78
                         ]
                     },
                     "valid_starting_location": false,
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Nightmare Training Grounds"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -683,7 +696,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Aerie": {
+                        "Door to Training Aerie": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -750,7 +763,7 @@
                 }
             }
         },
-        "Aerie": {
+        "Training Aerie": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 54",
@@ -843,7 +856,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Nightmare Training Grounds",
-                        "node": "Door to Aerie"
+                        "node": "Door to Training Aerie"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -854,7 +867,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -863,15 +876,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -921,8 +925,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            14,
-                            27
+                            14
                         ]
                     },
                     "valid_starting_location": false,
@@ -988,8 +991,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            15,
-                            28
+                            15
                         ]
                     },
                     "valid_starting_location": false,
@@ -1070,6 +1072,27 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Needed for charging in previous room",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill PB Geron"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1090,8 +1113,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            16,
-                            29
+                            16
                         ]
                     },
                     "valid_starting_location": false,
@@ -1152,8 +1174,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            30,
-                            31
+                            30
                         ]
                     },
                     "valid_starting_location": false,
@@ -1301,8 +1322,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            56,
-                            57
+                            56
                         ]
                     },
                     "valid_starting_location": false,
@@ -1346,8 +1366,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            99,
-                            70
+                            99
                         ]
                     },
                     "valid_starting_location": false,
@@ -1446,7 +1465,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            53
+                            27
                         ]
                     },
                     "valid_starting_location": false,
@@ -1730,7 +1749,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: High Jump should also be efficient to climb the room. Test before adding additional option requirement.",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1744,6 +1763,10 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Use Any Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Climb High Jump Wall"
                                                 }
                                             ]
                                         }
@@ -2039,7 +2062,7 @@
                 }
             }
         },
-        "Energy Tank Storage": {
+        "Mimic Storage": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 512",
@@ -2106,7 +2129,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Frozen Tower",
-                        "node": "Door to Energy Tank Storage"
+                        "node": "Door to Mimic Storage"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -2148,7 +2171,7 @@
                 ]
             },
             "nodes": {
-                "Door to Energy Tank Storage": {
+                "Door to Mimic Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2169,7 +2192,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Energy Tank Storage",
+                        "area": "Mimic Storage",
                         "node": "Door to Frozen Tower"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -2244,7 +2267,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Energy Tank Storage": {
+                        "Door to Mimic Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2290,7 +2313,7 @@
                                 ]
                             }
                         },
-                        "Other to Transformation Trial": {
+                        "Other to Transmutation Trial": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: varia / damage runs",
@@ -2321,7 +2344,7 @@
                         }
                     }
                 },
-                "Other to Transformation Trial": {
+                "Other to Transmutation Trial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2342,7 +2365,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Transformation Trial",
+                        "area": "Transmutation Trial",
                         "node": "Other to Frozen Tower"
                     },
                     "default_dock_weakness": "Tunnel",
@@ -2727,7 +2750,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            89
+                            28
                         ]
                     },
                     "valid_starting_location": false,
@@ -4780,7 +4803,7 @@
                         "area": "Arctic Containment",
                         "node": "Door to Ripper Road"
                     },
-                    "default_dock_weakness": "L0 Hatch",
+                    "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4907,7 +4930,7 @@
                         "Door to Nightmare Hub West": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4932,15 +4955,6 @@
                                         "data": {
                                             "type": "misc",
                                             "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -4983,7 +4997,7 @@
                         "Door to Nightmare Arena": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5008,15 +5022,6 @@
                                         "data": {
                                             "type": "misc",
                                             "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -5271,7 +5276,7 @@
                     "pickup_index": 81,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5280,7 +5285,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5301,7 +5306,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Magic Box"
                     },
                     "default_dock_weakness": "L3 Hatch",
@@ -5317,7 +5322,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Connection to Sector 6 (NOC)": {
+                        "Door to Glass Tube to Sector 6 (NOC)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5336,7 +5341,7 @@
                         }
                     }
                 },
-                "Door to Connection to Sector 6 (NOC)": {
+                "Door to Glass Tube to Sector 6 (NOC)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5357,7 +5362,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Connection to Sector 6 (NOC)",
+                        "area": "Glass Tube to Sector 6 (NOC)",
                         "node": "Door to Magic Box"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5366,7 +5371,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5387,7 +5392,7 @@
                 }
             }
         },
-        "Connection to Sector 6 (NOC)": {
+        "Glass Tube to Sector 6 (NOC)": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 531",
@@ -5417,7 +5422,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
-                        "area": "Connection to Sector 5 (ARC)",
+                        "area": "Glass Tube to Sector 5 (ARC)",
                         "node": "Area Transition to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -5457,7 +5462,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Magic Box",
-                        "node": "Door to Connection to Sector 6 (NOC)"
+                        "node": "Door to Glass Tube to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -5524,7 +5529,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5545,7 +5550,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Entrance Recharge Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5585,7 +5590,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5627,7 +5632,7 @@
                     "pickup_index": 82,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5666,7 +5671,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance Hub": {
+                        "Door to Entrance Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5675,7 +5680,7 @@
                         }
                     }
                 },
-                "Door to Entrance Hub": {
+                "Door to Entrance Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5696,7 +5701,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Entrance Hub",
+                        "area": "Entrance Lobby",
                         "node": "Door to Gerubus Gully"
                     },
                     "default_dock_weakness": "L3 Hatch",
@@ -6143,7 +6148,7 @@
                     "pickup_index": 84,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Connection to Sector 3 (PYR)": {
+                        "Door to Glass Tube to Sector 3 (PYR)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6152,7 +6157,7 @@
                         }
                     }
                 },
-                "Door to Connection to Sector 3 (PYR)": {
+                "Door to Glass Tube to Sector 3 (PYR)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6173,7 +6178,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
-                        "area": "Connection to Sector 3 (PYR)",
+                        "area": "Glass Tube to Sector 3 (PYR)",
                         "node": "Door to Crow's Nest"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -6395,7 +6400,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Connection to Sector 3 (PYR)": {
+                        "Door to Glass Tube to Sector 3 (PYR)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6466,7 +6471,7 @@
                 }
             }
         },
-        "Connection to Sector 3 (PYR)": {
+        "Glass Tube to Sector 3 (PYR)": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 537",
@@ -6497,7 +6502,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Crow's Nest",
-                        "node": "Door to Connection to Sector 3 (PYR)"
+                        "node": "Door to Glass Tube to Sector 3 (PYR)"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -6535,7 +6540,7 @@
                     "dock_type": "area_transition",
                     "default_connection": {
                         "region": "Sector 3 (PYR)",
-                        "area": "Connection to Sector 5 (ARC)",
+                        "area": "Glass Tube to Sector 5 (ARC)",
                         "node": "Area Transition to Sector 5 (ARC)"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -6992,7 +6997,7 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": "Need to charge spark in other room",
+                                "comment": "Need to charge spark in other room, This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -7006,15 +7011,6 @@
                                     {
                                         "type": "template",
                                         "data": "Can Freeze Enemies"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -8200,7 +8196,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8218,59 +8214,6 @@
                                             "name": "SpeedBooster",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Area Transition to Sector 4 (AQA)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
                                         }
                                     },
                                     {
@@ -8288,35 +8231,73 @@
                                             "comment": "Some way to kill the pirates",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 10,
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Area Transition to Sector 4 (AQA)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "This can safely not have Door Lock Rando check",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "GravitySuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Some way to kill the pirates",
+                                            "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Use Power Bombs"
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8359,7 +8340,7 @@
                         "Door to Zebesian Waters": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "This can safely not have Door Lock Rando check",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8383,15 +8364,6 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
                                             "name": "EntranceRando",
                                             "amount": 1,
                                             "negate": true
@@ -8404,7 +8376,7 @@
                 }
             }
         },
-        "Transformation Trial": {
+        "Transmutation Trial": {
             "default_node": null,
             "extra": {
                 "map_name": "Sector 551",
@@ -8476,7 +8448,7 @@
                     "default_connection": {
                         "region": "Sector 5 (ARC)",
                         "area": "Frozen Tower",
-                        "node": "Other to Transformation Trial"
+                        "node": "Other to Transmutation Trial"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,

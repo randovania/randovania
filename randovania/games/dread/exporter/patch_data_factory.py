@@ -466,7 +466,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             }
         ]
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         starting_location = self._start_point_ref_for(starting_location_node)
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
