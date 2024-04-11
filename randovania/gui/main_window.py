@@ -101,6 +101,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     GameDetailsSignal = Signal(LayoutWithPlayers)
     RequestOpenLayoutSignal = Signal(Path)
     InitPostShowSignal = Signal()
+    InitPostShowCompleteSignal = Signal()
 
     @property
     def _tab_widget(self):
@@ -408,6 +409,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         logging.info("Will update for modified options")
         with self._options:
             self.on_options_changed()
+
+        self.InitPostShowCompleteSignal.emit()
 
     # Generate Seed
     async def generate_seed_from_permalink(self, permalink: Permalink):
