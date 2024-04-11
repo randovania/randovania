@@ -1069,7 +1069,7 @@ def _migrate_v74(preset: dict) -> dict:
 def _migrate_v75(preset: dict) -> dict:
     if preset["game"] == "prime1":
         state = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
-        item_list = [("Health Refill", 20), ("Missile Refill", 5), ("Power Bomb Refill", 1)]
+        item_list = [("Energy Refill", 20), ("Missile Refill", 5), ("Power Bomb Refill", 1)]
         for item_name, count in item_list:
             state[item_name] = {"ammo_count": [count], "pickup_count": 0, "requires_main_item": False}
     return preset
