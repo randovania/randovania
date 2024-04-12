@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import functools
 from typing import TYPE_CHECKING
 
 from typing_extensions import TypeVar
@@ -29,6 +30,7 @@ if TYPE_CHECKING:
 
 class StartingLocationList(location_list.LocationList):
     @classmethod
+    @functools.cache
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         return location_list.node_locations_with_filter(game, lambda node: node.valid_starting_location)
 

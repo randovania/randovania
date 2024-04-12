@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import functools
 from enum import Enum
 from typing import TYPE_CHECKING
 
@@ -84,6 +85,7 @@ def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame) -> bo
 
 class TeleporterTargetList(location_list.LocationList):
     @classmethod
+    @functools.cache
     def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         return location_list.node_and_area_with_filter(
             game, lambda area, node: _valid_teleporter_target(area, node, game)
