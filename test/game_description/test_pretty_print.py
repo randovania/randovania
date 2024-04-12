@@ -24,7 +24,7 @@ def test_committed_human_readable_description(game: RandovaniaGame, tmp_path):
     assert new_files == existing_files
 
 
-@patch("randovania.game_description.pretty_print.pretty_print_requirement")
+@patch("randovania.game_description.pretty_print.pretty_format_requirement")
 def test_pretty_print_requirement_array_one_item(mock_print_requirement: MagicMock):
     mock_print_requirement.return_value = ["a", "b"]
 
