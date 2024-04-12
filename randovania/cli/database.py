@@ -417,7 +417,7 @@ def _find_tricks_usage_documentation(requirement: Requirement) -> typing.Iterato
 
 
 def _flat_trick_usage(requirement: Requirement) -> dict[str, bool]:
-    doc = {}
+    doc: dict[str, bool] = {}
     for usage, documented in sorted(set(_find_tricks_usage_documentation(requirement))):
         doc[usage] = documented and doc.get(usage, True)
     return doc
