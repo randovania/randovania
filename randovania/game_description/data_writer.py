@@ -322,15 +322,15 @@ def write_area(area: Area) -> dict:
     errors = []
 
     nodes = {}
-    for node in area.nodes:
+    for node, node_connections in area.connections.items():
         if node.is_derived_node:
             continue
         try:
             data = write_node(node)
             data["connections"] = {
-                target_node.name: write_requirement(area.connections[node][target_node])
-                for target_node in area.nodes
-                if not target_node.is_derived_node and target_node in area.connections[node]
+                target_node.name: write_requirement(requirement)
+                for target_node, requirement in node_connections.items()
+                if not target_node.is_derived_node
             }
             nodes[node.name] = data
         except ValueError as e:
