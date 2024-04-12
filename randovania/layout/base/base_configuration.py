@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import functools
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
@@ -17,12 +18,14 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
 from randovania.layout.lib import location_list
 
 if TYPE_CHECKING:
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.games.game import RandovaniaGame
 
 
 class StartingLocationList(location_list.LocationList):
     @classmethod
-    def nodes_list(cls, game: RandovaniaGame):
+    @functools.cache
+    def nodes_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         return location_list.node_locations_with_filter(game, lambda node: node.valid_starting_location)
 
 

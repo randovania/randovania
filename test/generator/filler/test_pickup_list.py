@@ -224,6 +224,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
     small_echoes_game_description, echoes_pickup_database, default_echoes_preset, mocker, has_light_beam
 ):
     # Setup
+    StartingLocationList.nodes_list.cache_clear()
     mocker.patch(
         "randovania.game_description.default_database.game_description_for", return_value=small_echoes_game_description
     )
@@ -269,6 +270,9 @@ async def test_get_pickups_that_solves_unreachable_quad(
     bomb = "Morph Ball Bomb"
     tanks = ["Energy Tank"] * 8
     missiles = ["Missile Expansion"] * 12
+
+    # Clear after
+    StartingLocationList.nodes_list.cache_clear()
 
     if has_light_beam:
         assert r2 == [

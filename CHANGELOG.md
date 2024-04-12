@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.0.0] - 2024-05-??
 
 - **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
+- Changed: Importing multiple permalinks is now slightly faster.
 
 ## [7.6.0] - 2024-05-??
 
