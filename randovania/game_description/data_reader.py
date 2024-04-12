@@ -523,7 +523,7 @@ def decode_data(data: dict) -> GameDescription:
 
 
 def read_split_file(dir_path: Path) -> dict:
-    data = json_lib.read_path(dir_path.joinpath("header.json"), raise_on_duplicate_keys=True)
+    data = json_lib.read_path(dir_path.joinpath("header.json"))
     assert isinstance(data, dict)
 
     key_name = "regions"

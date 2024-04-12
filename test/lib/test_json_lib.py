@@ -15,7 +15,7 @@ def test_read_raise_duplicate_keys(tmp_path: Path) -> None:
     path.write_text('{"a": 1, "b": 2, "a": 3}')
 
     with pytest.raises(ValueError, match="Duplicate key: a"):
-        json_lib.read_path(path, raise_on_duplicate_keys=True)
+        json_lib.read_path(path)
 
 
 def test_read_ignore_duplicate_keys(tmp_path: Path) -> None:
