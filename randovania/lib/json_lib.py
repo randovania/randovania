@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 import aiofiles
 import orjson
 
-USE_ORJSON = False
+USE_ORJSON = True
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -28,7 +28,10 @@ def read_dict(path: Path) -> dict:
 
 def write_path(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=4, separators=(",", ": ")))
+    if USE_ORJSON:
+        path.write_bytes(orjson.dumps(data, option=orjson.OPT_APPEND_NEWLINE | orjson.OPT_INDENT_2))
+    else:
+        path.write_text(json.dumps(data, indent=2, separators=(",", ": ")) + "\n")
 
 
 async def read_path_async(path: Path) -> dict | list:

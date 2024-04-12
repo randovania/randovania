@@ -91,7 +91,7 @@ def test_do_export_game(
         },
     }
 
-    patch_data_str = json.dumps(patch_data, indent=4)
+    patch_data_str = json.dumps(patch_data, indent=2) + "\n"
 
     if use_new_patcher:
         patch_data["new_patcher"] = new_patcher_data
