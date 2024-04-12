@@ -18,6 +18,8 @@ from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 if typing.TYPE_CHECKING:
+    from argparse import _SubParsersAction
+
     from randovania.game_description.db.area import Area
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
@@ -389,7 +391,7 @@ def pickups_per_area_command(sub_parsers):
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
-def _find_tricks_usage_documentation(requirement: Requirement) -> typing.Iterator[str, bool]:
+def _find_tricks_usage_documentation(requirement: Requirement) -> typing.Iterator[tuple[str, bool]]:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
     if not isinstance(requirement, RequirementArrayBase):
@@ -432,7 +434,7 @@ def _get_area_connection_docs(area: Area) -> dict[str, dict[str, dict[str, bool]
     return paths
 
 
-def trick_usage_documentation_logic(args):
+def trick_usage_documentation_logic(args: argparse.Namespace) -> None:
     gd = load_game_description(args)
     output_path: Path = args.output_path
 
@@ -454,7 +456,7 @@ def trick_usage_documentation_logic(args):
     output_path.write_text("\n".join(lines))
 
 
-def trick_usage_documentation_command(sub_parsers):
+def trick_usage_documentation_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "trick-usage-documentation",
         help="Creates a list of all trick usages and if they're documented or not.",
@@ -468,7 +470,7 @@ def trick_usage_documentation_command(sub_parsers):
     parser.set_defaults(func=trick_usage_documentation_logic)
 
 
-def create_subparsers(sub_parsers):
+def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("database", help="Actions for database manipulation")
 
     group = parser.add_mutually_exclusive_group()
