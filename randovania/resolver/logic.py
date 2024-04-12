@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 
 def n(node: Node, region_list, with_region=False) -> str:
-    return region_list.node_name(node, with_region) if node is not None else "None"
+    return region_list.node(node, with_region) if node is not None else "None"
 
 
 def energy_string(state: State) -> str:

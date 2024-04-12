@@ -95,7 +95,7 @@ class PresetTeleportersPrime2(PresetTeleporterTab, Ui_PresetTeleportersPrime2, N
 
         locations = TeleporterList.nodes_list(self.game_enum)
         node_identifiers: dict[NodeIdentifier, Area] = {
-            loc: region_list.area_by_area_location(loc.area_location) for loc in locations
+            loc: region_list.area_by_area_location(loc.area_identifier) for loc in locations
         }
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
@@ -106,7 +106,7 @@ class PresetTeleportersPrime2(PresetTeleporterTab, Ui_PresetTeleportersPrime2, N
         for location in sorted(
             locations,
             key=lambda loc: (
-                self.custom_weights.get(loc.area_location.region_name, 0),
+                self.custom_weights.get(loc.area_identifier.region, 0),
                 checks[loc].text(),
             ),
         ):
