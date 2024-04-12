@@ -5283,11 +5283,91 @@
                         "Before Diggernaut": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: move this to event, also have a second look",
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Diggernaut": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -19401.950891355533,
+                        "y": -7216.548940464178,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Diggernaut",
+                    "connections": {
+                        "Pickup (Power Bomb)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Diggernaut": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18500.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_Checkpoint_009"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Electric Escalade": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Lay Bomb"
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Diggernaut",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Diggernaut": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Diggernauts Bomb Slots",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -5396,7 +5476,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Dealing Damage",
+                                            "comment": "Dealing Damage to faceplate",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5551,7 +5631,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "\"Tank\" the lasers",
+                                                        "comment": "Tank the lasers with Lightning Armor",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5632,7 +5712,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Final Phase",
+                                            "comment": "Final Phase (Spinning Faceplate)",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5673,78 +5753,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Diggernaut": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -19401.950891355533,
-                        "y": -7216.548940464178,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Diggernaut",
-                    "connections": {
-                        "Pickup (Power Bomb)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Before Diggernaut": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -18500.0,
-                        "y": -7600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "ST_Checkpoint_009"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Electric Escalade": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Diggernaut",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Diggernaut": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
