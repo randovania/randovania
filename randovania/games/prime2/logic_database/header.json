@@ -2054,6 +2054,38 @@
                         ]
                     }
                 }
+            },
+            "Shoot Any Beam": {
+                "display_name": "Shoot Any Beam",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Dark Beam"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Light Beam"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Annihilator Beam"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -2258,10 +2290,41 @@
                             "door_type": "Normal"
                         },
                         "requirement": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         },
                         "lock": null
@@ -2271,10 +2334,41 @@
                             "door_type": "Normal"
                         },
                         "requirement": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Any Beam"
+                                    }
+                                ]
                             }
                         },
                         "lock": null

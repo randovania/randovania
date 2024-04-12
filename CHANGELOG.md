@@ -22,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: FAQ Entry about non-Superheated rooms
 
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Fixed: Normal Doors now account for having a beam or Morph Ball Bombs to open.
+
 ## [7.5.1] - 2024-04-??
 
 - Changed: The output after verifying the installation has been made less misleading.
