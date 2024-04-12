@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Cave Story
 
 - Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
+- Fixed: King does not have a third ear anymore when using him as a player sprite.
 
 ### Metroid Dread
 
