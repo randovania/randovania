@@ -40,9 +40,16 @@ jobs:
         run: python -m pip install -c requirements.txt -e .[server]
 
       - name: Post Report
-        run: python tools/trick_documentation_report.py
+        run: python tools/trick_documentation_report.py reports/
         env:
           WEBHOOK_URL: ${{ secrets.GENERAL_TALK_WEBHOOK }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reports
+          if-no-files-found: error
+          path: reports/
 
   notify_failure:
     runs-on: ubuntu-latest
