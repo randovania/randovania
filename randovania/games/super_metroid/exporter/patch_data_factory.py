@@ -137,7 +137,7 @@ class SuperMetroidPatchDataFactory(PatchDataFactory):
         starting_save_index = starting_area.extra["save_index"]
 
         starting_location_info = {
-            "starting_region": starting_point.region_name,
+            "starting_region": starting_point.region,
             "starting_save_station_index": starting_save_index,
         }
 

@@ -112,7 +112,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
                 disabled_doors.add((src_name, src_dock_num))
 
             if node.extra["nonstandard"]:
-                dst_name = node.default_connection.area_identifier.area_name
+                dst_name = node.default_connection.area_identifier.area
                 room_connections.append((wrap_text(src_name), wrap_text(dst_name)))
 
     # add edges which were shuffled

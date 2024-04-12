@@ -107,7 +107,7 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
 
     def _create_check_for_source_teleporters(self, location: NodeIdentifier):
         name = elevators.get_elevator_or_area_name(
-            self.game_enum, self.game_description.region_list, location.area_location, True
+            self.game_enum, self.game_description.region_list, location.area_identifier, True
         )
 
         check = QtWidgets.QCheckBox(self.teleporters_source_group)
