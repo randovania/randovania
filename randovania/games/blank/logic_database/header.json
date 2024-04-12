@@ -1,324 +1,324 @@
 {
-    "schema_version": 23,
-    "game": "blank",
-    "resource_database": {
-        "items": {
-            "Weapon": {
-                "long_name": "Weapon",
-                "max_capacity": 1,
-                "extra": {}
-            },
-            "Explosive": {
-                "long_name": "Explosive",
-                "max_capacity": 1,
-                "extra": {}
-            },
-            "Ammo": {
-                "long_name": "Missile",
-                "max_capacity": 500,
-                "extra": {}
-            },
-            "BlueKey": {
-                "long_name": "Blue Key",
-                "max_capacity": 1,
-                "extra": {}
-            },
-            "VictoryKey": {
-                "long_name": "Victory Key",
-                "max_capacity": 1,
-                "extra": {}
-            },
-            "Health": {
-                "long_name": "Health",
-                "max_capacity": 100,
-                "extra": {}
-            },
-            "Useless": {
-                "long_name": "Useless",
-                "max_capacity": 10,
-                "extra": {}
-            }
-        },
-        "events": {
-            "Boss": {
-                "long_name": "First Boss Killed",
-                "extra": {}
-            },
-            "KeySwitch1": {
-                "long_name": "Key Switch 1",
-                "extra": {}
-            },
-            "KeySwitch2": {
-                "long_name": "Key Switch 2",
-                "extra": {}
-            }
-        },
-        "tricks": {
-            "Combat": {
-                "long_name": "Combat",
-                "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
-                "extra": {}
-            }
-        },
-        "damage": {
-            "Damage": {
-                "long_name": "Normal Damage",
-                "extra": {}
-            }
-        },
-        "versions": {
-            "NTSC": {
-                "long_name": "NTSC",
-                "extra": {}
-            }
-        },
-        "misc": {},
-        "requirement_template": {},
-        "damage_reductions": [],
-        "energy_tank_item_index": "Health"
+  "schema_version": 23,
+  "game": "blank",
+  "resource_database": {
+    "items": {
+      "Weapon": {
+        "long_name": "Weapon",
+        "max_capacity": 1,
+        "extra": {}
+      },
+      "Explosive": {
+        "long_name": "Explosive",
+        "max_capacity": 1,
+        "extra": {}
+      },
+      "Ammo": {
+        "long_name": "Missile",
+        "max_capacity": 500,
+        "extra": {}
+      },
+      "BlueKey": {
+        "long_name": "Blue Key",
+        "max_capacity": 1,
+        "extra": {}
+      },
+      "VictoryKey": {
+        "long_name": "Victory Key",
+        "max_capacity": 1,
+        "extra": {}
+      },
+      "Health": {
+        "long_name": "Health",
+        "max_capacity": 100,
+        "extra": {}
+      },
+      "Useless": {
+        "long_name": "Useless",
+        "max_capacity": 10,
+        "extra": {}
+      }
     },
-    "layers": [
-        "default",
-        "extra_pickups"
+    "events": {
+      "Boss": {
+        "long_name": "First Boss Killed",
+        "extra": {}
+      },
+      "KeySwitch1": {
+        "long_name": "Key Switch 1",
+        "extra": {}
+      },
+      "KeySwitch2": {
+        "long_name": "Key Switch 2",
+        "extra": {}
+      }
+    },
+    "tricks": {
+      "Combat": {
+        "long_name": "Combat",
+        "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
+        "extra": {}
+      }
+    },
+    "damage": {
+      "Damage": {
+        "long_name": "Normal Damage",
+        "extra": {}
+      }
+    },
+    "versions": {
+      "NTSC": {
+        "long_name": "NTSC",
+        "extra": {}
+      }
+    },
+    "misc": {},
+    "requirement_template": {},
+    "damage_reductions": [],
+    "energy_tank_item_index": "Health"
+  },
+  "layers": [
+    "default",
+    "extra_pickups"
+  ],
+  "starting_location": {
+    "region": "Intro",
+    "area": "Starting Area",
+    "node": "Spawn Point"
+  },
+  "initial_states": {
+    "Default": []
+  },
+  "minimal_logic": {
+    "items_to_exclude": [],
+    "custom_item_amount": [],
+    "events_to_exclude": [
+      {
+        "name": "Boss",
+        "reason": "victory condition"
+      }
     ],
-    "starting_location": {
-        "region": "Intro",
-        "area": "Starting Area",
-        "node": "Spawn Point"
-    },
-    "initial_states": {
-        "Default": []
-    },
-    "minimal_logic": {
-        "items_to_exclude": [],
-        "custom_item_amount": [],
-        "events_to_exclude": [
-            {
-                "name": "Boss",
-                "reason": "victory condition"
-            }
-        ],
-        "description": "Nothing is checked."
-    },
-    "victory_condition": {
-        "type": "and",
-        "data": {
-            "comment": null,
-            "items": [
-                {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Boss",
-                        "amount": 1,
-                        "negate": false
-                    }
-                },
-                {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "KeySwitch1",
-                        "amount": 1,
-                        "negate": false
-                    }
-                },
-                {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "KeySwitch2",
-                        "amount": 1,
-                        "negate": false
-                    }
-                },
-                {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "VictoryKey",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            ]
-        }
-    },
-    "dock_weakness_database": {
-        "types": {
-            "door": {
-                "name": "Door",
-                "extra": {},
-                "items": {
-                    "Normal Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": null
-                    },
-                    "Explosive Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": {
-                            "lock_type": "front-blast-back-if-matching",
-                            "requirement": {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Explosive",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "Back-Only Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": {
-                            "lock_type": "front-blast-back-free-unlock",
-                            "requirement": {
-                                "type": "or",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
-                            }
-                        }
-                    },
-                    "Blue Key Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": {
-                            "lock_type": "front-blast-back-impossible",
-                            "requirement": {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "BlueKey",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        }
-                    },
-                    "Locked Door": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": {
-                            "lock_type": "front-blast-back-impossible",
-                            "requirement": {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": []
-                                }
-                            }
-                        }
-                    }
-                },
-                "dock_rando": {
-                    "unlocked": "Normal Door",
-                    "locked": "Locked Door",
-                    "change_from": [
-                        "Back-Only Door",
-                        "Blue Key Door",
-                        "Explosive Door",
-                        "Locked Door",
-                        "Normal Door"
-                    ],
-                    "change_to": [
-                        "Back-Only Door",
-                        "Blue Key Door",
-                        "Explosive Door",
-                        "Locked Door",
-                        "Normal Door"
-                    ]
-                }
-            },
-            "other": {
-                "name": "Dock",
-                "extra": {},
-                "items": {
-                    "Open Passage": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": null
-                    },
-                    "Not Determined": {
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "lock": null
-                    }
-                },
-                "dock_rando": null
-            }
+    "description": "Nothing is checked."
+  },
+  "victory_condition": {
+    "type": "and",
+    "data": {
+      "comment": null,
+      "items": [
+        {
+          "type": "resource",
+          "data": {
+            "type": "events",
+            "name": "Boss",
+            "amount": 1,
+            "negate": false
+          }
         },
-        "default_weakness": {
-            "type": "other",
-            "name": "Not Determined"
+        {
+          "type": "resource",
+          "data": {
+            "type": "events",
+            "name": "KeySwitch1",
+            "amount": 1,
+            "negate": false
+          }
+        },
+        {
+          "type": "resource",
+          "data": {
+            "type": "events",
+            "name": "KeySwitch2",
+            "amount": 1,
+            "negate": false
+          }
+        },
+        {
+          "type": "resource",
+          "data": {
+            "type": "items",
+            "name": "VictoryKey",
+            "amount": 1,
+            "negate": false
+          }
+        }
+      ]
+    }
+  },
+  "dock_weakness_database": {
+    "types": {
+      "door": {
+        "name": "Door",
+        "extra": {},
+        "items": {
+          "Normal Door": {
+            "extra": {},
+            "requirement": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "lock": null
+          },
+          "Explosive Door": {
+            "extra": {},
+            "requirement": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "lock": {
+              "lock_type": "front-blast-back-if-matching",
+              "requirement": {
+                "type": "and",
+                "data": {
+                  "comment": null,
+                  "items": [
+                    {
+                      "type": "resource",
+                      "data": {
+                        "type": "items",
+                        "name": "Explosive",
+                        "amount": 1,
+                        "negate": false
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "Back-Only Door": {
+            "extra": {},
+            "requirement": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "lock": {
+              "lock_type": "front-blast-back-free-unlock",
+              "requirement": {
+                "type": "or",
+                "data": {
+                  "comment": null,
+                  "items": []
+                }
+              }
+            }
+          },
+          "Blue Key Door": {
+            "extra": {},
+            "requirement": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "lock": {
+              "lock_type": "front-blast-back-impossible",
+              "requirement": {
+                "type": "resource",
+                "data": {
+                  "type": "items",
+                  "name": "BlueKey",
+                  "amount": 1,
+                  "negate": false
+                }
+              }
+            }
+          },
+          "Locked Door": {
+            "extra": {},
+            "requirement": {
+              "type": "or",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "lock": {
+              "lock_type": "front-blast-back-impossible",
+              "requirement": {
+                "type": "and",
+                "data": {
+                  "comment": null,
+                  "items": []
+                }
+              }
+            }
+          }
         },
         "dock_rando": {
-            "force_change_two_way": false,
-            "resolver_attempts": 125,
-            "to_shuffle_proportion": 1.0
+          "unlocked": "Normal Door",
+          "locked": "Locked Door",
+          "change_from": [
+            "Back-Only Door",
+            "Blue Key Door",
+            "Explosive Door",
+            "Locked Door",
+            "Normal Door"
+          ],
+          "change_to": [
+            "Back-Only Door",
+            "Blue Key Door",
+            "Explosive Door",
+            "Locked Door",
+            "Normal Door"
+          ]
         }
+      },
+      "other": {
+        "name": "Dock",
+        "extra": {},
+        "items": {
+          "Open Passage": {
+            "extra": {},
+            "requirement": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "lock": null
+          },
+          "Not Determined": {
+            "extra": {},
+            "requirement": {
+              "type": "or",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "lock": null
+          }
+        },
+        "dock_rando": null
+      }
     },
-    "used_trick_levels": {
-        "Combat": [
-            1
-        ]
+    "default_weakness": {
+      "type": "other",
+      "name": "Not Determined"
     },
-    "regions": [
-        "Intro.json"
+    "dock_rando": {
+      "force_change_two_way": false,
+      "resolver_attempts": 125,
+      "to_shuffle_proportion": 1.0
+    }
+  },
+  "used_trick_levels": {
+    "Combat": [
+      1
     ]
+  },
+  "regions": [
+    "Intro.json"
+  ]
 }

@@ -1,2441 +1,2441 @@
 {
-    "name": "Mimiga Village",
-    "extra": {},
-    "areas": {
-        "Start Point": {
-            "default_node": "Room Spawn",
-            "extra": {
-                "map_name": "Start",
-                "starting_script": "<EVE0091"
-            },
-            "nodes": {
-                "Door to First Cave": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 168.0,
-                        "y": 196.97,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "First Cave",
-                        "node": "Door to Start Point"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Save Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Save Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 247.18,
-                        "y": 135.38,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to First Cave": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Refill": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Room Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 167.64,
-                        "y": 121.73,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
-                    "valid_starting_location": true,
-                    "connections": {
-                        "Event - Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Refill": {
-                    "node_type": "generic",
-                    "heal": true,
-                    "coordinates": {
-                        "x": 230.62365591397847,
-                        "y": 138.68817204301075,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Save Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Start Point": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 167.71,
-                        "y": 134.15,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "different_strongly_connected_component": true
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "startPoint",
-                    "connections": {
-                        "Door to First Cave": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
+  "name": "Mimiga Village",
+  "extra": {},
+  "areas": {
+    "Start Point": {
+      "default_node": "Room Spawn",
+      "extra": {
+        "map_name": "Start",
+        "starting_script": "<EVE0091"
+      },
+      "nodes": {
+        "Door to First Cave": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 168.0,
+            "y": 196.97,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "different_strongly_connected_component": true
+          },
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "First Cave",
+            "node": "Door to Start Point"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Save Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             }
-        },
-        "First Cave": {
-            "default_node": "Door to Start Point",
-            "extra": {
-                "map_name": "Cave",
-                "starting_script": "<TRA0012:0094:0037:0011"
-            },
-            "nodes": {
-                "Door to Start Point": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 600.7933461292387,
-                        "y": 535.5598208573257,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Start Point",
-                        "node": "Door to First Cave"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Hermit Gunsmith": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Can Break Blocks"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Kill the Eye Door if Starting in Start Point",
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Has Weapon"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "startPoint",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (First Cave Life Capsule)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Hermit Gunsmith": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 853.6404350607805,
-                        "y": 137.3512476007678,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Hermit Gunsmith",
-                        "node": "Door to First Cave"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 886.4,
-                        "y": 567.29,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to First Cave"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Start Point": {
-                            "type": "template",
-                            "data": "Can Break Blocks"
-                        }
-                    }
-                },
-                "Pickup (First Cave Life Capsule)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 105.33589251439538,
-                        "y": 327.75431861804225,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0401"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 32,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Hermit Gunsmith": {
-            "default_node": "Door to First Cave",
-            "extra": {
-                "map_name": "Pole",
-                "starting_script": "<TRA0090:0094:0007:0009"
-            },
-            "nodes": {
-                "Door to First Cave": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 119.97,
-                        "y": 102.13,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "First Cave",
-                        "node": "Door to Hermit Gunsmith"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Hermit Gunsmith Chest)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Tetsuzou)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "polarStar",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "spur",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "eventCore",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Pickup (Hermit Gunsmith Chest)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 230.32049134561697,
-                        "y": 102.1284198771636,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0202"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 33,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to First Cave": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Tetsuzou)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 168.285873813512,
-                        "y": 107.84589614740369,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0303"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 34,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to First Cave": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Mimiga Village": {
-            "default_node": "Room Centre",
-            "extra": {
-                "map_name": "Mimi",
-                "starting_script": "<TRA0011:0302:0008:0006"
-            },
-            "nodes": {
-                "Door to First Cave": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 134.8073701842546,
-                        "y": 855.7453936348409,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "First Cave",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Room Centre": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 374.94137353433837,
-                        "y": 492.3283082077052,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "connections": {
-                        "Door to First Cave": {
-                            "type": "template",
-                            "data": "Has Flight"
-                        },
-                        "Door to Save Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Reservoir": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Yamashita Farm": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Assembly Hall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Graveyard": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "eventToroko2",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Door to Shack": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Arthur's House": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "arthurKey",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Mimiga Village Chest)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Save Point": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 391.0217755443886,
-                        "y": 406.56616415410383,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Save Point",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Reservoir": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 17.95644891122278,
-                        "y": 343.3165829145729,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Reservoir",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Yamashita Farm": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 723.3500837520937,
-                        "y": 612.3953098827471,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Yamashita Farm",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Assembly Hall": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 692.2613065326633,
-                        "y": 405.49413735343387,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Assembly Hall",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Graveyard": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 906.67,
-                        "y": 422.65,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Graveyard",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Shack": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 676.180904522613,
-                        "y": 119.26298157453937,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Shack",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Arthur's House": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 264.5226130653266,
-                        "y": 101.03852596314914,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Arthur's House",
-                        "node": "Door to Mimiga Village"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Mimiga Village Chest)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 794.1038525963148,
-                        "y": 294.00335008375214,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0202"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 35,
-                    "location_category": "minor",
-                    "connections": {
-                        "Room Centre": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
+          }
         },
         "Save Point": {
-            "default_node": "Save Point",
-            "extra": {
-                "map_name": "MiBox",
-                "starting_script": "<TRA0020:0094:0008:0009"
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 247.18,
+            "y": 135.38,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Door to First Cave": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             },
-            "nodes": {
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 168.0,
-                        "y": 108.47,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to Save Point"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Save Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Refill": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Save Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 132.89,
-                        "y": 101.31,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Refill": {
-                    "node_type": "generic",
-                    "heal": true,
-                    "coordinates": {
-                        "x": 199.01075268817203,
-                        "y": 103.46236559139786,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
+            "Refill": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             }
+          }
         },
-        "Yamashita Farm": {
-            "default_node": "Door to Mimiga Village",
-            "extra": {
-                "map_name": "Plant",
-                "starting_script": "<TRA0017:0092:0002:0011"
-            },
-            "nodes": {
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 41.56,
-                        "y": 71.02,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to Yamashita Farm"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Yamashita Farm)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Yamashita Farm)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 551.3499680102367,
-                        "y": 53.95436127105992,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0401"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 36,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
+        "Room Spawn": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 167.64,
+            "y": 121.73,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "different_strongly_connected_component": true
+          },
+          "valid_starting_location": true,
+          "connections": {
+            "Event - Start Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             }
+          }
         },
-        "Reservoir": {
-            "default_node": "Door to Mimiga Village",
-            "extra": {
-                "map_name": "Pool",
-                "starting_script": "<TRA0015:0090:0036:0014"
-            },
-            "nodes": {
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 585.47,
-                        "y": 85.27,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to Reservoir"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Debug Cat to Dark Place": {
-                            "type": "and",
-                            "data": {
-                                "comment": "Appears after killing Ironhead with entrance rando disabled",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "entranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "eventIronhead",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Reservoir)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Debug Cat to Dark Place": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 181.46,
-                        "y": 121.44,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "debug cat",
-                    "default_connection": {
-                        "region": "Labyrinth",
-                        "area": "Dark Place",
-                        "node": "Entrance from Reservoir"
-                    },
-                    "default_dock_weakness": "Debug Cat",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Reservoir)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 72.9537214757944,
-                        "y": 77.7649818724675,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0301"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 37,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Entrance from Main Artery": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 228.27,
-                        "y": 294.1,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "entrance",
-                    "default_connection": {
-                        "region": "Labyrinth",
-                        "area": "Main Artery",
-                        "node": "Exit to Reservoir"
-                    },
-                    "default_dock_weakness": "Entrance",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
+        "Refill": {
+          "node_type": "generic",
+          "heal": true,
+          "coordinates": {
+            "x": 230.62365591397847,
+            "y": 138.68817204301075,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Save Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             }
+          }
         },
-        "Assembly Hall": {
-            "default_node": "Door to Mimiga Village",
-            "extra": {
-                "map_name": "Comu",
-                "starting_script": "<TRA0019:0094:0007:0010"
-            },
-            "nodes": {
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 119.63,
-                        "y": 84.83,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to Assembly Hall"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Assembly Hall Fireplace)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Juice",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Pickup (Assembly Hall Fireplace)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 216.36852207293668,
-                        "y": 84.46833013435702,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0303"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 38,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
+        "Event - Start Point": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 167.71,
+            "y": 134.15,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "different_strongly_connected_component": true
+          },
+          "valid_starting_location": false,
+          "event_name": "startPoint",
+          "connections": {
+            "Door to First Cave": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             }
-        },
-        "Graveyard": {
-            "default_node": "Door to Mimiga Village",
-            "extra": {
-                "map_name": "Cemet",
-                "starting_script": "<TRA0016:0092:0002:0012"
-            },
-            "nodes": {
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 40.89,
-                        "y": 118.51,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to Graveyard"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Storage": {
-                            "type": "template",
-                            "data": "Has Flight"
-                        },
-                        "Pickup (Arthur's Grave)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Mr. Little (Graveyard))": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Storage": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 519.6542511393997,
-                        "y": 276.9259783121169,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Storage",
-                        "node": "Door to Graveyard"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Arthur's Grave)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 150.01728744303,
-                        "y": 234.17884645607418,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0301"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 39,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Mr. Little (Graveyard))": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 293.84881345277387,
-                        "y": 71.23683796951124,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0202"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 40,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Storage": {
-            "default_node": "Door to Graveyard",
-            "extra": {
-                "map_name": "Mapi",
-                "starting_script": "<TRA0083:0094:0007:0010"
-            },
-            "nodes": {
-                "Door to Graveyard": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 119.98976327575177,
-                        "y": 86.61804222648752,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Graveyard",
-                        "node": "Door to Storage"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Storage? Chest)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "eventCurly",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Ma Pignon": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "mushBadge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Ma Pignon is completely immune to Missiles, Super Missiles, and the Blade",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "polarStar",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "machineGun",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "bubbler",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "fireball",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "spur",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "snake",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "nemesis",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Pickup (Storage? Chest)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 181.97312859884838,
-                        "y": 85.18490083173384,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0202"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 41,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Graveyard": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Ma Pignon": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 200.2456813819578,
-                        "y": 86.61804222648752,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "eventMaPignon",
-                    "connections": {
-                        "Pickup (Ma Pignon Boss)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Ma Pignon Boss)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 199.52911068458096,
-                        "y": 102.02431222008957,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0501"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 42,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Graveyard": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Shack": {
-            "default_node": "Door to Mimiga Village",
-            "extra": {
-                "map_name": "Barr",
-                "starting_script": "<TRA0014:0094:0005:0009"
-            },
-            "nodes": {
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 88.46,
-                        "y": 102.74,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to Shack"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Event - Toroko Kidnapped": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "locket",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Has Weapon"
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Balrog 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "eventToroko2",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Kill Bosses"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Weapon requirements",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "BossMissiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "missiles",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "missile",
-                                                                                            "amount": 4,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "supers",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "missile",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Health requirements",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Level MG": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "machineGun",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "eventBalrog",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Toroko Kidnapped": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 198.45,
-                        "y": 106.68,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "eventToroko2",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Balrog 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 247.1810620601408,
-                        "y": 151.82597568777993,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "eventBalrog",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Level MG": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 263.14,
-                        "y": 150.69,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "levelMG",
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Arthur's House": {
-            "default_node": "Room Spawn",
-            "extra": {
-                "map_name": "Pens1",
-                "starting_script": "<TRA0001:0094:0008:0004"
-            },
-            "nodes": {
-                "Door to Mimiga Village": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 280.06253489670576,
-                        "y": 117.27973199329983,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Mimiga Village",
-                        "area": "Mimiga Village",
-                        "node": "Door to Arthur's House"
-                    },
-                    "default_dock_weakness": "Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Professor Booster)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 153.42043551088778,
-                        "y": 117.85147962032383,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "event": "0652"
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 43,
-                    "location_category": "minor",
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Main Teleporter": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 86.24008933556672,
-                        "y": 118.13735343383584,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Mimiga Village": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "arthurKey",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Pickup (Professor Booster)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "eventCore",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Save Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Teleporter to Egg Corridor": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Teleporter to Grasstown": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Teleporter to Sand Zone": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Teleporter to Labyrinth B": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Teleporter to Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Teleporter to Egg Corridor?": {
-                            "type": "or",
-                            "data": {
-                                "comment": "Defeat the Core or come in from Egg Corridor?",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "eventCore",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "eventEgg2Teleport",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Room Spawn": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Save Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 199.31,
-                        "y": 186.26,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Refill": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Egg Corridor": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 51.36,
-                        "y": 147.58,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Egg Corridor",
-                        "area": "Egg Corridor",
-                        "node": "Teleporter to Arthur's House"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Grasstown": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 67.09,
-                        "y": 154.16,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Grasstown",
-                        "area": "Grasstown",
-                        "node": "Teleporter to Arthur's House"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Sand Zone": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 86.24,
-                        "y": 161.3,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Sand Zone",
-                        "area": "Sand Zone",
-                        "node": "Teleporter to Arthur's House"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Labyrinth B": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 105.97,
-                        "y": 154.16,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Labyrinth",
-                        "area": "Labyrinth B",
-                        "node": "Teleporter to Arthur's House"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Teleporter": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 120.54,
-                        "y": 149.01,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Plantation",
-                        "area": "Teleporter",
-                        "node": "Teleporter to Arthur's House"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Teleporter to Egg Corridor?": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 51.08,
-                        "y": 139.01,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "teleporter",
-                    "default_connection": {
-                        "region": "Ruined Egg Corridor",
-                        "area": "Egg Corridor?",
-                        "node": "Teleporter to Arthur's House"
-                    },
-                    "default_dock_weakness": "Teleporter",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Room Spawn": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 153.13456169737577,
-                        "y": 183.31658291457285,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "connections": {
-                        "Event - Arthur's House": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Refill": {
-                    "node_type": "generic",
-                    "heal": true,
-                    "coordinates": {
-                        "x": 215.56989247311827,
-                        "y": 185.05376344086022,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Save Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Arthur's House": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 113.26,
-                        "y": 183.89,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "arthursHouse",
-                    "connections": {
-                        "Main Teleporter": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
+      }
+    },
+    "First Cave": {
+      "default_node": "Door to Start Point",
+      "extra": {
+        "map_name": "Cave",
+        "starting_script": "<TRA0012:0094:0037:0011"
+      },
+      "nodes": {
+        "Door to Start Point": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 600.7933461292387,
+            "y": 535.5598208573257,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Start Point",
+            "node": "Door to First Cave"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Hermit Gunsmith": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "template",
+                    "data": "Can Break Blocks"
+                  },
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": "Kill the Eye Door if Starting in Start Point",
+                      "items": [
+                        {
+                          "type": "template",
+                          "data": "Has Weapon"
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "events",
+                            "name": "startPoint",
+                            "amount": 1,
+                            "negate": true
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "Pickup (First Cave Life Capsule)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Hermit Gunsmith": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 853.6404350607805,
+            "y": 137.3512476007678,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Hermit Gunsmith",
+            "node": "Door to First Cave"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Start Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 886.4,
+            "y": 567.29,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to First Cave"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Start Point": {
+              "type": "template",
+              "data": "Can Break Blocks"
+            }
+          }
+        },
+        "Pickup (First Cave Life Capsule)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 105.33589251439538,
+            "y": 327.75431861804225,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0401"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 32,
+          "location_category": "minor",
+          "connections": {
+            "Door to Start Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Hermit Gunsmith": {
+      "default_node": "Door to First Cave",
+      "extra": {
+        "map_name": "Pole",
+        "starting_script": "<TRA0090:0094:0007:0009"
+      },
+      "nodes": {
+        "Door to First Cave": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 119.97,
+            "y": 102.13,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "First Cave",
+            "node": "Door to Hermit Gunsmith"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Pickup (Hermit Gunsmith Chest)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Pickup (Tetsuzou)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "polarStar",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "spur",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "events",
+                      "name": "eventCore",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Pickup (Hermit Gunsmith Chest)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 230.32049134561697,
+            "y": 102.1284198771636,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0202"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 33,
+          "location_category": "minor",
+          "connections": {
+            "Door to First Cave": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Tetsuzou)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 168.285873813512,
+            "y": 107.84589614740369,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0303"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 34,
+          "location_category": "minor",
+          "connections": {
+            "Door to First Cave": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Mimiga Village": {
+      "default_node": "Room Centre",
+      "extra": {
+        "map_name": "Mimi",
+        "starting_script": "<TRA0011:0302:0008:0006"
+      },
+      "nodes": {
+        "Door to First Cave": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 134.8073701842546,
+            "y": 855.7453936348409,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "First Cave",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Room Centre": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 374.94137353433837,
+            "y": 492.3283082077052,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "connections": {
+            "Door to First Cave": {
+              "type": "template",
+              "data": "Has Flight"
+            },
+            "Door to Save Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Reservoir": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Yamashita Farm": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Assembly Hall": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Graveyard": {
+              "type": "resource",
+              "data": {
+                "type": "events",
+                "name": "eventToroko2",
+                "amount": 1,
+                "negate": false
+              }
+            },
+            "Door to Shack": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Arthur's House": {
+              "type": "resource",
+              "data": {
+                "type": "items",
+                "name": "arthurKey",
+                "amount": 1,
+                "negate": false
+              }
+            },
+            "Pickup (Mimiga Village Chest)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Save Point": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 391.0217755443886,
+            "y": 406.56616415410383,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Save Point",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Reservoir": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 17.95644891122278,
+            "y": 343.3165829145729,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Reservoir",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Yamashita Farm": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 723.3500837520937,
+            "y": 612.3953098827471,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Yamashita Farm",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Assembly Hall": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 692.2613065326633,
+            "y": 405.49413735343387,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Assembly Hall",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Graveyard": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 906.67,
+            "y": 422.65,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Graveyard",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Shack": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 676.180904522613,
+            "y": 119.26298157453937,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Shack",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Arthur's House": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 264.5226130653266,
+            "y": 101.03852596314914,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Arthur's House",
+            "node": "Door to Mimiga Village"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Mimiga Village Chest)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 794.1038525963148,
+            "y": 294.00335008375214,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0202"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 35,
+          "location_category": "minor",
+          "connections": {
+            "Room Centre": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Save Point": {
+      "default_node": "Save Point",
+      "extra": {
+        "map_name": "MiBox",
+        "starting_script": "<TRA0020:0094:0008:0009"
+      },
+      "nodes": {
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 168.0,
+            "y": 108.47,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to Save Point"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Save Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Refill": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Save Point": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 132.89,
+            "y": 101.31,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Refill": {
+          "node_type": "generic",
+          "heal": true,
+          "coordinates": {
+            "x": 199.01075268817203,
+            "y": 103.46236559139786,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Yamashita Farm": {
+      "default_node": "Door to Mimiga Village",
+      "extra": {
+        "map_name": "Plant",
+        "starting_script": "<TRA0017:0092:0002:0011"
+      },
+      "nodes": {
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 41.56,
+            "y": 71.02,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to Yamashita Farm"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Pickup (Yamashita Farm)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Yamashita Farm)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 551.3499680102367,
+            "y": 53.95436127105992,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0401"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 36,
+          "location_category": "minor",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Reservoir": {
+      "default_node": "Door to Mimiga Village",
+      "extra": {
+        "map_name": "Pool",
+        "starting_script": "<TRA0015:0090:0036:0014"
+      },
+      "nodes": {
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 585.47,
+            "y": 85.27,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to Reservoir"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Debug Cat to Dark Place": {
+              "type": "and",
+              "data": {
+                "comment": "Appears after killing Ironhead with entrance rando disabled",
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "misc",
+                      "name": "entranceRando",
+                      "amount": 1,
+                      "negate": true
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "events",
+                      "name": "eventIronhead",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  }
+                ]
+              }
+            },
+            "Pickup (Reservoir)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Debug Cat to Dark Place": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 181.46,
+            "y": 121.44,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "debug cat",
+          "default_connection": {
+            "region": "Labyrinth",
+            "area": "Dark Place",
+            "node": "Entrance from Reservoir"
+          },
+          "default_dock_weakness": "Debug Cat",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Reservoir)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 72.9537214757944,
+            "y": 77.7649818724675,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0301"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 37,
+          "location_category": "minor",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Entrance from Main Artery": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 228.27,
+            "y": 294.1,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "entrance",
+          "default_connection": {
+            "region": "Labyrinth",
+            "area": "Main Artery",
+            "node": "Exit to Reservoir"
+          },
+          "default_dock_weakness": "Entrance",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Assembly Hall": {
+      "default_node": "Door to Mimiga Village",
+      "extra": {
+        "map_name": "Comu",
+        "starting_script": "<TRA0019:0094:0007:0010"
+      },
+      "nodes": {
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 119.63,
+            "y": 84.83,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to Assembly Hall"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Pickup (Assembly Hall Fireplace)": {
+              "type": "resource",
+              "data": {
+                "type": "items",
+                "name": "Juice",
+                "amount": 1,
+                "negate": false
+              }
+            }
+          }
+        },
+        "Pickup (Assembly Hall Fireplace)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 216.36852207293668,
+            "y": 84.46833013435702,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0303"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 38,
+          "location_category": "minor",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Graveyard": {
+      "default_node": "Door to Mimiga Village",
+      "extra": {
+        "map_name": "Cemet",
+        "starting_script": "<TRA0016:0092:0002:0012"
+      },
+      "nodes": {
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 40.89,
+            "y": 118.51,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to Graveyard"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Storage": {
+              "type": "template",
+              "data": "Has Flight"
+            },
+            "Pickup (Arthur's Grave)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Pickup (Mr. Little (Graveyard))": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Storage": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 519.6542511393997,
+            "y": 276.9259783121169,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Storage",
+            "node": "Door to Graveyard"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Arthur's Grave)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 150.01728744303,
+            "y": 234.17884645607418,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0301"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 39,
+          "location_category": "minor",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Mr. Little (Graveyard))": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 293.84881345277387,
+            "y": 71.23683796951124,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0202"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 40,
+          "location_category": "minor",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Storage": {
+      "default_node": "Door to Graveyard",
+      "extra": {
+        "map_name": "Mapi",
+        "starting_script": "<TRA0083:0094:0007:0010"
+      },
+      "nodes": {
+        "Door to Graveyard": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 119.98976327575177,
+            "y": 86.61804222648752,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Graveyard",
+            "node": "Door to Storage"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Pickup (Storage? Chest)": {
+              "type": "resource",
+              "data": {
+                "type": "events",
+                "name": "eventCurly",
+                "amount": 1,
+                "negate": false
+              }
+            },
+            "Event - Ma Pignon": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "mushBadge",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": "Ma Pignon is completely immune to Missiles, Super Missiles, and the Blade",
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "polarStar",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "machineGun",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "bubbler",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "fireball",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "spur",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "snake",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "nemesis",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Pickup (Storage? Chest)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 181.97312859884838,
+            "y": 85.18490083173384,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0202"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 41,
+          "location_category": "minor",
+          "connections": {
+            "Door to Graveyard": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Event - Ma Pignon": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 200.2456813819578,
+            "y": 86.61804222648752,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "eventMaPignon",
+          "connections": {
+            "Pickup (Ma Pignon Boss)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Ma Pignon Boss)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 199.52911068458096,
+            "y": 102.02431222008957,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0501"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 42,
+          "location_category": "minor",
+          "connections": {
+            "Door to Graveyard": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Shack": {
+      "default_node": "Door to Mimiga Village",
+      "extra": {
+        "map_name": "Barr",
+        "starting_script": "<TRA0014:0094:0005:0009"
+      },
+      "nodes": {
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 88.46,
+            "y": 102.74,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to Shack"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Event - Toroko Kidnapped": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "locket",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "template",
+                    "data": "Has Weapon"
+                  }
+                ]
+              }
+            },
+            "Event - Balrog 1": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "events",
+                      "name": "eventToroko2",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "template",
+                          "data": "Can Kill Bosses"
+                        },
+                        {
+                          "type": "and",
+                          "data": {
+                            "comment": "Weapon requirements",
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "BossMissiles",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "or",
+                                "data": {
+                                  "comment": null,
+                                  "items": [
+                                    {
+                                      "type": "and",
+                                      "data": {
+                                        "comment": null,
+                                        "items": [
+                                          {
+                                            "type": "resource",
+                                            "data": {
+                                              "type": "items",
+                                              "name": "missiles",
+                                              "amount": 1,
+                                              "negate": false
+                                            }
+                                          },
+                                          {
+                                            "type": "resource",
+                                            "data": {
+                                              "type": "items",
+                                              "name": "missile",
+                                              "amount": 4,
+                                              "negate": false
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "type": "and",
+                                      "data": {
+                                        "comment": null,
+                                        "items": [
+                                          {
+                                            "type": "resource",
+                                            "data": {
+                                              "type": "items",
+                                              "name": "supers",
+                                              "amount": 2,
+                                              "negate": false
+                                            }
+                                          },
+                                          {
+                                            "type": "resource",
+                                            "data": {
+                                              "type": "items",
+                                              "name": "missile",
+                                              "amount": 2,
+                                              "negate": false
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "and",
+                          "data": {
+                            "comment": "Health requirements",
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "damage",
+                                  "name": "Damage",
+                                  "amount": 3,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Combat",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "Event - Level MG": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "machineGun",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "events",
+                      "name": "eventBalrog",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Event - Toroko Kidnapped": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 198.45,
+            "y": 106.68,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "eventToroko2",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Event - Balrog 1": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 247.1810620601408,
+            "y": 151.82597568777993,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "eventBalrog",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Event - Level MG": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 263.14,
+            "y": 150.69,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "levelMG",
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Arthur's House": {
+      "default_node": "Room Spawn",
+      "extra": {
+        "map_name": "Pens1",
+        "starting_script": "<TRA0001:0094:0008:0004"
+      },
+      "nodes": {
+        "Door to Mimiga Village": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 280.06253489670576,
+            "y": 117.27973199329983,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Mimiga Village",
+            "area": "Mimiga Village",
+            "node": "Door to Arthur's House"
+          },
+          "default_dock_weakness": "Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Professor Booster)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 153.42043551088778,
+            "y": 117.85147962032383,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "event": "0652"
+          },
+          "valid_starting_location": false,
+          "pickup_index": 43,
+          "location_category": "minor",
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Main Teleporter": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 86.24008933556672,
+            "y": 118.13735343383584,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Door to Mimiga Village": {
+              "type": "resource",
+              "data": {
+                "type": "items",
+                "name": "arthurKey",
+                "amount": 1,
+                "negate": false
+              }
+            },
+            "Pickup (Professor Booster)": {
+              "type": "resource",
+              "data": {
+                "type": "events",
+                "name": "eventCore",
+                "amount": 1,
+                "negate": false
+              }
+            },
+            "Save Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Teleporter to Egg Corridor": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Teleporter to Grasstown": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Teleporter to Sand Zone": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Teleporter to Labyrinth B": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Teleporter to Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Teleporter to Egg Corridor?": {
+              "type": "or",
+              "data": {
+                "comment": "Defeat the Core or come in from Egg Corridor?",
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "events",
+                      "name": "eventCore",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "events",
+                      "name": "eventEgg2Teleport",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  }
+                ]
+              }
+            },
+            "Room Spawn": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Save Point": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 199.31,
+            "y": 186.26,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Refill": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Teleporter to Egg Corridor": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 51.36,
+            "y": 147.58,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "teleporter",
+          "default_connection": {
+            "region": "Egg Corridor",
+            "area": "Egg Corridor",
+            "node": "Teleporter to Arthur's House"
+          },
+          "default_dock_weakness": "Teleporter",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Teleporter to Grasstown": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 67.09,
+            "y": 154.16,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "teleporter",
+          "default_connection": {
+            "region": "Grasstown",
+            "area": "Grasstown",
+            "node": "Teleporter to Arthur's House"
+          },
+          "default_dock_weakness": "Teleporter",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Teleporter to Sand Zone": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 86.24,
+            "y": 161.3,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "teleporter",
+          "default_connection": {
+            "region": "Sand Zone",
+            "area": "Sand Zone",
+            "node": "Teleporter to Arthur's House"
+          },
+          "default_dock_weakness": "Teleporter",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Teleporter to Labyrinth B": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 105.97,
+            "y": 154.16,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "teleporter",
+          "default_connection": {
+            "region": "Labyrinth",
+            "area": "Labyrinth B",
+            "node": "Teleporter to Arthur's House"
+          },
+          "default_dock_weakness": "Teleporter",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Teleporter to Teleporter": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 120.54,
+            "y": 149.01,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "teleporter",
+          "default_connection": {
+            "region": "Plantation",
+            "area": "Teleporter",
+            "node": "Teleporter to Arthur's House"
+          },
+          "default_dock_weakness": "Teleporter",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Teleporter to Egg Corridor?": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 51.08,
+            "y": 139.01,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "teleporter",
+          "default_connection": {
+            "region": "Ruined Egg Corridor",
+            "area": "Egg Corridor?",
+            "node": "Teleporter to Arthur's House"
+          },
+          "default_dock_weakness": "Teleporter",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Room Spawn": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 153.13456169737577,
+            "y": 183.31658291457285,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "connections": {
+            "Event - Arthur's House": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Refill": {
+          "node_type": "generic",
+          "heal": true,
+          "coordinates": {
+            "x": 215.56989247311827,
+            "y": 185.05376344086022,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Save Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Event - Arthur's House": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 113.26,
+            "y": 183.89,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "arthursHouse",
+          "connections": {
+            "Main Teleporter": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
     }
+  }
 }

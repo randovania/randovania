@@ -1,1498 +1,1498 @@
 {
-    "name": "Itorash",
-    "extra": {
-        "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
-        "map_min_x": 66,
-        "map_max_x": 51,
-        "map_min_y": 24,
-        "map_max_y": 70,
-        "scenario_id": "s090_skybase"
-    },
-    "areas": {
+  "name": "Itorash",
+  "extra": {
+    "asset_id": "maps/levels/c10_samus/s090_skybase/s090_skybase.brfld",
+    "map_min_x": 66,
+    "map_max_x": 51,
+    "map_min_y": 24,
+    "map_max_y": 70,
+    "scenario_id": "s090_skybase"
+  },
+  "areas": {
+    "Save Station": {
+      "default_node": "Save Station",
+      "extra": {
+        "total_boundings": {
+          "x1": 1400.0,
+          "x2": 3500.0,
+          "y1": -4600.0,
+          "y2": -3500.0
+        },
+        "polygon": [
+          [
+            3500.0,
+            -3500.0
+          ],
+          [
+            1400.0,
+            -3500.0
+          ],
+          [
+            1400.0,
+            -4600.0
+          ],
+          [
+            3500.0,
+            -4600.0
+          ]
+        ],
+        "asset_id": "collision_camera_000"
+      },
+      "nodes": {
+        "Door to Transport to Hanubia": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 1450.0,
+            "y": -4500.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "doorpowerpower_000",
+            "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+            "left_shield_entity": "{EMPTY}",
+            "left_shield_def": null,
+            "right_shield_entity": "{EMPTY}",
+            "right_shield_def": null
+          },
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Itorash",
+            "area": "Transport to Hanubia",
+            "node": "Door to Save Station"
+          },
+          "default_dock_weakness": "Power Beam Door",
+          "exclude_from_dock_rando": true,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Save Station": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Elevator to Raven Beak": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 3450.0,
+            "y": -4500.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "doorpowerpower_001",
+            "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+            "left_shield_entity": "{EMPTY}",
+            "left_shield_def": null,
+            "right_shield_entity": "{EMPTY}",
+            "right_shield_def": null
+          },
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Itorash",
+            "area": "Elevator to Raven Beak",
+            "node": "Door to Save Station"
+          },
+          "default_dock_weakness": "Power Beam Door",
+          "exclude_from_dock_rando": true,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Save Station": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
         "Save Station": {
-            "default_node": "Save Station",
-            "extra": {
-                "total_boundings": {
-                    "x1": 1400.0,
-                    "x2": 3500.0,
-                    "y1": -4600.0,
-                    "y2": -3500.0
-                },
-                "polygon": [
-                    [
-                        3500.0,
-                        -3500.0
-                    ],
-                    [
-                        1400.0,
-                        -3500.0
-                    ],
-                    [
-                        1400.0,
-                        -4600.0
-                    ],
-                    [
-                        3500.0,
-                        -4600.0
-                    ]
-                ],
-                "asset_id": "collision_camera_000"
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 2450.0,
+            "y": -4500.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "savestation_000",
+            "actor_def": "actordef:actors/props/savestation/charclasses/savestation.bmsad",
+            "start_point_actor_name": "savestation_000_platform",
+            "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
+          },
+          "valid_starting_location": false,
+          "connections": {
+            "Door to Transport to Hanubia": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             },
-            "nodes": {
-                "Door to Transport to Hanubia": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1450.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "doorpowerpower_000",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Itorash",
-                        "area": "Transport to Hanubia",
-                        "node": "Door to Save Station"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": true,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Elevator to Raven Beak": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3450.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "doorpowerpower_001",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Itorash",
-                        "area": "Elevator to Raven Beak",
-                        "node": "Door to Save Station"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": true,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Save Station": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2450.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "savestation_000",
-                        "actor_def": "actordef:actors/props/savestation/charclasses/savestation.bmsad",
-                        "start_point_actor_name": "savestation_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Transport to Hanubia": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Elevator to Raven Beak": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
+            "Door to Elevator to Raven Beak": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             }
-        },
-        "Transport to Hanubia": {
-            "default_node": "Elevator to Hanubia",
-            "extra": {
-                "total_boundings": {
-                    "x1": -5900.0,
-                    "x2": 1500.0,
-                    "y1": -4800.0,
-                    "y2": -1100.0
-                },
-                "polygon": [
-                    [
-                        1500.0,
-                        -1100.0
-                    ],
-                    [
-                        -5900.0,
-                        -1100.0
-                    ],
-                    [
-                        -5900.0,
-                        -4800.0
-                    ],
-                    [
-                        1500.0,
-                        -4800.0
-                    ]
-                ],
-                "asset_id": "collision_camera_001"
-            },
-            "nodes": {
-                "Door to Save Station": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1450.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "doorpowerpower_000",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Itorash",
-                        "area": "Save Station",
-                        "node": "Door to Transport to Hanubia"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": true,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Total Recharge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3650.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "StartPoint0",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Elevator to Hanubia": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Total Recharge": {
-                    "node_type": "generic",
-                    "heal": true,
-                    "coordinates": {
-                        "x": -650.0,
-                        "y": -4700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "totalrechargestation_000",
-                        "actor_def": "actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad",
-                        "start_point_actor_name": "weightactivatedplatform_total_000",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Door to Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact1",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact2",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact3",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact4",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact5",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact6",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact7",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact8",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact9",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact10",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact11",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Artifact12",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Artifact Gate": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Elevator to Hanubia": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3850.0,
-                        "y": -4700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "capsuleelevatorskybase_000",
-                        "actor_def": "actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad",
-                        "elevator_component": "CCapsuleUsableComponent",
-                        "target_spawn_point": "elevator_skybase_000_platform",
-                        "start_point_actor_name": "elevator_shipyard_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
-                        "transporter_name": "Itorash"
-                    },
-                    "valid_starting_location": true,
-                    "dock_type": "elevator",
-                    "default_connection": {
-                        "region": "Hanubia",
-                        "area": "Transport to Itorash",
-                        "node": "Elevator to Itorash"
-                    },
-                    "default_dock_weakness": "Elevator",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Artifact Gate": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Artifact Gate": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2176.3729246487865,
-                        "y": -3203.9910600255434,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Total Recharge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Elevator to Hanubia": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Elevator to Raven Beak": {
-            "default_node": "Start Point",
-            "extra": {
-                "total_boundings": {
-                    "x1": 3400.0,
-                    "x2": 6700.0,
-                    "y1": -4600.0,
-                    "y2": -2400.0
-                },
-                "polygon": [
-                    [
-                        6700.0,
-                        -2400.0
-                    ],
-                    [
-                        3400.0,
-                        -2400.0
-                    ],
-                    [
-                        3400.0,
-                        -4600.0
-                    ],
-                    [
-                        6700.0,
-                        -4600.0
-                    ]
-                ],
-                "asset_id": "collision_camera_002"
-            },
-            "nodes": {
-                "Door to Save Station": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3450.0,
-                        "y": -4500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "doorpowerpower_001",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Itorash",
-                        "area": "Save Station",
-                        "node": "Door to Elevator to Raven Beak"
-                    },
-                    "default_dock_weakness": "Power Beam Door",
-                    "exclude_from_dock_rando": true,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Event - Destroy Generator": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
-                        },
-                        "Dock to Raven Beak Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s090_skybase:default:block_pbcolumn_000",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spin",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Destroy Generator": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5050.0,
-                        "y": -4300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "block_pbcolumn_000",
-                        "actor_def": "actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "s090_skybase:default:block_pbcolumn_000",
-                    "connections": {
-                        "Door to Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5300.0,
-                        "y": -3000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_Commander",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Dock to Raven Beak Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Dock to Raven Beak Arena": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5050.0,
-                        "y": -3100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "commander_elevator",
-                        "actor_def": "actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad",
-                        "start_point_actor_name": "weightactivatedplatform_commanderelevator_000",
-                        "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Itorash",
-                        "area": "Raven Beak Arena",
-                        "node": "Before Fight"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Save Station": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Elevator Cutscene": {
-            "default_node": null,
-            "extra": {
-                "total_boundings": {
-                    "x1": 3400.0,
-                    "x2": 6700.0,
-                    "y1": -2500.0,
-                    "y2": 1900.0
-                },
-                "polygon": [
-                    [
-                        6700.0,
-                        1900.0
-                    ],
-                    [
-                        3400.0,
-                        1900.0
-                    ],
-                    [
-                        3400.0,
-                        -2500.0
-                    ],
-                    [
-                        6700.0,
-                        -2500.0
-                    ]
-                ],
-                "asset_id": "collision_camera_003"
-            },
-            "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {}
-                }
-            }
-        },
-        "Raven Beak Arena": {
-            "default_node": "Before Fight",
-            "extra": {
-                "total_boundings": {
-                    "x1": 3000.0,
-                    "x2": 7100.0,
-                    "y1": 1800.0,
-                    "y2": 4000.0
-                },
-                "polygon": [
-                    [
-                        7100.0,
-                        4000.0
-                    ],
-                    [
-                        3000.0,
-                        4000.0
-                    ],
-                    [
-                        3000.0,
-                        1800.0
-                    ],
-                    [
-                        7100.0,
-                        1800.0
-                    ]
-                ],
-                "asset_id": "collision_camera_004"
-            },
-            "nodes": {
-                "Before Fight": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4466.614354467461,
-                        "y": 2250.1255492780915,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Boss - Raven Beak": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: flesh out phase 2 and 3 fight requirements. phase 1 should more or less get the job done for now though",
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Energy Requirements",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 799,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 549,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 299,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Methods of dodging",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Phase 1 and 3",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Phase 2",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "Methods of fighting",
-                                            "items": [
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Phase 1",
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "52 wide + plasma + wave shots",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Beam Damage 240"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "83 wide + plasma shots or 105 wide + wave shots",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Beam Damage 120"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "167 wide shots or 157 plasma + wave shots",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Beam Damage 75"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "500 power beam shots or 250 plasma shots or 313 wave shots",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Beam"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 5,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Ice Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "MissileAmmo",
-                                                                                "amount": 34,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Super Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "MissileAmmo",
-                                                                                "amount": 45,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Missile"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "MissileAmmo",
-                                                                                "amount": 134,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Boss - Raven Beak": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5032.84,
-                        "y": 2533.24,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Event - Escape Sequence": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Spin",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Speedbooster",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SWJ",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Event - Escape Sequence": {
-                    "node_type": "event",
-                    "heal": true,
-                    "coordinates": {
-                        "x": 5736.34,
-                        "y": 2267.28,
-                        "z": 0.0
-                    },
-                    "description": "End of the game",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_Endgame",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "valid_starting_location": false,
-                    "event_name": "Ship",
-                    "connections": {
-                        "Dock to Elevator to Raven Beak": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Dock to Elevator to Raven Beak": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6299.61,
-                        "y": 2370.1,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "other",
-                    "default_connection": {
-                        "region": "Itorash",
-                        "area": "Elevator to Raven Beak",
-                        "node": "Start Point"
-                    },
-                    "default_dock_weakness": "Open Passage",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {}
-                }
-            }
+          }
         }
+      }
+    },
+    "Transport to Hanubia": {
+      "default_node": "Elevator to Hanubia",
+      "extra": {
+        "total_boundings": {
+          "x1": -5900.0,
+          "x2": 1500.0,
+          "y1": -4800.0,
+          "y2": -1100.0
+        },
+        "polygon": [
+          [
+            1500.0,
+            -1100.0
+          ],
+          [
+            -5900.0,
+            -1100.0
+          ],
+          [
+            -5900.0,
+            -4800.0
+          ],
+          [
+            1500.0,
+            -4800.0
+          ]
+        ],
+        "asset_id": "collision_camera_001"
+      },
+      "nodes": {
+        "Door to Save Station": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 1450.0,
+            "y": -4500.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "doorpowerpower_000",
+            "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+            "left_shield_entity": "{EMPTY}",
+            "left_shield_def": null,
+            "right_shield_entity": "{EMPTY}",
+            "right_shield_def": null
+          },
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Itorash",
+            "area": "Save Station",
+            "node": "Door to Transport to Hanubia"
+          },
+          "default_dock_weakness": "Power Beam Door",
+          "exclude_from_dock_rando": true,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Total Recharge": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Start Point": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": -3650.0,
+            "y": -4500.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "start_point_actor_name": "StartPoint0",
+            "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+          },
+          "valid_starting_location": false,
+          "connections": {
+            "Elevator to Hanubia": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Total Recharge": {
+          "node_type": "generic",
+          "heal": true,
+          "coordinates": {
+            "x": -650.0,
+            "y": -4700.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "totalrechargestation_000",
+            "actor_def": "actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad",
+            "start_point_actor_name": "weightactivatedplatform_total_000",
+            "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
+          },
+          "valid_starting_location": false,
+          "connections": {
+            "Door to Save Station": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact1",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact2",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact3",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact4",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact5",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact6",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact7",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact8",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact9",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact10",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact11",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Artifact12",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  }
+                ]
+              }
+            },
+            "Artifact Gate": {
+              "type": "or",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "template",
+                    "data": "Use Spin Boost"
+                  },
+                  {
+                    "type": "template",
+                    "data": "Simple IBJ"
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Speed",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "and",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Flash",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "tricks",
+                            "name": "Walljump",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "and",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Morph",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "tricks",
+                            "name": "SWJ",
+                            "amount": 2,
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Elevator to Hanubia": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": -3850.0,
+            "y": -4700.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "capsuleelevatorskybase_000",
+            "actor_def": "actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad",
+            "elevator_component": "CCapsuleUsableComponent",
+            "target_spawn_point": "elevator_skybase_000_platform",
+            "start_point_actor_name": "elevator_shipyard_000_platform",
+            "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad",
+            "transporter_name": "Itorash"
+          },
+          "valid_starting_location": true,
+          "dock_type": "elevator",
+          "default_connection": {
+            "region": "Hanubia",
+            "area": "Transport to Itorash",
+            "node": "Elevator to Itorash"
+          },
+          "default_dock_weakness": "Elevator",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Start Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Artifact Gate": {
+              "type": "or",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "template",
+                    "data": "Use Spin Boost"
+                  },
+                  {
+                    "type": "template",
+                    "data": "Simple IBJ"
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Speed",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "and",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Flash",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "tricks",
+                            "name": "Walljump",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "and",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Morph",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "tricks",
+                            "name": "SWJ",
+                            "amount": 2,
+                            "negate": false
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Artifact Gate": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": -2176.3729246487865,
+            "y": -3203.9910600255434,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Total Recharge": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Elevator to Hanubia": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Elevator to Raven Beak": {
+      "default_node": "Start Point",
+      "extra": {
+        "total_boundings": {
+          "x1": 3400.0,
+          "x2": 6700.0,
+          "y1": -4600.0,
+          "y2": -2400.0
+        },
+        "polygon": [
+          [
+            6700.0,
+            -2400.0
+          ],
+          [
+            3400.0,
+            -2400.0
+          ],
+          [
+            3400.0,
+            -4600.0
+          ],
+          [
+            6700.0,
+            -4600.0
+          ]
+        ],
+        "asset_id": "collision_camera_002"
+      },
+      "nodes": {
+        "Door to Save Station": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 3450.0,
+            "y": -4500.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "doorpowerpower_001",
+            "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+            "left_shield_entity": "{EMPTY}",
+            "left_shield_def": null,
+            "right_shield_entity": "{EMPTY}",
+            "right_shield_def": null
+          },
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Itorash",
+            "area": "Save Station",
+            "node": "Door to Elevator to Raven Beak"
+          },
+          "default_dock_weakness": "Power Beam Door",
+          "exclude_from_dock_rando": true,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Event - Destroy Generator": {
+              "type": "template",
+              "data": "Lay Power Bomb"
+            },
+            "Dock to Raven Beak Arena": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "events",
+                      "name": "s090_skybase:default:block_pbcolumn_000",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Space",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "template",
+                          "data": "Simple IBJ"
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Speed",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "and",
+                          "data": {
+                            "comment": null,
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "items",
+                                  "name": "Spin",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Walljump",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "and",
+                          "data": {
+                            "comment": null,
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "items",
+                                  "name": "Flash",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Walljump",
+                                  "amount": 3,
+                                  "negate": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Event - Destroy Generator": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 5050.0,
+            "y": -4300.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "block_pbcolumn_000",
+            "actor_def": "actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad"
+          },
+          "valid_starting_location": false,
+          "event_name": "s090_skybase:default:block_pbcolumn_000",
+          "connections": {
+            "Door to Save Station": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Start Point": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 5300.0,
+            "y": -3000.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "start_point_actor_name": "SP_Checkpoint_Commander",
+            "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+          },
+          "valid_starting_location": false,
+          "connections": {
+            "Dock to Raven Beak Arena": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Dock to Raven Beak Arena": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 5050.0,
+            "y": -3100.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "actor_name": "commander_elevator",
+            "actor_def": "actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad",
+            "start_point_actor_name": "weightactivatedplatform_commanderelevator_000",
+            "start_point_actor_def": "actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad"
+          },
+          "valid_starting_location": false,
+          "dock_type": "other",
+          "default_connection": {
+            "region": "Itorash",
+            "area": "Raven Beak Arena",
+            "node": "Before Fight"
+          },
+          "default_dock_weakness": "Open Passage",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Save Station": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Start Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Elevator Cutscene": {
+      "default_node": null,
+      "extra": {
+        "total_boundings": {
+          "x1": 3400.0,
+          "x2": 6700.0,
+          "y1": -2500.0,
+          "y2": 1900.0
+        },
+        "polygon": [
+          [
+            6700.0,
+            1900.0
+          ],
+          [
+            3400.0,
+            1900.0
+          ],
+          [
+            3400.0,
+            -2500.0
+          ],
+          [
+            6700.0,
+            -2500.0
+          ]
+        ],
+        "asset_id": "collision_camera_003"
+      },
+      "nodes": {
+        "Placeholder": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": null,
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {}
+        }
+      }
+    },
+    "Raven Beak Arena": {
+      "default_node": "Before Fight",
+      "extra": {
+        "total_boundings": {
+          "x1": 3000.0,
+          "x2": 7100.0,
+          "y1": 1800.0,
+          "y2": 4000.0
+        },
+        "polygon": [
+          [
+            7100.0,
+            4000.0
+          ],
+          [
+            3000.0,
+            4000.0
+          ],
+          [
+            3000.0,
+            1800.0
+          ],
+          [
+            7100.0,
+            1800.0
+          ]
+        ],
+        "asset_id": "collision_camera_004"
+      },
+      "nodes": {
+        "Before Fight": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 4466.614354467461,
+            "y": 2250.1255492780915,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Boss - Raven Beak": {
+              "type": "and",
+              "data": {
+                "comment": "TODO: flesh out phase 2 and 3 fight requirements. phase 1 should more or less get the job done for now though",
+                "items": [
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": "Energy Requirements",
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "damage",
+                            "name": "Damage",
+                            "amount": 799,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "tricks",
+                            "name": "Combat",
+                            "amount": 3,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "and",
+                          "data": {
+                            "comment": null,
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "damage",
+                                  "name": "Damage",
+                                  "amount": 549,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Combat",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "and",
+                          "data": {
+                            "comment": null,
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "damage",
+                                  "name": "Damage",
+                                  "amount": 299,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Combat",
+                                  "amount": 2,
+                                  "negate": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "and",
+                    "data": {
+                      "comment": "Methods of dodging",
+                      "items": [
+                        {
+                          "type": "or",
+                          "data": {
+                            "comment": "Phase 1 and 3",
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "items",
+                                  "name": "Flash",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Combat",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "or",
+                          "data": {
+                            "comment": "Phase 2",
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "items",
+                                  "name": "Space",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Combat",
+                                  "amount": 2,
+                                  "negate": false
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "and",
+                    "data": {
+                      "comment": "Methods of fighting",
+                      "items": [
+                        {
+                          "type": "or",
+                          "data": {
+                            "comment": "Phase 1",
+                            "items": [
+                              {
+                                "type": "and",
+                                "data": {
+                                  "comment": "52 wide + plasma + wave shots",
+                                  "items": [
+                                    {
+                                      "type": "template",
+                                      "data": "Beam Damage 240"
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "and",
+                                "data": {
+                                  "comment": "83 wide + plasma shots or 105 wide + wave shots",
+                                  "items": [
+                                    {
+                                      "type": "template",
+                                      "data": "Beam Damage 120"
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Combat",
+                                        "amount": 1,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "and",
+                                "data": {
+                                  "comment": "167 wide shots or 157 plasma + wave shots",
+                                  "items": [
+                                    {
+                                      "type": "template",
+                                      "data": "Beam Damage 75"
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Combat",
+                                        "amount": 3,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "and",
+                                "data": {
+                                  "comment": "500 power beam shots or 250 plasma shots or 313 wave shots",
+                                  "items": [
+                                    {
+                                      "type": "template",
+                                      "data": "Shoot Beam"
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Combat",
+                                        "amount": 5,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "and",
+                                "data": {
+                                  "comment": null,
+                                  "items": [
+                                    {
+                                      "type": "template",
+                                      "data": "Shoot Super Ice Missile"
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "items",
+                                        "name": "MissileAmmo",
+                                        "amount": 34,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "and",
+                                "data": {
+                                  "comment": null,
+                                  "items": [
+                                    {
+                                      "type": "template",
+                                      "data": "Shoot Super Missile"
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "items",
+                                        "name": "MissileAmmo",
+                                        "amount": 45,
+                                        "negate": false
+                                      }
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Combat",
+                                        "amount": 2,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "and",
+                                "data": {
+                                  "comment": null,
+                                  "items": [
+                                    {
+                                      "type": "template",
+                                      "data": "Shoot Missile"
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "items",
+                                        "name": "MissileAmmo",
+                                        "amount": 134,
+                                        "negate": false
+                                      }
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Combat",
+                                        "amount": 4,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Boss - Raven Beak": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 5032.84,
+            "y": 2533.24,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Event - Escape Sequence": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "template",
+                    "data": "Lay Power Bomb"
+                  },
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Space",
+                            "amount": 1,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "template",
+                          "data": "Simple IBJ"
+                        },
+                        {
+                          "type": "and",
+                          "data": {
+                            "comment": null,
+                            "items": [
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "items",
+                                  "name": "Spin",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "items",
+                                  "name": "Speed",
+                                  "amount": 1,
+                                  "negate": false
+                                }
+                              },
+                              {
+                                "type": "or",
+                                "data": {
+                                  "comment": null,
+                                  "items": [
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Movement",
+                                        "amount": 2,
+                                        "negate": false
+                                      }
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Speedbooster",
+                                        "amount": 1,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "type": "or",
+                                "data": {
+                                  "comment": null,
+                                  "items": [
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "Walljump",
+                                        "amount": 1,
+                                        "negate": false
+                                      }
+                                    },
+                                    {
+                                      "type": "resource",
+                                      "data": {
+                                        "type": "tricks",
+                                        "name": "SWJ",
+                                        "amount": 2,
+                                        "negate": false
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Event - Escape Sequence": {
+          "node_type": "event",
+          "heal": true,
+          "coordinates": {
+            "x": 5736.34,
+            "y": 2267.28,
+            "z": 0.0
+          },
+          "description": "End of the game",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "start_point_actor_name": "SP_Checkpoint_Endgame",
+            "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
+          },
+          "valid_starting_location": false,
+          "event_name": "Ship",
+          "connections": {
+            "Dock to Elevator to Raven Beak": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Dock to Elevator to Raven Beak": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 6299.61,
+            "y": 2370.1,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "other",
+          "default_connection": {
+            "region": "Itorash",
+            "area": "Elevator to Raven Beak",
+            "node": "Start Point"
+          },
+          "default_dock_weakness": "Open Passage",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {}
+        }
+      }
     }
+  }
 }

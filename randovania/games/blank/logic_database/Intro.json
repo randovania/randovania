@@ -1,1210 +1,1210 @@
 {
-    "name": "Intro",
-    "extra": {},
-    "areas": {
-        "Starting Area": {
-            "default_node": "Spawn Point",
-            "extra": {},
-            "nodes": {
-                "Spawn Point": {
-                    "node_type": "generic",
-                    "heal": true,
-                    "coordinates": {
-                        "x": 305.34759358288767,
-                        "y": 194.6524064171123,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "connections": {
-                        "Pickup (Weapon)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Boss Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Weapon",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ammo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Missile Expansion)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Explosive Depot": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Back-Only Lock Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Blue Key Room (Exit)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Blue Key Room (Entrance)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Second Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Heated Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Weapon)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 61.74306734578382,
-                        "y": 206.22524052065646,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 0,
-                    "location_category": "major",
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Boss Arena": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 596.55,
-                        "y": 192.53,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Boss Arena",
-                        "node": "Door to Starting Area"
-                    },
-                    "default_dock_weakness": "Explosive Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Missile Expansion)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 134.22459893048128,
-                        "y": 314.0819964349376,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 1,
-                    "location_category": "minor",
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Explosive Depot": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 423.5772357723577,
-                        "y": 363.4146341463415,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Explosive Depot",
-                        "node": "Door to Starting Area"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Back-Only Lock Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 236.79308050565535,
-                        "y": 382.63473053892216,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Back-Only Lock Room",
-                        "node": "Door to Starting Area"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Blue Key Room (Exit)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 203.2258064516129,
-                        "y": 36.44595359366156,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Blue Key Room",
-                        "node": "Door to Starting Area (Exit)"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Blue Key Room (Entrance)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 379.7962648556876,
-                        "y": 12.676853423882278,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Blue Key Room",
-                        "node": "Door to Starting Area (Entrance)"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Second Spawn Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 527.4837511606314,
-                        "y": 37.511606313834704,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Heated Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 500.0,
-                        "y": 300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Heated Room",
-                        "node": "Door to Starting Area"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Boss Arena": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Square"
+  "name": "Intro",
+  "extra": {},
+  "areas": {
+    "Starting Area": {
+      "default_node": "Spawn Point",
+      "extra": {},
+      "nodes": {
+        "Spawn Point": {
+          "node_type": "generic",
+          "heal": true,
+          "coordinates": {
+            "x": 305.34759358288767,
+            "y": 194.6524064171123,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "connections": {
+            "Pickup (Weapon)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             },
-            "nodes": {
-                "Door to Starting Area": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4.79,
-                        "y": 118.53,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Starting Area",
-                        "node": "Door to Boss Arena"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Event - Boss": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Weapon",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ammo",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Ammo",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Free Loot)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
+            "Door to Boss Arena": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Weapon",
+                      "amount": 1,
+                      "negate": false
                     }
-                },
-                "Event - Boss": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 149.9,
-                        "y": 114.22,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Boss",
-                    "connections": {
-                        "Door to Starting Area": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Ammo",
+                      "amount": 1,
+                      "negate": false
                     }
-                },
-                "Pickup (Free Loot)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 24.17,
-                        "y": 51.22,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "extra_pickups"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 5,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Starting Area": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Explosive Depot": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Square"
+                  }
+                ]
+              }
             },
-            "nodes": {
-                "Door to Starting Area": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 116.96052339764915,
-                        "y": 15.080949212685738,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Starting Area",
-                        "node": "Door to Explosive Depot"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Explosive)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Hint Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Explosive)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 121.95054335772899,
-                        "y": 216.89953426480372,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 2,
-                    "location_category": "major",
-                    "connections": {
-                        "Door to Starting Area": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Hint Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 239.5,
-                        "y": 119.92,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Hint Room",
-                        "node": "Door to Explosive Depot"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Door to Starting Area": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Back-Only Lock Room": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Square"
+            "Pickup (Missile Expansion)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             },
-            "nodes": {
-                "Door to Starting Area": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 118.90108671545798,
-                        "y": 13.972055888223537,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Starting Area",
-                        "node": "Door to Back-Only Lock Room"
-                    },
-                    "default_dock_weakness": "Back-Only Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Event - Key Switch 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Key Switch 1": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 116.52131782945736,
-                        "y": 204.33624031007753,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "KeySwitch1",
-                    "connections": {
-                        "Middle Node": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Extra Key)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 194.22,
-                        "y": 188.45,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 6,
-                    "location_category": "major",
-                    "connections": {
-                        "Door to Starting Area": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Weapon",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Explosive",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ammo",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "BlueKey",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Middle Node": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 166.63,
-                        "y": 213.9,
-                        "z": 0.0
-                    },
-                    "description": "Just so the event+pickup don't become an EventPickup node\n\n",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Extra Key)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Blue Key Room": {
-            "default_node": "Spawn Point",
-            "extra": {
-                "map_name": "Square"
+            "Door to Explosive Depot": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             },
-            "nodes": {
-                "Door to Starting Area (Exit)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 62.983399358611585,
-                        "y": 234.64912280701753,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Starting Area",
-                        "node": "Door to Blue Key Room (Exit)"
-                    },
-                    "default_dock_weakness": "Blue Key Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Starting Area (Entrance)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 204.25298179535466,
-                        "y": 213.27683615819214,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Starting Area",
-                        "node": "Door to Blue Key Room (Entrance)"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Key Switch 2": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 62.22536095417451,
-                        "y": 74.38794726930325,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "KeySwitch2",
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Blue Key)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 157.17200251098555,
-                        "y": 97.92843691148781,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 4,
-                    "location_category": "major",
-                    "connections": {
-                        "Spawn Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Spawn Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 131.27746390458253,
-                        "y": 156.7796610169492,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": true,
-                    "connections": {
-                        "Door to Starting Area (Exit)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Key Switch 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Blue Key)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Hint Room": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Square"
+            "Door to Back-Only Lock Room": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             },
-            "nodes": {
-                "Door to Explosive Depot": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 10.57,
-                        "y": 123.69,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Explosive Depot",
-                        "node": "Door to Hint Room"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Hint with Translator": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Hint no Translator": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
+            "Door to Blue Key Room (Exit)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Blue Key Room (Entrance)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Second Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Heated Room": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Weapon)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 61.74306734578382,
+            "y": 206.22524052065646,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "pickup_index": 0,
+          "location_category": "major",
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Boss Arena": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 596.55,
+            "y": 192.53,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Boss Arena",
+            "node": "Door to Starting Area"
+          },
+          "default_dock_weakness": "Explosive Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Missile Expansion)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 134.22459893048128,
+            "y": 314.0819964349376,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "pickup_index": 1,
+          "location_category": "minor",
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Explosive Depot": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 423.5772357723577,
+            "y": 363.4146341463415,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Explosive Depot",
+            "node": "Door to Starting Area"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Back-Only Lock Room": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 236.79308050565535,
+            "y": 382.63473053892216,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Back-Only Lock Room",
+            "node": "Door to Starting Area"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Blue Key Room (Exit)": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 203.2258064516129,
+            "y": 36.44595359366156,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Blue Key Room",
+            "node": "Door to Starting Area (Exit)"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Blue Key Room (Entrance)": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 379.7962648556876,
+            "y": 12.676853423882278,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Blue Key Room",
+            "node": "Door to Starting Area (Entrance)"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Second Spawn Point": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 527.4837511606314,
+            "y": 37.511606313834704,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Heated Room": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 500.0,
+            "y": 300.0,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Heated Room",
+            "node": "Door to Starting Area"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Boss Arena": {
+      "default_node": null,
+      "extra": {
+        "map_name": "Square"
+      },
+      "nodes": {
+        "Door to Starting Area": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 4.79,
+            "y": 118.53,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Starting Area",
+            "node": "Door to Boss Arena"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Event - Boss": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Weapon",
+                      "amount": 1,
+                      "negate": false
                     }
-                },
-                "Hint with Translator": {
-                    "node_type": "hint",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 179.16,
-                        "y": 171.73,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "translator": "BlueKey",
-                        "string_asset_id": 0
-                    },
-                    "valid_starting_location": false,
-                    "kind": "generic",
-                    "requirement_to_collect": {
-                        "type": "and",
-                        "data": {
+                  },
+                  {
+                    "type": "or",
+                    "data": {
+                      "comment": null,
+                      "items": [
+                        {
+                          "type": "resource",
+                          "data": {
+                            "type": "items",
+                            "name": "Ammo",
+                            "amount": 4,
+                            "negate": false
+                          }
+                        },
+                        {
+                          "type": "and",
+                          "data": {
                             "comment": null,
                             "items": [
-                                {
-                                    "type": "resource",
-                                    "data": {
-                                        "type": "items",
-                                        "name": "BlueKey",
-                                        "amount": 1,
-                                        "negate": false
-                                    }
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "tricks",
+                                  "name": "Combat",
+                                  "amount": 1,
+                                  "negate": false
                                 }
+                              },
+                              {
+                                "type": "resource",
+                                "data": {
+                                  "type": "items",
+                                  "name": "Ammo",
+                                  "amount": 2,
+                                  "negate": false
+                                }
+                              }
                             ]
+                          }
                         }
-                    },
-                    "connections": {
-                        "Door to Explosive Depot": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
+                      ]
                     }
-                },
-                "Hint no Translator": {
-                    "node_type": "hint",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 173.04,
-                        "y": 81.76,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "string_asset_id": 1
-                    },
-                    "valid_starting_location": false,
-                    "kind": "generic",
-                    "requirement_to_collect": {
-                        "type": "and",
-                        "data": {
-                            "comment": null,
-                            "items": []
-                        }
-                    },
-                    "connections": {
-                        "Door to Explosive Depot": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Heated Room": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Orange"
+                  }
+                ]
+              }
             },
-            "nodes": {
-                "Pickup (Health)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 155.99,
-                        "y": 185.84,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "pickup_index": 3,
-                    "location_category": "minor",
-                    "connections": {
-                        "Door to Starting Area": {
-                            "type": "and",
-                            "data": {
-                                "comment": "When damage contraints are combined with 'and', the result requires the sum of the damage values.",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 40,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 10,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Door to Starting Area": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 55.0,
-                        "y": 52.69,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "dock_type": "door",
-                    "default_connection": {
-                        "region": "Intro",
-                        "area": "Starting Area",
-                        "node": "Door to Heated Room"
-                    },
-                    "default_dock_weakness": "Normal Door",
-                    "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [],
-                    "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
-                    "connections": {
-                        "Pickup (Health)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "damage",
-                                "name": "Damage",
-                                "amount": 49,
-                                "negate": false
-                            }
-                        }
-                    }
-                }
+            "Pickup (Free Loot)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
             }
+          }
         },
-        "Empty Area": {
-            "default_node": null,
-            "extra": {
-                "map_name": "Square"
-            },
-            "nodes": {}
+        "Event - Boss": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 149.9,
+            "y": 114.22,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "Boss",
+          "connections": {
+            "Door to Starting Area": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Free Loot)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 24.17,
+            "y": 51.22,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "extra_pickups"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "pickup_index": 5,
+          "location_category": "minor",
+          "connections": {
+            "Door to Starting Area": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
         }
+      }
+    },
+    "Explosive Depot": {
+      "default_node": null,
+      "extra": {
+        "map_name": "Square"
+      },
+      "nodes": {
+        "Door to Starting Area": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 116.96052339764915,
+            "y": 15.080949212685738,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Starting Area",
+            "node": "Door to Explosive Depot"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Pickup (Explosive)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Door to Hint Room": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Explosive)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 121.95054335772899,
+            "y": 216.89953426480372,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "pickup_index": 2,
+          "location_category": "major",
+          "connections": {
+            "Door to Starting Area": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Hint Room": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 239.5,
+            "y": 119.92,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Hint Room",
+            "node": "Door to Explosive Depot"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Door to Starting Area": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Back-Only Lock Room": {
+      "default_node": null,
+      "extra": {
+        "map_name": "Square"
+      },
+      "nodes": {
+        "Door to Starting Area": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 118.90108671545798,
+            "y": 13.972055888223537,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Starting Area",
+            "node": "Door to Back-Only Lock Room"
+          },
+          "default_dock_weakness": "Back-Only Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Event - Key Switch 1": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Event - Key Switch 1": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 116.52131782945736,
+            "y": 204.33624031007753,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "KeySwitch1",
+          "connections": {
+            "Middle Node": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Extra Key)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 194.22,
+            "y": 188.45,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "pickup_index": 6,
+          "location_category": "major",
+          "connections": {
+            "Door to Starting Area": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Weapon",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Explosive",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "Ammo",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "items",
+                      "name": "BlueKey",
+                      "amount": 1,
+                      "negate": false
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Middle Node": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 166.63,
+            "y": 213.9,
+            "z": 0.0
+          },
+          "description": "Just so the event+pickup don't become an EventPickup node\n\n",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "connections": {
+            "Pickup (Extra Key)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Blue Key Room": {
+      "default_node": "Spawn Point",
+      "extra": {
+        "map_name": "Square"
+      },
+      "nodes": {
+        "Door to Starting Area (Exit)": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 62.983399358611585,
+            "y": 234.64912280701753,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Starting Area",
+            "node": "Door to Blue Key Room (Exit)"
+          },
+          "default_dock_weakness": "Blue Key Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Door to Starting Area (Entrance)": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 204.25298179535466,
+            "y": 213.27683615819214,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Starting Area",
+            "node": "Door to Blue Key Room (Entrance)"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Event - Key Switch 2": {
+          "node_type": "event",
+          "heal": false,
+          "coordinates": {
+            "x": 62.22536095417451,
+            "y": 74.38794726930325,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "event_name": "KeySwitch2",
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Pickup (Blue Key)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 157.17200251098555,
+            "y": 97.92843691148781,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "pickup_index": 4,
+          "location_category": "major",
+          "connections": {
+            "Spawn Point": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Spawn Point": {
+          "node_type": "generic",
+          "heal": false,
+          "coordinates": {
+            "x": 131.27746390458253,
+            "y": 156.7796610169492,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": true,
+          "connections": {
+            "Door to Starting Area (Exit)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Event - Key Switch 2": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Pickup (Blue Key)": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Hint Room": {
+      "default_node": null,
+      "extra": {
+        "map_name": "Square"
+      },
+      "nodes": {
+        "Door to Explosive Depot": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 10.57,
+            "y": 123.69,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Explosive Depot",
+            "node": "Door to Hint Room"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Hint with Translator": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            },
+            "Hint no Translator": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Hint with Translator": {
+          "node_type": "hint",
+          "heal": false,
+          "coordinates": {
+            "x": 179.16,
+            "y": 171.73,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "translator": "BlueKey",
+            "string_asset_id": 0
+          },
+          "valid_starting_location": false,
+          "kind": "generic",
+          "requirement_to_collect": {
+            "type": "and",
+            "data": {
+              "comment": null,
+              "items": [
+                {
+                  "type": "resource",
+                  "data": {
+                    "type": "items",
+                    "name": "BlueKey",
+                    "amount": 1,
+                    "negate": false
+                  }
+                }
+              ]
+            }
+          },
+          "connections": {
+            "Door to Explosive Depot": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        },
+        "Hint no Translator": {
+          "node_type": "hint",
+          "heal": false,
+          "coordinates": {
+            "x": 173.04,
+            "y": 81.76,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {
+            "string_asset_id": 1
+          },
+          "valid_starting_location": false,
+          "kind": "generic",
+          "requirement_to_collect": {
+            "type": "and",
+            "data": {
+              "comment": null,
+              "items": []
+            }
+          },
+          "connections": {
+            "Door to Explosive Depot": {
+              "type": "and",
+              "data": {
+                "comment": null,
+                "items": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "Heated Room": {
+      "default_node": null,
+      "extra": {
+        "map_name": "Orange"
+      },
+      "nodes": {
+        "Pickup (Health)": {
+          "node_type": "pickup",
+          "heal": false,
+          "coordinates": {
+            "x": 155.99,
+            "y": 185.84,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "pickup_index": 3,
+          "location_category": "minor",
+          "connections": {
+            "Door to Starting Area": {
+              "type": "and",
+              "data": {
+                "comment": "When damage contraints are combined with 'and', the result requires the sum of the damage values.",
+                "items": [
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "damage",
+                      "name": "Damage",
+                      "amount": 40,
+                      "negate": false
+                    }
+                  },
+                  {
+                    "type": "resource",
+                    "data": {
+                      "type": "damage",
+                      "name": "Damage",
+                      "amount": 10,
+                      "negate": false
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Door to Starting Area": {
+          "node_type": "dock",
+          "heal": false,
+          "coordinates": {
+            "x": 55.0,
+            "y": 52.69,
+            "z": 0.0
+          },
+          "description": "",
+          "layers": [
+            "default"
+          ],
+          "extra": {},
+          "valid_starting_location": false,
+          "dock_type": "door",
+          "default_connection": {
+            "region": "Intro",
+            "area": "Starting Area",
+            "node": "Door to Heated Room"
+          },
+          "default_dock_weakness": "Normal Door",
+          "exclude_from_dock_rando": false,
+          "incompatible_dock_weaknesses": [],
+          "override_default_open_requirement": null,
+          "override_default_lock_requirement": null,
+          "connections": {
+            "Pickup (Health)": {
+              "type": "resource",
+              "data": {
+                "type": "damage",
+                "name": "Damage",
+                "amount": 49,
+                "negate": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "Empty Area": {
+      "default_node": null,
+      "extra": {
+        "map_name": "Square"
+      },
+      "nodes": {}
     }
+  }
 }
