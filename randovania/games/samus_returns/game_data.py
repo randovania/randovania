@@ -126,6 +126,11 @@ game_data: game.GameData = game.GameData(
             "until the Missile Launcher is in your inventory. This prevents a bug where "
             "the reserve will activate even if you have no usable Missiles.",
         ),
+        (
+            "Why did my Power Bombs disappear during the Diggernaut fight?",
+            "Due to technical limitations, Power Bombs are temporarily disabled while fighting Diggernaut. "
+            "If Diggernaut is defeated or a checkpoint/save is reloaded, your Power Bombs will be re-enabled.",
+        ),
     ],
     web_info=game.GameWebInfo(
         what_can_randomize=[
