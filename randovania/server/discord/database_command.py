@@ -237,7 +237,7 @@ class SelectNodesItem(discord.ui.Select):
                     continue
 
                 extra_lines = []
-                for level, text in pretty_print.pretty_print_requirement(requirement.simplify(), db.resource_database):
+                for level, text in pretty_print.pretty_format_requirement(requirement.simplify(), db.resource_database):
                     extra_lines.append("{}{}".format("  " * level, text))
 
                 inner = "\n".join(extra_lines)
