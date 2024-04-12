@@ -1,4 +1,4 @@
-[
+HASH_WORDS = [
     "A-Kul",
     "Abandoned",
     "Abyss",
@@ -183,8 +183,8 @@
     "Mining",
     "Mire",
     "Missile",
-    "Mk VI",
-    "Mk VII",
+    "Mk-VI",
+    "Mk-VII",
     "Module",
     "Morph",
     "Mutated",
@@ -321,5 +321,5 @@
     "Worker",
     "Works",
     "Worksite",
-    "Worship"
+    "Worship",
 ]

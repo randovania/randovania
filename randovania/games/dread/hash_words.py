@@ -1,4 +1,4 @@
-[
+HASH_WORDS = [
     "Aberration",
     "Adam",
     "Aeion",
@@ -130,5 +130,5 @@
     "Yamplot-X",
     "Yojimbee",
     "ZDR",
-    "Zone"
+    "Zone",
 ]

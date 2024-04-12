@@ -18,6 +18,9 @@ from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 if typing.TYPE_CHECKING:
+    from argparse import _SubParsersAction
+
+    from randovania.game_description.db.area import Area
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
@@ -388,7 +391,7 @@ def pickups_per_area_command(sub_parsers):
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
-def _find_uncommented_tricks(requirement: Requirement):
+def _find_tricks_usage_documentation(requirement: Requirement) -> typing.Iterator[tuple[str, bool]]:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
     if not isinstance(requirement, RequirementArrayBase):
@@ -397,20 +400,41 @@ def _find_uncommented_tricks(requirement: Requirement):
     trick_resources = []
     for it in requirement.items:
         if isinstance(it, RequirementArrayBase):
-            yield from _find_uncommented_tricks(it)
+            yield from _find_tricks_usage_documentation(it)
         elif isinstance(it, ResourceRequirement) and it.resource.resource_type == ResourceType.TRICK:
             trick_resources.append(it)
 
-    if requirement.comment is None and trick_resources:
-        yield ", ".join(
-            sorted(
-                f"{req.resource.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
-                for req in trick_resources
-            )
+    if trick_resources:
+        yield (
+            ", ".join(
+                sorted(
+                    f"{req.resource.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
+                    for req in trick_resources
+                )
+            ),
+            requirement.comment is not None,
         )
 
 
-def uncommented_trick_usages_logic(args):
+def _flat_trick_usage(requirement: Requirement) -> dict[str, bool]:
+    doc: dict[str, bool] = {}
+    for usage, documented in sorted(set(_find_tricks_usage_documentation(requirement))):
+        doc[usage] = documented and doc.get(usage, True)
+    return doc
+
+
+def _get_area_connection_docs(area: Area) -> dict[str, dict[str, dict[str, bool]]]:
+    paths: dict[str, dict[str, dict[str, bool]]] = {}
+    for source, connections in area.connections.items():
+        paths[source.name] = {}
+        for target, requirement in connections.items():
+            trick_documentation = _flat_trick_usage(requirement)
+            if trick_documentation:
+                paths[source.name][target.name] = trick_documentation
+    return paths
+
+
+def trick_usage_documentation_logic(args: argparse.Namespace) -> None:
     gd = load_game_description(args)
     output_path: Path = args.output_path
 
@@ -418,34 +442,24 @@ def uncommented_trick_usages_logic(args):
     for region in gd.region_list.regions:
         lines.append(f"# {region.name}")
         for area in region.areas:
-            paths = {}
-            for source, connections in area.connections.items():
-                paths[source.name] = {}
-                for target, requirement in connections.items():
-                    undocumented = sorted(set(_find_uncommented_tricks(requirement)))
-                    if undocumented:
-                        paths[source.name][target.name] = undocumented
+            paths = _get_area_connection_docs(area)
 
             if paths and any(paths.values()):
-                lines.append(f"## {area.name}")
+                lines.append(f"\n## {area.name}")
                 for source_name, connections in paths.items():
                     if connections:
-                        lines.append(f"### {source_name}")
-                        for target_name, undocumented in connections.items():
-                            if len(undocumented) == 1:
-                                lines.append(f"- [ ] {target_name}: {undocumented[0]}\n")
-                            else:
-                                lines.append(f"#### {target_name}")
-                                for it in undocumented:
-                                    lines.append(f"- [ ] {it}\n")
+                        for target_name, trick_documentation in connections.items():
+                            lines.append(f"### {source_name} -> {target_name}:")
+                            for it, used in trick_documentation.items():
+                                lines.append(f"- [{'X' if used else ' '}] {it}")
 
     output_path.write_text("\n".join(lines))
 
 
-def uncommented_trick_usages_command(sub_parsers):
+def trick_usage_documentation_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
-        "uncommented-trick-usages",
-        help="Creates a list of all trick usages that are in uncommented groups.",
+        "trick-usage-documentation",
+        help="Creates a list of all trick usages and if they're documented or not.",
         formatter_class=argparse.MetavarTypeHelpFormatter,
     )
     parser.add_argument(
@@ -453,10 +467,10 @@ def uncommented_trick_usages_command(sub_parsers):
         type=Path,
         help="Where to write the output.",
     )
-    parser.set_defaults(func=uncommented_trick_usages_logic)
+    parser.set_defaults(func=trick_usage_documentation_logic)
 
 
-def create_subparsers(sub_parsers):
+def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("database", help="Actions for database manipulation")
 
     group = parser.add_mutually_exclusive_group()
@@ -482,7 +496,7 @@ def create_subparsers(sub_parsers):
     list_paths_with_resource_command(sub_parsers)
     pickups_per_area_command(sub_parsers)
     create_export_videos_command(sub_parsers)
-    uncommented_trick_usages_command(sub_parsers)
+    trick_usage_documentation_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:

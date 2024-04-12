@@ -283,7 +283,7 @@ class CSPatchDataFactory(PatchDataFactory):
             starting_script += f"<ML+{num_to_tsc_value(self.configuration.starting_hp + life - 3).decode('utf-8')}"
 
         # Starting Locations
-        if self.patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
+        if self.patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:
             # started in first cave
             starting_script += "<FL+6200"
         else:

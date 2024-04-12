@@ -52,6 +52,12 @@ def _generator() -> game.GameGenerator:
     )
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.dread.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
@@ -125,6 +131,7 @@ game_data: game.GameData = game.GameData(
             "A dumped RomFS of your original game. Either version 1.0.0 or 2.1.0",
         ],
     ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=DreadConfiguration, cosmetic_patches=DreadCosmeticPatches, preset_describer=DreadPresetDescriber()
     ),

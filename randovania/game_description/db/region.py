@@ -48,9 +48,9 @@ class Region:
         raise KeyError(f"Unknown name: {area_name}")
 
     def area_by_identifier(self, location: AreaIdentifier) -> Area:
-        if self.name != location.region_name:
-            raise ValueError(f"Attempting to use AreaIdentifier for {location.region_name} with region {self.name}")
-        return self.area_by_name(location.area_name)
+        if self.name != location.region:
+            raise ValueError(f"Attempting to use AreaIdentifier for {location.region} with region {self.name}")
+        return self.area_by_name(location.area)
 
     def correct_name(self, use_dark_name: bool) -> str:
         if use_dark_name and self.dark_name is not None:

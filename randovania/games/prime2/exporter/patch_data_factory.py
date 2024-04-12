@@ -162,11 +162,11 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
 
     for node, connection in patches.all_dock_connections():
         if isinstance(node, DockNode) and node.dock_type == elevator_type:
-            target_area_location = connection.identifier.area_location
+            target_area_location = connection.identifier.area_identifier
             elevator_fields.append(
                 {
                     "instance_id": node.extra["teleporter_instance_id"],
-                    "origin_location": _area_identifier_to_json(game.region_list, node.identifier.area_location),
+                    "origin_location": _area_identifier_to_json(game.region_list, node.identifier.area_identifier),
                     "target_location": _area_identifier_to_json(game.region_list, target_area_location),
                     "room_name": _pretty_name_for_elevator(game.game, region_list, node, target_area_location),
                 }
