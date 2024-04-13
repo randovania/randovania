@@ -58,6 +58,12 @@ def _exporter() -> GameExporter:
     return CorruptionGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.blank.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Corruption",
     long_name="Metroid Prime 3: Corruption",
@@ -86,6 +92,7 @@ game_data: game.GameData = game.GameData(
             "You can fly to either unlocked landing site from an already active one to collect the item.",
         ),
     ],
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=CorruptionConfiguration,
         cosmetic_patches=CorruptionCosmeticPatches,

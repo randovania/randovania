@@ -3315,15 +3315,6 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "items",
-                                                                                "name": "Boots",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
                                                                                 "name": "Space",
                                                                                 "amount": 1,
                                                                                 "negate": false
@@ -3332,6 +3323,32 @@
                                                                         {
                                                                             "type": "template",
                                                                             "data": "Simple IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Break block then fall down and jump back up to ledge",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boots",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }

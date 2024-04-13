@@ -47,7 +47,7 @@ class NodeListHelper:
                 areas_by_region[region.name].append(area)
             if identifier.area_identifier not in nodes_by_area:
                 nodes_by_area[identifier.area_identifier] = []
-            nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node_name))
+            nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node))
 
         return regions, areas_by_region, nodes_by_area
 

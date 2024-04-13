@@ -111,7 +111,7 @@ class Editor:
     def rename_area(self, current_area: Area, new_name: str) -> None:
         current_world = self.game.region_list.region_with_area(current_area)
         old_identifier = self.game.region_list.identifier_for_area(current_area)
-        new_identifier = dataclasses.replace(old_identifier, area_name=new_name)
+        new_identifier = dataclasses.replace(old_identifier, area=new_name)
 
         self.replace_references_to_area_identifier(
             old_identifier,
@@ -140,11 +140,11 @@ class Editor:
                             new_node = dataclasses.replace(
                                 node,
                                 identifier=node.identifier.renamed(
-                                    node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                    node.name.replace(old_identifier.area, new_identifier.area),
                                 ),
-                                default_connection=NodeIdentifier(
+                                default_connection=NodeIdentifier.with_area(
                                     area_identifier=new_identifier,
-                                    node_name=node.default_connection.node_name,
+                                    node_name=node.default_connection.node,
                                 ),
                             )
 
@@ -170,7 +170,7 @@ class Editor:
                             new_node = dataclasses.replace(
                                 node,
                                 identifier=node.identifier.renamed(
-                                    node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                    node.name.replace(old_identifier.area, new_identifier.area),
                                 ),
                                 default_connection=new_identifier,
                             )

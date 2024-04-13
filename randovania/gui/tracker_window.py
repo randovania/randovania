@@ -180,6 +180,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.map_area_combo.currentIndexChanged.connect(self.on_map_area_combo)
         self.map_canvas.set_edit_mode(False)
         self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
+        self.map_canvas.SelectNodeRequest.connect(self._add_new_action)
 
         # Graph Map
         from randovania.gui.widgets.tracker_map import MatplotlibWidget
@@ -533,7 +534,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for region_name in sorted(nodes_by_region.keys()):
             nodes = nodes_by_region[region_name]
-            nodes_locations = [region_list.identifier_for_node(node).area_location for node in nodes]
+            nodes_locations = [region_list.identifier_for_node(node).area_identifier for node in nodes]
             nodes_names = [
                 elevators.get_short_elevator_or_area_name(self.game_configuration.game, region_list, location, False)
                 for location in nodes_locations

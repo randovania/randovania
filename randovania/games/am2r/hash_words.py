@@ -1,4 +1,4 @@
-[
+HASH_WORDS = [
     "Samus",
     "Metroid",
     "Baby",
@@ -98,5 +98,5 @@
     "Missile",
     "Super",
     "EMP",
-    "Fusion"
+    "Fusion",
 ]
