@@ -15,12 +15,12 @@ import randovania
 
 
 class HomeEventScrubber(sentry_sdk.scrubber.EventScrubber):
-    def scrub_dict(self, d):
+    def scrub_dict(self, d: object) -> None:
         super().scrub_dict(d)
         _filter_user_home(d)
 
 
-def _filter_data(data, str_filter: typing.Callable[[str], str]) -> typing.Any | None:
+def _filter_data(data: object, str_filter: typing.Callable[[str], str]) -> typing.Any | None:
     result = None
     if isinstance(data, dict):
         for k, v in tuple(data.items()):
