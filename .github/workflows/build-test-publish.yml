@@ -124,6 +124,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OBFUSCATOR_SECRET: ${{ secrets.OBFUSCATOR_SECRET }}
+          SENTRY_CLIENT_URL: ${{ secrets.SENTRY_CLIENT_URL }}
           PRODUCTION: ${{ startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/stable') }}
 
       - name: executable check
