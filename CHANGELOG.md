@@ -42,6 +42,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
 - Fixed: King does not have a third ear anymore when using him as a player sprite.
 
+##### Sand Zone
+
+- Fixed: Sand Zone: Breaking the blocks now properly accounts for having either Missile Launcher or Super Missile Launcher.
+- Fixed: Sand Zone: Reaching the Storehouse now expects you to have a weapon on trickless instead of the ability to fly.
+- Added: Sand Zone: Collecting the running puppy now expects you to either kill the Armadillos, or avoid them via intermediate Pacifist strats.
+- Added: Sand Zone: Health requirements added to Omega.
+- Added: Sand Zone Residence: Health requirements added to Curly.
+- Added: Sand Zone Storehouse: Health requirements added to Toroko+.
+
+
 ### Metroid Dread
 
 - Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
