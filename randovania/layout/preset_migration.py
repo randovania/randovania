@@ -1075,7 +1075,7 @@ def _migrate_v75(preset: dict) -> dict:
             "Power Bomb Expansion": "Power Bomb Tank",
         }
         pickups = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
-        for key in pickups.copy():
+        for key in list(pickups):
             if key in new_ammo_mapping:
                 pickups[new_ammo_mapping[key]] = pickups.pop(key)
 

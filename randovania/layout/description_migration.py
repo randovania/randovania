@@ -456,11 +456,9 @@ def _migrate_v24(data: dict) -> dict:
             "Power Bomb Expansion": "Power Bomb Tank",
         }
 
-        starting_items = game["starting_equipment"]["pickups"]
-        for pickup in starting_items:
-            if pickup in new_ammo_mapping:
-                starting_items.remove(pickup)
-                starting_items.append(new_ammo_mapping[pickup])
+        game["starting_equipment"]["pickups"] = [
+            new_ammo_mapping.get(pickup, pickup) for pickup in game["starting_equipment"]["pickups"]
+        ]
 
         for area, locations in game["locations"].items():
             for node, item in locations.items():
