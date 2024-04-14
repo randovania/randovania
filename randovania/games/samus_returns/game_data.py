@@ -21,7 +21,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.MSRHintDetailsTab,),
+        spoiler_visualizer=(gui.MSRHintDetailsTab, gui.MSRTeleporterDetailsTab),
     )
 
 
