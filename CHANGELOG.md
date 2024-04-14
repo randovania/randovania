@@ -22,7 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: FAQ Entry about non-Superheated rooms
 
-#### Chozo Ruins
+#### Logic Database
+
+##### Chozo Ruins
 
 - Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
 
