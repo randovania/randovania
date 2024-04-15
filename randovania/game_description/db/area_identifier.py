@@ -6,18 +6,18 @@ from typing import Self
 
 @dataclass(frozen=True, order=True, slots=True)
 class AreaIdentifier:
-    region_name: str
-    area_name: str
+    region: str
+    area: str
 
     def __post_init__(self) -> None:
-        assert isinstance(self.region_name, str)
-        assert isinstance(self.area_name, str)
+        assert isinstance(self.region, str)
+        assert isinstance(self.area, str)
 
     @property
     def as_json(self) -> dict:
         return {
-            "region": self.region_name,
-            "area": self.area_name,
+            "region": self.region,
+            "area": self.area,
         }
 
     @classmethod
@@ -29,15 +29,15 @@ class AreaIdentifier:
 
     @property
     def as_tuple(self) -> tuple[str, str]:
-        return self.region_name, self.area_name
+        return self.region, self.area
 
     @property
     def as_string(self) -> str:
-        return f"{self.region_name}/{self.area_name}"
+        return f"{self.region}/{self.area}"
 
     @classmethod
     def from_string(cls, value: str) -> Self:
         return cls(*value.split("/", 1))
 
     def __repr__(self) -> str:
-        return f"region {self.region_name}/area {self.area_name}"
+        return f"region {self.region}/area {self.area}"

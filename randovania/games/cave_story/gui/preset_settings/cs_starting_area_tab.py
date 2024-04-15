@@ -45,7 +45,7 @@ class PresetCSStartingArea(PresetStartingArea):
         save_points = [node.identifier for node in region_list.iterate_nodes() if "Save Point" in node.name]
 
         # remove because save point is locked behind a boss fight
-        save_points = [i for i in save_points if i.area_name != "Egg Observation Room?"]
+        save_points = [i for i in save_points if i.area != "Egg Observation Room?"]
 
         with self._editor as editor:
             editor.set_configuration_field(

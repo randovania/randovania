@@ -15,6 +15,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
+    import argparse
     from argparse import ArgumentParser
 
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -60,7 +61,9 @@ def _migrate_old_base_preset_uuid(preset_manager: PresetManager, options: Option
             options.set_parent_for_preset(uuid, parent_uuid)
 
 
-async def show_main_window(app: QtWidgets.QApplication, options: Options, is_preview: bool):
+async def show_main_window(
+    app: QtWidgets.QApplication, options: Options, is_preview: bool, instantly_quit: bool
+) -> None:
     from randovania.interface_common.preset_manager import PresetManager
 
     preset_manager = PresetManager(options.presets_path)
@@ -116,6 +119,14 @@ async def show_main_window(app: QtWidgets.QApplication, options: Options, is_pre
     main_window = MainWindow(options, preset_manager, network_client, multiworld_client, is_preview)
     app.main_window = main_window
 
+    if instantly_quit:
+
+        def quit_after() -> None:
+            main_window.close()
+            app.exit(0)
+
+        main_window.InitPostShowCompleteSignal.connect(quit_after)
+
     logger.info("Displaying main window")
     main_window.show()
     await main_window.request_new_data()
@@ -156,7 +167,7 @@ async def display_window_for(app: QtWidgets.QApplication, options: Options, comm
     if command == "tracker":
         await show_tracker(app, options)
     elif command == "main":
-        await show_main_window(app, options, args.preview)
+        await show_main_window(app, options, args.preview, args.instantly_quit)
     elif command == "data_editor":
         show_data_editor(app, options, RandovaniaGame(args.game))
     elif command == "game":
@@ -184,7 +195,7 @@ def add_options_cli_args(parser: ArgumentParser):
     )
 
 
-async def _load_options(args) -> Options | None:
+async def _load_options(args: argparse.Namespace) -> Options | None:
     logger.info("Loading up user preferences code...")
     from randovania.gui.lib import startup_tools, theme
     from randovania.interface_common.options import Options
@@ -211,7 +222,7 @@ async def _load_options(args) -> Options | None:
     return options
 
 
-def start_logger(data_dir: Path, is_preview: bool):
+def start_logger(data_dir: Path, is_preview: bool) -> None:
     # Ensure the log dir exists early on
     log_dir = data_dir.joinpath("logs", randovania.VERSION)
     log_dir.mkdir(parents=True, exist_ok=True)
@@ -234,7 +245,7 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
     return loop
 
 
-async def qt_main(app: QtWidgets.QApplication, args):
+async def qt_main(app: QtWidgets.QApplication, args: argparse.Namespace) -> None:
     app.setQuitOnLastWindowClosed(False)
 
     options = await _load_options(args)
@@ -296,7 +307,7 @@ async def qt_main(app: QtWidgets.QApplication, args):
     await asyncio.gather(app.game_connection.start(), display_window_for(app, options, args.command, args))
 
 
-def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
+def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState) -> None:
     logger.debug("New application state: %s", new_state)
     import sentry_sdk
 
@@ -306,12 +317,13 @@ def _on_application_state_changed(new_state: QtCore.Qt.ApplicationState):
         sentry_sdk.Hub.current.end_session()
 
 
-def run(args):
+def run(args: argparse.Namespace) -> None:
     locale.setlocale(locale.LC_ALL, "")  # use system's default locale
     QtWidgets.QApplication.setAttribute(QtCore.Qt.ApplicationAttribute.AA_EnableHighDpiScaling, True)
 
     is_preview = args.preview
     start_logger(args.local_data, is_preview)
+
     app = QtWidgets.QApplication(sys.argv)
     app.applicationStateChanged.connect(_on_application_state_changed)
 
@@ -334,7 +346,9 @@ def create_subparsers(sub_parsers):
     add_options_cli_args(parser)
 
     gui_parsers = parser.add_subparsers(dest="command")
-    gui_parsers.add_parser("main", help="Displays the Main Window").set_defaults(func=run)
+    main_parser = gui_parsers.add_parser("main", help="Displays the Main Window")
+    main_parser.add_argument("--instantly-quit", action="store_true", help="Quits the app instantly after it starts.")
+    main_parser.set_defaults(func=run)
     gui_parsers.add_parser("tracker", help="Opens only the auto tracker").set_defaults(func=run)
 
     editor_parser = gui_parsers.add_parser("data_editor", help="Opens a data editor for the given game")

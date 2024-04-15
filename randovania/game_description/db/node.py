@@ -62,7 +62,7 @@ class Node:
 
     @property
     def name(self) -> str:
-        return self.identifier.node_name
+        return self.identifier.node
 
     def __post_init__(self) -> None:
         if not self.layers:
