@@ -492,6 +492,7 @@ def _migrate_v25(data: dict) -> dict:
                 if item == "Energy Transfer Module":
                     continue
                 match = re.match(player_re, item)
+                assert match is not None
                 item_name, player_name = match.group(1, 2)
                 if player_name not in all_am2r_players:
                     continue
