@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Chozo Ruins
+
+- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
+
 ##### Frigate Orpheon
 
 - Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
