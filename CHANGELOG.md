@@ -45,7 +45,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Sand Zone
 
 - Fixed: Sand Zone: Breaking the blocks now properly accounts for having either Missile Launcher or Super Missile Launcher.
+- Fixed: Sand Zone: Breaking the blocks to go from the Sunstones to before the omega fight now properly accounts for killing enemies to farm Missiles.
 - Fixed: Sand Zone: Reaching the Storehouse now expects you to have a weapon on trickless instead of the ability to fly.
+- Added: Sand Zone: Breaking the blocks near the Storehouse is now accounted for with Missiles/Bubbler.
 - Added: Sand Zone: Collecting the running puppy now expects you to either kill the Armadillos, or avoid them via intermediate Pacifist strats.
 - Added: Sand Zone: Health requirements added to Omega.
 - Added: Sand Zone Residence: Health requirements added to Curly.
