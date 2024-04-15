@@ -4,8 +4,9 @@ from playhouse import flask_utils
 
 from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
-from randovania.server.database import MultiplayerSession, World, WorldUserAssociation
+from randovania.server.database import MultiplayerSession, User, World, WorldUserAssociation
 from randovania.server.server_app import ServerApp
 
 
@@ -98,13 +99,38 @@ def admin_session(user, session_id):
         )
 
     header = ["User", "World", "Connection State", "Inventory"]
-
-    return "<table border='1'><tr>{}</tr>{}</table>".format(
+    table = "<table border='1'><tr>{}</tr>{}</table>".format(
         "".join(f"<th>{h}</th>" for h in header),
         "".join("<tr>{}</tr>".format("".join(f"<td>{h}</td>" for h in r)) for r in rows),
     )
+
+    entries = [
+        f"<p>Session: {session.name}</p>",
+        f"<p>Created by {session.creator.name} at {session.creation_datetime}</p>",
+        "<p><a href='{link}'>Download rdvgame</a></p>".format(
+            link=flask.url_for("download_session_spoiler", session_id=session_id)
+        )
+        if session.has_layout_description()
+        else "<p>No rdvgame attached</p>",
+        table,
+    ]
+
+    return "\n".join(entries)
+
+
+def download_session_spoiler(user: User, session_id: int):
+    session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+
+    layout = session.get_layout_description_as_json()
+    if layout is None:
+        return flask.abort(404)
+
+    response = flask.make_response(json_lib.encode(layout))
+    response.headers["Content-Disposition"] = f"attachment; filename={session.name}.rdvgame"
+    return response
 
 
 def setup_app(sa: ServerApp):
     sa.route_with_user("/sessions", need_admin=True)(admin_sessions)
     sa.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
+    sa.route_with_user("/session/<session_id>/rdvgame", need_admin=True)(download_session_spoiler)
