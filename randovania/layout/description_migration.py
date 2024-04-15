@@ -475,7 +475,9 @@ def _migrate_v25(data: dict) -> dict:
 
     game_modifications = data["game_modifications"]
     all_am2r_players = [
-        f"Player {index}" for index, preset in enumerate(data["info"]["presets"], start=1) if preset["game"] == "am2r"
+        f"Player {index}"
+        for index, preset in enumerate(data["info"]["presets"], start=1)
+        if preset["schema_version"] >= 5 and preset["game"] == "am2r"
     ]
     player_re = r"^(.*) for (Player \d+)$"
     new_ammo_mapping = {
