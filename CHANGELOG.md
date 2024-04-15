@@ -24,6 +24,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Chozo Ruins
+
+- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
+
+##### Frigate Orpheon
+
+- Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
+
 ##### Phendrana Drifts
 
 - Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
@@ -43,6 +51,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
+
 ##### Hydro Station
 
 - Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
@@ -50,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Cave Story
 
 - Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
+- Fixed: King does not have a third ear anymore when using him as a player sprite.
 
 ### Metroid Dread
 
