@@ -1,5 +1,6 @@
 import construct
 import flask
+from flask.typing import ResponseReturnValue
 from playhouse import flask_utils
 
 from randovania.game_description import default_database
@@ -10,7 +11,7 @@ from randovania.server.database import MultiplayerSession, User, World, WorldUse
 from randovania.server.server_app import ServerApp
 
 
-def admin_sessions(user):
+def admin_sessions(user: User) -> ResponseReturnValue:
     paginated_query = flask_utils.PaginatedQuery(
         MultiplayerSession.select().order_by(MultiplayerSession.creation_date.desc()),
         paginate_by=20,
@@ -60,7 +61,7 @@ def admin_sessions(user):
     )
 
 
-def admin_session(user, session_id):
+def admin_session(user: User, session_id: int) -> ResponseReturnValue:
     session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
     rows = []
 
@@ -118,7 +119,7 @@ def admin_session(user, session_id):
     return "\n".join(entries)
 
 
-def download_session_spoiler(user: User, session_id: int):
+def download_session_spoiler(user: User, session_id: int) -> ResponseReturnValue:
     session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
 
     layout = session.get_layout_description_as_json()
