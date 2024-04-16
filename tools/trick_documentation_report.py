@@ -1,39 +1,52 @@
 import argparse
+import asyncio
 import os
 import shutil
 import subprocess
 import sys
+import typing
 from pathlib import Path
 
+import aiohttp
+import discord
+
+import randovania
 from randovania.games.game import RandovaniaGame
 
 
-def post_report(report: dict[RandovaniaGame, tuple[int, int]], webhook_url: str) -> None:
-    this_dir = Path(__file__).parent
+class TrickDocumentation(typing.NamedTuple):
+    documented: int
+    undocumented: int
+    skipped: int
 
-    args = [
-        sys.executable,
-        os.fspath(this_dir.joinpath("send_report_to_discord.py")),
-        "--webhook",
-        webhook_url,
-        "--title",
-        "Trick documentation report",
-    ]
 
-    for game, (documented, total) in report.items():
-        percent = int((documented / total) * 100)
-        game_name = game.long_name.replace(":", "@")
-        args.extend(
-            [
-                "--field",
-                f"{game_name}:{percent: >3}% ({documented} out of {total})",
-            ]
+async def post_report(report: dict[RandovaniaGame, TrickDocumentation], webhook_url: str) -> None:
+    embed = discord.Embed(
+        title="Trick documentation report",
+        description=(
+            f"Generated with Randovania {randovania.VERSION}\n"
+            f"Legend: :green_circle: Documented, :yellow_circle: Skipped, :red_circle: Undocumented"
+        ),
+    )
+
+    for game, report in report.items():
+        total = report.skipped + report.undocumented + report.documented
+        percent = int(((report.documented + report.skipped) / total) * 100)
+        embed.add_field(
+            name=game.long_name,
+            inline=False,
+            value=f"{percent: >3}% of {total}\n"
+            f":green_circle: {report.documented} "
+            f":yellow_circle: {report.skipped} "
+            f":red_circle: {report.undocumented} ",
         )
 
-    subprocess.run(args, check=True)
+    async with aiohttp.ClientSession() as session:
+        webhook = discord.Webhook.from_url(webhook_url, session=session)
+        await webhook.send(embed=embed)
 
 
-def main() -> None:
+async def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("reports_dir", type=Path, help="Where to store the usage reports")
     args = parser.parse_args()
@@ -61,25 +74,29 @@ def main() -> None:
             text=True,
         )
 
-        total = 0
+        undocumented = 0
         documented = 0
+        skipped = 0
 
         with reports_dir.joinpath(f"{game}.txt").open() as usage_file:
             for line in usage_file:
-                if line.startswith("- ["):
-                    total += 1
-                    if line.startswith("- [X]"):
+                if line.startswith("- "):
+                    if line.startswith("- (Documented)"):
                         documented += 1
+                    elif line.startswith("- (Missing)"):
+                        undocumented += 1
+                    elif line.startswith("- (Skipped)"):
+                        skipped += 1
 
-        reports[game_enum] = (documented, total)
+        reports[game_enum] = TrickDocumentation(documented, undocumented, skipped)
 
     try:
         webhook_url = os.environ["WEBHOOK_URL"]
     except KeyError:
         return
 
-    post_report(reports, webhook_url)
+    await post_report(reports, webhook_url)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
