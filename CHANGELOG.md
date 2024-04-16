@@ -32,6 +32,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
 
+##### Phendrana Drifts
+
+- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
+
+##### Magmoor Caverns
+
+- Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
+
 ## [7.5.1] - 2024-04-??
 
 - Changed: The output after verifying the installation has been made less misleading.
