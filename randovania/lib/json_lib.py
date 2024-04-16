@@ -34,7 +34,11 @@ def read_dict(path: Path) -> dict:
 
 def write_path(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=4, separators=(",", ": ")))
+    path.write_text(encode(data))
+
+
+def encode(data: Any) -> str:
+    return json.dumps(data, indent=4, separators=(",", ": "))
 
 
 async def read_path_async(path: Path, *, raise_on_duplicate_keys: bool = False) -> dict | list:
