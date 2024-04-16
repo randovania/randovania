@@ -91,9 +91,7 @@ def get_resources_for_details(
 
 
 def _get_destination_room_for_teleportal(connection: Node):
-    return connection.extra.get(
-        "transporter_name", f"{connection.identifier.region_name} - {connection.identifier.area_name}"
-    )
+    return connection.extra.get("transporter_name", f"{connection.identifier.region} - {connection.identifier.area}")
 
 
 class DreadPatchDataFactory(PatchDataFactory):

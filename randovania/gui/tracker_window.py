@@ -534,7 +534,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for region_name in sorted(nodes_by_region.keys()):
             nodes = nodes_by_region[region_name]
-            nodes_locations = [region_list.identifier_for_node(node).area_location for node in nodes]
+            nodes_locations = [region_list.identifier_for_node(node).area_identifier for node in nodes]
             nodes_names = [
                 elevators.get_short_elevator_or_area_name(self.game_configuration.game, region_list, location, False)
                 for location in nodes_locations

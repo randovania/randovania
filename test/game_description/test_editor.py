@@ -67,7 +67,7 @@ def test_replace_node(game_editor):
     assert region_list.area_by_area_location(loc).connections[source][new_node] is req
     dock_to_landing = region_list.area_by_area_location(loc2).node_with_name("Door to Landing Site")
     assert isinstance(dock_to_landing, DockNode)
-    assert dock_to_landing.default_connection.node_name == "FooBar"
+    assert dock_to_landing.default_connection.node == "FooBar"
 
 
 def test_replace_node_unknown_node(game_editor):
@@ -100,4 +100,4 @@ def test_rename_area(game_editor):
     area_2 = region_list.area_by_area_location(loc_2)
     dock_node = area_2.node_with_name("Elevator to Temple Grounds")
     assert dock_node is not None
-    assert dock_node.default_connection.area_name == new_area_name
+    assert dock_node.default_connection.area == new_area_name

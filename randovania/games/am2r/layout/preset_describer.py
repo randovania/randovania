@@ -64,9 +64,9 @@ class AM2RPresetDescriber(GamePresetDescriber):
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
                     {
-                        "Missiles need Launcher": "Missile Expansion",
-                        "Super Missiles need Launcher": "Super Missile Expansion",
-                        "Power Bombs need Launcher": "Power Bomb Expansion",
+                        "Missiles need Launcher": "Missile Tank",
+                        "Super Missiles need Launcher": "Super Missile Tank",
+                        "Power Bombs need Launcher": "Power Bomb Tank",
                     },
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},

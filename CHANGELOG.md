@@ -22,6 +22,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: FAQ Entry about non-Superheated rooms
 
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
+
+##### Frigate Orpheon
+
+- Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
+
 ## [7.5.1] - 2024-04-??
 
 - Changed: The output after verifying the installation has been made less misleading.
@@ -33,6 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
+
 ##### Hydro Station
 
 - Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
@@ -40,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Cave Story
 
 - Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
+- Fixed: King does not have a third ear anymore when using him as a player sprite.
 
 ### Metroid Dread
 

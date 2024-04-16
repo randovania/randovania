@@ -196,11 +196,11 @@ class PlayerState:
                 teleporters.append(
                     "* {} to {}".format(
                         elevators.get_elevator_or_area_name(
-                            self.game.game, wl, wl.identifier_for_node(node).area_location, True
+                            self.game.game, wl, wl.identifier_for_node(node).area_identifier, True
                         ),
                         (
                             elevators.get_elevator_or_area_name(
-                                self.game.game, wl, wl.identifier_for_node(other).area_location, True
+                                self.game.game, wl, wl.identifier_for_node(other).area_identifier, True
                             )
                             if other is not None
                             else "<Not connected>"

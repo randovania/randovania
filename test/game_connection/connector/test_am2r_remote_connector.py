@@ -80,7 +80,7 @@ async def test_new_inventory_received(connector: AM2RRemoteConnector):
 
     inventory_updated.reset_mock()
     connector.new_inventory_received(
-        "items:Missiles|5,Missile Expansion|20,Progressive Jump|1,Progressive Jump|1,"
+        "items:Missiles|5,Missile Tank|20,Missile Expansion|30,Progressive Jump|1,Progressive Jump|1,"
         "Speed Booster|1,Missile Launcher|1,Missiles|5,Progressive Suit|5,"
     )
     inventory_updated.assert_called_once()

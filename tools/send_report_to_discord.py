@@ -40,6 +40,7 @@ async def main():
             name = "Missing Title"
             value = data
 
+        name = name.replace("@", ":")
         print(f"Adding field {name} with {value}")
         embed.add_field(name=name, value=value)
 
