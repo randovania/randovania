@@ -16,6 +16,7 @@ from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock import DockRandoConfig, DockType, DockWeakness, DockWeaknessDatabase
 from randovania.game_description.db.node import GenericNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_description import GameDescription
@@ -26,6 +27,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase, default_base_damage_reduction
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
@@ -158,16 +160,39 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
         ),
     )
 
-    intro_node = GenericNode(
-        identifier=NodeIdentifier.create("Main", "First Area", "Spawn Point"),
-        node_index=0,
-        heal=False,
-        location=None,
-        description="",
-        layers=("default",),
-        extra={},
-        valid_starting_location=True,
+    node_index = 0
+
+    def make_node(node_class: type, name: str, **kwargs):
+        nonlocal node_index
+        node_index += 1
+
+        return node_class(
+            identifier=NodeIdentifier.create("Main", "First Area", name),
+            node_index=node_index - 1,
+            heal=False,
+            location=None,
+            description="",
+            layers=("default",),
+            extra={},
+            valid_starting_location=True,
+            **kwargs,
+        )
+
+    intro_node = make_node(GenericNode, "Spawn Point")
+    pickup_node_a = make_node(
+        PickupNode,
+        "Pickup (One)",
+        pickup_index=PickupIndex(0),
+        location_category=LocationCategory.MAJOR,
     )
+    pickup_node_b = make_node(
+        PickupNode,
+        "Pickup (Two)",
+        pickup_index=PickupIndex(1),
+        location_category=LocationCategory.MINOR,
+    )
+    trivial = Requirement.trivial()
+    nodes = [intro_node, pickup_node_a, pickup_node_b]
 
     game_db = GameDescription(
         game=game_enum,
@@ -185,8 +210,10 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
                     areas=[
                         Area(
                             name="First Area",
-                            nodes=[intro_node],
-                            connections={intro_node: {}},
+                            nodes=nodes,
+                            connections={
+                                source: {target: trivial for target in nodes if target != source} for source in nodes
+                            },
                             extra={},
                         )
                     ],

@@ -213,9 +213,15 @@ class Bootstrap:
         for resource, quantity in static_resources.as_resource_gain():
             starting_state.resources.set_resource(resource, quantity)
 
+        self.apply_game_specific_patches(configuration, game, patches)
         game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
         return game, starting_state
+
+    def apply_game_specific_patches(
+        self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
+    ) -> None:
+        pass
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         return patches.assign_own_pickups(pool_results.assignment.items()).assign_extra_starting_pickups(
