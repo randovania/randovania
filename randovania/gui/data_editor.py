@@ -181,7 +181,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.update_game(self.original_game_description)
 
-        self.resource_editor = ResourceDatabaseEditor(self, self.resource_database)
+        self.resource_editor = ResourceDatabaseEditor(self, self.resource_database, self.region_list)
         self.resource_editor.setFeatures(
             self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
         )
