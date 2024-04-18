@@ -53,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
 
+#### Logic Database
+
+- Changed: Zipping from destroyable objects with Missiles is now rated as Expert.
+
 ##### Hydro Station
 
 - Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
