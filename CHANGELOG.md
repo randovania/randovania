@@ -60,6 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Hydro Station
 
 - Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
+- Fixed: Inner Alpha Nest South: It's not logical anymore to get the Missile tank with only Walljumps and Mid-Air Morphs.
+- Added: Inner Alpha Nest South: A video link to get the Missile Tank with a Morph Glide.
 
 ### Cave Story
 
