@@ -4558,8 +4558,152 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Hijump Tunnel Climb"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Hijump Tunnel Climb, but without the Walljump",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Morph Ball",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "A way to get into the hole",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Spider Ball"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "IBJ",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Bombs"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Power Grip",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Midair morph combo",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Power Grip",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "MidAirMorph",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Space Jump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "CBJ - TODO: record this with a mid air morph + WJ. That should be advanced or expert.",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Use Charged Bomb Jump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "ChargedBombJump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4567,7 +4711,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Glide from waterjet",
+                                            "comment": "Glide from waterjet: https://youtu.be/qX1PhEM63N8",
                                             "items": [
                                                 {
                                                     "type": "resource",
