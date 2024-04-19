@@ -21,6 +21,12 @@ class TrickUsageState(enum.IntEnum):
     DOCUMENTED = enum.auto()
 
 
+EXCLUSION_KEYWORDS = (
+    "TODO",
+    "FIXME",
+)
+
+
 def _find_tricks_usage_documentation(requirement: Requirement) -> Iterator[tuple[str, TrickUsageState]]:
     from randovania.layout.base.trick_level import LayoutTrickLevel
 
@@ -40,7 +46,10 @@ def _find_tricks_usage_documentation(requirement: Requirement) -> Iterator[tuple
             if it.amount > it.resource.require_documentation_above:
                 documentation_state = TrickUsageState.DOCUMENTED
 
-    if documentation_state == TrickUsageState.DOCUMENTED and requirement.comment is None:
+    undocumented = requirement.comment is None or any(
+        keyword.casefold() in requirement.comment.casefold() for keyword in EXCLUSION_KEYWORDS
+    )
+    if documentation_state == TrickUsageState.DOCUMENTED and undocumented:
         documentation_state = TrickUsageState.UNDOCUMENTED
 
     if trick_resources:
