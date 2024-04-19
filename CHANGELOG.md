@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: FAQ Entry about non-Superheated rooms
+- Added: Exposed "Power Beam Only"-Doors for Door Lock Rando.
 
 #### Logic Database
 
