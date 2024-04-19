@@ -28,6 +28,9 @@ class NodeRequirement(Requirement):
     def __init__(self, node_identifier: NodeIdentifier):
         self.node_identifier = node_identifier
 
+    def __repr__(self) -> str:
+        return f"Req {self.node_identifier}"
+
     @property
     def is_damage(self) -> bool:
         return False
