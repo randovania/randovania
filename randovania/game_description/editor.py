@@ -180,7 +180,7 @@ class Editor:
 
                     if isinstance(node, DockNode):
                         new_default = replacer(node.default_connection)
-                        new_fields = {}
+                        new_fields: dict = {}
 
                         if node.default_connection != new_default:
                             new_fields["identifier"] = node.identifier.renamed(
