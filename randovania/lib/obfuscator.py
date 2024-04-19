@@ -10,7 +10,7 @@ try:
 except ImportError:
     _secret = None
 
-_encrypt = None
+_encrypt: Fernet | None = None
 
 
 class MissingSecret(Exception):
