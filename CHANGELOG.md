@@ -5,49 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.0.0] - 2024-05-??
-
-- **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
-
 ## [7.6.0] - 2024-05-??
 
-- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
+- **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
 - Added: Highlighting nodes in the Map view of the Map tracker will now update the current location.
+- Changed: The output after verifying the installation has been made less misleading.
+- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
+- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
 
 ### Resolver
 
 - Fixed: Some cases of seeds being wrongly considered as impossible.
 
-### Metroid Prime
-
-- Added: FAQ Entry about non-Superheated rooms
-
-#### Logic Database
-
-##### Chozo Ruins
-
-- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
-
-##### Frigate Orpheon
-
-- Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
-
-##### Phendrana Drifts
-
-- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
-
-##### Magmoor Caverns
-
-- Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
-
-## [7.5.1] - 2024-04-??
-
-- Changed: The output after verifying the installation has been made less misleading.
-- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
-
 ### Discord Bot
 
 - Added: The Discord bot now mentions the game when describing a preset.
+- Changed: Experimental games are now only available in the development bot.
 
 ### AM2R
 
@@ -72,6 +45,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
 - Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
+
+### Metroid Prime
+
+- Added: FAQ Entry about non-Superheated rooms
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
+
+##### Frigate Orpheon
+
+- Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
+
+##### Phendrana Drifts
+
+- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
+
+##### Magmoor Caverns
+
+- Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
 
 ## [7.5.0] - 2024-04-01
 
