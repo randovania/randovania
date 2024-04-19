@@ -101,7 +101,7 @@ def pretty_format_requirement(
         yield level, get_template_name(db, requirement)
 
     elif isinstance(requirement, NodeRequirement):
-        yield level, requirement.node_identifier.as_string
+        yield level, f"Collected {requirement.node_identifier.as_string}"
     else:
         raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
 

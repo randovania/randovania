@@ -102,6 +102,14 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Post Weapon": {
+                            "type": "node",
+                            "data": {
+                                "region": "Intro",
+                                "area": "Starting Area",
+                                "node": "Pickup (Weapon)"
+                            }
                         }
                     }
                 },
@@ -387,6 +395,31 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Post Weapon": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 66.6,
+                        "y": 120.77,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "PostWeapon",
                     "connections": {
                         "Spawn Point": {
                             "type": "and",
