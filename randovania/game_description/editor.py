@@ -96,7 +96,9 @@ class Editor:
         if old_node.name != new_node.name and area.node_with_name(new_node.name) is not None:
             raise ValueError(f"A node named {new_node.name} already exists.")
 
+        old_lock_identifier = None
         if isinstance(old_node, DockNode):
+            old_lock_identifier = old_node.lock_node.identifier
             self.remove_node(area, old_node.lock_node)
 
         old_identifier = old_node.identifier
@@ -118,8 +120,12 @@ class Editor:
         area.clear_dock_cache()
 
         if isinstance(new_node, DockNode):
-            self.add_node(
-                area, DockLockNode.create_from_dock(new_node, self.new_node_index(), self.game.resource_database)
+            new_lock_node = DockLockNode.create_from_dock(new_node, self.new_node_index(), self.game.resource_database)
+            self.add_node(area, new_lock_node)
+            assert old_lock_identifier is not None
+            self.replace_references_to_node_identifier(
+                old_lock_identifier,
+                new_lock_node.identifier,
             )
 
         self.game.region_list.invalidate_node_cache()
