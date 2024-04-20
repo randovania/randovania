@@ -315,32 +315,20 @@ Extra - in_dark_aether: False
 > H/V Trigger to Sacred Grounds - B2; Heals? False
   * Layers: default
   * H/V Trigger to Sacred Grounds - B2/H/V Trigger to Sacred Grounds - B3
-  > Pickup (Hell B3 Chest)
+  > After Spike Pit
       All of the following:
           Has Weapon
           Any of the following:
               Has Flight
-              Damage Boosting (Beginner) and Normal Damage ≥ 10
-  > Event - Heavy Press
-      All of the following:
-          Can Kill Bosses
-          Any of the following:
-              Has Flight
+              # Damage boost off of spikes
               Damage Boosting (Beginner) and Normal Damage ≥ 10
 
 > Pickup (Hell B3 Chest); Heals? False
   * Layers: default
   * Pickup 31; Category? Minor
   * Extra - event: 0400
-  > H/V Trigger to Sacred Grounds - B2
-      Has Flight and Has Weapon
-  > Event - Heavy Press
-      Any of the following:
-          Can Kill Bosses
-          # Shoot with Curly's Nemesis
-          After Picked up Curly (Hell) and Pacifist Strats (Beginner)
-          Missiles ≥ 18 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
-          Missiles ≥ 41 and Missile Launcher and Kill Bosses with Missiles (Advanced)
+  > After Spike Pit
+      Trivial
 
 > Exit to Passage?; Heals? False
   * Layers: default
@@ -351,6 +339,32 @@ Extra - in_dark_aether: False
   * Event Defeated Heavy Press
   > Exit to Passage?
       Trivial
+
+> After Spike Pit; Heals? False
+  * Layers: default
+  > H/V Trigger to Sacred Grounds - B2
+      All of the following:
+          Has Weapon
+          Any of the following:
+              Has Flight
+              # Damage boost off of spikes
+              Damage Boosting (Beginner) and Normal Damage ≥ 10
+  > Pickup (Hell B3 Chest)
+      All of the following:
+          Has Flight
+          Any of the following:
+              Can Break Blocks
+              Bubbler and Break blocks with Bubbler (Beginner)
+              All of the following:
+                  Missiles and Break blocks with Missiles (Beginner)
+                  Missile Launcher or Super Missile Launcher
+  > Event - Heavy Press
+      Any of the following:
+          Can Kill Bosses
+          # Shoot with Curly's Nemesis
+          After Picked up Curly (Hell) and Pacifist Strats (Beginner)
+          Missiles ≥ 18 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
+          Missiles ≥ 41 and Missile Launcher and Kill Bosses with Missiles (Advanced)
 
 ----------------
 Corridor
