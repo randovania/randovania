@@ -111,6 +111,7 @@ class PrecisionPair(JsonDataclass, DataclassPostInitTypeCheck):
 
 @dataclass(frozen=True)
 class Hint(JsonDataclass):
+    # FIXME: refactor this into subclasses. this is a typing nightmare
     hint_type: HintType
     precision: PrecisionPair | None
     target: PickupIndex | None = None

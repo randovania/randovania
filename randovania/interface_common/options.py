@@ -5,7 +5,7 @@ import json
 import uuid
 from distutils.version import StrictVersion
 from enum import Enum
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, Self, TypeVar
 
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.games.game import RandovaniaGame
@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.lib.json_lib import JsonObject
 
 T = TypeVar("T")
 
@@ -108,17 +109,17 @@ class PerGameOptions:
     cosmetic_patches: BaseCosmeticPatches
 
     @property
-    def as_json(self):
+    def as_json(self) -> JsonObject:
         return {
             "cosmetic_patches": self.cosmetic_patches.as_json,
         }
 
     @classmethod
-    def default_for_game(cls, game: RandovaniaGame) -> PerGameOptions:
+    def default_for_game(cls, game: RandovaniaGame) -> Self:
         return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
-    def from_json(cls, value: dict) -> PerGameOptions:
+    def from_json(cls, value: JsonObject) -> Self:
         raise NotImplementedError
 
 

@@ -16,12 +16,12 @@ from randovania.lib import type_lib
 if typing.TYPE_CHECKING:
     from _typeshed import DataclassInstance
 
+    from randovania.lib.json_lib import JsonValue
+
 BinStr = construct.PascalString(construct.VarInt, "utf-8")
 
 
 T = typing.TypeVar("T")
-
-JsonValue = str | int | float | list["JsonValue"] | dict[str, "JsonValue"]
 
 
 @typing.runtime_checkable
