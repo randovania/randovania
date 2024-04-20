@@ -39,11 +39,11 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _update_slider_max(self):
+    def _update_slider_max(self) -> None:
         self.dna_slider.setMaximum(self.num_preferred_locations)
         self.dna_slider.setEnabled(self.num_preferred_locations > 0)
 
-    def _edit_config(self, call: Callable[[AM2RArtifactConfig], AM2RArtifactConfig]):
+    def _edit_config(self, call: Callable[[AM2RArtifactConfig], AM2RArtifactConfig]) -> None:
         config = self._editor.configuration
         assert isinstance(config, AM2RConfiguration)
 
@@ -84,29 +84,29 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_prefer_metroids(self, value: bool):
-        def edit(config: AM2RArtifactConfig):
+    def _on_prefer_metroids(self, value: bool) -> None:
+        def edit(config: AM2RArtifactConfig) -> AM2RArtifactConfig:
             return dataclasses.replace(config, prefer_metroids=value)
 
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_prefer_bosses(self, value: bool):
-        def edit(config: AM2RArtifactConfig):
+    def _on_prefer_bosses(self, value: bool) -> None:
+        def edit(config: AM2RArtifactConfig) -> AM2RArtifactConfig:
             return dataclasses.replace(config, prefer_bosses=value)
 
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_dna_slider_changed(self):
+    def _on_dna_slider_changed(self) -> None:
         self.dna_slider_label.setText(f"{self.dna_slider.value()} DNA")
 
-        def edit(config: AM2RArtifactConfig):
+        def edit(config: AM2RArtifactConfig) -> AM2RArtifactConfig:
             return dataclasses.replace(config, required_artifacts=self.dna_slider.value())
 
         self._edit_config(edit)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, AM2RConfiguration)
         artifacts = preset.configuration.artifacts
         self.free_placement_radiobutton.setChecked(artifacts.prefer_anywhere)

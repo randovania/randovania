@@ -52,14 +52,14 @@ class PresetAM2RPatches(PresetTab, Ui_PresetAM2RPatches):
     def uses_patches_tab(cls) -> bool:
         return True
 
-    def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
-        def persist(value: bool):
+    def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
+        def persist(value: bool) -> None:
             with self._editor as editor:
                 editor.set_configuration_field(attribute_name, value)
 
         signal_handling.on_checked(check, persist)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, AM2RConfiguration)
         for f in _FIELDS:

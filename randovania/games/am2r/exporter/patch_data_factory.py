@@ -17,6 +17,8 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
+    from typing import Any
+
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.game_patches import GamePatches
     from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
@@ -93,7 +95,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
 
     if music_mode == MusicMode.FULL:
         total_orig += excluded_list
-        total_new = random_lib.shuffle(rng, total_orig)
+        total_new = random_lib.shuffle(rng, iter(total_orig))
     else:
         # MusicMode is TYPE
         # TODO: copying is not necessary anymore, clean this up in the future.
@@ -131,7 +133,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
     def _create_pickups_dict(
         self, pickup_list: list[ExportedPickupDetails], text_data: dict, model_data: dict[str, int], rng: Random
     ) -> dict:
-        pickup_map_dict = {}
+        pickup_map_dict: dict[str, dict[str, Any]] = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
             object_name = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_name"]
@@ -162,7 +164,14 @@ class AM2RPatchDataFactory(PatchDataFactory):
             }
 
             pickup_obj = pickup_map_dict[object_name]
-            shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
+            effect = pickup_obj["item_effect"]
+            details = pickup_obj["sprite_details"]["name"]
+            header = pickup_obj["text"]["header"]
+            assert isinstance(effect, str)
+            assert isinstance(details, str)
+            assert isinstance(header, str)
+
+            shiny_id: tuple[str, str, str] = (effect, details, header)
 
             if (shiny_id in self.SHINIES) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY) == 0:
                 sprite, text = self.SHINIES[shiny_id]

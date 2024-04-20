@@ -3,6 +3,7 @@ import dataclasses
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.gui.generated.preset_am2r_hints_ui import Ui_PresetAM2RHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
@@ -34,20 +35,22 @@ class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
     def uses_patches_tab(cls) -> bool:
         return False
 
-    def _on_art_combo_changed(self, new_index: int):
+    def _on_art_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
                 dataclasses.replace(editor.configuration.hints, artifacts=self.hint_artifact_combo.currentData()),
             )
 
-    def _on_ibeam_combo_changed(self, new_index: int):
+    def _on_ibeam_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
                 dataclasses.replace(editor.configuration.hints, ice_beam=self.ice_beam_hint_combo.currentData()),
             )
 
-    def on_preset_changed(self, preset: Preset):
-        set_combo_with_value(self.hint_artifact_combo, preset.configuration.hints.artifacts)
-        set_combo_with_value(self.ice_beam_hint_combo, preset.configuration.hints.ice_beam)
+    def on_preset_changed(self, preset: Preset) -> None:
+        am2rconfig = preset.configuration
+        assert isinstance(am2rconfig, AM2RConfiguration)
+        set_combo_with_value(self.hint_artifact_combo, am2rconfig.hints.artifacts)
+        set_combo_with_value(self.ice_beam_hint_combo, am2rconfig.hints.ice_beam)

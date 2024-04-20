@@ -6,10 +6,11 @@ from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStarti
 
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
+    from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
 
 
-def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[type[PresetTab]]:
     from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
     from randovania.games.am2r.gui.preset_settings.am2r_hints_tab import PresetAM2RHints
     from randovania.games.am2r.gui.preset_settings.am2r_patches_tab import PresetAM2RPatches

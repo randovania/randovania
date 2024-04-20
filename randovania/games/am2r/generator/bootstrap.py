@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def all_dna_locations(game: GameDescription, config: AM2RArtifactConfig):
+def all_dna_locations(game: GameDescription, config: AM2RArtifactConfig) -> list[PickupNode]:
     locations = []
 
     for node in game.region_list.all_nodes:
@@ -64,7 +64,7 @@ class AM2RBootstrap(MetroidBootstrap):
 
         return enabled_resources
 
-    def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
+    def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
         num_suits = sum(current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit"])
         return 2 ** (-num_suits)
 
