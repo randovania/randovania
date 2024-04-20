@@ -19,7 +19,7 @@ class CaverCue:
     def assign_song(self, song: CSSong) -> dict[str, CSSong]:
         return {event: song for event in self.events}
 
-    def assign_songs(self, songs: dict[str, CSSong]):
+    def assign_songs(self, songs: dict[str, CSSong]) -> dict[str, CSSong]:
         return {event: songs.get(event, self.default_song) for event in self.events}
 
 
@@ -153,6 +153,7 @@ class CaverMusic:
     @classmethod
     def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, str]]:
         music = cls.get_randomizer(cosmetic.music_rando.randomization_type)
+        # FIXME: The typing for this/return value seems to be very weird. `events` also gets redefined.
         mapping = {}
         for cue, events in music.shuffle(rng, cosmetic).items():
             if mapping.get(cue.map_name) is None:

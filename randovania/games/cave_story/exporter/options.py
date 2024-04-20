@@ -15,7 +15,7 @@ class CSPerGameOptions(PerGameOptions):
     platform: CSPlatform = CSPlatform.FREEWARE
 
     @property
-    def as_json(self):
+    def as_json(self) -> dict:
         return {
             **super().as_json,
             "output_directory": str(self.output_directory) if self.output_directory is not None else None,

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import typing
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from caver.patcher import wrap_msg_text
 from tsc_utils.flags import set_flag
@@ -17,6 +18,8 @@ from randovania.game_description.pickup.pickup_category import USELESS_PICKUP_CA
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
@@ -28,6 +31,7 @@ if TYPE_CHECKING:
     from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
     from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
+
 
 # ruff: noqa: C901
 
@@ -62,7 +66,12 @@ class CSPatchDataFactory(PatchDataFactory):
             self.players_config.player_index,
         )
 
-        pickups = {area.extra["map_name"]: {} for area in game_description.region_list.all_areas}
+        pickups: dict[str, dict[str, str]] = {}
+        for area in game_description.region_list.all_areas:
+            map_name = area.extra["map_name"]
+            assert isinstance(map_name, str)
+            pickups[map_name] = {}
+
         for index in sorted(
             node.pickup_index for node in game_description.region_list.iterate_nodes() if isinstance(node, PickupNode)
         ):
@@ -73,6 +82,7 @@ class CSPatchDataFactory(PatchDataFactory):
 
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
+            assert isinstance(event, str)
 
             if target.player != self.players_config.player_index:
                 message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
@@ -89,10 +99,10 @@ class CSPatchDataFactory(PatchDataFactory):
 
         music = CaverMusic.get_shuffled_mapping(music_rng, self.cosmetic_patches)
 
-        entrances = {}  # TODO: entrance rando
+        entrances: dict = {}  # TODO: entrance rando
 
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
-        hints = {}
+        hints: dict[str, dict[str, dict[str, Any]]] = {}
         for logbook_node in game_description.region_list.iterate_nodes():
             if not isinstance(logbook_node, HintNode):
                 continue
@@ -130,7 +140,9 @@ class CSPatchDataFactory(PatchDataFactory):
         # rocket skip enabled
         if (
             self.configuration.trick_level.level_for_trick(
-                self.game.resource_database.get_by_type_and_index(ResourceType.TRICK, "Dboost")
+                typing.cast(
+                    TrickResourceInfo, self.game.resource_database.get_by_type_and_index(ResourceType.TRICK, "Dboost")
+                )
             ).as_number
             >= 4
         ):
@@ -163,6 +175,7 @@ class CSPatchDataFactory(PatchDataFactory):
         missile = next(
             (res for res, _ in starting_items.as_resource_gain() if res.short_name in {"missile", "tempMissile"}), None
         )
+        assert isinstance(missile, SimpleResourceInfo)
         for item, _ in starting_items.as_resource_gain():
             if item.resource_type != ResourceType.ITEM or item == missile:
                 continue
@@ -198,6 +211,9 @@ class CSPatchDataFactory(PatchDataFactory):
 
             item_num = item.extra.get("it+")
             arms_num = item.extra.get("am+")
+            assert isinstance(item_num, int)
+            assert isinstance(arms_num, int)
+
             if (item_num is None) == (arms_num is None):
                 raise ValueError(f"{item.long_name} must define exactly one of item_num and arms_num.")
 
