@@ -96,7 +96,8 @@ class AM2RGameExporter(GameExporter):
 
 def _run_patcher(patch_data: dict, export_params: AM2RGameExportParams, output_pipe: Connection) -> None:
     # Delay this, so that we only load CLR/dotnet when exporting
-    import am2r_yams
+    # TODO: remove the type ignore in a future yams bump that has types.
+    import am2r_yams  # type: ignore
 
     def status_update(message: str, progress: float) -> None:
         output_pipe.send((message, progress))
