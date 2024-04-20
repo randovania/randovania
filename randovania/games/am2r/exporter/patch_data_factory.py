@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import typing
 from random import Random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypedDict
 
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
@@ -17,8 +17,6 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib, random_lib
 
 if TYPE_CHECKING:
-    from typing import Any
-
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.game_patches import GamePatches
     from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
@@ -110,6 +108,18 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
     return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new, strict=True)}
 
 
+class SpriteDetails(TypedDict):
+    name: str
+    speed: float
+
+
+class PickupClass(TypedDict):
+    sprite_details: SpriteDetails
+    item_effect: str
+    quantity: int
+    text: dict[str, str]
+
+
 class AM2RPatchDataFactory(PatchDataFactory):
     _EASTER_EGG_SHINY = 1024
     cosmetic_patches: AM2RCosmeticPatches
@@ -133,7 +143,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
     def _create_pickups_dict(
         self, pickup_list: list[ExportedPickupDetails], text_data: dict, model_data: dict[str, int], rng: Random
     ) -> dict:
-        pickup_map_dict: dict[str, dict[str, Any]] = {}
+        pickup_map_dict: dict[str, PickupClass] = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
             object_name = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_name"]
@@ -167,11 +177,8 @@ class AM2RPatchDataFactory(PatchDataFactory):
             effect = pickup_obj["item_effect"]
             details = pickup_obj["sprite_details"]["name"]
             header = pickup_obj["text"]["header"]
-            assert isinstance(effect, str)
-            assert isinstance(details, str)
-            assert isinstance(header, str)
 
-            shiny_id: tuple[str, str, str] = (effect, details, header)
+            shiny_id = (effect, details, header)
 
             if (shiny_id in self.SHINIES) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY) == 0:
                 sprite, text = self.SHINIES[shiny_id]
