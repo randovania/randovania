@@ -66,6 +66,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Pseudo Wave Beam (Beginner) to break the blob above Blue Teleportal to Artaria, from the left side of the wall.
 
+##### Dairon
+
+- Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
+- Fixed: Entering the tunnel to Power Switch 1 now properly requires Morph Ball or Slide.
+
 ### Metroid Prime
 
 - Added: FAQ Entry about non-Superheated rooms

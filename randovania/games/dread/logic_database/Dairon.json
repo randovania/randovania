@@ -2577,7 +2577,7 @@
                         "area": "Teleport to Cataris",
                         "node": "Door to Power Switch 1"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Dairon Power Switch 1 Powered Door",
                     "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2641,12 +2641,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Teleport to Cataris": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_001",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Event - Electric Generator": {
@@ -2812,12 +2810,10 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Power Switch 1": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_001",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Wide Beam Room": {
@@ -2830,11 +2826,8 @@
                             }
                         },
                         "Tunnel to Power Switch 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         },
                         "Bottom-Left Corner": {
                             "type": "and",
@@ -2881,7 +2874,7 @@
                         "area": "Power Switch 1",
                         "node": "Door to Teleport to Cataris"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Dairon Power Switch 1 Powered Door",
                     "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -10082,6 +10075,13 @@
                                 "items": []
                             }
                         },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tunnel to Total Recharge Station West": {
                             "type": "and",
                             "data": {
@@ -10185,7 +10185,15 @@
                         "start_point_actor_def": "actordef:actors/props/powergeneratorengine/charclasses/powergeneratorengine.bmsad"
                     },
                     "valid_starting_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Freezer": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tunnel to Total Recharge Station West": {
                     "node_type": "dock",
@@ -10710,7 +10718,7 @@
                         "area": "Energy Recharge Station West",
                         "node": "Door to Freezer (Upper)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Dairon Power Switch 2 Powered Door",
                     "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -10752,7 +10760,7 @@
                         "area": "Energy Recharge Station West",
                         "node": "Door to Freezer (Lower)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Dairon Power Switch 2 Powered Door",
                     "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -12254,12 +12262,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Energy Recharge Station West (Upper)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_002",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Freezer Navigation": {
@@ -12436,12 +12442,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Energy Recharge Station West (Lower)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_002",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Pickup (Missile Tank - Upper)": {
@@ -16705,7 +16709,7 @@
                         "area": "Freezer",
                         "node": "Door to Energy Recharge Station West (Upper)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Dairon Power Switch 2 Powered Door",
                     "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -16754,7 +16758,7 @@
                         "area": "Freezer",
                         "node": "Door to Energy Recharge Station West (Lower)"
                     },
-                    "default_dock_weakness": "Power Beam Door",
+                    "default_dock_weakness": "Dairon Power Switch 2 Powered Door",
                     "exclude_from_dock_rando": true,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -16819,12 +16823,10 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Freezer (Lower)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "s030_baselab:default:powergenerator_002",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to Transport to Ghavoran": {
