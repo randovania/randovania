@@ -17,6 +17,11 @@ class DreadModPlatform(Enum):
     ATMOSPHERE = "atmosphere"
 
 
+class LinuxRyujinxPath(Enum):
+    NATIVE = "native"
+    FLATPAK = "flatpak"
+
+
 @dataclasses.dataclass(frozen=True)
 class DreadGameExportParams(GameExportParams):
     input_path: Path
