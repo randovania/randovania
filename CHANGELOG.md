@@ -88,6 +88,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Normal Doors now account for having a beam or Morph Ball Bombs to open.
 
+##### Agon Wastes
+
+- Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.
+- Added: Screw Attack from the cannons to get the item in Central Mining Station before the Pirate fight.
+- Fixed: The video link for the Expert Slope Jump in Central Mining Station now links to a working video.
+
 ## [7.5.0] - 2024-04-01
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
