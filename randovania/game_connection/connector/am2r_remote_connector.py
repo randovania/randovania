@@ -169,6 +169,10 @@ class AM2RRemoteConnector(RemoteConnector):
 
             # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.
             item_name_replacement = {
+                "Missile Tank": "Nothing",
+                "Super Missile Tank": "Nothing",
+                "Power Bomb Tank": "Nothing",
+                # These names were used in older versions. To not break compatibility, we're keeping them here.
                 "Missile Expansion": "Nothing",
                 "Super Missile Expansion": "Nothing",
                 "Power Bomb Expansion": "Nothing",

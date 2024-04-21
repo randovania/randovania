@@ -29,6 +29,7 @@ if TYPE_CHECKING:
     import pytest_mock
 
 
+@pytest.mark.usefixtures("_mock_seed_hash")
 def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_audit):
     mock_emit = mocker.patch("flask_socketio.emit")
 
@@ -55,7 +56,7 @@ def test_admin_player_kick_last(solo_two_world_session, flask_app, mocker, mock_
             "visibility": "visible",
             "users_list": [],
             "worlds": [],
-            "game_details": {"seed_hash": "55SQZAV4", "spoiler": True, "word_hash": "Screw Poison Eyon"},
+            "game_details": {"seed_hash": "XXXXXXXX", "spoiler": True, "word_hash": "Some Words"},
             "generation_in_progress": None,
             "allowed_games": ANY,
             "allow_coop": False,

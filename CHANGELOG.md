@@ -5,22 +5,82 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.0.0] - 2024-05-??
-
-- **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
-
 ## [7.6.0] - 2024-05-??
 
-- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
+- **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
 - Added: Highlighting nodes in the Map view of the Map tracker will now update the current location.
+- Changed: The output after verifying the installation has been made less misleading.
+- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
+- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
 
 ### Resolver
 
 - Fixed: Some cases of seeds being wrongly considered as impossible.
 
+### Discord Bot
+
+- Added: The Discord bot now mentions the game when describing a preset.
+- Changed: Experimental games are now only available in the development bot.
+
+### AM2R
+
+- Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
+
+#### Logic Database
+
+- Changed: Zipping from destroyable objects with Missiles is now rated as Expert.
+
+##### Hydro Station
+
+- Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
+- Fixed: Inner Alpha Nest South: It's not logical anymore to get the Missile tank with only Walljumps and Mid-Air Morphs.
+- Added: Inner Alpha Nest South: A video link to get the Missile Tank with a Morph Glide.
+
+### Cave Story
+
+- Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
+- Fixed: King does not have a third ear anymore when using him as a player sprite.
+
+##### Sand Zone
+
+- Fixed: Sand Zone: Breaking the blocks now properly accounts for having either Missile Launcher or Super Missile Launcher.
+- Fixed: Sand Zone: Breaking the blocks to go from the Sunstones to before the omega fight now properly accounts for killing enemies to farm Missiles.
+- Fixed: Sand Zone: Reaching the Storehouse now expects you to have a weapon on trickless instead of the ability to fly.
+- Added: Sand Zone: Breaking the blocks near the Storehouse is now accounted for with Missiles/Bubbler.
+- Added: Sand Zone: Collecting the running puppy now expects you to either kill the Armadillos, or avoid them via intermediate Pacifist strats.
+- Added: Sand Zone: Health requirements added to Omega.
+- Added: Sand Zone Residence: Health requirements added to Curly.
+- Added: Sand Zone Storehouse: Health requirements added to Toroko+.
+
+
+### Metroid Dread
+
+- Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
+- Fixed: Customizing a preset where EMMI and Bosses were turned off for DNA placement won't have the DNA slider be initially enabled.
+- Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
+
 ### Metroid Prime
 
 - Added: FAQ Entry about non-Superheated rooms
+- Added: Exposed "Power Beam Only"-Doors for Door Lock Rando.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
+
+##### Frigate Orpheon
+
+- Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
+
+##### Phendrana Drifts
+
+- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
+
+##### Magmoor Caverns
+
+- Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
 
 ### Metroid Prime 2: Echoes
 
@@ -31,31 +91,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.
 - Added: Screw Attack from the cannons to get the item in Central Mining Station before the Pirate fight.
 - Fixed: The video link for the Expert Slope Jump in Central Mining Station now links to a working video.
-
-## [7.5.1] - 2024-04-??
-
-- Changed: The output after verifying the installation has been made less misleading.
-- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
-
-### Discord Bot
-
-- Added: The Discord bot now mentions the game when describing a preset.
-
-### AM2R
-
-##### Hydro Station
-
-- Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
-
-### Cave Story
-
-- Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
-- Fixed: King does not have a third ear anymore when using him as a player sprite.
-
-### Metroid Dread
-
-- Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
-- Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
 
 ## [7.5.0] - 2024-04-01
 

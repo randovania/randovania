@@ -4,16 +4,22 @@ import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.configurable_node import ConfigurableNode
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
     from random import Random
 
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
@@ -99,3 +105,26 @@ class EchoesBootstrap(MetroidBootstrap):
                 pool_results.assignment[location.pickup_index] = key
 
         return super().assign_pool_results(rng, patches, pool_results)
+
+    def apply_game_specific_patches(
+        self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
+    ) -> None:
+        assert isinstance(configuration, EchoesConfiguration)
+
+        scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
+        scan_visor_req = ResourceRequirement.simple(scan_visor)
+
+        translator_gates = patches.game_specific["translator_gates"]
+
+        for node in game.region_list.iterate_nodes():
+            if not isinstance(node, ConfigurableNode):
+                continue
+
+            requirement = LayoutTranslatorRequirement(translator_gates[node.identifier.as_string])
+            translator = game.resource_database.get_item(requirement.item_name)
+            game.region_list.configurable_nodes[node.identifier] = RequirementAnd(
+                [
+                    scan_visor_req,
+                    ResourceRequirement.simple(translator),
+                ]
+            )

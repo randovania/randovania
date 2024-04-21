@@ -125,6 +125,7 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
         "description": resource.description,
+        "require_documentation_above": resource.require_documentation_above,
         "extra": frozen_lib.unwrap(resource.extra),
     }
 

@@ -18,15 +18,13 @@ from randovania.game_description.db.node import Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
+from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.exceptions import InvalidConfiguration
@@ -44,7 +42,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -187,38 +185,23 @@ def _get_nodes_by_teleporter_id(region_list: RegionList, elevator_dock_type: Doc
             yield node
 
 
-def translator_index_for_requirement(requirement: Requirement) -> int:
-    assert isinstance(requirement, RequirementAnd)
-    assert 1 <= len(requirement.items) <= 2
-
-    items: set = set()
-    for req in requirement.items:
-        assert isinstance(req, ResourceRequirement)
-        assert req.amount == 1
-        assert not req.negate
-        assert isinstance(req.resource, ItemResourceInfo)
-        items.add(item_id_for_item_resource(req.resource))
-
-    # Remove Scan Visor, as it should always be present
-    items.remove(9)
-    for it in items:
-        return it
-    # If nothing is present, then return Scan Visor as "free"
-    return 9
+def translator_index_for_requirement(game: GameDescription, requirement: LayoutTranslatorRequirement) -> int:
+    return item_id_for_item_resource(game.resource_database.get_item(requirement.item_name))
 
 
-def _create_translator_gates_field(game: GameDescription, gate_assignment: dict[NodeIdentifier, Requirement]) -> list:
+def _create_translator_gates_field(game: GameDescription, game_specific: dict[str, str]) -> list:
     """
     Creates the translator gate entries in the patcher file
-    :param gate_assignment:
     :return:
     """
     return [
         {
-            "gate_index": game.region_list.node_by_identifier(identifier).extra["gate_index"],
-            "translator_index": translator_index_for_requirement(requirement),
+            "gate_index": game.region_list.node_by_identifier(NodeIdentifier.from_string(identifier)).extra[
+                "gate_index"
+            ],
+            "translator_index": translator_index_for_requirement(game, LayoutTranslatorRequirement(requirement)),
         }
-        for identifier, requirement in gate_assignment.items()
+        for identifier, requirement in game_specific.items()
     ]
 
 
@@ -705,7 +688,9 @@ class EchoesPatchDataFactory(PatchDataFactory):
             result["elevators"] = []
 
         # Add translators
-        result["translator_gates"] = _create_translator_gates_field(self.game, self.patches.configurable_nodes)
+        result["translator_gates"] = _create_translator_gates_field(
+            self.game, self.patches.game_specific["translator_gates"]
+        )
 
         # Scan hints
         result["string_patches"] = _create_string_patches(
