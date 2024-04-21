@@ -86,6 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Fixed: Normal Doors now account for having a beam or Morph Ball Bombs to open.
+
 ##### Agon Wastes
 
 - Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.

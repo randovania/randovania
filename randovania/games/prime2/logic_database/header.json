@@ -2079,6 +2079,79 @@
                         ]
                     }
                 }
+            },
+            "Shoot Any Beam": {
+                "display_name": "Shoot Any Beam",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Power",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Dark Beam"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Light Beam"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Shoot Annihilator Beam"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Open Normal Door": {
+                "display_name": "Open Normal Door",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Shoot Any Beam"
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bombs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -2283,11 +2356,8 @@
                             "door_type": "Normal"
                         },
                         "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Open Normal Door"
                         },
                         "lock": null
                     },
@@ -2296,11 +2366,8 @@
                             "door_type": "Normal"
                         },
                         "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Open Normal Door"
                         },
                         "lock": null
                     },
