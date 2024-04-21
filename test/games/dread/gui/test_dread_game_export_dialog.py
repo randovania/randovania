@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from pathlib import Path
 
     import pytest_mock
+    from pytestqt.qtbot import QtBot
 
 
 @pytest.mark.parametrize("has_custom_path", [False, True])
@@ -344,7 +345,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     )
 
 
-def test_linux_controls_changing(mocker: pytest_mock.MockerFixture, tmp_path: Path) -> None:
+def test_linux_controls_changing(skip_qtbot: QtBot, mocker: pytest_mock.MockerFixture, tmp_path: Path) -> None:
     # Setup
     mocker.patch("platform.system", return_value="Linux")
     options = MagicMock()
