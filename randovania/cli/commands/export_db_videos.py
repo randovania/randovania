@@ -178,7 +178,31 @@ def get_yt_ids(req: Requirement, highest_diff: int) -> Iterable[tuple[str, int, 
         yield from get_yt_ids(i, highest_diff)
 
 
-def collect_game_info(game: RandovaniaGame) -> dict[str, dict[str, dict[str, dict[str, list[tuple[str, int, int]]]]]]:
+ConnectionVideos = list[tuple[str, int, int]]
+AreaVideos = dict[str, dict[str, ConnectionVideos]]
+
+
+def collect_game_info(game: RandovaniaGame) -> dict[str, dict[str, AreaVideos]]:
+    """
+    Result:
+        dict[
+            RegionName,
+            dict[
+                AreaName,
+                dict[
+                    SourceNodeName,
+                    dict[
+                        TargetNodeName,
+                        list[tuple[
+                            YouTubeLink,
+                            StartTime,
+                            Difficulty
+                        ]]
+                    ]
+                ]
+            ]
+        ]
+    """
     db = default_database.game_description_for(game)
 
     regions = {}
@@ -206,7 +230,7 @@ def collect_game_info(game: RandovaniaGame) -> dict[str, dict[str, dict[str, dic
     return regions
 
 
-def generate_region_html(name: str, areas: dict[str, dict[str, dict[str, list[tuple[str, int, int]]]]]) -> str:
+def generate_region_html(name: str, areas: dict[str, AreaVideos]) -> str:
     body = ""
     toc = """
     <div id="toc_container">

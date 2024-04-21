@@ -25,7 +25,7 @@ def create_tree_items_for_requirement(
 
     result = None
 
-    for depth, text in pretty_print.pretty_print_requirement(requirement, db):
+    for depth, text in pretty_print.pretty_format_requirement(requirement, db):
         item = QtWidgets.QTreeWidgetItem(parents[depth])
         item.setExpanded(True)
 

@@ -41,6 +41,7 @@ class RegionList(NodeProvider):
     _patches_dock_open_requirements: list[Requirement] | None
     _patches_dock_lock_requirements: list[Requirement | None] | None
     _teleporter_network_cache: dict[str, list[TeleporterNetworkNode]]
+    configurable_nodes: dict[NodeIdentifier, Requirement]
 
     def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
@@ -52,6 +53,7 @@ class RegionList(NodeProvider):
         self._patched_node_connections = None
         self._patches_dock_open_requirements = None
         self._patches_dock_lock_requirements = None
+        self.configurable_nodes = {}
         self.invalidate_node_cache()
 
     def _refresh_node_cache(self) -> _NodesTuple:
@@ -236,13 +238,13 @@ class RegionList(NodeProvider):
         if cache_result is not None:
             return cache_result
 
-        area = self.area_by_area_location(identifier.area_location)
-        node = area.node_with_name(identifier.node_name)
+        area = self.area_by_area_location(identifier.area_identifier)
+        node = area.node_with_name(identifier.node)
         if node is not None:
             self._identifier_to_node[identifier] = node
             return node
 
-        raise ValueError(f"No node with name {identifier.node_name} found in {area}")
+        raise ValueError(f"No node with name {identifier.node} found in {area}")
 
     def typed_node_by_identifier(self, i: NodeIdentifier, t: type[NodeType]) -> NodeType:
         result = self.node_by_identifier(i)
@@ -256,11 +258,11 @@ class RegionList(NodeProvider):
         return self.region_and_area_by_area_identifier(location)[1]
 
     def region_by_area_location(self, location: AreaIdentifier) -> Region:
-        return self.region_with_name(location.region_name)
+        return self.region_with_name(location.region)
 
     def region_and_area_by_area_identifier(self, identifier: AreaIdentifier) -> tuple[Region, Area]:
-        region = self.region_with_name(identifier.region_name)
-        area = region.area_by_name(identifier.area_name)
+        region = self.region_with_name(identifier.region)
+        area = region.area_by_name(identifier.area)
         return region, area
 
     def correct_area_identifier_name(self, identifier: AreaIdentifier) -> str:
@@ -299,6 +301,9 @@ class RegionList(NodeProvider):
             ]
             self._teleporter_network_cache[network_name] = network
         return network
+
+    def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
+        return self.configurable_nodes[identifier]
 
 
 def _calculate_nodes_to_area_region(regions: Iterable[Region]) -> tuple[dict[NodeIndex, Area], dict[NodeIndex, Region]]:

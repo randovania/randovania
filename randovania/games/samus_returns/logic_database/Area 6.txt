@@ -697,7 +697,7 @@ Extra - asset_id: collision_camera_043
   * Pickup 139; Category? Major
   * Extra - actor_name: LE_PowerUp_Powerbomb
   * Extra - actor_type: itemsphere_powerbomb
-  > Before Diggernaut
+  > Room Center
       Trivial
 
 > Door to Electric Escalade; Heals? False
@@ -705,7 +705,7 @@ Extra - asset_id: collision_camera_043
   * Power Beam Door to Electric Escalade/Door to Diggernaut Arena
   * Extra - actor_name: Door024
   * Extra - actor_type: doorpowerpower
-  > Door from Transport to Area 7
+  > Room Center
       Trivial
 
 > Door from Transport to Area 7; Heals? False
@@ -713,9 +713,23 @@ Extra - asset_id: collision_camera_043
   * Access Closed to Transport to Area 7/Door to Diggernaut Arena; Excluded from Dock Lock Rando
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
-  > Before Diggernaut
+  > Room Center
+      Trivial
+
+> Event - Diggernaut; Heals? False
+  * Layers: default
+  * Event Area 6 - Diggernaut
+  > Pickup (Power Bomb)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoint_009
+  > Door to Electric Escalade
+      After Area 6 - Diggernaut and Lay Power Bomb
+  > Event - Diggernaut
       All of the following:
-          # TODO: move this to event, also have a second look
+          # Damage Diggernaut's Weak Points
           Lay Bomb
           Any of the following:
               # Energy Requirements
@@ -724,7 +738,7 @@ Extra - asset_id: collision_camera_043
               Combat (Intermediate) and Normal Damage ≥ 299
               Combat (Advanced) and Normal Damage ≥ 199
           Any of the following:
-              # Dealing Damage
+              # Dealing Damage to faceplate
               Plasma Beam or Shoot Beam Burst
               All of the following:
                   Combat (Advanced)
@@ -739,7 +753,7 @@ Extra - asset_id: collision_camera_043
                       Phase Drift and Dodge Enemies (Advanced)
                       # Deal damage then IBJ up to the ceiling to avoid the lasers https://youtu.be/XenOF4TceeY?t=8960
                       Dodge Enemies (Expert) and Infinite Bomb Jump (Expert)
-              # "Tank" the lasers
+              # Tank the lasers with Lightning Armor
               Aeion ≥ 1500 and Lightning Armor and Combat (Advanced)
           Any of the following:
               # Entering Arms
@@ -747,24 +761,10 @@ Extra - asset_id: collision_camera_043
               # Bomb Jump to avoid touching the arms https://youtu.be/rNv9nWRIwP8?t=9632
               Diagonal Bomb Jump (Expert) and Infinite Bomb Jump (Advanced)
           Any of the following:
-              # Final Phase
+              # Final Phase (Spinning Faceplate)
               Spider Ball
               # Lay a bomb near a weak point when its on the right or top only
               Mid-Air Morph (Advanced) or Infinite Bomb Jump (Advanced)
-
-> Event - Diggernaut; Heals? False
-  * Layers: default
-  * Event Area 6 - Diggernaut
-  > Pickup (Power Bomb)
-      Trivial
-
-> Before Diggernaut; Heals? False; Default Node
-  * Layers: default
-  * Extra - start_point_actor_name: ST_Checkpoint_009
-  > Door to Electric Escalade
-      After Area 6 - Diggernaut and Lay Power Bomb
-  > Event - Diggernaut
-      Trivial
 
 ----------------
 Swarm Square

@@ -1,5 +1,5 @@
 {
-    "schema_version": 23,
+    "schema_version": 24,
     "game": "am2r",
     "resource_database": {
         "items": {
@@ -776,71 +776,85 @@
             "Combat": {
                 "long_name": "Combat",
                 "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Walljump": {
                 "long_name": "Walljump",
                 "description": "If this trick is enabled, the player may be expected to get to places by chaining walljumps together.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "IBJ": {
                 "long_name": "Infinite Bomb Jumping",
                 "description": "If this trick is enabled, the player may be expected to reach higher places by placing bombs in a rhythm.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "MidAirMorph": {
                 "long_name": "Mid-Air Morph",
                 "description": "If this trick is enabled, the player may be expected to morph in mid-air to place bombs or get into morph tunnels.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Shinesparking": {
                 "long_name": "Shinesparking Tricks",
                 "description": "If this trick is enabled, the player may be expected to do complex shinesparking maneuvers. <br>Just running and jumping with speedboost is <b>not</b> considered a shinespark. Only preserving it by crouching is.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "MorphGlide": {
                 "long_name": "Morph Glide",
                 "description": "If this trick is enabled, the player may be expected to repeatedly morph and unmorph in the air to conserve height.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Knowledge": {
                 "long_name": "Knowledge",
                 "description": "If this trick is enabled, the player may be expected to know certain hidden passageways or other lesser known facts.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Movement": {
                 "long_name": "Movement",
                 "description": "If this trick is enabled, the player may be expected to do some tricky platforming.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "ShortCharge": {
                 "long_name": "Short Charge",
                 "description": "If this trick is enabled, the player may be expected to charge speedbooster sooner by various means.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "DamageBoost": {
                 "long_name": "Damage Boost",
                 "description": "If this trick is enabled, the player may be expected to take damage in order to proceed.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "DiagonalIBJ": {
                 "long_name": "Diagonal Infinite Bomb Jumping",
                 "description": "If this trick is enabled, the player may be expected to gain height diagonally by placing bombs and moving in a rhythm.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Zip": {
                 "long_name": "Zip Trick",
                 "description": "If this trick is enabled, the player may be expected to do instantly teleport between walls, by walljumping with certain conditions.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "ChargedBombJump": {
                 "long_name": "Charged Bomb Jump",
                 "description": "If this trick is enabled, the player may be expected to reach higher places by charging Charge Beam, morphing and releasing Charge Beam to release lots of bombs at once.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "MissileLessMetroids": {
                 "long_name": "Missile-Less Metroid Fights",
                 "description": "If this trick is enabled, the player may be expected to kill Metroids with only Charge Beam.",
+                "require_documentation_above": 0,
                 "extra": {}
             }
         },
@@ -3682,7 +3696,7 @@
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Via Bombs",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -3694,25 +3708,8 @@
                                             }
                                         },
                                         {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "template",
-                                                        "data": "Can Use Bombs"
-                                                    }
-                                                ]
-                                            }
+                                            "type": "template",
+                                            "data": "Can Use Bombs"
                                         }
                                     ]
                                 }
@@ -3720,7 +3717,7 @@
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Via PBs",
                                     "items": [
                                         {
                                             "type": "template",
@@ -3732,6 +3729,32 @@
                                                 "type": "tricks",
                                                 "name": "Zip",
                                                 "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "Via Missiles",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Zip",
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         }
@@ -5499,6 +5522,7 @@
             1,
             2,
             3,
+            4,
             5
         ]
     },

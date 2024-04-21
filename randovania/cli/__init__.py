@@ -3,12 +3,16 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
+import typing
 from pathlib import Path
 
 import randovania
 
+if typing.TYPE_CHECKING:
+    from argparse import _SubParsersAction
 
-def create_subparsers(root_parser):
+
+def create_subparsers(root_parser: _SubParsersAction) -> None:
     from randovania.cli import database, gui, layout
 
     layout.create_subparsers(root_parser)
@@ -21,11 +25,11 @@ def create_subparsers(root_parser):
         server.create_subparsers(root_parser)
 
 
-def _print_version(args):
+def _print_version(args: argparse.Namespace) -> None:
     print(f"Randovania {randovania.VERSION} from {Path(randovania.__file__).parent}")
 
 
-def _create_parser():
+def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="randovania")
 
     create_subparsers(parser.add_subparsers(dest="game"))
@@ -37,7 +41,7 @@ def _create_parser():
     return parser
 
 
-def _run_args(parser, args):
+def _run_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
     if args.configuration is not None:
         randovania.CONFIGURATION_FILE_PATH = args.configuration.absolute()
 
@@ -49,16 +53,16 @@ def _run_args(parser, args):
     return args.func(args) or 0
 
 
-def run_pytest(argv):
+def run_pytest(argv: list[str]) -> None:
     import pytest
     import pytest_asyncio.plugin
-    import pytest_localftpserver.plugin
+    import pytest_localftpserver.plugin  # type: ignore[import-untyped]
     import pytest_mock.plugin
 
     sys.exit(pytest.main(argv[2:], plugins=[pytest_asyncio.plugin, pytest_mock.plugin, pytest_localftpserver.plugin]))
 
 
-def run_cli(argv):
+def run_cli(argv: list[str]) -> None:
     if len(argv) > 1 and argv[1] == "--pytest":
         run_pytest(argv)
     else:
@@ -69,5 +73,5 @@ def run_cli(argv):
             args = ["gui", "main"]
 
         logging.debug("Creating parsers...")
-        parser = _create_parser()
+        parser = create_parser()
         raise SystemExit(_run_args(parser, parser.parse_args(args)))

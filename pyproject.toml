@@ -53,9 +53,6 @@ dependencies = [
     # nonblocking file IO
     "aiofiles",
 
-    # Better than dataclasses for NodeIdentifier
-    "attrs>=21.4.0",
-
     # Immutable dicts, used in many places
     "frozendict",
 
@@ -72,7 +69,7 @@ dependencies = [
 [project.optional-dependencies]
 exporters = [
     # AM2R
-    "am2r-yams>=1.2.0",
+    "am2r-yams>=2.0.0",
 
     # Cave Story
     "cave-story-randomizer>=2.3.3",
@@ -230,6 +227,7 @@ runtime-evaluated-base-classes = [
 [tool.mypy]
 files = [
     "randovania/bitpacking/",
+    "randovania/cli/__init__.py",
     "randovania/game_description/",
     "randovania/games/am2r/gui/dialog/cosmetic_patches_dialog.py",
     "randovania/games/blank/",

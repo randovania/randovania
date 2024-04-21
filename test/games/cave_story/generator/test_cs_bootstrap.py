@@ -63,10 +63,10 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     first_cave_assignment = [
         target.pickup for index, target in result.pickup_assignment.items() if index in FIRST_CAVE_INDICES
     ]
-    expected_first_cave_len = 1 if starting_area.area_name == "Start Point" else 0
+    expected_first_cave_len = 1 if starting_area.area == "Start Point" else 0
 
     assert len(first_cave_assignment) == expected_first_cave_len
-    assert starting_area.area_name != "Start Point" or first_cave_assignment[0].broad_category.name in {
+    assert starting_area.area != "Start Point" or first_cave_assignment[0].broad_category.name in {
         "weapon",
         "missile_related",
     }
@@ -74,7 +74,7 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
     # Camp weapon/life capsule
     camp_assignment = [target.pickup for index, target in result.pickup_assignment.items() if index in CAMP_INDICES]
 
-    if starting_area.area_name != "Camp":
+    if starting_area.area != "Camp":
         assert len(camp_assignment) == 0
     else:
         expected_names = set(STRONG_WEAPONS)

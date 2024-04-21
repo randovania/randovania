@@ -28,6 +28,7 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
         signal_handling.on_checked(self.prefer_emmi_check, self._on_prefer_emmi)
         signal_handling.on_checked(self.prefer_major_bosses_check, self._on_prefer_major_bosses)
         self.dna_slider.valueChanged.connect(self._on_dna_slider_changed)
+        self._update_slider_max()
 
     @classmethod
     def tab_title(cls) -> str:

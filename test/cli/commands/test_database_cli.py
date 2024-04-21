@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import argparse
+from typing import TYPE_CHECKING
 from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
@@ -8,6 +10,9 @@ from randovania.cli import database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.game import RandovaniaGame
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.mark.parametrize("expected_resource", [0, 1, 2])
@@ -106,3 +111,26 @@ def test_refresh_pickup_database_logic(mocker):
 
     # Assert
     mock_write_pickup_database_for_game.assert_has_calls([call(ANY, ANY) for _ in RandovaniaGame])
+
+
+def test_trick_usage_documentation_logic_blank(tmp_path: Path) -> None:
+    # Setup
+    args = argparse.Namespace()
+    args.json_database = None
+    args.game = "blank"
+    args.output_path = tmp_path.joinpath("output.txt")
+
+    # Run
+    database.trick_usage_documentation_logic(args)
+
+    # Assert
+    assert args.output_path.read_text() == "\n".join(
+        [
+            "\n",
+            "# Intro",
+            "",
+            "## Boss Arena",
+            "### Door to Starting Area -> Event - Boss:",
+            "- (Documented) Combat (Beginner)",
+        ]
+    )

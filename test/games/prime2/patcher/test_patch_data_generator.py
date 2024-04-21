@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
-from frozendict import frozendict
 
 import randovania
 import randovania.games.prime2.exporter.patch_data_factory
@@ -15,9 +14,6 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupModel
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
@@ -381,25 +377,11 @@ def test_create_elevators_field_elevators_for_a_seed(
 
 
 def test_create_translator_gates_field(echoes_game_description):
-    c = NodeIdentifier.create
-
-    def make_req(item_id: int):
-        return RequirementAnd(
-            [
-                ResourceRequirement.simple(
-                    ItemResourceInfo(0, "Scan Visor", "Scan", 1, frozendict({"item_id": 9})),
-                ),
-                ResourceRequirement.simple(
-                    ItemResourceInfo(1, "Other", "Other", 1, frozendict({"item_id": item_id})),
-                ),
-            ]
-        )
-
     # Setup
     gate_assignment = {
-        c("Temple Grounds", "Meeting Grounds", "Translator Gate"): make_req(0),
-        c("Temple Grounds", "Industrial Site", "Translator Gate"): make_req(1),
-        c("Temple Grounds", "Path of Eyes", "Translator Gate"): make_req(0),
+        "Temple Grounds/Meeting Grounds/Translator Gate": "violet",
+        "Temple Grounds/Industrial Site/Translator Gate": "amber",
+        "Temple Grounds/Path of Eyes/Translator Gate": "violet",
     }
 
     # Run
@@ -407,9 +389,9 @@ def test_create_translator_gates_field(echoes_game_description):
 
     # Assert
     assert result == [
-        {"gate_index": 1, "translator_index": 0},
-        {"gate_index": 3, "translator_index": 1},
-        {"gate_index": 4, "translator_index": 0},
+        {"gate_index": 1, "translator_index": 97},
+        {"gate_index": 3, "translator_index": 98},
+        {"gate_index": 4, "translator_index": 97},
     ]
 
 
@@ -691,6 +673,7 @@ def test_create_string_patches(
     assert result == expected_result
 
 
+@pytest.mark.usefixtures("_mock_seed_hash")
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename", "use_new_patcher"),
     [

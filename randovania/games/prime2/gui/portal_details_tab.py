@@ -44,7 +44,9 @@ class PortalDetailsTab(BaseConnectionDetailsTab):
                     per_area[region.name][area.name].add(node)
 
         def name_for(target):
-            target_region, target_area = region_list.region_and_area_by_area_identifier(target.identifier.area_location)
+            target_region, target_area = region_list.region_and_area_by_area_identifier(
+                target.identifier.area_identifier
+            )
             target_name = target_area.name
             if portal_count_in_area[target_region.name][target_area.name] > 1:
                 target_name += f" - {target.name}"

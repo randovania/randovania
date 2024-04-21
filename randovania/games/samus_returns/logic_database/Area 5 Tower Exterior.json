@@ -554,15 +554,21 @@
                             }
                         },
                         "Door to Transport to Tower Interior West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: DBJ",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "tricks",
+                                            "name": "DBJ",
+                                            "amount": 3,
+                                            "negate": false
                                         }
                                     }
                                 ]
