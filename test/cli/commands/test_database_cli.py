@@ -70,6 +70,7 @@ def test_refresh_game_description_logic(check, mocker):
     # Setup
     args = MagicMock()
     args.integrity_check = check
+    args.game = None
 
     from randovania.game_description import default_database, integrity_check
 

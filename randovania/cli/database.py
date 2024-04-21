@@ -203,9 +203,14 @@ def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescript
 def refresh_game_description_logic(args: Namespace) -> None:
     from randovania.game_description import integrity_check
 
+    if args.game is not None:
+        games = [RandovaniaGame(args.game)]
+    else:
+        games = list(RandovaniaGame.all_games())
+
     gd_per_game = {}
 
-    for game in RandovaniaGame.all_games():
+    for game in games:
         logging.info("Reading %s", game.long_name)
         gd_per_game[game] = default_database.game_description_for(game)
 
