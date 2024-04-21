@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import io
 import typing
 from typing import TYPE_CHECKING, TextIO
 
@@ -17,10 +18,13 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.lib import frozen_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
     from pathlib import Path
+
+    from frozendict import frozendict
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
@@ -149,10 +153,27 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
     return ""
 
 
+def pretty_print_extra(
+    extra: dict | frozendict, print_function: typing.Callable[[str], typing.Any], indent: int = 0
+) -> None:
+    if extra:
+        output = io.StringIO()
+
+        from ruamel.yaml import YAML
+
+        yaml = YAML()
+        yaml.dump(frozen_lib.unwrap(extra), stream=output)
+        output.seek(0)
+
+        prefix = "  " * (indent + 1)
+        print_function(f"{'  ' * indent}Extra:")
+        for line in output.readlines():
+            print_function(f"{prefix}{line.rstrip()}")
+
+
 def pretty_print_area(game: GameDescription, area: Area, print_function: typing.Callable[[str], None] = print) -> None:
     print_function(area.name)
-    for extra_name, extra_field in area.extra.items():
-        print_function(f"Extra - {extra_name}: {extra_field}")
+    pretty_print_extra(area.extra, print_function)
 
     for i, node in enumerate(area.nodes):
         if node.is_derived_node:
@@ -171,8 +192,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
             print_function(f"  * {description_line}")
         if node.description:
             print_function(f"  * {node.description}")
-        for extra_name, extra_field in node.extra.items():
-            print_function(f"  * Extra - {extra_name}: {extra_field}")
+        pretty_print_extra(node.extra, print_function, indent=1)
 
         for target_node, requirement in game.region_list.area_connections_from(node):
             if target_node.is_derived_node:
@@ -189,6 +209,9 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
 
 
 def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
+    def file_write(data: str) -> None:
+        output.write(data + "\n")
+
     output.write("====================\nTemplates\n")
     for template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template.display_name}:\n")
@@ -198,13 +221,11 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("\n====================\nDock Weaknesses\n")
     for dock_type in game.dock_weakness_database.dock_types:
         output.write(f"\n> {dock_type.long_name}")
-        for extra_name, extra_field in dock_type.extra.items():
-            output.write(f"\n* Extra - {extra_name}: {extra_field}")
+        pretty_print_extra(dock_type.extra, file_write)
 
         for weakness in game.dock_weakness_database.get_by_type(dock_type):
             output.write(f"\n  * {weakness.name}\n")
-            for extra_name, extra_field in weakness.extra.items():
-                output.write(f"      Extra - {extra_name}: {extra_field}\n")
+            pretty_print_extra(weakness.extra, file_write, indent=3)
 
             output.write("      Open:\n")
             for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1):
