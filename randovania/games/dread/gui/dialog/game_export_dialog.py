@@ -84,29 +84,34 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     def get_path_to_ryujinx(self) -> Path:
         ryujinx_path_tuple = ("Ryujinx", "mods", "contents", "010093801237c000")
         current_system = platform.system()
-        if current_system == "Windows":
-            return Path(os.environ["APPDATA"], *ryujinx_path_tuple)
-        elif current_system == "Linux":
-            if self.linux_ryujinx_path == LinuxRyujinxPath.NATIVE:
-                base_config_path = QtCore.QStandardPaths.writableLocation(
-                    QtCore.QStandardPaths.StandardLocation.GenericConfigLocation
-                )
-            else:
-                base_config_path = str(
-                    Path(
-                        QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.HomeLocation),
-                        ".var",
-                        "app",
-                        "org.ryujinx.Ryujinx",
-                        "config",
+        match current_system:
+            case "Windows":
+                # TODO: double check what ryujinx actually uses for windows. I don't think it reads the Appdata env var
+                # but instead probably the value from QStandardPaths.
+                return Path(os.environ["APPDATA"], *ryujinx_path_tuple)
+
+            case "Linux":
+                if self.linux_ryujinx_path == LinuxRyujinxPath.NATIVE:
+                    base_config_path = QtCore.QStandardPaths.writableLocation(
+                        QtCore.QStandardPaths.StandardLocation.GenericConfigLocation
                     )
+                else:
+                    base_config_path = str(
+                        Path(
+                            QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.HomeLocation),
+                            ".var",
+                            "app",
+                            "org.ryujinx.Ryujinx",
+                            "config",
+                        )
+                    )
+                return Path(base_config_path, *ryujinx_path_tuple)
+
+            case "Darwin":
+                return Path(
+                    QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.GenericDataLocation),
+                    *ryujinx_path_tuple,
                 )
-            return Path(base_config_path, *ryujinx_path_tuple)
-        elif current_system == "Darwin":
-            return Path(
-                QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.GenericDataLocation),
-                *ryujinx_path_tuple,
-            )
 
         raise ValueError("Unsupported platform")
 
