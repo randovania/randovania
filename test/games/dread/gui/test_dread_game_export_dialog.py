@@ -1,18 +1,24 @@
 from __future__ import annotations
 
 import json
+import typing
 from unittest.mock import MagicMock, call
 
 import pytest
 from PySide6 import QtCore
 
-from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
+from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExportDialog, serialize_path
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 from randovania.lib.ftp_uploader import FtpUploader
+
+if typing.TYPE_CHECKING:
+    from pathlib import Path
+
+    import pytest_mock
 
 
 @pytest.mark.parametrize("has_custom_path", [False, True])
@@ -336,3 +342,35 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
         clean_output_path=False,
         post_export=None,
     )
+
+
+def test_linux_controls_changing(mocker: pytest_mock.MockerFixture, tmp_path: Path) -> None:
+    # Setup
+    mocker.patch("platform.system", return_value="Linux")
+    options = MagicMock()
+    options.options_for_game.return_value = DreadPerGameOptions(
+        cosmetic_patches=DreadCosmeticPatches.default(),
+        linux_ryujinx_path=LinuxRyujinxPath.FLATPAK,
+    )
+    label_template = (
+        "<html><head/><body><p>The game will be exported directly to Ryujinx's mod folder for Metroid "
+        'Dread in this computer.</p><p>Path to be used:<br/><span style=" font-size:8pt;">{'
+        "mod_path}</span></p><p>Please make sure Ryujinx is closed before exporting a "
+        "game.</p></body></html>"
+    )
+
+    # Run
+    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+
+    # Assert
+    assert not window.linux_native_radio.isChecked()
+    assert window.linux_flatpak_radio.isChecked()
+    assert window.ryujinx_label.text() == label_template.format(mod_path=window.get_path_to_ryujinx())
+
+    # Run
+    window.linux_native_radio.setChecked(True)
+
+    # Assert
+    assert window.linux_native_radio.isChecked()
+    assert not window.linux_flatpak_radio.isChecked()
+    assert window.ryujinx_label.text() == label_template.format(mod_path=window.get_path_to_ryujinx())
