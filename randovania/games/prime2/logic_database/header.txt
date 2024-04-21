@@ -95,42 +95,48 @@ Dock Weaknesses
 
 > Door
   * Normal Door
-      Extra - door_type: Normal
+      Extra:
+        door_type: Normal
       Open:
           Open Normal Door
       No lock
 
 
   * Normal Door (Forced)
-      Extra - door_type: Normal
+      Extra:
+        door_type: Normal
       Open:
           Open Normal Door
       No lock
 
 
   * Dark Door
-      Extra - door_type: Dark
+      Extra:
+        door_type: Dark
       Open:
           Shoot Dark Beam
       No lock
 
 
   * Light Door
-      Extra - door_type: Light
+      Extra:
+        door_type: Light
       Open:
           Shoot Light Beam
       No lock
 
 
   * Annihilator Door
-      Extra - door_type: Annihilator
+      Extra:
+        door_type: Annihilator
       Open:
           Shoot Annihilator Beam
       No lock
 
 
   * Missile Blast Shield
-      Extra - door_type: Missile
+      Extra:
+        door_type: Missile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -138,7 +144,8 @@ Dock Weaknesses
 
 
   * Super Missile Blast Shield
-      Extra - door_type: SuperMissile
+      Extra:
+        door_type: SuperMissile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -146,7 +153,8 @@ Dock Weaknesses
 
 
   * Seeker Launcher Blast Shield
-      Extra - door_type: SeekerMissile
+      Extra:
+        door_type: SeekerMissile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -154,8 +162,9 @@ Dock Weaknesses
 
 
   * Seeker Launcher Blast Shield (patched)
-      Extra - door_type: SeekerMissile
-      Extra - display_name: Seeker Launcher Blast Shield
+      Extra:
+        door_type: SeekerMissile
+        display_name: Seeker Launcher Blast Shield
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -163,7 +172,8 @@ Dock Weaknesses
 
 
   * Power Bomb Blast Shield
-      Extra - door_type: PowerBomb
+      Extra:
+        door_type: PowerBomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -171,14 +181,16 @@ Dock Weaknesses
 
 
   * Permanently Locked
-      Extra - door_type: Disabled
+      Extra:
+        door_type: Disabled
       Open:
           Impossible
       No lock
 
 
   * Darkburst Blast Shield
-      Extra - door_type: Darkburst
+      Extra:
+        door_type: Darkburst
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -186,7 +198,8 @@ Dock Weaknesses
 
 
   * Sunburst Blast Shield
-      Extra - door_type: Sunburst
+      Extra:
+        door_type: Sunburst
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -194,7 +207,8 @@ Dock Weaknesses
 
 
   * Sonic Boom Blast Shield
-      Extra - door_type: SonicBoom
+      Extra:
+        door_type: SonicBoom
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -202,7 +216,8 @@ Dock Weaknesses
 
 
   * Bomb Blast Shield
-      Extra - door_type: Bomb
+      Extra:
+        door_type: Bomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -210,7 +225,8 @@ Dock Weaknesses
 
 
   * Boost Ball Blast Shield
-      Extra - door_type: Boost
+      Extra:
+        door_type: Boost
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -218,7 +234,8 @@ Dock Weaknesses
 
 
   * Screw Attack Blast Shield
-      Extra - door_type: ScrewAttack
+      Extra:
+        door_type: ScrewAttack
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -226,7 +243,8 @@ Dock Weaknesses
 
 
   * Dark Visor Blast Shield
-      Extra - door_type: DarkVisor
+      Extra:
+        door_type: DarkVisor
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -234,7 +252,8 @@ Dock Weaknesses
 
 
   * Echo Visor Blast Shield
-      Extra - door_type: EchoVisor
+      Extra:
+        door_type: EchoVisor
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
@@ -272,8 +291,9 @@ Dock Weaknesses
           Super Missile Blast Shield
 
 
-> Portal
-* Extra - ignore_for_hints: True
+> PortalExtra:
+  ignore_for_hints: true
+
   * Scan Portal
       Open:
           Scan Visor
@@ -315,9 +335,10 @@ Dock Weaknesses
   > Dock Rando: Disabled
 
 
-> Elevator
-* Extra - is_teleporter: True
-* Extra - ignore_for_hints: True
+> ElevatorExtra:
+  is_teleporter: true
+  ignore_for_hints: true
+
   * Elevator
       Open:
           Trivial
@@ -326,8 +347,9 @@ Dock Weaknesses
   > Dock Rando: Disabled
 
 
-> Teleporter
-* Extra - ignore_for_hints: True
+> TeleporterExtra:
+  ignore_for_hints: true
+
   * Teleporter
       Open:
           Trivial

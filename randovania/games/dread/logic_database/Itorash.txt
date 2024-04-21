@@ -1,38 +1,55 @@
 ----------------
 Save Station
-Extra - total_boundings: {'x1': 1400.0, 'x2': 3500.0, 'y1': -4600.0, 'y2': -3500.0}
-Extra - polygon: [[3500.0, -3500.0], [1400.0, -3500.0], [1400.0, -4600.0], [3500.0, -4600.0]]
-Extra - asset_id: collision_camera_000
+Extra:
+  total_boundings:
+    x1: 1400.0
+    x2: 3500.0
+    y1: -4600.0
+    y2: -3500.0
+  polygon:
+  - - 3500.0
+    - -3500.0
+  - - 1400.0
+    - -3500.0
+  - - 1400.0
+    - -4600.0
+  - - 3500.0
+    - -4600.0
+  asset_id: collision_camera_000
 > Door to Transport to Hanubia; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Hanubia/Door to Save Station; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Save Station
       Trivial
 
 > Door to Elevator to Raven Beak; Heals? False
   * Layers: default
   * Power Beam Door to Elevator to Raven Beak/Door to Save Station; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Save Station
       Trivial
 
 > Save Station; Heals? False; Default Node
   * Layers: default
-  * Extra - actor_name: savestation_000
-  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
-  * Extra - start_point_actor_name: savestation_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  Extra:
+    actor_name: savestation_000
+    actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+    start_point_actor_name: savestation_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
   > Door to Transport to Hanubia
       Trivial
   > Door to Elevator to Raven Beak
@@ -40,34 +57,52 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Transport to Hanubia
-Extra - total_boundings: {'x1': -5900.0, 'x2': 1500.0, 'y1': -4800.0, 'y2': -1100.0}
-Extra - polygon: [[1500.0, -1100.0], [-5900.0, -1100.0], [-5900.0, -4800.0], [1500.0, -4800.0]]
-Extra - asset_id: collision_camera_001
+Extra:
+  total_boundings:
+    x1: -5900.0
+    x2: 1500.0
+    y1: -4800.0
+    y2: -1100.0
+  polygon:
+  - - 1500.0
+    - -1100.0
+  - - -5900.0
+    - -1100.0
+  - - -5900.0
+    - -4800.0
+  - - 1500.0
+    - -4800.0
+  asset_id: collision_camera_001
 > Door to Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Save Station/Door to Transport to Hanubia; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Total Recharge
       Trivial
 
 > Start Point; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: StartPoint0
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Elevator to Hanubia
       Trivial
 
 > Total Recharge; Heals? True
   * Layers: default
-  * Extra - actor_name: totalrechargestation_000
-  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_total_000
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  Extra:
+    actor_name: totalrechargestation_000
+    actor_def:
+      actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+    start_point_actor_name: weightactivatedplatform_total_000
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
   > Door to Save Station
       Metroid DNA 1 and Metroid DNA 10 and Metroid DNA 11 and Metroid DNA 12 and Metroid DNA 2 and Metroid DNA 3 and Metroid DNA 4 and Metroid DNA 5 and Metroid DNA 6 and Metroid DNA 7 and Metroid DNA 8 and Metroid DNA 9
   > Artifact Gate
@@ -79,13 +114,16 @@ Extra - asset_id: collision_camera_001
 > Elevator to Hanubia; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Transport to Itorash/Elevator to Itorash
-  * Extra - actor_name: capsuleelevatorskybase_000
-  * Extra - actor_def: actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad
-  * Extra - elevator_component: CCapsuleUsableComponent
-  * Extra - target_spawn_point: elevator_skybase_000_platform
-  * Extra - start_point_actor_name: elevator_shipyard_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - transporter_name: Itorash
+  Extra:
+    actor_name: capsuleelevatorskybase_000
+    actor_def:
+      actordef:actors/props/capsuleelevatorskybase/charclasses/capsuleelevatorskybase.bmsad
+    elevator_component: CCapsuleUsableComponent
+    target_spawn_point: elevator_skybase_000_platform
+    start_point_actor_name: elevator_shipyard_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+    transporter_name: Itorash
   > Start Point
       Trivial
   > Artifact Gate
@@ -103,18 +141,32 @@ Extra - asset_id: collision_camera_001
 
 ----------------
 Elevator to Raven Beak
-Extra - total_boundings: {'x1': 3400.0, 'x2': 6700.0, 'y1': -4600.0, 'y2': -2400.0}
-Extra - polygon: [[6700.0, -2400.0], [3400.0, -2400.0], [3400.0, -4600.0], [6700.0, -4600.0]]
-Extra - asset_id: collision_camera_002
+Extra:
+  total_boundings:
+    x1: 3400.0
+    x2: 6700.0
+    y1: -4600.0
+    y2: -2400.0
+  polygon:
+  - - 6700.0
+    - -2400.0
+  - - 3400.0
+    - -2400.0
+  - - 3400.0
+    - -4600.0
+  - - 6700.0
+    - -4600.0
+  asset_id: collision_camera_002
 > Door to Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Save Station/Door to Elevator to Raven Beak; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Event - Destroy Generator
       Lay Power Bomb
   > Dock to Raven Beak Arena
@@ -128,25 +180,29 @@ Extra - asset_id: collision_camera_002
 > Event - Destroy Generator; Heals? False
   * Layers: default
   * Event Itorash - Destroy Generator
-  * Extra - actor_name: block_pbcolumn_000
-  * Extra - actor_def: actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad
+  Extra:
+    actor_name: block_pbcolumn_000
+    actor_def: actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad
   > Door to Save Station
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Commander
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Commander
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Raven Beak Arena
       Trivial
 
 > Dock to Raven Beak Arena; Heals? False
   * Layers: default
   * Open Passage to Raven Beak Arena/Before Fight
-  * Extra - actor_name: commander_elevator
-  * Extra - actor_def: actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_commanderelevator_000
-  * Extra - start_point_actor_def: actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
+  Extra:
+    actor_name: commander_elevator
+    actor_def: actordef:actors/props/commander_elevator/charclasses/commander_elevator.bmsad
+    start_point_actor_name: weightactivatedplatform_commanderelevator_000
+    start_point_actor_def:
+      actordef:actors/props/wplatform_cm_elevator/charclasses/weightactivatedplatform_commanderelevator.bmsad
   > Door to Save Station
       Trivial
   > Start Point
@@ -154,17 +210,43 @@ Extra - asset_id: collision_camera_002
 
 ----------------
 Elevator Cutscene
-Extra - total_boundings: {'x1': 3400.0, 'x2': 6700.0, 'y1': -2500.0, 'y2': 1900.0}
-Extra - polygon: [[6700.0, 1900.0], [3400.0, 1900.0], [3400.0, -2500.0], [6700.0, -2500.0]]
-Extra - asset_id: collision_camera_003
+Extra:
+  total_boundings:
+    x1: 3400.0
+    x2: 6700.0
+    y1: -2500.0
+    y2: 1900.0
+  polygon:
+  - - 6700.0
+    - 1900.0
+  - - 3400.0
+    - 1900.0
+  - - 3400.0
+    - -2500.0
+  - - 6700.0
+    - -2500.0
+  asset_id: collision_camera_003
 > Placeholder; Heals? False
   * Layers: default
 
 ----------------
 Raven Beak Arena
-Extra - total_boundings: {'x1': 3000.0, 'x2': 7100.0, 'y1': 1800.0, 'y2': 4000.0}
-Extra - polygon: [[7100.0, 4000.0], [3000.0, 4000.0], [3000.0, 1800.0], [7100.0, 1800.0]]
-Extra - asset_id: collision_camera_004
+Extra:
+  total_boundings:
+    x1: 3000.0
+    x2: 7100.0
+    y1: 1800.0
+    y2: 4000.0
+  polygon:
+  - - 7100.0
+    - 4000.0
+  - - 3000.0
+    - 4000.0
+  - - 3000.0
+    - 1800.0
+  - - 7100.0
+    - 1800.0
+  asset_id: collision_camera_004
 > Before Fight; Heals? False; Default Node
   * Layers: default
   > Boss - Raven Beak
@@ -213,8 +295,9 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   * Event Ship
   * End of the game
-  * Extra - start_point_actor_name: SP_Checkpoint_Endgame
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Endgame
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Elevator to Raven Beak
       Trivial
 

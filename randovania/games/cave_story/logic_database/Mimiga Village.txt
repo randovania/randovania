@@ -1,11 +1,13 @@
 ----------------
 Start Point
-Extra - map_name: Start
-Extra - starting_script: <EVE0091
+Extra:
+  map_name: Start
+  starting_script: <EVE0091
 > Door to First Cave; Heals? False
   * Layers: default
   * Door to First Cave/Door to Start Point
-  * Extra - different_strongly_connected_component: True
+  Extra:
+    different_strongly_connected_component: true
   > Save Point
       Trivial
 
@@ -18,7 +20,8 @@ Extra - starting_script: <EVE0091
 
 > Room Spawn; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - different_strongly_connected_component: True
+  Extra:
+    different_strongly_connected_component: true
   > Event - Start Point
       Trivial
 
@@ -30,14 +33,16 @@ Extra - starting_script: <EVE0091
 > Event - Start Point; Heals? False
   * Layers: default
   * Event Start in Start Point
-  * Extra - different_strongly_connected_component: True
+  Extra:
+    different_strongly_connected_component: true
   > Door to First Cave
       Trivial
 
 ----------------
 First Cave
-Extra - map_name: Cave
-Extra - starting_script: <TRA0012:0094:0037:0011
+Extra:
+  map_name: Cave
+  starting_script: <TRA0012:0094:0037:0011
 > Door to Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Start Point/Door to First Cave
@@ -66,14 +71,16 @@ Extra - starting_script: <TRA0012:0094:0037:0011
 > Pickup (First Cave Life Capsule); Heals? False
   * Layers: default
   * Pickup 32; Category? Minor
-  * Extra - event: 0401
+  Extra:
+    event: '0401'
   > Door to Start Point
       Trivial
 
 ----------------
 Hermit Gunsmith
-Extra - map_name: Pole
-Extra - starting_script: <TRA0090:0094:0007:0009
+Extra:
+  map_name: Pole
+  starting_script: <TRA0090:0094:0007:0009
 > Door to First Cave; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to First Cave/Door to Hermit Gunsmith
@@ -87,21 +94,24 @@ Extra - starting_script: <TRA0090:0094:0007:0009
 > Pickup (Hermit Gunsmith Chest); Heals? False
   * Layers: default
   * Pickup 33; Category? Minor
-  * Extra - event: 0202
+  Extra:
+    event: '0202'
   > Door to First Cave
       Trivial
 
 > Pickup (Tetsuzou); Heals? False
   * Layers: default
   * Pickup 34; Category? Minor
-  * Extra - event: 0303
+  Extra:
+    event: '0303'
   > Door to First Cave
       Trivial
 
 ----------------
 Mimiga Village
-Extra - map_name: Mimi
-Extra - starting_script: <TRA0011:0302:0008:0006
+Extra:
+  map_name: Mimi
+  starting_script: <TRA0011:0302:0008:0006
 > Door to First Cave; Heals? False
   * Layers: default
   * Door to First Cave/Door to Mimiga Village
@@ -174,14 +184,16 @@ Extra - starting_script: <TRA0011:0302:0008:0006
 > Pickup (Mimiga Village Chest); Heals? False
   * Layers: default
   * Pickup 35; Category? Minor
-  * Extra - event: 0202
+  Extra:
+    event: '0202'
   > Room Centre
       Trivial
 
 ----------------
 Save Point
-Extra - map_name: MiBox
-Extra - starting_script: <TRA0020:0094:0008:0009
+Extra:
+  map_name: MiBox
+  starting_script: <TRA0020:0094:0008:0009
 > Door to Mimiga Village; Heals? False
   * Layers: default
   * Door to Mimiga Village/Door to Save Point
@@ -202,8 +214,9 @@ Extra - starting_script: <TRA0020:0094:0008:0009
 
 ----------------
 Yamashita Farm
-Extra - map_name: Plant
-Extra - starting_script: <TRA0017:0092:0002:0011
+Extra:
+  map_name: Plant
+  starting_script: <TRA0017:0092:0002:0011
 > Door to Mimiga Village; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Yamashita Farm
@@ -213,14 +226,16 @@ Extra - starting_script: <TRA0017:0092:0002:0011
 > Pickup (Yamashita Farm); Heals? False
   * Layers: default
   * Pickup 36; Category? Minor
-  * Extra - event: 0401
+  Extra:
+    event: '0401'
   > Door to Mimiga Village
       Trivial
 
 ----------------
 Reservoir
-Extra - map_name: Pool
-Extra - starting_script: <TRA0015:0090:0036:0014
+Extra:
+  map_name: Pool
+  starting_script: <TRA0015:0090:0036:0014
 > Door to Mimiga Village; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Reservoir
@@ -239,7 +254,8 @@ Extra - starting_script: <TRA0015:0090:0036:0014
 > Pickup (Reservoir); Heals? False
   * Layers: default
   * Pickup 37; Category? Minor
-  * Extra - event: 0301
+  Extra:
+    event: '0301'
   > Door to Mimiga Village
       Trivial
 
@@ -251,8 +267,9 @@ Extra - starting_script: <TRA0015:0090:0036:0014
 
 ----------------
 Assembly Hall
-Extra - map_name: Comu
-Extra - starting_script: <TRA0019:0094:0007:0010
+Extra:
+  map_name: Comu
+  starting_script: <TRA0019:0094:0007:0010
 > Door to Mimiga Village; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Assembly Hall
@@ -262,14 +279,16 @@ Extra - starting_script: <TRA0019:0094:0007:0010
 > Pickup (Assembly Hall Fireplace); Heals? False
   * Layers: default
   * Pickup 38; Category? Minor
-  * Extra - event: 0303
+  Extra:
+    event: '0303'
   > Door to Mimiga Village
       Trivial
 
 ----------------
 Graveyard
-Extra - map_name: Cemet
-Extra - starting_script: <TRA0016:0092:0002:0012
+Extra:
+  map_name: Cemet
+  starting_script: <TRA0016:0092:0002:0012
 > Door to Mimiga Village; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Graveyard
@@ -289,21 +308,24 @@ Extra - starting_script: <TRA0016:0092:0002:0012
 > Pickup (Arthur's Grave); Heals? False
   * Layers: default
   * Pickup 39; Category? Minor
-  * Extra - event: 0301
+  Extra:
+    event: '0301'
   > Door to Mimiga Village
       Trivial
 
 > Pickup (Mr. Little (Graveyard)); Heals? False
   * Layers: default
   * Pickup 40; Category? Minor
-  * Extra - event: 0202
+  Extra:
+    event: '0202'
   > Door to Mimiga Village
       Trivial
 
 ----------------
 Storage
-Extra - map_name: Mapi
-Extra - starting_script: <TRA0083:0094:0007:0010
+Extra:
+  map_name: Mapi
+  starting_script: <TRA0083:0094:0007:0010
 > Door to Graveyard; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Graveyard/Door to Storage
@@ -318,7 +340,8 @@ Extra - starting_script: <TRA0083:0094:0007:0010
 > Pickup (Storage? Chest); Heals? False
   * Layers: default
   * Pickup 41; Category? Minor
-  * Extra - event: 0202
+  Extra:
+    event: '0202'
   > Door to Graveyard
       Trivial
 
@@ -331,14 +354,16 @@ Extra - starting_script: <TRA0083:0094:0007:0010
 > Pickup (Ma Pignon Boss); Heals? False
   * Layers: default
   * Pickup 42; Category? Minor
-  * Extra - event: 0501
+  Extra:
+    event: '0501'
   > Door to Graveyard
       Trivial
 
 ----------------
 Shack
-Extra - map_name: Barr
-Extra - starting_script: <TRA0014:0094:0005:0009
+Extra:
+  map_name: Barr
+  starting_script: <TRA0014:0094:0005:0009
 > Door to Mimiga Village; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Mimiga Village/Door to Shack
@@ -380,8 +405,9 @@ Extra - starting_script: <TRA0014:0094:0005:0009
 
 ----------------
 Arthur's House
-Extra - map_name: Pens1
-Extra - starting_script: <TRA0001:0094:0008:0004
+Extra:
+  map_name: Pens1
+  starting_script: <TRA0001:0094:0008:0004
 > Door to Mimiga Village; Heals? False
   * Layers: default
   * Door to Mimiga Village/Door to Arthur's House
@@ -391,7 +417,8 @@ Extra - starting_script: <TRA0001:0094:0008:0004
 > Pickup (Professor Booster); Heals? False
   * Layers: default
   * Pickup 43; Category? Minor
-  * Extra - event: 0652
+  Extra:
+    event: '0652'
   > Main Teleporter
       Trivial
 

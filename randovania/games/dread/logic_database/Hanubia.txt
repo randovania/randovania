@@ -1,54 +1,85 @@
 ----------------
 Transport to Ferenia
-Extra - total_boundings: {'x1': 2400.0, 'x2': 4500.0, 'y1': -3700.0, 'y2': -2558.0}
-Extra - polygon: [[4500.0, -2558.0], [2400.0, -2558.0], [2400.0, -3700.0], [4500.0, -3700.0]]
-Extra - asset_id: collision_camera_000
+Extra:
+  total_boundings:
+    x1: 2400.0
+    x2: 4500.0
+    y1: -3700.0
+    y2: -2558.0
+  polygon:
+  - - 4500.0
+    - -2558.0
+  - - 2400.0
+    - -2558.0
+  - - 2400.0
+    - -3700.0
+  - - 4500.0
+    - -3700.0
+  asset_id: collision_camera_000
 > Door to Ferenia Shortcut; Heals? False
   * Layers: default
   * Power Beam Door to Ferenia Shortcut/Door to Transport to Ferenia
-  * Extra - actor_name: doorpowerpower_004
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_004
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Elevator to Ferenia
       Trivial
 
 > Elevator to Ferenia; Heals? False; Default Node
   * Layers: default
   * Elevator to Transport to Hanubia/Elevator to Hanubia
-  * Extra - actor_name: elevator_sanctuary_000
-  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
-  * Extra - elevator_component: CElevatorUsableComponent
-  * Extra - target_spawn_point: elevator_shipyard_000_platform
-  * Extra - start_point_actor_name: elevator_sanctuary_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - transporter_name: Hanubia - E.M.M.I.
+  Extra:
+    actor_name: elevator_sanctuary_000
+    actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
+    elevator_component: CElevatorUsableComponent
+    target_spawn_point: elevator_shipyard_000_platform
+    start_point_actor_name: elevator_sanctuary_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+    transporter_name: Hanubia - E.M.M.I.
   > Door to Ferenia Shortcut
       Trivial
 
 ----------------
 Transport to Ghavoran
-Extra - total_boundings: {'x1': -14600.0, 'x2': -6400.0, 'y1': -1300.0, 'y2': 800.0}
-Extra - polygon: [[-6400.0, 800.0], [-14600.0, 800.0], [-14600.0, -1300.0], [-6400.0, -1300.0]]
-Extra - asset_id: collision_camera_001
+Extra:
+  total_boundings:
+    x1: -14600.0
+    x2: -6400.0
+    y1: -1300.0
+    y2: 800.0
+  polygon:
+  - - -6400.0
+    - 800.0
+  - - -14600.0
+    - 800.0
+  - - -14600.0
+    - -1300.0
+  - - -6400.0
+    - -1300.0
+  asset_id: collision_camera_001
 > Door to Entrance Tall Room; Heals? False
   * Layers: default
   * Power Beam Door to Entrance Tall Room/Door to Transport to Ghavoran
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Start Point
       Trivial
 
 > Start Point; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: StartPoint0
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Entrance Tall Room
       Trivial
   > Shuttle to Ghavoran
@@ -57,30 +88,46 @@ Extra - asset_id: collision_camera_001
 > Shuttle to Ghavoran; Heals? False; Default Node
   * Layers: default
   * Shuttle to Transport to Hanubia/Shuttle to Hanubia
-  * Extra - actor_name: wagontrain_forest_000
-  * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
-  * Extra - elevator_component: CTrainUsableComponent
-  * Extra - target_spawn_point: wagontrain_shipyard_000_platform
-  * Extra - start_point_actor_name: wagontrain_forest_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - transporter_name: Hanubia - Bridge
+  Extra:
+    actor_name: wagontrain_forest_000
+    actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
+    elevator_component: CTrainUsableComponent
+    target_spawn_point: wagontrain_shipyard_000_platform
+    start_point_actor_name: wagontrain_forest_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+    transporter_name: Hanubia - Bridge
   > Start Point
       Trivial
 
 ----------------
 Ferenia Shortcut
-Extra - total_boundings: {'x1': -800.0, 'x2': 2500.0, 'y1': -3700.0, 'y2': -1500.0}
-Extra - polygon: [[2500.0, -1500.0], [-800.0, -1500.0], [-800.0, -3700.0], [2500.0, -3700.0]]
-Extra - asset_id: collision_camera_002
+Extra:
+  total_boundings:
+    x1: -800.0
+    x2: 2500.0
+    y1: -3700.0
+    y2: -1500.0
+  polygon:
+  - - 2500.0
+    - -1500.0
+  - - -800.0
+    - -1500.0
+  - - -800.0
+    - -3700.0
+  - - 2500.0
+    - -3700.0
+  asset_id: collision_camera_002
 > Door to Transport to Ferenia; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Ferenia/Door to Ferenia Shortcut
-  * Extra - actor_name: doorpowerpower_004
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_004
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Event - Grapple Block
       Grapple Beam
   > Shortcut Room
@@ -89,8 +136,9 @@ Extra - asset_id: collision_camera_002
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 136; Category? Minor
-  * Extra - actor_name: item_missiletank
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Missile Tank Alcove
       Trivial
 
@@ -105,8 +153,9 @@ Extra - asset_id: collision_camera_002
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Hanubia - Ferenia Shortcut Grapple Block
-  * Extra - actor_name: grapplepulloff1x2_000
-  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  Extra:
+    actor_name: grapplepulloff1x2_000
+    actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Transport to Ferenia
       Trivial
 
@@ -144,30 +193,45 @@ Extra - asset_id: collision_camera_002
 
 ----------------
 Navigation Station
-Extra - total_boundings: {'x1': -500.0, 'x2': 1600.0, 'y1': -1100.0, 'y2': 42.0}
-Extra - polygon: [[1600.0, 42.0], [-500.0, 42.0], [-500.0, -1100.0], [1600.0, -1100.0]]
-Extra - asset_id: collision_camera_003
+Extra:
+  total_boundings:
+    x1: -500.0
+    x2: 1600.0
+    y1: -1100.0
+    y2: 42.0
+  polygon:
+  - - 1600.0
+    - 42.0
+  - - -500.0
+    - 42.0
+  - - -500.0
+    - -1100.0
+  - - 1600.0
+    - -1100.0
+  asset_id: collision_camera_003
 > Door to Entrance Tall Room; Heals? False
   * Layers: default
   * Power Beam Door to Entrance Tall Room/Door to Navigation Station
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Save Station
       Trivial
 
 > Door to Speedboost Puzzle Room; Heals? False
   * Layers: default
   * Power Beam Door to Speedboost Puzzle Room/Door to Navigation Station (Bottom)
-  * Extra - actor_name: doorpowerpower_002
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_002
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door from Speedboost Puzzle Room
       Trivial
   > Save Station
@@ -176,24 +240,27 @@ Extra - asset_id: collision_camera_003
 > Door from Speedboost Puzzle Room; Heals? False
   * Layers: default
   * Access Closed to Speedboost Puzzle Room/Door to Navigation Station (Top)
-  * Extra - actor_name: doorclosedpower_000
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
-  * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  Extra:
+    actor_name: doorclosedpower_000
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
+    right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Door to Speedboost Puzzle Room
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
-  * Extra - actor_name: accesspoint_000
-  * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_access_000
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
-  * Extra - hint_id: SHIP_1
-  * Extra - string_asset_id: 11
+  Extra:
+    actor_name: accesspoint_000
+    actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
+    start_point_actor_name: weightactivatedplatform_access_000
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
+    hint_id: SHIP_1
+    string_asset_id: 11
   > Door to Entrance Tall Room
       Trivial
   > Door to Speedboost Puzzle Room
@@ -203,30 +270,45 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Entrance Tall Room
-Extra - total_boundings: {'x1': -6500.0, 'x2': -400.0, 'y1': -7600.0, 'y2': 4200.0}
-Extra - polygon: [[-400.0, 4200.0], [-6500.0, 4200.0], [-6500.0, -7600.0], [-400.0, -7600.0]]
-Extra - asset_id: collision_camera_004
+Extra:
+  total_boundings:
+    x1: -6500.0
+    x2: -400.0
+    y1: -7600.0
+    y2: 4200.0
+  polygon:
+  - - -400.0
+    - 4200.0
+  - - -6500.0
+    - 4200.0
+  - - -6500.0
+    - -7600.0
+  - - -400.0
+    - -7600.0
+  asset_id: collision_camera_004
 > Door to Transport to Ghavoran; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Ghavoran/Door to Entrance Tall Room
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Navigation Station
       Trivial
 
 > Door to Navigation Station; Heals? False
   * Layers: default
   * Power Beam Door to Navigation Station/Door to Entrance Tall Room
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Transport to Ghavoran
       Trivial
   > Inside breakable tube
@@ -239,20 +321,22 @@ Extra - asset_id: collision_camera_004
 > Door to Total Recharge Station North; Heals? False
   * Layers: default
   * Wave Beam Door to Total Recharge Station North/Door to Entrance Tall Room
-  * Extra - actor_name: doorpowerpower_005
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_005
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Next to Hyper Block
       Trivial
 
 > Event - Glass Tube; Heals? False
   * Layers: default
   * Event Hanubia - Entrance Glass Tube
-  * Extra - actor_name: block_pbtube
-  * Extra - actor_def: actordef:actors/props/block_pbtube_001/charclasses/block_pbtube_001.bmsad
+  Extra:
+    actor_name: block_pbtube
+    actor_def: actordef:actors/props/block_pbtube_001/charclasses/block_pbtube_001.bmsad
   > Inside breakable tube
       Trivial
 
@@ -282,34 +366,51 @@ Extra - asset_id: collision_camera_004
 
 > Ammo Recharge; Heals? False
   * Layers: default
-  * Extra - actor_name: ammorecharge_000
-  * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
-  * Extra - start_point_actor_name: ammorecharge_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+  Extra:
+    actor_name: ammorecharge_000
+    actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
+    start_point_actor_name: ammorecharge_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
   > Door to Navigation Station
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_AccessPoint_10
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_AccessPoint_10
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station
       Trivial
 
 ----------------
 Gold Chozo Warrior Arena
-Extra - total_boundings: {'x1': 3900.0, 'x2': 6300.0, 'y1': 3169.77001953125, 'y2': 4311.77001953125}
-Extra - polygon: [[6300.0, 4311.77001953125], [3900.0, 4311.77001953125], [3900.0, 3169.77001953125], [6300.0, 3169.77001953125]]
-Extra - asset_id: collision_camera_005
+Extra:
+  total_boundings:
+    x1: 3900.0
+    x2: 6300.0
+    y1: 3169.77001953125
+    y2: 4311.77001953125
+  polygon:
+  - - 6300.0
+    - 4311.77001953125
+  - - 3900.0
+    - 4311.77001953125
+  - - 3900.0
+    - 3169.77001953125
+  - - 6300.0
+    - 3169.77001953125
+  asset_id: collision_camera_005
 > Door to Total Recharge Station North; Heals? False
   * Layers: default
   * Power Beam Door to Total Recharge Station North/Door to Gold Chozo Warrior Arena
-  * Extra - actor_name: doorpowerpower_006
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_006
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Transport to Itorash
       After Hanubia - Gold Chozo Fight
   > Event - Gold Chozo Fight
@@ -318,12 +419,13 @@ Extra - asset_id: collision_camera_005
 > Door to Transport to Itorash; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Itorash/Door to Gold Chozo Warrior Arena
-  * Extra - actor_name: doorpowerpower_007
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_007
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Total Recharge Station North
       After Hanubia - Gold Chozo Fight
   > Event - Gold Chozo Fight
@@ -331,8 +433,9 @@ Extra - asset_id: collision_camera_005
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Dead_CWX_Elite
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Dead_CWX_Elite
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Transport to Itorash
       Trivial
 
@@ -344,18 +447,32 @@ Extra - asset_id: collision_camera_005
 
 ----------------
 Total Recharge Station North
-Extra - total_boundings: {'x1': -500.0, 'x2': 4000.0, 'y1': 1500.0, 'y2': 5100.0}
-Extra - polygon: [[4000.0, 5100.0], [-500.0, 5100.0], [-500.0, 1500.0], [4000.0, 1500.0]]
-Extra - asset_id: collision_camera_006
+Extra:
+  total_boundings:
+    x1: -500.0
+    x2: 4000.0
+    y1: 1500.0
+    y2: 5100.0
+  polygon:
+  - - 4000.0
+    - 5100.0
+  - - -500.0
+    - 5100.0
+  - - -500.0
+    - 1500.0
+  - - 4000.0
+    - 1500.0
+  asset_id: collision_camera_006
 > Door to Entrance Tall Room; Heals? False
   * Layers: default
   * Power Beam Door to Entrance Tall Room/Door to Total Recharge Station North
-  * Extra - actor_name: doorpowerpower_005
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_005
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Event - Grapple Block
       Grapple Beam
   > Start Point
@@ -364,35 +481,39 @@ Extra - asset_id: collision_camera_006
 > Door to Gold Chozo Warrior Arena; Heals? False
   * Layers: default
   * Wave Beam Door to Gold Chozo Warrior Arena/Door to Total Recharge Station North
-  * Extra - actor_name: doorpowerpower_006
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_006
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Start Point
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 134; Category? Minor
-  * Extra - actor_name: item_missiletank_000
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_000
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Start Point
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Hanubia - Total Recharge Station North Grapple Block
-  * Extra - actor_name: grapplepulloff1x2_001
-  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  Extra:
+    actor_name: grapplepulloff1x2_001
+    actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Entrance Tall Room
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_EliteChozoWarriorX
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_EliteChozoWarriorX
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Entrance Tall Room
       Morph Ball and After Hanubia - Total Recharge Station North Grapple Block
   > Door to Gold Chozo Warrior Arena
@@ -404,67 +525,127 @@ Extra - asset_id: collision_camera_006
 
 > Total Recharge; Heals? True
   * Layers: default
-  * Extra - actor_name: totalrechargestation_001
-  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_total_001
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  Extra:
+    actor_name: totalrechargestation_001
+    actor_def:
+      actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+    start_point_actor_name: weightactivatedplatform_total_001
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
   > Start Point
       Trivial
 
 ----------------
 Transport to Itorash
-Extra - total_boundings: {'x1': 6200.0, 'x2': 8300.0, 'y1': 3100.0, 'y2': 4242.0}
-Extra - polygon: [[8300.0, 4242.0], [6200.0, 4242.0], [6200.0, 3100.0], [8300.0, 3100.0]]
-Extra - asset_id: collision_camera_007
+Extra:
+  total_boundings:
+    x1: 6200.0
+    x2: 8300.0
+    y1: 3100.0
+    y2: 4242.0
+  polygon:
+  - - 8300.0
+    - 4242.0
+  - - 6200.0
+    - 4242.0
+  - - 6200.0
+    - 3100.0
+  - - 8300.0
+    - 3100.0
+  asset_id: collision_camera_007
 > Door to Gold Chozo Warrior Arena; Heals? False
   * Layers: default
   * Power Beam Door to Gold Chozo Warrior Arena/Door to Transport to Itorash
-  * Extra - actor_name: doorpowerpower_007
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_007
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Elevator to Itorash
       Trivial
 
 > Elevator to Itorash; Heals? False; Default Node
   * Layers: default
   * Elevator to Transport to Hanubia/Elevator to Hanubia
-  * Extra - actor_name: capsulelaunchershipyard_000
-  * Extra - actor_def: actordef:actors/props/capsulelaunchershipyard/charclasses/capsulelaunchershipyard.bmsad
-  * Extra - elevator_component: CCapsuleUsableComponent
-  * Extra - target_spawn_point: elevator_shipyard_000_platform
-  * Extra - start_point_actor_name: elevator_skybase_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - transporter_name: Hanubia - Elite Chozo
+  Extra:
+    actor_name: capsulelaunchershipyard_000
+    actor_def:
+      actordef:actors/props/capsulelaunchershipyard/charclasses/capsulelaunchershipyard.bmsad
+    elevator_component: CCapsuleUsableComponent
+    target_spawn_point: elevator_shipyard_000_platform
+    start_point_actor_name: elevator_skybase_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+    transporter_name: Hanubia - Elite Chozo
   > Door to Gold Chozo Warrior Arena
       Trivial
 
 ----------------
 Ship Room
-Extra - total_boundings: {'x1': -19100.0, 'x2': -6400.0, 'y1': 1700.0, 'y2': 9000.0}
-Extra - polygon: [[-7600.0, 9000.0], [-19100.0, 9000.0], [-19100.0, 6400.0], [-12100.0, 5300.0], [-12100.0, 1700.0], [-6400.0, 1700.0], [-6400.0, 4300.0], [-7600.0, 4900.0]]
-Extra - asset_id: collision_camera_008
+Extra:
+  total_boundings:
+    x1: -19100.0
+    x2: -6400.0
+    y1: 1700.0
+    y2: 9000.0
+  polygon:
+  - - -7600.0
+    - 9000.0
+  - - -19100.0
+    - 9000.0
+  - - -19100.0
+    - 6400.0
+  - - -12100.0
+    - 5300.0
+  - - -12100.0
+    - 1700.0
+  - - -6400.0
+    - 1700.0
+  - - -6400.0
+    - 4300.0
+  - - -7600.0
+    - 4900.0
+  asset_id: collision_camera_008
 > Start Point; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Endgame
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Endgame
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 Speedboost Puzzle Room
-Extra - total_boundings: {'x1': 1500.0, 'x2': 4500.0, 'y1': -2300.0, 'y2': 600.0}
-Extra - polygon: [[4500.0, 600.0], [1500.0, 600.0], [1500.0, -1350.0], [2400.0, -1650.0], [2400.0, -2300.0], [4500.0, -2300.0]]
-Extra - asset_id: collision_camera_009
+Extra:
+  total_boundings:
+    x1: 1500.0
+    x2: 4500.0
+    y1: -2300.0
+    y2: 600.0
+  polygon:
+  - - 4500.0
+    - 600.0
+  - - 1500.0
+    - 600.0
+  - - 1500.0
+    - -1350.0
+  - - 2400.0
+    - -1650.0
+  - - 2400.0
+    - -2300.0
+  - - 4500.0
+    - -2300.0
+  asset_id: collision_camera_009
 > Door to Navigation Station (Bottom); Heals? False
   * Layers: default
   * Power Beam Door to Navigation Station/Door to Speedboost Puzzle Room
-  * Extra - actor_name: doorpowerpower_002
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_002
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Navigation Station (Top)
       Wave Beam and Disabled Door Lock Randomizer
   > Start Point 1
@@ -473,20 +654,22 @@ Extra - asset_id: collision_camera_009
 > Door to Tank Room; Heals? False
   * Layers: default
   * Wave Beam Door to Tank Room/Door from Speedboost Puzzle Room
-  * Extra - actor_name: doorpowerclosed_000
-  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerclosed_000
+    actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Start Point 1
       Trivial
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 135; Category? Minor
-  * Extra - actor_name: item_powerbombtank_000
-  * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  Extra:
+    actor_name: item_powerbombtank_000
+    actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Door from Tank Room
       Any of the following:
           Lay Small Bomb
@@ -495,12 +678,13 @@ Extra - asset_id: collision_camera_009
 > Door from Tank Room; Heals? False
   * Layers: default
   * Access Closed to Tank Room/Door to Speedboost Puzzle Room
-  * Extra - actor_name: doorclosedpower_001
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedpower_001
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Pickup (Power Bomb Tank)
       Ballspark and Lay Any Bomb
   > Door to Navigation Station (Top)
@@ -509,12 +693,13 @@ Extra - asset_id: collision_camera_009
 > Door to Navigation Station (Top); Heals? False
   * Layers: default
   * Wave Beam Door to Navigation Station/Door from Speedboost Puzzle Room
-  * Extra - actor_name: doorclosedpower_000
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
-  * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  Extra:
+    actor_name: doorclosedpower_000
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
+    right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Door from Tank Room
       Trivial
   > Start Point 2
@@ -529,15 +714,17 @@ Extra - asset_id: collision_camera_009
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Hanubia - Speed Booster Puzzle Room Grapple Block
-  * Extra - actor_name: grapplepulloff1x2
-  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  Extra:
+    actor_name: grapplepulloff1x2
+    actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Start Point 1
       Trivial
 
 > Start Point 1; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_StrongReaction
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_StrongReaction
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station (Bottom)
       Lay Any Bomb
   > Door to Tank Room
@@ -549,33 +736,49 @@ Extra - asset_id: collision_camera_009
 
 > Start Point 2; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_AccessPoint_10B
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_AccessPoint_10B
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station (Top)
       Trivial
 
 ----------------
 Tank Room
-Extra - total_boundings: {'x1': 4400.0, 'x2': 6500.0, 'y1': -1800.0, 'y2': 600.0}
-Extra - polygon: [[6500.0, 600.0], [4400.0, 600.0], [4400.0, -1800.0], [6500.0, -1800.0]]
-Extra - asset_id: collision_camera_010
+Extra:
+  total_boundings:
+    x1: 4400.0
+    x2: 6500.0
+    y1: -1800.0
+    y2: 600.0
+  polygon:
+  - - 6500.0
+    - 600.0
+  - - 4400.0
+    - 600.0
+  - - 4400.0
+    - -1800.0
+  - - 6500.0
+    - -1800.0
+  asset_id: collision_camera_010
 > Door from Speedboost Puzzle Room; Heals? False
   * Layers: default
   * Access Closed to Speedboost Puzzle Room/Door to Tank Room
-  * Extra - actor_name: doorpowerclosed_000
-  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerclosed_000
+    actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exit West (Bottom)
       Trivial
 
 > Dock to EMMI Zone Exit West (Bottom); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (Bottom)
-  * Extra - actor_name: dooremmy_000
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_000
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door from Speedboost Puzzle Room
       Trivial
   > Center Platform
@@ -590,8 +793,9 @@ Extra - asset_id: collision_camera_010
 > Dock to EMMI Zone Exit West (Top); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (Top)
-  * Extra - actor_name: dooremmy_001
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_001
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Speedboost Puzzle Room
       Trivial
   > Center Platform
@@ -600,12 +804,13 @@ Extra - asset_id: collision_camera_010
 > Door to Speedboost Puzzle Room; Heals? False
   * Layers: default
   * Power Beam Door to Speedboost Puzzle Room/Door from Tank Room
-  * Extra - actor_name: doorclosedpower_001
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedpower_001
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exit West (Top)
       Trivial
 
@@ -618,34 +823,50 @@ Extra - asset_id: collision_camera_010
 
 ----------------
 EMMI Zone Exit West
-Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': -2800.0, 'y2': 650.0}
-Extra - polygon: [[8500.0, 650.0], [6400.0, 650.0], [6400.0, -2800.0], [8500.0, -2800.0]]
-Extra - asset_id: collision_camera_011
+Extra:
+  total_boundings:
+    x1: 6400.0
+    x2: 8500.0
+    y1: -2800.0
+    y2: 650.0
+  polygon:
+  - - 8500.0
+    - 650.0
+  - - 6400.0
+    - 650.0
+  - - 6400.0
+    - -2800.0
+  - - 8500.0
+    - -2800.0
+  asset_id: collision_camera_011
 > Dock to Tank Room (Bottom); Heals? False
   * Layers: default
   * EMMI Door to Tank Room/Dock to EMMI Zone Exit West (Bottom)
-  * Extra - actor_name: dooremmy_000
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_000
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Orange EMMI Introduction
       Trivial
 
 > Dock to Tank Room (Top); Heals? False
   * Layers: default
   * EMMI Door to Tank Room/Dock to EMMI Zone Exit West (Top)
-  * Extra - actor_name: dooremmy_001
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_001
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tunnel to Central Unit
       Lay Any Bomb
 
 > Door to Orange EMMI Introduction; Heals? False
   * Layers: default
   * Wave Beam Door to Orange EMMI Introduction/Door from EMMI Zone Exit West
-  * Extra - actor_name: doorpowerclosed_001
-  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerclosed_001
+    actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Tank Room (Bottom)
       Trivial
 
@@ -657,9 +878,22 @@ Extra - asset_id: collision_camera_011
 
 ----------------
 Central Unit
-Extra - total_boundings: {'x1': 8400.0, 'x2': 10500.0, 'y1': -900.0, 'y2': 650.0}
-Extra - polygon: [[10500.0, 650.0], [8400.0, 650.0], [8400.0, -900.0], [10500.0, -900.0]]
-Extra - asset_id: collision_camera_012
+Extra:
+  total_boundings:
+    x1: 8400.0
+    x2: 10500.0
+    y1: -900.0
+    y2: 650.0
+  polygon:
+  - - 10500.0
+    - 650.0
+  - - 8400.0
+    - 650.0
+  - - 8400.0
+    - -900.0
+  - - 10500.0
+    - -900.0
+  asset_id: collision_camera_012
 > Tunnel to EMMI Zone Exit East; Heals? False
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to Central Unit
@@ -680,8 +914,10 @@ Extra - asset_id: collision_camera_012
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: centralunitmagmacontroller_000
-  * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
+  Extra:
+    start_point_actor_name: centralunitmagmacontroller_000
+    start_point_actor_def:
+      actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
   > Tunnel to EMMI Zone Exit East
       Any of the following:
           Flash Shift or Simple IBJ or Use Spin Boost
@@ -694,14 +930,32 @@ Extra - asset_id: collision_camera_012
 
 ----------------
 EMMI Zone Exit East
-Extra - total_boundings: {'x1': 10400.0, 'x2': 13500.0, 'y1': -2200.0, 'y2': 500.0}
-Extra - polygon: [[13500.0, 500.0], [10400.0, 500.0], [10400.0, -1300.0], [10700.0, -1300.0], [10700.0, -2200.0], [13500.0, -2200.0]]
-Extra - asset_id: collision_camera_013
+Extra:
+  total_boundings:
+    x1: 10400.0
+    x2: 13500.0
+    y1: -2200.0
+    y2: 500.0
+  polygon:
+  - - 13500.0
+    - 500.0
+  - - 10400.0
+    - 500.0
+  - - 10400.0
+    - -1300.0
+  - - 10700.0
+    - -1300.0
+  - - 10700.0
+    - -2200.0
+  - - 13500.0
+    - -2200.0
+  asset_id: collision_camera_013
 > Dock to Total Recharge Station East (Upper); Heals? False
   * Layers: default
   * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (Upper)
-  * Extra - actor_name: dooremmy_002
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_002
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Event - Break EMMI Zone Exit East PB Tube
       Lay Power Bomb
   > Tunnel to Central Unit
@@ -710,16 +964,18 @@ Extra - asset_id: collision_camera_013
 > Dock to Total Recharge Station East (Lower); Heals? False
   * Layers: default
   * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (Lower)
-  * Extra - actor_name: dooremmy_003
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_003
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tunnel to Orange EMMI Introduction
       Trivial
 
 > Event - Break EMMI Zone Exit East PB Tube; Heals? False
   * Layers: default
   * Event Hanubia - EMMI Zone PB Block
-  * Extra - actor_name: block_pbtube_2
-  * Extra - actor_def: actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad
+  Extra:
+    actor_name: block_pbtube_2
+    actor_def: actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad
   > Dock to Total Recharge Station East (Upper)
       Trivial
   > Tunnel to Central Unit
@@ -747,18 +1003,32 @@ Extra - asset_id: collision_camera_013
 
 ----------------
 Orange EMMI Introduction
-Extra - total_boundings: {'x1': 8400.0, 'x2': 10800.0, 'y1': -2628.360107421875, 'y2': -1486.3599853515625}
-Extra - polygon: [[10800.0, -1486.3599853515625], [8400.0, -1486.3599853515625], [8400.0, -2628.360107421875], [10800.0, -2628.360107421875]]
-Extra - asset_id: collision_camera_014
+Extra:
+  total_boundings:
+    x1: 8400.0
+    x2: 10800.0
+    y1: -2628.360107421875
+    y2: -1486.3599853515625
+  polygon:
+  - - 10800.0
+    - -1486.3599853515625
+  - - 8400.0
+    - -1486.3599853515625
+  - - 8400.0
+    - -2628.360107421875
+  - - 10800.0
+    - -2628.360107421875
+  asset_id: collision_camera_014
 > Door from EMMI Zone Exit West; Heals? False
   * Layers: default
   * Access Closed to EMMI Zone Exit West/Door to Orange EMMI Introduction
-  * Extra - actor_name: doorpowerclosed_001
-  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
-  * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerclosed_001
+    actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
+    left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Start Point
       Trivial
 
@@ -777,18 +1047,20 @@ Extra - asset_id: collision_camera_014
 > Pickup (Power Bomb); Heals? False
   * Layers: default
   * Pickup 137; Category? Major
-  * Extra - pickup_type: emmi
-  * Extra - actor_def: actors/characters/emmyshipyard/charclasses/emmyshipyard.bmsad
-  * Extra - string_key: GUI_ITEM_ACQUIRED_POWER_BOMB
-  * Extra - callback_function: OnEmmyShipyardAbilityObtained
-  * Extra - boss_hint_name: E.M.M.I.-07PB
+  Extra:
+    pickup_type: emmi
+    actor_def: actors/characters/emmyshipyard/charclasses/emmyshipyard.bmsad
+    string_key: GUI_ITEM_ACQUIRED_POWER_BOMB
+    callback_function: OnEmmyShipyardAbilityObtained
+    boss_hint_name: E.M.M.I.-07PB
   > Start Point
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door from EMMI Zone Exit West
       After Hanubia - Red Chozo Fight
   > Tunnel to EMMI Zone Exit East
@@ -798,22 +1070,39 @@ Extra - asset_id: collision_camera_014
 
 ----------------
 Total Recharge Station East
-Extra - total_boundings: {'x1': 13400.0, 'x2': 16800.0, 'y1': -4000.0, 'y2': -100.0}
-Extra - polygon: [[16800.0, -100.0], [13400.0, -100.0], [13400.0, -4000.0], [16100.0, -4000.0], [16800.0, -3700.0]]
-Extra - asset_id: collision_camera_015
+Extra:
+  total_boundings:
+    x1: 13400.0
+    x2: 16800.0
+    y1: -4000.0
+    y2: -100.0
+  polygon:
+  - - 16800.0
+    - -100.0
+  - - 13400.0
+    - -100.0
+  - - 13400.0
+    - -4000.0
+  - - 16100.0
+    - -4000.0
+  - - 16800.0
+    - -3700.0
+  asset_id: collision_camera_015
 > Dock to EMMI Zone Exit East (Upper); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (Upper)
-  * Extra - actor_name: dooremmy_002
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_002
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to EMMI Zone Exit East (Lower)
       Lay Power Bomb
 
 > Dock to EMMI Zone Exit East (Lower); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (Lower)
-  * Extra - actor_name: dooremmy_003
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_003
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to EMMI Zone Exit East (Upper)
       All of the following:
           Lay Power Bomb
@@ -823,52 +1112,137 @@ Extra - asset_id: collision_camera_015
 
 > Total Recharge; Heals? True; Default Node
   * Layers: default
-  * Extra - actor_name: totalrechargestation_000
-  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_total_000
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  Extra:
+    actor_name: totalrechargestation_000
+    actor_def:
+      actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+    start_point_actor_name: weightactivatedplatform_total_000
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
   > Dock to EMMI Zone Exit East (Lower)
       Trivial
 
 ----------------
 Raven Beak X Arena
-Extra - total_boundings: {'x1': 11800.0, 'x2': 18600.0, 'y1': -8700.0, 'y2': -4500.0}
-Extra - polygon: [[18600.0, -4500.0], [15400.0, -4500.0], [15400.0, -6100.0], [11800.0, -6100.0], [11800.0, -8700.0], [18600.0, -8700.0]]
-Extra - asset_id: collision_camera_020
+Extra:
+  total_boundings:
+    x1: 11800.0
+    x2: 18600.0
+    y1: -8700.0
+    y2: -4500.0
+  polygon:
+  - - 18600.0
+    - -4500.0
+  - - 15400.0
+    - -4500.0
+  - - 15400.0
+    - -6100.0
+  - - 11800.0
+    - -6100.0
+  - - 11800.0
+    - -8700.0
+  - - 18600.0
+    - -8700.0
+  asset_id: collision_camera_020
 > Start Point; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Escape
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Escape
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
 Escape Room 3
-Extra - total_boundings: {'x1': -500.0, 'x2': 6500.0, 'y1': -8600.0, 'y2': -1900.0}
-Extra - polygon: [[6500.0, -1900.0], [4400.0, -1900.0], [4400.0, -3800.0], [-500.0, -3900.0], [-500.0, -7600.0], [900.0, -7600.0], [1500.0, -7900.0], [2700.0, -7900.0], [4100.0, -8600.0], [6500.0, -8600.0]]
-Extra - asset_id: collision_camera_016
+Extra:
+  total_boundings:
+    x1: -500.0
+    x2: 6500.0
+    y1: -8600.0
+    y2: -1900.0
+  polygon:
+  - - 6500.0
+    - -1900.0
+  - - 4400.0
+    - -1900.0
+  - - 4400.0
+    - -3800.0
+  - - -500.0
+    - -3900.0
+  - - -500.0
+    - -7600.0
+  - - 900.0
+    - -7600.0
+  - - 1500.0
+    - -7900.0
+  - - 2700.0
+    - -7900.0
+  - - 4100.0
+    - -8600.0
+  - - 6500.0
+    - -8600.0
+  asset_id: collision_camera_016
 > Start Point; Heals? False
   * Layers: default
 
 ----------------
 Escape Room 2
-Extra - total_boundings: {'x1': 11400.0, 'x2': 13500.0, 'y1': -5900.0, 'y2': -3300.0}
-Extra - polygon: [[13500.0, -3300.0], [11400.0, -3300.0], [11400.0, -5900.0], [13500.0, -5900.0]]
-Extra - asset_id: collision_camera_018
+Extra:
+  total_boundings:
+    x1: 11400.0
+    x2: 13500.0
+    y1: -5900.0
+    y2: -3300.0
+  polygon:
+  - - 13500.0
+    - -3300.0
+  - - 11400.0
+    - -3300.0
+  - - 11400.0
+    - -5900.0
+  - - 13500.0
+    - -5900.0
+  asset_id: collision_camera_018
 > Start Point; Heals? False
   * Layers: default
 
 ----------------
 Escape Room 1
-Extra - total_boundings: {'x1': 13400.0, 'x2': 15500.0, 'y1': -6100.0, 'y2': -4200.0}
-Extra - polygon: [[15500.0, -4200.0], [13400.0, -4200.0], [13400.0, -6100.0], [15500.0, -6100.0]]
-Extra - asset_id: collision_camera_019
+Extra:
+  total_boundings:
+    x1: 13400.0
+    x2: 15500.0
+    y1: -6100.0
+    y2: -4200.0
+  polygon:
+  - - 15500.0
+    - -4200.0
+  - - 13400.0
+    - -4200.0
+  - - 13400.0
+    - -6100.0
+  - - 15500.0
+    - -6100.0
+  asset_id: collision_camera_019
 > Start Point; Heals? False
   * Layers: default
 
 ----------------
 collision_camera_1000 (H)
-Extra - total_boundings: {'x1': -14600.0, 'x2': -10100.0, 'y1': -6200.0, 'y2': -4000.0}
-Extra - polygon: [[-10100.0, -4000.0], [-14600.0, -4000.0], [-14600.0, -6200.0], [-10100.0, -6200.0]]
-Extra - asset_id: collision_camera_1000
+Extra:
+  total_boundings:
+    x1: -14600.0
+    x2: -10100.0
+    y1: -6200.0
+    y2: -4000.0
+  polygon:
+  - - -10100.0
+    - -4000.0
+  - - -14600.0
+    - -4000.0
+  - - -14600.0
+    - -6200.0
+  - - -10100.0
+    - -6200.0
+  asset_id: collision_camera_1000
 > Placeholder; Heals? False
   * Layers: default
 

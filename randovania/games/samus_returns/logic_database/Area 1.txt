@@ -1,14 +1,48 @@
 ----------------
 Transport to Surface and Area 2
-Extra - total_boundings: {'x1': -20550.0, 'x2': -10700.0, 'y1': -4600.0, 'y2': 6000.0}
-Extra - polygon: [[-15300.0, 700.0], [-14900.0, -500.0], [-14900.0, -4600.0], [-11200.0, -4600.0], [-11200.0, -3600.0], [-12000.0, -3500.0], [-12000.0, -2000.0], [-10700.0, -1800.0], [-10700.0, 2100.030029296875], [-17900.0, 2100.0], [-18200.0, 2400.0], [-18200.0, 6000.0], [-20550.0, 6000.0], [-20550.0, 700.0]]
-Extra - asset_id: collision_camera_000
+Extra:
+  total_boundings:
+    x1: -20550.0
+    x2: -10700.0
+    y1: -4600.0
+    y2: 6000.0
+  polygon:
+  - - -15300.0
+    - 700.0
+  - - -14900.0
+    - -500.0
+  - - -14900.0
+    - -4600.0
+  - - -11200.0
+    - -4600.0
+  - - -11200.0
+    - -3600.0
+  - - -12000.0
+    - -3500.0
+  - - -12000.0
+    - -2000.0
+  - - -10700.0
+    - -1800.0
+  - - -10700.0
+    - 2100.030029296875
+  - - -17900.0
+    - 2100.0
+  - - -18200.0
+    - 2400.0
+  - - -18200.0
+    - 6000.0
+  - - -20550.0
+    - 6000.0
+  - - -20550.0
+    - 700.0
+  asset_id: collision_camera_000
 > Chozo Seal; Heals? False
   * Layers: default
   * Hint
-  * Extra - actor_name: LE_ChozoUnlockAreaDNA
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
+  Extra:
+    actor_name: LE_ChozoUnlockAreaDNA
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Elevator to Area 2 Dam Entryway
       Any of the following:
           All of the following:
@@ -45,18 +79,20 @@ Extra - asset_id: collision_camera_000
 > Elevator to Surface East; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Transport to Area 1/Elevator to Area 1
-  * Extra - actor_name: LE_Platform_Elevator_FromArea00
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea00
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea00
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea00
   > Save Station
       Trivial
 
 > Elevator to Area 2 Dam Entryway; Heals? False
   * Layers: default
   * Elevator to Transport to Areas 1 and 3/Elevator to Area 1
-  * Extra - actor_name: LE_Platform_Elevator_FromArea02
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea02
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea02
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea02
   > Chozo Seal
       Any of the following:
           # Freeze the Hornoad by the wall and clip right: https://youtu.be/HdZfUSnqxrE
@@ -77,9 +113,10 @@ Extra - asset_id: collision_camera_000
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation003
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation003
+  Extra:
+    actor_name: LE_Platform_SaveStation003
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation003
   > Chozo Seal
       Trivial
   > Elevator to Surface East
@@ -88,16 +125,18 @@ Extra - asset_id: collision_camera_000
 > Door to Moheek Mount; Heals? False
   * Layers: default
   * Power Beam Door to Moheek Mount/Door to Transport to Surface and Area 2
-  * Extra - actor_name: Door002
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door002
+    actor_type: doorpowerpower
   > Chozo Seal
       Trivial
 
 > Door to Transport Cache; Heals? False
   * Layers: default
   * Wave Beam Door to Transport Cache/Door to Transport to Surface and Area 2
-  * Extra - actor_name: Door008
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door008
+    actor_type: doorpowerpower
   > Elevator to Area 2 Dam Entryway
       Any of the following:
           Screw Attack
@@ -107,22 +146,37 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Moheek Mount
-Extra - total_boundings: {'x1': -10800.0, 'x2': -9500.0, 'y1': 1100.0, 'y2': 5100.0}
-Extra - polygon: [[-9500.0, 1100.0], [-9500.0, 5100.0], [-10800.0, 5100.0], [-10800.0, 1100.0]]
-Extra - asset_id: collision_camera_003
+Extra:
+  total_boundings:
+    x1: -10800.0
+    x2: -9500.0
+    y1: 1100.0
+    y2: 5100.0
+  polygon:
+  - - -9500.0
+    - 1100.0
+  - - -9500.0
+    - 5100.0
+  - - -10800.0
+    - 5100.0
+  - - -10800.0
+    - 1100.0
+  asset_id: collision_camera_003
 > Door to Transport to Surface and Area 2; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Surface and Area 2/Door to Moheek Mount
-  * Extra - actor_name: Door002
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door002
+    actor_type: doorpowerpower
   > Door to Magma Pool
       Trivial
 
 > Door to Magma Pool; Heals? False
   * Layers: default
   * Charge Beam Door to Magma Pool/Door to Moheek Mount
-  * Extra - actor_name: Door009
-  * Extra - actor_type: doorchargecharge
+  Extra:
+    actor_name: Door009
+    actor_type: doorchargecharge
   > Door to Transport to Surface and Area 2
       Trivial
   > Dock to Harmonized Hallway
@@ -136,14 +190,28 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Gullugg Gangway
-Extra - total_boundings: {'x1': -7202.06005859375, 'x2': -5400.0, 'y1': 2400.0, 'y2': 8300.0}
-Extra - polygon: [[-5400.0, 8300.0], [-7200.0, 8300.0], [-7202.06005859375, 2400.0], [-5400.0, 2400.0]]
-Extra - asset_id: collision_camera_005
+Extra:
+  total_boundings:
+    x1: -7202.06005859375
+    x2: -5400.0
+    y1: 2400.0
+    y2: 8300.0
+  polygon:
+  - - -5400.0
+    - 8300.0
+  - - -7200.0
+    - 8300.0
+  - - -7202.06005859375
+    - 2400.0
+  - - -5400.0
+    - 2400.0
+  asset_id: collision_camera_005
 > Door to Magma Pool; Heals? False
   * Layers: default
   * Charge Beam Door to Magma Pool/Door to Gullugg Gangway
-  * Extra - actor_name: Door010
-  * Extra - actor_type: doorchargecharge
+  Extra:
+    actor_name: Door010
+    actor_type: doorchargecharge
   > Door from Water Maze
       Trivial
   > Dock to Harmonized Hallway
@@ -156,8 +224,9 @@ Extra - asset_id: collision_camera_005
 > Door from Water Maze; Heals? False
   * Layers: default
   * Access Closed to Water Maze/Door to Gullugg Gangway
-  * Extra - actor_name: Door011
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door011
+    actor_type: doorclosedpower
   > Door to Magma Pool
       Trivial
 
@@ -181,30 +250,46 @@ Extra - asset_id: collision_camera_005
 
 ----------------
 Bomb Chamber
-Extra - total_boundings: {'x1': -2500.0, 'x2': 0.0, 'y1': 4100.0, 'y2': 5700.0}
-Extra - polygon: [[0.0, 4100.0], [0.0, 5700.0], [-2500.0, 5700.0], [-2500.0, 4100.0]]
-Extra - asset_id: collision_camera_008
+Extra:
+  total_boundings:
+    x1: -2500.0
+    x2: 0.0
+    y1: 4100.0
+    y2: 5700.0
+  polygon:
+  - - 0.0
+    - 4100.0
+  - - 0.0
+    - 5700.0
+  - - -2500.0
+    - 5700.0
+  - - -2500.0
+    - 4100.0
+  asset_id: collision_camera_008
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 18; Category? Minor
-  * Extra - actor_name: LE_Item_005
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_005
+    actor_type: item_missiletank
   > Tunnel to Bomb Chamber Access
       Lay Any Bomb
 
 > Pickup (Bomb); Heals? False
   * Layers: default
   * Pickup 26; Category? Major
-  * Extra - actor_name: LE_PowerUp_Bomb
-  * Extra - actor_type: itemsphere_bomb
+  Extra:
+    actor_name: LE_PowerUp_Bomb
+    actor_type: itemsphere_bomb
   > Room Center
       Trivial
 
 > Door to Bomb Chamber Access; Heals? False
   * Layers: default
   * Missile Door to Bomb Chamber Access/Door to Bomb Chamber
-  * Extra - actor_name: Door004
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door004
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
@@ -218,7 +303,8 @@ Extra - asset_id: collision_camera_008
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_CheckPoint_005
+  Extra:
+    start_point_actor_name: ST_CheckPoint_005
   > Pickup (Bomb)
       Trivial
   > Door to Bomb Chamber Access
@@ -228,14 +314,28 @@ Extra - asset_id: collision_camera_008
 
 ----------------
 Inner Temple East Hall
-Extra - total_boundings: {'x1': 7800.0, 'x2': 9300.0, 'y1': 2800.0, 'y2': 10300.0}
-Extra - polygon: [[9300.0, 2800.0], [9300.0, 10300.0], [7800.0, 10300.0], [7800.0, 2800.0]]
-Extra - asset_id: collision_camera_012
+Extra:
+  total_boundings:
+    x1: 7800.0
+    x2: 9300.0
+    y1: 2800.0
+    y2: 10300.0
+  polygon:
+  - - 9300.0
+    - 2800.0
+  - - 9300.0
+    - 10300.0
+  - - 7800.0
+    - 10300.0
+  - - 7800.0
+    - 2800.0
+  asset_id: collision_camera_012
 > Door to Destroyed Armory; Heals? False
   * Layers: default
   * Charge Beam Door to Destroyed Armory/Door to Inner Temple East Hall
-  * Extra - actor_name: Door005
-  * Extra - actor_type: doorchargecharge
+  Extra:
+    actor_name: Door005
+    actor_type: doorchargecharge
   > Dock to Inner Temple Teleporter
       Trivial
   > Dock to Ice Beam Chamber Access
@@ -244,8 +344,9 @@ Extra - asset_id: collision_camera_012
 > Door to Temple Exterior; Heals? False
   * Layers: default
   * Power Beam Door to Temple Exterior/Door to Inner Temple East Hall
-  * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door012
+    actor_type: doorpowerpower
   > Door to Inner Temple Upper Hallway
       Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (High Jump)
   > Dock to Inner Temple Teleporter
@@ -254,8 +355,9 @@ Extra - asset_id: collision_camera_012
 > Door to Inner Temple Upper Hallway; Heals? False
   * Layers: default
   * Power Beam Door to Inner Temple Upper Hallway/Door to Inner Temple East Hall
-  * Extra - actor_name: Door013
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door013
+    actor_type: doorclosedpower
   > Door to Temple Exterior
       Trivial
 
@@ -276,22 +378,37 @@ Extra - asset_id: collision_camera_012
 
 ----------------
 Destroyed Armory
-Extra - total_boundings: {'x1': 9200.0, 'x2': 13400.0, 'y1': 3902.47998046875, 'y2': 5400.0}
-Extra - polygon: [[13400.0, 3902.47998046875], [13400.0, 5400.0], [9200.0, 5400.0], [9200.0, 3902.47998046875]]
-Extra - asset_id: collision_camera_014
+Extra:
+  total_boundings:
+    x1: 9200.0
+    x2: 13400.0
+    y1: 3902.47998046875
+    y2: 5400.0
+  polygon:
+  - - 13400.0
+    - 3902.47998046875
+  - - 13400.0
+    - 5400.0
+  - - 9200.0
+    - 5400.0
+  - - 9200.0
+    - 3902.47998046875
+  asset_id: collision_camera_014
 > Pickup (Aeion Tank); Heals? False
   * Layers: default
   * Pickup 21; Category? Minor
-  * Extra - actor_name: LE_Item_011
-  * Extra - actor_type: item_senergytank
+  Extra:
+    actor_name: LE_Item_011
+    actor_type: item_senergytank
   > Door to Inner Temple East Hall
       Trivial
 
 > Door to Inner Temple East Hall; Heals? False
   * Layers: default
   * Charge Beam Door to Inner Temple East Hall/Door to Destroyed Armory
-  * Extra - actor_name: Door005
-  * Extra - actor_type: doorchargecharge
+  Extra:
+    actor_name: Door005
+    actor_type: doorchargecharge
   > Pickup (Aeion Tank)
       All of the following:
           Morph Ball
@@ -340,30 +457,50 @@ Extra - asset_id: collision_camera_014
 
 ----------------
 Spider Ball Chamber
-Extra - total_boundings: {'x1': 11850.0, 'x2': 14900.0, 'y1': 4100.0, 'y2': 8500.0}
-Extra - polygon: [[14900.0, 8500.0], [11850.0, 8500.0], [11850.0, 6200.0], [13300.0, 5400.0], [13300.0, 4100.0], [14900.0, 4100.0]]
-Extra - asset_id: collision_camera_016
+Extra:
+  total_boundings:
+    x1: 11850.0
+    x2: 14900.0
+    y1: 4100.0
+    y2: 8500.0
+  polygon:
+  - - 14900.0
+    - 8500.0
+  - - 11850.0
+    - 8500.0
+  - - 11850.0
+    - 6200.0
+  - - 13300.0
+    - 5400.0
+  - - 13300.0
+    - 4100.0
+  - - 14900.0
+    - 4100.0
+  asset_id: collision_camera_016
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 22; Category? Minor
-  * Extra - actor_name: LE_Item_013
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_013
+    actor_type: item_missiletank
   > Tunnel to Destroyed Armory
       Lay Any Bomb
 
 > Pickup (Spider Ball); Heals? False
   * Layers: default
   * Pickup 28; Category? Major
-  * Extra - actor_name: LE_PowerUp_SpiderBall
-  * Extra - actor_type: powerup_spiderball
+  Extra:
+    actor_name: LE_PowerUp_SpiderBall
+    actor_type: powerup_spiderball
   > Room Bottom
       Morph Ball
 
 > Door to Temple Exterior; Heals? False
   * Layers: default
   * Power Beam Door to Temple Exterior/Door to Spider Ball Chamber
-  * Extra - actor_name: Door017
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door017
+    actor_type: doorclosedpower
   > Pickup (Missile Tank)
       # https://youtu.be/sneRCyFDt-Q - TODO: revise once remote activation nodes are in
       Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
@@ -384,7 +521,8 @@ Extra - asset_id: collision_camera_016
 
 > Room Bottom; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Checkpoint_007
+  Extra:
+    start_point_actor_name: ST_Checkpoint_007
   > Pickup (Spider Ball)
       Morph Ball
   > Door to Temple Exterior
@@ -397,22 +535,37 @@ Extra - asset_id: collision_camera_016
 
 ----------------
 Exterior Alpha Arena
-Extra - total_boundings: {'x1': 11870.0, 'x2': 15700.0, 'y1': 8800.0, 'y2': 10900.0}
-Extra - polygon: [[15700.0, 8800.0], [15700.0, 10900.0], [11870.0, 10900.0], [11870.0, 8800.0]]
-Extra - asset_id: collision_camera_017
+Extra:
+  total_boundings:
+    x1: 11870.0
+    x2: 15700.0
+    y1: 8800.0
+    y2: 10900.0
+  polygon:
+  - - 15700.0
+    - 8800.0
+  - - 15700.0
+    - 10900.0
+  - - 11870.0
+    - 10900.0
+  - - 11870.0
+    - 8800.0
+  asset_id: collision_camera_017
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 20; Category? Major
-  * Extra - actor_name: LE_Item_008
-  * Extra - actor_type: item_energytank
+  Extra:
+    actor_name: LE_Item_008
+    actor_type: item_energytank
   > Above Arena
       Trivial
 
 > Door to Temple Exterior; Heals? False
   * Layers: default
   * Power Beam Door to Temple Exterior/Door to Exterior Alpha Arena
-  * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door016
+    actor_type: doorpowerpower
   > Inside Arena
       Trivial
 
@@ -430,7 +583,8 @@ Extra - asset_id: collision_camera_017
 
 > Above Arena; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_004B
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_004B
   > Pickup (Energy Tank)
       Trivial
   > Tunnel to Temple Exterior
@@ -440,7 +594,8 @@ Extra - asset_id: collision_camera_017
 
 > Inside Arena; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_004_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Alpha_004_Checkpoint
   > Door to Temple Exterior
       Trivial
   > Event - Alpha Metroid
@@ -453,36 +608,79 @@ Extra - asset_id: collision_camera_017
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 176; Category? Minor
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Alpha_004
+  Extra:
+    pickup_type: metroid
+    spawngroup: SG_Alpha_004
   > Inside Arena
       Trivial
 
 ----------------
 Temple Exterior
-Extra - total_boundings: {'x1': -2600.0, 'x2': 11950.0, 'y1': 7600.0, 'y2': 14000.0}
-Extra - polygon: [[11950.0, 7600.0], [11950.0, 13100.0], [9400.0, 13100.0], [8000.0, 14000.0], [3100.0, 14000.0], [1900.0, 13100.0], [-2600.0, 13100.0], [-2600.0, 7600.0], [1400.0, 7600.0], [1400.0, 8700.0], [2800.0, 9300.0], [3400.0, 9300.0], [3400.0, 10400.0], [3800.0, 10600.0], [9100.0, 10600.0], [9200.0, 10500.0], [9200.0, 7600.0]]
-Extra - asset_id: collision_camera_018
+Extra:
+  total_boundings:
+    x1: -2600.0
+    x2: 11950.0
+    y1: 7600.0
+    y2: 14000.0
+  polygon:
+  - - 11950.0
+    - 7600.0
+  - - 11950.0
+    - 13100.0
+  - - 9400.0
+    - 13100.0
+  - - 8000.0
+    - 14000.0
+  - - 3100.0
+    - 14000.0
+  - - 1900.0
+    - 13100.0
+  - - -2600.0
+    - 13100.0
+  - - -2600.0
+    - 7600.0
+  - - 1400.0
+    - 7600.0
+  - - 1400.0
+    - 8700.0
+  - - 2800.0
+    - 9300.0
+  - - 3400.0
+    - 9300.0
+  - - 3400.0
+    - 10400.0
+  - - 3800.0
+    - 10600.0
+  - - 9100.0
+    - 10600.0
+  - - 9200.0
+    - 10500.0
+  - - 9200.0
+    - 7600.0
+  asset_id: collision_camera_018
 > Pickup (Missile Tank Crevice); Heals? False
   * Layers: default
   * Pickup 23; Category? Minor
-  * Extra - actor_name: LE_Item_014
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_014
+    actor_type: item_missiletank
   > Save Station
       Trivial
 
 > Pickup (Missile Tank Puzzle); Heals? False
   * Layers: default
   * Pickup 25; Category? Minor
-  * Extra - actor_name: LE_Item_017
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_017
+    actor_type: item_missiletank
   > Ammo Recharge Station
       Lay Any Bomb
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
-  * Extra - actor_name: LE_AmmoRecharge_Platform
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_AmmoRecharge_Platform
+    actor_type: weightactivatedplatform
   > Pickup (Missile Tank Puzzle)
       Lay Any Bomb and Shoot Any Missile
   > Energy Recharge Station
@@ -490,8 +688,9 @@ Extra - asset_id: collision_camera_018
 
 > Energy Recharge Station; Heals? True
   * Layers: default
-  * Extra - actor_name: LE_EnergyCharge_Plaftorm
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_EnergyCharge_Plaftorm
+    actor_type: weightactivatedplatform
   > Ammo Recharge Station
       Trivial
   > Above Wall
@@ -499,9 +698,10 @@ Extra - asset_id: collision_camera_018
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation004
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation004
+  Extra:
+    actor_name: LE_Platform_SaveStation004
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation004
   > Pickup (Missile Tank Crevice)
       All of the following:
           Morph Ball
@@ -527,16 +727,18 @@ Extra - asset_id: collision_camera_018
 > Door to Inner Temple East Hall; Heals? False
   * Layers: default
   * Power Beam Door to Inner Temple East Hall/Door to Temple Exterior
-  * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door012
+    actor_type: doorpowerpower
   > Save Station
       Trivial
 
 > Door to Exterior Alpha Arena; Heals? False
   * Layers: default
   * Power Beam Door to Exterior Alpha Arena/Door to Temple Exterior
-  * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door016
+    actor_type: doorpowerpower
   > Save Station
       Trivial
   > Tunnel to Exterior Alpha Arena
@@ -554,16 +756,18 @@ Extra - asset_id: collision_camera_018
 > Door to Spider Ball Chamber; Heals? False
   * Layers: default
   * Access Locked to Spider Ball Chamber/Door to Temple Exterior
-  * Extra - actor_name: Door017
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door017
+    actor_type: doorclosedpower
   > Save Station
       Trivial
 
 > Pickup (Missile Tank Hidden); Heals? False
   * Layers: default
   * Pickup 29; Category? Minor
-  * Extra - actor_name: HiddenPowerup001
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: HiddenPowerup001
+    actor_type: item_missiletank
   > Above Wall
       Trivial
 
@@ -621,20 +825,39 @@ Extra - asset_id: collision_camera_018
 
 > Start Point; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_004
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_004
   > Door to Exterior Alpha Arena
       Trivial
 
 ----------------
 Metroid Caverns Lobby
-Extra - total_boundings: {'x1': -300.00201416015625, 'x2': 1400.0, 'y1': -1100.0, 'y2': 2000.0}
-Extra - polygon: [[1200.0, -1100.0], [1200.0, 500.0], [1400.0, 600.0], [1400.0, 2000.0], [-300.00201416015625, 2000.0], [-299.99798583984375, -1100.0]]
-Extra - asset_id: collision_camera_023
+Extra:
+  total_boundings:
+    x1: -300.00201416015625
+    x2: 1400.0
+    y1: -1100.0
+    y2: 2000.0
+  polygon:
+  - - 1200.0
+    - -1100.0
+  - - 1200.0
+    - 500.0
+  - - 1400.0
+    - 600.0
+  - - 1400.0
+    - 2000.0
+  - - -300.00201416015625
+    - 2000.0
+  - - -299.99798583984375
+    - -1100.0
+  asset_id: collision_camera_023
 > Door to Metroid Caverns Alpha Arena South East; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Caverns Alpha Arena South East/Door to Metroid Caverns Lobby
-  * Extra - actor_name: Door014
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door014
+    actor_type: doorpowerpower
   > Dock to Metroid Caverns Alpha Arena South West Access
       Trivial
   > Start Point
@@ -670,15 +893,29 @@ Extra - asset_id: collision_camera_023
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_002
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_002
   > Door to Metroid Caverns Alpha Arena South East
       Trivial
 
 ----------------
 Metroid Caverns Alpha Arena South West Access
-Extra - total_boundings: {'x1': -4000.0, 'x2': -200.0, 'y1': -1100.0, 'y2': 600.0}
-Extra - polygon: [[-200.0, -1100.0], [-200.0, 600.0], [-4000.0, 600.0], [-4000.0, -1100.0]]
-Extra - asset_id: collision_camera_024
+Extra:
+  total_boundings:
+    x1: -4000.0
+    x2: -200.0
+    y1: -1100.0
+    y2: 600.0
+  polygon:
+  - - -200.0
+    - -1100.0
+  - - -200.0
+    - 600.0
+  - - -4000.0
+    - 600.0
+  - - -4000.0
+    - -1100.0
+  asset_id: collision_camera_024
 > Dock to Metroid Caverns Lobby; Heals? False
   * Layers: default
   * Open Passage to Metroid Caverns Lobby/Dock to Metroid Caverns Alpha Arena South West Access
@@ -711,7 +948,8 @@ Extra - asset_id: collision_camera_024
 
 > Left Pillar; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_001
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_001
   > Dock to Metroid Caverns Lobby
       Trivial
   > Tunnel to Metroid Caverns Alpha Arena South West (Top)
@@ -734,14 +972,28 @@ Extra - asset_id: collision_camera_024
 
 ----------------
 Metroid Caverns Alpha Arena South East
-Extra - total_boundings: {'x1': 1100.0, 'x2': 3800.0, 'y1': -1100.0, 'y2': 400.0}
-Extra - polygon: [[3800.0, -1100.0], [3800.0, 400.0], [1100.0, 400.0], [1100.0, -1100.0]]
-Extra - asset_id: collision_camera_025
+Extra:
+  total_boundings:
+    x1: 1100.0
+    x2: 3800.0
+    y1: -1100.0
+    y2: 400.0
+  polygon:
+  - - 3800.0
+    - -1100.0
+  - - 3800.0
+    - 400.0
+  - - 1100.0
+    - 400.0
+  - - 1100.0
+    - -1100.0
+  asset_id: collision_camera_025
 > Door to Metroid Caverns Lobby; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Caverns Lobby/Door to Metroid Caverns Alpha Arena South East
-  * Extra - actor_name: Door014
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door014
+    actor_type: doorpowerpower
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -754,21 +1006,36 @@ Extra - asset_id: collision_camera_025
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 174; Category? Minor
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Alpha_002
+  Extra:
+    pickup_type: metroid
+    spawngroup: SG_Alpha_002
   > Door to Metroid Caverns Lobby
       Trivial
 
 ----------------
 Metroid Caverns Alpha Arena North East
-Extra - total_boundings: {'x1': 7500.0, 'x2': 10206.7001953125, 'y1': 700.0, 'y2': 2100.0}
-Extra - polygon: [[10206.7001953125, 700.0], [10206.7001953125, 2100.0], [7500.0, 2100.0], [7500.0, 700.0]]
-Extra - asset_id: collision_camera_027
+Extra:
+  total_boundings:
+    x1: 7500.0
+    x2: 10206.7001953125
+    y1: 700.0
+    y2: 2100.0
+  polygon:
+  - - 10206.7001953125
+    - 700.0
+  - - 10206.7001953125
+    - 2100.0
+  - - 7500.0
+    - 2100.0
+  - - 7500.0
+    - 700.0
+  asset_id: collision_camera_027
 > Door to Metroid Caverns Alpha Arena North East Access; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Caverns Alpha Arena North East Access/Door to Metroid Caverns Alpha Arena North East
-  * Extra - actor_name: Door015
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door015
+    actor_type: doorpowerpower
   > Event - Alpha Metroid
       Defeat Alpha Metroid
 
@@ -781,29 +1048,45 @@ Extra - asset_id: collision_camera_027
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 175; Category? Minor
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Alpha_003
+  Extra:
+    pickup_type: metroid
+    spawngroup: SG_Alpha_003
   > Door to Metroid Caverns Alpha Arena North East Access
       Trivial
 
 ----------------
 Water Maze
-Extra - total_boundings: {'x1': -5498.08984375, 'x2': -4198.08984375, 'y1': 1600.0, 'y2': 3400.0}
-Extra - polygon: [[-4198.08984375, 1600.0], [-4198.08984375, 3400.0], [-5498.08984375, 3400.0], [-5498.08984375, 1600.0]]
-Extra - asset_id: collision_camera_028
+Extra:
+  total_boundings:
+    x1: -5498.08984375
+    x2: -4198.08984375
+    y1: 1600.0
+    y2: 3400.0
+  polygon:
+  - - -4198.08984375
+    - 1600.0
+  - - -4198.08984375
+    - 3400.0
+  - - -5498.08984375
+    - 3400.0
+  - - -5498.08984375
+    - 1600.0
+  asset_id: collision_camera_028
 > Pickup (Aeion Tank); Heals? False
   * Layers: default
   * Pickup 17; Category? Minor
-  * Extra - actor_name: LE_Item_004
-  * Extra - actor_type: item_senergytank
+  Extra:
+    actor_name: LE_Item_004
+    actor_type: item_senergytank
   > Next to Pickup
       Trivial
 
 > Door to Gullugg Gangway; Heals? False
   * Layers: default
   * Plasma Beam Door to Gullugg Gangway/Door from Water Maze
-  * Extra - actor_name: Door011
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door011
+    actor_type: doorclosedpower
   > Next to Pickup
       All of the following:
           Morph Ball and Shoot Any Missile
@@ -884,36 +1167,53 @@ Extra - asset_id: collision_camera_028
 
 ----------------
 Ice Beam Chamber
-Extra - total_boundings: {'x1': 3800.0, 'x2': 6000.0, 'y1': 2400.0, 'y2': 4100.0}
-Extra - polygon: [[6000.0, 2400.0], [6000.0, 4100.0], [3800.0, 4100.0], [3800.0, 2400.0]]
-Extra - asset_id: collision_camera_030
+Extra:
+  total_boundings:
+    x1: 3800.0
+    x2: 6000.0
+    y1: 2400.0
+    y2: 4100.0
+  polygon:
+  - - 6000.0
+    - 2400.0
+  - - 6000.0
+    - 4100.0
+  - - 3800.0
+    - 4100.0
+  - - 3800.0
+    - 2400.0
+  asset_id: collision_camera_030
 > Pickup (Ice Beam); Heals? False
   * Layers: default
   * Pickup 27; Category? Major
-  * Extra - actor_name: LE_PowerUp_IceBeam
-  * Extra - actor_type: itemsphere_icebeam
+  Extra:
+    actor_name: LE_PowerUp_IceBeam
+    actor_type: itemsphere_icebeam
   > Room Center
       Trivial
 
 > Door to Ice Beam Chamber Access; Heals? False
   * Layers: default
   * Missile Door to Ice Beam Chamber Access/Door to Ice Beam Chamber
-  * Extra - actor_name: Door003
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door003
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 31; Category? Minor
-  * Extra - actor_name: HiddenPowerup003
-  * Extra - actor_type: item_supermissiletank
+  Extra:
+    actor_name: HiddenPowerup003
+    actor_type: item_supermissiletank
   > Room Center
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_CheckPoint_006
+  Extra:
+    start_point_actor_name: ST_CheckPoint_006
   > Pickup (Ice Beam)
       Trivial
   > Door to Ice Beam Chamber Access
@@ -923,13 +1223,27 @@ Extra - asset_id: collision_camera_030
 
 ----------------
 Metroid Caverns Energy Recharge Station
-Extra - total_boundings: {'x1': -1500.0, 'x2': -200.0, 'y1': 1241.27001953125, 'y2': 2000.0}
-Extra - polygon: [[-200.0, 1241.27001953125], [-200.0, 2000.0], [-1500.0, 2000.0], [-1500.0, 1241.27001953125]]
-Extra - asset_id: collision_camera_031
+Extra:
+  total_boundings:
+    x1: -1500.0
+    x2: -200.0
+    y1: 1241.27001953125
+    y2: 2000.0
+  polygon:
+  - - -200.0
+    - 1241.27001953125
+  - - -200.0
+    - 2000.0
+  - - -1500.0
+    - 2000.0
+  - - -1500.0
+    - 1241.27001953125
+  asset_id: collision_camera_031
 > Energy Recharge Station; Heals? True
   * Layers: default
-  * Extra - actor_name: LE_EnergyCharge001_Platform
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_EnergyCharge001_Platform
+    actor_type: weightactivatedplatform
   > Tunnel to Metroid Caverns Lobby
       Lay Any Bomb
 
@@ -941,22 +1255,37 @@ Extra - asset_id: collision_camera_031
 
 ----------------
 Magma Pool
-Extra - total_boundings: {'x1': -9600.0, 'x2': -7100.0, 'y1': 700.0, 'y2': 3700.0}
-Extra - polygon: [[-7100.0, 700.0], [-7100.0, 3700.0], [-9600.0, 3700.0], [-9600.0, 700.0]]
-Extra - asset_id: collision_camera_033
+Extra:
+  total_boundings:
+    x1: -9600.0
+    x2: -7100.0
+    y1: 700.0
+    y2: 3700.0
+  polygon:
+  - - -7100.0
+    - 700.0
+  - - -7100.0
+    - 3700.0
+  - - -9600.0
+    - 3700.0
+  - - -9600.0
+    - 700.0
+  asset_id: collision_camera_033
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 15; Category? Minor
-  * Extra - actor_name: LE_Item_001
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_001
+    actor_type: item_missiletank
   > Door to Moheek Mount
       Trivial
 
 > Door to Moheek Mount; Heals? False
   * Layers: default
   * Charge Beam Door to Moheek Mount/Door to Magma Pool
-  * Extra - actor_name: Door009
-  * Extra - actor_type: doorchargecharge
+  Extra:
+    actor_name: Door009
+    actor_type: doorchargecharge
   > Pickup (Missile Tank)
       Any of the following:
           All of the following:
@@ -976,8 +1305,9 @@ Extra - asset_id: collision_camera_033
 > Door to Gullugg Gangway; Heals? False
   * Layers: default
   * Charge Beam Door to Gullugg Gangway/Door to Magma Pool
-  * Extra - actor_name: Door010
-  * Extra - actor_type: doorchargecharge
+  Extra:
+    actor_name: Door010
+    actor_type: doorchargecharge
   > Door to Moheek Mount
       Any of the following:
           Gravity Suit
@@ -1006,21 +1336,40 @@ Extra - asset_id: collision_camera_033
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 30; Category? Minor
-  * Extra - actor_name: HiddenPowerup002
-  * Extra - actor_type: item_supermissiletank
+  Extra:
+    actor_name: HiddenPowerup002
+    actor_type: item_supermissiletank
   > Door to Gullugg Gangway
       Gravity Suit
 
 ----------------
 Inner Temple West Hall
-Extra - total_boundings: {'x1': 2400.0, 'x2': 3900.0, 'y1': 2000.0, 'y2': 8600.0}
-Extra - polygon: [[2500.0, 8600.0], [2500.0, 3700.0], [2400.0, 3000.0], [2400.0, 2000.0], [3900.0, 2000.0], [3900.0, 8600.0]]
-Extra - asset_id: collision_camera_035
+Extra:
+  total_boundings:
+    x1: 2400.0
+    x2: 3900.0
+    y1: 2000.0
+    y2: 8600.0
+  polygon:
+  - - 2500.0
+    - 8600.0
+  - - 2500.0
+    - 3700.0
+  - - 2400.0
+    - 3000.0
+  - - 2400.0
+    - 2000.0
+  - - 3900.0
+    - 2000.0
+  - - 3900.0
+    - 8600.0
+  asset_id: collision_camera_035
 > Door to Inner Temple Teleporter Access; Heals? False
   * Layers: default
   * Power Beam Door to Inner Temple Teleporter Access/Door to Inner Temple West Hall
-  * Extra - actor_name: Door006
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door006
+    actor_type: doorpowerpower
   > Dock to Bomb Chamber Access
       Trivial
   > Dock to Inner Temple Save Station
@@ -1083,14 +1432,28 @@ Extra - asset_id: collision_camera_035
 
 ----------------
 Metroid Caverns Save Station
-Extra - total_boundings: {'x1': -4300.0, 'x2': 1400.0, 'y1': 1900.0, 'y2': 3800.0}
-Extra - polygon: [[1400.0, 1900.0], [1400.0, 3800.0], [-4300.0, 3800.0], [-4300.0, 1900.0]]
-Extra - asset_id: collision_camera_041
+Extra:
+  total_boundings:
+    x1: -4300.0
+    x2: 1400.0
+    y1: 1900.0
+    y2: 3800.0
+  polygon:
+  - - 1400.0
+    - 1900.0
+  - - 1400.0
+    - 3800.0
+  - - -4300.0
+    - 3800.0
+  - - -4300.0
+    - 1900.0
+  asset_id: collision_camera_041
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 19; Category? Minor
-  * Extra - actor_name: LE_Item_006
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_006
+    actor_type: item_missiletank
   > Dock to Metroid Caverns Hub
       Lay Any Bomb
   > Tunnel to Metroid Caverns Hub
@@ -1098,9 +1461,10 @@ Extra - asset_id: collision_camera_041
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation001
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation001
+  Extra:
+    actor_name: LE_Platform_SaveStation001
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation001
   > Dock to Water Maze
       Trivial
   > Tunnel to Water Maze
@@ -1162,14 +1526,28 @@ Extra - asset_id: collision_camera_041
 
 ----------------
 Inner Temple Teleporter Access
-Extra - total_boundings: {'x1': 3800.0, 'x2': 6000.0, 'y1': 5700.0, 'y2': 7000.0}
-Extra - polygon: [[6000.0, 5700.0], [6000.0, 7000.0], [3800.0, 7000.0], [3800.0, 5700.0]]
-Extra - asset_id: collision_camera_042
+Extra:
+  total_boundings:
+    x1: 3800.0
+    x2: 6000.0
+    y1: 5700.0
+    y2: 7000.0
+  polygon:
+  - - 6000.0
+    - 5700.0
+  - - 6000.0
+    - 7000.0
+  - - 3800.0
+    - 7000.0
+  - - 3800.0
+    - 5700.0
+  asset_id: collision_camera_042
 > Door to Inner Temple West Hall; Heals? False
   * Layers: default
   * Power Beam Door to Inner Temple West Hall/Door to Inner Temple Teleporter Access
-  * Extra - actor_name: Door006
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door006
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
@@ -1187,7 +1565,8 @@ Extra - asset_id: collision_camera_042
 
 > Room Center; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_DEBUG_CutsceneTeleport
+  Extra:
+    start_point_actor_name: ST_DEBUG_CutsceneTeleport
   > Door to Inner Temple West Hall
       Trivial
   > Tunnel to Inner Temple Teleporter
@@ -1200,14 +1579,32 @@ Extra - asset_id: collision_camera_042
 
 ----------------
 Inner Temple Ventilation Shaft
-Extra - total_boundings: {'x1': 3300.0, 'x2': 5100.0, 'y1': 6900.0, 'y2': 9500.0}
-Extra - polygon: [[5100.0, 6900.0], [5100.0, 9500.0], [3300.0, 9500.0], [3300.0, 8800.0], [3800.0, 8600.0], [3800.0, 6900.0]]
-Extra - asset_id: collision_camera_043
+Extra:
+  total_boundings:
+    x1: 3300.0
+    x2: 5100.0
+    y1: 6900.0
+    y2: 9500.0
+  polygon:
+  - - 5100.0
+    - 6900.0
+  - - 5100.0
+    - 9500.0
+  - - 3300.0
+    - 9500.0
+  - - 3300.0
+    - 8800.0
+  - - 3800.0
+    - 8600.0
+  - - 3800.0
+    - 6900.0
+  asset_id: collision_camera_043
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 24; Category? Minor
-  * Extra - actor_name: LE_Item_016
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_016
+    actor_type: item_missiletank
   > Door to Inner Temple Upper Hallway
       Any of the following:
           Space Jump or Use Spider Ball
@@ -1219,8 +1616,9 @@ Extra - asset_id: collision_camera_043
 > Door to Inner Temple Upper Hallway; Heals? False
   * Layers: default
   * Spazer Beam Door to Inner Temple Upper Hallway/Door to Inner Temple Ventilation Shaft
-  * Extra - actor_name: Door007
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door007
+    actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Any of the following:
           Space Jump or Use Spider Ball
@@ -1247,9 +1645,22 @@ Extra - asset_id: collision_camera_043
 
 ----------------
 Metroid Caverns Hub
-Extra - total_boundings: {'x1': 1300.0, 'x2': 2600.0, 'y1': 700.0, 'y2': 3700.0}
-Extra - polygon: [[2600.0, 700.0], [2600.0, 3700.0], [1300.0, 3700.0], [1300.0, 700.0]]
-Extra - asset_id: collision_camera_044
+Extra:
+  total_boundings:
+    x1: 1300.0
+    x2: 2600.0
+    y1: 700.0
+    y2: 3700.0
+  polygon:
+  - - 2600.0
+    - 700.0
+  - - 2600.0
+    - 3700.0
+  - - 1300.0
+    - 3700.0
+  - - 1300.0
+    - 700.0
+  asset_id: collision_camera_044
 > Dock to Metroid Caverns Save Station; Heals? False
   * Layers: default
   * Open Passage to Metroid Caverns Save Station/Dock to Metroid Caverns Hub
@@ -1298,14 +1709,28 @@ Extra - asset_id: collision_camera_044
 
 ----------------
 Metroid Caverns Alpha Arena North East Access
-Extra - total_boundings: {'x1': 2500.0, 'x2': 7600.0, 'y1': 700.0, 'y2': 2100.0}
-Extra - polygon: [[7600.0, 700.0], [7600.0, 2100.0], [2500.0, 2100.0], [2500.0, 700.0]]
-Extra - asset_id: collision_camera_045
+Extra:
+  total_boundings:
+    x1: 2500.0
+    x2: 7600.0
+    y1: 700.0
+    y2: 2100.0
+  polygon:
+  - - 7600.0
+    - 700.0
+  - - 7600.0
+    - 2100.0
+  - - 2500.0
+    - 2100.0
+  - - 2500.0
+    - 700.0
+  asset_id: collision_camera_045
 > Door to Metroid Caverns Alpha Arena North East; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Caverns Alpha Arena North East/Door to Metroid Caverns Alpha Arena North East Access
-  * Extra - actor_name: Door015
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door015
+    actor_type: doorpowerpower
   > Dock to Metroid Caverns Hub
       Trivial
   > Start Point
@@ -1319,20 +1744,35 @@ Extra - asset_id: collision_camera_045
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_003
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_003
   > Door to Metroid Caverns Alpha Arena North East
       Trivial
 
 ----------------
 Bomb Chamber Access
-Extra - total_boundings: {'x1': -100.0, 'x2': 2600.0, 'y1': 4200.0, 'y2': 5400.0}
-Extra - polygon: [[2600.0, 4200.0], [2600.0, 5400.0], [-100.0, 5400.0], [-100.0, 4200.0]]
-Extra - asset_id: collision_camera_046
+Extra:
+  total_boundings:
+    x1: -100.0
+    x2: 2600.0
+    y1: 4200.0
+    y2: 5400.0
+  polygon:
+  - - 2600.0
+    - 4200.0
+  - - 2600.0
+    - 5400.0
+  - - -100.0
+    - 5400.0
+  - - -100.0
+    - 4200.0
+  asset_id: collision_camera_046
 > Door to Bomb Chamber; Heals? False
   * Layers: default
   * Missile Door to Bomb Chamber/Door to Bomb Chamber Access
-  * Extra - actor_name: Door004
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door004
+    actor_type: doorpowerpower
   > Dock to Inner Temple West Hall
       Trivial
 
@@ -1352,14 +1792,28 @@ Extra - asset_id: collision_camera_046
 
 ----------------
 Inner Temple Save Station
-Extra - total_boundings: {'x1': 1300.0, 'x2': 2600.0, 'y1': 7500.0, 'y2': 8500.0}
-Extra - polygon: [[2600.0, 7500.0], [2600.0, 8500.0], [1300.0, 8500.0], [1300.0, 7500.0]]
-Extra - asset_id: collision_camera_047
+Extra:
+  total_boundings:
+    x1: 1300.0
+    x2: 2600.0
+    y1: 7500.0
+    y2: 8500.0
+  polygon:
+  - - 2600.0
+    - 7500.0
+  - - 2600.0
+    - 8500.0
+  - - 1300.0
+    - 8500.0
+  - - 1300.0
+    - 7500.0
+  asset_id: collision_camera_047
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation
+  Extra:
+    actor_name: LE_Platform_SaveStation
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation
   > Dock to Inner Temple West Hall
       Trivial
   > Dock to Temple Exterior
@@ -1379,14 +1833,28 @@ Extra - asset_id: collision_camera_047
 
 ----------------
 Inner Temple Upper Hallway
-Extra - total_boundings: {'x1': 5000.0, 'x2': 7900.0, 'y1': 8700.0, 'y2': 10100.0}
-Extra - polygon: [[7900.0, 10100.0], [5000.0, 10100.0], [5000.0, 8700.0], [7900.0, 8700.0]]
-Extra - asset_id: collision_camera_048
+Extra:
+  total_boundings:
+    x1: 5000.0
+    x2: 7900.0
+    y1: 8700.0
+    y2: 10100.0
+  polygon:
+  - - 7900.0
+    - 10100.0
+  - - 5000.0
+    - 10100.0
+  - - 5000.0
+    - 8700.0
+  - - 7900.0
+    - 8700.0
+  asset_id: collision_camera_048
 > Door to Inner Temple Ventilation Shaft; Heals? False
   * Layers: default
   * Spazer Beam Door to Inner Temple Ventilation Shaft/Door to Inner Temple Upper Hallway
-  * Extra - actor_name: Door007
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door007
+    actor_type: doorpowerpower
   > Door to Inner Temple East Hall
       Trivial
   > Tunnel to Inner Temple Ventilation Shaft
@@ -1395,8 +1863,9 @@ Extra - asset_id: collision_camera_048
 > Door to Inner Temple East Hall; Heals? False
   * Layers: default
   * Access Locked to Inner Temple East Hall/Door to Inner Temple Upper Hallway
-  * Extra - actor_name: Door013
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door013
+    actor_type: doorclosedpower
   > Door to Inner Temple Ventilation Shaft
       Trivial
 
@@ -1408,15 +1877,29 @@ Extra - asset_id: collision_camera_048
 
 ----------------
 Inner Temple Teleporter
-Extra - total_boundings: {'x1': 5900.0, 'x2': 7900.0, 'y1': 5700.0, 'y2': 7100.0}
-Extra - polygon: [[7900.0, 7100.0], [5900.0, 7100.0], [5900.0, 5700.0], [7900.0, 5700.0]]
-Extra - asset_id: collision_camera_049
+Extra:
+  total_boundings:
+    x1: 5900.0
+    x2: 7900.0
+    y1: 5700.0
+    y2: 7100.0
+  polygon:
+  - - 7900.0
+    - 7100.0
+  - - 5900.0
+    - 7100.0
+  - - 5900.0
+    - 5700.0
+  - - 7900.0
+    - 5700.0
+  asset_id: collision_camera_049
 > Teleporter; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by After Area 1 - Inner Temple Teleporter Unlocked)
-  * Extra - actor_name: LE_Platform_Teleporter_01_01
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_Teleporter_01_01
+  Extra:
+    actor_name: LE_Platform_Teleporter_01_01
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_Teleporter_01_01
   > Dock to Inner Temple East Hall
       Trivial
 
@@ -1444,14 +1927,28 @@ Extra - asset_id: collision_camera_049
 
 ----------------
 Ice Beam Chamber Access
-Extra - total_boundings: {'x1': 5900.0, 'x2': 8000.0, 'y1': 2300.0, 'y2': 3800.0}
-Extra - polygon: [[8000.0, 3800.0], [5900.0, 3800.0], [5900.0, 2300.0], [8000.0, 2300.0]]
-Extra - asset_id: collision_camera_050
+Extra:
+  total_boundings:
+    x1: 5900.0
+    x2: 8000.0
+    y1: 2300.0
+    y2: 3800.0
+  polygon:
+  - - 8000.0
+    - 3800.0
+  - - 5900.0
+    - 3800.0
+  - - 5900.0
+    - 2300.0
+  - - 8000.0
+    - 2300.0
+  asset_id: collision_camera_050
 > Door to Ice Beam Chamber; Heals? False
   * Layers: default
   * Missile Door to Ice Beam Chamber/Door to Ice Beam Chamber Access
-  * Extra - actor_name: Door003
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door003
+    actor_type: doorpowerpower
   > Dock to Inner Temple East Hall
       Any of the following:
           High Jump Boots or Ice Beam or Space Jump or Super Jump (Intermediate) or Simple IBJ
@@ -1470,30 +1967,58 @@ Extra - asset_id: collision_camera_050
 
 ----------------
 Transport Cache
-Extra - total_boundings: {'x1': -12100.0, 'x2': -10800.0, 'y1': -2814.06005859375, 'y2': -2055.330078125}
-Extra - polygon: [[-10800.0, -2814.06005859375], [-10800.0, -2055.330078125], [-12100.0, -2055.330078125], [-12100.0, -2814.06005859375]]
-Extra - asset_id: collision_camera_051
+Extra:
+  total_boundings:
+    x1: -12100.0
+    x2: -10800.0
+    y1: -2814.06005859375
+    y2: -2055.330078125
+  polygon:
+  - - -10800.0
+    - -2814.06005859375
+  - - -10800.0
+    - -2055.330078125
+  - - -12100.0
+    - -2055.330078125
+  - - -12100.0
+    - -2814.06005859375
+  asset_id: collision_camera_051
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 16; Category? Minor
-  * Extra - actor_name: LE_Item_003
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_003
+    actor_type: item_missiletank
   > Door to Transport to Surface and Area 2
       Morph Ball
 
 > Door to Transport to Surface and Area 2; Heals? False
   * Layers: default
   * Wave Beam Door to Transport to Surface and Area 2/Door to Transport Cache
-  * Extra - actor_name: Door008
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door008
+    actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Lay Any Bomb
 
 ----------------
 Harmonized Hallway
-Extra - total_boundings: {'x1': -9600.0, 'x2': -7100.0, 'y1': 4265.7900390625, 'y2': 5024.52001953125}
-Extra - polygon: [[-7100.0, 4265.7900390625], [-7100.0, 5024.52001953125], [-9600.0, 5024.52001953125], [-9600.0, 4265.7900390625]]
-Extra - asset_id: collision_camera_052
+Extra:
+  total_boundings:
+    x1: -9600.0
+    x2: -7100.0
+    y1: 4265.7900390625
+    y2: 5024.52001953125
+  polygon:
+  - - -7100.0
+    - 4265.7900390625
+  - - -7100.0
+    - 5024.52001953125
+  - - -9600.0
+    - 5024.52001953125
+  - - -9600.0
+    - 4265.7900390625
+  asset_id: collision_camera_052
 > Dock to Moheek Mount; Heals? False
   * Layers: default
   * Open Passage to Moheek Mount/Dock to Harmonized Hallway
@@ -1508,9 +2033,22 @@ Extra - asset_id: collision_camera_052
 
 ----------------
 Metroid Caverns Alpha Arena South West
-Extra - total_boundings: {'x1': -7200.0, 'x2': -3900.0, 'y1': -1100.0, 'y2': 600.0}
-Extra - polygon: [[-3900.0, -1100.0], [-3900.0, 600.0], [-7200.0, 600.0], [-7200.0, -1100.0]]
-Extra - asset_id: collision_camera_054
+Extra:
+  total_boundings:
+    x1: -7200.0
+    x2: -3900.0
+    y1: -1100.0
+    y2: 600.0
+  polygon:
+  - - -3900.0
+    - -1100.0
+  - - -3900.0
+    - 600.0
+  - - -7200.0
+    - 600.0
+  - - -7200.0
+    - -1100.0
+  asset_id: collision_camera_054
 > Tunnel to Metroid Caverns Alpha Arena South West Access (Top); Heals? False
   * Layers: default
   * Tunnel to Metroid Caverns Alpha Arena South West Access/Tunnel to Metroid Caverns Alpha Arena South West (Top)
@@ -1529,7 +2067,8 @@ Extra - asset_id: collision_camera_054
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Alpha_001_Checkpoint
   > Tunnel to Metroid Caverns Alpha Arena South West Access (Bottom)
       Lay Any Bomb
   > Event - Alpha Metroid
@@ -1538,16 +2077,30 @@ Extra - asset_id: collision_camera_054
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 173; Category? Minor
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Alpha_001
+  Extra:
+    pickup_type: metroid
+    spawngroup: SG_Alpha_001
   > Room Center
       Trivial
 
 ----------------
 Chute Leech Cabin
-Extra - total_boundings: {'x1': -5500.0, 'x2': -2500.0, 'y1': 7200.0, 'y2': 8500.0}
-Extra - polygon: [[-2500.0, 7200.0], [-2500.0, 8500.0], [-5500.0, 8500.0], [-5500.0, 7200.0]]
-Extra - asset_id: collision_camera_055
+Extra:
+  total_boundings:
+    x1: -5500.0
+    x2: -2500.0
+    y1: 7200.0
+    y2: 8500.0
+  polygon:
+  - - -2500.0
+    - 7200.0
+  - - -2500.0
+    - 8500.0
+  - - -5500.0
+    - 8500.0
+  - - -5500.0
+    - 7200.0
+  asset_id: collision_camera_055
 > Dock to Gullugg Gangway; Heals? False
   * Layers: default
   * Open Passage to Gullugg Gangway/Dock to Chute Leech Cabin

@@ -1,13 +1,27 @@
 ----------------
 Metroid Nest Foyer
-Extra - total_boundings: {'x1': -2800.0, 'x2': -270.0, 'y1': 8900.0, 'y2': 11000.0}
-Extra - polygon: [[-2800.0, 8900.0], [-270.0, 8900.0], [-270.0, 11200.0], [-2800.0, 11200.0]]
-Extra - asset_id: collision_camera_008
+Extra:
+  total_boundings:
+    x1: -2800.0
+    x2: -270.0
+    y1: 8900.0
+    y2: 11000.0
+  polygon:
+  - - -2800.0
+    - 8900.0
+  - - -270.0
+    - 8900.0
+  - - -270.0
+    - 11200.0
+  - - -2800.0
+    - 11200.0
+  asset_id: collision_camera_008
 > Door to Metroid Nest Hallway South; Heals? False
   * Layers: default
   * Access Locked to Metroid Nest Hallway South/Door to Metroid Nest Foyer
-  * Extra - actor_name: Door010
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door010
+    actor_type: doorclosedpower
   > Tunnel to Metroid Nest Teleporter
       All of the following:
           Morph Ball
@@ -29,7 +43,8 @@ Extra - asset_id: collision_camera_008
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Larva_001
+  Extra:
+    start_point_actor_name: ST_SG_Larva_001
   > Door to Metroid Nest Hallway South
       Screw Attack
   > Tunnel to Metroid Nest Hallway South
@@ -37,14 +52,38 @@ Extra - asset_id: collision_camera_008
 
 ----------------
 Transport to Surface
-Extra - total_boundings: {'x1': -12400.0, 'x2': 7150.0, 'y1': 11000.0, 'y2': 27400.0}
-Extra - polygon: [[-12400.0, 27400.0], [-12400.0, 11000.0], [-6900.0, 11000.0], [-6900.0, 19500.0], [-3100.0, 20900.0], [-1000.0, 20900.0], [100.0, 21600.0], [7150.0, 21600.0], [7150.0, 27400.0]]
-Extra - asset_id: collision_camera_007
+Extra:
+  total_boundings:
+    x1: -12400.0
+    x2: 7150.0
+    y1: 11000.0
+    y2: 27400.0
+  polygon:
+  - - -12400.0
+    - 27400.0
+  - - -12400.0
+    - 11000.0
+  - - -6900.0
+    - 11000.0
+  - - -6900.0
+    - 19500.0
+  - - -3100.0
+    - 20900.0
+  - - -1000.0
+    - 20900.0
+  - - 100.0
+    - 21600.0
+  - - 7150.0
+    - 21600.0
+  - - 7150.0
+    - 27400.0
+  asset_id: collision_camera_007
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 165; Category? Minor
-  * Extra - actor_name: LE_Item_013
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_013
+    actor_type: item_missiletank
   > Above Left Pickup
       All of the following:
           Morph Ball
@@ -55,15 +94,17 @@ Extra - asset_id: collision_camera_007
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 166; Category? Minor
-  * Extra - actor_name: LE_Item_014
-  * Extra - actor_type: item_supermissiletank
+  Extra:
+    actor_name: LE_Item_014
+    actor_type: item_supermissiletank
   > Ammo Recharge Station
       Morph Ball
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
-  * Extra - actor_name: LE_Platform_AmmoCharge_003
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_Platform_AmmoCharge_003
+    actor_type: weightactivatedplatform
   > Pickup (Super Missile Tank)
       Any of the following:
           Spider Boost (Beginner) and Can Spider Boost
@@ -81,17 +122,19 @@ Extra - asset_id: collision_camera_007
 > Elevator to Surface West; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Transport to Area 8/Elevator to Area 8
-  * Extra - actor_name: LE_Platform_Elevator_FromAreaSurfaceB
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromAreaSurfaceB
+  Extra:
+    actor_name: LE_Platform_Elevator_FromAreaSurfaceB
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromAreaSurfaceB
   > Ammo Recharge Station
       Baby Metroid
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation_005
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation_005
+  Extra:
+    actor_name: LE_Platform_SaveStation_005
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation_005
   > Dock to Hatchling Room
       Baby Metroid
   > Above Left Pickup
@@ -138,22 +181,37 @@ Extra - asset_id: collision_camera_007
 
 ----------------
 Metroid Nest Hallway South
-Extra - total_boundings: {'x1': -370.0, 'x2': 4160.0, 'y1': 8900.0, 'y2': 10500.0}
-Extra - polygon: [[-370.0, 8900.0], [4160.0, 8900.0], [4160.0, 10500.0], [-370.0, 10500.0]]
-Extra - asset_id: collision_camera_008
+Extra:
+  total_boundings:
+    x1: -370.0
+    x2: 4160.0
+    y1: 8900.0
+    y2: 10500.0
+  polygon:
+  - - -370.0
+    - 8900.0
+  - - 4160.0
+    - 8900.0
+  - - 4160.0
+    - 10500.0
+  - - -370.0
+    - 10500.0
+  asset_id: collision_camera_008
 > Door to Metroid Nest Foyer; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Foyer/Door to Metroid Nest Hallway South
-  * Extra - actor_name: Door010
-  * Extra - actor_type: doorclosedpower
+  Extra:
+    actor_name: Door010
+    actor_type: doorclosedpower
   > Room Center
       Trivial
 
 > Door to Metroid Nest Small Shaft; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Small Shaft/Door to Metroid Nest Hallway South
-  * Extra - actor_name: Door011
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door011
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
@@ -165,7 +223,8 @@ Extra - asset_id: collision_camera_008
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Larva_001_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Larva_001_Checkpoint
   > Door to Metroid Nest Foyer
       After Area 8 - Larva Metroid 1
   > Door to Metroid Nest Small Shaft
@@ -181,14 +240,44 @@ Extra - asset_id: collision_camera_008
 
 ----------------
 Amphitheater
-Extra - total_boundings: {'x1': -3900.0, 'x2': 2100.0, 'y1': -2800.0, 'y2': 8800.0}
-Extra - polygon: [[-3700.0, 8800.0], [-3700.0, 5500.0], [-3900.0, 4800.0], [-3900.0, -300.0], [-3700.0, -600.0009765625], [-3700.0, -2800.0], [-1500.0, -2800.0], [200.0, -2500.0], [450.0, -2500.0], [450.0, -1300.0], [2100.0, -1200.0], [2100.0, 8800.0]]
-Extra - asset_id: collision_camera_009
+Extra:
+  total_boundings:
+    x1: -3900.0
+    x2: 2100.0
+    y1: -2800.0
+    y2: 8800.0
+  polygon:
+  - - -3700.0
+    - 8800.0
+  - - -3700.0
+    - 5500.0
+  - - -3900.0
+    - 4800.0
+  - - -3900.0
+    - -300.0
+  - - -3700.0
+    - -600.0009765625
+  - - -3700.0
+    - -2800.0
+  - - -1500.0
+    - -2800.0
+  - - 200.0
+    - -2500.0
+  - - 450.0
+    - -2500.0
+  - - 450.0
+    - -1300.0
+  - - 2100.0
+    - -1200.0
+  - - 2100.0
+    - 8800.0
+  asset_id: collision_camera_009
 > Pickup (Missile Tank Top); Heals? False
   * Layers: default
   * Pickup 156; Category? Minor
-  * Extra - actor_name: LE_Item_003
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_003
+    actor_type: item_missiletank
   > Above Tunnels
       Morph Ball
   > Left of Grapple Pickup
@@ -197,8 +286,9 @@ Extra - asset_id: collision_camera_009
 > Pickup (Missile Tank Left); Heals? False
   * Layers: default
   * Pickup 157; Category? Minor
-  * Extra - actor_name: LE_Item_004
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_004
+    actor_type: item_missiletank
   > Ammo Recharge Station
       Use Spider Ball
   > Above Save Station
@@ -207,8 +297,9 @@ Extra - asset_id: collision_camera_009
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 158; Category? Minor
-  * Extra - actor_name: LE_Item_005
-  * Extra - actor_type: item_supermissiletank
+  Extra:
+    actor_name: LE_Item_005
+    actor_type: item_supermissiletank
   > Above Tunnels
       All of the following:
           Morph Ball and Screw Attack
@@ -217,8 +308,9 @@ Extra - asset_id: collision_camera_009
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 164; Category? Minor
-  * Extra - actor_name: LE_Item_012
-  * Extra - actor_type: item_powerbombtank
+  Extra:
+    actor_name: LE_Item_012
+    actor_type: item_powerbombtank
   > Energy Recharge Station
       Spider Ball and Lay Power Bomb
   > Above Save Station
@@ -226,8 +318,9 @@ Extra - asset_id: collision_camera_009
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
-  * Extra - actor_name: LE_Platform_AmmoCharge_001
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_Platform_AmmoCharge_001
+    actor_type: weightactivatedplatform
   > Energy Recharge Station
       # Deal with the Gunzoo
       Lightning Armor or Space Jump or Defeat Weak Enemies or Use Spider Ball
@@ -250,8 +343,9 @@ Extra - asset_id: collision_camera_009
 
 > Energy Recharge Station; Heals? True
   * Layers: default
-  * Extra - actor_name: LE_Platform_EnergyCharge_001
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_Platform_EnergyCharge_001
+    actor_type: weightactivatedplatform
   > Ammo Recharge Station
       # Deal with the Gunzoo
       Lightning Armor or Space Jump or Defeat Weak Enemies or Use Spider Ball
@@ -265,9 +359,10 @@ Extra - asset_id: collision_camera_009
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation_001
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation_001
+  Extra:
+    actor_name: LE_Platform_SaveStation_001
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation_001
   > Door to Nest Network
       Trivial
   > Above Save Station
@@ -291,16 +386,18 @@ Extra - asset_id: collision_camera_009
 > Door to Nest Network; Heals? False
   * Layers: default
   * Power Beam Door to Nest Network/Door to Amphitheater
-  * Extra - actor_name: Door007
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door007
+    actor_type: doorpowerpower
   > Save Station
       Trivial
 
 > Door to Metroid Nest Teleporter; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Teleporter/Door to Amphitheater
-  * Extra - actor_name: Door009
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door009
+    actor_type: doorpowerpower
   > Left of Grapple Pickup
       # Deal with the Gunzoo
       Lightning Armor or Dodge Enemies (Advanced) or Defeat Weak Enemies
@@ -308,8 +405,9 @@ Extra - asset_id: collision_camera_009
 > Pickup (Missile Tank Hidden); Heals? False
   * Layers: default
   * Pickup 167; Category? Minor
-  * Extra - actor_name: HiddenPowerup001
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: HiddenPowerup001
+    actor_type: item_missiletank
   > Ammo Recharge Station
       Trivial
 
@@ -445,14 +543,34 @@ Extra - asset_id: collision_camera_009
 
 ----------------
 Nest Network
-Extra - total_boundings: {'x1': -5300.0, 'x2': 1100.0, 'y1': -7300.0, 'y2': -1100.0}
-Extra - polygon: [[-5300.0, -1100.0], [-5300.0, -7300.0], [1100.0, -7300.0], [1100.0, -3600.0], [-2200.0, -3600.0], [-3600.0, -2600.0], [-3600.0, -1100.0]]
-Extra - asset_id: collision_camera_010
+Extra:
+  total_boundings:
+    x1: -5300.0
+    x2: 1100.0
+    y1: -7300.0
+    y2: -1100.0
+  polygon:
+  - - -5300.0
+    - -1100.0
+  - - -5300.0
+    - -7300.0
+  - - 1100.0
+    - -7300.0
+  - - 1100.0
+    - -3600.0
+  - - -2200.0
+    - -3600.0
+  - - -3600.0
+    - -2600.0
+  - - -3600.0
+    - -1100.0
+  asset_id: collision_camera_010
 > Pickup (Missile Tank Hallway); Heals? False
   * Layers: default
   * Pickup 160; Category? Minor
-  * Extra - actor_name: LE_Item_008
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_008
+    actor_type: item_missiletank
   > Door to Entrance Teleporter
       Any of the following:
           # Drop through left pit
@@ -471,32 +589,36 @@ Extra - asset_id: collision_camera_010
 > Pickup (Missile Tank Baby Locked); Heals? False
   * Layers: default
   * Pickup 163; Category? Minor
-  * Extra - actor_name: LE_Item_011
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_011
+    actor_type: item_missiletank
   > Door to Amphitheater
       Baby Metroid
 
 > Door to Entrance Teleporter; Heals? False
   * Layers: default
   * Power Beam Door to Entrance Teleporter/Door to Nest Network
-  * Extra - actor_name: Door003
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door003
+    actor_type: doorpowerpower
   > Door to Nest Nodule (Bottom)
       Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
 
 > Door to Nest Nodule (Bottom); Heals? False
   * Layers: default
   * Power Beam Door to Nest Nodule/Door to Nest Network (Bottom)
-  * Extra - actor_name: Door004
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door004
+    actor_type: doorpowerpower
   > Door to Entrance Teleporter
       Lightning Armor or Dodge Enemies (Advanced) or Defeat Non-Counterable Enemies
 
 > Door to Nest Nodule (Top); Heals? False
   * Layers: default
   * Power Beam Door to Nest Nodule/Door to Nest Network (Top)
-  * Extra - actor_name: Door005
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door005
+    actor_type: doorpowerpower
   > Door to Nest Nodule (Bottom)
       Trivial
   > Dock to Nest Nodule
@@ -508,8 +630,9 @@ Extra - asset_id: collision_camera_010
 > Door to Amphitheater; Heals? False
   * Layers: default
   * Power Beam Door to Amphitheater/Door to Nest Network
-  * Extra - actor_name: Door007
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door007
+    actor_type: doorpowerpower
   > Pickup (Missile Tank Baby Locked)
       All of the following:
           Defeat Non-Counterable Enemies
@@ -591,14 +714,28 @@ Extra - asset_id: collision_camera_010
 
 ----------------
 Entrance Teleporter
-Extra - total_boundings: {'x1': -7100.0, 'x2': -5200.0, 'y1': -10900.0, 'y2': -5500.0}
-Extra - polygon: [[-7100.0, -5500.0], [-7100.0, -10900.0], [-5200.0, -10900.0], [-5200.0, -5500.0]]
-Extra - asset_id: collision_camera_011
+Extra:
+  total_boundings:
+    x1: -7100.0
+    x2: -5200.0
+    y1: -10900.0
+    y2: -5500.0
+  polygon:
+  - - -7100.0
+    - -5500.0
+  - - -7100.0
+    - -10900.0
+  - - -5200.0
+    - -10900.0
+  - - -5200.0
+    - -5500.0
+  asset_id: collision_camera_011
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 161; Category? Minor
-  * Extra - actor_name: LE_Item_009
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_009
+    actor_type: item_missiletank
   > Door to Nest Vestibule
       All of the following:
           Morph Ball
@@ -626,17 +763,19 @@ Extra - asset_id: collision_camera_011
 > Teleporter; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by After Area 8 - Teleporter Unlocked (Lower))
-  * Extra - actor_name: LE_Platform_Teleporter_10_02
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_Teleporter_10_02
+  Extra:
+    actor_name: LE_Platform_Teleporter_10_02
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_Teleporter_10_02
   > Door to Nest Vestibule
       Trivial
 
 > Door to Nest Vestibule; Heals? False
   * Layers: default
   * Power Beam Door to Nest Vestibule/Door to Entrance Teleporter
-  * Extra - actor_name: Door002
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door002
+    actor_type: doorpowerpower
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
@@ -660,8 +799,9 @@ Extra - asset_id: collision_camera_011
 > Door to Nest Network; Heals? False
   * Layers: default
   * Power Beam Door to Nest Network/Door to Entrance Teleporter
-  * Extra - actor_name: Door003
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door003
+    actor_type: doorpowerpower
   > Tunnel to Nest Network
       All of the following:
           Morph Ball and After Area 8 - Nest Network Grapple Block
@@ -732,30 +872,46 @@ Extra - asset_id: collision_camera_011
 
 ----------------
 Nest Nodule
-Extra - total_boundings: {'x1': 1000.0, 'x2': 2900.0, 'y1': -7100.0, 'y2': -3600.0}
-Extra - polygon: [[1000.0, -3600.0], [1000.0, -7100.0], [2900.0, -7100.0], [2900.0, -3600.0]]
-Extra - asset_id: collision_camera_012
+Extra:
+  total_boundings:
+    x1: 1000.0
+    x2: 2900.0
+    y1: -7100.0
+    y2: -3600.0
+  polygon:
+  - - 1000.0
+    - -3600.0
+  - - 1000.0
+    - -7100.0
+  - - 2900.0
+    - -7100.0
+  - - 2900.0
+    - -3600.0
+  asset_id: collision_camera_012
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 155; Category? Minor
-  * Extra - actor_name: LE_Item_001
-  * Extra - actor_type: item_supermissiletank
+  Extra:
+    actor_name: LE_Item_001
+    actor_type: item_supermissiletank
   > Door to Nest Network (Top)
       Morph Ball
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 162; Category? Minor
-  * Extra - actor_name: LE_Item_010
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_010
+    actor_type: item_missiletank
   > Dock to Nest Network
       Morph Ball
 
 > Door to Nest Network (Bottom); Heals? False
   * Layers: default
   * Power Beam Door to Nest Network/Door to Nest Nodule (Bottom)
-  * Extra - actor_name: Door004
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door004
+    actor_type: doorpowerpower
   > Door to Nest Network (Top)
       All of the following:
           # Deal with the enemies
@@ -769,8 +925,9 @@ Extra - asset_id: collision_camera_012
 > Door to Nest Network (Top); Heals? False
   * Layers: default
   * Power Beam Door to Nest Network/Door to Nest Nodule (Top)
-  * Extra - actor_name: Door005
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door005
+    actor_type: doorpowerpower
   > Pickup (Super Missile Tank)
       All of the following:
           Morph Ball
@@ -797,22 +954,37 @@ Extra - asset_id: collision_camera_012
 
 ----------------
 Metroid Nest Small Shaft
-Extra - total_boundings: {'x1': 4050.0, 'x2': 5950.0, 'y1': 9300.0, 'y2': 12000.0}
-Extra - polygon: [[4050.0, 12000.0], [4050.0, 9300.0], [5950.0, 9300.0], [5950.0, 12000.0]]
-Extra - asset_id: collision_camera_013
+Extra:
+  total_boundings:
+    x1: 4050.0
+    x2: 5950.0
+    y1: 9300.0
+    y2: 12000.0
+  polygon:
+  - - 4050.0
+    - 12000.0
+  - - 4050.0
+    - 9300.0
+  - - 5950.0
+    - 9300.0
+  - - 5950.0
+    - 12000.0
+  asset_id: collision_camera_013
 > Door to Metroid Nest Hallway South; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Hallway South/Door to Metroid Nest Small Shaft
-  * Extra - actor_name: Door011
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door011
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
 > Door to Metroid Nest Shaft East; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Shaft East/Door to Metroid Nest Small Shaft
-  * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door012
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
@@ -824,7 +996,8 @@ Extra - asset_id: collision_camera_013
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Larva_002_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Larva_002_Checkpoint
   > Door to Metroid Nest Hallway South
       After Area 8 - Larva Metroid 2
   > Door to Metroid Nest Shaft East
@@ -834,28 +1007,44 @@ Extra - asset_id: collision_camera_013
 
 ----------------
 Metroid Nest Shaft East
-Extra - total_boundings: {'x1': 5850.0, 'x2': 7500.0, 'y1': 11200.0, 'y2': 16500.0}
-Extra - polygon: [[5850.0, 16500.0], [5850.0, 11200.0], [7500.0, 11200.0], [7500.0, 16500.0]]
-Extra - asset_id: collision_camera_014
+Extra:
+  total_boundings:
+    x1: 5850.0
+    x2: 7500.0
+    y1: 11200.0
+    y2: 16500.0
+  polygon:
+  - - 5850.0
+    - 16500.0
+  - - 5850.0
+    - 11200.0
+  - - 7500.0
+    - 11200.0
+  - - 7500.0
+    - 16500.0
+  asset_id: collision_camera_014
 > Door to Metroid Nest Small Shaft; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Small Shaft/Door to Metroid Nest Shaft East
-  * Extra - actor_name: Door012
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door012
+    actor_type: doorpowerpower
   > Room Bottom
       Trivial
 
 > Door to Metroid Nest Hallway North East; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Hallway North East/Door to Metroid Nest Shaft East
-  * Extra - actor_name: Door013
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door013
+    actor_type: doorpowerpower
   > Room Top
       Trivial
 
 > Room Top; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Larva_003_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Larva_003_Checkpoint
   > Door to Metroid Nest Hallway North East
       After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4
   > Event - Larva Metroid Top
@@ -886,28 +1075,44 @@ Extra - asset_id: collision_camera_014
 
 ----------------
 Metroid Nest Hallway North East
-Extra - total_boundings: {'x1': 50.0, 'x2': 5950.0, 'y1': 15100.0, 'y2': 16400.0}
-Extra - polygon: [[50.0, 16400.0], [50.0, 15100.0], [5950.0, 15100.0], [5950.0, 16400.0]]
-Extra - asset_id: collision_camera_015
+Extra:
+  total_boundings:
+    x1: 50.0
+    x2: 5950.0
+    y1: 15100.0
+    y2: 16400.0
+  polygon:
+  - - 50.0
+    - 16400.0
+  - - 50.0
+    - 15100.0
+  - - 5950.0
+    - 15100.0
+  - - 5950.0
+    - 16400.0
+  asset_id: collision_camera_015
 > Door to Metroid Nest Shaft East; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Shaft East/Door to Metroid Nest Hallway North East
-  * Extra - actor_name: Door013
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door013
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
 > Door to Metroid Nest Recharge Stations; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Recharge Stations/Door to Metroid Nest Hallway North East
-  * Extra - actor_name: Door014
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door014
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Larva_004_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Larva_004_Checkpoint
   > Door to Metroid Nest Shaft East
       After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6
   > Door to Metroid Nest Recharge Stations
@@ -931,22 +1136,37 @@ Extra - asset_id: collision_camera_015
 
 ----------------
 Metroid Nest Hallway North West
-Extra - total_boundings: {'x1': -5350.0, 'x2': -1050.0, 'y1': 15100.0, 'y2': 16400.0}
-Extra - polygon: [[-5350.0, 16400.0], [-5350.0, 15100.0], [-1050.0, 15100.0], [-1050.0, 16400.0]]
-Extra - asset_id: collision_camera_016
+Extra:
+  total_boundings:
+    x1: -5350.0
+    x2: -1050.0
+    y1: 15100.0
+    y2: 16400.0
+  polygon:
+  - - -5350.0
+    - 16400.0
+  - - -5350.0
+    - 15100.0
+  - - -1050.0
+    - 15100.0
+  - - -1050.0
+    - 16400.0
+  asset_id: collision_camera_016
 > Door to Metroid Nest Recharge Stations; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Recharge Stations/Door to Metroid Nest Hallway North West
-  * Extra - actor_name: Door015
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door015
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
 > Door to Metroid Nest Shaft West; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Shaft West/Door to Metroid Nest Hallway North West
-  * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door016
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
@@ -958,7 +1178,8 @@ Extra - asset_id: collision_camera_016
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Larva_005_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Larva_005_Checkpoint
   > Door to Metroid Nest Recharge Stations
       After Area 8 - Larva Metroid 7
   > Door to Metroid Nest Shaft West
@@ -968,13 +1189,27 @@ Extra - asset_id: collision_camera_016
 
 ----------------
 Metroid Nest Recharge Stations
-Extra - total_boundings: {'x1': -1150.0, 'x2': 150.0, 'y1': 15241.5, 'y2': 16000.0}
-Extra - polygon: [[-1150.0, 16000.0], [-1150.0, 15241.5], [150.0, 15241.5], [150.0, 16000.0]]
-Extra - asset_id: collision_camera_017
+Extra:
+  total_boundings:
+    x1: -1150.0
+    x2: 150.0
+    y1: 15241.5
+    y2: 16000.0
+  polygon:
+  - - -1150.0
+    - 16000.0
+  - - -1150.0
+    - 15241.5
+  - - 150.0
+    - 15241.5
+  - - 150.0
+    - 16000.0
+  asset_id: collision_camera_017
 > Ammo Recharge Station; Heals? False
   * Layers: default
-  * Extra - actor_name: LE_Platform_AmmoCharge_002
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_Platform_AmmoCharge_002
+    actor_type: weightactivatedplatform
   > Energy Recharge Station
       Trivial
   > Door to Metroid Nest Hallway North West
@@ -982,8 +1217,9 @@ Extra - asset_id: collision_camera_017
 
 > Energy Recharge Station; Heals? True
   * Layers: default
-  * Extra - actor_name: LE_Platform_EnergyCharge_002
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_Platform_EnergyCharge_002
+    actor_type: weightactivatedplatform
   > Ammo Recharge Station
       Trivial
   > Door to Metroid Nest Hallway North East
@@ -992,45 +1228,63 @@ Extra - asset_id: collision_camera_017
 > Door to Metroid Nest Hallway North East; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Hallway North East/Door to Metroid Nest Recharge Stations
-  * Extra - actor_name: Door014
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door014
+    actor_type: doorpowerpower
   > Energy Recharge Station
       Trivial
 
 > Door to Metroid Nest Hallway North West; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Hallway North West/Door to Metroid Nest Recharge Stations
-  * Extra - actor_name: Door015
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door015
+    actor_type: doorpowerpower
   > Ammo Recharge Station
       Trivial
 
 ----------------
 Metroid Nest Shaft West
-Extra - total_boundings: {'x1': -7100.0, 'x2': -5250.0, 'y1': 12500.0, 'y2': 18500.0}
-Extra - polygon: [[-7100.0, 18500.0], [-7100.0, 12500.0], [-5250.0, 12500.0], [-5250.0, 18500.0]]
-Extra - asset_id: collision_camera_018
+Extra:
+  total_boundings:
+    x1: -7100.0
+    x2: -5250.0
+    y1: 12500.0
+    y2: 18500.0
+  polygon:
+  - - -7100.0
+    - 18500.0
+  - - -7100.0
+    - 12500.0
+  - - -5250.0
+    - 12500.0
+  - - -5250.0
+    - 18500.0
+  asset_id: collision_camera_018
 > Door to Metroid Nest Hallway North West; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Hallway North West/Door to Metroid Nest Shaft West
-  * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door016
+    actor_type: doorpowerpower
   > Room Top
       Trivial
 
 > Door to Queen Arena Access; Heals? False
   * Layers: default
   * Power Beam Door to Queen Arena Access/Door to Metroid Nest Shaft West
-  * Extra - actor_name: Door017
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door017
+    actor_type: doorpowerpower
   > Room Bottom
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 168; Category? Minor
-  * Extra - actor_name: HiddenPowerup002
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: HiddenPowerup002
+    actor_type: item_missiletank
   > Room Bottom
       Trivial
 
@@ -1070,7 +1324,8 @@ Extra - asset_id: collision_camera_018
 
 > Room Bottom; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_Larva_006_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Larva_006_Checkpoint
   > Door to Queen Arena Access
       After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
   > Pickup (Missile Tank)
@@ -1082,14 +1337,28 @@ Extra - asset_id: collision_camera_018
 
 ----------------
 Queen Arena Access
-Extra - total_boundings: {'x1': -5350.0, 'x2': 1200.0, 'y1': 12100.0, 'y2': 13600.0}
-Extra - polygon: [[-5350.0, 13600.0], [-5350.0, 12100.0], [1200.0, 12100.0], [1200.0, 13600.0]]
-Extra - asset_id: collision_camera_019
+Extra:
+  total_boundings:
+    x1: -5350.0
+    x2: 1200.0
+    y1: 12100.0
+    y2: 13600.0
+  polygon:
+  - - -5350.0
+    - 13600.0
+  - - -5350.0
+    - 12100.0
+  - - 1200.0
+    - 12100.0
+  - - 1200.0
+    - 13600.0
+  asset_id: collision_camera_019
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation_004
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation_004
+  Extra:
+    actor_name: LE_Platform_SaveStation_004
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation_004
   > Door to Metroid Nest Shaft West
       Any of the following:
           Lightning Armor or High Jump Boots or Space Jump
@@ -1103,8 +1372,9 @@ Extra - asset_id: collision_camera_019
 > Door to Metroid Nest Shaft West; Heals? False
   * Layers: default
   * Power Beam Door to Metroid Nest Shaft West/Door to Queen Arena Access
-  * Extra - actor_name: Door017
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door017
+    actor_type: doorpowerpower
   > Save Station
       Any of the following:
           Lightning Armor or High Jump Boots or Space Jump or Use Spider Ball
@@ -1124,15 +1394,47 @@ Extra - asset_id: collision_camera_019
 
 ----------------
 Transport to Area 7
-Extra - total_boundings: {'x1': -2100.0, 'x2': 6000.0, 'y1': -18400.0, 'y2': -7600.0}
-Extra - polygon: [[-2100.0, -16700.0], [-2100.0, -18400.0], [2000.0, -18400.0], [2200.0, -17900.0], [5200.0, -17600.0], [6000.0, -17600.0], [6000.0, -7600.0], [2600.0, -7600.0], [2600.0, -9500.0], [2700.0, -9500.0], [3700.0, -9800.0], [3700.0, -16200.0], [3100.0, -16700.0]]
-Extra - asset_id: collision_camera_021
+Extra:
+  total_boundings:
+    x1: -2100.0
+    x2: 6000.0
+    y1: -18400.0
+    y2: -7600.0
+  polygon:
+  - - -2100.0
+    - -16700.0
+  - - -2100.0
+    - -18400.0
+  - - 2000.0
+    - -18400.0
+  - - 2200.0
+    - -17900.0
+  - - 5200.0
+    - -17600.0
+  - - 6000.0
+    - -17600.0
+  - - 6000.0
+    - -7600.0
+  - - 2600.0
+    - -7600.0
+  - - 2600.0
+    - -9500.0
+  - - 2700.0
+    - -9500.0
+  - - 3700.0
+    - -9800.0
+  - - 3700.0
+    - -16200.0
+  - - 3100.0
+    - -16700.0
+  asset_id: collision_camera_021
 > Elevator to Area 7; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Transport to Area 8/Elevator to Area 8
-  * Extra - actor_name: LE_Platform_Elevator_FromArea09
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea09
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea09
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea09
   > Save Station
       All of the following:
           # TODO: can climb with clips w/o screw
@@ -1151,9 +1453,10 @@ Extra - asset_id: collision_camera_021
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation_002
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation_002
+  Extra:
+    actor_name: LE_Platform_SaveStation_002
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation_002
   > Elevator to Area 7
       Any of the following:
           Screw Attack
@@ -1167,16 +1470,30 @@ Extra - asset_id: collision_camera_021
 > Door to Nest Vestibule; Heals? False
   * Layers: default
   * Power Beam Door to Nest Vestibule/Door to Transport to Area 7
-  * Extra - actor_name: Door001
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door001
+    actor_type: doorpowerpower
   > Save Station
       Trivial
 
 ----------------
 Queen Arena
-Extra - total_boundings: {'x1': -2600.0, 'x2': 1600.0, 'y1': 11100.0, 'y2': 12500.0}
-Extra - polygon: [[-2600.0, 11100.0], [1600.0, 11100.0], [1600.0, 12500.0], [-2600.0, 12500.0]]
-Extra - asset_id: collision_camera_020
+Extra:
+  total_boundings:
+    x1: -2600.0
+    x2: 1600.0
+    y1: 11100.0
+    y2: 12500.0
+  polygon:
+  - - -2600.0
+    - 11100.0
+  - - 1600.0
+    - 11100.0
+  - - 1600.0
+    - 12500.0
+  - - -2600.0
+    - 12500.0
+  asset_id: collision_camera_020
 > Dock to Queen Arena Access; Heals? False
   * Layers: default
   * Open Passage to Queen Arena Access/Dock to Queen Arena
@@ -1197,7 +1514,8 @@ Extra - asset_id: collision_camera_020
 
 > Before Queen; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_Queen_001_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Queen_001_Checkpoint
   > Event - Queen Metroid
       All of the following:
           Any of the following:
@@ -1237,9 +1555,22 @@ Extra - asset_id: collision_camera_020
 
 ----------------
 Hatchling Room
-Extra - total_boundings: {'x1': -7000.0, 'x2': -2500.0, 'y1': 11100.0, 'y2': 12200.0}
-Extra - polygon: [[-7000.0, 11100.0], [-2500.0, 11100.0], [-2500.0, 12200.0], [-7000.0, 12200.0]]
-Extra - asset_id: collision_camera_022
+Extra:
+  total_boundings:
+    x1: -7000.0
+    x2: -2500.0
+    y1: 11100.0
+    y2: 12200.0
+  polygon:
+  - - -7000.0
+    - 11100.0
+  - - -2500.0
+    - 11100.0
+  - - -2500.0
+    - 12200.0
+  - - -7000.0
+    - 12200.0
+  asset_id: collision_camera_022
 > Dock to Queen Arena; Heals? False
   * Layers: default
   * Open Passage to Queen Arena/Dock to Hatchling Room
@@ -1255,8 +1586,9 @@ Extra - asset_id: collision_camera_022
 > Pickup (Baby Metroid); Heals? False
   * Layers: default
   * Pickup 171; Category? Major
-  * Extra - actor_name: LE_Baby_Hatchling
-  * Extra - actor_type: ITEM_BABY_HATCHLING
+  Extra:
+    actor_name: LE_Baby_Hatchling
+    actor_type: ITEM_BABY_HATCHLING
   > Room Center
       Trivial
 
@@ -1271,22 +1603,37 @@ Extra - asset_id: collision_camera_022
 
 ----------------
 Nest Vestibule
-Extra - total_boundings: {'x1': -5300.0, 'x2': 2700.0, 'y1': -9700.0, 'y2': -7700.0}
-Extra - polygon: [[-5300.0, -7700.0], [-5300.0, -9700.0], [2700.0, -9700.0], [2700.0, -7700.0]]
-Extra - asset_id: collision_camera_023
+Extra:
+  total_boundings:
+    x1: -5300.0
+    x2: 2700.0
+    y1: -9700.0
+    y2: -7700.0
+  polygon:
+  - - -5300.0
+    - -7700.0
+  - - -5300.0
+    - -9700.0
+  - - 2700.0
+    - -9700.0
+  - - 2700.0
+    - -7700.0
+  asset_id: collision_camera_023
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 159; Category? Major
-  * Extra - actor_name: LE_Item_007
-  * Extra - actor_type: item_energytank
+  Extra:
+    actor_name: LE_Item_007
+    actor_type: item_energytank
   > Below Pickup
       Morph Ball
 
 > Door to Transport to Area 7; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Area 7/Door to Nest Vestibule
-  * Extra - actor_name: Door001
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door001
+    actor_type: doorpowerpower
   > Below Pickup
       # Deal with the Electric Gulluggs
       Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Weak Enemies
@@ -1294,8 +1641,9 @@ Extra - asset_id: collision_camera_023
 > Door to Entrance Teleporter; Heals? False
   * Layers: default
   * Power Beam Door to Entrance Teleporter/Door to Nest Vestibule
-  * Extra - actor_name: Door002
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door002
+    actor_type: doorpowerpower
   > Below Pickup
       Any of the following:
           # Deal with the Black Autrack and Gunzoos
@@ -1324,14 +1672,34 @@ Extra - asset_id: collision_camera_023
 
 ----------------
 Metroid Nest Teleporter
-Extra - total_boundings: {'x1': -5400.0, 'x2': -2500.0, 'y1': 7500.0, 'y2': 11200.0}
-Extra - polygon: [[-5400.0, 11200.0], [-5400.0, 7500.0], [-3600.0, 7500.0], [-3600.0, 10200.0], [-3600.0, 10900.0], [-2500.0, 10900.0], [-2500.0, 11200.0]]
-Extra - asset_id: collision_camera_024
+Extra:
+  total_boundings:
+    x1: -5400.0
+    x2: -2500.0
+    y1: 7500.0
+    y2: 11200.0
+  polygon:
+  - - -5400.0
+    - 11200.0
+  - - -5400.0
+    - 7500.0
+  - - -3600.0
+    - 7500.0
+  - - -3600.0
+    - 10200.0
+  - - -3600.0
+    - 10900.0
+  - - -2500.0
+    - 10900.0
+  - - -2500.0
+    - 11200.0
+  asset_id: collision_camera_024
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation_003
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation_003
+  Extra:
+    actor_name: LE_Platform_SaveStation_003
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation_003
   > Door to Amphitheater
       Trivial
   > Tunnel to Metroid Nest Foyer
@@ -1342,17 +1710,19 @@ Extra - asset_id: collision_camera_024
 > Teleporter; Heals? False
   * Layers: default
   * Teleporter Network (Unlocked by After Area 8 - Teleporter Unlocked (Upper))
-  * Extra - actor_name: LE_Platform_Teleporter_10_01
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_Teleporter_10_01
+  Extra:
+    actor_name: LE_Platform_Teleporter_10_01
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_Teleporter_10_01
   > Door to Amphitheater
       Screw Attack
 
 > Door to Amphitheater; Heals? False
   * Layers: default
   * Power Beam Door to Amphitheater/Door to Metroid Nest Teleporter
-  * Extra - actor_name: Door009
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door009
+    actor_type: doorpowerpower
   > Save Station
       Trivial
   > Teleporter

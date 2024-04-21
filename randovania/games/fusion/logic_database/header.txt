@@ -116,49 +116,56 @@ Dock Weaknesses
 
 > Door
   * Open Hatch
-      Extra - type: Open
+      Extra:
+        type: Open
       Open:
           Trivial
       No lock
 
 
   * Locked Hatch
-      Extra - type: Locked
+      Extra:
+        type: Locked
       Open:
           Impossible
       No lock
 
 
   * L0 Hatch
-      Extra - type: Level0
+      Extra:
+        type: Level0
       Open:
           Level 0 Locks
       No lock
 
 
   * L1 Hatch
-      Extra - type: Level1
+      Extra:
+        type: Level1
       Open:
           Level 1 Locks
       No lock
 
 
   * L2 Hatch
-      Extra - type: Level2
+      Extra:
+        type: Level2
       Open:
           Level 2 Locks
       No lock
 
 
   * L3 Hatch
-      Extra - type: Level3
+      Extra:
+        type: Level3
       Open:
           Level 3 Locks
       No lock
 
 
   * L4 Hatch
-      Extra - type: Level4
+      Extra:
+        type: Level4
       Open:
           Level 4 Locks
       No lock
@@ -183,8 +190,9 @@ Dock Weaknesses
           Open Hatch
 
 
-> Elevator
-* Extra - is_elevator: True
+> ElevatorExtra:
+  is_elevator: true
+
   * Elevator
       Open:
           Trivial
@@ -193,8 +201,9 @@ Dock Weaknesses
   > Dock Rando: Disabled
 
 
-> Area Transition
-* Extra - is_area_transition: True
+> Area TransitionExtra:
+  is_area_transition: true
+
   * Open Passage
       Open:
           Trivial

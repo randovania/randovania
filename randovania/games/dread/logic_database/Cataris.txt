@@ -1,29 +1,50 @@
 ----------------
 Transport to Artaria
-Extra - total_boundings: {'x1': 8400.0, 'x2': 13500.0, 'y1': -7300.0, 'y2': -758.0}
-Extra - polygon: [[13500.0, -758.0], [8400.0, -758.0], [8400.0, -7300.0], [10500.0, -7300.0], [10500.0, -2600.0], [12200.0, -1900.0], [13500.0, -1900.0]]
-Extra - asset_id: collision_camera_000
+Extra:
+  total_boundings:
+    x1: 8400.0
+    x2: 13500.0
+    y1: -7300.0
+    y2: -758.0
+  polygon:
+  - - 13500.0
+    - -758.0
+  - - 8400.0
+    - -758.0
+  - - 8400.0
+    - -7300.0
+  - - 10500.0
+    - -7300.0
+  - - 10500.0
+    - -2600.0
+  - - 12200.0
+    - -1900.0
+  - - 13500.0
+    - -1900.0
+  asset_id: collision_camera_000
 > Door to Artaria Transport Access; Heals? False
   * Layers: default
   * Power Beam Door to Artaria Transport Access/Door to Transport to Artaria
-  * Extra - actor_name: doorpowerpower
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Elevator to Artaria
       Trivial
 
 > Door to Navigation Station Southeast; Heals? False
   * Layers: default
   * Power Beam Door to Navigation Station Southeast/Door to Transport to Artaria
-  * Extra - actor_name: doorpowerpower_002
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_002
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Elevator to Artaria
       Trivial
   > Tunnel to Total Recharge Station South
@@ -36,29 +57,33 @@ Extra - asset_id: collision_camera_000
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 36; Category? Minor
-  * Extra - actor_name: item_missiletank
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to Total Recharge Station South
       Trivial
 
 > Event - Blob from Tunnel; Heals? False
   * Layers: default
   * Event Cataris - Artaria Transport Blob
-  * Extra - actor_name: breakablemag002
-  * Extra - actor_def: actordef:actors/props/breakablemag002/charclasses/breakablemag002.bmsad
+  Extra:
+    actor_name: breakablemag002
+    actor_def: actordef:actors/props/breakablemag002/charclasses/breakablemag002.bmsad
   > Tunnel to Total Recharge Station South
       Trivial
 
 > Elevator to Artaria; Heals? False; Default Node
   * Layers: default
   * Elevator to Transport to Cataris/Elevator to Cataris
-  * Extra - actor_name: LE_Elevator_FromCave
-  * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
-  * Extra - elevator_component: CElevatorUsableComponent
-  * Extra - target_spawn_point: LE_Platform_Elevator_FromMagma
-  * Extra - start_point_actor_name: LE_Platform_Elevator_FromCave
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  * Extra - transporter_name: Cataris - Experiment Z-57
+  Extra:
+    actor_name: LE_Elevator_FromCave
+    actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
+    elevator_component: CElevatorUsableComponent
+    target_spawn_point: LE_Platform_Elevator_FromMagma
+    start_point_actor_name: LE_Platform_Elevator_FromCave
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+    transporter_name: Cataris - Experiment Z-57
   > Door to Artaria Transport Access
       Trivial
   > Door to Navigation Station Southeast
@@ -82,9 +107,22 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Dropdown Pit
-Extra - total_boundings: {'x1': -1700.0, 'x2': 400.0, 'y1': -4700.0, 'y2': -3000.0}
-Extra - polygon: [[400.0, -3000.0], [-1700.0, -3000.0], [-1700.0, -4700.0], [400.0, -4700.0]]
-Extra - asset_id: collision_camera_001
+Extra:
+  total_boundings:
+    x1: -1700.0
+    x2: 400.0
+    y1: -4700.0
+    y2: -3000.0
+  polygon:
+  - - 400.0
+    - -3000.0
+  - - -1700.0
+    - -3000.0
+  - - -1700.0
+    - -4700.0
+  - - 400.0
+    - -4700.0
+  asset_id: collision_camera_001
 > Tunnel to Above Z-57 Fight; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Above Z-57 Fight/Tunnel to Dropdown Pit
@@ -103,18 +141,32 @@ Extra - asset_id: collision_camera_001
 
 ----------------
 Navigation Station Southeast
-Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': -6000.0, 'y2': -4858.0}
-Extra - polygon: [[8500.0, -4858.0], [6400.0, -4858.0], [6400.0, -6000.0], [8500.0, -6000.0]]
-Extra - asset_id: collision_camera_002
+Extra:
+  total_boundings:
+    x1: 6400.0
+    x2: 8500.0
+    y1: -6000.0
+    y2: -4858.0
+  polygon:
+  - - 8500.0
+    - -4858.0
+  - - 6400.0
+    - -4858.0
+  - - 6400.0
+    - -6000.0
+  - - 8500.0
+    - -6000.0
+  asset_id: collision_camera_002
 > Door to Transport to Artaria; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Artaria/Door to Navigation Station Southeast
-  * Extra - actor_name: doorpowerpower_002
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_002
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Thermal Device Room South
       Trivial
   > Save Station
@@ -123,53 +175,71 @@ Extra - asset_id: collision_camera_002
 > Door to Thermal Device Room South; Heals? False
   * Layers: default
   * Power Beam Door to Thermal Device Room South/Door to Navigation Station Southeast
-  * Extra - actor_name: doorpowerpower_003
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_003
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Transport to Artaria
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
-  * Extra - actor_name: accesspoint
-  * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
-  * Extra - start_point_actor_name: accesspoint_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
-  * Extra - hint_id: MAGMA_1
-  * Extra - string_asset_id: 3
+  Extra:
+    actor_name: accesspoint
+    actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
+    start_point_actor_name: accesspoint_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
+    hint_id: MAGMA_1
+    string_asset_id: 3
   > Door to Transport to Artaria
       Trivial
 
 ----------------
 Thermal Device Room South
-Extra - total_boundings: {'x1': 4400.0, 'x2': 6500.0, 'y1': -8400.0, 'y2': -4500.0}
-Extra - polygon: [[6500.0, -4500.0], [4400.0, -4500.0], [4400.0, -8400.0], [6500.0, -8400.0]]
-Extra - asset_id: collision_camera_004
+Extra:
+  total_boundings:
+    x1: 4400.0
+    x2: 6500.0
+    y1: -8400.0
+    y2: -4500.0
+  polygon:
+  - - 6500.0
+    - -4500.0
+  - - 4400.0
+    - -4500.0
+  - - 4400.0
+    - -8400.0
+  - - 6500.0
+    - -8400.0
+  asset_id: collision_camera_004
 > Door to Navigation Station Southeast; Heals? False
   * Layers: default
   * Power Beam Door to Navigation Station Southeast/Door to Thermal Device Room South
-  * Extra - actor_name: doorpowerpower_003
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_003
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Start Point
       Trivial
 
 > Door to Total Recharge Station South (Thermal Device); Heals? False
   * Layers: default
   * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (Thermal Device)
-  * Extra - actor_name: doorpowerpower_004
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_004
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Event - First Thermal Device
       # This is here to ensure the Thermal Door is never a problem
       After Cataris - First Device Blob and Can Slide
@@ -177,41 +247,46 @@ Extra - asset_id: collision_camera_004
 > Dock to Total Recharge Station South; Heals? False
   * Layers: default
   * Open Passage to Total Recharge Station South/Dock to Thermal Device Room South
-  * Extra - actor_name: doorheat_001
-  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorheat_001
+    actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Front of Thermal Door
       Trivial
 
 > Door to Total Recharge Station South (Top); Heals? False
   * Layers: default
   * Power Beam Door to Total Recharge Station South/Door to Thermal Device Room South (Top); Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_019
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_019
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Start Point
       Trivial
 
 > Event - First Thermal Device; Heals? False
   * Layers: default
   * Event Cataris - First Thermal Device
-  * Extra - actor_name: deviceheat
-  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_005
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
+  Extra:
+    actor_name: deviceheat
+    actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
+    start_point_actor_name: weightactivatedplatform_005
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
   > Door to Total Recharge Station South (Thermal Device)
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_CooldownX
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_CooldownX
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station Southeast
       Trivial
   > Door to Total Recharge Station South (Top)
@@ -244,42 +319,58 @@ Extra - asset_id: collision_camera_004
 
 ----------------
 Artaria Transport Access
-Extra - total_boundings: {'x1': 13400.0, 'x2': 16500.0, 'y1': -1900.0, 'y2': 900.0}
-Extra - polygon: [[16500.0, 900.0], [13400.0, 900.0], [13400.0, -1900.0], [16500.0, -1900.0]]
-Extra - asset_id: collision_camera_006
+Extra:
+  total_boundings:
+    x1: 13400.0
+    x2: 16500.0
+    y1: -1900.0
+    y2: 900.0
+  polygon:
+  - - 16500.0
+    - 900.0
+  - - 13400.0
+    - 900.0
+  - - 13400.0
+    - -1900.0
+  - - 16500.0
+    - -1900.0
+  asset_id: collision_camera_006
 > Door to Transport to Artaria; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Artaria/Door to Artaria Transport Access
-  * Extra - actor_name: doorpowerpower
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Lava Button East
       Trivial
 
 > Door to Teleport to Artaria (Blue); Heals? False
   * Layers: default
   * Power Beam Door to Teleport to Artaria (Blue)/Door to Artaria Transport Access
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Lava Button East
       Trivial
 
 > Door to Lava Button East; Heals? False
   * Layers: default
   * Charge Beam Door to Lava Button East/Door to Artaria Transport Access
-  * Extra - actor_name: doorchargecharge_003
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_003
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Transport to Artaria
       Trivial
   > Door to Teleport to Artaria (Blue)
@@ -287,42 +378,58 @@ Extra - asset_id: collision_camera_006
 
 ----------------
 Total Recharge Station South
-Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': -7900.0, 'y2': -5900.0}
-Extra - polygon: [[8500.0, -5900.0], [6400.0, -5900.0], [6400.0, -7900.0], [8500.0, -7900.0]]
-Extra - asset_id: collision_camera_007
+Extra:
+  total_boundings:
+    x1: 6400.0
+    x2: 8500.0
+    y1: -7900.0
+    y2: -5900.0
+  polygon:
+  - - 8500.0
+    - -5900.0
+  - - 6400.0
+    - -5900.0
+  - - 6400.0
+    - -7900.0
+  - - 8500.0
+    - -7900.0
+  asset_id: collision_camera_007
 > Door to Thermal Device Room South (Thermal Device); Heals? False
   * Layers: default
   * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (Thermal Device)
-  * Extra - actor_name: doorpowerpower_004
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_004
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Next to Thermal Door
       Trivial
 
 > Dock to Thermal Device Room South; Heals? False
   * Layers: default
   * Open Passage to Thermal Device Room South/Dock to Total Recharge Station South
-  * Extra - actor_name: doorheat_001
-  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorheat_001
+    actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Next to Thermal Door
       Trivial
 
 > Door to Thermal Device Room South (Top); Heals? False
   * Layers: default
   * Power Beam Door to Thermal Device Room South/Door to Total Recharge Station South (Top); Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_019
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_019
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Event - Blob
       Shoot Diffusion or Wave
   > Tunnel to Transport to Artaria
@@ -331,17 +438,21 @@ Extra - asset_id: collision_camera_007
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - First Device Blob
-  * Extra - actor_name: breakablemag001
-  * Extra - actor_def: actordef:actors/props/breakablemag001/charclasses/breakablemag001.bmsad
+  Extra:
+    actor_name: breakablemag001
+    actor_def: actordef:actors/props/breakablemag001/charclasses/breakablemag001.bmsad
   > Tunnel to Transport to Artaria
       Trivial
 
 > Total Recharge; Heals? True; Default Node
   * Layers: default
-  * Extra - actor_name: totalrechargestation
-  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_total
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  Extra:
+    actor_name: totalrechargestation
+    actor_def:
+      actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+    start_point_actor_name: weightactivatedplatform_total
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
   > Tunnel to Transport to Artaria
       Trivial
 
@@ -368,18 +479,48 @@ Extra - asset_id: collision_camera_007
 
 ----------------
 Above Z-57 Fight
-Extra - total_boundings: {'x1': 300.0, 'x2': 4500.0, 'y1': -8400.0, 'y2': -2100.0}
-Extra - polygon: [[4500.0, -2100.0], [300.0, -2100.0], [300.0, -3400.0], [2300.0, -3700.0], [1300.0, -4100.0], [300.0, -4100.0], [300.0, -5500.0], [1150.0, -5600.0], [1150.0, -7825.0], [1500.0, -7825.0], [2300.0, -8400.0], [4500.0, -8400.0]]
-Extra - asset_id: collision_camera_009
+Extra:
+  total_boundings:
+    x1: 300.0
+    x2: 4500.0
+    y1: -8400.0
+    y2: -2100.0
+  polygon:
+  - - 4500.0
+    - -2100.0
+  - - 300.0
+    - -2100.0
+  - - 300.0
+    - -3400.0
+  - - 2300.0
+    - -3700.0
+  - - 1300.0
+    - -4100.0
+  - - 300.0
+    - -4100.0
+  - - 300.0
+    - -5500.0
+  - - 1150.0
+    - -5600.0
+  - - 1150.0
+    - -7825.0
+  - - 1500.0
+    - -7825.0
+  - - 2300.0
+    - -8400.0
+  - - 4500.0
+    - -8400.0
+  asset_id: collision_camera_009
 > Door to Z-57 Heat Room East; Heals? False
   * Layers: default
   * Charge Beam Door to Z-57 Heat Room East/Door to Above Z-57 Fight
-  * Extra - actor_name: doorchargecharge_007
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_007
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Z-57 Heat Room West (Right)
       Trivial
   > Center Hall
@@ -388,12 +529,13 @@ Extra - asset_id: collision_camera_009
 > Door to Z-57 Heat Room West (Right); Heals? False
   * Layers: default
   * Power Beam Door to Z-57 Heat Room West (Right)/Door to Above Z-57 Fight
-  * Extra - actor_name: doorpowerpower_026
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_026
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Z-57 Heat Room East
       Trivial
   > Event - Blob
@@ -404,16 +546,18 @@ Extra - asset_id: collision_camera_009
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 37; Category? Minor
-  * Extra - actor_name: item_missiletank_008
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_008
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Pickup Corner
       Trivial
 
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - Z-57 Blob
-  * Extra - actor_name: breakablemag003
-  * Extra - actor_def: actordef:actors/props/breakablemag003/charclasses/breakablemag003.bmsad
+  Extra:
+    actor_name: breakablemag003
+    actor_def: actordef:actors/props/breakablemag003/charclasses/breakablemag003.bmsad
   > Door to Z-57 Heat Room West (Right)
       Trivial
 
@@ -514,26 +658,41 @@ Extra - asset_id: collision_camera_009
 > Pickup (Z-57); Heals? False
   * Layers: default
   * Pickup 141; Category? Major
-  * Extra - pickup_type: cutscene
-  * Extra - callback_function: OnExperimentDeath_CUSTOM
-  * Extra - boss_hint_name: Experiment Z-57
+  Extra:
+    pickup_type: cutscene
+    callback_function: OnExperimentDeath_CUSTOM
+    boss_hint_name: Experiment Z-57
   > Z-57 Room
       Trivial
 
 ----------------
 EMMI Zone Exit East
-Extra - total_boundings: {'x1': 4400.0, 'x2': 8500.0, 'y1': -1300.0, 'y2': 1800.0}
-Extra - polygon: [[8500.0, 1800.0], [4400.0, 1800.0], [4400.0, -1300.0], [8500.0, -1300.0]]
-Extra - asset_id: collision_camera_010
+Extra:
+  total_boundings:
+    x1: 4400.0
+    x2: 8500.0
+    y1: -1300.0
+    y2: 1800.0
+  polygon:
+  - - 8500.0
+    - 1800.0
+  - - 4400.0
+    - 1800.0
+  - - 4400.0
+    - -1300.0
+  - - 8500.0
+    - -1300.0
+  asset_id: collision_camera_010
 > Door to EMMI Zone Tower East (Lower); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone Exit East (Power)
-  * Extra - actor_name: doorpowerpower_016
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_016
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Tower East (Upper)
       Trivial
   > Tunnel to EMMI Zone Tower East
@@ -544,20 +703,22 @@ Extra - asset_id: collision_camera_010
 > Dock to Tall Magnet Walls Access; Heals? False
   * Layers: default
   * EMMI Door to Tall Magnet Walls Access/Dock to EMMI Zone Exit East
-  * Extra - actor_name: dooremmy
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Tower East (Upper)
       After Cataris - Hallway Thermal Device
 
 > Door to EMMI Zone Tower East (Upper); Heals? False
   * Layers: default
   * Charge Beam Door to EMMI Zone Tower East/Door to EMMI Zone Exit East (Charge)
-  * Extra - actor_name: doorclosedcharge_001
-  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedcharge_001
+    actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Tower East (Lower)
       Flash Shift or Speed Booster or Movement (Beginner) or Can Slide or Use Spin Boost
   > Dock to Tall Magnet Walls Access
@@ -571,18 +732,32 @@ Extra - asset_id: collision_camera_010
 
 ----------------
 Lava Button East
-Extra - total_boundings: {'x1': 10400.0, 'x2': 13500.0, 'y1': -499.9989929199219, 'y2': 2275.0}
-Extra - polygon: [[13500.0, 2275.0], [10400.0, 2275.0], [10400.0, -499.9989929199219], [13500.0, -499.9989929199219]]
-Extra - asset_id: collision_camera_012
+Extra:
+  total_boundings:
+    x1: 10400.0
+    x2: 13500.0
+    y1: -499.9989929199219
+    y2: 2275.0
+  polygon:
+  - - 13500.0
+    - 2275.0
+  - - 10400.0
+    - 2275.0
+  - - 10400.0
+    - -499.9989929199219
+  - - 13500.0
+    - -499.9989929199219
+  asset_id: collision_camera_012
 > Door to Tall Magnet Walls Access; Heals? False
   * Layers: default
   * Charge Beam Door to Tall Magnet Walls Access/Door to Lava Button East
-  * Extra - actor_name: doorchargecharge_001
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_001
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Above Thermal Door
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
@@ -591,12 +766,13 @@ Extra - asset_id: collision_camera_012
 > Door to Lava Button East Access; Heals? False
   * Layers: default
   * Charge Beam Door to Lava Button East Access/Door to Lava Button East (Charge)
-  * Extra - actor_name: doorchargecharge_002
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_002
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Above Thermal Door
       Any of the following:
           Varia Suit or After Cataris - Move Magnet Walls Button
@@ -605,12 +781,13 @@ Extra - asset_id: collision_camera_012
 > Door to Artaria Transport Access; Heals? False
   * Layers: default
   * Charge Beam Door to Artaria Transport Access/Door to Lava Button East
-  * Extra - actor_name: doorchargecharge_003
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_003
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Below Thermal Door
       All of the following:
           Morph Ball
@@ -623,24 +800,27 @@ Extra - asset_id: collision_camera_012
 > Dock to Lava Button East Access; Heals? False
   * Layers: default
   * Open Passage to Lava Button East Access/Door to Lava Button East (Cloak)
-  * Extra - actor_name: doorframepresence_001
-  * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorframepresence_001
+    actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Event - Activate Magnet Walls Button
       Can Slide
 
 > Start Point 1; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: shootactivatormag01_000
-  * Extra - start_point_actor_def: actordef:actors/props/shootactivatormag01/charclasses/shootactivatormag01.bmsad
+  Extra:
+    start_point_actor_name: shootactivatormag01_000
+    start_point_actor_def: actordef:actors/props/shootactivatormag01/charclasses/shootactivatormag01.bmsad
 
 > Start Point 2; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_PistonRight
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_PistonRight
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Lava Button East Access
       Can Slide
 
@@ -692,38 +872,54 @@ Extra - asset_id: collision_camera_012
 
 ----------------
 Tall Magnet Walls Access
-Extra - total_boundings: {'x1': 8400.0, 'x2': 10500.0, 'y1': 700.0, 'y2': 2800.0}
-Extra - polygon: [[10500.0, 2800.0], [8400.0, 2800.0], [8400.0, 700.0], [10500.0, 700.0]]
-Extra - asset_id: collision_camera_013
+Extra:
+  total_boundings:
+    x1: 8400.0
+    x2: 10500.0
+    y1: 700.0
+    y2: 2800.0
+  polygon:
+  - - 10500.0
+    - 2800.0
+  - - 8400.0
+    - 2800.0
+  - - 8400.0
+    - 700.0
+  - - 10500.0
+    - 700.0
+  asset_id: collision_camera_013
 > Dock to EMMI Zone Exit East; Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit East/Dock to Tall Magnet Walls Access
-  * Extra - actor_name: dooremmy
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Lava Button East
       Trivial
 
 > Door to Moving Magnet Walls (Tall); Heals? False
   * Layers: default
   * Power Beam Door to Moving Magnet Walls (Tall)/Door to Tall Magnet Walls Access
-  * Extra - actor_name: doorpowerpower_022
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_022
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Lava Button East
       Trivial
 
 > Door to Lava Button East; Heals? False
   * Layers: default
   * Charge Beam Door to Lava Button East/Door to Tall Magnet Walls Access
-  * Extra - actor_name: doorchargecharge_001
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_001
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exit East
       Trivial
   > Door to Moving Magnet Walls (Tall)
@@ -731,18 +927,32 @@ Extra - asset_id: collision_camera_013
 
 ----------------
 Moving Magnet Walls (Tall)
-Extra - total_boundings: {'x1': 10400.0, 'x2': 13500.0, 'y1': 2225.0, 'y2': 6300.0}
-Extra - polygon: [[13500.0, 6300.0], [10400.0, 6300.0], [10400.0, 2225.0], [13500.0, 2225.0]]
-Extra - asset_id: collision_camera_014
+Extra:
+  total_boundings:
+    x1: 10400.0
+    x2: 13500.0
+    y1: 2225.0
+    y2: 6300.0
+  polygon:
+  - - 13500.0
+    - 6300.0
+  - - 10400.0
+    - 6300.0
+  - - 10400.0
+    - 2225.0
+  - - 13500.0
+    - 2225.0
+  asset_id: collision_camera_014
 > Door to Tall Magnet Walls Access; Heals? False
   * Layers: default
   * Power Beam Door to Tall Magnet Walls Access/Door to Moving Magnet Walls (Tall)
-  * Extra - actor_name: doorpowerpower_022
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_022
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Lava Button East Access
       Trivial
   > Door to Energy Recharge Station
@@ -764,12 +974,13 @@ Extra - asset_id: collision_camera_014
 > Door to Lava Button East Access; Heals? False
   * Layers: default
   * Power Beam Door to Lava Button East Access/Door to Moving Magnet Walls (Tall)
-  * Extra - actor_name: doorpowerpower_023
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_023
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Tall Magnet Walls Access
       Trivial
   > Door to Teleport to Artaria (Blue)
@@ -785,12 +996,13 @@ Extra - asset_id: collision_camera_014
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
   * Charge Beam Door to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Charge)
-  * Extra - actor_name: doorclosedcharge_002
-  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedcharge_002
+    actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Tall Magnet Walls Access
       Trivial
   > Dock to Energy Recharge Station
@@ -799,24 +1011,26 @@ Extra - asset_id: collision_camera_014
 > Dock to Energy Recharge Station; Heals? False
   * Layers: default
   * Open Passage to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Cloak)
-  * Extra - actor_name: doorpresenceframe_000
-  * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpresenceframe_000
+    actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Energy Recharge Station
       Trivial
 
 > Door to Teleport to Artaria (Blue); Heals? False
   * Layers: default
   * Grapple Beam Door to Teleport to Artaria (Blue)/Door to Moving Magnet Walls (Tall)
-  * Extra - actor_name: doorgrapplegrapple_000
-  * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorgrapplegrapple_000
+    actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Lava Button East Access
       Trivial
   > Door to Energy Recharge Station
@@ -834,18 +1048,40 @@ player to reload the room to see.
 
 ----------------
 Teleport to Artaria (Blue)
-Extra - total_boundings: {'x1': 13400.0, 'x2': 19600.0, 'y1': -1200.0, 'y2': 8400.0}
-Extra - polygon: [[19600.0, 8400.0], [13400.0, 8400.0], [13400.0, 3000.0], [15400.0, 3000.0], [15400.0, 1300.0], [16400.0, 1300.0], [16400.0, -1200.0], [19600.0, -1200.0]]
-Extra - asset_id: collision_camera_015
+Extra:
+  total_boundings:
+    x1: 13400.0
+    x2: 19600.0
+    y1: -1200.0
+    y2: 8400.0
+  polygon:
+  - - 19600.0
+    - 8400.0
+  - - 13400.0
+    - 8400.0
+  - - 13400.0
+    - 3000.0
+  - - 15400.0
+    - 3000.0
+  - - 15400.0
+    - 1300.0
+  - - 16400.0
+    - 1300.0
+  - - 16400.0
+    - -1200.0
+  - - 19600.0
+    - -1200.0
+  asset_id: collision_camera_015
 > Door to Artaria Transport Access; Heals? False
   * Layers: default
   * Power Beam Door to Artaria Transport Access/Door to Teleport to Artaria (Blue)
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Lava Room
       Gravity Suit and Can Slide
   > Event - East Blob, left
@@ -859,8 +1095,9 @@ Extra - asset_id: collision_camera_015
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 45; Category? Minor
-  * Extra - actor_name: item_missiletank_009
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_009
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Top Platform
       All of the following:
           Any of the following:
@@ -882,8 +1119,9 @@ Extra - asset_id: collision_camera_015
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 48; Category? Minor
-  * Extra - actor_name: item_powerbombtank_000
-  * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  Extra:
+    actor_name: item_powerbombtank_000
+    actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Door to Moving Magnet Walls (Tall)
       All of the following:
           Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
@@ -894,12 +1132,13 @@ Extra - asset_id: collision_camera_015
 > Door to Moving Magnet Walls (Tall); Heals? False
   * Layers: default
   * Grapple Beam Door to Moving Magnet Walls (Tall)/Door to Teleport to Artaria (Blue)
-  * Extra - actor_name: doorgrapplegrapple_000
-  * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorgrapplegrapple_000
+    actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Pickup (Power Bomb Tank)
       All of the following:
           Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
@@ -916,28 +1155,32 @@ Extra - asset_id: collision_camera_015
 > Event - East Blob, below; Heals? False
   * Layers: default
   * Event Cataris - Blue Teleport Blob
-  * Extra - actor_name: breakablemag012
-  * Extra - actor_def: actordef:actors/props/breakablemag012/charclasses/breakablemag012.bmsad
+  Extra:
+    actor_name: breakablemag012
+    actor_def: actordef:actors/props/breakablemag012/charclasses/breakablemag012.bmsad
   > Teleporter to Artaria
       Trivial
 
 > Event - West Blob; Heals? False
   * Layers: default
   * Event Cataris - Lava Button East Blob
-  * Extra - actor_name: db_dside_mg_004
-  * Extra - actor_def: actordef:actors/props/db_dside_mg_003/charclasses/db_dside_mg_003.bmsad
+  Extra:
+    actor_name: db_dside_mg_004
+    actor_def: actordef:actors/props/db_dside_mg_003/charclasses/db_dside_mg_003.bmsad
   > Center Room
       Trivial
 
 > Teleporter to Artaria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Screw Attack Room/Teleporter to Cataris
-  * Extra - actor_name: teleporter_cave_000
-  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
-  * Extra - elevator_component: CTeleporterUsableComponent
-  * Extra - target_spawn_point: teleporter_magma_000_platform
-  * Extra - start_point_actor_name: teleporter_cave_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  Extra:
+    actor_name: teleporter_cave_000
+    actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+    elevator_component: CTeleporterUsableComponent
+    target_spawn_point: teleporter_magma_000_platform
+    start_point_actor_name: teleporter_cave_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Event - East Blob, below
       Lay Small Bomb or Shoot Beam
   > Lava Room
@@ -1100,18 +1343,32 @@ Extra - asset_id: collision_camera_015
 
 ----------------
 Total Recharge Station North
-Extra - total_boundings: {'x1': 8400.0, 'x2': 10500.0, 'y1': 6500.0, 'y2': 8500.0}
-Extra - polygon: [[10500.0, 8500.0], [8400.0, 8500.0], [8400.0, 6500.0], [10500.0, 6500.0]]
-Extra - asset_id: collision_camera_016
+Extra:
+  total_boundings:
+    x1: 8400.0
+    x2: 10500.0
+    y1: 6500.0
+    y2: 8500.0
+  polygon:
+  - - 10500.0
+    - 8500.0
+  - - 8400.0
+    - 8500.0
+  - - 8400.0
+    - 6500.0
+  - - 10500.0
+    - 6500.0
+  asset_id: collision_camera_016
 > Door to Thermal Device Room North; Heals? False
   * Layers: default
   * Power Beam Door to Thermal Device Room North/Door to Total Recharge Station North
-  * Extra - actor_name: doorpowerpower_020
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_020
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Double Obsydomithon Room
       After Cataris - Obsydomithon Blob
   > Total Recharge
@@ -1120,38 +1377,56 @@ Extra - asset_id: collision_camera_016
 > Door to Double Obsydomithon Room; Heals? False
   * Layers: default
   * Power Beam Door to Double Obsydomithon Room/Door to Total Recharge Station North; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_025
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_001
-  * Extra - left_shield_def: actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_025
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_001
+    left_shield_def: actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Thermal Device Room North
       After Cataris - Obsydomithon Blob
 
 > Total Recharge; Heals? True; Default Node
   * Layers: default
-  * Extra - actor_name: totalrechargestation_000
-  * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_total_000
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  Extra:
+    actor_name: totalrechargestation_000
+    actor_def:
+      actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
+    start_point_actor_name: weightactivatedplatform_total_000
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
   > Door to Thermal Device Room North
       Trivial
 
 ----------------
 Energy Recharge Station
-Extra - total_boundings: {'x1': 8400.0, 'x2': 10500.0, 'y1': 2800.0, 'y2': 6100.0}
-Extra - polygon: [[10500.0, 6100.0], [8400.0, 6100.0], [8400.0, 2800.0], [10500.0, 2800.0]]
-Extra - asset_id: collision_camera_018
+Extra:
+  total_boundings:
+    x1: 8400.0
+    x2: 10500.0
+    y1: 2800.0
+    y2: 6100.0
+  polygon:
+  - - 10500.0
+    - 6100.0
+  - - 8400.0
+    - 6100.0
+  - - 8400.0
+    - 2800.0
+  - - 10500.0
+    - 2800.0
+  asset_id: collision_camera_018
 > Door to Save Station East; Heals? False
   * Layers: default
   * Power Beam Door to Save Station East/Door to Energy Recharge Station
-  * Extra - actor_name: doorpowerpower_018
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_018
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Moving Magnet Walls (Tall) (Charge)
       Trivial
   > Life Recharge
@@ -1160,24 +1435,26 @@ Extra - asset_id: collision_camera_018
 > Door to Thermal Device Room North; Heals? False
   * Layers: default
   * Charge Beam Door to Thermal Device Room North/Door to Energy Recharge Station
-  * Extra - actor_name: doorchargecharge
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Moving Magnet Walls (Tall) (Charge)
       Trivial
 
 > Door to Moving Magnet Walls (Tall) (Charge); Heals? False
   * Layers: default
   * Access Locked to Moving Magnet Walls (Tall)/Door to Energy Recharge Station
-  * Extra - actor_name: doorclosedcharge_002
-  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedcharge_002
+    actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Save Station East
       Trivial
   > Door to Thermal Device Room North
@@ -1191,21 +1468,24 @@ Extra - asset_id: collision_camera_018
 > Door to Moving Magnet Walls (Tall) (Cloak); Heals? False
   * Layers: default
   * Sensor Lock Door to Moving Magnet Walls (Tall)/Dock to Energy Recharge Station
-  * Extra - actor_name: doorpresenceframe_000
-  * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpresenceframe_000
+    actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Thermal Device Room North
       Trivial
 
 > Life Recharge; Heals? True; Default Node
   * Layers: default
-  * Extra - actor_name: energyrecharge
-  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_002
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
+  Extra:
+    actor_name: energyrecharge
+    actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
+    start_point_actor_name: weightactivatedplatform_002
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Door to Save Station East
       Trivial
 
@@ -1217,42 +1497,60 @@ Extra - asset_id: collision_camera_018
 
 ----------------
 Z-57 Heat Room West (Left)
-Extra - total_boundings: {'x1': -4700.0, 'x2': -1600.0, 'y1': -3700.0, 'y2': -1700.0}
-Extra - polygon: [[-1600.0, -1700.0], [-4700.0, -1700.0], [-4700.0, -3700.0], [-1600.0, -3700.0]]
-Extra - asset_id: collision_camera_019
+Extra:
+  total_boundings:
+    x1: -4700.0
+    x2: -1600.0
+    y1: -3700.0
+    y2: -1700.0
+  polygon:
+  - - -1600.0
+    - -1700.0
+  - - -4700.0
+    - -1700.0
+  - - -4700.0
+    - -3700.0
+  - - -1600.0
+    - -3700.0
+  asset_id: collision_camera_019
 > Door to Green EMMI Introduction Access; Heals? False
   * Layers: default
   * Power Beam Door to Green EMMI Introduction Access/Door to Z-57 Heat Room West (Left); Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_027
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002
-  * Extra - left_shield_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
-  * Extra - right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
+  Extra:
+    actor_name: doorpowerpower_027
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002
+    left_shield_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
+    right_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
+    right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
   > Top Ledge
       After Cataris - Green EMMI Access Blob
 
 > Event - First Tunnel Blob, in Tunnel; Heals? False
   * Layers: default
   * Event Cataris - Z-57 First Tunnel Blob
-  * Extra - actor_name: breakablemag004
-  * Extra - actor_def: actordef:actors/props/breakablemag004/charclasses/breakablemag004.bmsad
+  Extra:
+    actor_name: breakablemag004
+    actor_def: actordef:actors/props/breakablemag004/charclasses/breakablemag004.bmsad
   > Tiny Alcove
       Trivial
 
 > Event - Second Tunnel Blob; Heals? False
   * Layers: default
   * Event Cataris - Z-57 Second Tunnel Blob
-  * Extra - actor_name: breakablemag014
-  * Extra - actor_def: actordef:actors/props/breakablemag014/charclasses/breakablemag014.bmsad
+  Extra:
+    actor_name: breakablemag014
+    actor_def: actordef:actors/props/breakablemag014/charclasses/breakablemag014.bmsad
   > Tiny Alcove
       Trivial
 
 > Event - Open Passage Blob; Heals? False
   * Layers: default
   * Event Cataris - Z-57 Open Passage Blob
-  * Extra - actor_name: breakablemag013
-  * Extra - actor_def: actordef:actors/props/breakablemag013/charclasses/breakablemag013.bmsad
+  Extra:
+    actor_name: breakablemag013
+    actor_def: actordef:actors/props/breakablemag013/charclasses/breakablemag013.bmsad
   > Right Platform
       Trivial
 
@@ -1365,14 +1663,28 @@ Extra - asset_id: collision_camera_019
 
 ----------------
 Green EMMI Introduction
-Extra - total_boundings: {'x1': -4700.0, 'x2': -600.0, 'y1': -1300.0, 'y2': 2000.0}
-Extra - polygon: [[-600.0, 2000.0], [-4700.0, 2000.0], [-4700.0, -1300.0], [-600.0, -1300.0]]
-Extra - asset_id: collision_camera_020
+Extra:
+  total_boundings:
+    x1: -4700.0
+    x2: -600.0
+    y1: -1300.0
+    y2: 2000.0
+  polygon:
+  - - -600.0
+    - 2000.0
+  - - -4700.0
+    - 2000.0
+  - - -4700.0
+    - -1300.0
+  - - -600.0
+    - -1300.0
+  asset_id: collision_camera_020
 > Dock to Green EMMI Introduction Access; Heals? False
   * Layers: default
   * EMMI Door to Green EMMI Introduction Access/Dock to Green EMMI Introduction
-  * Extra - actor_name: dooremmy_003
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_003
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone East Tower Access (Lower)
       Trivial
   > Event - Blob
@@ -1389,24 +1701,26 @@ Extra - asset_id: collision_camera_020
 > Door to EMMI Zone East Tower Access (Lower); Heals? False
   * Layers: default
   * Charge Beam Door to EMMI Zone East Tower Access/Door to Green EMMI Introduction
-  * Extra - actor_name: doorchargecharge_005
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_005
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Green EMMI Introduction Access
       Trivial
 
 > Door to EMMI Zone West Exit Path; Heals? False
   * Layers: default
   * Sensor Lock Door to EMMI Zone West Exit Path/Dock to Green EMMI Introduction
-  * Extra - actor_name: doorframepresence
-  * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorframepresence
+    actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone East Tower Access (Upper)
       Can Slide
   > Tunnel to EMMI Zone Item Tunnel
@@ -1426,20 +1740,22 @@ Extra - asset_id: collision_camera_020
 > Door to EMMI Zone East Tower Access (Upper); Heals? False
   * Layers: default
   * Phase Shift Door to EMMI Zone East Tower Access/Dock to Green EMMI Introduction
-  * Extra - actor_name: doorshutter_001
-  * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorshutter_001
+    actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone West Exit Path
       Can Slide
 
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - Green EMMI Blob
-  * Extra - actor_name: breakablemag005
-  * Extra - actor_def: actordef:actors/props/breakablemag005/charclasses/breakablemag005.bmsad
+  Extra:
+    actor_name: breakablemag005
+    actor_def: actordef:actors/props/breakablemag005/charclasses/breakablemag005.bmsad
   > Center Alcove
       Trivial
 
@@ -1479,18 +1795,32 @@ Extra - asset_id: collision_camera_020
 
 ----------------
 Z-57 Heat Room West (Right)
-Extra - total_boundings: {'x1': -1700.0, 'x2': 400.0, 'y1': -3100.0, 'y2': -1700.0}
-Extra - polygon: [[400.0, -1700.0], [-1700.0, -1700.0], [-1700.0, -3100.0], [400.0, -3100.0]]
-Extra - asset_id: collision_camera_021
+Extra:
+  total_boundings:
+    x1: -1700.0
+    x2: 400.0
+    y1: -3100.0
+    y2: -1700.0
+  polygon:
+  - - 400.0
+    - -1700.0
+  - - -1700.0
+    - -1700.0
+  - - -1700.0
+    - -3100.0
+  - - 400.0
+    - -3100.0
+  asset_id: collision_camera_021
 > Door to Above Z-57 Fight; Heals? False
   * Layers: default
   * Power Beam Door to Above Z-57 Fight/Door to Z-57 Heat Room West (Right)
-  * Extra - actor_name: doorpowerpower_026
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_026
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Z-57 Heat Room West (Left)
       All of the following:
           After Cataris - Z-57 Open Passage Blob
@@ -1503,8 +1833,9 @@ Extra - asset_id: collision_camera_021
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 38; Category? Minor
-  * Extra - actor_name: item_missiletank_001
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_001
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to Z-57 Heat Room West (Left)
       Morph Ball
 
@@ -1532,26 +1863,41 @@ Extra - asset_id: collision_camera_021
 
 ----------------
 EMMI Zone Exit to Map Station
-Extra - total_boundings: {'x1': -4700.0, 'x2': -2600.0, 'y1': 2000.0, 'y2': 3600.0}
-Extra - polygon: [[-2600.0, 3600.0], [-4700.0, 3600.0], [-4700.0, 2000.0], [-2600.0, 2000.0]]
-Extra - asset_id: collision_camera_022
+Extra:
+  total_boundings:
+    x1: -4700.0
+    x2: -2600.0
+    y1: 2000.0
+    y2: 3600.0
+  polygon:
+  - - -2600.0
+    - 3600.0
+  - - -4700.0
+    - 3600.0
+  - - -4700.0
+    - 2000.0
+  - - -2600.0
+    - 2000.0
+  asset_id: collision_camera_022
 > Door to EMMI Zone Item Tunnel; Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Item Tunnel/Door to EMMI Zone Exit to Map Station; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_013
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_013
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Map Station
       Trivial
 
 > Dock to Map Station; Heals? False
   * Layers: default
   * EMMI Door to Map Station/Dock to EMMI Zone Exit to Map Station
-  * Extra - actor_name: dooremmy_004
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_004
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Item Tunnel
       Trivial
   > Tunnel to EMMI Zone Tower West
@@ -1567,22 +1913,41 @@ Extra - asset_id: collision_camera_022
 
 ----------------
 Long Mouth Statue Room
-Extra - total_boundings: {'x1': -14500.0, 'x2': -10400.0, 'y1': -1000.0, 'y2': 3100.0}
-Extra - polygon: [[-10400.0, 3100.0], [-12500.0, 3100.0], [-12500.0, 1100.0], [-14500.0, 1100.0], [-14500.0, -1000.0], [-10400.0, -1000.0]]
-Extra - asset_id: collision_camera_023
+Extra:
+  total_boundings:
+    x1: -14500.0
+    x2: -10400.0
+    y1: -1000.0
+    y2: 3100.0
+  polygon:
+  - - -10400.0
+    - 3100.0
+  - - -12500.0
+    - 3100.0
+  - - -12500.0
+    - 1100.0
+  - - -14500.0
+    - 1100.0
+  - - -14500.0
+    - -1000.0
+  - - -10400.0
+    - -1000.0
+  asset_id: collision_camera_023
 > Dock to EMMI Zone Exits West (Upper); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exits West/Dock to Long Mouth Statue Room (Upper)
-  * Extra - actor_name: dooremmy_008
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_008
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to EMMI Zone Exits West (Lower)
       Morph Ball
 
 > Dock to EMMI Zone Exits West (Lower); Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exits West/Dock to Long Mouth Statue Room (Lower)
-  * Extra - actor_name: dooremmy_009
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_009
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Path to Kraid Entryway
       Morph Ball
   > Door to West Teleport Access
@@ -1591,12 +1956,13 @@ Extra - asset_id: collision_camera_023
 > Door to Path to Kraid Entryway; Heals? False
   * Layers: default
   * Power Beam Door to Path to Kraid Entryway/Door to Long Mouth Statue Room
-  * Extra - actor_name: doorpowerpower_029
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_029
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exits West (Lower)
       All of the following:
           Morph Ball
@@ -1611,29 +1977,33 @@ Extra - asset_id: collision_camera_023
 > Door to West Teleport Access; Heals? False
   * Layers: default
   * Power Beam Door to West Teleport Access/Door to Long Mouth Statue Room
-  * Extra - actor_name: doorpowerpower_028
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_028
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exits West (Lower)
       Trivial
 
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - Path to Kraid Blob
-  * Extra - actor_name: db_reg_mg_017
-  * Extra - actor_def: actordef:actors/props/db_reg_mg_016/charclasses/db_reg_mg_016.bmsad
+  Extra:
+    actor_name: db_reg_mg_017
+    actor_def: actordef:actors/props/db_reg_mg_016/charclasses/db_reg_mg_016.bmsad
   > Door to Path to Kraid Entryway
       Trivial
 
 > Ammo Recharge; Heals? False; Default Node
   * Layers: default
-  * Extra - actor_name: ammorecharge_000
-  * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_000
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+  Extra:
+    actor_name: ammorecharge_000
+    actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
+    start_point_actor_name: weightactivatedplatform_000
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
   > Door to Path to Kraid Entryway
       Trivial
 
@@ -1645,18 +2015,36 @@ Extra - asset_id: collision_camera_023
 
 ----------------
 Above Kraid
-Extra - total_boundings: {'x1': -18500.0, 'x2': -12400.0, 'y1': -4173.759765625, 'y2': -1300.0}
-Extra - polygon: [[-14400.0, -2300.0], [-14400.0, -1300.0], [-18500.0, -1300.0], [-18500.0, -4173.759765625], [-12400.0, -4173.759765625], [-12400.0, -2300.0]]
-Extra - asset_id: collision_camera_024
+Extra:
+  total_boundings:
+    x1: -18500.0
+    x2: -12400.0
+    y1: -4173.759765625
+    y2: -1300.0
+  polygon:
+  - - -14400.0
+    - -2300.0
+  - - -14400.0
+    - -1300.0
+  - - -18500.0
+    - -1300.0
+  - - -18500.0
+    - -4173.759765625
+  - - -12400.0
+    - -4173.759765625
+  - - -12400.0
+    - -2300.0
+  asset_id: collision_camera_024
 > Door to Kraid Eyedoor Room; Heals? False
   * Layers: default
   * Power Beam Door to Kraid Eyedoor Room/Door to Above Kraid; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_012
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_012
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Event - Blob above Kraid, below
       Lay Small Bomb or Shoot Beam
   > Dock to Kraid Arena
@@ -1675,16 +2063,18 @@ Extra - asset_id: collision_camera_024
 > Event - Ceiling Blob; Heals? False
   * Layers: default
   * Event Cataris - Above Kraid Ceiling Blob
-  * Extra - actor_name: breakablemag010
-  * Extra - actor_def: actordef:actors/props/breakablemag010/charclasses/breakablemag010.bmsad
+  Extra:
+    actor_name: breakablemag010
+    actor_def: actordef:actors/props/breakablemag010/charclasses/breakablemag010.bmsad
   > Center Room
       Trivial
 
 > Event - Blob above Kraid, below; Heals? False
   * Layers: default
   * Event Cataris - Blob above Kraid
-  * Extra - actor_name: db_reg_mg_019
-  * Extra - actor_def: actordef:actors/props/db_reg_mg_018/charclasses/db_reg_mg_018.bmsad
+  Extra:
+    actor_name: db_reg_mg_019
+    actor_def: actordef:actors/props/db_reg_mg_018/charclasses/db_reg_mg_018.bmsad
   > Door to Kraid Eyedoor Room
       Trivial
 
@@ -1785,18 +2175,38 @@ Extra - asset_id: collision_camera_024
 
 ----------------
 Teleport to Artaria (Red)
-Extra - total_boundings: {'x1': -18500.0, 'x2': -14400.0, 'y1': -700.0009765625, 'y2': 5800.0}
-Extra - polygon: [[-14400.0, 5800.0], [-18500.0, 5800.0], [-18500.0, -700.0009765625], [-16400.0, -700.0009765625], [-16400.0, 4300.0], [-16100.0, 4600.0], [-14400.0, 4600.0]]
-Extra - asset_id: collision_camera_025
+Extra:
+  total_boundings:
+    x1: -18500.0
+    x2: -14400.0
+    y1: -700.0009765625
+    y2: 5800.0
+  polygon:
+  - - -14400.0
+    - 5800.0
+  - - -18500.0
+    - 5800.0
+  - - -18500.0
+    - -700.0009765625
+  - - -16400.0
+    - -700.0009765625
+  - - -16400.0
+    - 4300.0
+  - - -16100.0
+    - 4600.0
+  - - -14400.0
+    - 4600.0
+  asset_id: collision_camera_025
 > Door to Path to Kraid Entryway; Heals? False
   * Layers: default
   * Access Open to Path to Kraid Entryway/Door to Teleport to Artaria (Red)
-  * Extra - actor_name: doorframe
-  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorframe
+    actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Save Station West
       Trivial
   > Pickup (Missile+ Tank)
@@ -1807,12 +2217,13 @@ Extra - asset_id: collision_camera_025
 > Door to West Teleport Access; Heals? False
   * Layers: default
   * Power Beam Door to West Teleport Access/Door to Teleport to Artaria (Red)
-  * Extra - actor_name: doorpowerpower_008
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_008
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Navigation Station Northwest
       Any of the following:
           Spider Magnet or Space Jump
@@ -1833,32 +2244,36 @@ Extra - asset_id: collision_camera_025
 > Door to Navigation Station Northwest; Heals? False
   * Layers: default
   * Power Beam Door to Navigation Station Northwest/Door to Teleport to Artaria (Red)
-  * Extra - actor_name: doorpowerpower_009
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_009
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to West Teleport Access
       Trivial
 
 > Door to Save Station West; Heals? False
   * Layers: default
   * Power Beam Door to Save Station West/Door to Teleport to Artaria (Red); Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_007
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_007
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Path to Kraid Entryway
       Trivial
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
   * Pickup 50; Category? Major
-  * Extra - actor_name: item_missiletankplus_000
-  * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
+  Extra:
+    actor_name: item_missiletankplus_000
+    actor_def:
+      actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Door to Path to Kraid Entryway
       Morph Ball
   > Teleporter to Artaria
@@ -1867,20 +2282,23 @@ Extra - asset_id: collision_camera_025
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - Ghavoran Teleport Lower Blob
-  * Extra - actor_name: db_dside_mg_002b_000
-  * Extra - actor_def: actordef:actors/props/db_dside_mg_002b/charclasses/db_dside_mg_002b.bmsad
+  Extra:
+    actor_name: db_dside_mg_002b_000
+    actor_def: actordef:actors/props/db_dside_mg_002b/charclasses/db_dside_mg_002b.bmsad
   > Door to West Teleport Access
       Trivial
 
 > Teleporter to Artaria; Heals? False; Default Node
   * Layers: default
   * Teleporter to Teleport to Cataris/Teleporter to Cataris
-  * Extra - actor_name: LE_Teleport_FromCave
-  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
-  * Extra - elevator_component: CTeleporterUsableComponent
-  * Extra - target_spawn_point: LE_Platform_Teleport_FromMagma
-  * Extra - start_point_actor_name: LE_Platform_Teleport_FromCave
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  Extra:
+    actor_name: LE_Teleport_FromCave
+    actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+    elevator_component: CTeleporterUsableComponent
+    target_spawn_point: LE_Platform_Teleport_FromMagma
+    start_point_actor_name: LE_Platform_Teleport_FromCave
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Door to West Teleport Access
       Lay Any Bomb
   > Door to Save Station West
@@ -1896,14 +2314,30 @@ Extra - asset_id: collision_camera_025
 
 ----------------
 Teleport to Ghavoran
-Extra - total_boundings: {'x1': -16500.0, 'x2': -12400.0, 'y1': 1200.0, 'y2': 4700.0}
-Extra - polygon: [[-12400.0, 4700.0], [-16000.0, 4700.0], [-16500.0, 4100.0], [-16500.0, 1200.0], [-12400.0, 1200.0]]
-Extra - asset_id: collision_camera_026
+Extra:
+  total_boundings:
+    x1: -16500.0
+    x2: -12400.0
+    y1: 1200.0
+    y2: 4700.0
+  polygon:
+  - - -12400.0
+    - 4700.0
+  - - -16000.0
+    - 4700.0
+  - - -16500.0
+    - 4100.0
+  - - -16500.0
+    - 1200.0
+  - - -12400.0
+    - 1200.0
+  asset_id: collision_camera_026
 > Pickup (Missile Tank - Top); Heals? False
   * Layers: default
   * Pickup 41; Category? Minor
-  * Extra - actor_name: item_missiletank_005
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_005
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Top room
       All of the following:
           Morph Ball
@@ -1914,44 +2348,50 @@ Extra - asset_id: collision_camera_026
 > Pickup (Missile Tank - Bottom); Heals? False
   * Layers: default
   * Pickup 53; Category? Minor
-  * Extra - actor_name: item_missiletank_006
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_006
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Lower Center
       Trivial
 
 > Event - Lower Blob; Heals? False
   * Layers: default
   * Event Cataris - Ghavoran Teleport Lower Blob
-  * Extra - actor_name: db_dside_mg_003
-  * Extra - actor_def: actordef:actors/props/db_dside_mg_002/charclasses/db_dside_mg_002.bmsad
+  Extra:
+    actor_name: db_dside_mg_003
+    actor_def: actordef:actors/props/db_dside_mg_002/charclasses/db_dside_mg_002.bmsad
   > Lower Center
       Trivial
 
 > Event - Upper Blob; Heals? False
   * Layers: default
   * Event Cataris - Ghavoran Teleport Upper Blob
-  * Extra - actor_name: db_dside_mg_001b_000
-  * Extra - actor_def: actordef:actors/props/db_dside_mg_001b/charclasses/db_dside_mg_001b.bmsad
+  Extra:
+    actor_name: db_dside_mg_001b_000
+    actor_def: actordef:actors/props/db_dside_mg_001b/charclasses/db_dside_mg_001b.bmsad
   > Top room
       Trivial
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Cataris - Ghavoran Teleport Grapple Block
-  * Extra - actor_name: grapplepulloff1x2_001
-  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  Extra:
+    actor_name: grapplepulloff1x2_001
+    actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Teleporter to Ghavoran
       Trivial
 
 > Teleporter to Ghavoran; Heals? False; Default Node
   * Layers: default
   * Teleporter to Golzuna Tower/Teleporter to Cataris
-  * Extra - actor_name: teleporter_forest_000
-  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
-  * Extra - elevator_component: CTeleporterUsableComponent
-  * Extra - target_spawn_point: teleporter_magma_000_platform
-  * Extra - start_point_actor_name: teleporter_forest_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  Extra:
+    actor_name: teleporter_forest_000
+    actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+    elevator_component: CTeleporterUsableComponent
+    target_spawn_point: teleporter_magma_000_platform
+    start_point_actor_name: teleporter_forest_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Event - Grapple Block
       All of the following:
           Grapple Beam
@@ -2065,18 +2505,32 @@ Extra - asset_id: collision_camera_026
 
 ----------------
 Ghavoran Teleport Access
-Extra - total_boundings: {'x1': -12500.0, 'x2': -10400.0, 'y1': 3600.0, 'y2': 5500.0}
-Extra - polygon: [[-10400.0, 5500.0], [-12500.0, 5500.0], [-12500.0, 3600.0], [-10400.0, 3600.0]]
-Extra - asset_id: collision_camera_027
+Extra:
+  total_boundings:
+    x1: -12500.0
+    x2: -10400.0
+    y1: 3600.0
+    y2: 5500.0
+  polygon:
+  - - -10400.0
+    - 5500.0
+  - - -12500.0
+    - 5500.0
+  - - -12500.0
+    - 3600.0
+  - - -10400.0
+    - 3600.0
+  asset_id: collision_camera_027
 > Door to Navigation Station Northwest; Heals? False
   * Layers: default
   * Power Beam Door to Navigation Station Northwest/Door to Ghavoran Teleport Access
-  * Extra - actor_name: doorpowerpower_010
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_010
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exits West
       Trivial
   > Event - Blob
@@ -2087,16 +2541,18 @@ Extra - asset_id: collision_camera_027
 > Dock to EMMI Zone Exits West; Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exits West/Dock to Ghavoran Teleport Access
-  * Extra - actor_name: dooremmy_007
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_007
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Navigation Station Northwest
       Trivial
 
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - Ghavoran Teleport Upper Blob
-  * Extra - actor_name: db_dside_mg_002
-  * Extra - actor_def: actordef:actors/props/db_dside_mg_001/charclasses/db_dside_mg_001.bmsad
+  Extra:
+    actor_name: db_dside_mg_002
+    actor_def: actordef:actors/props/db_dside_mg_001/charclasses/db_dside_mg_001.bmsad
   > Door to Navigation Station Northwest
       Trivial
 
@@ -2108,18 +2564,32 @@ Extra - asset_id: collision_camera_027
 
 ----------------
 EMMI Zone Exits West
-Extra - total_boundings: {'x1': -10500.0, 'x2': -7550.0, 'y1': -100.0, 'y2': 5200.0}
-Extra - polygon: [[-7550.0, 5200.0], [-10500.0, 5200.0], [-10500.0, -100.0], [-7550.0, -100.0]]
-Extra - asset_id: collision_camera_028
+Extra:
+  total_boundings:
+    x1: -10500.0
+    x2: -7550.0
+    y1: -100.0
+    y2: 5200.0
+  polygon:
+  - - -7550.0
+    - 5200.0
+  - - -10500.0
+    - 5200.0
+  - - -10500.0
+    - -100.0
+  - - -7550.0
+    - -100.0
+  asset_id: collision_camera_028
 > Door to EMMI Zone Item Tunnel; Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Item Tunnel/Door to EMMI Zone Exits West
-  * Extra - actor_name: doorpowerpower_011
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_011
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Ghavoran Teleport Access
       Can Slide
   > Dock to Long Mouth Statue Room (Upper)
@@ -2130,16 +2600,18 @@ Extra - asset_id: collision_camera_028
 > Dock to Ghavoran Teleport Access; Heals? False
   * Layers: default
   * EMMI Door to Ghavoran Teleport Access/Dock to EMMI Zone Exits West
-  * Extra - actor_name: dooremmy_007
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_007
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Item Tunnel
       Can Slide
 
 > Dock to Long Mouth Statue Room (Upper); Heals? False
   * Layers: default
   * EMMI Door to Long Mouth Statue Room/Dock to EMMI Zone Exits West (Upper)
-  * Extra - actor_name: dooremmy_008
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_008
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Item Tunnel
       Can Slide
   > Pickup (Missile Tank)
@@ -2148,28 +2620,31 @@ Extra - asset_id: collision_camera_028
 > Dock to Long Mouth Statue Room (Lower); Heals? False
   * Layers: default
   * EMMI Door to Long Mouth Statue Room/Dock to EMMI Zone Exits West (Lower)
-  * Extra - actor_name: dooremmy_009
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_009
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Upper Ledge
       Trivial
 
 > Door to EMMI Zone West Exit Path; Heals? False
   * Layers: default
   * Phase Shift Door to EMMI Zone West Exit Path/Dock to EMMI Zone Exits West
-  * Extra - actor_name: doorshutter_002
-  * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorshutter_002
+    actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Upper Ledge
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 40; Category? Minor
-  * Extra - actor_name: item_missiletank_004
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_004
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Dock to Long Mouth Statue Room (Upper)
       Trivial
 
@@ -2204,38 +2679,54 @@ Extra - asset_id: collision_camera_028
 
 ----------------
 EMMI Zone Item Tunnel
-Extra - total_boundings: {'x1': -7650.0, 'x2': -4600.0, 'y1': 1000.0, 'y2': 3100.0}
-Extra - polygon: [[-4600.0, 3100.0], [-7650.0, 3100.0], [-7650.0, 1000.0], [-4600.0, 1000.0]]
-Extra - asset_id: collision_camera_029
+Extra:
+  total_boundings:
+    x1: -7650.0
+    x2: -4600.0
+    y1: 1000.0
+    y2: 3100.0
+  polygon:
+  - - -4600.0
+    - 3100.0
+  - - -7650.0
+    - 3100.0
+  - - -7650.0
+    - 1000.0
+  - - -4600.0
+    - 1000.0
+  asset_id: collision_camera_029
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 33; Category? Minor
-  * Extra - actor_name: item_powerbombtank_002
-  * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  Extra:
+    actor_name: item_powerbombtank_002
+    actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Center of Tunnel
       Lay Power Bomb
 
 > Door to EMMI Zone Exits West; Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Exits West/Door to EMMI Zone Item Tunnel
-  * Extra - actor_name: doorpowerpower_011
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_011
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Exit to Map Station
       Can Slide
 
 > Door to EMMI Zone Exit to Map Station; Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Exit to Map Station/Door to EMMI Zone Item Tunnel; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_013
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_013
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Exits West
       Can Slide
   > Center of Tunnel
@@ -2272,26 +2763,41 @@ Extra - asset_id: collision_camera_029
 
 ----------------
 Map Station
-Extra - total_boundings: {'x1': -2700.0, 'x2': -600.0, 'y1': 2000.0, 'y2': 3142.0}
-Extra - polygon: [[-600.0, 3142.0], [-2700.0, 3142.0], [-2700.0, 2000.0], [-600.0, 2000.0]]
-Extra - asset_id: collision_camera_030
+Extra:
+  total_boundings:
+    x1: -2700.0
+    x2: -600.0
+    y1: 2000.0
+    y2: 3142.0
+  polygon:
+  - - -600.0
+    - 3142.0
+  - - -2700.0
+    - 3142.0
+  - - -2700.0
+    - 2000.0
+  - - -600.0
+    - 2000.0
+  asset_id: collision_camera_030
 > Door to Moving Magnet Walls (Small); Heals? False
   * Layers: default
   * Power Beam Door to Moving Magnet Walls (Small)/Door to Map Station
-  * Extra - actor_name: doorpowerpower_014
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_014
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exit to Map Station
       Trivial
 
 > Dock to EMMI Zone Exit to Map Station; Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Exit to Map Station/Dock to Map Station
-  * Extra - actor_name: dooremmy_004
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_004
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Moving Magnet Walls (Small)
       Trivial
   > Save Station
@@ -2299,27 +2805,43 @@ Extra - asset_id: collision_camera_030
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: maproom
-  * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
-  * Extra - start_point_actor_name: maproom_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad
+  Extra:
+    actor_name: maproom
+    actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
+    start_point_actor_name: maproom_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad
   > Dock to EMMI Zone Exit to Map Station
       Trivial
 
 ----------------
 Moving Magnet Walls (Small)
-Extra - total_boundings: {'x1': -700.0, 'x2': 2500.0, 'y1': 2000.0, 'y2': 4300.0}
-Extra - polygon: [[2500.0, 4300.0], [-700.0, 4300.0], [-700.0, 2000.0], [2500.0, 2000.0]]
-Extra - asset_id: collision_camera_031
+Extra:
+  total_boundings:
+    x1: -700.0
+    x2: 2500.0
+    y1: 2000.0
+    y2: 4300.0
+  polygon:
+  - - 2500.0
+    - 4300.0
+  - - -700.0
+    - 4300.0
+  - - -700.0
+    - 2000.0
+  - - 2500.0
+    - 2000.0
+  asset_id: collision_camera_031
 > Door to Map Station; Heals? False
   * Layers: default
   * Power Beam Door to Map Station/Door to Moving Magnet Walls (Small)
-  * Extra - actor_name: doorpowerpower_014
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_014
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Tower East
       Any of the following:
           Space Jump or Speed Booster or Simple IBJ
@@ -2338,8 +2860,9 @@ Extra - asset_id: collision_camera_031
 > Dock to EMMI Zone Tower East; Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Tower East/Dock to Moving Magnet Walls (Small)
-  * Extra - actor_name: dooremmy_001
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_001
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Map Station
       Any of the following:
           Space Jump or Simple IBJ
@@ -2354,37 +2877,53 @@ Extra - asset_id: collision_camera_031
 > Dock to EMMI Zone Tower West; Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Tower West/Dock to Moving Magnet Walls (Small)
-  * Extra - actor_name: dooremmy_005
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_005
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Map Station
       Trivial
 
 ----------------
 EMMI Zone Tower East
-Extra - total_boundings: {'x1': 2400.0, 'x2': 4500.0, 'y1': -1300.0, 'y2': 4150.0}
-Extra - polygon: [[4500.0, 4150.0], [2400.0, 4150.0], [2400.0, -1300.0], [4500.0, -1300.0]]
-Extra - asset_id: collision_camera_032
+Extra:
+  total_boundings:
+    x1: 2400.0
+    x2: 4500.0
+    y1: -1300.0
+    y2: 4150.0
+  polygon:
+  - - 4500.0
+    - 4150.0
+  - - 2400.0
+    - 4150.0
+  - - 2400.0
+    - -1300.0
+  - - 4500.0
+    - -1300.0
+  asset_id: collision_camera_032
 > Door to EMMI Zone East Tower Access (Middle); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Middle)
-  * Extra - actor_name: doorpowerpower_015
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_015
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Tunnel to EMMI Zone Exit East
       Trivial
 
 > Door to EMMI Zone Exit East (Power); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Exit East/Door to EMMI Zone Tower East (Lower)
-  * Extra - actor_name: doorpowerpower_016
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_016
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone East Tower Access (Bottom)
       Trivial
   > Tunnel to EMMI Zone Exit East
@@ -2395,8 +2934,9 @@ Extra - asset_id: collision_camera_032
 > Dock to Moving Magnet Walls (Small); Heals? False
   * Layers: default
   * EMMI Door to Moving Magnet Walls (Small)/Dock to EMMI Zone Tower East
-  * Extra - actor_name: dooremmy_001
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_001
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Hall Thermal Device Room
       Any of the following:
           After Cataris - Magnet Wall Thermal Device
@@ -2411,8 +2951,9 @@ Extra - asset_id: collision_camera_032
 > Dock to Hall Thermal Device Room; Heals? False
   * Layers: default
   * EMMI Door to Hall Thermal Device Room/Dock to EMMI Zone Tower East
-  * Extra - actor_name: dooremmy_002
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_002
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Moving Magnet Walls (Small)
       Any of the following:
           After Cataris - Magnet Wall Thermal Device
@@ -2423,36 +2964,39 @@ Extra - asset_id: collision_camera_032
 > Door to EMMI Zone East Tower Access (Top); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Top)
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Moving Magnet Walls (Small)
       Trivial
 
 > Door to EMMI Zone East Tower Access (Bottom); Heals? False
   * Layers: default
   * Charge Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Bottom)
-  * Extra - actor_name: doorclosedcharge
-  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedcharge
+    actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Exit East (Power)
       Trivial
 
 > Door to EMMI Zone Exit East (Charge); Heals? False
   * Layers: default
   * Access Locked to EMMI Zone Exit East/Door to EMMI Zone Tower East (Upper)
-  * Extra - actor_name: doorclosedcharge_001
-  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedcharge_001
+    actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Tunnel to EMMI Zone Hidden Missile Room
       Trivial
   > Tunnel to EMMI Zone East Tower Access (Upper)
@@ -2490,18 +3034,32 @@ Extra - asset_id: collision_camera_032
 
 ----------------
 Save Station East
-Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': 2800.0, 'y2': 3942.0}
-Extra - polygon: [[8500.0, 3942.0], [6400.0, 3942.0], [6400.0, 2800.0], [8500.0, 2800.0]]
-Extra - asset_id: collision_camera_033
+Extra:
+  total_boundings:
+    x1: 6400.0
+    x2: 8500.0
+    y1: 2800.0
+    y2: 3942.0
+  polygon:
+  - - 8500.0
+    - 3942.0
+  - - 6400.0
+    - 3942.0
+  - - 6400.0
+    - 2800.0
+  - - 8500.0
+    - 2800.0
+  asset_id: collision_camera_033
 > Door to Hall Thermal Device Room; Heals? False
   * Layers: default
   * Power Beam Door to Hall Thermal Device Room/Door to Save Station East
-  * Extra - actor_name: doorpowerpower_017
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_017
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Energy Recharge Station
       Trivial
   > Save Station
@@ -2510,46 +3068,64 @@ Extra - asset_id: collision_camera_033
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
   * Power Beam Door to Energy Recharge Station/Door to Save Station East
-  * Extra - actor_name: doorpowerpower_018
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_018
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Hall Thermal Device Room
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: savestation_001
-  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
-  * Extra - start_point_actor_name: savestation_001_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  Extra:
+    actor_name: savestation_001
+    actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+    start_point_actor_name: savestation_001_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
   > Door to Hall Thermal Device Room
       Trivial
 
 ----------------
 Hall Thermal Device Room
-Extra - total_boundings: {'x1': 4400.0, 'x2': 6500.0, 'y1': 2800.0, 'y2': 3942.0}
-Extra - polygon: [[6500.0, 3942.0], [4400.0, 3942.0], [4400.0, 2800.0], [6500.0, 2800.0]]
-Extra - asset_id: collision_camera_034
+Extra:
+  total_boundings:
+    x1: 4400.0
+    x2: 6500.0
+    y1: 2800.0
+    y2: 3942.0
+  polygon:
+  - - 6500.0
+    - 3942.0
+  - - 4400.0
+    - 3942.0
+  - - 4400.0
+    - 2800.0
+  - - 6500.0
+    - 2800.0
+  asset_id: collision_camera_034
 > Door to Save Station East; Heals? False
   * Layers: default
   * Power Beam Door to Save Station East/Door to Hall Thermal Device Room
-  * Extra - actor_name: doorpowerpower_017
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_017
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Tower East
       Trivial
 
 > Dock to EMMI Zone Tower East; Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Tower East/Dock to Hall Thermal Device Room
-  * Extra - actor_name: dooremmy_002
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_002
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Save Station East
       Trivial
   > Event - Thermal Device
@@ -2558,23 +3134,39 @@ Extra - asset_id: collision_camera_034
 > Event - Thermal Device; Heals? False; Default Node
   * Layers: default
   * Event Cataris - Hallway Thermal Device
-  * Extra - actor_name: deviceheat_001
-  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_004
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
+  Extra:
+    actor_name: deviceheat_001
+    actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
+    start_point_actor_name: weightactivatedplatform_004
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
   > Dock to EMMI Zone Tower East
       Trivial
 
 ----------------
 EMMI Zone Tower West
-Extra - total_boundings: {'x1': -2700.0, 'x2': -600.0, 'y1': 3100.0, 'y2': 7000.0}
-Extra - polygon: [[-600.0, 7000.0], [-2700.0, 7000.0], [-2700.0, 3100.0], [-600.0, 3100.0]]
-Extra - asset_id: collision_camera_035
+Extra:
+  total_boundings:
+    x1: -2700.0
+    x2: -600.0
+    y1: 3100.0
+    y2: 7000.0
+  polygon:
+  - - -600.0
+    - 7000.0
+  - - -2700.0
+    - 7000.0
+  - - -2700.0
+    - 3100.0
+  - - -600.0
+    - 3100.0
+  asset_id: collision_camera_035
 > Dock to Moving Magnet Walls (Small); Heals? False
   * Layers: default
   * EMMI Door to Moving Magnet Walls (Small)/Dock to EMMI Zone Tower West
-  * Extra - actor_name: dooremmy_005
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_005
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Central Unit Access
       Trivial
   > Tunnel to EMMI Zone Exit to Map Station
@@ -2583,20 +3175,22 @@ Extra - asset_id: collision_camera_035
 > Dock to Dairon Transport Access; Heals? False
   * Layers: default
   * EMMI Door to Dairon Transport Access/Dock to EMMI Zone Tower West
-  * Extra - actor_name: dooremmy_006
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_006
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Central Unit Access
       Trivial
 
 > Door to Central Unit Access; Heals? False
   * Layers: default
   * Wide Beam Door to Central Unit Access/Door to EMMI Zone Tower West
-  * Extra - actor_name: doorpowerpower_030
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
-  * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
+  Extra:
+    actor_name: doorpowerpower_030
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
+    right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
   > Dock to Moving Magnet Walls (Small)
       Trivial
   > Dock to Dairon Transport Access
@@ -2610,34 +3204,50 @@ Extra - asset_id: collision_camera_035
 
 ----------------
 Central Unit Access
-Extra - total_boundings: {'x1': -7650.0, 'x2': -2600.0, 'y1': 3000.0, 'y2': 6500.0}
-Extra - polygon: [[-2600.0, 6500.0], [-7650.0, 6500.0], [-7650.0, 3000.0], [-2600.0, 3000.0]]
-Extra - asset_id: collision_camera_036
+Extra:
+  total_boundings:
+    x1: -7650.0
+    x2: -2600.0
+    y1: 3000.0
+    y2: 6500.0
+  polygon:
+  - - -2600.0
+    - 6500.0
+  - - -7650.0
+    - 6500.0
+  - - -7650.0
+    - 3000.0
+  - - -2600.0
+    - 3000.0
+  asset_id: collision_camera_036
 > Door to EMMI Zone Tower West; Heals? False
   * Layers: default
   * Wide Beam Door to EMMI Zone Tower West/Door to Central Unit Access
-  * Extra - actor_name: doorpowerpower_030
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
-  * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
+  Extra:
+    actor_name: doorpowerpower_030
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
+    right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
   > Room Center
       Trivial
 
 > Event - Top Blob; Heals? False
   * Layers: default
   * Event Cataris - Central Unit Top Blob
-  * Extra - actor_name: breakablemag007
-  * Extra - actor_def: actordef:actors/props/breakablemag007/charclasses/breakablemag007.bmsad
+  Extra:
+    actor_name: breakablemag007
+    actor_def: actordef:actors/props/breakablemag007/charclasses/breakablemag007.bmsad
   > Upper-right Corner
       Trivial
 
 > Event - Bottom Blob, adjacent; Heals? False
   * Layers: default
   * Event Cataris - Central Unit Bottom Blob
-  * Extra - actor_name: breakablemag008
-  * Extra - actor_def: actordef:actors/props/breakablemag008/charclasses/breakablemag008.bmsad
+  Extra:
+    actor_name: breakablemag008
+    actor_def: actordef:actors/props/breakablemag008/charclasses/breakablemag008.bmsad
   > Door to Central Unit
       Trivial
   > Room Center
@@ -2645,8 +3255,9 @@ Extra - asset_id: collision_camera_036
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_MorphBall
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_MorphBall
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Tunnel to EMMI Zone Exits West
       Trivial
 
@@ -2694,11 +3305,12 @@ Extra - asset_id: collision_camera_036
 > Pickup (Morph Ball); Heals? False
   * Layers: default
   * Pickup 144; Category? Major
-  * Extra - pickup_type: emmi
-  * Extra - actor_def: actors/characters/emmymagma/charclasses/emmymagma.bmsad
-  * Extra - string_key: GUI_ITEM_ACQUIRED_MORPH_BALL
-  * Extra - callback_function: OnEmmyMagmaDead
-  * Extra - boss_hint_name: E.M.M.I.-03MB
+  Extra:
+    pickup_type: emmi
+    actor_def: actors/characters/emmymagma/charclasses/emmymagma.bmsad
+    string_key: GUI_ITEM_ACQUIRED_MORPH_BALL
+    callback_function: OnEmmyMagmaDead
+    boss_hint_name: E.M.M.I.-03MB
   > Door to Central Unit
       Trivial
 
@@ -2719,13 +3331,27 @@ Extra - asset_id: collision_camera_036
 
 ----------------
 Central Unit
-Extra - total_boundings: {'x1': -9700.0, 'x2': -7600.0, 'y1': 5100.0, 'y2': 6242.0}
-Extra - polygon: [[-7600.0, 6242.0], [-9700.0, 6242.0], [-9700.0, 5100.0], [-7600.0, 5100.0]]
-Extra - asset_id: collision_camera_037
+Extra:
+  total_boundings:
+    x1: -9700.0
+    x2: -7600.0
+    y1: 5100.0
+    y2: 6242.0
+  polygon:
+  - - -7600.0
+    - 6242.0
+  - - -9700.0
+    - 6242.0
+  - - -9700.0
+    - 5100.0
+  - - -7600.0
+    - 5100.0
+  asset_id: collision_camera_037
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_EmmyMagmaPhase2
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_EmmyMagmaPhase2
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Central Unit Access
       Trivial
 
@@ -2743,13 +3369,27 @@ Extra - asset_id: collision_camera_037
 
 ----------------
 Lava Button West
-Extra - total_boundings: {'x1': -700.0, 'x2': 4500.0, 'y1': 4400.0, 'y2': 5875.0}
-Extra - polygon: [[4500.0, 5875.0], [-700.0, 5875.0], [-700.0, 4400.0], [4500.0, 4400.0]]
-Extra - asset_id: collision_camera_038
+Extra:
+  total_boundings:
+    x1: -700.0
+    x2: 4500.0
+    y1: 4400.0
+    y2: 5875.0
+  polygon:
+  - - 4500.0
+    - 5875.0
+  - - -700.0
+    - 5875.0
+  - - -700.0
+    - 4400.0
+  - - 4500.0
+    - 4400.0
+  asset_id: collision_camera_038
 > Start Point 2; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_PistonLeft
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_PistonLeft
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Thermal Device Room North (Mid)
       Can Slide
 
@@ -2805,26 +3445,45 @@ Extra - asset_id: collision_camera_038
 
 ----------------
 Dairon Transport Access
-Extra - total_boundings: {'x1': -1500.0, 'x2': 4500.0, 'y1': 5825.0, 'y2': 10100.0}
-Extra - polygon: [[4500.0, 10100.0], [-1500.0, 10100.0], [-1500.0, 7006.419921875], [-700.0, 6966.419921875], [-700.0, 5825.0], [4500.0, 5825.0]]
-Extra - asset_id: collision_camera_040
+Extra:
+  total_boundings:
+    x1: -1500.0
+    x2: 4500.0
+    y1: 5825.0
+    y2: 10100.0
+  polygon:
+  - - 4500.0
+    - 10100.0
+  - - -1500.0
+    - 10100.0
+  - - -1500.0
+    - 7006.419921875
+  - - -700.0
+    - 6966.419921875
+  - - -700.0
+    - 5825.0
+  - - 4500.0
+    - 5825.0
+  asset_id: collision_camera_040
 > Door to Transport to Dairon; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Dairon/Door to Dairon Transport Access
-  * Extra - actor_name: doorpowerpower_021
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_021
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Thermal Device Room North
       Trivial
 
 > Dock to EMMI Zone Tower West; Heals? False
   * Layers: default
   * EMMI Door to EMMI Zone Tower West/Dock to Dairon Transport Access
-  * Extra - actor_name: dooremmy_006
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_006
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Thermal Device Room North
       After Cataris - Dairon Transport Wide Beam Block
   > Dock to Thermal Device Room North
@@ -2840,12 +3499,13 @@ Extra - asset_id: collision_camera_040
 > Door to Thermal Device Room North; Heals? False
   * Layers: default
   * Cataris Thermal Door to Thermal Device Room North/Door to Dairon Transport Access
-  * Extra - actor_name: doorheat_004
-  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorheat_004
+    actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Transport to Dairon
       Trivial
   > Dock to EMMI Zone Tower West
@@ -2860,8 +3520,9 @@ Extra - asset_id: collision_camera_040
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 54; Category? Minor
-  * Extra - actor_name: item_missiletank_000
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_000
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Thermal Device Room North
       Trivial
 
@@ -2879,48 +3540,78 @@ Extra - asset_id: collision_camera_040
 
 ----------------
 Transport to Dairon
-Extra - total_boundings: {'x1': -10400.0, 'x2': -1400.0, 'y1': 7300.0, 'y2': 9400.0}
-Extra - polygon: [[-1400.0, 9400.0], [-10400.0, 9400.0], [-10400.0, 7300.0], [-1400.0, 7300.0]]
-Extra - asset_id: collision_camera_041
+Extra:
+  total_boundings:
+    x1: -10400.0
+    x2: -1400.0
+    y1: 7300.0
+    y2: 9400.0
+  polygon:
+  - - -1400.0
+    - 9400.0
+  - - -10400.0
+    - 9400.0
+  - - -10400.0
+    - 7300.0
+  - - -1400.0
+    - 7300.0
+  asset_id: collision_camera_041
 > Door to Dairon Transport Access; Heals? False
   * Layers: default
   * Power Beam Door to Dairon Transport Access/Door to Transport to Dairon
-  * Extra - actor_name: doorpowerpower_021
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_021
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Shuttle to Dairon
       Trivial
 
 > Shuttle to Dairon; Heals? False; Default Node
   * Layers: default
   * Shuttle to Transport to Cataris/Shuttle to Cataris
-  * Extra - actor_name: wagontrain_baselab_000
-  * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
-  * Extra - elevator_component: CTrainUsableComponent
-  * Extra - target_spawn_point: wagontrain_magma_000_platform
-  * Extra - start_point_actor_name: wagontrain_baselab_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - transporter_name: Cataris - Central Unit
+  Extra:
+    actor_name: wagontrain_baselab_000
+    actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
+    elevator_component: CTrainUsableComponent
+    target_spawn_point: wagontrain_magma_000_platform
+    start_point_actor_name: wagontrain_baselab_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+    transporter_name: Cataris - Central Unit
   > Door to Dairon Transport Access
       Trivial
 
 ----------------
 Thermal Device Room North
-Extra - total_boundings: {'x1': 4400.0, 'x2': 8500.0, 'y1': 4400.0, 'y2': 8000.0}
-Extra - polygon: [[8500.0, 8000.0], [4400.0, 8000.0], [4400.0, 4400.0], [8500.0, 4400.0]]
-Extra - asset_id: collision_camera_042
+Extra:
+  total_boundings:
+    x1: 4400.0
+    x2: 8500.0
+    y1: 4400.0
+    y2: 8000.0
+  polygon:
+  - - 8500.0
+    - 8000.0
+  - - 4400.0
+    - 8000.0
+  - - 4400.0
+    - 4400.0
+  - - 8500.0
+    - 4400.0
+  asset_id: collision_camera_042
 > Door to Total Recharge Station North; Heals? False
   * Layers: default
   * Power Beam Door to Total Recharge Station North/Door to Thermal Device Room North
-  * Extra - actor_name: doorpowerpower_020
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_020
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Dairon Transport Access
       All of the following:
           Can Slide
@@ -2934,12 +3625,13 @@ Extra - asset_id: collision_camera_042
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
   * Charge Beam Door to Energy Recharge Station/Door to Thermal Device Room North
-  * Extra - actor_name: doorchargecharge
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Below Spider Magnet Wall
       Any of the following:
           All of the following:
@@ -2952,12 +3644,13 @@ Extra - asset_id: collision_camera_042
 > Door to Dairon Transport Access; Heals? False
   * Layers: default
   * Cataris Thermal Door to Dairon Transport Access/Door to Thermal Device Room North
-  * Extra - actor_name: doorheat_004
-  * Extra - actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorheat_004
+    actor_def: actordef:actors/props/doorheat/charclasses/doorheat.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Total Recharge Station North
       All of the following:
           Can Slide
@@ -2970,8 +3663,9 @@ Extra - asset_id: collision_camera_042
 > Pickup (Energy Part); Heals? False
   * Layers: default
   * Pickup 42; Category? Minor
-  * Extra - actor_name: item_energyfragment_001
-  * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
+  Extra:
+    actor_name: item_energyfragment_001
+    actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Tunnel to Lava Button West
       Any of the following:
           Varia Suit
@@ -2980,28 +3674,34 @@ Extra - asset_id: collision_camera_042
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 49; Category? Major
-  * Extra - actor_name: item_energytank_000
-  * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
+  Extra:
+    actor_name: item_energytank_000
+    actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Past Magnet Floor
       Trivial
 
 > Event - Thermal Device 2; Heals? False; Default Node
   * Layers: default
   * Event Cataris - Final Thermal Device
-  * Extra - actor_name: deviceheat_002
-  * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_003
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
+  Extra:
+    actor_name: deviceheat_002
+    actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
+    start_point_actor_name: weightactivatedplatform_003
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
   > Door to Dairon Transport Access
       Trivial
 
 > Event - Thermal Device 1; Heals? False
   * Layers: default
   * Event Cataris - Magnet Wall Thermal Device
-  * Extra - actor_name: deviceheat_camerafar_000
-  * Extra - actor_def: actordef:actors/props/deviceheat_camerafar/charclasses/deviceheat_camerafar.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_006
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
+  Extra:
+    actor_name: deviceheat_camerafar_000
+    actor_def:
+      actordef:actors/props/deviceheat_camerafar/charclasses/deviceheat_camerafar.bmsad
+    start_point_actor_name: weightactivatedplatform_006
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
   > Dock to Energy Recharge Station
       Trivial
 
@@ -3094,30 +3794,45 @@ Extra - asset_id: collision_camera_042
 
 ----------------
 Path to Kraid Entryway
-Extra - total_boundings: {'x1': -16500.0, 'x2': -14400.0, 'y1': -2400.0, 'y2': 100.0}
-Extra - polygon: [[-14400.0, 100.0], [-16500.0, 100.0], [-16500.0, -2400.0], [-14400.0, -2400.0]]
-Extra - asset_id: collision_camera_043
+Extra:
+  total_boundings:
+    x1: -16500.0
+    x2: -14400.0
+    y1: -2400.0
+    y2: 100.0
+  polygon:
+  - - -14400.0
+    - 100.0
+  - - -16500.0
+    - 100.0
+  - - -16500.0
+    - -2400.0
+  - - -14400.0
+    - -2400.0
+  asset_id: collision_camera_043
 > Door to Teleport to Artaria (Red); Heals? False
   * Layers: default
   * Access Open to Teleport to Artaria (Red)/Door to Path to Kraid Entryway
-  * Extra - actor_name: doorframe
-  * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorframe
+    actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Tunnel to Long Mouth Statue Room
       Can Slide
 
 > Door to Long Mouth Statue Room; Heals? False
   * Layers: default
   * Power Beam Door to Long Mouth Statue Room/Door to Path to Kraid Entryway
-  * Extra - actor_name: doorpowerpower_029
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_029
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Above Kraid
       Any of the following:
           Varia Suit
@@ -3139,18 +3854,32 @@ Extra - asset_id: collision_camera_043
 
 ----------------
 Diffusion Beam Room
-Extra - total_boundings: {'x1': -12500.0, 'x2': -10400.0, 'y1': -7700.0, 'y2': -4700.0}
-Extra - polygon: [[-10400.0, -4700.0], [-12500.0, -4700.0], [-12500.0, -7700.0], [-10400.0, -7700.0]]
-Extra - asset_id: collision_camera_044
+Extra:
+  total_boundings:
+    x1: -12500.0
+    x2: -10400.0
+    y1: -7700.0
+    y2: -4700.0
+  polygon:
+  - - -10400.0
+    - -4700.0
+  - - -12500.0
+    - -4700.0
+  - - -12500.0
+    - -7700.0
+  - - -10400.0
+    - -7700.0
+  asset_id: collision_camera_044
 > Door from Teleport to Dairon; Heals? False
   * Layers: default
   * Access Closed to Teleport to Dairon/Door to Diffusion Beam Room
-  * Extra - actor_name: doorclosedpower_000
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
-  * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  Extra:
+    actor_name: doorclosedpower_000
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
+    right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   > Pickup (Diffusion Beam)
       Any of the following:
           Varia Suit
@@ -3167,9 +3896,11 @@ Extra - asset_id: collision_camera_044
 > Pickup (Diffusion Beam); Heals? False
   * Layers: default
   * Pickup 35; Category? Major
-  * Extra - actor_name: itemsphere_diffusionbeam
-  * Extra - actor_def: actordef:actors/items/itemsphere_diffusionbeam/charclasses/itemsphere_diffusionbeam.bmsad
-  * Extra - map_icon_actor: powerup_diffusionbeam
+  Extra:
+    actor_name: itemsphere_diffusionbeam
+    actor_def:
+      actordef:actors/items/itemsphere_diffusionbeam/charclasses/itemsphere_diffusionbeam.bmsad
+    map_icon_actor: powerup_diffusionbeam
   > Door from Teleport to Dairon
       Any of the following:
           Varia Suit
@@ -3181,31 +3912,35 @@ Extra - asset_id: collision_camera_044
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 51; Category? Minor
-  * Extra - actor_name: item_powerbombtank_001
-  * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  Extra:
+    actor_name: item_powerbombtank_001
+    actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Alcove
       Morph Ball and After Cataris - PB Tank Grapple Block
 
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - Diffusion Tutorial Blob
-  * Extra - actor_name: db_dif_mg_002
-  * Extra - actor_def: actordef:actors/props/db_dif_mg_002/charclasses/db_dif_mg_002.bmsad
+  Extra:
+    actor_name: db_dif_mg_002
+    actor_def: actordef:actors/props/db_dif_mg_002/charclasses/db_dif_mg_002.bmsad
   > Door from Teleport to Dairon
       Trivial
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Cataris - PB Tank Grapple Block
-  * Extra - actor_name: grapplepulloff1x2
-  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  Extra:
+    actor_name: grapplepulloff1x2
+    actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Alcove
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_DiffusionBeam
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_DiffusionBeam
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door from Teleport to Dairon
       Trivial
 
@@ -3259,42 +3994,58 @@ Extra - asset_id: collision_camera_044
 
 ----------------
 Lava Button East Access
-Extra - total_boundings: {'x1': 13400.0, 'x2': 15500.0, 'y1': 799.9990234375, 'y2': 2900.0}
-Extra - polygon: [[15500.0, 2900.0], [13400.0, 2900.0], [13400.0, 799.9990234375], [15500.0, 799.9990234375]]
-Extra - asset_id: collision_camera_045
+Extra:
+  total_boundings:
+    x1: 13400.0
+    x2: 15500.0
+    y1: 799.9990234375
+    y2: 2900.0
+  polygon:
+  - - 15500.0
+    - 2900.0
+  - - 13400.0
+    - 2900.0
+  - - 13400.0
+    - 799.9990234375
+  - - 15500.0
+    - 799.9990234375
+  asset_id: collision_camera_045
 > Door to Moving Magnet Walls (Tall); Heals? False
   * Layers: default
   * Power Beam Door to Moving Magnet Walls (Tall)/Door to Lava Button East Access
-  * Extra - actor_name: doorpowerpower_023
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_023
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Lava Button East (Cloak)
       Trivial
 
 > Door to Lava Button East (Charge); Heals? False
   * Layers: default
   * Charge Beam Door to Lava Button East/Door to Lava Button East Access
-  * Extra - actor_name: doorchargecharge_002
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_002
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Pickup Corner
       Trivial
 
 > Door to Lava Button East (Cloak); Heals? False
   * Layers: default
   * Sensor Lock Door to Lava Button East/Dock to Lava Button East Access
-  * Extra - actor_name: doorframepresence_001
-  * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorframepresence_001
+    actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Moving Magnet Walls (Tall)
       Trivial
   > Event - Blob, adjacent
@@ -3305,16 +4056,18 @@ Extra - asset_id: collision_camera_045
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 46; Category? Minor
-  * Extra - actor_name: item_missiletank_010
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_010
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Pickup Corner
       Trivial
 
 > Event - Blob, adjacent; Heals? False
   * Layers: default
   * Event Cataris - Lava Button East Blob
-  * Extra - actor_name: db_dside_mg_003b_000
-  * Extra - actor_def: actordef:actors/props/db_dside_mg_003b/charclasses/db_dside_mg_003b.bmsad
+  Extra:
+    actor_name: db_dside_mg_003b_000
+    actor_def: actordef:actors/props/db_dside_mg_003b/charclasses/db_dside_mg_003b.bmsad
   > Door to Lava Button East (Cloak)
       Trivial
 
@@ -3341,18 +4094,32 @@ Extra - asset_id: collision_camera_045
 
 ----------------
 EMMI Zone East Tower Access
-Extra - total_boundings: {'x1': -700.0, 'x2': 2500.0, 'y1': -1300.0, 'y2': 2000.0}
-Extra - polygon: [[2500.0, 2000.0], [-700.0, 2000.0], [-700.0, -1300.0], [2500.0, -1300.0]]
-Extra - asset_id: collision_camera_046
+Extra:
+  total_boundings:
+    x1: -700.0
+    x2: 2500.0
+    y1: -1300.0
+    y2: 2000.0
+  polygon:
+  - - 2500.0
+    - 2000.0
+  - - -700.0
+    - 2000.0
+  - - -700.0
+    - -1300.0
+  - - 2500.0
+    - -1300.0
+  asset_id: collision_camera_046
 > Door to EMMI Zone Tower East (Middle); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (Middle)
-  * Extra - actor_name: doorpowerpower_015
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_015
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Green EMMI Introduction
       Trivial
   > Door to EMMI Zone Tower East (Bottom)
@@ -3369,48 +4136,52 @@ Extra - asset_id: collision_camera_046
 > Door to Green EMMI Introduction; Heals? False
   * Layers: default
   * Charge Beam Door to Green EMMI Introduction/Door to EMMI Zone East Tower Access (Lower)
-  * Extra - actor_name: doorchargecharge_005
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_005
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Tower East (Middle)
       Trivial
 
 > Door to EMMI Zone Tower East (Top); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (Top)
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Green EMMI Introduction
       Can Slide
 
 > Door to EMMI Zone Tower East (Bottom); Heals? False
   * Layers: default
   * Access Locked to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (Bottom)
-  * Extra - actor_name: doorclosedcharge
-  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorclosedcharge
+    actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Tower East (Middle)
       Trivial
 
 > Dock to Green EMMI Introduction; Heals? False
   * Layers: default
   * Open Passage to Green EMMI Introduction/Door to EMMI Zone East Tower Access (Upper)
-  * Extra - actor_name: doorshutter_001
-  * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorshutter_001
+    actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to EMMI Zone Tower East (Top)
       Can Slide
   > Tunnel to Green EMMI Introduction (Upper)
@@ -3446,26 +4217,41 @@ Extra - asset_id: collision_camera_046
 
 ----------------
 Double Obsydomithon Room
-Extra - total_boundings: {'x1': 10400.0, 'x2': 13500.0, 'y1': 6500.0, 'y2': 8400.0}
-Extra - polygon: [[13500.0, 8400.0], [10400.0, 8400.0], [10400.0, 6500.0], [13500.0, 6500.0]]
-Extra - asset_id: collision_camera_048
+Extra:
+  total_boundings:
+    x1: 10400.0
+    x2: 13500.0
+    y1: 6500.0
+    y2: 8400.0
+  polygon:
+  - - 13500.0
+    - 8400.0
+  - - 10400.0
+    - 8400.0
+  - - 10400.0
+    - 6500.0
+  - - 13500.0
+    - 6500.0
+  asset_id: collision_camera_048
 > Door to Total Recharge Station North; Heals? False
   * Layers: default
   * Power Beam Door to Total Recharge Station North/Door to Double Obsydomithon Room; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_025
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_001
-  * Extra - left_shield_def: actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_025
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_001
+    left_shield_def: actordef:actors/props/db_hdoor_mg_001/charclasses/db_hdoor_mg_001.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Left Floor
       After Cataris - Obsydomithon Blob
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 43; Category? Minor
-  * Extra - actor_name: item_missiletank_007
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_007
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Left Floor
       All of the following:
           Any of the following:
@@ -3522,18 +4308,32 @@ Extra - asset_id: collision_camera_048
 
 ----------------
 Z-57 Heat Room East
-Extra - total_boundings: {'x1': 4400.0, 'x2': 8100.0, 'y1': -4400.0, 'y2': -2200.0}
-Extra - polygon: [[8100.0, -2200.0], [4400.0, -2200.0], [4400.0, -4400.0], [8100.0, -4400.0]]
-Extra - asset_id: collision_camera_049
+Extra:
+  total_boundings:
+    x1: 4400.0
+    x2: 8100.0
+    y1: -4400.0
+    y2: -2200.0
+  polygon:
+  - - 8100.0
+    - -2200.0
+  - - 4400.0
+    - -2200.0
+  - - 4400.0
+    - -4400.0
+  - - 8100.0
+    - -4400.0
+  asset_id: collision_camera_049
 > Door to Above Z-57 Fight; Heals? False
   * Layers: default
   * Charge Beam Door to Above Z-57 Fight/Door to Z-57 Heat Room East
-  * Extra - actor_name: doorchargecharge_007
-  * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorchargecharge_007
+    actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Pickup (Missile Tank)
       Any of the following:
           Varia Suit
@@ -3542,8 +4342,9 @@ Extra - asset_id: collision_camera_049
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 52; Category? Minor
-  * Extra - actor_name: item_missiletank_002
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_002
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Above Z-57 Fight
       Any of the following:
           Varia Suit
@@ -3551,18 +4352,32 @@ Extra - asset_id: collision_camera_049
 
 ----------------
 Teleport to Dairon
-Extra - total_boundings: {'x1': -10500.0, 'x2': -6600.0, 'y1': -6400.0, 'y2': -900.0}
-Extra - polygon: [[-6600.0, -900.0], [-10500.0, -900.0], [-10500.0, -6400.0], [-6600.0, -6400.0]]
-Extra - asset_id: collision_camera_051
+Extra:
+  total_boundings:
+    x1: -10500.0
+    x2: -6600.0
+    y1: -6400.0
+    y2: -900.0
+  polygon:
+  - - -6600.0
+    - -900.0
+  - - -10500.0
+    - -900.0
+  - - -10500.0
+    - -6400.0
+  - - -6600.0
+    - -6400.0
+  asset_id: collision_camera_051
 > Door to Diffusion Beam Room; Heals? False
   * Layers: default
   * Missile Door to Diffusion Beam Room/Door from Teleport to Dairon
-  * Extra - actor_name: doorclosedpower_000
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
-  * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  Extra:
+    actor_name: doorclosedpower_000
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
+    right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   > Tunnel to Diffusion Beam Room
       Any of the following:
           Varia Suit
@@ -3571,8 +4386,9 @@ Extra - asset_id: collision_camera_051
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 39; Category? Minor
-  * Extra - actor_name: item_missiletank_003
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_003
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Event - Lava Blob
       Lay Small Bomb
   > Ledge above Teleport
@@ -3592,12 +4408,13 @@ Extra - asset_id: collision_camera_051
 > Door to Green EMMI Introduction Access; Heals? False
   * Layers: default
   * Grapple Beam Door to Green EMMI Introduction Access/Door to Teleport to Dairon
-  * Extra - actor_name: doorgrapplegrapple
-  * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorgrapplegrapple
+    actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Teleporter to Dairon
       Any of the following:
           Varia Suit
@@ -3612,8 +4429,9 @@ Extra - asset_id: collision_camera_051
 > Event - Lava Blob; Heals? False
   * Layers: default
   * Event Cataris - Missile Tank Blob
-  * Extra - actor_name: breakablemag009
-  * Extra - actor_def: actordef:actors/props/breakablemag009/charclasses/breakablemag009.bmsad
+  Extra:
+    actor_name: breakablemag009
+    actor_def: actordef:actors/props/breakablemag009/charclasses/breakablemag009.bmsad
   > Ledge above Teleport
       Any of the following:
           Varia Suit
@@ -3622,20 +4440,23 @@ Extra - asset_id: collision_camera_051
 > Event - Diffusion Blob, below; Heals? False
   * Layers: default
   * Event Cataris - Diffusion Tutorial Blob 2
-  * Extra - actor_name: db_dif_mg_001
-  * Extra - actor_def: actordef:actors/props/db_dif_mg_001/charclasses/db_dif_mg_001.bmsad
+  Extra:
+    actor_name: db_dif_mg_001
+    actor_def: actordef:actors/props/db_dif_mg_001/charclasses/db_dif_mg_001.bmsad
   > Tunnel to Diffusion Beam Room
       Trivial
 
 > Teleporter to Dairon; Heals? False; Default Node
   * Layers: default
   * Teleporter to Teleport to Cataris/Teleporter to Cataris
-  * Extra - actor_name: teleport_baselab_000
-  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
-  * Extra - elevator_component: CTeleporterUsableComponent
-  * Extra - target_spawn_point: teleport_magma_000_platform
-  * Extra - start_point_actor_name: teleport_baselab_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  Extra:
+    actor_name: teleport_baselab_000
+    actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+    elevator_component: CTeleporterUsableComponent
+    target_spawn_point: teleport_magma_000_platform
+    start_point_actor_name: teleport_baselab_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Door to Green EMMI Introduction Access
       Any of the following:
           Varia Suit
@@ -3744,26 +4565,46 @@ Extra - asset_id: collision_camera_051
 
 ----------------
 Green EMMI Introduction Access
-Extra - total_boundings: {'x1': -7100.0, 'x2': -4600.0, 'y1': -4600.0, 'y2': -400.0}
-Extra - polygon: [[-4600.0, -400.0], [-7100.0, -400.0], [-7100.0, -3150.0], [-6700.0, -3272.090087890625], [-6700.0, -4600.0], [-4600.0, -4600.0]]
-Extra - asset_id: collision_camera_052
+Extra:
+  total_boundings:
+    x1: -7100.0
+    x2: -4600.0
+    y1: -4600.0
+    y2: -400.0
+  polygon:
+  - - -4600.0
+    - -400.0
+  - - -7100.0
+    - -400.0
+  - - -7100.0
+    - -3150.0
+  - - -6700.0
+    - -3272.090087890625
+  - - -6700.0
+    - -4600.0
+  - - -4600.0
+    - -4600.0
+  asset_id: collision_camera_052
 > Door to Z-57 Heat Room West (Left); Heals? False
   * Layers: default
   * Power Beam Door to Z-57 Heat Room West (Left)/Door to Green EMMI Introduction Access; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_027
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002
-  * Extra - left_shield_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
-  * Extra - right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
+  Extra:
+    actor_name: doorpowerpower_027
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002
+    left_shield_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
+    right_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
+    right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
   > Dock to Green EMMI Introduction
       After Cataris - Green EMMI Access Blob
 
 > Dock to Green EMMI Introduction; Heals? False
   * Layers: default
   * EMMI Door to Green EMMI Introduction/Dock to Green EMMI Introduction Access
-  * Extra - actor_name: dooremmy_003
-  * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  Extra:
+    actor_name: dooremmy_003
+    actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Z-57 Heat Room West (Left)
       After Cataris - Green EMMI Access Blob
   > Door to Teleport to Dairon
@@ -3774,24 +4615,26 @@ Extra - asset_id: collision_camera_052
 > Door from Underlava Puzzle Room 2; Heals? False
   * Layers: default
   * Access Closed to Underlava Puzzle Room 2/Door to Green EMMI Introduction Access
-  * Extra - actor_name: doorclosedpower_001
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
-  * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  Extra:
+    actor_name: doorclosedpower_001
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
+    right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Door to Teleport to Dairon
       Trivial
 
 > Door to Teleport to Dairon; Heals? False
   * Layers: default
   * Grapple Beam Door to Teleport to Dairon/Door to Green EMMI Introduction Access
-  * Extra - actor_name: doorgrapplegrapple
-  * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorgrapplegrapple
+    actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Green EMMI Introduction
       Trivial
   > Door from Underlava Puzzle Room 2
@@ -3802,15 +4645,17 @@ Extra - asset_id: collision_camera_052
 > Event - Blob; Heals? False
   * Layers: default
   * Event Cataris - Green EMMI Access Blob
-  * Extra - actor_name: db_hdoor_mg_002
-  * Extra - actor_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
+  Extra:
+    actor_name: db_hdoor_mg_002
+    actor_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
   > Dock to Green EMMI Introduction
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_EmmyMagma
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_EmmyMagma
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Green EMMI Introduction
       Trivial
 
@@ -3822,18 +4667,32 @@ Extra - asset_id: collision_camera_052
 
 ----------------
 Underlava Puzzle Room 2
-Extra - total_boundings: {'x1': -4700.0, 'x2': -1600.0, 'y1': -6900.0, 'y2': -3600.0}
-Extra - polygon: [[-1600.0, -3600.0], [-4700.0, -3600.0], [-4700.0, -6900.0], [-1600.0, -6900.0]]
-Extra - asset_id: collision_camera_053
+Extra:
+  total_boundings:
+    x1: -4700.0
+    x2: -1600.0
+    y1: -6900.0
+    y2: -3600.0
+  polygon:
+  - - -1600.0
+    - -3600.0
+  - - -4700.0
+    - -3600.0
+  - - -4700.0
+    - -6900.0
+  - - -1600.0
+    - -6900.0
+  asset_id: collision_camera_053
 > Door to Green EMMI Introduction Access; Heals? False
   * Layers: default
   * Wave Beam Door to Green EMMI Introduction Access/Door from Underlava Puzzle Room 2
-  * Extra - actor_name: doorclosedpower_001
-  * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
-  * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  Extra:
+    actor_name: doorclosedpower_001
+    actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
+    right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Above Lava
       All of the following:
           Morph Ball
@@ -3844,16 +4703,18 @@ Extra - asset_id: collision_camera_053
 > Pickup (Energy Part); Heals? False
   * Layers: default
   * Pickup 44; Category? Minor
-  * Extra - actor_name: item_energyfragment_000
-  * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
+  Extra:
+    actor_name: item_energyfragment_000
+    actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Dock to Underlava Puzzle Room 1
       Trivial
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Cataris - Lava Grapple Block
-  * Extra - actor_name: grapplepulloff1x2_000
-  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  Extra:
+    actor_name: grapplepulloff1x2_000
+    actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Below Lava
       Trivial
 
@@ -3934,9 +4795,22 @@ Extra - asset_id: collision_camera_053
 
 ----------------
 Underlava Puzzle Room 1
-Extra - total_boundings: {'x1': -6700.0, 'x2': -4600.0, 'y1': -6600.0, 'y2': -5458.0}
-Extra - polygon: [[-4600.0, -5458.0], [-6700.0, -5458.0], [-6700.0, -6600.0], [-4600.0, -6600.0]]
-Extra - asset_id: collision_camera_054
+Extra:
+  total_boundings:
+    x1: -6700.0
+    x2: -4600.0
+    y1: -6600.0
+    y2: -5458.0
+  polygon:
+  - - -4600.0
+    - -5458.0
+  - - -6700.0
+    - -5458.0
+  - - -6700.0
+    - -6600.0
+  - - -4600.0
+    - -6600.0
+  asset_id: collision_camera_054
 > Dock to Underlava Puzzle Room 2; Heals? False
   * Layers: default
   * Open Passage to Underlava Puzzle Room 2/Dock to Underlava Puzzle Room 1
@@ -3953,14 +4827,28 @@ Extra - asset_id: collision_camera_054
 
 ----------------
 EMMI Zone Hidden Missile Room
-Extra - total_boundings: {'x1': 4400.0, 'x2': 8200.0, 'y1': 1700.0, 'y2': 2842.0}
-Extra - polygon: [[8200.0, 2842.0], [4400.0, 2842.0], [4400.0, 1700.0], [8200.0, 1700.0]]
-Extra - asset_id: collision_camera_055
+Extra:
+  total_boundings:
+    x1: 4400.0
+    x2: 8200.0
+    y1: 1700.0
+    y2: 2842.0
+  polygon:
+  - - 8200.0
+    - 2842.0
+  - - 4400.0
+    - 2842.0
+  - - 4400.0
+    - 1700.0
+  - - 8200.0
+    - 1700.0
+  asset_id: collision_camera_055
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 47; Category? Minor
-  * Extra - actor_name: item_missiletank_011
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_011
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Main Room
       Morph Ball
 
@@ -3983,18 +4871,32 @@ Extra - asset_id: collision_camera_055
 
 ----------------
 Navigation Station Northwest
-Extra - total_boundings: {'x1': -14500.0, 'x2': -12400.0, 'y1': 4700.0, 'y2': 5842.0}
-Extra - polygon: [[-12400.0, 5842.0], [-14500.0, 5842.0], [-14500.0, 4700.0], [-12400.0, 4700.0]]
-Extra - asset_id: collision_camera_058
+Extra:
+  total_boundings:
+    x1: -14500.0
+    x2: -12400.0
+    y1: 4700.0
+    y2: 5842.0
+  polygon:
+  - - -12400.0
+    - 5842.0
+  - - -14500.0
+    - 5842.0
+  - - -14500.0
+    - 4700.0
+  - - -12400.0
+    - 4700.0
+  asset_id: collision_camera_058
 > Door to Teleport to Artaria (Red); Heals? False
   * Layers: default
   * Power Beam Door to Teleport to Artaria (Red)/Door to Navigation Station Northwest
-  * Extra - actor_name: doorpowerpower_009
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_009
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Ghavoran Teleport Access
       Trivial
   > Save Station
@@ -4003,53 +4905,71 @@ Extra - asset_id: collision_camera_058
 > Door to Ghavoran Teleport Access; Heals? False
   * Layers: default
   * Power Beam Door to Ghavoran Teleport Access/Door to Navigation Station Northwest
-  * Extra - actor_name: doorpowerpower_010
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_010
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Teleport to Artaria (Red)
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
-  * Extra - actor_name: accesspoint_000
-  * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
-  * Extra - start_point_actor_name: accesspoint_platform_000
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
-  * Extra - hint_id: MAGMA_2
-  * Extra - string_asset_id: 4
+  Extra:
+    actor_name: accesspoint_000
+    actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
+    start_point_actor_name: accesspoint_platform_000
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
+    hint_id: MAGMA_2
+    string_asset_id: 4
   > Door to Teleport to Artaria (Red)
       Trivial
 
 ----------------
 EMMI Zone West Exit Path
-Extra - total_boundings: {'x1': -7650.0, 'x2': -4600.0, 'y1': -100.0, 'y2': 1042.0}
-Extra - polygon: [[-4600.0, 1042.0], [-7650.0, 1042.0], [-7650.0, -100.0], [-4600.0, -100.0]]
-Extra - asset_id: collision_camera_059
+Extra:
+  total_boundings:
+    x1: -7650.0
+    x2: -4600.0
+    y1: -100.0
+    y2: 1042.0
+  polygon:
+  - - -4600.0
+    - 1042.0
+  - - -7650.0
+    - 1042.0
+  - - -7650.0
+    - -100.0
+  - - -4600.0
+    - -100.0
+  asset_id: collision_camera_059
 > Dock to Green EMMI Introduction; Heals? False
   * Layers: default
   * Open Passage to Green EMMI Introduction/Door to EMMI Zone West Exit Path
-  * Extra - actor_name: doorframepresence
-  * Extra - actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorframepresence
+    actor_def: actordef:actors/props/doorframepresence/charclasses/doorframepresence.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to EMMI Zone Exits West
       Trivial
 
 > Dock to EMMI Zone Exits West; Heals? False
   * Layers: default
   * Open Passage to EMMI Zone Exits West/Door to EMMI Zone West Exit Path
-  * Extra - actor_name: doorshutter_002
-  * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorshutter_002
+    actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Green EMMI Introduction
       Trivial
   > Tunnel to EMMI Zone Exits West
@@ -4063,9 +4983,22 @@ Extra - asset_id: collision_camera_059
 
 ----------------
 Heated U-Turn
-Extra - total_boundings: {'x1': -14500.0, 'x2': -12400.0, 'y1': -2400.0, 'y2': -1300.0}
-Extra - polygon: [[-12400.0, -1300.0], [-14500.0, -1300.0], [-14500.0, -2400.0], [-12400.0, -2400.0]]
-Extra - asset_id: collision_camera_060
+Extra:
+  total_boundings:
+    x1: -14500.0
+    x2: -12400.0
+    y1: -2400.0
+    y2: -1300.0
+  polygon:
+  - - -12400.0
+    - -1300.0
+  - - -14500.0
+    - -1300.0
+  - - -14500.0
+    - -2400.0
+  - - -12400.0
+    - -2400.0
+  asset_id: collision_camera_060
 > Tunnel to Above Kraid (bottom); Heals? False
   * Layers: default
   * Slide Tunnel to Above Kraid/Tunnel to Heated U-Turn (bottom)
@@ -4088,14 +5021,28 @@ Extra - asset_id: collision_camera_060
 
 ----------------
 Kraid Eyedoor Room
-Extra - total_boundings: {'x1': -12500.0, 'x2': -10400.0, 'y1': -4400.0, 'y2': -2400.0}
-Extra - polygon: [[-10400.0, -2400.0], [-12500.0, -2400.0], [-12500.0, -4400.0], [-10400.0, -4400.0]]
-Extra - asset_id: collision_camera_061
+Extra:
+  total_boundings:
+    x1: -12500.0
+    x2: -10400.0
+    y1: -4400.0
+    y2: -2400.0
+  polygon:
+  - - -10400.0
+    - -2400.0
+  - - -12500.0
+    - -2400.0
+  - - -12500.0
+    - -4400.0
+  - - -10400.0
+    - -4400.0
+  asset_id: collision_camera_061
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 34; Category? Minor
-  * Extra - actor_name: item_missiletank_012
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_012
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Safe Ledge
       All of the following:
           Morph Ball
@@ -4106,12 +5053,13 @@ Extra - asset_id: collision_camera_061
 > Door to Above Kraid; Heals? False
   * Layers: default
   * Power Beam Door to Above Kraid/Door to Kraid Eyedoor Room; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_012
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_012
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Safe Ledge
       All of the following:
           Flash Shift or Gravity Suit or Spider Magnet or Movement (Beginner) or Lava Damage ≥ 10 or Lay Cross Bomb or Use Spin Boost
@@ -4122,23 +5070,26 @@ Extra - asset_id: collision_camera_061
 > Event - Wall Blob; Heals? False
   * Layers: default
   * Event Cataris - Kraid Eyedoor Blob
-  * Extra - actor_name: db_reg_mg_021
-  * Extra - actor_def: actordef:actors/props/db_reg_mg_020/charclasses/db_reg_mg_020.bmsad
+  Extra:
+    actor_name: db_reg_mg_021
+    actor_def: actordef:actors/props/db_reg_mg_020/charclasses/db_reg_mg_020.bmsad
   > Safe Ledge
       Trivial
 
 > Event - Ceiling Blob; Heals? False
   * Layers: default
   * Event Cataris - Kraid Eyedoor Ceiling Blob
-  * Extra - actor_name: db_reg_mg_020
-  * Extra - actor_def: actordef:actors/props/db_reg_mg_019/charclasses/db_reg_mg_019.bmsad
+  Extra:
+    actor_name: db_reg_mg_020
+    actor_def: actordef:actors/props/db_reg_mg_019/charclasses/db_reg_mg_019.bmsad
   > Ledge below blob
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Kraid
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Kraid
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Safe Ledge
       Trivial
 
@@ -4209,39 +5160,69 @@ Extra - asset_id: collision_camera_061
 
 ----------------
 Save Station West
-Extra - total_boundings: {'x1': -20500.0, 'x2': -18400.0, 'y1': -700.0020141601562, 'y2': 442.0}
-Extra - polygon: [[-18400.0, 442.0], [-20500.0, 442.0], [-20500.0, -700.0020141601562], [-18400.0, -700.0020141601562]]
-Extra - asset_id: collision_camera_062
+Extra:
+  total_boundings:
+    x1: -20500.0
+    x2: -18400.0
+    y1: -700.0020141601562
+    y2: 442.0
+  polygon:
+  - - -18400.0
+    - 442.0
+  - - -20500.0
+    - 442.0
+  - - -20500.0
+    - -700.0020141601562
+  - - -18400.0
+    - -700.0020141601562
+  asset_id: collision_camera_062
 > Door to Teleport to Artaria (Red); Heals? False
   * Layers: default
   * Power Beam Door to Teleport to Artaria (Red)/Door to Save Station West; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_007
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_007
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: savestation_000
-  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
-  * Extra - start_point_actor_name: savestation_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  Extra:
+    actor_name: savestation_000
+    actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+    start_point_actor_name: savestation_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
   > Door to Teleport to Artaria (Red)
       Trivial
 
 ----------------
 Kraid Arena
-Extra - total_boundings: {'x1': -17900.0, 'x2': -12400.0, 'y1': -7700.0, 'y2': -4128.35986328125}
-Extra - polygon: [[-12400.0, -4128.35986328125], [-17900.0, -4128.35986328125], [-17900.0, -7700.0], [-12400.0, -7700.0]]
-Extra - asset_id: collision_camera_063
+Extra:
+  total_boundings:
+    x1: -17900.0
+    x2: -12400.0
+    y1: -7700.0
+    y2: -4128.35986328125
+  polygon:
+  - - -12400.0
+    - -4128.35986328125
+  - - -17900.0
+    - -4128.35986328125
+  - - -17900.0
+    - -7700.0
+  - - -12400.0
+    - -7700.0
+  asset_id: collision_camera_063
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Dead_Kraid
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Dead_Kraid
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Right Ledge
       Trivial
 
@@ -4318,46 +5299,75 @@ Extra - asset_id: collision_camera_063
 > Pickup (Kraid); Heals? False
   * Layers: default
   * Pickup 148; Category? Major
-  * Extra - pickup_type: cutscene
-  * Extra - callback_function: OnKraidDeath_CUSTOM
-  * Extra - boss_hint_name: Kraid
+  Extra:
+    pickup_type: cutscene
+    callback_function: OnKraidDeath_CUSTOM
+    boss_hint_name: Kraid
   > Right Ledge
       Trivial
 
 ----------------
 West Teleport Access
-Extra - total_boundings: {'x1': -16500.0, 'x2': -14400.0, 'y1': 350.0, 'y2': 1150.0}
-Extra - polygon: [[-14400.0, 1150.0], [-16500.0, 1150.0], [-16500.0, 350.0], [-14400.0, 350.0]]
-Extra - asset_id: collision_camera_064
+Extra:
+  total_boundings:
+    x1: -16500.0
+    x2: -14400.0
+    y1: 350.0
+    y2: 1150.0
+  polygon:
+  - - -14400.0
+    - 1150.0
+  - - -16500.0
+    - 1150.0
+  - - -16500.0
+    - 350.0
+  - - -14400.0
+    - 350.0
+  asset_id: collision_camera_064
 > Door to Teleport to Artaria (Red); Heals? False
   * Layers: default
   * Power Beam Door to Teleport to Artaria (Red)/Door to West Teleport Access
-  * Extra - actor_name: doorpowerpower_008
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_008
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Long Mouth Statue Room
       Trivial
 
 > Door to Long Mouth Statue Room; Heals? False
   * Layers: default
   * Power Beam Door to Long Mouth Statue Room/Door to West Teleport Access
-  * Extra - actor_name: doorpowerpower_028
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_028
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Teleport to Artaria (Red)
       Trivial
 
 ----------------
 Experiment Z-57 Fight?
-Extra - total_boundings: {'x1': 1250.0, 'x2': 3550.0, 'y1': -7825.0, 'y2': -6575.0}
-Extra - polygon: [[3550.0, -6575.0], [1250.0, -6575.0], [1250.0, -7825.0], [3550.0, -7825.0]]
-Extra - asset_id: collision_camera_CooldownX
+Extra:
+  total_boundings:
+    x1: 1250.0
+    x2: 3550.0
+    y1: -7825.0
+    y2: -6575.0
+  polygon:
+  - - 3550.0
+    - -6575.0
+  - - 1250.0
+    - -6575.0
+  - - 1250.0
+    - -7825.0
+  - - 3550.0
+    - -7825.0
+  asset_id: collision_camera_CooldownX
 > Placeholder; Heals? False
   * Layers: default
 

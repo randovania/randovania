@@ -1,7 +1,8 @@
 ----------------
 Sand Zone
-Extra - map_name: Sand
-Extra - starting_script: <TRA0010:0099:0036:0033
+Extra:
+  map_name: Sand
+  starting_script: <TRA0010:0099:0036:0033
 > Door to Jenka's House; Heals? False
   * Layers: default
   * Door to Jenka's House/Door to Sand Zone
@@ -52,7 +53,8 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 > Pickup (Polish Spot); Heals? False
   * Layers: default
   * Pickup 57; Category? Minor
-  * Extra - event: 0502
+  Extra:
+    event: '0502'
   > Above Sunstones
       Trivial
 
@@ -84,14 +86,16 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 > Pickup (Pawprint Spot); Heals? False
   * Layers: default
   * Pickup 58; Category? Minor
-  * Extra - event: 0503
+  Extra:
+    event: '0503'
   > Pawprint Spot
       Trivial
 
 > Pickup (Puppy (Chest)); Heals? False
   * Layers: default
   * Pickup 59; Category? Minor
-  * Extra - event: 0423
+  Extra:
+    event: '0423'
   > Pawprint Spot
       Trivial
 
@@ -104,14 +108,16 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 > Pickup (Puppy (Run)); Heals? False
   * Layers: default
   * Pickup 60; Category? Minor
-  * Extra - event: 0422
+  Extra:
+    event: '0422'
   > Lower Side
       Trivial
 
 > Pickup (Puppy (Sleep)); Heals? False
   * Layers: default
   * Pickup 61; Category? Minor
-  * Extra - event: 0421
+  Extra:
+    event: '0421'
   > Outside Sand Zone Storehouse
       Trivial
 
@@ -341,8 +347,9 @@ Extra - starting_script: <TRA0010:0099:0036:0033
 
 ----------------
 Sand Zone Residence
-Extra - map_name: Curly
-Extra - starting_script: <TRA0029:0090:0018:0009
+Extra:
+  map_name: Curly
+  starting_script: <TRA0029:0090:0018:0009
 > Door to Sand Zone; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Sand Zone/Door to Sand Zone Residence
@@ -364,7 +371,8 @@ Extra - starting_script: <TRA0029:0090:0018:0009
 > Pickup (Curly Boss); Heals? False
   * Layers: default
   * Pickup 62; Category? Minor
-  * Extra - event: 0518
+  Extra:
+    event: '0518'
   > Door to Sand Zone
       Trivial
 
@@ -391,9 +399,10 @@ Extra - starting_script: <TRA0029:0090:0018:0009
 
 ----------------
 Small Room
-Extra - map_name: CurlyS
-Extra - starting_script: <TRA0032:0094:0004:0009
-Extra - softlock_warp: 0501
+Extra:
+  map_name: CurlyS
+  starting_script: <TRA0032:0094:0004:0009
+  softlock_warp: '0501'
 > Door to Sand Zone Residence; Heals? False
   * Layers: default
   * Door to Sand Zone Residence/Door to Small Room
@@ -407,14 +416,16 @@ Extra - softlock_warp: 0501
 > Pickup (Puppy (Curly)); Heals? False
   * Layers: default
   * Pickup 63; Category? Minor
-  * Extra - event: 0401
+  Extra:
+    event: '0401'
   > Door to Sand Zone Residence
       Trivial
 
 > Pickup (Curly's Closet); Heals? False
   * Layers: default
   * Pickup 64; Category? Minor
-  * Extra - event: 0421
+  Extra:
+    event: '0421'
   > Door to Sand Zone Residence
       Trivial
 
@@ -432,10 +443,13 @@ Extra - softlock_warp: 0501
 
 ----------------
 Jenka's House
-Extra - map_name: Jenka2
-Extra - starting_script: <EVE0+10
-Extra - softlock_maps: ['Jenka1', 'Jenka2']
-Extra - softlock_warp: 0501
+Extra:
+  map_name: Jenka2
+  starting_script: <EVE0+10
+  softlock_maps:
+  - Jenka1
+  - Jenka2
+  softlock_warp: '0501'
 > Door to Sand Zone; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Sand Zone/Door to Jenka's House
@@ -451,7 +465,8 @@ Extra - softlock_warp: 0501
 > Pickup (Jenka); Heals? False
   * Layers: default
   * Pickup 65; Category? Minor
-  * Extra - event: 0221
+  Extra:
+    event: '0221'
   > Door to Sand Zone
       Trivial
 
@@ -469,29 +484,32 @@ Extra - softlock_warp: 0501
 > Hint - Jenka 1; Heals? False
   * Layers: default
   * Hint
-  * Extra - event: 0201
-  * Extra - event_map: Jenka1
-  * Extra - facepic: 0013
-  * Extra - hint_index: 65
-  * Extra - string_asset_id: 9
+  Extra:
+    event: '0201'
+    event_map: Jenka1
+    facepic: '0013'
+    hint_index: 65
+    string_asset_id: 9
   > Hint - Jenka 2
       Trivial
 
 > Hint - Jenka 2; Heals? False
   * Layers: default
   * Hint
-  * Extra - event: 0202
-  * Extra - event_map: Jenka1
-  * Extra - facepic: 0013
-  * Extra - hint_index: 67
-  * Extra - string_asset_id: 10
+  Extra:
+    event: '0202'
+    event_map: Jenka1
+    facepic: '0013'
+    hint_index: 67
+    string_asset_id: 10
   > Door to Sand Zone
       Trivial
 
 ----------------
 Deserted House
-Extra - map_name: Dark
-Extra - starting_script: <TRA0034:0094:0012:0011
+Extra:
+  map_name: Dark
+  starting_script: <TRA0034:0094:0012:0011
 > Door to Sand Zone; Heals? False
   * Layers: default
   * Door to Sand Zone/Door to Deserted House
@@ -503,7 +521,8 @@ Extra - starting_script: <TRA0034:0094:0012:0011
 > Pickup (Puppy (Dark)); Heals? False
   * Layers: default
   * Pickup 66; Category? Minor
-  * Extra - event: 0401
+  Extra:
+    event: '0401'
   > Door to Sand Zone
       Trivial
 
@@ -514,7 +533,8 @@ Extra - starting_script: <TRA0034:0094:0012:0011
 
 ----------------
 Sand Zone Storehouse
-Extra - map_name: Gard
+Extra:
+  map_name: Gard
 > Entrance from Sand Zone; Heals? False; Default Node
   * Layers: default
   * Entrance to Sand Zone/Exit to Sand Zone Storehouse
@@ -547,7 +567,8 @@ Extra - map_name: Gard
 > Pickup (King); Heals? False
   * Layers: default
   * Pickup 67; Category? Minor
-  * Extra - event: 0602
+  Extra:
+    event: '0602'
   > Exit to Labyrinth I
       Trivial
 

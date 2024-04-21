@@ -1,8 +1,9 @@
 ----------------
 Egg Corridor?
-Extra - map_name: Eggs2
-Extra - in_dark_aether: False
-Extra - starting_script: <TRA0049:0099:0007:0006
+Extra:
+  map_name: Eggs2
+  in_dark_aether: false
+  starting_script: <TRA0049:0099:0007:0006
 > Door to Cthulhu's Abode? (Upper); Heals? False
   * Layers: default
   * Door to Cthulhu's Abode?/Door to Egg Corridor? (Upper)
@@ -61,7 +62,8 @@ Extra - starting_script: <TRA0049:0099:0007:0006
 > Pickup (Dragon Chest); Heals? False
   * Layers: default
   * Pickup 53; Category? Minor
-  * Extra - event: 0321
+  Extra:
+    event: '0321'
   > West Side
       Trivial
 
@@ -100,8 +102,9 @@ Extra - starting_script: <TRA0049:0099:0007:0006
 > Hint - Blue Robot; Heals? False
   * Layers: default
   * Hint
-  * Extra - event: 0210
-  * Extra - string_asset_id: 7
+  Extra:
+    event: '0210'
+    string_asset_id: 7
   > Teleporter to Arthur's House
       Trivial
 
@@ -131,9 +134,10 @@ Extra - starting_script: <TRA0049:0099:0007:0006
 
 ----------------
 Cthulhu's Abode?
-Extra - map_name: Cthu2
-Extra - in_dark_aether: False
-Extra - starting_script: <TRA0050:0094:0011:0012
+Extra:
+  map_name: Cthu2
+  in_dark_aether: false
+  starting_script: <TRA0050:0094:0011:0012
 > Door to Egg Corridor? (Upper); Heals? False
   * Layers: default
   * Door to Egg Corridor?/Door to Cthulhu's Abode? (Upper)
@@ -164,9 +168,10 @@ Extra - starting_script: <TRA0050:0094:0011:0012
 
 ----------------
 Egg Observation Room?
-Extra - map_name: EggR2
-Extra - in_dark_aether: False
-Extra - starting_script: <TRA0051:0094:0004:0004
+Extra:
+  map_name: EggR2
+  in_dark_aether: false
+  starting_script: <TRA0051:0094:0004:0004
 > Door to Egg Corridor? (Western); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Egg Corridor?/Door to Egg Observation Room? (West)
@@ -186,7 +191,8 @@ Extra - starting_script: <TRA0051:0094:0004:0004
 > Pickup (Sisters Boss); Heals? False
   * Layers: default
   * Pickup 54; Category? Minor
-  * Extra - event: 0303
+  Extra:
+    event: '0303'
   > Door to Egg Corridor? (Western)
       # Reverse Sisters Skip
       Sisters Skip (Intermediate) and Has Flight
@@ -222,9 +228,10 @@ Extra - starting_script: <TRA0051:0094:0004:0004
 
 ----------------
 Side Room
-Extra - map_name: EgEnd2
-Extra - in_dark_aether: False
-Extra - starting_script: <TRA0054:0094:0011:0006
+Extra:
+  map_name: EgEnd2
+  in_dark_aether: false
+  starting_script: <TRA0054:0094:0011:0006
 > Door to Egg Corridor?; Heals? False
   * Layers: default
   * Door to Egg Corridor?/Door to Side Room
@@ -245,9 +252,10 @@ Extra - starting_script: <TRA0054:0094:0011:0006
 
 ----------------
 Egg No. 00
-Extra - map_name: EggX2
-Extra - in_dark_aether: False
-Extra - starting_script: <TRA0052:0094:0004:0010
+Extra:
+  map_name: EggX2
+  in_dark_aether: false
+  starting_script: <TRA0052:0094:0004:0010
 > Door to Egg Corridor?; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Egg Corridor?/Door to Egg No. 00
@@ -262,9 +270,10 @@ Extra - starting_script: <TRA0052:0094:0004:0010
 
 ----------------
 Outer Wall
-Extra - map_name: Oside
-Extra - in_dark_aether: True
-Extra - starting_script: <TRA0053:0092:0165:0004
+Extra:
+  map_name: Oside
+  in_dark_aether: true
+  starting_script: <TRA0053:0092:0165:0004
 > Door to Egg No. 00; Heals? False
   * Layers: default
   * Door to Egg No. 00/Door to Outer Wall
@@ -332,7 +341,8 @@ Extra - starting_script: <TRA0053:0092:0165:0004
 > Event - Bad Ending; Heals? False
   * Layers: default
   * Event Bad Ending
-  * Extra - different_strongly_connected_component: True
+  Extra:
+    different_strongly_connected_component: true
 
 > Event - Entered Outer Wall from Storehouse; Heals? False
   * Layers: default
@@ -354,9 +364,10 @@ Extra - starting_script: <TRA0053:0092:0165:0004
 
 ----------------
 Little House
-Extra - map_name: Little
-Extra - in_dark_aether: True
-Extra - starting_script: <TRA0069:0090:0015:0008
+Extra:
+  map_name: Little
+  in_dark_aether: true
+  starting_script: <TRA0069:0090:0015:0008
 > Door to Outer Wall; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Outer Wall/Door to Little House
@@ -368,24 +379,27 @@ Extra - starting_script: <TRA0069:0090:0015:0008
 > Pickup (Little House); Heals? False
   * Layers: default
   * Pickup 55; Category? Minor
-  * Extra - event: 0204
+  Extra:
+    event: '0204'
   > Door to Outer Wall
       Trivial
 
 > Hint - Mrs. Little; Heals? False
   * Layers: default
   * Hint
-  * Extra - event: 0212
-  * Extra - hint_index: 55
-  * Extra - string_asset_id: 11
+  Extra:
+    event: '0212'
+    hint_index: 55
+    string_asset_id: 11
   > Door to Outer Wall
       Trivial
 
 ----------------
 Clock Room
-Extra - map_name: Clock
-Extra - in_dark_aether: True
-Extra - starting_script: <TRA0094:0090:0014:0007
+Extra:
+  map_name: Clock
+  in_dark_aether: true
+  starting_script: <TRA0094:0090:0014:0007
 > Door to Outer Wall; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Door to Outer Wall/Door to Clock Room
@@ -395,7 +409,8 @@ Extra - starting_script: <TRA0094:0090:0014:0007
 > Pickup (Clock Room); Heals? False
   * Layers: default
   * Pickup 56; Category? Minor
-  * Extra - event: 0300
+  Extra:
+    event: '0300'
   > Door to Outer Wall
       Trivial
 

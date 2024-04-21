@@ -1,8 +1,21 @@
 ----------------
 Bridge Gate
-Extra - total_boundings: {'x1': -2600.0, 'x2': -500.0, 'y1': 500.0, 'y2': 3500.0}
-Extra - polygon: [[-500.0, 3500.0], [-2600.0, 3500.0], [-2600.0, 500.0], [-500.0, 500.0]]
-Extra - asset_id: collision_camera_000
+Extra:
+  total_boundings:
+    x1: -2600.0
+    x2: -500.0
+    y1: 500.0
+    y2: 3500.0
+  polygon:
+  - - -500.0
+    - 3500.0
+  - - -2600.0
+    - 3500.0
+  - - -2600.0
+    - 500.0
+  - - -500.0
+    - 500.0
+  asset_id: collision_camera_000
 > Dock to Exterior Bridge; Heals? False
   * Layers: default
   * Open Passage to Exterior Bridge/Dock to Bridge Gate
@@ -17,18 +30,32 @@ Extra - asset_id: collision_camera_000
 
 ----------------
 Transport to Ghavoran
-Extra - total_boundings: {'x1': -17300.0, 'x2': -11600.0, 'y1': 500.0, 'y2': 1642.0}
-Extra - polygon: [[-11600.0, 1642.0], [-17300.0, 1642.0], [-17300.0, 500.0], [-11600.0, 500.0]]
-Extra - asset_id: collision_camera_001
+Extra:
+  total_boundings:
+    x1: -17300.0
+    x2: -11600.0
+    y1: 500.0
+    y2: 1642.0
+  polygon:
+  - - -11600.0
+    - 1642.0
+  - - -17300.0
+    - 1642.0
+  - - -17300.0
+    - 500.0
+  - - -11600.0
+    - 500.0
+  asset_id: collision_camera_001
 > Door to Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Save Station/Door to Transport to Ghavoran
-  * Extra - actor_name: doorpowerpower_004
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_004
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Start Point 1
       Trivial
   > Shuttle to Ghavoran
@@ -38,45 +65,65 @@ Extra - asset_id: collision_camera_001
 
 > Start Point 1; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: StartPoint0
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Save Station
       Trivial
 
 > Shuttle to Ghavoran; Heals? False; Default Node
   * Layers: default
   * Shuttle to Transport to Elun/Shuttle to Elun
-  * Extra - actor_name: wagontrain_forest_000
-  * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
-  * Extra - elevator_component: CTrainUsableComponent
-  * Extra - target_spawn_point: wagontrain_quarantine_000_platform
-  * Extra - start_point_actor_name: wagontrain_forest_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  * Extra - transporter_name: Elun
+  Extra:
+    actor_name: wagontrain_forest_000
+    actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
+    elevator_component: CTrainUsableComponent
+    target_spawn_point: wagontrain_quarantine_000_platform
+    start_point_actor_name: wagontrain_forest_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+    transporter_name: Elun
   > Door to Save Station
       Trivial
 
 > Start Point 2; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_ProfessorX
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_ProfessorX
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Save Station
       Trivial
 
 ----------------
 Purple Drapes
-Extra - total_boundings: {'x1': -700.0, 'x2': 1400.0, 'y1': -2100.0, 'y2': 1600.0}
-Extra - polygon: [[1400.0, 1600.0], [-700.0, 1600.0], [-700.0, -2100.0], [1400.0, -2100.0]]
-Extra - asset_id: collision_camera_002
+Extra:
+  total_boundings:
+    x1: -700.0
+    x2: 1400.0
+    y1: -2100.0
+    y2: 1600.0
+  polygon:
+  - - 1400.0
+    - 1600.0
+  - - -700.0
+    - 1600.0
+  - - -700.0
+    - -2100.0
+  - - 1400.0
+    - -2100.0
+  asset_id: collision_camera_002
 > Door to Ammo Recharge Station; Heals? False
   * Layers: default
   * Plasma Beam Door to Ammo Recharge Station/Door to Purple Drapes
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
-  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
-  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
+    left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+    right_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
+    right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Dock to Bridge Gate
       After Elun - Release X Parasites
   > Tunnel to Ammo Recharge Station
@@ -107,30 +154,47 @@ Extra - asset_id: collision_camera_002
 
 ----------------
 Ammo Recharge Station
-Extra - total_boundings: {'x1': 1300.0, 'x2': 3400.0, 'y1': -2700.0, 'y2': 4000.0}
-Extra - polygon: [[3400.0, 4000.0], [1300.0, 4000.0], [1300.0, -2700.0], [3400.0, -2700.0]]
-Extra - asset_id: collision_camera_003
+Extra:
+  total_boundings:
+    x1: 1300.0
+    x2: 3400.0
+    y1: -2700.0
+    y2: 4000.0
+  polygon:
+  - - 3400.0
+    - 4000.0
+  - - 1300.0
+    - 4000.0
+  - - 1300.0
+    - -2700.0
+  - - 3400.0
+    - -2700.0
+  asset_id: collision_camera_003
 > Door to Purple Drapes; Heals? False
   * Layers: default
   * Plasma Beam Door to Purple Drapes/Door to Ammo Recharge Station
-  * Extra - actor_name: doorpowerpower_000
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
-  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
-  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  Extra:
+    actor_name: doorpowerpower_000
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
+    left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+    right_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
+    right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Door to Chozo Soldier Arena
       Trivial
 
 > Door to Chozo Soldier Arena; Heals? False
   * Layers: default
   * Power Beam Door to Chozo Soldier Arena/Door to Ammo Recharge Station
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Purple Drapes
       Trivial
   > Pickup (Energy Tank)
@@ -141,32 +205,37 @@ Extra - asset_id: collision_camera_003
 > Door to Gyroscope Room; Heals? False
   * Layers: default
   * Power Beam Door to Gyroscope Room/Door to Ammo Recharge Station
-  * Extra - actor_name: doorpowerpower_002
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_002
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Plasma Beam Room (Upper)
       Trivial
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 114; Category? Major
-  * Extra - actor_name: item_energytank_000
-  * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
+  Extra:
+    actor_name: item_energytank_000
+    actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Door to Chozo Soldier Arena
       Trivial
 
 > Door to Plasma Beam Room (Upper); Heals? False
   * Layers: default
   * Plasma Beam Door to Plasma Beam Room/Door to Ammo Recharge Station
-  * Extra - actor_name: doorpowerpower_003
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
-  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
-  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  Extra:
+    actor_name: doorpowerpower_003
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
+    left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+    right_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
+    right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Door to Gyroscope Room
       Trivial
   > Event - Elun - Ammo Recharge Room Blob
@@ -179,36 +248,42 @@ Extra - asset_id: collision_camera_003
 > Door to Plasma Beam Room (Lower); Heals? False
   * Layers: default
   * Missile Door to Plasma Beam Room/Door from Ammo Recharge Station
-  * Extra - actor_name: doorpowerclosed_000
-  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
-  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerclosed_000
+    actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
+    left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Tunnel to Bottom Morph Launcher
       Trivial
 
 > Event - Elun - Ammo Recharge Room Blob; Heals? False
   * Layers: default
   * Event Elun - Ammo Recharge Room Blob
-  * Extra - actor_name: db_reg_qt_001
-  * Extra - actor_def: actordef:actors/props/db_reg_qt_001/charclasses/db_reg_qt_001.bmsad
+  Extra:
+    actor_name: db_reg_qt_001
+    actor_def: actordef:actors/props/db_reg_qt_001/charclasses/db_reg_qt_001.bmsad
   > Door to Plasma Beam Room (Upper)
       Trivial
 
 > Ammo Recharge; Heals? False
   * Layers: default
-  * Extra - actor_name: ammorecharge_000
-  * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
-  * Extra - start_point_actor_name: ammorecharge_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+  Extra:
+    actor_name: ammorecharge_000
+    actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
+    start_point_actor_name: ammorecharge_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
   > Door to Plasma Beam Room (Upper)
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_PlasmaBeam
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_PlasmaBeam
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Plasma Beam Room (Lower)
       Trivial
 
@@ -250,18 +325,32 @@ Extra - asset_id: collision_camera_003
 
 ----------------
 Chozo Soldier Arena
-Extra - total_boundings: {'x1': 3300.0, 'x2': 5700.0, 'y1': 1569.0, 'y2': 2711.0}
-Extra - polygon: [[5700.0, 2711.0], [3300.0, 2711.0], [3300.0, 1569.0], [5700.0, 1569.0]]
-Extra - asset_id: collision_camera_004
+Extra:
+  total_boundings:
+    x1: 3300.0
+    x2: 5700.0
+    y1: 1569.0
+    y2: 2711.0
+  polygon:
+  - - 5700.0
+    - 2711.0
+  - - 3300.0
+    - 2711.0
+  - - 3300.0
+    - 1569.0
+  - - 5700.0
+    - 1569.0
+  asset_id: collision_camera_004
 > Door to Ammo Recharge Station; Heals? False
   * Layers: default
   * Power Beam Door to Ammo Recharge Station/Door to Chozo Soldier Arena
-  * Extra - actor_name: doorpowerpower_001
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_001
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Spider Magnet Room
       After Elun - Chozo Soldier Fight
   > Event - Chozo Soldier Fight
@@ -270,12 +359,13 @@ Extra - asset_id: collision_camera_004
 > Door to Spider Magnet Room; Heals? False
   * Layers: default
   * Power Beam Door to Spider Magnet Room/Door to Chozo Soldier Arena; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_005
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_005
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Ammo Recharge Station
       After Elun - Chozo Soldier Fight
   > Event - Chozo Soldier Fight
@@ -283,8 +373,9 @@ Extra - asset_id: collision_camera_004
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Spider Magnet Room
       Trivial
 
@@ -296,30 +387,46 @@ Extra - asset_id: collision_camera_004
 
 ----------------
 Gyroscope Room
-Extra - total_boundings: {'x1': 3300.0, 'x2': 5700.0, 'y1': -500.0, 'y2': 1500.0}
-Extra - polygon: [[5700.0, 1500.0], [3300.0, 1500.0], [3300.0, -500.0], [5700.0, -500.0]]
-Extra - asset_id: collision_camera_005
+Extra:
+  total_boundings:
+    x1: 3300.0
+    x2: 5700.0
+    y1: -500.0
+    y2: 1500.0
+  polygon:
+  - - 5700.0
+    - 1500.0
+  - - 3300.0
+    - 1500.0
+  - - 3300.0
+    - -500.0
+  - - 5700.0
+    - -500.0
+  asset_id: collision_camera_005
 > Door to Ammo Recharge Station; Heals? False
   * Layers: default
   * Power Beam Door to Ammo Recharge Station/Door to Gyroscope Room
-  * Extra - actor_name: doorpowerpower_002
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_002
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Spider Magnet Room
       Trivial
 
 > Door to Spider Magnet Room; Heals? False
   * Layers: default
   * Plasma Beam Door to Spider Magnet Room/Door to Gyroscope Room
-  * Extra - actor_name: doorpowerpower_006
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
-  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_006
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
+    left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Ammo Recharge Station
       Trivial
   > Door to Fan Room
@@ -328,12 +435,13 @@ Extra - asset_id: collision_camera_005
 > Door to Fan Room; Heals? False
   * Layers: default
   * Power Beam Door to Fan Room/Door to Gyroscope Room
-  * Extra - actor_name: doorpowerpower_007
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_007
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Spider Magnet Room
       Lay Any Bomb
 
@@ -344,27 +452,45 @@ Extra - asset_id: collision_camera_005
 
 ----------------
 Plasma Beam Room
-Extra - total_boundings: {'x1': 3400.0, 'x2': 5500.0, 'y1': -2700.0, 'y2': -500.0}
-Extra - polygon: [[5500.0, -500.0], [3400.0, -500.0], [3400.0, -2700.0], [5500.0, -2700.0]]
-Extra - asset_id: collision_camera_006
+Extra:
+  total_boundings:
+    x1: 3400.0
+    x2: 5500.0
+    y1: -2700.0
+    y2: -500.0
+  polygon:
+  - - 5500.0
+    - -500.0
+  - - 3400.0
+    - -500.0
+  - - 3400.0
+    - -2700.0
+  - - 5500.0
+    - -2700.0
+  asset_id: collision_camera_006
 > Pickup (Plasma Beam); Heals? False
   * Layers: default
   * Pickup 115; Category? Major
-  * Extra - actor_name: itemsphere_plasmabeam_000
-  * Extra - actor_def: actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad
-  * Extra - map_icon_actor: powerup_plasmabeam
+  Extra:
+    actor_name: itemsphere_plasmabeam_000
+    actor_def:
+      actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad
+    map_icon_actor: powerup_plasmabeam
   > Door to Ammo Recharge Station
       Trivial
 
 > Door to Ammo Recharge Station; Heals? False
   * Layers: default
   * Plasma Beam Door to Ammo Recharge Station/Door to Plasma Beam Room (Upper)
-  * Extra - actor_name: doorpowerpower_003
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
-  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
-  * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  Extra:
+    actor_name: doorpowerpower_003
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
+    left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+    right_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
+    right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Pickup (Plasma Beam)
       Trivial
   > Door from Ammo Recharge Station
@@ -375,48 +501,67 @@ Extra - asset_id: collision_camera_006
 > Door from Ammo Recharge Station; Heals? False
   * Layers: default
   * Access Closed to Ammo Recharge Station/Door to Plasma Beam Room (Lower)
-  * Extra - actor_name: doorpowerclosed_000
-  * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
-  * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerclosed_000
+    actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
+    left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Ammo Recharge Station
       Trivial
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_PlasmaBeam
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_PlasmaBeam
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Ammo Recharge Station
       Trivial
 
 ----------------
 Spider Magnet Room
-Extra - total_boundings: {'x1': 5600.0, 'x2': 7700.0, 'y1': 400.0, 'y2': 2900.0}
-Extra - polygon: [[7700.0, 2900.0], [5600.0, 2900.0], [5600.0, 400.0], [7700.0, 400.0]]
-Extra - asset_id: collision_camera_007
+Extra:
+  total_boundings:
+    x1: 5600.0
+    x2: 7700.0
+    y1: 400.0
+    y2: 2900.0
+  polygon:
+  - - 7700.0
+    - 2900.0
+  - - 5600.0
+    - 2900.0
+  - - 5600.0
+    - 400.0
+  - - 7700.0
+    - 400.0
+  asset_id: collision_camera_007
 > Door to Chozo Soldier Arena; Heals? False
   * Layers: default
   * Power Beam Door to Chozo Soldier Arena/Door to Spider Magnet Room; Excluded from Dock Lock Rando
-  * Extra - actor_name: doorpowerpower_005
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_005
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Gyroscope Room
       Morph Ball
 
 > Door to Gyroscope Room; Heals? False
   * Layers: default
   * Plasma Beam Door to Gyroscope Room/Door to Spider Magnet Room
-  * Extra - actor_name: doorpowerpower_006
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
-  * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_006
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity:
+      Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
+    left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Chozo Soldier Arena
       Can Slide
   > Tunnel to Vertical Bomb Maze
@@ -424,8 +569,9 @@ Extra - asset_id: collision_camera_007
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorX
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  Extra:
+    start_point_actor_name: SP_Checkpoint_ChozoWarriorX
+    start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Chozo Soldier Arena
       Trivial
 
@@ -437,18 +583,32 @@ Extra - asset_id: collision_camera_007
 
 ----------------
 Fan Room
-Extra - total_boundings: {'x1': 5600.0, 'x2': 7700.0, 'y1': -2700.0, 'y2': 500.0}
-Extra - polygon: [[7700.0, 500.0], [5600.0, 500.0], [5600.0, -2700.0], [7700.0, -2700.0]]
-Extra - asset_id: collision_camera_008
+Extra:
+  total_boundings:
+    x1: 5600.0
+    x2: 7700.0
+    y1: -2700.0
+    y2: 500.0
+  polygon:
+  - - 7700.0
+    - 500.0
+  - - 5600.0
+    - 500.0
+  - - 5600.0
+    - -2700.0
+  - - 7700.0
+    - -2700.0
+  asset_id: collision_camera_008
 > Door to Gyroscope Room; Heals? False
   * Layers: default
   * Power Beam Door to Gyroscope Room/Door to Fan Room
-  * Extra - actor_name: doorpowerpower_007
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_007
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Pickup (Missile Tank)
       Speed Booster and Speed Booster Conservation (Beginner) and Can Slide
   > Room Bottom
@@ -459,8 +619,9 @@ Extra - asset_id: collision_camera_008
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 117; Category? Minor
-  * Extra - actor_name: item_missiletank_002
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_002
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Room Bottom
       Trivial
 
@@ -492,22 +653,37 @@ Extra - asset_id: collision_camera_008
 
 ----------------
 Vertical Bomb Maze
-Extra - total_boundings: {'x1': 7600.0, 'x2': 9700.0, 'y1': -300.0, 'y2': 4000.0}
-Extra - polygon: [[9700.0, 4000.0], [7600.0, 4000.0], [7600.0, -300.0], [9700.0, -300.0]]
-Extra - asset_id: collision_camera_009
+Extra:
+  total_boundings:
+    x1: 7600.0
+    x2: 9700.0
+    y1: -300.0
+    y2: 4000.0
+  polygon:
+  - - 9700.0
+    - 4000.0
+  - - 7600.0
+    - 4000.0
+  - - 7600.0
+    - -300.0
+  - - 9700.0
+    - -300.0
+  asset_id: collision_camera_009
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 116; Category? Minor
-  * Extra - actor_name: item_powerbombtank_000
-  * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  Extra:
+    actor_name: item_powerbombtank_000
+    actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Grapple Block Alcove
       Morph Ball
 
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Elun - Vertical Bomb Maze Grapple Block
-  * Extra - actor_name: grapplepulloff1x2_000
-  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  Extra:
+    actor_name: grapplepulloff1x2_000
+    actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Tunnel to Spider Magnet Room
       Morph Ball
   > Grapple Block Alcove
@@ -515,10 +691,12 @@ Extra - asset_id: collision_camera_009
 
 > Life Recharge; Heals? True; Default Node
   * Layers: default
-  * Extra - actor_name: energyrecharge_000
-  * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
-  * Extra - start_point_actor_name: energyrecharge_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
+  Extra:
+    actor_name: energyrecharge_000
+    actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
+    start_point_actor_name: energyrecharge_000_platform
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Tunnel to Fan Room
       Morph Ball
 
@@ -574,14 +752,28 @@ Extra - asset_id: collision_camera_009
 
 ----------------
 Horizontal Bomb Maze
-Extra - total_boundings: {'x1': 3300.0, 'x2': 7700.0, 'y1': 2858.0, 'y2': 4000.0}
-Extra - polygon: [[7700.0, 4000.0], [3300.0, 4000.0], [3300.0, 2858.0], [7700.0, 2858.0]]
-Extra - asset_id: collision_camera_010
+Extra:
+  total_boundings:
+    x1: 3300.0
+    x2: 7700.0
+    y1: 2858.0
+    y2: 4000.0
+  polygon:
+  - - 7700.0
+    - 4000.0
+  - - 3300.0
+    - 4000.0
+  - - 3300.0
+    - 2858.0
+  - - 7700.0
+    - 2858.0
+  asset_id: collision_camera_010
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 118; Category? Minor
-  * Extra - actor_name: item_missiletank_000
-  * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  Extra:
+    actor_name: item_missiletank_000
+    actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to Vertical Bomb Maze (Lower)
       Lay Any Bomb
   > Tunnel to Vertical Bomb Maze (Upper)
@@ -614,18 +806,32 @@ Extra - asset_id: collision_camera_010
 
 ----------------
 Exterior Bridge
-Extra - total_boundings: {'x1': -9700.0, 'x2': -2500.0, 'y1': 300.0, 'y2': 2300.0}
-Extra - polygon: [[-2500.0, 2300.0], [-9700.0, 2300.0], [-9700.0, 300.0], [-2500.0, 300.0]]
-Extra - asset_id: collision_camera_011
+Extra:
+  total_boundings:
+    x1: -9700.0
+    x2: -2500.0
+    y1: 300.0
+    y2: 2300.0
+  polygon:
+  - - -2500.0
+    - 2300.0
+  - - -9700.0
+    - 2300.0
+  - - -9700.0
+    - 300.0
+  - - -2500.0
+    - 300.0
+  asset_id: collision_camera_011
 > Door to Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Save Station/Door to Exterior Bridge
-  * Extra - actor_name: doorpowerpower_008
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_008
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Dock to Bridge Gate
       Trivial
 
@@ -637,30 +843,45 @@ Extra - asset_id: collision_camera_011
 
 ----------------
 Save Station
-Extra - total_boundings: {'x1': -11700.0, 'x2': -9600.0, 'y1': 500.0, 'y2': 1642.0}
-Extra - polygon: [[-9600.0, 1642.0], [-11700.0, 1642.0], [-11700.0, 500.0], [-9600.0, 500.0]]
-Extra - asset_id: collision_camera_012
+Extra:
+  total_boundings:
+    x1: -11700.0
+    x2: -9600.0
+    y1: 500.0
+    y2: 1642.0
+  polygon:
+  - - -9600.0
+    - 1642.0
+  - - -11700.0
+    - 1642.0
+  - - -11700.0
+    - 500.0
+  - - -9600.0
+    - 500.0
+  asset_id: collision_camera_012
 > Door to Exterior Bridge; Heals? False
   * Layers: default
   * Power Beam Door to Exterior Bridge/Door to Save Station
-  * Extra - actor_name: doorpowerpower_008
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_008
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Transport to Ghavoran
       Trivial
 
 > Door to Transport to Ghavoran; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Ghavoran/Door to Save Station
-  * Extra - actor_name: doorpowerpower_004
-  * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
+  Extra:
+    actor_name: doorpowerpower_004
+    actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
+    left_shield_entity: '{EMPTY}'
+    left_shield_def:
+    right_shield_entity: '{EMPTY}'
+    right_shield_def:
   > Door to Exterior Bridge
       Trivial
   > Save Station
@@ -668,18 +889,41 @@ Extra - asset_id: collision_camera_012
 
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: savestation
-  * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
-  * Extra - start_point_actor_name: weightactivatedplatform_save
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  Extra:
+    actor_name: savestation
+    actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
+    start_point_actor_name: weightactivatedplatform_save
+    start_point_actor_def:
+      actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
   > Door to Transport to Ghavoran
       Trivial
 
 ----------------
 Bottom Morph Launcher
-Extra - total_boundings: {'x1': 1300.0, 'x2': 9700.0, 'y1': -2700.0, 'y2': -1400.0}
-Extra - polygon: [[9700.0, -1400.0], [7600.0, -1400.0], [7600.0, -2500.0], [3400.0, -2500.0], [3400.0, -1400.0], [1300.0, -1400.0], [1300.0, -2700.0], [9700.0, -2700.0]]
-Extra - asset_id: collision_camera_MBL_B
+Extra:
+  total_boundings:
+    x1: 1300.0
+    x2: 9700.0
+    y1: -2700.0
+    y2: -1400.0
+  polygon:
+  - - 9700.0
+    - -1400.0
+  - - 7600.0
+    - -1400.0
+  - - 7600.0
+    - -2500.0
+  - - 3400.0
+    - -2500.0
+  - - 3400.0
+    - -1400.0
+  - - 1300.0
+    - -1400.0
+  - - 1300.0
+    - -2700.0
+  - - 9700.0
+    - -2700.0
+  asset_id: collision_camera_MBL_B
 > Tunnel to Fan Room; Heals? False
   * Layers: default
   * Morph Ball Launcher to Fan Room/Tunnel to Bottom Morph Launcher

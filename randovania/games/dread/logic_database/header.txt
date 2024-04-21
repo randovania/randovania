@@ -420,7 +420,8 @@ Dock Weaknesses
 
 > Door
   * Access Open
-      Extra - type: frame
+      Extra:
+        type: frame
       Open:
           Trivial
       No lock
@@ -440,21 +441,24 @@ Dock Weaknesses
 
 
   * Access Permanently Closed
-      Extra - type: closed
+      Extra:
+        type: closed
       Open:
           Impossible
       No lock
 
 
   * Power Beam Door
-      Extra - type: power_beam
+      Extra:
+        type: power_beam
       Open:
           Shoot Beam
       No lock
 
 
   * Charge Beam Door
-      Extra - type: charge_beam
+      Extra:
+        type: charge_beam
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -462,7 +466,8 @@ Dock Weaknesses
 
 
   * Wide Beam Door
-      Extra - type: wide_beam
+      Extra:
+        type: wide_beam
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -470,7 +475,8 @@ Dock Weaknesses
 
 
   * Plasma Beam Door
-      Extra - type: plasma_beam
+      Extra:
+        type: plasma_beam
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -478,7 +484,8 @@ Dock Weaknesses
 
 
   * Wave Beam Door
-      Extra - type: wave_beam
+      Extra:
+        type: wave_beam
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -486,7 +493,8 @@ Dock Weaknesses
 
 
   * Missile Door
-      Extra - type: missile
+      Extra:
+        type: missile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -494,7 +502,8 @@ Dock Weaknesses
 
 
   * Super Missile Door
-      Extra - type: super_missile
+      Extra:
+        type: super_missile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -502,21 +511,24 @@ Dock Weaknesses
 
 
   * Sensor Lock Door
-      Extra - type: phantom_cloak
+      Extra:
+        type: phantom_cloak
       Open:
           Phantom Cloak
       No lock
 
 
   * Grapple Beam Door
-      Extra - type: grapple_beam
+      Extra:
+        type: grapple_beam
       Open:
           Grapple Beam
       No lock
 
 
   * Phase Shift Door
-      Extra - type: phase_shift
+      Extra:
+        type: phase_shift
       Open:
           Any of the following:
               Flash Shift
@@ -538,7 +550,8 @@ Dock Weaknesses
 
 
   * Ice Missile Door
-      Extra - type: ice_missile
+      Extra:
+        type: ice_missile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -546,7 +559,8 @@ Dock Weaknesses
 
 
   * Diffusion Beam Door
-      Extra - type: diffusion_beam
+      Extra:
+        type: diffusion_beam
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -554,7 +568,8 @@ Dock Weaknesses
 
 
   * Storm Missile Door
-      Extra - type: storm_missile
+      Extra:
+        type: storm_missile
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -562,7 +577,8 @@ Dock Weaknesses
 
 
   * Bomb Door
-      Extra - type: bomb
+      Extra:
+        type: bomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -570,7 +586,8 @@ Dock Weaknesses
 
 
   * Cross Bomb Door
-      Extra - type: cross_bomb
+      Extra:
+        type: cross_bomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -578,7 +595,8 @@ Dock Weaknesses
 
 
   * Power Bomb Door
-      Extra - type: power_bomb
+      Extra:
+        type: power_bomb
       Open:
           Trivial
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
@@ -694,9 +712,10 @@ Dock Weaknesses
   > Dock Rando: Disabled
 
 
-> Teleporter
-* Extra - is_teleportal: True
-* Extra - ignore_for_hints: True
+> TeleporterExtra:
+  is_teleportal: true
+  ignore_for_hints: true
+
   * Teleporter
       Open:
           Trivial
@@ -705,9 +724,10 @@ Dock Weaknesses
   > Dock Rando: Disabled
 
 
-> Elevator
-* Extra - is_teleporter: True
-* Extra - ignore_for_hints: True
+> ElevatorExtra:
+  is_teleporter: true
+  ignore_for_hints: true
+
   * Elevator
       Open:
           Trivial
@@ -716,9 +736,10 @@ Dock Weaknesses
   > Dock Rando: Disabled
 
 
-> Shuttle
-* Extra - is_teleporter: True
-* Extra - ignore_for_hints: True
+> ShuttleExtra:
+  is_teleporter: true
+  ignore_for_hints: true
+
   * Shuttle
       Open:
           Trivial

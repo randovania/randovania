@@ -1,21 +1,26 @@
 ----------------
 Entrance Lobby
-Extra - map_name: Sector 60
-Extra - room_id: [0]
+Extra:
+  map_name: Sector 60
+  room_id:
+  - 0
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 88; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 0
-  * Extra - blockx: 41
-  * Extra - blocky: 18
+  Extra:
+    area: 6
+    room: 0
+    blockx: 41
+    blocky: 18
   > Other to Geron's Crossing
       Trivial
 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
-  * Extra - door_idx: (1,)
+  Extra:
+    door_idx:
+    - 1
   > Door to Geron's Crossing
       Trivial
   > Door to Glass Tube to Sector 4 (AQA)
@@ -24,21 +29,27 @@ Extra - room_id: [0]
 > Door to Geron's Crossing; Heals? False
   * Layers: default
   * L0 Hatch to Geron's Crossing/Door to Entrance Lobby
-  * Extra - door_idx: (2,)
+  Extra:
+    door_idx:
+    - 2
   > Door to Entrance Recharge Room
       Trivial
 
 > Other to Geron's Crossing; Heals? False
   * Layers: default
   * Tunnel to Geron's Crossing/Other to Entrance Lobby
-  * Extra - door_idx: (51,)
+  Extra:
+    door_idx:
+    - 51
   > Pickup (Missile Tank)
       Trivial
 
 > Door to Glass Tube to Sector 4 (AQA); Heals? False
   * Layers: default
   * L0 Hatch to Glass Tube to Sector 4 (AQA)/Door to Entrance Lobby
-  * Extra - door_idx: (79,)
+  Extra:
+    door_idx:
+    - 79
   > Door to Entrance Recharge Room
       All of the following:
           Any of the following:
@@ -49,19 +60,25 @@ Extra - room_id: [0]
 
 ----------------
 Entrance Save Room
-Extra - map_name: Sector 61
-Extra - room_id: [1]
+Extra:
+  map_name: Sector 61
+  room_id:
+  - 1
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
-  * Extra - door_idx: (4,)
+  Extra:
+    door_idx:
+    - 4
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Entrance Save Room
-  * Extra - door_idx: (5,)
+  Extra:
+    door_idx:
+    - 5
   > Door to Entrance Recharge Room
       Trivial
   > Save Station
@@ -69,26 +86,33 @@ Extra - room_id: [1]
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - X: 9
-  * Extra - Y: 10
+  Extra:
+    X: 9
+    Y: 10
   > Door to Entrance Navigation Room
       Trivial
 
 ----------------
 Entrance Navigation Room
-Extra - map_name: Sector 62
-Extra - room_id: [2]
+Extra:
+  map_name: Sector 62
+  room_id:
+  - 2
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * Open Hatch to Entrance Save Room/Door to Entrance Navigation Room
-  * Extra - door_idx: (6,)
+  Extra:
+    door_idx:
+    - 6
   > Door to Elevator to Main Deck
       Trivial
 
 > Door to Elevator to Main Deck; Heals? False
   * Layers: default
   * Open Hatch to Elevator to Main Deck/Door to Entrance Navigation Room
-  * Extra - door_idx: (34,)
+  Extra:
+    door_idx:
+    - 34
   > Door to Entrance Save Room
       Trivial
   > Navigation Terminal
@@ -97,20 +121,25 @@ Extra - room_id: [2]
 > Navigation Terminal; Heals? False
   * Layers: default
   * Hint
-  * Extra - hint_name: Sector6Entrance
-  * Extra - location_precision: REGION_ONLY
-  * Extra - item_precision: PRECISE_CATEGORY
+  Extra:
+    hint_name: Sector6Entrance
+    location_precision: REGION_ONLY
+    item_precision: PRECISE_CATEGORY
   > Door to Elevator to Main Deck
       Trivial
 
 ----------------
 Geron's Crossing
-Extra - map_name: Sector 63
-Extra - room_id: [3]
+Extra:
+  map_name: Sector 63
+  room_id:
+  - 3
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Geron's Crossing
-  * Extra - door_idx: (7,)
+  Extra:
+    door_idx:
+    - 7
   > Door to Nocturnal Access
       Any of the following:
           Can Kill Super Geron
@@ -132,7 +161,9 @@ Extra - room_id: [3]
 > Door to Nocturnal Access; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Access/Door to Geron's Crossing
-  * Extra - door_idx: (8,)
+  Extra:
+    door_idx:
+    - 8
   > Door to Entrance Lobby
       Any of the following:
           All of the following:
@@ -152,7 +183,9 @@ Extra - room_id: [3]
 > Other to Entrance Lobby; Heals? False
   * Layers: default
   * Tunnel to Entrance Lobby/Other to Geron's Crossing
-  * Extra - door_idx: (50,)
+  Extra:
+    door_idx:
+    - 50
   > Door to Entrance Lobby
       All of the following:
           Can Use Any Bombs
@@ -161,36 +194,48 @@ Extra - room_id: [3]
 > Other to Vault; Heals? False
   * Layers: default
   * Tunnel to Vault/Other to Geron's Crossing
-  * Extra - door_idx: (75,)
+  Extra:
+    door_idx:
+    - 75
   > Door to Nocturnal Access
       Can Use Any Bombs
 
 ----------------
 Nocturnal Access
-Extra - map_name: Sector 64
-Extra - room_id: [4]
+Extra:
+  map_name: Sector 64
+  room_id:
+  - 4
 > Door to Geron's Crossing; Heals? False
   * Layers: default
   * L0 Hatch to Geron's Crossing/Door to Nocturnal Access
-  * Extra - door_idx: (9,)
+  Extra:
+    door_idx:
+    - 9
   > Door to Nocturnal Shaft
       Trivial
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Nocturnal Access
-  * Extra - door_idx: (10,)
+  Extra:
+    door_idx:
+    - 10
   > Door to Geron's Crossing
       Trivial
 
 ----------------
 Nocturnal Shaft
-Extra - map_name: Sector 65
-Extra - room_id: [5]
+Extra:
+  map_name: Sector 65
+  room_id:
+  - 5
 > Door to Nocturnal Access; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Access/Door to Nocturnal Shaft
-  * Extra - door_idx: (11,)
+  Extra:
+    door_idx:
+    - 11
   > Door to Mimic Access
       Trivial
   > Door to Forbidden Entrance
@@ -203,14 +248,18 @@ Extra - room_id: [5]
 > Door to Mimic Access; Heals? False
   * Layers: default
   * L0 Hatch to Mimic Access/Door to Nocturnal Shaft
-  * Extra - door_idx: (12,)
+  Extra:
+    door_idx:
+    - 12
   > Door to Nocturnal Access
       Trivial
 
 > Door to Forbidden Entrance; Heals? False
   * Layers: default
   * L0 Hatch to Forbidden Entrance/Door to Nocturnal Shaft
-  * Extra - door_idx: (13,)
+  Extra:
+    door_idx:
+    - 13
   > Door to Nocturnal Access
       Trivial
   > Door to Pillar Puzzle
@@ -233,21 +282,27 @@ Extra - room_id: [5]
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Nocturnal Shaft
-  * Extra - door_idx: (14,)
+  Extra:
+    door_idx:
+    - 14
   > Door to Nocturnal Access
       Movement (Beginner) or Can Climb High Jump Wall
 
 > Door to Glass Tube to Sector 5 (ARC); Heals? False
   * Layers: default
   * L0 Hatch to Glass Tube to Sector 5 (ARC)/Door to Nocturnal Shaft
-  * Extra - door_idx: (82,)
+  Extra:
+    door_idx:
+    - 82
   > Door to Nocturnal Access
       Screw Attack
 
 > Door to Pillar Puzzle; Heals? False
   * Layers: default
   * L0 Hatch to Pillar Puzzle/Door to Nocturnal Shaft
-  * Extra - door_idx: (85,)
+  Extra:
+    door_idx:
+    - 85
   > Door to Forbidden Entrance
       All of the following:
           # This can safely not have Door Lock Rando check
@@ -256,12 +311,16 @@ Extra - room_id: [5]
 
 ----------------
 Mimic Access
-Extra - map_name: Sector 66
-Extra - room_id: [6]
+Extra:
+  map_name: Sector 66
+  room_id:
+  - 6
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Mimic Access
-  * Extra - door_idx: (32,)
+  Extra:
+    door_idx:
+    - 32
   > Door to Mimic Storage
       Any of the following:
           Varia Suit
@@ -273,7 +332,9 @@ Extra - room_id: [6]
 > Door to Mimic Storage; Heals? False
   * Layers: default
   * L0 Hatch to Mimic Storage/Door to Mimic Access
-  * Extra - door_idx: (48,)
+  Extra:
+    door_idx:
+    - 48
   > Door to Nocturnal Shaft
       Any of the following:
           Varia Suit
@@ -284,12 +345,16 @@ Extra - room_id: [6]
 
 ----------------
 Forbidden Entrance
-Extra - map_name: Sector 67
-Extra - room_id: [7]
+Extra:
+  map_name: Sector 67
+  room_id:
+  - 7
 > Door to X-B.O.X. Access; Heals? False
   * Layers: default
   * L4 Hatch to X-B.O.X. Access/Door to Forbidden Entrance
-  * Extra - door_idx: (3,)
+  Extra:
+    door_idx:
+    - 3
   > Door to Nocturnal Shaft
       All of the following:
           Can Use Power Bombs
@@ -310,7 +375,9 @@ Extra - room_id: [7]
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Forbidden Entrance
-  * Extra - door_idx: (33,)
+  Extra:
+    door_idx:
+    - 33
   > Door to X-B.O.X. Access
       All of the following:
           Can Use Power Bombs
@@ -330,12 +397,16 @@ Extra - room_id: [7]
 
 ----------------
 Nocturnal Playground
-Extra - map_name: Sector 68
-Extra - room_id: [8]
+Extra:
+  map_name: Sector 68
+  room_id:
+  - 8
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Nocturnal Playground
-  * Extra - door_idx: (15,)
+  Extra:
+    door_idx:
+    - 15
   > Door to Clogged Cavern
       Trivial
   > Door to Maintenance Annex
@@ -344,25 +415,34 @@ Extra - room_id: [8]
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Nocturnal Playground
-  * Extra - door_idx: (16,)
+  Extra:
+    door_idx:
+    - 16
   > Door to Nocturnal Shaft
       Trivial
 
 > Door to Maintenance Annex; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Annex/Door to Nocturnal Playground
-  * Extra - door_idx: (71,)
+  Extra:
+    door_idx:
+    - 71
   > Door to Nocturnal Shaft
       Morph Ball
 
 ----------------
 Clogged Cavern
-Extra - map_name: Sector 69
-Extra - room_id: [9]
+Extra:
+  map_name: Sector 69
+  room_id:
+  - 9
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Clogged Cavern
-  * Extra - door_idx: (17, 72)
+  Extra:
+    door_idx:
+    - 17
+    - 72
   > Door to Cavern Save Access
       # This can safely not have Door Lock Rando check
       Speed Booster and Disabled Entrance Rando
@@ -370,14 +450,20 @@ Extra - room_id: [9]
 > Door to Shell Access; Heals? False
   * Layers: default
   * L0 Hatch to Shell Access/Door to Clogged Cavern
-  * Extra - door_idx: (18, 73)
+  Extra:
+    door_idx:
+    - 18
+    - 73
   > Door to Cavern Save Access
       Trivial
 
 > Door to Cavern Save Access; Heals? False
   * Layers: default
   * L0 Hatch to Cavern Save Access/Door to Clogged Cavern
-  * Extra - door_idx: (46, 74)
+  Extra:
+    door_idx:
+    - 46
+    - 74
   > Door to Nocturnal Playground
       Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Shell Access
@@ -385,19 +471,25 @@ Extra - room_id: [9]
 
 ----------------
 Blue X Blockade
-Extra - map_name: Sector 610
-Extra - room_id: [10]
+Extra:
+  map_name: Sector 610
+  room_id:
+  - 10
 > Door to Data Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Data Save Room/Door to Blue X Blockade
-  * Extra - door_idx: (20,)
+  Extra:
+    door_idx:
+    - 20
   > Door to Big Shell 2
       Trivial
 
 > Door to Data Access; Heals? False
   * Layers: default
   * L0 Hatch to Data Access/Door to Blue X Blockade
-  * Extra - door_idx: (21,)
+  Extra:
+    door_idx:
+    - 21
   > Other to Zozoro Wine Cellar
       Morph Ball
   > Door to Big Shell 2
@@ -406,14 +498,18 @@ Extra - room_id: [10]
 > Other to Zozoro Wine Cellar; Heals? False
   * Layers: default
   * Tunnel to Zozoro Wine Cellar/Other to Blue X Blockade
-  * Extra - door_idx: (27,)
+  Extra:
+    door_idx:
+    - 27
   > Door to Data Access
       Morph Ball
 
 > Door to Big Shell 2; Heals? False
   * Layers: default
   * L0 Hatch to Big Shell 2/Door to Blue X Blockade
-  * Extra - door_idx: (61,)
+  Extra:
+    door_idx:
+    - 61
   > Door to Data Save Room
       Trivial
   > Door to Data Access
@@ -421,55 +517,72 @@ Extra - room_id: [10]
 
 ----------------
 Data Save Room
-Extra - map_name: Sector 611
-Extra - room_id: [11]
+Extra:
+  map_name: Sector 611
+  room_id:
+  - 11
 > Door to Blue X Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Blue X Blockade/Door to Data Save Room
-  * Extra - door_idx: (22,)
+  Extra:
+    door_idx:
+    - 22
   > Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - X: 8
-  * Extra - Y: 10
+  Extra:
+    X: 8
+    Y: 10
   > Door to Blue X Blockade
       Trivial
 
 ----------------
 Data Access
-Extra - map_name: Sector 612
-Extra - room_id: [12]
+Extra:
+  map_name: Sector 612
+  room_id:
+  - 12
 > Door to Blue X Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Blue X Blockade/Door to Data Access
-  * Extra - door_idx: (23,)
+  Extra:
+    door_idx:
+    - 23
   > Door to Data Room
       Can Kill Eye Door
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to Data Access
-  * Extra - door_idx: (24,)
+  Extra:
+    door_idx:
+    - 24
   > Door to Blue X Blockade
       Trivial
 
 ----------------
 Varia Core-X Arena
-Extra - map_name: Sector 613
-Extra - room_id: [13]
+Extra:
+  map_name: Sector 613
+  room_id:
+  - 13
 > Door to Data Room; Heals? False
   * Layers: default
   * L2 Hatch to Data Room/Door to Varia Core-X Arena
-  * Extra - door_idx: (25,)
+  Extra:
+    door_idx:
+    - 25
   > Arena
       Trivial
 
 > Door to Twin Caverns West; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Varia Core-X Arena
-  * Extra - door_idx: (52,)
+  Extra:
+    door_idx:
+    - 52
   > Arena
       Trivial
 
@@ -482,9 +595,10 @@ Extra - room_id: [13]
 > Pickup (Varia Suit); Heals? False
   * Layers: default
   * Pickup 108; Category? Major
-  * Extra - area: 6
-  * Extra - room: 13
-  * Extra - source: MegaX
+  Extra:
+    area: 6
+    room: 13
+    source: MegaX
   > Arena
       Trivial
 
@@ -511,12 +625,16 @@ Extra - room_id: [13]
 
 ----------------
 X-B.O.X. Access
-Extra - map_name: Sector 614
-Extra - room_id: [14]
+Extra:
+  map_name: Sector 614
+  room_id:
+  - 14
 > Door to Forbidden Entrance; Heals? False
   * Layers: default
   * L4 Hatch to Forbidden Entrance/Door to X-B.O.X. Access
-  * Extra - door_idx: (26,)
+  Extra:
+    door_idx:
+    - 26
   > Door to X-B.O.X. Arena
       Trivial
   > Door to Spaceboost Alley
@@ -539,7 +657,9 @@ Extra - room_id: [14]
 > Door to X-B.O.X. Arena; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Access
-  * Extra - door_idx: (28,)
+  Extra:
+    door_idx:
+    - 28
   > Door to Forbidden Entrance
       Any of the following:
           Space Jump
@@ -549,7 +669,9 @@ Extra - room_id: [14]
 > Door to Spaceboost Alley; Heals? False
   * Layers: default
   * Open Hatch to Spaceboost Alley/Door to X-B.O.X. Access
-  * Extra - door_idx: (89,)
+  Extra:
+    door_idx:
+    - 89
   > Door to Forbidden Entrance
       Any of the following:
           Morph Ball
@@ -557,20 +679,25 @@ Extra - room_id: [14]
 
 ----------------
 Zozoro Wine Cellar
-Extra - map_name: Sector 615
-Extra - room_id: [15]
+Extra:
+  map_name: Sector 615
+  room_id:
+  - 15
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 89; Category? Minor
-  * Extra - blockx: 3
-  * Extra - blocky: 3
+  Extra:
+    blockx: 3
+    blocky: 3
   > Other to Blue X Blockade
       Can Use Any Bombs
 
 > Other to Blue X Blockade; Heals? False
   * Layers: default
   * Tunnel to Blue X Blockade/Other to Zozoro Wine Cellar
-  * Extra - door_idx: (29,)
+  Extra:
+    door_idx:
+    - 29
   > Pickup (Hidden Missile Tank)
       All of the following:
           Can Use Any Bombs
@@ -581,33 +708,43 @@ Extra - room_id: [15]
 
 ----------------
 X-B.O.X. Arena
-Extra - map_name: Sector 616
-Extra - room_id: [16]
+Extra:
+  map_name: Sector 616
+  room_id:
+  - 16
 > Door to X-B.O.X. Access; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Access/Door to X-B.O.X. Arena
-  * Extra - door_idx: (30,)
+  Extra:
+    door_idx:
+    - 30
   > Beside Crumble Blocks
       Trivial
 
 > Door to Bull Bend; Heals? False
   * Layers: default
   * L0 Hatch to Bull Bend/Door to X-B.O.X. Arena
-  * Extra - door_idx: (31,)
+  Extra:
+    door_idx:
+    - 31
   > Arena
       Trivial
 
 > Door to X-B.O.X. Garage (Lower); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Garage/Door to X-B.O.X. Arena (Lower)
-  * Extra - door_idx: (36,)
+  Extra:
+    door_idx:
+    - 36
   > Arena
       Trivial
 
 > Door to X-B.O.X. Garage (Upper); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Garage/Door to X-B.O.X. Arena (Upper)
-  * Extra - door_idx: (87,)
+  Extra:
+    door_idx:
+    - 87
   > Beside Crumble Blocks
       Screw Attack
 
@@ -620,9 +757,10 @@ Extra - room_id: [16]
 > Pickup (Wave Beam); Heals? False
   * Layers: default
   * Pickup 111; Category? Major
-  * Extra - area: 0
-  * Extra - room: 16
-  * Extra - source: WaveCoreX
+  Extra:
+    area: 0
+    room: 16
+    source: WaveCoreX
   > Arena
       Trivial
 
@@ -671,50 +809,62 @@ Extra - room_id: [16]
 
 ----------------
 Elevator to Main Deck
-Extra - map_name: Sector 617
-Extra - room_id: [17]
+Extra:
+  map_name: Sector 617
+  room_id:
+  - 17
 > Elevator to Main Deck; Heals? False
   * Layers: default
   * Elevator to Elevator to Sector 6 (NOC)/Elevator to Sector 6 (NOC)
-  * Extra - door_idx: (0,)
+  Extra:
+    door_idx:
+    - 0
   > Door to Entrance Navigation Room
       Trivial
 
 > Door to Entrance Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Navigation Room/Door to Elevator to Main Deck
-  * Extra - door_idx: (35,)
+  Extra:
+    door_idx:
+    - 35
   > Elevator to Main Deck
       Trivial
 
 ----------------
 X-B.O.X. Garage
-Extra - map_name: Sector 618
-Extra - room_id: [18]
+Extra:
+  map_name: Sector 618
+  room_id:
+  - 18
 > Pickup (Hidden Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 90; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 18
-  * Extra - blockx: 15
-  * Extra - blocky: 3
+  Extra:
+    area: 6
+    room: 18
+    blockx: 15
+    blocky: 3
   > Door to X-B.O.X. Arena (Upper)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 91; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 18
-  * Extra - blockx: 29
-  * Extra - blocky: 20
+  Extra:
+    area: 6
+    room: 18
+    blockx: 29
+    blocky: 20
   > Door to X-B.O.X. Arena (Lower)
       Trivial
 
 > Door to X-B.O.X. Arena (Lower); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Garage (Lower)
-  * Extra - door_idx: (37,)
+  Extra:
+    door_idx:
+    - 37
   > Pickup (Missile Tank)
       Wave Beam
   > Door to X-B.O.X. Arena (Upper)
@@ -723,7 +873,9 @@ Extra - room_id: [18]
 > Door to X-B.O.X. Arena (Upper); Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to X-B.O.X. Garage (Upper)
-  * Extra - door_idx: (88,)
+  Extra:
+    door_idx:
+    - 88
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
           Can Bounce in Ball and Can Use Any Bombs
@@ -743,37 +895,49 @@ Extra - room_id: [18]
 
 ----------------
 Bull Bend
-Extra - map_name: Sector 619
-Extra - room_id: [19]
+Extra:
+  map_name: Sector 619
+  room_id:
+  - 19
 > Door to X-B.O.X. Arena; Heals? False
   * Layers: default
   * L0 Hatch to X-B.O.X. Arena/Door to Bull Bend
-  * Extra - door_idx: (38,)
+  Extra:
+    door_idx:
+    - 38
   > Door to Neglected Shaft
       Trivial
 
 > Door to Neglected Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Shaft/Door to Bull Bend
-  * Extra - door_idx: (39,)
+  Extra:
+    door_idx:
+    - 39
   > Door to X-B.O.X. Arena
       Trivial
 
 ----------------
 Neglected Shaft
-Extra - map_name: Sector 620
-Extra - room_id: [20]
+Extra:
+  map_name: Sector 620
+  room_id:
+  - 20
 > Door to Bull Bend; Heals? False
   * Layers: default
   * L0 Hatch to Bull Bend/Door to Neglected Shaft
-  * Extra - door_idx: (40,)
+  Extra:
+    door_idx:
+    - 40
   > Door to Neglected Save Room
       Trivial
 
 > Door to Neglected Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Save Room/Door to Neglected Shaft
-  * Extra - door_idx: (41,)
+  Extra:
+    door_idx:
+    - 41
   > Door to Bull Bend
       Any of the following:
           Space Jump
@@ -784,7 +948,9 @@ Extra - room_id: [20]
 > Door to Checkpoint to Restricted Zone; Heals? False
   * Layers: default
   * L4 Hatch to Checkpoint to Restricted Zone/Door to Neglected Shaft
-  * Extra - door_idx: (42,)
+  Extra:
+    door_idx:
+    - 42
   > Door to Neglected Save Room
       Any of the following:
           Space Jump
@@ -793,115 +959,147 @@ Extra - room_id: [20]
 
 ----------------
 Neglected Save Room
-Extra - map_name: Sector 621
-Extra - room_id: [21]
+Extra:
+  map_name: Sector 621
+  room_id:
+  - 21
 > Door to Neglected Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Neglected Shaft/Door to Neglected Save Room
-  * Extra - door_idx: (43,)
+  Extra:
+    door_idx:
+    - 43
   > Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - X: 10
-  * Extra - Y: 10
+  Extra:
+    X: 10
+    Y: 10
   > Door to Neglected Shaft
       Trivial
 
 ----------------
 Checkpoint to Restricted Zone
-Extra - map_name: Sector 622
-Extra - room_id: [22]
+Extra:
+  map_name: Sector 622
+  room_id:
+  - 22
 > Door to Neglected Shaft; Heals? False
   * Layers: default
   * L4 Hatch to Neglected Shaft/Door to Checkpoint to Restricted Zone
-  * Extra - door_idx: (44,)
+  Extra:
+    door_idx:
+    - 44
   > Other to Restricted Entrance
       Morph Ball and Wave Beam
 
 > Other to Restricted Entrance; Heals? False
   * Layers: default
   * Tunnel to Restricted Entrance/Other to Checkpoint to Restricted Zone
-  * Extra - door_idx: (45,)
+  Extra:
+    door_idx:
+    - 45
   > Door to Neglected Shaft
       Morph Ball
 
 ----------------
 Cavern Save Room
-Extra - map_name: Sector 623
-Extra - room_id: [23]
+Extra:
+  map_name: Sector 623
+  room_id:
+  - 23
 > Door to Cavern Save Access; Heals? False
   * Layers: default
   * L0 Hatch to Cavern Save Access/Door to Cavern Save Room
-  * Extra - door_idx: (92,)
+  Extra:
+    door_idx:
+    - 92
   > Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - X: 10
-  * Extra - Y: 10
+  Extra:
+    X: 10
+    Y: 10
   > Door to Cavern Save Access
       Trivial
 
 ----------------
 Mimic Storage
-Extra - map_name: Sector 624
-Extra - room_id: [24]
+Extra:
+  map_name: Sector 624
+  room_id:
+  - 24
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 92; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 24
-  * Extra - blockx: 29
-  * Extra - blocky: 9
+  Extra:
+    area: 6
+    room: 24
+    blockx: 29
+    blocky: 9
   > Door to Mimic Access
       Can Use Any Bombs
 
 > Door to Mimic Access; Heals? False
   * Layers: default
   * L0 Hatch to Mimic Access/Door to Mimic Storage
-  * Extra - door_idx: (49,)
+  Extra:
+    door_idx:
+    - 49
   > Pickup (Missile Tank)
       Can Use Any Bombs
 
 ----------------
 Data Room
-Extra - map_name: Sector 625
-Extra - room_id: [25]
+Extra:
+  map_name: Sector 625
+  room_id:
+  - 25
 > Door to Data Access; Heals? False
   * Layers: default
   * L2 Hatch to Data Access/Door to Data Room
-  * Extra - door_idx: (53,)
+  Extra:
+    door_idx:
+    - 53
   > Door to Varia Core-X Arena
       Trivial
 
 > Door to Varia Core-X Arena; Heals? False
   * Layers: default
   * L2 Hatch to Varia Core-X Arena/Door to Data Room
-  * Extra - door_idx: (62,)
+  Extra:
+    door_idx:
+    - 62
   > Door to Data Access
       Trivial
 
 ----------------
 Shell Access
-Extra - map_name: Sector 626
-Extra - room_id: [26]
+Extra:
+  map_name: Sector 626
+  room_id:
+  - 26
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 93; Category? Major
-  * Extra - area: 6
-  * Extra - room: 26
-  * Extra - blockx: 5
-  * Extra - blocky: 6
+  Extra:
+    area: 6
+    room: 26
+    blockx: 5
+    blocky: 6
   > Door to Clogged Cavern
       Trivial
 
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Shell Access
-  * Extra - door_idx: (19,)
+  Extra:
+    door_idx:
+    - 19
   > Pickup (Energy Tank)
       Trivial
   > Door to Big Shell 1
@@ -910,7 +1108,9 @@ Extra - room_id: [26]
 > Door to Big Shell 1; Heals? False
   * Layers: default
   * L0 Hatch to Big Shell 1/Door to Shell Access
-  * Extra - door_idx: (54,)
+  Extra:
+    door_idx:
+    - 54
   > Door to Clogged Cavern
       All of the following:
           Can Use Power Bombs
@@ -918,19 +1118,25 @@ Extra - room_id: [26]
 
 ----------------
 Big Shell 1
-Extra - map_name: Sector 627
-Extra - room_id: [27]
+Extra:
+  map_name: Sector 627
+  room_id:
+  - 27
 > Door to Shell Access; Heals? False
   * Layers: default
   * L0 Hatch to Shell Access/Door to Big Shell 1
-  * Extra - door_idx: (55,)
+  Extra:
+    door_idx:
+    - 55
   > Door to Big Shell 2
       Can Use Power Bombs
 
 > Door to Big Shell 2; Heals? False
   * Layers: default
   * L0 Hatch to Big Shell 2/Door to Big Shell 1
-  * Extra - door_idx: (56,)
+  Extra:
+    door_idx:
+    - 56
   > Door to Shell Access
       All of the following:
           Can Use Power Bombs
@@ -945,37 +1151,49 @@ Extra - room_id: [27]
 
 ----------------
 Big Shell 2
-Extra - map_name: Sector 628
-Extra - room_id: [28]
+Extra:
+  map_name: Sector 628
+  room_id:
+  - 28
 > Door to Big Shell 1; Heals? False
   * Layers: default
   * L0 Hatch to Big Shell 1/Door to Big Shell 2
-  * Extra - door_idx: (57,)
+  Extra:
+    door_idx:
+    - 57
   > Door to Blue X Blockade
       Morph Ball
 
 > Door to Blue X Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Blue X Blockade/Door to Big Shell 2
-  * Extra - door_idx: (58,)
+  Extra:
+    door_idx:
+    - 58
   > Door to Big Shell 1
       Morph Ball
 
 ----------------
 Entrance Recharge Room
-Extra - map_name: Sector 629
-Extra - room_id: [29]
+Extra:
+  map_name: Sector 629
+  room_id:
+  - 29
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
-  * Extra - door_idx: (59,)
+  Extra:
+    door_idx:
+    - 59
   > Recharge Terminal
       Trivial
 
 > Door to Entrance Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Save Room/Door to Entrance Recharge Room
-  * Extra - door_idx: (60,)
+  Extra:
+    door_idx:
+    - 60
   > Recharge Terminal
       Trivial
 
@@ -988,15 +1206,18 @@ Extra - room_id: [29]
 
 ----------------
 Twin Caverns West
-Extra - map_name: Sector 630
-Extra - room_id: [30]
+Extra:
+  map_name: Sector 630
+  room_id:
+  - 30
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 94; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 30
-  * Extra - blockx: 19
-  * Extra - blocky: 8
+  Extra:
+    area: 6
+    room: 30
+    blockx: 19
+    blocky: 8
   > Door to Twin Caverns East (Upper)
       Movement (Intermediate)
   > Ledge
@@ -1005,24 +1226,29 @@ Extra - room_id: [30]
 > Pickup (Hidden Missile Tank); Heals? False
   * Layers: default
   * Pickup 95; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 30
-  * Extra - blockx: 9
-  * Extra - blocky: 13
+  Extra:
+    area: 6
+    room: 30
+    blockx: 9
+    blocky: 13
   > Ledge
       Morph Ball
 
 > Door to Varia Core-X Arena; Heals? False
   * Layers: default
   * L0 Hatch to Varia Core-X Arena/Door to Twin Caverns West
-  * Extra - door_idx: (63,)
+  Extra:
+    door_idx:
+    - 63
   > Door to Twin Caverns East (Lower)
       Trivial
 
 > Door to Twin Caverns East (Lower); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Caverns West (Lower)
-  * Extra - door_idx: (64,)
+  Extra:
+    door_idx:
+    - 64
   > Door to Varia Core-X Arena
       Trivial
   > Ledge
@@ -1033,7 +1259,9 @@ Extra - room_id: [30]
 > Door to Twin Caverns East (Upper); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Caverns West (Upper)
-  * Extra - door_idx: (66,)
+  Extra:
+    door_idx:
+    - 66
   > Pickup (Missile Tank)
       Trivial
   > Ledge
@@ -1050,26 +1278,34 @@ Extra - room_id: [30]
 
 ----------------
 Twin Caverns East
-Extra - map_name: Sector 631
-Extra - room_id: [31]
+Extra:
+  map_name: Sector 631
+  room_id:
+  - 31
 > Door to Twin Caverns West (Lower); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Twin Caverns East (Lower)
-  * Extra - door_idx: (65,)
+  Extra:
+    door_idx:
+    - 65
   > Door to Twin Cavern Save Room
       Trivial
 
 > Door to Twin Caverns West (Upper); Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns West/Door to Twin Caverns East (Upper)
-  * Extra - door_idx: (67,)
+  Extra:
+    door_idx:
+    - 67
   > Door to Maintenance Annex
       Trivial
 
 > Door to Maintenance Annex; Heals? False
   * Layers: default
   * L0 Hatch to Maintenance Annex/Door to Twin Caverns East
-  * Extra - door_idx: (68,)
+  Extra:
+    door_idx:
+    - 68
   > Door to Twin Caverns West (Upper)
       Trivial
   > Door to Twin Cavern Save Room
@@ -1081,7 +1317,9 @@ Extra - room_id: [31]
 > Door to Twin Cavern Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Twin Cavern Save Room/Door to Twin Caverns East
-  * Extra - door_idx: (77,)
+  Extra:
+    door_idx:
+    - 77
   > Door to Twin Caverns West (Lower)
       Trivial
   > Door to Maintenance Annex
@@ -1096,115 +1334,148 @@ Extra - room_id: [31]
 
 ----------------
 Maintenance Annex
-Extra - map_name: Sector 632
-Extra - room_id: [32]
+Extra:
+  map_name: Sector 632
+  room_id:
+  - 32
 > Door to Twin Caverns East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Maintenance Annex
-  * Extra - door_idx: (69,)
+  Extra:
+    door_idx:
+    - 69
   > Door to Nocturnal Playground
       Trivial
 
 > Door to Nocturnal Playground; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Maintenance Annex
-  * Extra - door_idx: (70,)
+  Extra:
+    door_idx:
+    - 70
   > Door to Twin Caverns East
       Trivial
 
 ----------------
 Vault
-Extra - map_name: Sector 634
-Extra - room_id: [34]
+Extra:
+  map_name: Sector 634
+  room_id:
+  - 34
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 96; Category? Major
-  * Extra - area: 6
-  * Extra - room: 34
-  * Extra - blockx: 14
-  * Extra - blocky: 8
+  Extra:
+    area: 6
+    room: 34
+    blockx: 14
+    blocky: 8
   > Other to Geron's Crossing
       Can Use Any Bombs
 
 > Other to Geron's Crossing; Heals? False
   * Layers: default
   * Tunnel to Geron's Crossing/Other to Vault
-  * Extra - door_idx: (76,)
+  Extra:
+    door_idx:
+    - 76
   > Pickup (Energy Tank)
       Can Use Any Bombs
 
 ----------------
 Twin Cavern Save Room
-Extra - map_name: Sector 635
-Extra - room_id: [35]
+Extra:
+  map_name: Sector 635
+  room_id:
+  - 35
 > Door to Twin Caverns East; Heals? False
   * Layers: default
   * L0 Hatch to Twin Caverns East/Door to Twin Cavern Save Room
-  * Extra - door_idx: (78,)
+  Extra:
+    door_idx:
+    - 78
   > Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - X: 10
-  * Extra - Y: 10
+  Extra:
+    X: 10
+    Y: 10
   > Door to Twin Caverns East
       Trivial
 
 ----------------
 Glass Tube to Sector 4 (AQA)
-Extra - map_name: Sector 636
-Extra - room_id: [36]
+Extra:
+  map_name: Sector 636
+  room_id:
+  - 36
 > Door to Entrance Lobby; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Lobby/Door to Glass Tube to Sector 4 (AQA)
-  * Extra - door_idx: (80,)
+  Extra:
+    door_idx:
+    - 80
   > Area Transition to Sector 4 (AQA)
       Trivial
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
   * Open Passage to Glass Tube to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
-  * Extra - door_idx: (81,)
+  Extra:
+    door_idx:
+    - 81
   > Door to Entrance Lobby
       Trivial
 
 ----------------
 Glass Tube to Sector 5 (ARC)
-Extra - map_name: Sector 637
-Extra - room_id: [37]
+Extra:
+  map_name: Sector 637
+  room_id:
+  - 37
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Glass Tube to Sector 5 (ARC)
-  * Extra - door_idx: (83,)
+  Extra:
+    door_idx:
+    - 83
   > Area Transition to Sector 5 (ARC)
       Trivial
 
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
   * Open Passage to Glass Tube to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
-  * Extra - door_idx: (84,)
+  Extra:
+    door_idx:
+    - 84
   > Door to Nocturnal Shaft
       Trivial
 
 ----------------
 Pillar Puzzle
-Extra - map_name: Sector 638
-Extra - room_id: [38]
+Extra:
+  map_name: Sector 638
+  room_id:
+  - 38
 > Pickup (Energy Tank); Heals? False
   * Layers: default
   * Pickup 97; Category? Major
-  * Extra - area: 6
-  * Extra - room: 38
-  * Extra - blockx: 45
-  * Extra - blocky: 6
+  Extra:
+    area: 6
+    room: 38
+    blockx: 45
+    blocky: 6
   > Door to Nocturnal Shaft
       Trivial
 
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Nocturnal Shaft/Door to Pillar Puzzle
-  * Extra - door_idx: (86,)
+  Extra:
+    door_idx:
+    - 86
   > Pickup (Energy Tank)
       All of the following:
           Speed Booster
@@ -1220,32 +1491,38 @@ Extra - room_id: [38]
 
 ----------------
 Spaceboost Alley
-Extra - map_name: Sector 639
-Extra - room_id: [39]
+Extra:
+  map_name: Sector 639
+  room_id:
+  - 39
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 98; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 39
-  * Extra - blockx: 33
-  * Extra - blocky: 10
+  Extra:
+    area: 6
+    room: 39
+    blockx: 33
+    blocky: 10
   > Bottom of Room
       Trivial
 
 > Pickup (Power Bomb Tank 2); Heals? False
   * Layers: default
   * Pickup 99; Category? Minor
-  * Extra - area: 6
-  * Extra - room: 39
-  * Extra - blockx: 10
-  * Extra - blocky: 24
+  Extra:
+    area: 6
+    room: 39
+    blockx: 10
+    blocky: 24
   > Bottom of Room
       Trivial
 
 > Door to X-B.O.X. Access; Heals? False
   * Layers: default
   * Open Hatch to X-B.O.X. Access/Door to Spaceboost Alley
-  * Extra - door_idx: (90,)
+  Extra:
+    door_idx:
+    - 90
   > Bottom of Room
       Trivial
 
@@ -1262,19 +1539,25 @@ Extra - room_id: [39]
 
 ----------------
 Cavern Save Access
-Extra - map_name: Sector 640
-Extra - room_id: [40]
+Extra:
+  map_name: Sector 640
+  room_id:
+  - 40
 > Door to Clogged Cavern; Heals? False
   * Layers: default
   * L0 Hatch to Clogged Cavern/Door to Cavern Save Access
-  * Extra - door_idx: (47,)
+  Extra:
+    door_idx:
+    - 47
   > Door to Cavern Save Room
       Trivial
 
 > Door to Cavern Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Cavern Save Room/Door to Cavern Save Access
-  * Extra - door_idx: (91,)
+  Extra:
+    door_idx:
+    - 91
   > Door to Clogged Cavern
       Trivial
 

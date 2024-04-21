@@ -1,13 +1,33 @@
 ----------------
 Lobby Save Station
-Extra - total_boundings: {'x1': -7400.0, 'x2': -1800.0, 'y1': -6400.0, 'y2': -3900.0}
-Extra - polygon: [[-1800.0, -5600.0], [-1900.0, -5600.0], [-5100.0, -4700.0], [-5100.0, -3900.0], [-7400.0, -3900.0], [-7400.0, -6400.0], [-1800.0, -6400.0]]
-Extra - asset_id: collision_camera_001
+Extra:
+  total_boundings:
+    x1: -7400.0
+    x2: -1800.0
+    y1: -6400.0
+    y2: -3900.0
+  polygon:
+  - - -1800.0
+    - -5600.0
+  - - -1900.0
+    - -5600.0
+  - - -5100.0
+    - -4700.0
+  - - -5100.0
+    - -3900.0
+  - - -7400.0
+    - -3900.0
+  - - -7400.0
+    - -6400.0
+  - - -1800.0
+    - -6400.0
+  asset_id: collision_camera_001
 > Save Station; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation_001
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation_001
+  Extra:
+    actor_name: LE_Platform_SaveStation_001
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation_001
   > Door to Transport to Tower Interior East
       Trivial
   > Door to Meboid Millpond
@@ -33,16 +53,18 @@ Extra - asset_id: collision_camera_001
 > Door to Transport to Tower Interior East; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Tower Interior East/Door to Lobby Save Station
-  * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door016
+    actor_type: doorpowerpower
   > Save Station
       Trivial
 
 > Door to Meboid Millpond; Heals? False
   * Layers: default
   * Power Beam Door to Meboid Millpond/Door to Lobby Save Station
-  * Extra - actor_name: Door019
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door019
+    actor_type: doorpowerpower
   > Save Station
       All of the following:
           Morph Ball
@@ -80,15 +102,29 @@ Extra - asset_id: collision_camera_001
 
 ----------------
 Transport to Tower Interior East
-Extra - total_boundings: {'x1': -5200.0, 'x2': -2400.0, 'y1': -4700.0, 'y2': -700.0}
-Extra - polygon: [[-5200.0, -700.0], [-5200.0, -4700.0], [-2400.0, -4700.0], [-2400.0, -700.0]]
-Extra - asset_id: collision_camera_002
+Extra:
+  total_boundings:
+    x1: -5200.0
+    x2: -2400.0
+    y1: -4700.0
+    y2: -700.0
+  polygon:
+  - - -5200.0
+    - -700.0
+  - - -5200.0
+    - -4700.0
+  - - -2400.0
+    - -4700.0
+  - - -2400.0
+    - -700.0
+  asset_id: collision_camera_002
 > Elevator to Area 5 Tower Interior; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Transport to Tower Lobby East/Elevator to Area 5 Tower Lobby
-  * Extra - actor_name: LE_Platform_Elevator_FromArea06C_01
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea06C_01
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea06C_01
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea06C_01
   > Door to Lobby Save Station
       Any of the following:
           Lightning Armor or Phase Drift
@@ -111,8 +147,9 @@ Extra - asset_id: collision_camera_002
 > Door to Lobby Teleporter West; Heals? False
   * Layers: default
   * Access Locked to Lobby Teleporter West/Door to Transport to Tower Interior East
-  * Extra - actor_name: Door015
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door015
+    actor_type: doorpowerclosed
   > Door to Lobby Save Station
       Any of the following:
           Lightning Armor or Phase Drift
@@ -128,8 +165,9 @@ Extra - asset_id: collision_camera_002
 > Door to Lobby Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Save Station/Door to Transport to Tower Interior East
-  * Extra - actor_name: Door016
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door016
+    actor_type: doorpowerpower
   > Top of Room
       Any of the following:
           All of the following:
@@ -168,14 +206,44 @@ Extra - asset_id: collision_camera_002
 
 ----------------
 Transport to Areas 4 and 6
-Extra - total_boundings: {'x1': 11300.0, 'x2': 21150.0, 'y1': -14200.0, 'y2': -7000.0}
-Extra - polygon: [[11300.0, -7000.0], [11300.0, -13000.0], [13300.0, -13000.0], [13300.0, -14500.0], [17800.0, -14500.0], [17800.0, -8700.0], [18100.0, -8300.0], [20700.0, -7900.0], [21150.0, -7900.0], [21150.0, -7140.64013671875], [16300.0, -7140.64013671875], [15200.0, -7000.0]]
-Extra - asset_id: collision_camera_004
+Extra:
+  total_boundings:
+    x1: 11300.0
+    x2: 21150.0
+    y1: -14200.0
+    y2: -7000.0
+  polygon:
+  - - 11300.0
+    - -7000.0
+  - - 11300.0
+    - -13000.0
+  - - 13300.0
+    - -13000.0
+  - - 13300.0
+    - -14500.0
+  - - 17800.0
+    - -14500.0
+  - - 17800.0
+    - -8700.0
+  - - 18100.0
+    - -8300.0
+  - - 20700.0
+    - -7900.0
+  - - 21150.0
+    - -7900.0
+  - - 21150.0
+    - -7140.64013671875
+  - - 16300.0
+    - -7140.64013671875
+  - - 15200.0
+    - -7000.0
+  asset_id: collision_camera_004
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 102; Category? Minor
-  * Extra - actor_name: LE_Item_002
-  * Extra - actor_type: item_supermissiletank
+  Extra:
+    actor_name: LE_Item_002
+    actor_type: item_supermissiletank
   > Ammo Recharge Station
       Screw Attack
   > Chozo Seal
@@ -187,8 +255,9 @@ Extra - asset_id: collision_camera_004
 
 > Ammo Recharge Station; Heals? False
   * Layers: default
-  * Extra - actor_name: LE_Platform_AmmoRecharge_001
-  * Extra - actor_type: weightactivatedplatform
+  Extra:
+    actor_name: LE_Platform_AmmoRecharge_001
+    actor_type: weightactivatedplatform
   > Pickup (Super Missile Tank)
       All of the following:
           Morph Ball and Screw Attack
@@ -212,9 +281,10 @@ Extra - asset_id: collision_camera_004
 > Chozo Seal; Heals? False
   * Layers: default
   * Hint
-  * Extra - actor_name: LE_ChozoUnlockAreaDNA
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
+  Extra:
+    actor_name: LE_ChozoUnlockAreaDNA
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Ammo Recharge Station
       Trivial
   > Elevator to Area 4 Central Caves
@@ -236,26 +306,29 @@ Extra - asset_id: collision_camera_004
 > Elevator to Area 4 Central Caves; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Transport to Area 5/Elevator to Area 5 Tower Lobby
-  * Extra - actor_name: LE_Platform_Elevator_FromArea04
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea04
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea04
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea04
   > Chozo Seal
       Trivial
 
 > Elevator to Area 6; Heals? False
   * Layers: default
   * Elevator to Transport to Area 5/Elevator to Area 5 Tower Lobby
-  * Extra - actor_name: LE_Platform_Elevator_FromArea07
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea07
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea07
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea07
   > Below Center Tunnel
       Morph Ball and After Area 5 (Tower Lobby) - Transport to Areas 4 and 6 Grapple Block Bottom
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation_002
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation_002
+  Extra:
+    actor_name: LE_Platform_SaveStation_002
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation_002
   > Chozo Seal
       Trivial
   > Dock to Lobby Passageway
@@ -266,8 +339,9 @@ Extra - asset_id: collision_camera_004
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 109; Category? Minor
-  * Extra - actor_name: HiddenPowerup002
-  * Extra - actor_type: item_powerbombtank
+  Extra:
+    actor_name: HiddenPowerup002
+    actor_type: item_powerbombtank
   > Chozo Seal
       Baby Metroid and Morph Ball
   > Next to Top Grapple Block
@@ -364,22 +438,59 @@ Extra - asset_id: collision_camera_004
 
 ----------------
 Lobby Teleporter West
-Extra - total_boundings: {'x1': -16800.0, 'x2': -5100.0, 'y1': -7900.0, 'y2': 100.0}
-Extra - polygon: [[-16800.0, -3000.0], [-16800.0, -5800.0], [-12400.0, -5799.89013671875], [-10900.0, -6000.0], [-10900.0, -7900.0], [-8500.0, -7900.0], [-8500.0, -1900.0], [-8197.349609375, -1900.0], [-6700.0, -1600.0], [-5100.0, -1600.0], [-5100.0, 100.0], [-11600.0, 100.0], [-11600.0, -1000.0], [-12600.0, -1200.0], [-12600.0, -3000.0]]
-Extra - asset_id: collision_camera_006
+Extra:
+  total_boundings:
+    x1: -16800.0
+    x2: -5100.0
+    y1: -7900.0
+    y2: 100.0
+  polygon:
+  - - -16800.0
+    - -3000.0
+  - - -16800.0
+    - -5800.0
+  - - -12400.0
+    - -5799.89013671875
+  - - -10900.0
+    - -6000.0
+  - - -10900.0
+    - -7900.0
+  - - -8500.0
+    - -7900.0
+  - - -8500.0
+    - -1900.0
+  - - -8197.349609375
+    - -1900.0
+  - - -6700.0
+    - -1600.0
+  - - -5100.0
+    - -1600.0
+  - - -5100.0
+    - 100.0
+  - - -11600.0
+    - 100.0
+  - - -11600.0
+    - -1000.0
+  - - -12600.0
+    - -1200.0
+  - - -12600.0
+    - -3000.0
+  asset_id: collision_camera_006
 > Pickup (Aeion Tank); Heals? False
   * Layers: default
   * Pickup 105; Category? Minor
-  * Extra - actor_name: LE_Item_006
-  * Extra - actor_type: item_senergytank
+  Extra:
+    actor_name: LE_Item_006
+    actor_type: item_senergytank
   > Next to Grapple Block
       Trivial
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 106; Category? Minor
-  * Extra - actor_name: LE_Item_007
-  * Extra - actor_type: item_powerbombtank
+  Extra:
+    actor_name: LE_Item_007
+    actor_type: item_powerbombtank
   > Door to Transport to Tower Interior East
       Trivial
   > Top Platform
@@ -393,33 +504,37 @@ Extra - asset_id: collision_camera_006
 > Teleporter; Heals? False; Default Node
   * Layers: default
   * Teleporter Network (Unlocked by After Area 5 (Tower Lobby) - Teleporter Unlocked (West))
-  * Extra - actor_name: LE_Platform_Teleporter_06A_002
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_Teleporter_06A_002
+  Extra:
+    actor_name: LE_Platform_Teleporter_06A_002
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_Teleporter_06A_002
   > Next to Teleporter
       Trivial
 
 > Door to Transport to Tower Interior East; Heals? False
   * Layers: default
   * Power Beam Door to Transport to Tower Interior East/Door to Lobby Teleporter West
-  * Extra - actor_name: Door015
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door015
+    actor_type: doorpowerclosed
   > Pickup (Power Bomb Tank)
       Trivial
 
 > Door to Transport to Tower Interior West; Heals? False
   * Layers: default
   * Access Locked to Transport to Tower Interior West/Door to Lobby Teleporter West
-  * Extra - actor_name: Door017
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door017
+    actor_type: doorpowerclosed
   > Top Platform
       Trivial
 
 > Door to Gamma+ Arena Access; Heals? False
   * Layers: default
   * Power Beam Door to Gamma+ Arena Access/Door to Lobby Teleporter West
-  * Extra - actor_name: Door018
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door018
+    actor_type: doorpowerpower
   > Next to Left Pool
       Trivial
 
@@ -581,9 +696,22 @@ Extra - asset_id: collision_camera_006
 
 ----------------
 J-Shape Tunnel
-Extra - total_boundings: {'x1': -8600.0, 'x2': -7300.0, 'y1': -6400.0, 'y2': -5000.0}
-Extra - polygon: [[-8600.0, -5000.0], [-8600.0, -6400.0], [-7300.0, -6400.0], [-7300.0, -5000.0]]
-Extra - asset_id: collision_camera_007
+Extra:
+  total_boundings:
+    x1: -8600.0
+    x2: -7300.0
+    y1: -6400.0
+    y2: -5000.0
+  polygon:
+  - - -8600.0
+    - -5000.0
+  - - -8600.0
+    - -6400.0
+  - - -7300.0
+    - -6400.0
+  - - -7300.0
+    - -5000.0
+  asset_id: collision_camera_007
 > Tunnel to Lobby Save Station; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Lobby Save Station/Tunnel to J-Shape Tunnel
@@ -617,53 +745,92 @@ Extra - asset_id: collision_camera_007
 
 ----------------
 Transport to Tower Interior West
-Extra - total_boundings: {'x1': -12800.0, 'x2': -11500.0, 'y1': -679.427001953125, 'y2': 79.42769622802734}
-Extra - polygon: [[-12800.0, 79.42769622802734], [-12800.0, -679.427001953125], [-11500.0, -679.427001953125], [-11500.0, 79.42769622802734]]
-Extra - asset_id: collision_camera_010
+Extra:
+  total_boundings:
+    x1: -12800.0
+    x2: -11500.0
+    y1: -679.427001953125
+    y2: 79.42769622802734
+  polygon:
+  - - -12800.0
+    - 79.42769622802734
+  - - -12800.0
+    - -679.427001953125
+  - - -11500.0
+    - -679.427001953125
+  - - -11500.0
+    - 79.42769622802734
+  asset_id: collision_camera_010
 > Elevator to Area 5 Tower Interior; Heals? False
   * Layers: default
   * Elevator to Transport to Tower Lobby West/Elevator to Area 5 Tower Lobby
-  * Extra - actor_name: LE_Platform_Elevator_FromArea06C_02
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea06C_02
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea06C_02
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea06C_02
   > Door to Lobby Teleporter West
       Trivial
 
 > Door to Lobby Teleporter West; Heals? False; Default Node
   * Layers: default
   * Power Beam Door to Lobby Teleporter West/Door to Transport to Tower Interior West
-  * Extra - actor_name: Door017
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door017
+    actor_type: doorpowerclosed
   > Elevator to Area 5 Tower Interior
       Trivial
 
 ----------------
 Lobby Teleporter East
-Extra - total_boundings: {'x1': 5100.0, 'x2': 8800.0, 'y1': -12000.0, 'y2': -5400.0}
-Extra - polygon: [[8800.0, -5400.0], [5950.0, -5400.0], [5950.0, -6400.0], [5400.0, -6782.669921875], [5400.0, -9300.0], [5100.0, -9800.0], [5100.0, -12000.0], [8800.0, -12000.0]]
-Extra - asset_id: collision_camera_011
+Extra:
+  total_boundings:
+    x1: 5100.0
+    x2: 8800.0
+    y1: -12000.0
+    y2: -5400.0
+  polygon:
+  - - 8800.0
+    - -5400.0
+  - - 5950.0
+    - -5400.0
+  - - 5950.0
+    - -6400.0
+  - - 5400.0
+    - -6782.669921875
+  - - 5400.0
+    - -9300.0
+  - - 5100.0
+    - -9800.0
+  - - 5100.0
+    - -12000.0
+  - - 8800.0
+    - -12000.0
+  asset_id: collision_camera_011
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 103; Category? Minor
-  * Extra - actor_name: LE_Item_003
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_003
+    actor_type: item_missiletank
   > Next to Pickup
       Trivial
 
 > Teleporter; Heals? False
   * Layers: default
   * Teleporter Network (Unlocked by After Area 5 (Tower Lobby) - Teleporter Unlocked (East))
-  * Extra - actor_name: LE_Platform_Teleporter_06A_001
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_Teleporter_06A_001
+  Extra:
+    actor_name: LE_Platform_Teleporter_06A_001
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_Teleporter_06A_001
   > Next to Teleporter
       Trivial
 
 > Door to Lobby Passageway; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Passageway/Door to Lobby Teleporter East
-  * Extra - actor_name: Door001
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door001
+    actor_type: doorpowerpower
   > Next to Teleporter
       All of the following:
           Morph Ball
@@ -682,8 +849,9 @@ Extra - asset_id: collision_camera_011
 > Door to Alpha+ Arena; Heals? False
   * Layers: default
   * Power Beam Door to Alpha+ Arena/Door to Lobby Teleporter East
-  * Extra - actor_name: Door021
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door021
+    actor_type: doorpowerpower
   > Next to Teleporter
       Trivial
   > Start Point
@@ -769,28 +937,44 @@ Extra - asset_id: collision_camera_011
 
 > Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_001
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_001
   > Door to Alpha+ Arena
       Trivial
 
 ----------------
 Alpha+ Arena
-Extra - total_boundings: {'x1': 3050.0, 'x2': 6050.0, 'y1': -6300.0, 'y2': -5400.0}
-Extra - polygon: [[6050.0, -5400.0], [3050.0, -5400.0], [3050.0, -6300.0], [6050.0, -6300.0]]
-Extra - asset_id: collision_camera_012
+Extra:
+  total_boundings:
+    x1: 3050.0
+    x2: 6050.0
+    y1: -6300.0
+    y2: -5400.0
+  polygon:
+  - - 6050.0
+    - -5400.0
+  - - 3050.0
+    - -5400.0
+  - - 3050.0
+    - -6300.0
+  - - 6050.0
+    - -6300.0
+  asset_id: collision_camera_012
 > Door to Meboid Millpond; Heals? False
   * Layers: default
   * Power Beam Door to Meboid Millpond/Door to Alpha+ Arena
-  * Extra - actor_name: Door020
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door020
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
 > Door to Lobby Teleporter East; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Teleporter East/Door to Alpha+ Arena
-  * Extra - actor_name: Door021
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door021
+    actor_type: doorpowerpower
   > Room Center
       Trivial
 
@@ -802,7 +986,8 @@ Extra - asset_id: collision_camera_012
 
 > Room Center; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_001_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Alpha_001_Checkpoint
   > Door to Meboid Millpond
       Trivial
   > Door to Lobby Teleporter East
@@ -813,21 +998,36 @@ Extra - asset_id: collision_camera_012
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 188; Category? Major
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Alpha_001
+  Extra:
+    pickup_type: metroid
+    spawngroup: SG_Alpha_001
   > Room Center
       Trivial
 
 ----------------
 Gamma+ Arena Access
-Extra - total_boundings: {'x1': -20800.0, 'x2': -16700.0, 'y1': -4100.0, 'y2': -2100.0}
-Extra - polygon: [[-20800.0, -2100.0], [-20800.0, -4100.0], [-16700.0, -4100.0], [-16700.0, -2100.0]]
-Extra - asset_id: collision_camera_013
+Extra:
+  total_boundings:
+    x1: -20800.0
+    x2: -16700.0
+    y1: -4100.0
+    y2: -2100.0
+  polygon:
+  - - -20800.0
+    - -2100.0
+  - - -20800.0
+    - -4100.0
+  - - -16700.0
+    - -4100.0
+  - - -16700.0
+    - -2100.0
+  asset_id: collision_camera_013
 > Door to Lobby Teleporter West; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Teleporter West/Door to Gamma+ Arena Access
-  * Extra - actor_name: Door018
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door018
+    actor_type: doorpowerpower
   > Tunnel to Gamma+ Arena
       Lay Any Bomb
   > Start Point
@@ -841,20 +1041,39 @@ Extra - asset_id: collision_camera_013
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Gamma_004
+  Extra:
+    start_point_actor_name: ST_SG_Gamma_004
   > Door to Lobby Teleporter West
       Trivial
 
 ----------------
 Phase Drift Chamber
-Extra - total_boundings: {'x1': -6100.0, 'x2': -1800.0, 'y1': -7900.0, 'y2': -6300.0}
-Extra - polygon: [[-3000.0, -7900.0], [-1800.0, -7900.0], [-1800.0, -6300.0], [-6100.0, -6300.0], [-6100.0, -7200.0], [-4600.0, -7200.0]]
-Extra - asset_id: collision_camera_014
+Extra:
+  total_boundings:
+    x1: -6100.0
+    x2: -1800.0
+    y1: -7900.0
+    y2: -6300.0
+  polygon:
+  - - -3000.0
+    - -7900.0
+  - - -1800.0
+    - -7900.0
+  - - -1800.0
+    - -6300.0
+  - - -6100.0
+    - -6300.0
+  - - -6100.0
+    - -7200.0
+  - - -4600.0
+    - -7200.0
+  asset_id: collision_camera_014
 > Pickup (Phase Drift); Heals? False
   * Layers: default
   * Pickup 107; Category? Major
-  * Extra - actor_name: LE_SpecialAbility_PhaseDisplacement
-  * Extra - actor_type: powerup_phasedisplacement
+  Extra:
+    actor_name: LE_SpecialAbility_PhaseDisplacement
+    actor_type: powerup_phasedisplacement
   > Left of Crumble Blocks
       Trivial
   > Left of Statue
@@ -863,8 +1082,9 @@ Extra - asset_id: collision_camera_014
 > Pickup (Super Missile Tank); Heals? False
   * Layers: default
   * Pickup 108; Category? Minor
-  * Extra - actor_name: HiddenPowerup001
-  * Extra - actor_type: item_supermissiletank
+  Extra:
+    actor_name: HiddenPowerup001
+    actor_type: item_supermissiletank
   > Tunnel to Meboid Millpond (Bottom)
       Trivial
   > Left of Crumble Blocks
@@ -895,7 +1115,8 @@ Extra - asset_id: collision_camera_014
 
 > Left of Crumble Blocks; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_CheckPoint_002
+  Extra:
+    start_point_actor_name: ST_CheckPoint_002
   > Pickup (Phase Drift)
       Morph Ball
   > Pickup (Super Missile Tank)
@@ -915,7 +1136,8 @@ Extra - asset_id: collision_camera_014
 
 > Left of Statue; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  Extra:
+    start_point_actor_name: ST_DEBUG_Bestowal
   > Pickup (Phase Drift)
       Any of the following:
           Morph Ball
@@ -927,22 +1149,37 @@ Extra - asset_id: collision_camera_014
 
 ----------------
 Meboid Millpond
-Extra - total_boundings: {'x1': -1900.0, 'x2': 3150.0, 'y1': -8600.0, 'y2': -5200.0}
-Extra - polygon: [[3150.0, -8600.0], [3150.0, -5200.0], [-1900.0, -5200.0], [-1900.0, -8600.0]]
-Extra - asset_id: collision_camera_015
+Extra:
+  total_boundings:
+    x1: -1900.0
+    x2: 3150.0
+    y1: -8600.0
+    y2: -5200.0
+  polygon:
+  - - 3150.0
+    - -8600.0
+  - - 3150.0
+    - -5200.0
+  - - -1900.0
+    - -5200.0
+  - - -1900.0
+    - -8600.0
+  asset_id: collision_camera_015
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 104; Category? Minor
-  * Extra - actor_name: LE_Item_004
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_004
+    actor_type: item_missiletank
   > Room Bottom
       Morph Ball
 
 > Door to Lobby Save Station; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Save Station/Door to Meboid Millpond
-  * Extra - actor_name: Door019
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door019
+    actor_type: doorpowerpower
   > Tunnel to Phase Drift Chamber (Top)
       Lay Power Bomb
   > Room Bottom
@@ -951,8 +1188,9 @@ Extra - asset_id: collision_camera_015
 > Door to Alpha+ Arena; Heals? False
   * Layers: default
   * Power Beam Door to Alpha+ Arena/Door to Meboid Millpond
-  * Extra - actor_name: Door020
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door020
+    actor_type: doorpowerpower
   > Room Bottom
       Trivial
 
@@ -1008,9 +1246,22 @@ Extra - asset_id: collision_camera_015
 
 ----------------
 Gamma+ Arena
-Extra - total_boundings: {'x1': -24700.0, 'x2': -20700.0, 'y1': -4100.0, 'y2': -2100.0}
-Extra - polygon: [[-24700.0, -2100.0], [-24700.0, -4100.0], [-20700.0, -4100.0], [-20700.0, -2100.0]]
-Extra - asset_id: collision_camera_016
+Extra:
+  total_boundings:
+    x1: -24700.0
+    x2: -20700.0
+    y1: -4100.0
+    y2: -2100.0
+  polygon:
+  - - -24700.0
+    - -2100.0
+  - - -24700.0
+    - -4100.0
+  - - -20700.0
+    - -4100.0
+  - - -20700.0
+    - -2100.0
+  asset_id: collision_camera_016
 > Tunnel to Gamma+ Arena Access; Heals? False
   * Layers: default
   * Tunnel to Gamma+ Arena Access/Tunnel to Gamma+ Arena
@@ -1025,7 +1276,8 @@ Extra - asset_id: collision_camera_016
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Gamma_004_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Gamma_004_Checkpoint
   > Tunnel to Gamma+ Arena Access
       Any of the following:
           Lay Power Bomb
@@ -1038,21 +1290,36 @@ Extra - asset_id: collision_camera_016
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 202; Category? Major
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Gamma_004
+  Extra:
+    pickup_type: metroid
+    spawngroup: SG_Gamma_004
   > Start Point
       Trivial
 
 ----------------
 Lobby Passageway
-Extra - total_boundings: {'x1': 8700.0, 'x2': 11400.0, 'y1': -12000.0, 'y2': -6700.0}
-Extra - polygon: [[11400.0, -6700.0], [8700.0, -6700.0], [8700.0, -12000.0], [11400.0, -12000.0]]
-Extra - asset_id: collision_camera_017
+Extra:
+  total_boundings:
+    x1: 8700.0
+    x2: 11400.0
+    y1: -12000.0
+    y2: -6700.0
+  polygon:
+  - - 11400.0
+    - -6700.0
+  - - 8700.0
+    - -6700.0
+  - - 8700.0
+    - -12000.0
+  - - 11400.0
+    - -12000.0
+  asset_id: collision_camera_017
 > Door to Lobby Teleporter East; Heals? False
   * Layers: default
   * Power Beam Door to Lobby Teleporter East/Door to Lobby Passageway
-  * Extra - actor_name: Door001
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door001
+    actor_type: doorpowerpower
   > Room Center
       All of the following:
           # Deal with the Wallfire

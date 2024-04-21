@@ -1,31 +1,57 @@
 ----------------
 Transport to Areas 1 and 3
-Extra - total_boundings: {'x1': 19000.0, 'x2': 25000.0, 'y1': -9600.0, 'y2': -900.0}
-Extra - polygon: [[20400.0, -900.0], [20400.0, -1900.0], [19000.0, -2000.0], [19000.0, -4600.0], [20100.0, -4600.0], [20300.0, -5200.0], [20300.0, -9600.0], [25000.0, -9600.0], [25000.0, -900.0]]
-Extra - asset_id: collision_camera
+Extra:
+  total_boundings:
+    x1: 19000.0
+    x2: 25000.0
+    y1: -9600.0
+    y2: -900.0
+  polygon:
+  - - 20400.0
+    - -900.0
+  - - 20400.0
+    - -1900.0
+  - - 19000.0
+    - -2000.0
+  - - 19000.0
+    - -4600.0
+  - - 20100.0
+    - -4600.0
+  - - 20300.0
+    - -5200.0
+  - - 20300.0
+    - -9600.0
+  - - 25000.0
+    - -9600.0
+  - - 25000.0
+    - -900.0
+  asset_id: collision_camera
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 52; Category? Minor
-  * Extra - actor_name: LE_Item_005
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_005
+    actor_type: item_missiletank
   > Chozo Seal
       Morph Ball
 
 > Elevator to Area 1; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Transport to Surface and Area 2/Elevator to Area 2 Dam Entryway
-  * Extra - actor_name: LE_Platform_Elevator_FromArea01
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea01
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea01
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea01
   > Save Station
       Trivial
 
 > Elevator to Area 3 Factory Exterior; Heals? False
   * Layers: default
   * Elevator to Transport to Area 2/Elevator to Area 2 Dam Entryway
-  * Extra - actor_name: LE_Platform_Elevator_FromArea03
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea03
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea03
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea03
   > Chozo Seal
       Morph Ball
   > Event - Grapple Block
@@ -33,9 +59,10 @@ Extra - asset_id: collision_camera
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
-  * Extra - actor_name: LE_Platform_SaveStation002
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_SaveStation002
+  Extra:
+    actor_name: LE_Platform_SaveStation002
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_SaveStation002
   > Elevator to Area 1
       Trivial
   > Chozo Seal
@@ -46,9 +73,10 @@ Extra - asset_id: collision_camera
 > Chozo Seal; Heals? False
   * Layers: default
   * Hint
-  * Extra - actor_name: LE_ChozoUnlockAreaDNA
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
+  Extra:
+    actor_name: LE_ChozoUnlockAreaDNA
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Pickup (Missile Tank)
       Any of the following:
           Lightning Armor and Lay Any Bomb
@@ -82,24 +110,27 @@ Extra - asset_id: collision_camera
 > Door to Entryway Teleporter (Top); Heals? False
   * Layers: default
   * Access Locked to Entryway Teleporter/Door to Transport to Areas 1 and 3 (Top)
-  * Extra - actor_name: Door006
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door006
+    actor_type: doorpowerclosed
   > Save Station
       Trivial
 
 > Door to Entryway Teleporter (Bottom); Heals? False
   * Layers: default
   * Power Beam Door to Entryway Teleporter/Door to Transport to Areas 1 and 3 (Bottom)
-  * Extra - actor_name: Door007
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door007
+    actor_type: doorpowerpower
   > Chozo Seal
       Trivial
 
 > Pickup (Power Bomb Tank); Heals? False
   * Layers: default
   * Pickup 54; Category? Minor
-  * Extra - actor_name: HiddenPowerup001
-  * Extra - actor_type: item_powerbombtank
+  Extra:
+    actor_name: HiddenPowerup001
+    actor_type: item_powerbombtank
   > Chozo Seal
       Trivial
 
@@ -111,39 +142,64 @@ Extra - asset_id: collision_camera
 
 ----------------
 Entryway Teleporter
-Extra - total_boundings: {'x1': 13600.0, 'x2': 19100.0, 'y1': -5400.0, 'y2': -200.0}
-Extra - polygon: [[13800.0, -200.0], [13800.0, -1500.0], [14050.0, -1500.0], [14050.0, -2650.0], [14150.0, -2650.0], [14150.0, -5400.0], [19100.0, -5400.0], [19100.0, -200.0]]
-Extra - asset_id: collision_camera_003
+Extra:
+  total_boundings:
+    x1: 13600.0
+    x2: 19100.0
+    y1: -5400.0
+    y2: -200.0
+  polygon:
+  - - 13800.0
+    - -200.0
+  - - 13800.0
+    - -1500.0
+  - - 14050.0
+    - -1500.0
+  - - 14050.0
+    - -2650.0
+  - - 14150.0
+    - -2650.0
+  - - 14150.0
+    - -5400.0
+  - - 19100.0
+    - -5400.0
+  - - 19100.0
+    - -200.0
+  asset_id: collision_camera_003
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 51; Category? Minor
-  * Extra - actor_name: LE_Item_003
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_003
+    actor_type: item_missiletank
   > Below Teleporter
       Trivial
 
 > Teleporter; Heals? False
   * Layers: default
   * Teleporter Network (Unlocked by After Area 2 (Dam Entryway) - Dam Entryway Teleporter Unlocked)
-  * Extra - actor_name: LE_Platform_Teleporter_02_01
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_Teleporter_02_01
+  Extra:
+    actor_name: LE_Platform_Teleporter_02_01
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_Teleporter_02_01
   > Below Teleporter
       Trivial
 
 > Door to Transport to Areas 1 and 3 (Top); Heals? False
   * Layers: default
   * Power Beam Door to Transport to Areas 1 and 3/Door to Entryway Teleporter (Top)
-  * Extra - actor_name: Door006
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door006
+    actor_type: doorpowerclosed
   > Door to Transport to Areas 1 and 3 (Bottom)
       Morph Ball
 
 > Door to Transport to Areas 1 and 3 (Bottom); Heals? False
   * Layers: default
   * Power Beam Door to Transport to Areas 1 and 3/Door to Entryway Teleporter (Bottom)
-  * Extra - actor_name: Door007
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door007
+    actor_type: doorpowerpower
   > Door to Transport to Areas 1 and 3 (Top)
       Morph Ball
   > Below Teleporter
@@ -158,8 +214,9 @@ Extra - asset_id: collision_camera_003
 > Door to Alpha+ Arena; Heals? False
   * Layers: default
   * Power Beam Door to Alpha+ Arena/Door to Entryway Teleporter
-  * Extra - actor_name: Door008
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door008
+    actor_type: doorpowerpower
   > Pickup (Missile Tank)
       Morph Ball
   > Below Teleporter
@@ -186,28 +243,48 @@ Extra - asset_id: collision_camera_003
 
 > Start Point; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_002
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_002
   > Door to Alpha+ Arena
       Trivial
 
 ----------------
 Lightning Armor & Transport to Dam Exterior East
-Extra - total_boundings: {'x1': 3900.0, 'x2': 8800.0, 'y1': -3000.0, 'y2': 700.0}
-Extra - polygon: [[3900.0, 700.0], [3900.0, -2500.0], [5600.0, -2500.0], [7200.0, -3000.0], [8800.0, -3000.0], [8800.0, 700.0]]
-Extra - asset_id: collision_camera_004
+Extra:
+  total_boundings:
+    x1: 3900.0
+    x2: 8800.0
+    y1: -3000.0
+    y2: 700.0
+  polygon:
+  - - 3900.0
+    - 700.0
+  - - 3900.0
+    - -2500.0
+  - - 5600.0
+    - -2500.0
+  - - 7200.0
+    - -3000.0
+  - - 8800.0
+    - -3000.0
+  - - 8800.0
+    - 700.0
+  asset_id: collision_camera_004
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 50; Category? Minor
-  * Extra - actor_name: LE_Item_002
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_002
+    actor_type: item_missiletank
   > Next to Pickup
       Trivial
 
 > Pickup (Lightning Armor); Heals? False
   * Layers: default
   * Pickup 53; Category? Major
-  * Extra - actor_name: LE_SpecialAbility_EnergyShield
-  * Extra - actor_type: powerup_energyshield
+  Extra:
+    actor_name: LE_SpecialAbility_EnergyShield
+    actor_type: powerup_energyshield
   > Left Spawnpoint
       Trivial
   > Right Spawnpoint
@@ -216,31 +293,35 @@ Extra - asset_id: collision_camera_004
 > Elevator to Area 2 Dam Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Elevator to Dam Exterior/Elevator to Area 2 Dam Entryway
-  * Extra - actor_name: LE_Platform_Elevator_FromArea02A
-  * Extra - actor_type: weightactivatedplatform
-  * Extra - start_point_actor_name: ST_FromArea02A
+  Extra:
+    actor_name: LE_Platform_Elevator_FromArea02A
+    actor_type: weightactivatedplatform
+    start_point_actor_name: ST_FromArea02A
   > Door to Transport Access (Top)
       Trivial
 
 > Door to Transport Access (Bottom); Heals? False
   * Layers: default
   * Power Beam Door to Transport Access/Door to Lightning Armor & Transport to Dam Exterior East (Bottom)
-  * Extra - actor_name: Door001
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door001
+    actor_type: doorpowerpower
   > Right Spawnpoint
       Trivial
 
 > Door to Transport Access (Top); Heals? False
   * Layers: default
   * Power Beam Door to Transport Access/Door to Lightning Armor & Transport to Dam Exterior East (Top)
-  * Extra - actor_name: Door003
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door003
+    actor_type: doorpowerclosed
   > Elevator to Area 2 Dam Exterior
       Trivial
 
 > Left Spawnpoint; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_CheckPoint_002
+  Extra:
+    start_point_actor_name: ST_CheckPoint_002
   > Pickup (Lightning Armor)
       Morph Ball
   > Event - Unlock Door
@@ -254,7 +335,8 @@ Extra - asset_id: collision_camera_004
 
 > Right Spawnpoint; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_DEBUG_Bestowal
+  Extra:
+    start_point_actor_name: ST_DEBUG_Bestowal
   > Pickup (Lightning Armor)
       Any of the following:
           Morph Ball
@@ -281,14 +363,28 @@ Extra - asset_id: collision_camera_004
 
 ----------------
 Transport Access
-Extra - total_boundings: {'x1': 8700.0, 'x2': 10500.0, 'y1': -3000.0, 'y2': 100.0}
-Extra - polygon: [[8700.0, 100.0], [8700.0, -3000.0], [10500.0, -3000.0], [10500.0, 100.0]]
-Extra - asset_id: collision_camera_005
+Extra:
+  total_boundings:
+    x1: 8700.0
+    x2: 10500.0
+    y1: -3000.0
+    y2: 100.0
+  polygon:
+  - - 8700.0
+    - 100.0
+  - - 8700.0
+    - -3000.0
+  - - 10500.0
+    - -3000.0
+  - - 10500.0
+    - 100.0
+  asset_id: collision_camera_005
 > Door to Lightning Armor & Transport to Dam Exterior East (Bottom); Heals? False
   * Layers: default
   * Power Beam Door to Lightning Armor & Transport to Dam Exterior East/Door to Transport Access (Bottom)
-  * Extra - actor_name: Door001
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door001
+    actor_type: doorpowerpower
   > Dock to Fleech Swarm Floodway
       Any of the following:
           Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
@@ -318,8 +414,9 @@ Extra - asset_id: collision_camera_005
 > Door to Lightning Armor & Transport to Dam Exterior East (Top); Heals? False
   * Layers: default
   * Power Beam Door to Lightning Armor & Transport to Dam Exterior East/Door to Transport Access (Top)
-  * Extra - actor_name: Door003
-  * Extra - actor_type: doorpowerclosed
+  Extra:
+    actor_name: Door003
+    actor_type: doorpowerclosed
   > Dock to Alpha+ Arena
       Trivial
 
@@ -365,14 +462,28 @@ Extra - asset_id: collision_camera_005
 
 ----------------
 Fleech Swarm Floodway
-Extra - total_boundings: {'x1': 10300.0, 'x2': 15100.0, 'y1': -3200.0, 'y2': -1600.0}
-Extra - polygon: [[10400.0, -1600.0], [10400.0, -3100.0], [14200.0, -3100.0], [14200.0, -1600.0]]
-Extra - asset_id: collision_camera_006
+Extra:
+  total_boundings:
+    x1: 10300.0
+    x2: 15100.0
+    y1: -3200.0
+    y2: -1600.0
+  polygon:
+  - - 10400.0
+    - -1600.0
+  - - 10400.0
+    - -3100.0
+  - - 14200.0
+    - -3100.0
+  - - 14200.0
+    - -1600.0
+  asset_id: collision_camera_006
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 49; Category? Minor
-  * Extra - actor_name: LE_Item_001
-  * Extra - actor_type: item_missiletank
+  Extra:
+    actor_name: LE_Item_001
+    actor_type: item_missiletank
   > Dock to Transport Access
       All of the following:
           Morph Ball
@@ -392,14 +503,28 @@ Extra - asset_id: collision_camera_006
 
 ----------------
 Alpha+ Arena
-Extra - total_boundings: {'x1': 10400.0, 'x2': 13900.0, 'y1': -1500.0, 'y2': -200.0}
-Extra - polygon: [[10400.0, -200.0], [10400.0, -1500.0], [13900.0, -1500.0], [13900.0, -200.0]]
-Extra - asset_id: collision_camera_007
+Extra:
+  total_boundings:
+    x1: 10400.0
+    x2: 13900.0
+    y1: -1500.0
+    y2: -200.0
+  polygon:
+  - - 10400.0
+    - -200.0
+  - - 10400.0
+    - -1500.0
+  - - 13900.0
+    - -1500.0
+  - - 13900.0
+    - -200.0
+  asset_id: collision_camera_007
 > Door to Entryway Teleporter; Heals? False
   * Layers: default
   * Power Beam Door to Entryway Teleporter/Door to Alpha+ Arena
-  * Extra - actor_name: Door008
-  * Extra - actor_type: doorpowerpower
+  Extra:
+    actor_name: Door008
+    actor_type: doorpowerpower
   > Inside Arena
       Trivial
 
@@ -419,7 +544,8 @@ Extra - asset_id: collision_camera_007
 
 > Inside Arena; Heals? False; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
+  Extra:
+    start_point_actor_name: ST_Alpha_002_Checkpoint
   > Door to Entryway Teleporter
       Trivial
   > Dock to Transport Access
@@ -429,15 +555,17 @@ Extra - asset_id: collision_camera_007
 
 > Outside Arena; Heals? False
   * Layers: default
-  * Extra - start_point_actor_name: ST_SG_Alpha_002B
+  Extra:
+    start_point_actor_name: ST_SG_Alpha_002B
   > Dock to Transport Access
       Trivial
 
 > Pickup (DNA); Heals? False
   * Layers: default
   * Pickup 178; Category? Major
-  * Extra - pickup_type: metroid
-  * Extra - spawngroup: SG_Alpha_002
+  Extra:
+    pickup_type: metroid
+    spawngroup: SG_Alpha_002
   > Inside Arena
       Trivial
 
