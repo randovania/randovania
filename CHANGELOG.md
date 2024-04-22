@@ -99,6 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.
 - Added: Screw Attack from the cannons to get the item in Central Mining Station before the Pirate fight.
+- Added: Mining Station B - Room Center to Transit Station with Boost Ball, Bombs, BSJ (Intermediate), and Standable Terrain (Intermediate).
 - Fixed: The video link for the Expert Slope Jump in Central Mining Station now links to a working video.
 - Fixed: Mining Station B - Room Center to Transit Station now properly requires Boost Ball and Standable Terrain (Intermediate) for the No Space Jump Post-Puzzle path.
 
