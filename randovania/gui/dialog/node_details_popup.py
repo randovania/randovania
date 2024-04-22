@@ -130,6 +130,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.layers_combo.clear()
         for layer in game.layers:
             self.layers_combo.addItem(layer)
+        self.layers_combo.setCurrentIndex(self.layers_combo.findText(node.layers[0]))
 
         self.dock_incompatible_model = DockWeaknessListModel(self.game.dock_weakness_database)
         self.dock_incompatible_list.setItemDelegate(self.dock_incompatible_model.delegate)
