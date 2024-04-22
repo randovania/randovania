@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Highlighting nodes in the Map view of the Map tracker will now update the current location.
 - Changed: The output after verifying the installation has been made less misleading.
 - Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
+- Changed: Improve error handling when exporting presets.
 - Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
 
 ### Resolver
