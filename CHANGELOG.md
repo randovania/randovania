@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Added: Linux and macOS now have the Ryujinx exporting option available.
+- Changed: The Missile Tank pickup in Invisible Corpius Room in Artaria has been moved to the left so that it won't overlap with the door in Door Lock Rando.
 - Changed: There is now a thermal gate preventing players from entering the Experiment Z-57 fight without activating the nearby thermal first.
 - Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
 - Fixed: Customizing a preset where EMMI and Bosses were turned off for DNA placement won't have the DNA slider be initially enabled.
