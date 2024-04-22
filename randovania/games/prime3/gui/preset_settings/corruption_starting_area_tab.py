@@ -4,7 +4,7 @@ from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStarti
 
 
 class PresetCorruptionStartingArea(PresetMetroidStartingArea):
-    def create_quick_fill_buttons(self):
+    def create_quick_fill_buttons(self) -> None:
         super().create_quick_fill_buttons()
 
         self.starting_area_quick_fill_ships = self._quick_fill_button(
@@ -23,7 +23,7 @@ class PresetCorruptionStartingArea(PresetMetroidStartingArea):
             ]
         )
 
-    def _starting_location_on_select_ships(self):
+    def _starting_location_on_select_ships(self) -> None:
         region_list = self.game_description.region_list
         ships = [node.identifier for node in region_list.iterate_nodes() if "Samus Ship" in node.name]
 
