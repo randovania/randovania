@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>458</height>
+    <width>501</width>
+    <height>529</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,7 +67,7 @@
       </size>
      </property>
      <property name="text">
-      <string>Input Path (Unmodified Samus Returns extracted RomFS)</string>
+      <string>Input Path (An extracted unmodified Samus Returns RomFS)</string>
      </property>
     </widget>
    </item>
@@ -142,7 +142,7 @@
        <item>
         <widget class="QLabel" name="sd_label">
          <property name="text">
-          <string>Select the driver letter for your SD Card</string>
+          <string>Select the drive letter for your SD Card</string>
          </property>
         </widget>
        </item>
@@ -183,7 +183,7 @@
        <item row="0" column="0" colspan="4">
         <widget class="QLabel" name="ftp_description_label">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your 3DS, via FTP, to a path compatible with Luma.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your 3DS, run &lt;a href=&quot;https://github.com/mtheall/ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ftpd&lt;/span&gt;&lt;/a&gt; or download it directly from the homebrew store.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your 3DS, via FTP, to a path compatible with Luma3DS.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your 3DS, run &lt;a href=&quot;https://github.com/mtheall/ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ftpd&lt;/span&gt;&lt;/a&gt; or download it directly from the homebrew store.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -222,7 +222,17 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLineEdit" name="ftp_ip_edit"/>
+        <widget class="QLineEdit" name="ftp_ip_edit">
+         <property name="inputMask">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>IP</string>
+         </property>
+        </widget>
        </item>
        <item row="2" column="2">
         <widget class="QLineEdit" name="ftp_port_edit">
@@ -231,6 +241,9 @@
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Port</string>
          </property>
         </widget>
        </item>
@@ -253,7 +266,7 @@
          <x>0</x>
          <y>0</y>
          <width>473</width>
-         <height>71</height>
+         <height>171</height>
         </rect>
        </property>
        <property name="text">
@@ -340,7 +353,7 @@
    <item row="7" column="0" colspan="3">
     <widget class="QLabel" name="console_reminder_label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ensure that Game Patching is enabled in Luma first before launching the game.&lt;br/&gt;This can be done by holding SELECT when turning on your 3DS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ensure that Game Patching is enabled in Luma3DS first before launching the game.&lt;br/&gt;This can be done by holding SELECT when turning on your 3DS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
