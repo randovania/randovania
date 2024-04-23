@@ -61,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: There is now a thermal gate preventing players from entering the Experiment Z-57 fight without activating the nearby thermal first.
 - Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
 - Fixed: Customizing a preset where EMMI and Bosses were turned off for DNA placement won't have the DNA slider be initially enabled.
+- Fixed: A `drive letter` typo in the exporting window.
 - Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
 
 #### Logic database
