@@ -6838,6 +6838,15 @@
                                                         "amount": 4,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6948,12 +6957,20 @@
                                 "comment": "Long sequence (15-20) of Underwater Wall Jumps",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "UnderwaterWallJump",
-                                            "amount": 4,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnderwaterWallJump",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
