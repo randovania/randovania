@@ -6,13 +6,17 @@ Extra - in_dark_aether: False
   * Layers: default
   * Door to Plantation/Door to Final Cave
   > Door to Balcony (Pre-Bosses)
-      Has Weapon
+      All of the following:
+          Has Weapon
+          Combat (Beginner) or Normal Damage ≥ 5
 
 > Door to Balcony (Pre-Bosses); Heals? False
   * Layers: default
   * Door to Balcony (Pre-Bosses)/Door to Final Cave
   > Door to Plantation
-      Has Weapon
+      All of the following:
+          Has Weapon
+          Combat (Beginner) or Normal Damage ≥ 5
 
 ----------------
 Last Cave (Hidden)
@@ -27,20 +31,16 @@ Extra - in_dark_aether: False
 > Event - Red Demon; Heals? False
   * Layers: default
   * Event Defeated Red Demon
-  > Door to Plantation
-      Booster 2.0
   > Pickup (Red Demon Boss)
-      Booster 2.0
-  > Door to Balcony (Pre-Bosses)
+      Trivial
+  > Before Red Demon
       Booster 2.0
 
 > Pickup (Red Demon Boss); Heals? False
   * Layers: default
   * Pickup 29; Category? Minor
   * Extra - event: 0300
-  > Door to Plantation
-      Booster 2.0
-  > Door to Balcony (Pre-Bosses)
+  > Before Red Demon
       Booster 2.0
 
 > Door to Balcony (Pre-Bosses); Heals? False
@@ -52,14 +52,23 @@ Extra - in_dark_aether: False
 > Before Red Demon; Heals? False
   * Layers: default
   > Door to Plantation
-      After Defeated Red Demon
+      Booster 2.0 and After Defeated Red Demon
   > Event - Red Demon
       Any of the following:
-          Can Kill Bosses
-          Missiles ≥ 8 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
-          Missiles ≥ 18 and Missile Launcher and Kill Bosses with Missiles (Advanced)
+          Any of the following:
+              # Item requirements
+              Can Kill Bosses
+              # Kill with Supers
+              Missiles ≥ 8 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
+              # Kill with Missiles
+              Missiles ≥ 18 and Missile Launcher and Kill Bosses with Missiles (Advanced)
+          Any of the following:
+              # Energy requirements
+              Combat (Beginner) or Combat (Expert) or Normal Damage ≥ 22 or Normal Damage ≥ 28
+              Combat (Intermediate) and Normal Damage ≥ 16
+              Combat (Advanced) and Normal Damage ≥ 8
   > Door to Balcony (Pre-Bosses)
-      After Defeated Red Demon
+      Booster 2.0 and After Defeated Red Demon
 
 ----------------
 Balcony (Pre-Bosses)
@@ -146,10 +155,18 @@ Extra - in_dark_aether: False
   * Layers: default
   * Entrance to Balcony (Pre-Bosses)/Exit to Throne Room
   > Event - Misery
-      Any of the following:
-          Can Kill Bosses
-          Missiles ≥ 13 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
-          Missiles ≥ 31 and Missile Launcher and Kill Bosses with Missiles (Expert)
+      All of the following:
+          Missiles ≥ 13 and Missiles ≥ 31 and Missile Launcher and Super Missile Launcher and Kill Bosses with Missiles (Advanced) and Kill Bosses with Missiles (Expert) and Can Kill Bosses
+          Any of the following:
+              # Item requirements
+              Can Kill Bosses
+              # Kill with Supers
+              Missiles ≥ 13 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+              # Kill with Missiles
+              Missiles ≥ 31 and Missile Launcher and Kill Bosses with Missiles (Expert)
+          Any of the following:
+              # Health requirements
+              Trivial
 
 > Exit to Balcony (Post-Bosses); Heals? False
   * Layers: default
@@ -175,10 +192,17 @@ Extra - in_dark_aether: False
   * Layers: default
   * H/V Trigger to Throne Room/H/V Trigger to The King's Table
   > Event - Doctor
-      Any of the following:
-          Can Kill Bosses
-          Missiles ≥ 36 and Missile Launcher and Kill Bosses with Missiles (Intermediate)
-          Missiles ≥ 16 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+      All of the following:
+          Any of the following:
+              # Item requirements
+              Can Kill Bosses
+              # Kill with Supers
+              Missiles ≥ 16 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+              # Kill with Missiles
+              Missiles ≥ 36 and Missile Launcher and Kill Bosses with Missiles (Intermediate)
+          Any of the following:
+              # Health requirements
+              Trivial
 
 > H/V Trigger to Black Space; Heals? False
   * Layers: default
@@ -200,10 +224,17 @@ Extra - in_dark_aether: False
   * Layers: default
   * H/V Trigger to The King's Table/H/V Trigger to Black Space
   > Event - Undead Core
-      Any of the following:
-          Can Kill Bosses
-          Missiles ≥ 18 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
-          Missiles ≥ 42 and Missile Launcher and Kill Bosses with Missiles (Expert)
+      All of the following:
+          Any of the following:
+              # Item requirements
+              Can Kill Bosses
+              # Kill with Supers
+              Missiles ≥ 18 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+              # Kill with Missiles
+              Missiles ≥ 42 and Missile Launcher and Kill Bosses with Missiles (Expert)
+          Any of the following:
+              # TODO: Energy requirements
+              Trivial
 
 ----------------
 Balcony (Post-Bosses)
@@ -393,10 +424,13 @@ Extra - in_dark_aether: False
       All of the following:
           Has Flight
           Any of the following:
-              # No Missile tricks because holy moly 3808 HP absolutely dwarfs every other boss in the game lol
-              Can Kill Bosses
-              # Shoot with Curly's Nemesis
-              After Picked up Curly (Hell) and Pacifist Strats (Beginner)
+              # Item requirements
+              Any of the following:
+                  # No Missile tricks because holy moly 3808 HP absolutely dwarfs every other boss in the game lol
+                  Can Kill Bosses
+                  # Shoot with Curly's Nemesis
+                  After Picked up Curly (Hell) and Pacifist Strats (Beginner)
+          # Triggering Ballos
           Enabled All Bosses or Enabled Best Ending or Enabled 100%
 
 > Event - Best Ending; Heals? False
