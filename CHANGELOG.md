@@ -49,8 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Sand Zone: Reaching the Storehouse now expects you to have a weapon on trickless instead of the ability to fly.
 - Added: Sand Zone: Breaking the blocks near the Storehouse is now accounted for with Missiles/Bubbler.
 - Added: Sand Zone: Collecting the running puppy now expects you to either kill the Armadillos, or avoid them via intermediate Pacifist strats.
-- Added: Sand Zone: Health requirements added to Omega.
-- Added: Sand Zone Residence: Health requirements added to Curly.
 - Added: Sand Zone Storehouse: Health requirements added to Toroko+.
 
 
