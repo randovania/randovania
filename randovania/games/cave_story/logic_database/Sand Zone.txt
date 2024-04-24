@@ -203,7 +203,8 @@ Extra - starting_script: <TRA0010:0099:0036:0033
                       Any of the following:
                           Missiles ≥ 11 and Kill Bosses with Missiles (Beginner)
                           Missiles ≥ 10 and Kill Bosses with Missiles (Intermediate)
-              Trivial
+              # Energy Requirements - FIXME: energy requirements here cause generation failures
+              Normal Damage
   > Above Sunstones
       Any of the following:
           Can Break Blocks
@@ -376,10 +377,13 @@ Extra - starting_script: <TRA0029:0090:0018:0009
 > Before Curly; Heals? False
   * Layers: default
   > Event - Curly
-      Any of the following:
-          # Item requirements
-          Can Kill Bosses
-          Missiles ≥ 9 and Super Missile Launcher and Kill Bosses with Missiles (Beginner)
+      All of the following:
+          Any of the following:
+              # Item requirements
+              Can Kill Bosses
+              Missiles ≥ 9 and Super Missile Launcher and Kill Bosses with Missiles (Beginner)
+          # Health requirements - FIXME: energy requirements here cause generation failures
+          Normal Damage
 
 ----------------
 Small Room
