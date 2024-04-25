@@ -183,7 +183,7 @@
        <item row="0" column="0" colspan="4">
         <widget class="QLabel" name="ftp_description_label">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your 3DS, via FTP, to a path compatible with Luma3DS.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your 3DS, run &lt;a href=&quot;https://github.com/mtheall/ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ftpd&lt;/span&gt;&lt;/a&gt; or download it directly from the homebrew store.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your 3DS, via FTP, to a path compatible with Luma3DS.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your 3DS, you need to run ftpd. You can download it &lt;a href=&quot;https://github.com/mtheall/ftpd/releases/latest&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; or download it directly to your SD card with &lt;a href=&quot;https://github.com/Universal-Team/Universal-Updater/releases/latest&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Universal Updater&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -327,6 +327,9 @@
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Minimum</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
