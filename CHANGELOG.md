@@ -85,13 +85,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
 
-##### Phendrana Drifts
-
-- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
+##### Impact Crater
 
 ##### Magmoor Caverns
 
 - Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
+- Changed: Geothermal Core: Various Puddle Spore requirements now require Before Storage Depot B instead of After.
+
+##### Phazon Mines
+
+- Changed: Central Dynamo: Infinite Speed trick only has one connection and no longer requires Knowledge (Advanced)
+- Changed: Fungal Hall Access now appropriately requires Plasma
+
+##### Phendrana Drifts
+
+- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
+- Changed: Temple Entryway: Breaking ice properly requires Plasma/Wave/Power
+- Changed: Qurantine Cave: Thardus fight properly requires beams
+
+##### Tallon Overworld
+
+- Changed: Root Cave: NSJ inbounds climb now also connects to Arbor Chamber
+- Changed: Root Cave: NSJ inbounds climb to item no longer needs Standable Terrain and Invisible Objects has been nerfed to Beginner for the item
+- Changed: Root Cave: NSJ inbounds climb now appropriately requires Door Lock Rando to be off
+- Changed: Root Cave: Combat Dash from Arbor Chamber to item no longer requires X-Ray/Invisible Objects
+- Added: Root Cave: NSJ inbounds climb now has comments to explain methodology
+- Added: Root Cave: Advanced Combat Dash to Arbor Chamnber from item that does not need X-Ray/Invisible Objects
 
 ### Metroid Prime 2: Echoes
 
