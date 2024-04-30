@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Added: 1 joke hint.
 - Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
 
 #### Logic Database
