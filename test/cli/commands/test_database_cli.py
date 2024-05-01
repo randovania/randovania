@@ -125,5 +125,12 @@ def test_trick_usage_documentation_logic_blank(tmp_path: Path) -> None:
 
     # Assert
     assert args.output_path.read_text() == "\n".join(
-        ["" "# Intro", "", "## Boss Arena", "### Door to Starting Area -> Event - Boss:", "- [X] Combat (Beginner)"]
+        [
+            "\n",
+            "# Intro",
+            "",
+            "## Boss Arena",
+            "### Door to Starting Area -> Event - Boss:",
+            "- (Documented) Combat (Beginner)",
+        ]
     )

@@ -292,6 +292,13 @@ def _migrate_v22(data: dict) -> dict:
     return data
 
 
+def _migrate_v23(data: dict) -> dict:
+    for trick in data["resource_database"]["tricks"].values():
+        trick["require_documentation_above"] = 0
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -315,6 +322,7 @@ _MIGRATIONS = [
     _migrate_v20,
     _migrate_v21,
     _migrate_v22,
+    _migrate_v23,  # add require_documentation_above
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

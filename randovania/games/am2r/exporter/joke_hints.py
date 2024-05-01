@@ -8,6 +8,7 @@ JOKE_HINTS = [
     "*Adam has not yet authorized the use of this hint.*",
     "*Did you know that Frog Legs are delicious with some Goat Butter, Garlic and Parsley?*",
     "*If you see an Omega Metroid shinesparking towards your general direction, run.*",
+    "*For hints to Return... we must get rid of Proteus Ridley, find the Metroid DNA, and repair the Chozo Seals...*",
     "*Judging by the architecture on SR-388, the Chozo's favourite transportation device seem to be TUUUUUUUUUBES!*",
     "*S P E E N*",
     "*You are faced with an overwhelming amount of cute Septogg noises. Accept your helplessness.*",

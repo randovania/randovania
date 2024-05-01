@@ -259,6 +259,8 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         if self.output_tab_widget.indexOf(self.tab_sd_card) in visible_tabs:
             self.refresh_drive_list()
 
+        self.console_reminder_label.setVisible(target_platform == MSRModPlatform.LUMA)
+
         self.output_tab_widget.setCurrentIndex(visible_tabs[0])
 
     # Getters
