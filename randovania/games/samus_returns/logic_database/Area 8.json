@@ -444,7 +444,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Spider Boost",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -465,7 +465,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Phase Drift",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -477,12 +477,55 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Phase",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Phase",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Melee Clip on the ledge above the Ammo Station: https://youtu.be/duncqz0RrAQ",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Space",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MeleeClip",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "OoB",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5506,7 +5549,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Knowledge",
-                                            "amount": 1,
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     }

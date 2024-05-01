@@ -1,17 +1,17 @@
 ----------------
-Entrance Hub
+Entrance Lobby
 Extra - map_name: Sector 50
 Extra - room_id: [0]
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
+  * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
   * Extra - door_idx: (1,)
   > Door to Magic Box
       Trivial
 
 > Door to Magic Box; Heals? False
   * Layers: default
-  * L3 Hatch to Magic Box/Door to Entrance Hub
+  * L3 Hatch to Magic Box/Door to Entrance Lobby
   * Extra - door_idx: (66,)
   > Door to Entrance Recharge Room
       Trivial
@@ -24,14 +24,14 @@ Extra - room_id: [0]
 
 > Door to Nightmare Training Grounds; Heals? False
   * Layers: default
-  * L0 Hatch to Nightmare Training Grounds/Door to Entrance Hub
+  * L0 Hatch to Nightmare Training Grounds/Door to Entrance Lobby
   * Extra - door_idx: (77,)
   > Door to Magic Box
       Missiles and Morph Ball
 
 > Door to Gerubus Gully; Heals? False
   * Layers: default
-  * L3 Hatch to Gerubus Gully/Door to Entrance Hub
+  * L3 Hatch to Gerubus Gully/Door to Entrance Lobby
   * Extra - door_idx: (81,)
   > Door to Magic Box
       Trivial
@@ -102,17 +102,17 @@ Extra - room_id: [3, 6]
   * Extra - door_idx: (7,)
   > Door to Arctic Containment
       Trivial
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Any of the following:
           Can Climb High Jump Wall
           # Needs to check if DLR in case it becomes an open hatch, making this impossible
           Wall Jump (Advanced) and Disabled Door Lock Rando
 
-> Door to Aerie; Heals? False
+> Door to Training Aerie; Heals? False
   * Layers: default
-  * L0 Hatch to Aerie/Door to Nightmare Training Grounds
+  * L0 Hatch to Training Aerie/Door to Nightmare Training Grounds
   * Extra - door_idx: (8,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
 > Door to Arctic Containment; Heals? False
@@ -122,13 +122,13 @@ Extra - room_id: [3, 6]
   > Door to Gerubus Gully
       Trivial
 
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Nightmare Training Grounds
+  * L0 Hatch to Entrance Lobby/Door to Nightmare Training Grounds
   * Extra - door_idx: (78,)
   > Door to Gerubus Gully
       Trivial
-  > Door to Aerie
+  > Door to Training Aerie
       Any of the following:
           Space Jump
           All of the following:
@@ -136,7 +136,7 @@ Extra - room_id: [3, 6]
               Hi-Jump or Movement (Intermediate)
 
 ----------------
-Aerie
+Training Aerie
 Extra - map_name: Sector 54
 Extra - room_id: [4]
 > Pickup (Power Bomb Tank); Heals? False
@@ -161,7 +161,7 @@ Extra - room_id: [4]
 
 > Door to Nightmare Training Grounds; Heals? False
   * Layers: default
-  * L0 Hatch to Nightmare Training Grounds/Door to Aerie
+  * L0 Hatch to Nightmare Training Grounds/Door to Training Aerie
   * Extra - door_idx: (10,)
   > Pickup (Power Bomb Tank)
       # This can safely not have Door Lock Rando check
@@ -393,13 +393,13 @@ Extra - room_id: [13]
           Space Jump or Can Freeze Enemies
           # Damage Run
           Varia Suit
-  > Other to Transformation Trial
+  > Other to Transmutation Trial
       # TODO: varia / damage runs
       Varia Suit and Can Bounce in Ball
 
-> Other to Transformation Trial; Heals? False
+> Other to Transmutation Trial; Heals? False
   * Layers: default
-  * Tunnel to Transformation Trial/Other to Frozen Tower
+  * Tunnel to Transmutation Trial/Other to Frozen Tower
   * Extra - door_idx: (79,)
   > Door to Groznyj Shaft
       # TODO: Varia / damag eruns
@@ -903,39 +903,39 @@ Extra - room_id: [30]
   * Extra - room: 30
   * Extra - blockx: 23
   * Extra - blocky: 7
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L3 Hatch to Entrance Hub/Door to Magic Box
+  * L3 Hatch to Entrance Lobby/Door to Magic Box
   * Extra - door_idx: (67,)
   > Pickup (Missile Tank)
       Trivial
-  > Door to Connection to Sector 6 (NOC)
+  > Door to Glass Tube to Sector 6 (NOC)
       Screw Attack
 
-> Door to Connection to Sector 6 (NOC); Heals? False
+> Door to Glass Tube to Sector 6 (NOC); Heals? False
   * Layers: default
-  * L0 Hatch to Connection to Sector 6 (NOC)/Door to Magic Box
+  * L0 Hatch to Glass Tube to Sector 6 (NOC)/Door to Magic Box
   * Extra - door_idx: (73,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Screw Attack
 
 ----------------
-Connection to Sector 6 (NOC)
+Glass Tube to Sector 6 (NOC)
 Extra - map_name: Sector 531
 Extra - room_id: [31]
 > Area Transition to Sector 6 (NOC); Heals? False
   * Layers: default
-  * Open Passage to Connection to Sector 5 (ARC)/Area Transition to Sector 5 (ARC)
+  * Open Passage to Glass Tube to Sector 5 (ARC)/Area Transition to Sector 5 (ARC)
   * Extra - door_idx: (2,)
   > Door to Magic Box
       Trivial
 
 > Door to Magic Box; Heals? False
   * Layers: default
-  * L0 Hatch to Magic Box/Door to Connection to Sector 6 (NOC)
+  * L0 Hatch to Magic Box/Door to Glass Tube to Sector 6 (NOC)
   * Extra - door_idx: (71,)
   > Area Transition to Sector 6 (NOC)
       Trivial
@@ -951,9 +951,9 @@ Extra - room_id: [32]
   > Recharge Terminal
       Trivial
 
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
+  * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
   * Extra - door_idx: (74,)
   > Recharge Terminal
       Trivial
@@ -962,7 +962,7 @@ Extra - room_id: [32]
   * Layers: default
   > Door to Entrance Save Room
       Trivial
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
 ----------------
@@ -976,19 +976,19 @@ Extra - room_id: [33]
   * Extra - room: 33
   * Extra - blockx: 14
   * Extra - blocky: 3
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
 > Door to Nightmare Training Grounds; Heals? False
   * Layers: default
   * L3 Hatch to Nightmare Training Grounds/Door to Gerubus Gully
   * Extra - door_idx: (3,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L3 Hatch to Entrance Hub/Door to Gerubus Gully
+  * L3 Hatch to Entrance Lobby/Door to Gerubus Gully
   * Extra - door_idx: (82,)
   > Pickup (Hidden Missile Tank)
       Any of the following:
@@ -1032,8 +1032,8 @@ Extra - room_id: [34]
               All of the following:
                   Can Use Power Bombs
                   Mid-Air Morph (Advanced) or Can Use Springball
-              # Crumble block side (TODO: Break out a requirement for unmorphing and grabbing the ledge.)
-              Movement (Expert) and Can Use Springball
+              # 100% strat, crumble block side: https://youtu.be/uUAoOZGU9HI
+              Movement (Advanced)
   > Other to Nightmare Arena
       Morph Ball
 
@@ -1066,12 +1066,12 @@ Extra - room_id: [36]
   * Extra - room: 36
   * Extra - blockx: 8
   * Extra - blocky: 8
-  > Door to Connection to Sector 3 (PYR)
+  > Door to Glass Tube to Sector 3 (PYR)
       Trivial
 
-> Door to Connection to Sector 3 (PYR); Heals? False
+> Door to Glass Tube to Sector 3 (PYR); Heals? False
   * Layers: default
-  * L0 Hatch to Connection to Sector 3 (PYR)/Door to Crow's Nest
+  * L0 Hatch to Glass Tube to Sector 3 (PYR)/Door to Crow's Nest
   * Extra - door_idx: (75,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
@@ -1096,7 +1096,7 @@ Extra - room_id: [36]
   * Layers: default
   * L3 Hatch to Arctic Containment/Door to Crow's Nest
   * Extra - door_idx: (87,)
-  > Door to Connection to Sector 3 (PYR)
+  > Door to Glass Tube to Sector 3 (PYR)
       Wall Jump (Beginner) or Can Climb High Jump Wall
   > Door to Data Room
       Trivial
@@ -1109,19 +1109,19 @@ Extra - room_id: [36]
       Trivial
 
 ----------------
-Connection to Sector 3 (PYR)
+Glass Tube to Sector 3 (PYR)
 Extra - map_name: Sector 537
 Extra - room_id: [37]
 > Door to Crow's Nest; Heals? False
   * Layers: default
-  * L0 Hatch to Crow's Nest/Door to Connection to Sector 3 (PYR)
+  * L0 Hatch to Crow's Nest/Door to Glass Tube to Sector 3 (PYR)
   * Extra - door_idx: (76,)
   > Area Transition to Sector 3 (PYR)
       Trivial
 
 > Area Transition to Sector 3 (PYR); Heals? False
   * Layers: default
-  * Open Passage to Connection to Sector 5 (ARC)/Area Transition to Sector 5 (ARC)
+  * Open Passage to Glass Tube to Sector 5 (ARC)/Area Transition to Sector 5 (ARC)
   * Extra - door_idx: (83,)
   > Door to Crow's Nest
       Trivial
@@ -1401,7 +1401,7 @@ Extra - room_id: [50]
       Gravity Suit and Speed Booster and Disabled Entrance Rando
 
 ----------------
-Transformation Trial
+Transmutation Trial
 Extra - map_name: Sector 551
 Extra - room_id: [51]
 > Pickup (Hidden Missile Tank); Heals? False
@@ -1417,7 +1417,7 @@ Extra - room_id: [51]
 
 > Other to Frozen Tower; Heals? False
   * Layers: default
-  * Tunnel to Frozen Tower/Other to Transformation Trial
+  * Tunnel to Frozen Tower/Other to Transmutation Trial
   * Extra - door_idx: (47,)
   > Pickup (Hidden Missile Tank)
       All of the following:

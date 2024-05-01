@@ -55,6 +55,12 @@ def _exporter() -> GameExporter:
     return FusionGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.fusion.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Fusion",
     long_name="Metroid Fusion",
@@ -80,6 +86,7 @@ game_data: game.GameData = game.GameData(
             "Please note that this is never logical.",
         ),
     ],
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.FusionConfiguration,
         cosmetic_patches=layout.FusionCosmeticPatches,

@@ -1,14 +1,14 @@
 ----------------
-Entrance Hub
+Entrance Lobby
 Extra - map_name: Sector 30
 Extra - room_id: [0]
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
+  * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
   * Extra - door_idx: (1,)
   > Door to Security Access
       Trivial
-  > Door to Checkpoint Shaft
+  > Door to Checkpoint Crossing
       Trivial
   > Other to Alcove
       All of the following:
@@ -22,28 +22,28 @@ Extra - room_id: [0]
 
 > Door to Security Access; Heals? False
   * Layers: default
-  * Open Hatch to Security Access/Door to Entrance Hub
+  * Open Hatch to Security Access/Door to Entrance Lobby
   * Extra - door_idx: (2,)
   > Door to Entrance Recharge Room
       Trivial
 
-> Door to Checkpoint Shaft; Heals? False
+> Door to Checkpoint Crossing; Heals? False
   * Layers: default
-  * L0 Hatch to Checkpoint Shaft/Door to Entrance Hub
+  * L0 Hatch to Checkpoint Crossing/Door to Entrance Lobby
   * Extra - door_idx: (3,)
   > Door to Entrance Recharge Room
       Trivial
 
 > Other to Alcove; Heals? False
   * Layers: default
-  * Tunnel to Alcove/Other to Entrance Hub
+  * Tunnel to Alcove/Other to Entrance Lobby
   * Extra - door_idx: (4,)
   > Door to Entrance Recharge Room
       Trivial
 
 > Door to Monkey Bars of Fire; Heals? False
   * Layers: default
-  * L0 Hatch to Monkey Bars of Fire/Door to Entrance Hub
+  * L0 Hatch to Monkey Bars of Fire/Door to Entrance Lobby
   * Extra - door_idx: (53,)
   > Door to Entrance Recharge Room
       Trivial
@@ -118,9 +118,9 @@ Extra - room_id: [3]
   > Behind Wall
       Trivial
 
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * Open Hatch to Entrance Hub/Door to Security Access
+  * Open Hatch to Entrance Lobby/Door to Security Access
   * Extra - door_idx: (8,)
   > Behind Wall
       Speed Booster and Disabled Entrance Rando
@@ -144,7 +144,7 @@ Extra - room_id: [3]
           Wall Jump (Beginner) or Can Climb High Jump Wall
           Speed Booster and Shinespark Tricks (Beginner)
           After Level 2 Locks Released and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Speed Booster
   > Door to Level 2 Security Room
       Trivial
@@ -193,38 +193,38 @@ Extra - room_id: [4]
       Trivial
 
 ----------------
-Checkpoint Shaft
+Checkpoint Crossing
 Extra - map_name: Sector 35
 Extra - room_id: [5]
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Checkpoint Shaft
+  * L0 Hatch to Entrance Lobby/Door to Checkpoint Crossing
   * Extra - door_idx: (11,)
-  > Door to Bob Room
+  > Door to Bob's Abode
       Trivial
-  > Other to Namihe's Abode
+  > Other to Namihe's Lair
       Any of the following:
           # Get past wall enemy. For simplicity's sake, we assume the enemies are always there.
           Charge Beam or Missiles ≥ 5 or Morph Ball or Screw Attack or Wave Beam or Normal Damage ≥ 80
           # Shinespark
           Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
-> Door to Bob Room; Heals? False
+> Door to Bob's Abode; Heals? False
   * Layers: default
-  * L2 Hatch to Bob Room/Door to Checkpoint Shaft
+  * L2 Hatch to Bob's Abode/Door to Checkpoint Crossing
   * Extra - door_idx: (12,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
-> Other to Namihe's Abode; Heals? False
+> Other to Namihe's Lair; Heals? False
   * Layers: default
-  * Open Passage to Namihe's Abode/Other to Checkpoint Shaft
+  * Open Passage to Namihe's Lair/Other to Checkpoint Crossing
   * Extra - door_idx: (61,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
 ----------------
-Bob Room
+Bob's Abode
 Extra - map_name: Sector 36
 Extra - room_id: [6, 24]
 > Pickup (Missile Tank); Heals? False
@@ -237,9 +237,9 @@ Extra - room_id: [6, 24]
   > Door to Red Tower
       Can Use Any Bombs
 
-> Door to Checkpoint Shaft; Heals? False
+> Door to Checkpoint Crossing; Heals? False
   * Layers: default
-  * L2 Hatch to Checkpoint Shaft/Door to Bob Room
+  * L2 Hatch to Checkpoint Crossing/Door to Bob's Abode
   * Extra - door_idx: (13,)
   > Door to B.O.X. Access
       Any of the following:
@@ -249,18 +249,18 @@ Extra - room_id: [6, 24]
 
 > Door to B.O.X. Access; Heals? False
   * Layers: default
-  * L2 Hatch to B.O.X. Access/Door to Bob Room
+  * L2 Hatch to B.O.X. Access/Door to Bob's Abode
   * Extra - door_idx: (14,)
   > Pickup (Missile Tank)
       Morph Ball
-  > Door to Checkpoint Shaft
+  > Door to Checkpoint Crossing
       Can Kill Super Geron
   > Door to Red Tower
       Morph Ball
 
 > Door to Red Tower; Heals? False
   * Layers: default
-  * L0 Hatch to Red Tower/Door to Bob Room
+  * L0 Hatch to Red Tower/Door to Bob's Abode
   * Extra - door_idx: (15,)
   > Pickup (Missile Tank)
       All of the following:
@@ -270,12 +270,12 @@ Extra - room_id: [6, 24]
       Any of the following:
           Can Use Bombs
           Can Use Power Bombs and Can Use Springball
-  > Other to Namihe's Abode
+  > Other to Namihe's Lair
       Morph Ball and Can Break Single Bomb Blocks
 
-> Other to Namihe's Abode; Heals? False
+> Other to Namihe's Lair; Heals? False
   * Layers: default
-  * Tunnel to Namihe's Abode/Other to Bob Room
+  * Tunnel to Namihe's Lair/Other to Bob's Abode
   * Extra - door_idx: (60, 63)
 
 ----------------
@@ -289,7 +289,7 @@ Extra - room_id: [8]
   * Extra - room: 8
   * Extra - blockx: 9
   * Extra - blocky: 9
-  > Other to Entrance Hub
+  > Other to Entrance Lobby
       Trivial
   > Above E-Tank
       Can Use Power Bombs
@@ -306,9 +306,9 @@ Extra - room_id: [8]
   > Below E-Tank
       Trivial
 
-> Other to Entrance Hub; Heals? False
+> Other to Entrance Lobby; Heals? False
   * Layers: default
-  * Tunnel to Entrance Hub/Other to Alcove
+  * Tunnel to Entrance Lobby/Other to Alcove
   * Extra - door_idx: (17,)
   > Below E-Tank
       Can Break Single Bomb Blocks
@@ -344,7 +344,7 @@ Extra - room_id: [8]
                   Movement (Beginner) and Can Use Bombs
           # Alternate - Screw Attack and some extra Jump height (knowledge)
           Screw Attack and Knowledge (Beginner) and Can Climb High Jump Wall
-  > Other to Entrance Hub
+  > Other to Entrance Lobby
       Any of the following:
           Can Use Power Bombs
           Morph Ball and Screw Attack and Knowledge (Beginner)
@@ -388,7 +388,7 @@ Extra - room_id: [9]
       Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
   > Door to Chute Access
       Screw Attack
-  > Door to Connection to Sector 1 (SRX)
+  > Door to Glass Tube to Sector 1 (SRX)
       All of the following:
           Screw Attack
           Any of the following:
@@ -410,9 +410,9 @@ Extra - room_id: [9]
   > Door to Alcove
       Screw Attack
 
-> Door to Connection to Sector 1 (SRX); Heals? False
+> Door to Glass Tube to Sector 1 (SRX); Heals? False
   * Layers: default
-  * L0 Hatch to Connection to Sector 1 (SRX)/Door to Deserted Runway
+  * L0 Hatch to Glass Tube to Sector 1 (SRX)/Door to Deserted Runway
   * Extra - door_idx: (84,)
   > Door to Alcove
       Screw Attack
@@ -421,27 +421,27 @@ Extra - room_id: [9]
 Red Tower
 Extra - map_name: Sector 310
 Extra - room_id: [10]
-> Door to Bob Room; Heals? False
+> Door to Bob's Abode; Heals? False
   * Layers: default
-  * L0 Hatch to Bob Room/Door to Red Tower
+  * L0 Hatch to Bob's Abode/Door to Red Tower
   * Extra - door_idx: (20,)
-  > Door to Namihe's Abode
+  > Door to Namihe's Lair
       Trivial
 
 > Door to Lava Reservoirs; Heals? False
   * Layers: default
   * L2 Hatch to Lava Reservoirs/Door to Red Tower
   * Extra - door_idx: (21,)
-  > Door to Namihe's Abode
+  > Door to Namihe's Lair
       Trivial
   > Door to Processing Access
       Trivial
 
-> Door to Namihe's Abode; Heals? False
+> Door to Namihe's Lair; Heals? False
   * Layers: default
-  * L0 Hatch to Namihe's Abode/Door to Red Tower
+  * L0 Hatch to Namihe's Lair/Door to Red Tower
   * Extra - door_idx: (57,)
-  > Door to Bob Room
+  > Door to Bob's Abode
       Trivial
   > Door to Lava Reservoirs
       Trivial
@@ -778,7 +778,7 @@ Extra - room_id: [22, 7]
   * Extra - door_idx: (45,)
   > Door to Data Save Room
       Trivial
-  > Door to Bob Room
+  > Door to Bob's Abode
       Trivial
 
 > Door to Data Save Room; Heals? False
@@ -788,9 +788,9 @@ Extra - room_id: [22, 7]
   > Door to B.O.X. Arena
       Trivial
 
-> Door to Bob Room; Heals? False
+> Door to Bob's Abode; Heals? False
   * Layers: default
-  * L2 Hatch to Bob Room/Door to B.O.X. Access
+  * L2 Hatch to Bob's Abode/Door to B.O.X. Access
   * Extra - door_idx: (16,)
   > Door to B.O.X. Arena
       Trivial
@@ -905,9 +905,9 @@ Extra - room_id: [26]
   > Recharge Terminal
       Trivial
 
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
+  * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
   * Extra - door_idx: (52,)
   > Recharge Terminal
       Trivial
@@ -916,16 +916,16 @@ Extra - room_id: [26]
   * Layers: default
   > Door to Entrance Save Room
       Trivial
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
 ----------------
 Monkey Bars of Fire
 Extra - map_name: Sector 327
 Extra - room_id: [27]
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Monkey Bars of Fire
+  * L0 Hatch to Entrance Lobby/Door to Monkey Bars of Fire
   * Extra - door_idx: (54,)
   > Door to Fiery Storage
       Any of the following:
@@ -957,7 +957,7 @@ Extra - room_id: [27]
   * Layers: default
   * L0 Hatch to Fiery Storage/Door to Monkey Bars of Fire
   * Extra - door_idx: (55,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Any of the following:
           All of the following:
               # Climb on bars
@@ -1016,9 +1016,9 @@ Extra - room_id: [28]
   > Behind Wall
       Can Break Single Bomb Blocks
 
-> Door to Connection to Sector 5 (ARC); Heals? False
+> Door to Glass Tube to Sector 5 (ARC); Heals? False
   * Layers: default
-  * L0 Hatch to Connection to Sector 5 (ARC)/Door to Fiery Storage
+  * L0 Hatch to Glass Tube to Sector 5 (ARC)/Door to Fiery Storage
   * Extra - door_idx: (87,)
   > Behind Wall
       All of the following:
@@ -1033,11 +1033,11 @@ Extra - room_id: [28]
           Space Jump or Can Activate Pillar
   > Door to Monkey Bars of Fire
       Can Break Single Bomb Blocks
-  > Door to Connection to Sector 5 (ARC)
+  > Door to Glass Tube to Sector 5 (ARC)
       Screw Attack
 
 ----------------
-Namihe's Abode
+Namihe's Lair
 Extra - map_name: Sector 330
 Extra - room_id: [30]
 > Pickup (Power Bomb Tank); Heals? False
@@ -1056,7 +1056,7 @@ Extra - room_id: [30]
 
 > Door to Red Tower; Heals? False
   * Layers: default
-  * L0 Hatch to Red Tower/Door to Namihe's Abode
+  * L0 Hatch to Red Tower/Door to Namihe's Lair
   * Extra - door_idx: (58,)
   > Pickup (Power Bomb Tank)
       All of the following:
@@ -1065,16 +1065,16 @@ Extra - room_id: [30]
               Can Climb High Jump Wall or Can Freeze Enemies
               Jump Bombjump (Expert) and Can Use Bombs
 
-> Other to Bob Room; Heals? False
+> Other to Bob's Abode; Heals? False
   * Layers: default
-  * Tunnel to Bob Room/Other to Namihe's Abode
+  * Tunnel to Bob's Abode/Other to Namihe's Lair
   * Extra - door_idx: (59,)
-  > Other to Checkpoint Shaft
+  > Other to Checkpoint Crossing
       Trivial
 
-> Other to Checkpoint Shaft; Heals? False
+> Other to Checkpoint Crossing; Heals? False
   * Layers: default
-  * Open Passage to Checkpoint Shaft/Other to Namihe's Abode
+  * Open Passage to Checkpoint Crossing/Other to Namihe's Lair
   * Extra - door_idx: (62,)
   > Door to Red Tower
       # This can safely not have Door Lock Rando check
@@ -1287,7 +1287,7 @@ Extra - room_id: [36]
       Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
 
 ----------------
-Connection to Sector 5 (ARC)
+Glass Tube to Sector 5 (ARC)
 Extra - map_name: Sector 337
 Extra - room_id: [37]
 > Pickup (Hidden Power Bomb Tank); Heals? False
@@ -1302,7 +1302,7 @@ Extra - room_id: [37]
 
 > Door to Fiery Storage; Heals? False
   * Layers: default
-  * L0 Hatch to Fiery Storage/Door to Connection to Sector 5 (ARC)
+  * L0 Hatch to Fiery Storage/Door to Glass Tube to Sector 5 (ARC)
   * Extra - door_idx: (88,)
   > Pickup (Hidden Power Bomb Tank)
       Any of the following:
@@ -1314,25 +1314,25 @@ Extra - room_id: [37]
 
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
-  * Open Passage to Connection to Sector 3 (PYR)/Area Transition to Sector 3 (PYR)
+  * Open Passage to Glass Tube to Sector 3 (PYR)/Area Transition to Sector 3 (PYR)
   * Extra - door_idx: (89,)
   > Door to Fiery Storage
       Trivial
 
 ----------------
-Connection to Sector 1 (SRX)
+Glass Tube to Sector 1 (SRX)
 Extra - map_name: Sector 338
 Extra - room_id: [38]
 > Door to Deserted Runway; Heals? False
   * Layers: default
-  * L0 Hatch to Deserted Runway/Door to Connection to Sector 1 (SRX)
+  * L0 Hatch to Deserted Runway/Door to Glass Tube to Sector 1 (SRX)
   * Extra - door_idx: (85,)
   > Area Transition to Sector 1 (SRX)
       Trivial
 
 > Area Transition to Sector 1 (SRX); Heals? False
   * Layers: default
-  * Open Passage to Connection to Sector 3 (PYR)/Area Transition to Sector 3 (PYR)
+  * Open Passage to Glass Tube to Sector 3 (PYR)/Area Transition to Sector 3 (PYR)
   * Extra - door_idx: (86,)
   > Door to Deserted Runway
       Trivial

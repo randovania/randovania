@@ -24,7 +24,7 @@ class NodeProvider:
 
     def identifier_for_area(self, area: Area) -> AreaIdentifier:
         region = self.region_with_area(area)
-        return AreaIdentifier(region_name=region.name, area_name=area.name)
+        return AreaIdentifier(region=region.name, area=area.name)
 
     def region_with_name(self, name: str) -> Region:
         raise NotImplementedError
@@ -67,27 +67,27 @@ class NodeProvider:
         raise NotImplementedError
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
-        area = self.area_by_area_location(identifier.area_location)
-        node = area.node_with_name(identifier.node_name)
+        area = self.area_by_area_location(identifier.area_identifier)
+        node = area.node_with_name(identifier.node)
         if node is not None:
             return node
-        raise ValueError(f"No node with name {identifier.node_name} found in {area}")
+        raise ValueError(f"No node with name {identifier.node} found in {area}")
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.region_and_area_by_area_identifier(location)[1]
 
     def region_by_area_location(self, location: AreaIdentifier) -> Region:
-        return self.region_with_name(location.region_name)
+        return self.region_with_name(location.region)
 
     def region_and_area_by_area_identifier(self, identifier: AreaIdentifier) -> tuple[Region, Area]:
-        region = self.region_with_name(identifier.region_name)
-        area = region.area_by_name(identifier.area_name)
+        region = self.region_with_name(identifier.region)
+        area = region.area_by_name(identifier.area)
         return region, area
 
     def node_to_area_location(self, node: Node) -> AreaIdentifier:
         return AreaIdentifier(
-            region_name=self.nodes_to_region(node).name,
-            area_name=self.nodes_to_area(node).name,
+            region=self.nodes_to_region(node).name,
+            area=self.nodes_to_area(node).name,
         )
 
     def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
@@ -98,4 +98,7 @@ class NodeProvider:
         return weakness.lock.requirement
 
     def nodes_in_network(self, network_name: str) -> list[TeleporterNetworkNode]:
+        raise NotImplementedError
+
+    def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
         raise NotImplementedError

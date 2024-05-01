@@ -1,9 +1,6 @@
 import dataclasses
 from pathlib import Path
 
-import sentry_sdk
-
-from randovania import monitoring
 from randovania.lib import status_update_lib
 
 
@@ -54,9 +51,11 @@ class GameExporter:
         progress_update: status_update_lib.ProgressUpdateCallable,
     ):
         self._before_export()
+        from randovania import monitoring
+
         try:
             with monitoring.attach_patcher_data(patch_data):
-                with sentry_sdk.start_transaction(op="task", name="export_game") as span:
+                with monitoring.start_transaction(op="task", name="export_game") as span:
                     span.set_tag("exporter", type(self).__name__)
                     self._do_export_game(patch_data, export_params, progress_update)
         finally:

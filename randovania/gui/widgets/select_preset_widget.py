@@ -223,7 +223,12 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         default_name = f"{self._current_preset_data.slug_name}.rdvpreset"
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True, name=default_name)
         if path is not None:
-            self._current_preset_data.save_to_file(path)
+            try:
+                self._current_preset_data.save_to_file(path)
+            except OSError as e:
+                QtWidgets.QMessageBox.critical(
+                    self, "Unable to save", f"The following error occurred when writing to '{path}': {e}."
+                )
 
     def _on_duplicate_preset(self):
         old_preset = self._current_preset_data

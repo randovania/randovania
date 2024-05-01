@@ -50,10 +50,16 @@ def _generator() -> game.GameGenerator:
     )
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.samus_returns.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="MSR",
     long_name="Metroid: Samus Returns",
-    development_state=game.DevelopmentState.EXPERIMENTAL,
+    development_state=game.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
@@ -120,7 +126,24 @@ game_data: game.GameData = game.GameData(
             "until the Missile Launcher is in your inventory. This prevents a bug where "
             "the reserve will activate even if you have no usable Missiles.",
         ),
+        (
+            "Why did my Power Bombs disappear during the Diggernaut fight?",
+            "Due to technical limitations, Power Bombs are temporarily disabled while fighting Diggernaut. "
+            "If Diggernaut is defeated or a checkpoint/save is reloaded, your Power Bombs will be re-enabled.",
+        ),
     ],
+    web_info=game.GameWebInfo(
+        what_can_randomize=[
+            "All items, including ones normally locked behind amiibo",
+            "Starting locations",
+            "A new goal has been added (DNA Hunt)",
+        ],
+        need_to_play=[
+            "A modded 3DS with Luma3DS, or Citra",
+            "A dumped RomFS of your original game. Any region works.",
+        ],
+    ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.MSRConfiguration,
         cosmetic_patches=layout.MSRCosmeticPatches,

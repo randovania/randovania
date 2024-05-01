@@ -200,8 +200,8 @@ Extra - asset_id: collision_camera_004
   * Pickup 50; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
-  > Right of Paraby Swarm
-      Morph Ball
+  > Next to Pickup
+      Trivial
 
 > Pickup (Lightning Armor); Heals? False
   * Layers: default
@@ -209,9 +209,9 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_SpecialAbility_EnergyShield
   * Extra - actor_type: powerup_energyshield
   > Left Spawnpoint
-      Morph Ball
+      Trivial
   > Right Spawnpoint
-      Morph Ball
+      Trivial
 
 > Elevator to Area 2 Dam Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
@@ -243,34 +243,40 @@ Extra - asset_id: collision_camera_004
   * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (Lightning Armor)
       Morph Ball
-  > Right of Paraby Swarm
-      Trivial
+  > Event - Unlock Door
+      Morph Ball
+  > Next to Pickup
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Lightning Armor
+              Hazard Runs (Intermediate) and Hazard Damage ≥ 250
 
 > Right Spawnpoint; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_Bestowal
   > Pickup (Lightning Armor)
-      Morph Ball
+      Any of the following:
+          Morph Ball
+          # Clip into the statue: https://youtu.be/nlu3akHbJew
+          Out of Bounds Movement (Intermediate)
   > Door to Transport Access (Bottom)
       Trivial
 
 > Event - Unlock Door; Heals? False
   * Layers: default
   * Event Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
-  > Right of Paraby Swarm
-      Morph Ball
-
-> Right of Paraby Swarm; Heals? False
-  * Layers: default
-  > Pickup (Missile Tank)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Lightning Armor
-              Hazard Runs (Intermediate) and Normal Damage ≥ 250
   > Right Spawnpoint
       Morph Ball
-  > Event - Unlock Door
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
+  > Elevator to Area 2 Dam Exterior
+      # Freeze the Moheek below the Crumble Block and Melee Clip right: https://youtu.be/3VLe-42BmeE
+      Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Advanced) and Melee Clip (Advanced) and Out of Bounds Movement (Advanced)
+  > Right Spawnpoint
       Morph Ball
 
 ----------------
@@ -307,7 +313,7 @@ Extra - asset_id: collision_camera_005
               Any of the following:
                   # Go through the red plants
                   Lightning Armor
-                  Hazard Runs (Intermediate) and Hazard Damage ≥ 40
+                  Hazard Runs (Beginner) and Hazard Damage ≥ 40
 
 > Door to Lightning Armor & Transport to Dam Exterior East (Top); Heals? False
   * Layers: default
@@ -327,7 +333,7 @@ Extra - asset_id: collision_camera_005
   > Plant Ledge
       Any of the following:
           Lightning Armor or Use Spider Ball
-          Hazard Runs (Intermediate) and Hazard Damage ≥ 45
+          Hazard Runs (Beginner) and Hazard Damage ≥ 45
 
 > Dock to Fleech Swarm Floodway; Heals? False
   * Layers: default
@@ -340,22 +346,22 @@ Extra - asset_id: collision_camera_005
           Movement (Intermediate)
           Any of the following:
               Lightning Armor
-              Hazard Runs (Intermediate) and Hazard Damage ≥ 45
+              Hazard Runs (Beginner) and Hazard Damage ≥ 45
 
 > Plant Ledge; Heals? False
   * Layers: default
   > Door to Lightning Armor & Transport to Dam Exterior East (Bottom)
       Any of the following:
           Lightning Armor or Use Spider Ball
-          Hazard Runs (Intermediate) and Hazard Damage ≥ 40
+          Hazard Runs (Beginner) and Hazard Damage ≥ 40
   > Dock to Alpha+ Arena
       Any of the following:
           Lightning Armor or Use Spider Ball
-          Hazard Runs (Intermediate) and Hazard Damage ≥ 45
+          Hazard Runs (Beginner) and Hazard Damage ≥ 45
   > Dock to Fleech Swarm Floodway
       Any of the following:
           Lightning Armor or Use Spider Ball
-          Hazard Runs (Intermediate) and Hazard Damage ≥ 45
+          Hazard Runs (Beginner) and Hazard Damage ≥ 45
 
 ----------------
 Fleech Swarm Floodway

@@ -442,6 +442,93 @@ def _migrate_v23(data: dict) -> dict:
     return data
 
 
+def _migrate_v24(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "am2r":
+            continue
+
+        new_ammo_mapping = {
+            "Missile Expansion": "Missile Tank",
+            "Super Missile Expansion": "Super Missile Tank",
+            "Power Bomb Expansion": "Power Bomb Tank",
+        }
+
+        game["starting_equipment"]["pickups"] = [
+            new_ammo_mapping.get(pickup, pickup) for pickup in game["starting_equipment"]["pickups"]
+        ]
+
+        for area, locations in game["locations"].items():
+            for node, item in locations.items():
+                if item in new_ammo_mapping:
+                    locations[node] = new_ammo_mapping[item]
+
+    return data
+
+
+def _migrate_v25(data: dict) -> dict:
+    is_mw_session = len(data["info"]["presets"]) > 1
+    if not is_mw_session:
+        return data
+
+    game_modifications = data["game_modifications"]
+    all_am2r_players = [
+        f"Player {index}"
+        for index, preset in enumerate(data["info"]["presets"], start=1)
+        if preset["schema_version"] >= 5 and preset["game"] == "am2r"
+    ]
+    player_re = r"^(.*) for (Player \d+)$"
+    new_ammo_mapping = {
+        "Missile Expansion": "Missile Tank",
+        "Super Missile Expansion": "Super Missile Tank",
+        "Power Bomb Expansion": "Power Bomb Tank",
+    }
+
+    for game in game_modifications:
+        for area, locations in game["locations"].items():
+            for node, item in locations.items():
+                if item == "Energy Transfer Module":
+                    continue
+                match = re.match(player_re, item)
+                assert match is not None
+                item_name, player_name = match.group(1, 2)
+                if player_name not in all_am2r_players:
+                    continue
+                if item_name in new_ammo_mapping:
+                    locations[node] = f"{new_ammo_mapping[item_name]} for {player_name}"
+
+    return data
+
+
+def _migrate_v26(data: dict) -> dict:
+    for game in data["game_modifications"]:
+        configurable_nodes: dict[str, dict] = game.pop("configurable_nodes")
+        game["game_specific"] = {}
+
+        if game["game"] != "prime2":
+            continue
+
+        def convert_to_enum(req: dict) -> str:
+            non_scan = [name for it in req["data"]["items"] if (name := it["data"]["name"]) != "Scan"]
+            if non_scan:
+                return {
+                    "Violet": "violet",
+                    "Amber": "amber",
+                    "Emerald": "emerald",
+                    "Cobalt": "cobalt",
+                }[non_scan[0]]
+            else:
+                return "removed"
+
+        game["game_specific"]["translator_gates"] = {
+            identifier: convert_to_enum(requirement) for identifier, requirement in configurable_nodes.items()
+        }
+
+    return data
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -466,6 +553,9 @@ _MIGRATIONS = [
     _migrate_v21,
     _migrate_v22,
     _migrate_v23,
+    _migrate_v24,  # AM2R expansion -> tank rename for solo games
+    _migrate_v25,  # AM2R expansion -> tank rename for MW games
+    _migrate_v26,  # configurable nodes -> game_specific
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

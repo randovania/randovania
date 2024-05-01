@@ -32,11 +32,11 @@ class TeleporterHelper:
 
     @property
     def region_name(self) -> str:
-        return self.teleporter.area_location.region_name
+        return self.teleporter.area_identifier.region
 
     @property
     def area_name(self) -> str:
-        return self.teleporter.area_location.area_name
+        return self.teleporter.area_identifier.area
 
     def connect_to(self, other: TeleporterHelper) -> None:
         self.destination = other.teleporter
@@ -46,7 +46,7 @@ class TeleporterHelper:
 
     @property
     def area_location(self) -> AreaIdentifier:
-        return self.teleporter.area_location
+        return self.teleporter.area_identifier
 
 
 def try_randomize_teleporters(
@@ -87,7 +87,7 @@ def try_randomize_teleporters(
                 cteleporter2 = list3[index]
                 if (
                     cteleporter2.region_name == cteleporter1.region_name
-                    or cteleporter2.area_name == cteleporter1.destination.area_name
+                    or cteleporter2.area_name == cteleporter1.destination.area
                 ):
                     cteleporter_list1.append(cteleporter2)
                     list3.remove(cteleporter2)

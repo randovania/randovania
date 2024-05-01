@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>343</height>
+    <width>537</width>
+    <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -101,7 +101,7 @@
        <item>
         <widget class="QLabel" name="sd_label">
          <property name="text">
-          <string>Select the driver letter for your SD Card</string>
+          <string>Select the drive letter for your SD Card</string>
          </property>
         </widget>
        </item>
@@ -213,7 +213,31 @@
       <attribute name="title">
        <string>Ryujinx</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="horizontalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="layout_linux_choice">
+         <item>
+          <widget class="QRadioButton" name="linux_flatpak_radio">
+           <property name="text">
+            <string>Use Flatpak Ryujinx folder</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="linux_native_radio">
+           <property name="text">
+            <string>Use native Ryujinx folder</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item>
         <widget class="QLabel" name="ryujinx_label">
          <property name="text">

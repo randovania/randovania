@@ -158,6 +158,7 @@ async def main():
         "discord_client_id": client_id,
         "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
         "socketio_path": f"/{server_suffix}/socket.io",
+        "sentry_urls": {"client": os.environ.get("SENTRY_CLIENT_URL")},
     }
     json_lib.write_path(_ROOT_FOLDER.joinpath("randovania", "data", "configuration.json"), configuration)
 

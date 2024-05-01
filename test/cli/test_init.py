@@ -33,7 +33,7 @@ def test_create_subparsers(mocker):
 def test_parse_args_valid(args):
     # Run
     try:
-        cli._create_parser().parse_args(args)
+        cli.create_parser().parse_args(args)
 
     except SystemExit:
         pytest.fail("should not have raised SystemExit")
@@ -47,7 +47,7 @@ def test_parse_args_valid(args):
 )
 def test_parse_args_invalid(args):
     # Run
-    parser = cli._create_parser()
+    parser = cli.create_parser()
 
     with pytest.raises(SystemExit, match="^0$"):
         parser.parse_args(args)
@@ -82,7 +82,7 @@ def test_run_args_without_func():
 
 
 @patch("randovania.cli._run_args", autospec=True)
-@patch("randovania.cli._create_parser", autospec=True)
+@patch("randovania.cli.create_parser", autospec=True)
 def test_run_cli(
     mock_create_parser: MagicMock,
     mock_run_args: MagicMock,

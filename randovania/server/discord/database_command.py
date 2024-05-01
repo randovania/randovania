@@ -237,7 +237,7 @@ class SelectNodesItem(discord.ui.Select):
                     continue
 
                 extra_lines = []
-                for level, text in pretty_print.pretty_print_requirement(requirement.simplify(), db.resource_database):
+                for level, text in pretty_print.pretty_format_requirement(requirement.simplify(), db.resource_database):
                     extra_lines.append("{}{}".format("  " * level, text))
 
                 inner = "\n".join(extra_lines)
@@ -433,6 +433,9 @@ class DatabaseCommandCog(RandovaniaCog):
 
     async def add_commands(self):
         for game in enum_lib.iterate_enum(RandovaniaGame):
+            if not game.data.development_state.can_view():
+                continue
+
             db = default_database.game_description_for(game)
             region_options = await create_split_regions(db)
             self._split_regions[game] = region_options

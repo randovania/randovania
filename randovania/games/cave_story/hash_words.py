@@ -1,4 +1,4 @@
-[
+HASH_WORDS = [
     "Abode",
     "Air",
     "Alien",
@@ -211,5 +211,5 @@
     "Yamashita",
     "Zett",
     "Zombie",
-    "Zone"
+    "Zone",
 ]

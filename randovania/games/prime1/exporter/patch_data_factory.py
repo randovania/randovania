@@ -282,8 +282,8 @@ def _serialize_dock_modifications(
                 dock_num_by_area_node[(area.name, node.name)] = index
                 is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                 default_connections_node_name[(area.name, index)] = (
-                    node.default_connection.area_name,
-                    node.default_connection.node_name,
+                    node.default_connection.area,
+                    node.default_connection.node,
                 )
 
                 if node.default_dock_weakness.name == "Permanently Locked":
@@ -292,7 +292,7 @@ def _serialize_dock_modifications(
                 if node.extra["nonstandard"]:
                     continue
                 area_dock_nums[area.name].append(index)
-                attached_areas[area.name].append(node.default_connection.area_name)
+                attached_areas[area.name].append(node.default_connection.area)
                 candidates.append((area.name, index))
             size_indices[area.name] = area.extra["size_index"]
 
@@ -466,7 +466,7 @@ def _serialize_dock_modifications(
                 assert len(candidates) % 2 == 0
 
                 if max_index < -0.00001:
-                    raise Exception("Failed to find pairings for %s" % str(candidates))
+                    raise Exception(f"Failed to find pairings for {str(candidates)}")
 
                 (src_name, src_dock) = next_candidate(max_index)
 
@@ -685,8 +685,8 @@ class PrimePatchDataFactory(PatchDataFactory):
 
                     source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[
                         (
-                            identifier.area_location.region_name,
-                            identifier.area_location.area_name,
+                            identifier.area_identifier.region,
+                            identifier.area_identifier.area,
                         )
                     ]
                     level_data[region.name]["transports"][source_name] = target
