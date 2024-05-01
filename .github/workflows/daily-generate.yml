@@ -46,6 +46,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Workaround for worktree config
+        run: git config --unset-all extensions.worktreeConfig || true
+
       - name: Create venv
         run: python3.12 -m venv venv
 

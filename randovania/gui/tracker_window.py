@@ -579,6 +579,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         # But we need to support a magical "Impossible" kind of gate, in case there's no selection
 
         game = self.game_description
+        if game.game != RandovaniaGame.METROID_PRIME_ECHOES:
+            return
+
         scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 

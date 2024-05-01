@@ -5,12 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.6.0] - 2024-05-??
+## [8.1.0] - 2024-06-??
+
+## [8.0.0] - 2024-05-01
 
 - **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
 - Added: Highlighting nodes in the Map view of the Map tracker will now update the current location.
 - Changed: The output after verifying the installation has been made less misleading.
 - Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
+- Changed: Improve error handling when exporting presets.
 - Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
 
 ### Resolver
@@ -24,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Added: 1 joke hint.
 - Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
 
 #### Logic Database
@@ -48,16 +52,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Sand Zone: Reaching the Storehouse now expects you to have a weapon on trickless instead of the ability to fly.
 - Added: Sand Zone: Breaking the blocks near the Storehouse is now accounted for with Missiles/Bubbler.
 - Added: Sand Zone: Collecting the running puppy now expects you to either kill the Armadillos, or avoid them via intermediate Pacifist strats.
-- Added: Sand Zone: Health requirements added to Omega.
-- Added: Sand Zone Residence: Health requirements added to Curly.
-- Added: Sand Zone Storehouse: Health requirements added to Toroko+.
-
 
 ### Metroid Dread
 
 - Added: Linux and macOS now have the Ryujinx exporting option available.
+- Changed: The Missile Tank pickup in Invisible Corpius Room in Artaria has been moved to the left so that it won't overlap with the door in Door Lock Rando.
+- Changed: There is now a thermal gate preventing players from entering the Experiment Z-57 fight without activating the nearby thermal first.
 - Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
 - Fixed: Customizing a preset where EMMI and Bosses were turned off for DNA placement won't have the DNA slider be initially enabled.
+- Fixed: A `drive letter` typo in the exporting window.
 - Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
 
 #### Logic database
@@ -103,7 +106,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.
 - Added: Screw Attack from the cannons to get the item in Central Mining Station before the Pirate fight.
+- Added: Mining Station B - Room Center to Transit Station with Boost Ball, Bombs, BSJ (Intermediate), and Standable Terrain (Intermediate).
 - Fixed: The video link for the Expert Slope Jump in Central Mining Station now links to a working video.
+- Fixed: Mining Station B - Room Center to Transit Station now properly requires Boost Ball and Standable Terrain (Intermediate) for the No Space Jump Post-Puzzle path.
 
 ## [7.5.0] - 2024-04-01
 
