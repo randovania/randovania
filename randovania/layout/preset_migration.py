@@ -1082,6 +1082,12 @@ def _migrate_v75(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v76(preset: dict) -> dict:
+    if preset["game"] == "samus_returns":
+        preset = _update_default_dock_rando(preset)
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1158,6 +1164,7 @@ _MIGRATIONS = [
     _migrate_v73,
     _migrate_v74,
     _migrate_v75,
+    _migrate_v76,  # msr door lock rando
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
