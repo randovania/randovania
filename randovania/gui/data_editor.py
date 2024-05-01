@@ -475,7 +475,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             msg = f"Unable to describe node: {e}"
 
         if isinstance(node, DockNode):
-            msg = f'{node.default_dock_weakness.name} to <a href="node://{node.default_connection.as_string}">{node.default_connection.node_name}</a>'
+            msg = f'{node.default_dock_weakness.name} to <a href="node://{node.default_connection.as_string}">{node.default_connection.node}</a>'
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
@@ -708,12 +708,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         dock_type, dock_weakness = self.game_description.dock_weakness_database.default_weakness
         source_name_base = next(
             integrity_check.raw_expected_dock_names(
-                dock_type, dock_weakness, target_identifier, source_identifier.region_name
+                dock_type, dock_weakness, target_identifier, source_identifier.region
             )
         )
         target_name_base = next(
             integrity_check.raw_expected_dock_names(
-                dock_type, dock_weakness, source_identifier, target_identifier.region_name
+                dock_type, dock_weakness, source_identifier, target_identifier.region
             )
         )
 
@@ -730,8 +730,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             source_name = source_name_base
             target_name = target_name_base
 
-        new_node_this_area_identifier = NodeIdentifier(self.region_list.identifier_for_area(current_area), source_name)
-        new_node_other_area_identifier = NodeIdentifier(self.region_list.identifier_for_area(target_area), target_name)
+        new_node_this_area_identifier = NodeIdentifier.with_area(
+            self.region_list.identifier_for_area(current_area), source_name
+        )
+        new_node_other_area_identifier = NodeIdentifier.with_area(
+            self.region_list.identifier_for_area(target_area), target_name
+        )
 
         new_node_this_area = DockNode(
             identifier=new_node_this_area_identifier,

@@ -1051,6 +1051,37 @@ def _migrate_v73(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v74(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        difficulty_levels = ["beginner", "intermediate", "advanced", "expert", "hypermode"]
+
+        floor_clips = [
+            difficulty_levels.index(v)
+            for k, v in preset["configuration"]["trick_level"]["specific_levels"].items()
+            if k in ["ADC", "SSC"]
+        ]
+
+        if floor_clips:
+            preset["configuration"]["trick_level"]["specific_levels"]["FloorClip"] = difficulty_levels[min(floor_clips)]
+
+    return preset
+
+
+def _migrate_v75(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        new_ammo_mapping = {
+            "Missile Expansion": "Missile Tank",
+            "Super Missile Expansion": "Super Missile Tank",
+            "Power Bomb Expansion": "Power Bomb Tank",
+        }
+        pickups = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
+        for key in list(pickups):
+            if key in new_ammo_mapping:
+                pickups[new_ammo_mapping[key]] = pickups.pop(key)
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1125,6 +1156,8 @@ _MIGRATIONS = [
     _migrate_v71,
     _migrate_v72,
     _migrate_v73,
+    _migrate_v74,
+    _migrate_v75,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

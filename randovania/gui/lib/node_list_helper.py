@@ -47,7 +47,7 @@ class NodeListHelper:
                 areas_by_region[region.name].append(area)
             if identifier.area_identifier not in nodes_by_area:
                 nodes_by_area[identifier.area_identifier] = []
-            nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node_name))
+            nodes_by_area[identifier.area_identifier].append(area.node_with_name(identifier.node))
 
         return regions, areas_by_region, nodes_by_area
 
@@ -104,7 +104,7 @@ class NodeListHelper:
             for column, use_dark_name in enumerate(dark_name_flags(region)):
                 group_box = QtWidgets.QGroupBox(parent)
                 region_check = QtWidgets.QCheckBox(group_box)
-                region_check.setText(region.correct_name(use_dark_name))
+                region_check.setText(region.correct_name(use_dark_name).replace("&", "&&"))
                 region_check.region_name = region.name
                 region_check.use_dark_name = use_dark_name
                 region_check.stateChanged.connect(functools.partial(_on_check_region, region_check))
@@ -132,7 +132,7 @@ class NodeListHelper:
                 area_check.setText(
                     elevators.get_elevator_name_or_default(
                         self.game_description.game, region.name, area.name, area.name
-                    )
+                    ).replace("&", "&&")
                 )
                 area_check.area_location = self.game_description.region_list.identifier_for_area(area)
                 area_check.stateChanged.connect(functools.partial(_on_check_area, area_check))
@@ -142,7 +142,7 @@ class NodeListHelper:
 
                 for node in nodes_by_area[area_check.area_location]:
                     node_check = QtWidgets.QCheckBox(group_box)
-                    node_check.setText(node.name)
+                    node_check.setText(node.name.replace("&", "&&"))
                     node_check.node_location = node.identifier
                     node_check.stateChanged.connect(functools.partial(_on_check_node, node_check))
 

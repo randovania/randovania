@@ -82,7 +82,8 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
 
     layout_names = [
         # Cross Game Multis
-        "all_game_multi.rdvgame",
+        "multi-cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2.rdvgame",
         "prime1_and_2_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
         "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
@@ -97,6 +98,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/dread_dread_multiworld.rdvgame",  # dread-dread multi
         "dread/elevator_rando.rdvgame",  # elevator_rando multi
         "dread/custom_start.rdvgame",  # crazy settings
+        "dread/custom_patcher_data.rdvgame",  # custom patcher data
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors

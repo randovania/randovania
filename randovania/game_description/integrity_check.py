@@ -39,9 +39,9 @@ def raw_expected_dock_names(
     expected_connector = "to"
     if weakness.requirement == Requirement.impossible() and weakness.name != "Not Determined":
         expected_connector = "from"
-    target_area_str = f"{dock_type.long_name} {expected_connector} {connection.area_name}"
-    target_region_str = f"{dock_type.long_name} {expected_connector} {connection.region_name}"
-    if source_region_name != connection.region_name:
+    target_area_str = f"{dock_type.long_name} {expected_connector} {connection.area}"
+    target_region_str = f"{dock_type.long_name} {expected_connector} {connection.region}"
+    if source_region_name != connection.region:
         yield target_region_str
     yield target_area_str
 
@@ -51,7 +51,7 @@ def expected_dock_names(node: DockNode) -> Iterator[str]:
     Provides valid names for this node. The first result is the recommended name.
     """
     yield from raw_expected_dock_names(
-        node.dock_type, node.default_dock_weakness, node.default_connection.area_identifier, node.identifier.region_name
+        node.dock_type, node.default_dock_weakness, node.default_connection.area_identifier, node.identifier.region
     )
 
 

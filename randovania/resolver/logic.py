@@ -9,13 +9,14 @@ from randovania.resolver.exceptions import ResolverTimeoutError
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
+    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.resolver.state import State
 
 
-def n(node: Node, region_list, with_region=False) -> str:
+def n(node: Node, region_list: RegionList, with_region: bool = False) -> str:
     return region_list.node_name(node, with_region) if node is not None else "None"
 
 

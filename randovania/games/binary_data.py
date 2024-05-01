@@ -94,6 +94,7 @@ ConstructItemResourceInfo = _build_resource_info(
 
 ConstructTrickResourceInfo = _build_resource_info(
     description=String,
+    require_documentation_above=Byte,
 )
 
 ConstructDamageReductions = Struct(

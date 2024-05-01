@@ -41,7 +41,7 @@ class CSPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         game_description = self.game
         seed_number = self.description.get_seed_for_player(self.players_config.player_index)
         music_rng = Random(seed_number)
@@ -283,7 +283,7 @@ class CSPatchDataFactory(PatchDataFactory):
             starting_script += f"<ML+{num_to_tsc_value(self.configuration.starting_hp + life - 3).decode('utf-8')}"
 
         # Starting Locations
-        if self.patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
+        if self.patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:
             # started in first cave
             starting_script += "<FL+6200"
         else:

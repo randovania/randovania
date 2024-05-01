@@ -95,7 +95,7 @@ def render_region_graph_logic(args):
         )
 
     def _cross_region_dock(node: DockNode):
-        return node.default_connection.region_name != node.identifier.region_name
+        return node.default_connection.region != node.identifier.region
 
     per_game_colors = {
         RandovaniaGame.METROID_PRIME_ECHOES: {

@@ -101,6 +101,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     GameDetailsSignal = Signal(LayoutWithPlayers)
     RequestOpenLayoutSignal = Signal(Path)
     InitPostShowSignal = Signal()
+    InitPostShowCompleteSignal = Signal()
 
     @property
     def _tab_widget(self):
@@ -408,6 +409,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         logging.info("Will update for modified options")
         with self._options:
             self.on_options_changed()
+
+        self.InitPostShowCompleteSignal.emit()
 
     # Generate Seed
     async def generate_seed_from_permalink(self, permalink: Permalink):
@@ -818,13 +821,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if bad_files or extra_files:
             errors = []
             if bad_files:
-                errors.append(f"- {len(bad_files)} files are incorrect")
+                errors.append(f"* {len(bad_files)} files are incorrect")
 
             if missing_files:
-                errors.append(f"- {len(missing_files)} files are missing")
+                errors.append(f"* {len(missing_files)} files are missing")
 
             if extra_files:
-                errors.append(f"- {len(extra_files)} files are unexpected")
+                errors.append(f"* {len(extra_files)} files are unexpected")
 
             for m in bad_files:
                 logging.warning("Bad file: %s", m)

@@ -91,9 +91,7 @@ def get_resources_for_details(
 
 
 def _get_destination_room_for_teleportal(connection: Node):
-    return connection.extra.get(
-        "transporter_name", f"{connection.identifier.region_name} - {connection.identifier.area_name}"
-    )
+    return connection.extra.get("transporter_name", f"{connection.identifier.region} - {connection.identifier.area}")
 
 
 class DreadPatchDataFactory(PatchDataFactory):
@@ -466,7 +464,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             }
         ]
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         starting_location = self._start_point_ref_for(starting_location_node)
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())

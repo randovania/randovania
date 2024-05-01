@@ -53,9 +53,6 @@ dependencies = [
     # nonblocking file IO
     "aiofiles",
 
-    # Better than dataclasses for NodeIdentifier
-    "attrs>=21.4.0",
-
     # Immutable dicts, used in many places
     "frozendict",
 
@@ -64,19 +61,22 @@ dependencies = [
 
     # error reports
     "sentry-sdk",
+
+    # Patch GamesPatches JSON from rdvgame
+    "json-delta"
 ]
 
 [project.optional-dependencies]
 exporters = [
     # AM2R
-    "am2r-yams>=1.2.0",
+    "am2r-yams>=2.0.0",
 
     # Cave Story
     "cave-story-randomizer>=2.3.3",
     "tsc-utils>=0.2.5",
 
     # Metroid Dread
-    "open-dread-rando>=2.9.0",
+    "open-dread-rando>=2.10.0",
 
     # Metroid Prime 1
     "py_randomprime>=1.22.1",
@@ -91,7 +91,7 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=1.0.8",
+    "open-samus-returns-rando>=1.2.2",
 
     # Super Metroid
     "SuperDuperMetroid>=1.2.0",
@@ -227,6 +227,7 @@ runtime-evaluated-base-classes = [
 [tool.mypy]
 files = [
     "randovania/bitpacking/",
+    "randovania/cli/__init__.py",
     "randovania/game_description/",
     "randovania/games/am2r/gui/dialog/cosmetic_patches_dialog.py",
     "randovania/games/blank/",
@@ -255,6 +256,7 @@ files = [
 ]
 follow_imports = "silent"
 disallow_untyped_defs = true
+local_partial_types = true
 
 [[tool.mypy.overrides]]
 module = "test.*"

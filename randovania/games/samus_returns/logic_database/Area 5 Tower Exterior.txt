@@ -1,0 +1,964 @@
+----------------
+Tower Exterior
+Extra - total_boundings: {'x1': -11000.0, 'x2': 7700.0, 'y1': -7800.0, 'y2': 9500.0}
+Extra - polygon: [[1800.0, 600.0], [1800.0, -3400.0], [2200.0, -3500.0], [2400.0, -4100.0], [2400.0, -7800.0], [4500.0, -7800.0], [4500.0, -5800.0], [4300.0, -5200.0], [4300.0, -1100.0], [4900.0, -900.0], [5300.0, -900.0], [5300.0, 1300.0], [5100.0, 1600.0], [5100.0, 5900.0], [5300.0, 6200.0], [7700.0, 6200.0], [7700.0, 9500.0], [-7800.0, 9500.0], [-7800.0, -3800.0], [-11000.0, -3800.0], [-11000.0, -7100.0], [-4600.0, -7100.0], [-4600.0, 3800.0], [-2900.0, 4600.0], [-1300.0, 4600.0], [-1300.0, 5100.0], [-600.0, 5400.0], [1900.0, 5400.0], [2350.0, 5300.0], [2600.0, 5000.0], [2600.0, 900.0]]
+Extra - asset_id: collision_camera_002
+> Pickup (Super Missile Tank Top); Heals? False
+  * Layers: default
+  * Pickup 111; Category? Minor
+  * Extra - actor_name: LE_Item_002
+  * Extra - actor_type: item_supermissiletank
+  > Door to Overgrown Maze
+      Screw Attack
+  > Below Ceiling Pickup
+      # Spinjump onto ledge, then use spider
+      Screw Attack and Movement (Intermediate) and Use Spider Ball
+
+> Pickup (Super Missile Tank Bottom); Heals? False
+  * Layers: default
+  * Pickup 114; Category? Minor
+  * Extra - actor_name: LE_Item_005
+  * Extra - actor_type: item_supermissiletank
+  > Underwater
+      Morph Ball
+
+> Pickup (Missile Tank Bottom); Heals? False
+  * Layers: default
+  * Pickup 115; Category? Minor
+  * Extra - actor_name: LE_Item_006
+  * Extra - actor_type: item_missiletank
+  > Save Station Left
+      Screw Attack
+  > Door to Transport to Tower Interior West
+      Morph Ball and Screw Attack
+
+> Ammo Recharge Station; Heals? False
+  * Layers: default
+  * Extra - actor_name: LE_Platform_AmmoRecharge
+  * Extra - actor_type: weightactivatedplatform
+  > Elevator to Area 5 Tower Interior
+      Trivial
+  > Door to Zeta Arena Access
+      Climb Rooms Vertically (No High Jump)
+
+> Elevator to Area 5 Tower Interior; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Tower Exterior East/Elevator to Area 5 Tower Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea06C_01
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea06C_01
+  > Ammo Recharge Station
+      Any of the following:
+          Space Jump or Single-wall Wall Jump (Advanced) or Use Spider Ball
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+  > Save Station Right
+      Trivial
+  > Door to Gamma Arena
+      Trivial
+
+> Save Station Left; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation001
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation001
+  > Pickup (Missile Tank Bottom)
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump
+              All of the following:
+                  # Break the blocks by unmorphing underneath and respinning
+                  Lay Bomb
+                  Any of the following:
+                      # Spider Boost up: https://youtu.be/f7SZju61ZlI
+                      Infinite Bomb Jump (Advanced) and Spider Boost (Advanced) and Can Spider Boost
+                      # IBJ with Phase Drift to get up before the block reforms - TODO: video
+                      Phase Drift and Infinite Bomb Jump (Expert)
+  > Door to Transport to Tower Interior West
+      Diagonal Bomb Jump (Advanced) and Lay Bomb
+  > Underwater
+      Trivial
+
+> Save Station Right; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - actor_name: LE_Platform_SaveStation002
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_SaveStation002
+  > Elevator to Area 5 Tower Interior
+      Trivial
+
+> Teleporter; Heals? False
+  * Layers: default
+  * Teleporter Network (Unlocked by After Area 5 (Tower Exterior) - Teleporter Unlocked)
+  * Extra - actor_name: LE_Platform_Teleporter_06B_001
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_Teleporter_06B_001
+  > Next to Teleporter
+      Trivial
+
+> Door to Zeta Arena Access; Heals? False
+  * Layers: default
+  * Plasma Beam Door to Zeta Arena Access/Door to Tower Exterior
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Door to Red Plant Maze
+      Trivial
+
+> Door to Overgrown Maze; Heals? False
+  * Layers: default
+  * Super Missile Door to Overgrown Maze/Door to Tower Exterior
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Super Missile Tank Top)
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump
+              # IBJ, unmorph and destroy Screw blocks. Then spider boost up: https://youtu.be/uze9OiibjUM
+              Infinite Bomb Jump (Expert) and Spider Boost (Advanced) and Can Spider Boost and Lay Bomb
+  > Next to Teleporter
+      Any of the following:
+          High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs
+          All of the following:
+              # Damage Boost over the Blob Thrower: https://youtu.be/xM7_Mlvgp_g
+              Damage Boost (Advanced)
+              Lightning Armor or Normal Damage ≥ 85
+          # IBJ over the Blob Thrower
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Intermediate)
+  > Top of Tower Right Side
+      Any of the following:
+          High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs
+          All of the following:
+              # Damage Boost over the Blob Thrower: https://youtu.be/xM7_Mlvgp_g
+              Damage Boost (Advanced)
+              Lightning Armor or Normal Damage ≥ 85
+          # IBJ over the Blob Thrower
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Intermediate)
+
+> Door to Red Plant Maze; Heals? False
+  * Layers: default
+  * Power Bomb Door to Red Plant Maze/Door to Tower Exterior
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerpower
+  > Ammo Recharge Station
+      Trivial
+  > Door to Zeta Arena Access
+      High Jump Boots or Space Jump or Single-wall Wall Jump (Intermediate) or Use Spider Ball
+  > Upper Right Ledge
+      Any of the following:
+          Space Jump or Use Spider Ball
+          # IBJ
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+
+> Door to Transport to Tower Interior West; Heals? False
+  * Layers: default
+  * Power Beam Door to Transport to Tower Interior West/Door to Tower Exterior
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Save Station Left
+      Trivial
+  > Tunnel to Overgrown Maze
+      All of the following:
+          # Clip Setup https://youtu.be/jYFppXh1m5w
+          Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Advanced) and Melee Clip (Advanced) and Out of Bounds Movement (Intermediate)
+          # Reach the tunnel ledge
+          Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > Next to Teleporter
+      Any of the following:
+          Single-wall Wall Jump (Advanced) or Climb Rooms Vertically (No High Jump)
+          # SWJ+HJ
+          High Jump Boots and Single-wall Wall Jump (Intermediate)
+
+> Door to Gamma+ Arena Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma+ Arena Access/Door to Tower Exterior
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Upper Right Ledge
+      Any of the following:
+          Lightning Armor or Space Jump
+          # Spider Boost
+          Spider Boost (Intermediate) and Can Spider Boost
+          # Hazard run
+          Hazard Runs (Beginner) and Hazard Damage ≥ 75
+
+> Door to Gamma Arena; Heals? False
+  * Layers: default
+  * Charge Beam Door to Gamma Arena/Door to Tower Exterior
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorchargecharge
+  > Elevator to Area 5 Tower Interior
+      Trivial
+
+> Pickup (Missile Tank Top); Heals? False
+  * Layers: default
+  * Pickup 118; Category? Minor
+  * Extra - actor_name: HiddenPowerup001
+  * Extra - actor_type: item_missiletank
+  > Door to Overgrown Maze
+      Any of the following:
+          High Jump Boots or Destroy Blob Throwers/Steel Orbs
+          All of the following:
+              # Damage Boost over the Blob Thrower
+              Damage Boost (Advanced)
+              Lightning Armor or Normal Damage ≥ 85
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Intermediate)
+  > Next to Teleporter
+      Trivial
+  > Below Ceiling Pickup
+      Use Spider Ball
+
+> Tunnel to Overgrown Maze; Heals? False
+  * Layers: default
+  * Tunnel to Overgrown Maze/Tunnel to Tower Exterior
+  > Next to Teleporter
+      # Jump from the tunnel to avoid falling down
+      Morph Ball and Movement (Intermediate)
+
+> Upper Right Ledge; Heals? False
+  * Layers: default
+  > Door to Red Plant Maze
+      Trivial
+  > Door to Gamma+ Arena Access
+      Any of the following:
+          Lightning Armor or Space Jump
+          # Spider Boost
+          Spider Boost (Intermediate) and Can Spider Boost
+          # Hazard run
+          Hazard Runs (Beginner) and Hazard Damage ≥ 75
+  > Top of Tower Right Side
+      Trivial
+  > Below Ceiling Pickup
+      Any of the following:
+          Spider Boost (Intermediate) and Can Spider Boost
+          All of the following:
+              Use Spider Ball
+              # Grab onto the wall
+              Spring Ball or Mid-Air Morph (Beginner) or Lay Bomb
+
+> Underwater; Heals? False
+  * Layers: default
+  > Door to Transport to Tower Interior West
+      Any of the following:
+          Space Jump or Use Spider Ball
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  # Two IBJs to reach the door
+                  Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      # IBJ from the water
+                      Infinite Bomb Jump (Beginner)
+                      Gravity Suit or Mid-Air Morph (Beginner)
+          All of the following:
+              # SWJ: https://youtu.be/JE_9y06JTk4
+              Morph Ball
+              Any of the following:
+                  Single-wall Wall Jump (Advanced)
+                  High Jump Boots and Single-wall Wall Jump (Intermediate)
+  > Above Grapple Block
+      Any of the following:
+          Use Spider Ball
+          All of the following:
+              # Jump up
+              Space Jump or Wall Jump (Beginner)
+              High Jump Boots or Gravity Suit or Super Jump (Intermediate)
+          All of the following:
+              # IBJ up
+              Lay Bomb
+              Any of the following:
+                  All of the following:
+                      Gravity Suit
+                      Mid-Air Morph (Beginner) or Infinite Bomb Jump (Beginner)
+                  All of the following:
+                      Infinite Bomb Jump (Intermediate)
+                      # Quickly lay bombs to exit the water
+                      Spring Ball or Mid-Air Morph (Beginner)
+
+> Next to Teleporter; Heals? False
+  * Layers: default
+  > Teleporter
+      Trivial
+  > Door to Overgrown Maze
+      Any of the following:
+          # Get over the Blob Thrower
+          Space Jump
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+  > Door to Transport to Tower Interior West
+      Trivial
+  > Pickup (Missile Tank Top)
+      Any of the following:
+          # IBJ to right ledge, then IBJ to item ledge
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          All of the following:
+              Lay Any Bomb
+              Space Jump or Use Spider Ball
+  > Event - Teleporter Unlocked
+      Trivial
+
+> Event - Teleporter Unlocked; Heals? False
+  * Layers: default
+  * Event Area 5 (Tower Exterior) - Teleporter Unlocked
+  > Next to Teleporter
+      Trivial
+
+> Above Grapple Block; Heals? False
+  * Layers: default
+  > Pickup (Super Missile Tank Bottom)
+      Any of the following:
+          All of the following:
+              # https://youtu.be/olF7Zn1G8xU
+              Ice Beam
+              Any of the following:
+                  Ice Beam Clip (Advanced)
+                  All of the following:
+                      Ice Beam Clip (Beginner)
+                      Charge Beam or Freeze Enemy with Melee (Beginner)
+                  Phase Drift and Ice Beam Clip (Intermediate)
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Baby Metroid
+                  All of the following:
+                      Grapple Beam
+                      Any of the following:
+                          # Deal with Blob Thrower
+                          Destroy Blob Throwers/Steel Orbs
+                          # Jump over the Blob Thrower
+                          Phase Drift and Dodge Enemies (Intermediate)
+                      Any of the following:
+                          # Cross the Crumble blocks
+                          Phase Drift or Use Spider Ball
+                          # Skip with SJ: https://youtu.be/Ngh3cBoy3e8
+                          Gravity Suit and Space Jump and Phase Drift Skip (Advanced)
+
+> Top of Tower Right Side; Heals? False
+  * Layers: default
+  > Door to Overgrown Maze
+      Any of the following:
+          High Jump Boots or Space Jump or Destroy Blob Throwers/Steel Orbs
+          All of the following:
+              # Damage boost over the Blob Thrower: https://youtu.be/xM7_Mlvgp_g
+              Damage Boost (Advanced)
+              Lightning Armor or Normal Damage ≥ 85
+          # IBJ over the Blob Thrower
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
+          # Jump over the Blob Thrower
+          Phase Drift and Dodge Enemies (Intermediate)
+  > Door to Red Plant Maze
+      Trivial
+  > Upper Right Ledge
+      Simple IBJ
+
+> Below Ceiling Pickup; Heals? False
+  * Layers: default
+  > Door to Overgrown Maze
+      # Fall from above
+      Movement (Beginner)
+  > Pickup (Missile Tank Top)
+      Use Spider Ball
+  > Upper Right Ledge
+      Use Spider Ball
+
+----------------
+Overgrown Maze
+Extra - total_boundings: {'x1': -4900.0, 'x2': 900.0, 'y1': 2700.0, 'y2': 5100.0}
+Extra - polygon: [[-4900.0, 4500.0], [-4900.0, 2700.0], [900.0, 2700.0], [900.0, 5100.0], [-1400.0, 5100.0], [-1400.0, 4500.0]]
+Extra - asset_id: collision_camera_004
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 110; Category? Major
+  * Extra - actor_name: LE_Item_001
+  * Extra - actor_type: item_energytank
+  > Pickup (Power Bomb Tank)
+      Power Bomb ≥ 2 and Spider Boost (Beginner) and Can Spider Boost
+  > Door to Tower Exterior
+      Any of the following:
+          Power Bomb ≥ 2 and Spider Boost (Beginner) and Can Spider Boost
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Grapple Beam
+                  All of the following:
+                      # Bomb Jump from the corner and hit the spike
+                      Diagonal Bomb Jump (Advanced) and Damage Boost (Beginner) and Lay Bomb and Use Spider Ball
+                      Lightning Armor or Normal Damage ≥ 35
+
+> Pickup (Power Bomb Tank); Heals? False
+  * Layers: default
+  * Pickup 116; Category? Minor
+  * Extra - actor_name: LE_Item_007
+  * Extra - actor_type: item_powerbombtank
+  > Pickup (Energy Tank)
+      Power Bomb ≥ 2 and Spider Boost (Beginner) and Can Spider Boost
+  > Tunnel to Tower Exterior
+      Morph Ball
+
+> Door to Tower Exterior; Heals? False
+  * Layers: default
+  * Super Missile Door to Tower Exterior/Door to Overgrown Maze
+  * Extra - actor_name: Door004
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Energy Tank)
+      Any of the following:
+          # Spider Boost from right path
+          Spider Boost (Beginner) and Can Spider Boost
+          All of the following:
+              # Left path
+              Morph Ball
+              Any of the following:
+                  Grapple Beam
+                  # Bomb Jump from corner
+                  Diagonal Bomb Jump (Beginner) and Lay Bomb and Use Spider Ball
+                  All of the following:
+                      # Jump through the spikes
+                      Damage Boost (Advanced)
+                      Any of the following:
+                          Lightning Armor
+                          Hazard Runs (Intermediate) and Normal Damage ≥ 30 and Hazard Damage ≥ 50
+
+> Tunnel to Tower Exterior; Heals? False
+  * Layers: default
+  * Tunnel to Tower Exterior/Tunnel to Overgrown Maze
+  > Pickup (Power Bomb Tank)
+      Out of Bounds Movement (Intermediate)
+
+----------------
+Screw Attack Chamber
+Extra - total_boundings: {'x1': 200.0, 'x2': 2600.0, 'y1': 1300.0, 'y2': 2600.0}
+Extra - polygon: [[200.0, 2600.0], [200.0, 1300.0], [2600.0, 1300.0], [2600.0, 2600.0]]
+Extra - asset_id: collision_camera_005
+> Pickup (Screw Attack); Heals? False
+  * Layers: default
+  * Pickup 117; Category? Major
+  * Extra - actor_name: LE_PowerUp_ScrewAttack
+  * Extra - actor_type: itemsphere_screwattack
+  > Next to Pickup
+      Trivial
+
+> Door from Screw Attack Chamber Access; Heals? False
+  * Layers: default
+  * Access Closed to Screw Attack Chamber Access/Door to Screw Attack Chamber
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerclosed
+  > Next to Pickup
+      Trivial
+
+> Dock to Screw Attack Chamber Access; Heals? False
+  * Layers: default
+  * Open Passage to Screw Attack Chamber Access/Dock to Screw Attack Chamber
+  > Next to Pickup
+      Trivial
+
+> Next to Pickup; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Checkpoint_005
+  > Pickup (Screw Attack)
+      Trivial
+  > Door from Screw Attack Chamber Access
+      Trivial
+  > Dock to Screw Attack Chamber Access
+      Screw Attack
+
+----------------
+Zeta Arena Access
+Extra - total_boundings: {'x1': -2200.0, 'x2': 1900.0, 'y1': -1000.0, 'y2': 700.0}
+Extra - polygon: [[-2200.0, 700.0], [-2200.0, -100.0], [-2150.0, -100.0], [-2150.0, -1000.0], [1900.0, -1000.0], [1900.0, 700.0]]
+Extra - asset_id: collision_camera_006
+> Door to Tower Exterior; Heals? False
+  * Layers: default
+  * Plasma Beam Door to Tower Exterior/Door to Zeta Arena Access
+  * Extra - actor_name: Door003
+  * Extra - actor_type: doorpowerpower
+  > Door to Zeta Arena
+      Screw Attack
+  > Tunnel to Paraby Parlor
+      Any of the following:
+          All of the following:
+              Lay Any Bomb
+              Any of the following:
+                  Spider Ball
+                  All of the following:
+                      High Jump Boots
+                      # Escape the water
+                      Gravity Suit or Super Jump (Beginner) or Unmorph Extend (Intermediate)
+                  All of the following:
+                      Gravity Suit
+                      # Reach the tunnel
+                      Space Jump or Single-wall Wall Jump (Beginner) or Wall Jump (Beginner)
+          All of the following:
+              # Reach the tunnel via bomb jump methods
+              Infinite Bomb Jump (Beginner) and Lay Bomb
+              # Escape the water
+              Gravity Suit or Underwater Bomb Jump (Beginner)
+
+> Door to Zeta Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Zeta Arena/Door to Zeta Arena Access
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Door to Tower Exterior
+      Any of the following:
+          Screw Attack
+          All of the following:
+              Use Spider Ball
+              Any of the following:
+                  Spider Ball Clip (Expert)
+                  Gravity Suit and Spider Ball Clip (Intermediate)
+  > Start Point
+      Trivial
+
+> Tunnel to Paraby Parlor; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Paraby Parlor/Tunnel to Zeta Arena Access
+  > Door to Tower Exterior
+      Morph Ball
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Zeta_001
+  > Door to Zeta Arena
+      Trivial
+
+----------------
+Red Plant Maze
+Extra - total_boundings: {'x1': 5200.0, 'x2': 11500.0, 'y1': -700.0, 'y2': 600.0}
+Extra - polygon: [[5200.0, 600.0], [5200.0, -700.0], [11500.0, -700.0], [11500.0, 600.0]]
+Extra - asset_id: collision_camera_008
+> Pickup (Aeion Tank); Heals? False
+  * Layers: default
+  * Pickup 112; Category? Minor
+  * Extra - actor_name: LE_Item_003
+  * Extra - actor_type: item_senergytank
+  > Door to Tower Exterior
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # Top path
+              Lightning Armor
+              Hazard Runs (Advanced) and Hazard Damage ≥ 500
+              Any of the following:
+                  # Bottom path
+                  Lay Bomb
+                  Power Bomb ≥ 2 and Lay Power Bomb
+
+> Door to Tower Exterior; Heals? False
+  * Layers: default
+  * Power Bomb Door to Tower Exterior/Door to Red Plant Maze
+  * Extra - actor_name: Door005
+  * Extra - actor_type: doorpowerpower
+  > Pickup (Aeion Tank)
+      Any of the following:
+          All of the following:
+              # Top path
+              Morph Ball
+              Any of the following:
+                  Lightning Armor
+                  Hazard Runs (Advanced) and Hazard Damage ≥ 500
+          # Bottom path
+          Baby Metroid and Lay Any Bomb
+
+----------------
+Transport to Tower Interior West
+Extra - total_boundings: {'x1': -4700.0, 'x2': -3400.0, 'y1': -2958.300048828125, 'y2': -2200.0}
+Extra - polygon: [[-4700.0, -2200.0], [-4700.0, -2958.300048828125], [-3400.0, -2958.300048828125], [-3400.0, -2200.0]]
+Extra - asset_id: collision_camera_011
+> Elevator to Area 5 Tower Interior; Heals? False; Spawn Point; Default Node
+  * Layers: default
+  * Elevator to Transport to Tower Exterior West/Elevator to Area 5 Tower Exterior
+  * Extra - actor_name: LE_Platform_Elevator_FromArea06C_02
+  * Extra - actor_type: weightactivatedplatform
+  * Extra - start_point_actor_name: ST_FromArea06C_02
+  > Door to Tower Exterior
+      Trivial
+
+> Door to Tower Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Tower Exterior/Door to Transport to Tower Interior West
+  * Extra - actor_name: Door007
+  * Extra - actor_type: doorpowerpower
+  > Elevator to Area 5 Tower Interior
+      Trivial
+
+----------------
+Zeta Arena
+Extra - total_boundings: {'x1': -4700.0, 'x2': -2050.0, 'y1': -1200.0, 'y2': 200.0}
+Extra - polygon: [[-4700.0, 200.0], [-4700.0, -1200.0], [-2050.0, -1200.0], [-2050.0, 200.0]]
+Extra - asset_id: collision_camera_012
+> Door to Zeta Arena Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Zeta Arena Access/Door to Zeta Arena
+  * Extra - actor_name: Door012
+  * Extra - actor_type: doorpowerpower
+  > Room Center
+      Trivial
+
+> Event - Zeta Metroid; Heals? False
+  * Layers: default
+  * Event Area 5 (Tower Exterior) - Zeta Metroid
+  > Pickup (DNA)
+      Trivial
+
+> Room Center; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Zeta_001_Checkpoint
+  > Door to Zeta Arena Access
+      Any of the following:
+          High Jump Boots or Space Jump or Super Jump (Intermediate) or Simple IBJ
+          # Spider Boost
+          Spider Boost (Intermediate) and Can Spider Boost
+          # UE
+          Morph Ball and Unmorph Extend (Beginner)
+  > Event - Zeta Metroid
+      Defeat Zeta Metroid
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 204; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Zeta_001
+  > Room Center
+      Trivial
+
+----------------
+Paraby Parlor
+Extra - total_boundings: {'x1': -4500.0, 'x2': -2100.0, 'y1': 400.0, 'y2': 2600.0}
+Extra - polygon: [[-4500.0, 2600.0], [-4500.0, 400.0], [-2100.0, 400.0], [-2100.0, 2600.0]]
+Extra - asset_id: collision_camera_013
+> Door to Screw Attack Chamber Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Screw Attack Chamber Access/Door to Paraby Parlor
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Tunnel to Zeta Arena Access
+      Lay Any Bomb
+
+> Tunnel to Zeta Arena Access; Heals? False
+  * Layers: default
+  * Tunnel with Bomb Block to Zeta Arena Access/Tunnel to Paraby Parlor
+  > Door to Screw Attack Chamber Access
+      # Climb the room
+      Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+
+----------------
+Gamma Arena
+Extra - total_boundings: {'x1': 4300.0, 'x2': 10200.0, 'y1': -8600.0, 'y2': -2900.0}
+Extra - polygon: [[4300.0, -2900.0], [4300.0, -6000.0], [4400.0, -6200.0], [4400.0, -8600.0], [10200.0, -8600.0], [10200.0, -2900.0]]
+Extra - asset_id: collision_camera_015
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 113; Category? Minor
+  * Extra - actor_name: LE_Item_004
+  * Extra - actor_type: item_missiletank
+  > Bottom of Climb
+      Destroy Blob Throwers/Steel Orbs and Lay Any Bomb
+  > Room Bottom
+      Morph Ball
+
+> Energy Recharge Station; Heals? True
+  * Layers: default
+  * Extra - actor_name: LE_Platform_EnergyRecharge001
+  * Extra - actor_type: weightactivatedplatform
+  > Door to Tower Exterior
+      Space Jump or Use Spider Ball
+  > Bottom of Climb
+      Space Jump or Use Spider Ball
+  > Room Bottom
+      Trivial
+
+> Door to Tower Exterior; Heals? False
+  * Layers: default
+  * Charge Beam Door to Tower Exterior/Door to Gamma Arena
+  * Extra - actor_name: Door010
+  * Extra - actor_type: doorchargecharge
+  > Energy Recharge Station
+      Space Jump or Use Spider Ball
+  > Room Bottom
+      Trivial
+
+> Event - Gamma Metroid; Heals? False
+  * Layers: default
+  * Event Area 5 (Tower Exterior) - Gamma Metroid
+  > Pickup (DNA)
+      Trivial
+
+> Bottom of Climb; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Destroy Blob Throwers/Steel Orbs and Lay Any Bomb
+  > Energy Recharge Station
+      Space Jump or Use Spider Ball
+  > Top of Climb
+      Any of the following:
+          Climb Rooms Vertically (No High Jump)
+          All of the following:
+              Wall Jump (Beginner)
+              Any of the following:
+                  High Jump Boots or Super Jump (Advanced)
+                  # Jump around the overhang
+                  Single-wall Wall Jump (Intermediate)
+  > Room Bottom
+      Trivial
+  > Out of Bounds in Tunnel
+      All of the following:
+          # Freeze the Moheek https://youtu.be/H-IFsJD02bo
+          Ice Beam and Morph Ball and Melee Clip (Advanced) and Out of Bounds Movement (Beginner)
+          Any of the following:
+              All of the following:
+                  Stand on Frozen Enemy (Intermediate)
+                  Charge Beam or Freeze Enemy with Melee (Beginner)
+              Phase Drift and Stand on Frozen Enemy (Advanced)
+
+> Top of Climb; Heals? False
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_003
+  > Bottom of Climb
+      Trivial
+  > Inside Arena
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  Use Spider Ball
+                  # Bomb Jump from ledge or bottom of climb
+                  Infinite Bomb Jump (Intermediate)
+                  All of the following:
+                      Mid-Air Morph (Beginner)
+                      High Jump Boots or Space Jump or Wall Jump (Beginner)
+  > Out of Bounds in Tunnel
+      # https://youtu.be/H-IFsJD02bo?t=7
+      Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
+
+> Room Bottom; Heals? False
+  * Layers: default
+  > Energy Recharge Station
+      Any of the following:
+          Space Jump or Use Spider Ball
+          Gravity Suit and Simple IBJ
+  > Door to Tower Exterior
+      All of the following:
+          Gravity Suit
+          Single-wall Wall Jump (Intermediate) or Simple IBJ
+  > Bottom of Climb
+      Any of the following:
+          All of the following:
+              Lay Bomb
+              Any of the following:
+                  # IBJ from edge and move around top ledge
+                  Infinite Bomb Jump (Intermediate)
+                  # IBJ from water
+                  Gravity Suit and Infinite Bomb Jump (Beginner)
+          All of the following:
+              # Start from higher ledge
+              Morph Ball
+              Any of the following:
+                  High Jump Boots
+                  # https://youtu.be/DJGUa0lTZM8
+                  Super Jump (Advanced) and Unmorph Extend (Advanced)
+
+> Inside Arena; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_003_Checkpoint
+  > Door to Tower Exterior
+      # Clip left side of arena
+      Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
+  > Event - Gamma Metroid
+      Defeat Gamma Metroid
+  > Bottom of Climb
+      # Clip right side of arena
+      Morph Ball and Melee Clip (Beginner) and Out of Bounds Movement (Beginner)
+  > Top of Climb
+      Any of the following:
+          Lay Power Bomb
+          All of the following:
+              Lay Bomb
+              Mid-Air Morph (Beginner) or Simple IBJ or Use Spider Ball
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 201; Category? Minor
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_003
+  > Inside Arena
+      Trivial
+
+> Out of Bounds in Tunnel; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              All of the following:
+                  Out of Bounds Movement (Beginner) and Shoot Beam Burst
+                  # Reveal tunnel with Missile or navigate tunnel while obscured
+                  Missile or Knowledge (Intermediate)
+              # Missile to reveal the tunnel https://youtu.be/H-IFsJD02bo?t=11
+              Missile and Out of Bounds Movement (Advanced)
+              # Navigate while the tunnel is hidden https://youtu.be/H-IFsJD02bo?t=24
+              Out of Bounds Movement (Expert)
+  > Bottom of Climb
+      Trivial
+
+----------------
+Screw Attack Chamber Access
+Extra - total_boundings: {'x1': -2200.0, 'x2': 300.0, 'y1': 700.0, 'y2': 2600.0}
+Extra - polygon: [[-2200.0, 2600.0], [-2200.0, 700.0], [300.0, 700.0], [300.0, 2600.0]]
+Extra - asset_id: collision_camera_016
+> Door to Screw Attack Chamber; Heals? False
+  * Layers: default
+  * Missile Door to Screw Attack Chamber/Door from Screw Attack Chamber Access
+  * Extra - actor_name: Door002
+  * Extra - actor_type: doorpowerclosed
+  > Door to Paraby Parlor
+      Trivial
+  > Dock to Screw Attack Chamber
+      Screw Attack
+
+> Door to Paraby Parlor; Heals? False
+  * Layers: default
+  * Power Beam Door to Paraby Parlor/Door to Screw Attack Chamber Access
+  * Extra - actor_name: Door008
+  * Extra - actor_type: doorpowerpower
+  > Door to Screw Attack Chamber
+      Any of the following:
+          # Spider Boost
+          Spider Boost (Intermediate) and Can Spider Boost
+          # UBJ: https://youtu.be/jMV40L8UISU
+          Underwater Bomb Jump (Advanced) and Lay Bomb
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Space Jump or Simple IBJ
+                  # SWJ: https://youtu.be/3XIUkQcTIPg
+                  Morph Ball and Single-wall Wall Jump (Advanced)
+
+> Dock to Screw Attack Chamber; Heals? False
+  * Layers: default
+  * Open Passage to Screw Attack Chamber/Dock to Screw Attack Chamber Access
+  > Door to Screw Attack Chamber
+      All of the following:
+          Screw Attack
+          Any of the following:
+              High Jump Boots or Space Jump or Wall Jump (Beginner)
+              # Super Jump + UE: https://youtu.be/VHSysPvOGV0
+              Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Beginner)
+
+----------------
+Gamma+ Arena Access
+Extra - total_boundings: {'x1': 7600.0, 'x2': 10350.0, 'y1': 6200.0, 'y2': 7900.0}
+Extra - polygon: [[7600.0, 7900.0], [7600.0, 6200.0], [10350.0, 6200.0], [10350.0, 7900.0]]
+Extra - asset_id: collision_camera_014
+> Door to Tower Exterior; Heals? False
+  * Layers: default
+  * Power Beam Door to Tower Exterior/Door to Gamma+ Arena Access
+  * Extra - actor_name: Door009
+  * Extra - actor_type: doorpowerpower
+  > Door to Gamma+ Arena
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Lightning Armor or Space Jump
+              # Spider Boost
+              Spider Boost (Intermediate) and Can Spider Boost
+              # Hazard Run
+              Hazard Runs (Beginner) and Hazard Damage ≥ 90
+              All of the following:
+                  # Freeze Gulluggs - TODO: video
+                  Ice Beam
+                  Any of the following:
+                      # Fully Freeze
+                      Charge Beam and Stand on Frozen Enemy (Intermediate)
+                      # Use Phase Drift to extend freeze timer
+                      Phase Drift and Stand on Frozen Enemy (Advanced)
+                      # Quickly jump while temporarily frozen
+                      Stand on Frozen Enemy (Expert)
+
+> Door to Gamma+ Arena; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma+ Arena/Door to Gamma+ Arena Access
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Door to Tower Exterior
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Lightning Armor or Space Jump
+              # Spider Boost
+              Spider Boost (Intermediate) and Can Spider Boost
+              # Hazard Run
+              Hazard Runs (Beginner) and Hazard Damage ≥ 90
+              All of the following:
+                  # Freeze Gulluggs - TODO: video
+                  Ice Beam
+                  Any of the following:
+                      # Fully Freeze
+                      Charge Beam and Stand on Frozen Enemy (Intermediate)
+                      # Use Phase Drift to extend freeze timer
+                      Phase Drift and Stand on Frozen Enemy (Advanced)
+                      # Quickly jump while temporarily frozen
+                      Stand on Frozen Enemy (Expert)
+  > Start Point
+      Varia Suit
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Gamma_002
+  > Door to Gamma+ Arena
+      Varia Suit
+
+----------------
+Gamma+ Arena
+Extra - total_boundings: {'x1': 10250.0, 'x2': 14200.0, 'y1': 5800.0, 'y2': 7900.0}
+Extra - polygon: [[10250.0, 7900.0], [10250.0, 5800.0], [14200.0, 5800.0], [14200.0, 7900.0]]
+Extra - asset_id: collision_camera_014
+> Door to Gamma+ Arena Access; Heals? False
+  * Layers: default
+  * Power Beam Door to Gamma+ Arena Access/Door to Gamma+ Arena
+  * Extra - actor_name: Door011
+  * Extra - actor_type: doorpowerpower
+  > Event - Gamma Metroid+
+      All of the following:
+          Varia Suit and Defeat Gamma Metroid+
+          Any of the following:
+              # Gamma trigger is across the lava
+              Gravity Suit or Space Jump
+              # Spider Boost across
+              Spider Boost (Intermediate) and Can Spider Boost
+              # DBJ
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+  > Start Point
+      Varia Suit
+
+> Event - Gamma Metroid+; Heals? False
+  * Layers: default
+  * Event Area 5 (Tower Exterior) - Gamma Metroid+
+  > Pickup (DNA)
+      Trivial
+
+> Start Point; Heals? False; Default Node
+  * Layers: default
+  * Extra - start_point_actor_name: ST_Gamma_002_Checkpoint
+  > Door to Gamma+ Arena Access
+      Varia Suit
+
+> Pickup (DNA); Heals? False
+  * Layers: default
+  * Pickup 200; Category? Major
+  * Extra - pickup_type: metroid
+  * Extra - spawngroup: SG_Gamma_002
+  > Door to Gamma+ Arena Access
+      All of the following:
+          Varia Suit
+          Any of the following:
+              Gravity Suit or Space Jump
+              # Spider Boost
+              Spider Boost (Intermediate) and Can Spider Boost
+              # DBJ
+              Diagonal Bomb Jump (Intermediate) and Lay Bomb
+

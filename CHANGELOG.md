@@ -5,10 +5,150 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.5.0] - 2024-04-??
+## [7.6.0] - 2024-05-??
+
+- **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
+- Added: Highlighting nodes in the Map view of the Map tracker will now update the current location.
+- Changed: The output after verifying the installation has been made less misleading.
+- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
+- Changed: Improve error handling when exporting presets.
+- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
+
+### Resolver
+
+- Fixed: Some cases of seeds being wrongly considered as impossible.
+
+### Discord Bot
+
+- Added: The Discord bot now mentions the game when describing a preset.
+- Changed: Experimental games are now only available in the development bot.
+
+### AM2R
+
+- Added: 1 joke hint.
+- Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
+
+#### Logic Database
+
+- Changed: Zipping from destroyable objects with Missiles is now rated as Expert.
+
+##### Hydro Station
+
+- Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
+- Fixed: Inner Alpha Nest South: It's not logical anymore to get the Missile tank with only Walljumps and Mid-Air Morphs.
+- Added: Inner Alpha Nest South: A video link to get the Missile Tank with a Morph Glide.
+
+### Cave Story
+
+- Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
+- Fixed: King does not have a third ear anymore when using him as a player sprite.
+
+##### Sand Zone
+
+- Fixed: Sand Zone: Breaking the blocks now properly accounts for having either Missile Launcher or Super Missile Launcher.
+- Fixed: Sand Zone: Breaking the blocks to go from the Sunstones to before the omega fight now properly accounts for killing enemies to farm Missiles.
+- Fixed: Sand Zone: Reaching the Storehouse now expects you to have a weapon on trickless instead of the ability to fly.
+- Added: Sand Zone: Breaking the blocks near the Storehouse is now accounted for with Missiles/Bubbler.
+- Added: Sand Zone: Collecting the running puppy now expects you to either kill the Armadillos, or avoid them via intermediate Pacifist strats.
+
+### Metroid Dread
+
+- Added: Linux and macOS now have the Ryujinx exporting option available.
+- Changed: The Missile Tank pickup in Invisible Corpius Room in Artaria has been moved to the left so that it won't overlap with the door in Door Lock Rando.
+- Changed: There is now a thermal gate preventing players from entering the Experiment Z-57 fight without activating the nearby thermal first.
+- Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
+- Fixed: Customizing a preset where EMMI and Bosses were turned off for DNA placement won't have the DNA slider be initially enabled.
+- Fixed: A `drive letter` typo in the exporting window.
+- Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
+
+#### Logic database
+
+##### Cataris
+
+- Added: Pseudo Wave Beam (Beginner) to break the blob above Blue Teleportal to Artaria, from the left side of the wall.
+
+### Metroid Prime
+
+- Added: FAQ Entry about non-Superheated rooms
+- Added: Exposed "Power Beam Only"-Doors for Door Lock Rando.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
+
+##### Frigate Orpheon
+
+- Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
+
+##### Phendrana Drifts
+
+- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
+
+##### Magmoor Caverns
+
+- Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Fixed: Normal Doors now account for having a beam or Morph Ball Bombs to open.
+
+##### Agon Wastes
+
+- Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.
+- Added: Screw Attack from the cannons to get the item in Central Mining Station before the Pirate fight.
+- Added: Mining Station B - Room Center to Transit Station with Boost Ball, Bombs, BSJ (Intermediate), and Standable Terrain (Intermediate).
+- Fixed: The video link for the Expert Slope Jump in Central Mining Station now links to a working video.
+- Fixed: Mining Station B - Room Center to Transit Station now properly requires Boost Ball and Standable Terrain (Intermediate) for the No Space Jump Post-Puzzle path.
+
+## [7.5.0] - 2024-04-01
 
 - Added: Command line arguments for exporting games. These commands are intended for advanced uses only.
 - Fixed: During generation, actions that involves multiple progressive pickups are now properly considered.
+
+### AM2R
+
+- Fixed: Hitting Zetas with Charge Beam works again.
+
+#### Logic Database
+
+##### Distribution Center
+
+- Added: Gravity Area Corridor: Getting the item is now logical via a Charge Bomb Spread. This requires Knowledge Beginner and Movement Intermediate.
+- Fixed: Gravity Chamber Access: Going from right to left is now logical with Gravity and Bombs.
+- Fixed: Gravity Chamber Access: Going from right to left is not logical anymore with walljumping.
+
+##### Hydro Station
+
+- Changed: Shinesparking from Breeding Grounds Alpha Nest West to Breeding Grounds Overgrown Alley now requires an intermediate Shinespark.
+- Fixed: Hydro Station Exterior: It's now impossible for the Water Turbine to shuffle to a Spider Ball door or a Screw Attack door.
+
+##### Industrial Complex
+
+- Added: Industrial Complex Exterior: It is now possible to get from the right building to the left building. It's an Intermediate Morph Glide with High Jump, and an Advanced without.
+
+##### Main Caves
+
+- Fixed: Drill Excavation: Logic does not expect you to need bombs anymore to break the crystal if Cutscene Skips are enabled.
+
+##### The Tower
+
+- Fixed: Plasma Chamber: It is now logical to escape the room through the left tunnel if the Softlock Prevention option is enabled.
+
+### Cave Story
+
+- Fixed: Cave Story exports with CS:Tweaked now prioritize the mod-specific files over Freeware's. This solves several issues with missing graphics when exporting over a Freeeware game.
+- Fixed: Missing graphical assets for rando-exclusive inventory entries in Cave Story: Tweaked exports
+
+#### Logic Database
+
+##### Ruined Egg Corridor
+
+- Added: Health requirements to the Sisters.
+- Fixed: Breaking the blocks in `Cthulhu's Abode?` now properly accounts for Super Missile Launcher
 
 ### Metroid Dread
 
@@ -17,11 +157,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Added: New trick, Cross Bomb Launch.
+- Changed: The Shinesink Clip and Aim Down Clip tricks are now a single Floor Clip trick.
+
+##### Artaria
+
+- Added: Video: Ballsparking into Speed Hallway from the right, charging speed from Energy Recharge Station South.
 
 ##### Burenia
 
-- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch (Intermediate).
+- Added: Crossing the gap in Underneath Drogyga with Cross Bomb Launch; Intermediate with Spin Boost, Advanced without.
 - Added: Reaching the Missile Tank Pickup in Main Hub Tower Top using Cross Bomb Launch (Advanced).
+- Added: Video: Morph Ball Movement Jump in Main Hub Tower Middle.
 
 ##### Cataris
 
@@ -39,14 +185,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ferenia
 
 - Changed: Getting across the water in EMMI Zone Exit East with Cross Bombs now additionally requires Cross Bomb Launch (Advanced).
+- Changed: Path to Escue: Getting from Door to Save Station Southeast to Dock to EMMI Zone Exit East is now trivial.
 
 ##### Ghavoran
 
 - Added: Cross Bomb Launch (Advanced) to get to the Save Station Door in Golzuna Tower from the Missile Tank Pickup.
 - Added: Cross Bomb Launch (Beginner) to get the Missile Tank Pickup in Golzuna Tower.
 - Added: Video showing the Climb Sloped Tunnels trick to get from the Missile Tank Pickup to the Save Station Door in Golzuna Tower.
+- Added: Wall Jump using Spin Boost in Left Entrance.
+- Added: Water Space Jump (Intermediate) in Energy Recharge Station, getting up through the Screw Attack Blocks.
 - Changed: Using Cross Bomb to get the Missile Tank Pickup in Golzuna Tower now requires Movement (Beginner).
+- Changed: The Floor Clip into Golzuna Arena has been reduced from Expert to Intermediate.
 - Changed: The Cross Bomb Skip to get across the Pitfall blocks in Cross Bomb Tutorial has been reduced from Expert to Advanced.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Phendrana Drifts
+
+- Added: Ruined Courtyard: Scan/X-Ray Beginner dash to and from Specimen Storage
+
+##### Tallon Overworld
+
+- Changed: Frigate Crash Site: Overgrown Cavern Climb L-Jump adjusted to Beginner
 
 ### Metroid Prime 2: Echoes
 
@@ -57,6 +219,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Torvus Bog
 
 - Added: The reverse air underwater in Training Chamber now has a method with and without Space Jump (Advanced and Expert respectively). This can be used to get to the bomb slot as well as the door to Fortress Transport Access.
+
+## [7.4.2] - 2024-03-13
+
+This release is identical to 7.4.0 and was released to revert 7.4.1.
 
 ## [7.4.1] - 2024-03-13
 

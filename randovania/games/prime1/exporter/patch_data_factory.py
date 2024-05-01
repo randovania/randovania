@@ -282,8 +282,8 @@ def _serialize_dock_modifications(
                 dock_num_by_area_node[(area.name, node.name)] = index
                 is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                 default_connections_node_name[(area.name, index)] = (
-                    node.default_connection.area_name,
-                    node.default_connection.node_name,
+                    node.default_connection.area,
+                    node.default_connection.node,
                 )
 
                 if node.default_dock_weakness.name == "Permanently Locked":
@@ -292,7 +292,7 @@ def _serialize_dock_modifications(
                 if node.extra["nonstandard"]:
                     continue
                 area_dock_nums[area.name].append(index)
-                attached_areas[area.name].append(node.default_connection.area_name)
+                attached_areas[area.name].append(node.default_connection.area)
                 candidates.append((area.name, index))
             size_indices[area.name] = area.extra["size_index"]
 
@@ -618,7 +618,7 @@ class PrimePatchDataFactory(PatchDataFactory):
             "swapBeamControls": cosmetic_patches.user_preferences.swap_beam_controls,
         }
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         # Setup
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
@@ -685,8 +685,8 @@ class PrimePatchDataFactory(PatchDataFactory):
 
                     source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[
                         (
-                            identifier.area_location.region_name,
-                            identifier.area_location.area_name,
+                            identifier.area_identifier.region,
+                            identifier.area_identifier.area,
                         )
                     ]
                     level_data[region.name]["transports"][source_name] = target

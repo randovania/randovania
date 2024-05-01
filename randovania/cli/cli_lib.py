@@ -39,11 +39,11 @@ class EnumAction(argparse.Action):
         setattr(namespace, self.dest, value)
 
 
-def add_debug_argument(parser: ArgumentParser):
+def add_debug_argument(parser: ArgumentParser) -> None:
     parser.add_argument("--debug", choices=range(4), type=int, default=0, help="The level of debug logging to print.")
 
 
-def add_validate_argument(parser: ArgumentParser):
+def add_validate_argument(parser: ArgumentParser) -> None:
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "--validate",
@@ -61,7 +61,7 @@ def add_validate_argument(parser: ArgumentParser):
     )
 
 
-def print_report_multiple_times(total_times: list[float]):
+def print_report_multiple_times(total_times: list[float]) -> None:
     print(
         f"Result after doing {len(total_times)} times:\n"
         f"Mean: {statistics.mean(total_times):.3f} seconds\n"

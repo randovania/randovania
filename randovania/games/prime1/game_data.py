@@ -61,6 +61,12 @@ def _exporter():
     return PrimeGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.prime1.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
@@ -95,6 +101,15 @@ game_data: game.GameData = game.GameData(
             "break fixes present on that version are undone. This reverts the game to be functionally equivalent to "
             "NTSC 0-00, meaning that all versions of Prime are guaranteed to be logically completable when randomized.",
         ),
+        (
+            "Why do I not take heat damage in some rooms in Magmoor, despite not having Varia Suit?",
+            "Some rooms in Magmoor are not coded to be superheated. These include:\n"
+            "- Elevator Rooms\n"
+            "- Storage Cavern\n"
+            "- Every room including and past Twin Fires\n"
+            "- Burning Trail\n"
+            "- Lake Access",
+        ),
     ],
     web_info=game.GameWebInfo(
         what_can_randomize=[
@@ -108,6 +123,7 @@ game_data: game.GameData = game.GameData(
             "A modded Wii, or Dolphin Emulator",
         ],
     ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,

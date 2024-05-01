@@ -80,7 +80,7 @@ class CSBootstrap(Bootstrap):
             self.pre_place_artifacts(rng, locations, results, puppies_category)
 
         # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
-        if patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
+        if patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:
             _sn_weapons = list(SN_WEAPONS)
 
             bubble_sn = db.get_trick("SNBubbler")
@@ -102,7 +102,7 @@ class CSBootstrap(Bootstrap):
                 results.assignment[index] = weapon
 
         # strong weapon and life capsule in camp
-        if patches.starting_location.area_name == "Camp":
+        if patches.starting_location.area == "Camp":
             strong_weapons = get_valid_pickups(STRONG_WEAPONS)
             life_capsules = get_valid_pickups(["5HP Life Capsule"])
             camp_indices = get_valid_indices(CAMP_INDICES)

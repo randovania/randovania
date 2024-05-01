@@ -102,13 +102,12 @@ def echoes_hint_exporter(echoes_game_patches) -> HintExporter:
     return HintExporter(namer, random.Random(0), ["A Joke"])
 
 
-def test_create_hints_nothing(echoes_game_patches, players_config, monkeypatch, echoes_game_description):
+def test_create_hints_nothing(echoes_game_patches, players_config):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(0)
 
     hint_node, _, region_list = _create_region_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     patches = dataclasses.replace(
         echoes_game_patches,
@@ -128,8 +127,8 @@ def test_create_hints_nothing(echoes_game_patches, players_config, monkeypatch, 
 
     # Assert
     message = (
-        "The &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
-        "&push;&main-color=#FF3333;World - Area&pop;."
+        "An &push;&main-color=#FF6705B3;Energy Transfer Module&pop; can be found in "
+        "&push;&main-color=#FF3333;Temple Grounds - Hive Chamber A&pop;."
     )
     assert result == [{"asset_id": asset_id, "strings": [message, "", message]}]
 
@@ -290,20 +289,17 @@ def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_conf
 @pytest.mark.parametrize(
     "location",
     [
-        (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;World - Area&pop;"),
-        (HintLocationPrecision.REGION_ONLY, "&push;&main-color=#FF3333;World&pop;"),
+        (HintLocationPrecision.DETAILED, "&push;&main-color=#FF3333;Dark Agon Wastes - Doomed Entry&pop;"),
+        (HintLocationPrecision.REGION_ONLY, "&push;&main-color=#FF3333;Dark Agon Wastes&pop;"),
     ],
 )
 @pytest.mark.parametrize("owner", [False, True])
 @pytest.mark.parametrize("is_multiworld", [False, True])
-def test_create_hints_item_location(
-    echoes_game_patches, blank_pickup, item, location, owner, is_multiworld, echoes_game_description, monkeypatch
-):
+def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, location, owner, is_multiworld):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
     logbook_node, _, region_list = _create_region_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     players_config = PlayersConfiguration(
         player_index=0,
@@ -362,15 +358,12 @@ def test_create_hints_guardians(
     blank_pickup,
     item,
     players_config,
-    echoes_game_description,
-    monkeypatch,
 ):
     # Setup
     asset_id = 1000
     pickup_index, guardian = pickup_index_and_guardian
 
     logbook_node, _, region_list = _create_region_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     patches = dataclasses.replace(
         echoes_game_patches,
@@ -405,15 +398,12 @@ def test_create_hints_guardians(
         (HintItemPrecision.BROAD_CATEGORY, "a &push;&main-color=#FF6705B3;life support system&pop;"),
     ],
 )
-def test_create_hints_light_suit_location(
-    echoes_game_patches, players_config, blank_pickup, item, echoes_game_description, monkeypatch
-):
+def test_create_hints_light_suit_location(echoes_game_patches, players_config, blank_pickup, item):
     # Setup
     asset_id = 1000
     pickup_index = PickupIndex(50)
 
     logbook_node, _, region_list = _create_region_list(asset_id, pickup_index)
-    monkeypatch.setattr(echoes_game_description, "region_list", region_list)
 
     patches = dataclasses.replace(
         echoes_game_patches,

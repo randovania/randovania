@@ -1,5 +1,5 @@
 ----------------
-Entrance Hub
+Entrance Lobby
 Extra - map_name: Sector 60
 Extra - room_id: [0]
 > Pickup (Missile Tank); Heals? False
@@ -14,38 +14,46 @@ Extra - room_id: [0]
 
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Recharge Room/Door to Entrance Hub
+  * L0 Hatch to Entrance Recharge Room/Door to Entrance Lobby
   * Extra - door_idx: (1,)
   > Door to Geron's Crossing
       Trivial
-  > Door to Connection to Sector 4 (AQA)
+  > Door to Glass Tube to Sector 4 (AQA)
       Screw Attack and Can Break Single Bomb Blocks
 
 > Door to Geron's Crossing; Heals? False
   * Layers: default
-  * L0 Hatch to Geron's Crossing/Door to Entrance Hub
+  * L0 Hatch to Geron's Crossing/Door to Entrance Lobby
   * Extra - door_idx: (2,)
   > Door to Entrance Recharge Room
       Trivial
 
 > Other to Geron's Crossing; Heals? False
   * Layers: default
-  * Tunnel to Geron's Crossing/Other to Entrance Hub
+  * Tunnel to Geron's Crossing/Other to Entrance Lobby
   * Extra - door_idx: (51,)
   > Pickup (Missile Tank)
       Trivial
 
-> Door to Connection to Sector 4 (AQA); Heals? False
+> Door to Glass Tube to Sector 4 (AQA); Heals? False
   * Layers: default
-  * L0 Hatch to Connection to Sector 4 (AQA)/Door to Entrance Hub
+  * L0 Hatch to Glass Tube to Sector 4 (AQA)/Door to Entrance Lobby
   * Extra - door_idx: (79,)
   > Door to Entrance Recharge Room
       All of the following:
+          Screw Attack
           Any of the following:
+              # Break single bomb blocks
               Can Use Power Bombs
               Screw Attack and Knowledge (Beginner)
-              Jump Bombjump (Expert) and Can Use Bombs
-          Wall Jump (Beginner) or Can Climb High Jump Wall
+              # TODO: vid of this
+              Hi-Jump and Jump Bombjump (Expert) and Can Use Bombs
+          Any of the following:
+              # Climb up
+              Wall Jump (Beginner) or Can Climb High Jump Wall
+              Speed Booster and Shinespark Tricks (Beginner)
+              # Break only the top 2 rows of Screw Blocks and jump to ledge
+              Knowledge (Intermediate) and Movement (Intermediate)
 
 ----------------
 Entrance Save Room
@@ -107,9 +115,9 @@ Extra - room_id: [2]
 Geron's Crossing
 Extra - map_name: Sector 63
 Extra - room_id: [3]
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Geron's Crossing
+  * L0 Hatch to Entrance Lobby/Door to Geron's Crossing
   * Extra - door_idx: (7,)
   > Door to Nocturnal Access
       Any of the following:
@@ -117,12 +125,12 @@ Extra - room_id: [3]
           Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
           # Upper way
           Screw Attack
-  > Other to Entrance Hub
+  > Other to Entrance Lobby
       All of the following:
           Any of the following:
               # Destroy the Bomb Block
               Can Break Single Bomb Blocks
-              # Store a Shinespark using Entrance Hub Room
+              # Store a Shinespark using Entrance Lobby Room
               Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
           Any of the following:
               # Get into the tunnel (can't ledge grab)
@@ -133,7 +141,7 @@ Extra - room_id: [3]
   * Layers: default
   * L0 Hatch to Nocturnal Access/Door to Geron's Crossing
   * Extra - door_idx: (8,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Any of the following:
           All of the following:
               # Bottom way
@@ -149,11 +157,11 @@ Extra - room_id: [3]
               Can Use Springball
               Morph Ball and Mid-Air Morph (Beginner)
 
-> Other to Entrance Hub; Heals? False
+> Other to Entrance Lobby; Heals? False
   * Layers: default
-  * Tunnel to Entrance Hub/Other to Geron's Crossing
+  * Tunnel to Entrance Lobby/Other to Geron's Crossing
   * Extra - door_idx: (50,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       All of the following:
           Can Use Any Bombs
           Wall Jump (Beginner) or Can Climb High Jump Wall
@@ -197,7 +205,7 @@ Extra - room_id: [5]
       Trivial
   > Door to Nocturnal Playground
       Trivial
-  > Door to Connection to Sector 5 (ARC)
+  > Door to Glass Tube to Sector 5 (ARC)
       Screw Attack
 
 > Door to Mimic Access; Heals? False
@@ -237,9 +245,9 @@ Extra - room_id: [5]
   > Door to Nocturnal Access
       Movement (Beginner) or Can Climb High Jump Wall
 
-> Door to Connection to Sector 5 (ARC); Heals? False
+> Door to Glass Tube to Sector 5 (ARC); Heals? False
   * Layers: default
-  * L0 Hatch to Connection to Sector 5 (ARC)/Door to Nocturnal Shaft
+  * L0 Hatch to Glass Tube to Sector 5 (ARC)/Door to Nocturnal Shaft
   * Extra - door_idx: (82,)
   > Door to Nocturnal Access
       Screw Attack
@@ -363,7 +371,7 @@ Extra - room_id: [9]
   * Layers: default
   * L0 Hatch to Nocturnal Playground/Door to Clogged Cavern
   * Extra - door_idx: (17, 72)
-  > Door to Menu Corridor
+  > Door to Cavern Save Access
       # This can safely not have Door Lock Rando check
       Speed Booster and Disabled Entrance Rando
 
@@ -371,12 +379,12 @@ Extra - room_id: [9]
   * Layers: default
   * L0 Hatch to Shell Access/Door to Clogged Cavern
   * Extra - door_idx: (18, 73)
-  > Door to Menu Corridor
+  > Door to Cavern Save Access
       Trivial
 
-> Door to Menu Corridor; Heals? False
+> Door to Cavern Save Access; Heals? False
   * Layers: default
-  * L0 Hatch to Menu Corridor/Door to Clogged Cavern
+  * L0 Hatch to Cavern Save Access/Door to Clogged Cavern
   * Extra - door_idx: (46, 74)
   > Door to Nocturnal Playground
       Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
@@ -828,12 +836,12 @@ Extra - room_id: [22]
       Morph Ball
 
 ----------------
-Menu Save Room
+Cavern Save Room
 Extra - map_name: Sector 623
 Extra - room_id: [23]
-> Door to Menu Corridor; Heals? False
+> Door to Cavern Save Access; Heals? False
   * Layers: default
-  * L0 Hatch to Menu Corridor/Door to Menu Save Room
+  * L0 Hatch to Cavern Save Access/Door to Cavern Save Room
   * Extra - door_idx: (92,)
   > Save Station
       Trivial
@@ -842,7 +850,7 @@ Extra - room_id: [23]
   * Layers: default
   * Extra - X: 10
   * Extra - Y: 10
-  > Door to Menu Corridor
+  > Door to Cavern Save Access
       Trivial
 
 ----------------
@@ -965,9 +973,9 @@ Extra - room_id: [28]
 Entrance Recharge Room
 Extra - map_name: Sector 629
 Extra - room_id: [29]
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Entrance Recharge Room
+  * L0 Hatch to Entrance Lobby/Door to Entrance Recharge Room
   * Extra - door_idx: (59,)
   > Recharge Terminal
       Trivial
@@ -981,7 +989,7 @@ Extra - room_id: [29]
 
 > Recharge Terminal; Heals? True
   * Layers: default
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
   > Door to Entrance Save Room
       Trivial
@@ -1152,37 +1160,37 @@ Extra - room_id: [35]
       Trivial
 
 ----------------
-Connection to Sector 4 (AQA)
+Glass Tube to Sector 4 (AQA)
 Extra - map_name: Sector 636
 Extra - room_id: [36]
-> Door to Entrance Hub; Heals? False
+> Door to Entrance Lobby; Heals? False
   * Layers: default
-  * L0 Hatch to Entrance Hub/Door to Connection to Sector 4 (AQA)
+  * L0 Hatch to Entrance Lobby/Door to Glass Tube to Sector 4 (AQA)
   * Extra - door_idx: (80,)
   > Area Transition to Sector 4 (AQA)
       Trivial
 
 > Area Transition to Sector 4 (AQA); Heals? False
   * Layers: default
-  * Open Passage to Connection to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
+  * Open Passage to Glass Tube to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
   * Extra - door_idx: (81,)
-  > Door to Entrance Hub
+  > Door to Entrance Lobby
       Trivial
 
 ----------------
-Connection to Sector 5 (ARC)
+Glass Tube to Sector 5 (ARC)
 Extra - map_name: Sector 637
 Extra - room_id: [37]
 > Door to Nocturnal Shaft; Heals? False
   * Layers: default
-  * L0 Hatch to Nocturnal Shaft/Door to Connection to Sector 5 (ARC)
+  * L0 Hatch to Nocturnal Shaft/Door to Glass Tube to Sector 5 (ARC)
   * Extra - door_idx: (83,)
   > Area Transition to Sector 5 (ARC)
       Trivial
 
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
-  * Open Passage to Connection to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
+  * Open Passage to Glass Tube to Sector 6 (NOC)/Area Transition to Sector 6 (NOC)
   * Extra - door_idx: (84,)
   > Door to Nocturnal Shaft
       Trivial
@@ -1261,19 +1269,19 @@ Extra - room_id: [39]
       Trivial
 
 ----------------
-Menu Corridor
+Cavern Save Access
 Extra - map_name: Sector 640
 Extra - room_id: [40]
 > Door to Clogged Cavern; Heals? False
   * Layers: default
-  * L0 Hatch to Clogged Cavern/Door to Menu Corridor
+  * L0 Hatch to Clogged Cavern/Door to Cavern Save Access
   * Extra - door_idx: (47,)
-  > Door to Menu Save Room
+  > Door to Cavern Save Room
       Trivial
 
-> Door to Menu Save Room; Heals? False
+> Door to Cavern Save Room; Heals? False
   * Layers: default
-  * L0 Hatch to Menu Save Room/Door to Menu Corridor
+  * L0 Hatch to Cavern Save Room/Door to Cavern Save Access
   * Extra - door_idx: (91,)
   > Door to Clogged Cavern
       Trivial

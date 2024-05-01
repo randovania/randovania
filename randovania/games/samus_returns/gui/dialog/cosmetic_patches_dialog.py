@@ -67,6 +67,19 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
 
+        box_mapping = [
+            (self.custom_laser_locked_color_square, patches.laser_locked_color),
+            (self.custom_laser_unlocked_color_square, patches.laser_unlocked_color),
+            (self.custom_grapple_laser_locked_color_square, patches.grapple_laser_locked_color),
+            (self.custom_grapple_laser_unlocked_color_square, patches.grapple_laser_unlocked_color),
+            (self.custom_energy_tank_color_square, patches.energy_tank_color),
+            (self.custom_aeion_bar_color_square, patches.aeion_bar_color),
+            (self.custom_ammo_hud_color_square, patches.ammo_hud_color),
+        ]
+        for box, new_color in box_mapping:
+            style = "background-color: rgb({},{},{})".format(*new_color)
+            box.setStyleSheet(style)
+
         set_combo_with_value(self.room_names_dropdown, patches.show_room_names)
 
     def _open_color_picker(self, color: tuple, propertyName: str) -> None:

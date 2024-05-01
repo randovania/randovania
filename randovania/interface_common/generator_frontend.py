@@ -5,8 +5,7 @@ import multiprocessing
 from concurrent.futures import ProcessPoolExecutor
 from typing import TYPE_CHECKING
 
-import sentry_sdk
-
+from randovania import monitoring
 from randovania.generator import generator
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
@@ -37,7 +36,7 @@ def generate_layout(
     :param retries:
     :return:
     """
-    with sentry_sdk.start_transaction(op="task", name="generate_layout") as span:
+    with monitoring.start_transaction(op="task", name="generate_layout") as span:
         games = {preset.game.short_name for preset in parameters.presets}
         span.set_tag("num_worlds", parameters.world_count)
         span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")

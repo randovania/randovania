@@ -217,7 +217,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             f"\n{commands}"
         )
 
-        message_box = ScrollLabelDialog(dialog_text, "Commands for patcher", self)
+        message_box = ScrollLabelDialog(self, dialog_text, "Commands for patcher")
         message_box.resize(750, 200)
         message_box.label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
         common_qt_lib.set_clipboard(commands)

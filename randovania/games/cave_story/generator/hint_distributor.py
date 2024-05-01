@@ -50,7 +50,7 @@ class CSHintDistributor(HintDistributor):
                 items_with_hint.append("Rusty Key")
             else:
                 items_with_hint.append("ID Card")
-            if patches.starting_location.area_name != "Start Point":
+            if patches.starting_location.area != "Start Point":
                 items_with_hint.append("Arthur's Key")
 
             already_hinted_indices = [hint.target for hint in patches.hints.values() if hint.target is not None]

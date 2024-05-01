@@ -52,6 +52,12 @@ def _generator() -> game.GameGenerator:
     )
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.dread.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
@@ -111,11 +117,6 @@ game_data: game.GameData = game.GameData(
             "Reload from checkpoint immediately to fix the issue. "
             "Your checkpoint was saved after killing the E.M.M.I., so you will not lose progress.",
         ),
-        (
-            "Why are items, hints, and the seed hash not displaying properly in my game?",
-            "Currently, English is the only officially supported language.\n\n"
-            "You must set your language to English to see all the text the randomizer changes.",
-        ),
     ],
     web_info=game.GameWebInfo(
         what_can_randomize=[
@@ -130,6 +131,7 @@ game_data: game.GameData = game.GameData(
             "A dumped RomFS of your original game. Either version 1.0.0 or 2.1.0",
         ],
     ),
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=DreadConfiguration, cosmetic_patches=DreadCosmeticPatches, preset_describer=DreadPresetDescriber()
     ),

@@ -47,7 +47,7 @@ def pretty_print_requirement_array(
     requirement: RequirementArrayBase, db: ResourceDatabase, level: int
 ) -> Iterator[tuple[int, str]]:
     if len(requirement.items) == 1 and requirement.comment is None:
-        yield from pretty_print_requirement(requirement.items[0], db, level)
+        yield from pretty_format_requirement(requirement.items[0], db, level)
         return
 
     resource_requirements = [item for item in requirement.items if isinstance(item, ResourceRequirement)]
@@ -74,10 +74,10 @@ def pretty_print_requirement_array(
         if pretty_resources or sorted_templates:
             yield level + 1, requirement.combinator().join(pretty_resources + sorted_templates)
         for item in other_requirements:
-            yield from pretty_print_requirement(item, db, level + 1)
+            yield from pretty_format_requirement(item, db, level + 1)
 
 
-def pretty_print_requirement(
+def pretty_format_requirement(
     requirement: Requirement, db: ResourceDatabase, level: int = 0
 ) -> Iterator[tuple[int, str]]:
     if requirement == Requirement.impossible():
@@ -98,13 +98,23 @@ def pretty_print_requirement(
         raise RuntimeError(f"Unknown requirement type: {type(requirement)} - {requirement}")
 
 
+def pretty_print_requirement(
+    requirement: Requirement,
+    db: ResourceDatabase,
+    prefix: str = "",
+    print_function: typing.Callable[[str], None] = print,
+) -> None:
+    for nested_level, text in pretty_format_requirement(requirement, db):
+        print_function("{}{}{}".format(prefix, "    " * nested_level, text))
+
+
 def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceDatabase) -> str:
     if isinstance(node, DockNode):
         try:
             other = region_list.node_by_identifier(node.default_connection)
             other_name = region_list.node_name(other)
         except IndexError as e:
-            other_name = f"(Area {node.default_connection.area_name}, index {node.default_connection.node_name}) [{e}]"
+            other_name = f"(Area {node.default_connection.area}, index {node.default_connection.node}) [{e}]"
 
         message = f"{node.default_dock_weakness.name} to {other_name}"
 
@@ -129,7 +139,7 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
         return "Hint"
 
     elif isinstance(node, TeleporterNetworkNode):
-        unlocked_pretty = list(pretty_print_requirement(node.is_unlocked, db))
+        unlocked_pretty = list(pretty_format_requirement(node.is_unlocked, db))
         if len(unlocked_pretty) > 1:
             unlocked_by = "Complex requirement"
         else:
@@ -169,10 +179,12 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
                 continue
 
             print_function(f"  > {target_node.name}")
-            for level, text in pretty_print_requirement(
-                requirement.simplify(keep_comments=True), game.resource_database
-            ):
-                print_function("      {}{}".format("    " * level, text))
+            pretty_print_requirement(
+                requirement.simplify(keep_comments=True),
+                game.resource_database,
+                prefix="      ",
+                print_function=print_function,
+            )
         print_function("")
 
 
@@ -180,7 +192,7 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("====================\nTemplates\n")
     for template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template.display_name}:\n")
-        for level, text in pretty_print_requirement(template.requirement, game.resource_database):
+        for level, text in pretty_format_requirement(template.requirement, game.resource_database):
             output.write("      {}{}\n".format("    " * level, text))
 
     output.write("\n====================\nDock Weaknesses\n")
@@ -195,12 +207,14 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
                 output.write(f"      Extra - {extra_name}: {extra_field}\n")
 
             output.write("      Open:\n")
-            for level, text in pretty_print_requirement(weakness.requirement, game.resource_database, level=1):
+            for level, text in pretty_format_requirement(weakness.requirement, game.resource_database, level=1):
                 output.write("      {}{}\n".format("    " * level, text))
 
             if weakness.lock is not None:
                 output.write(f"      Lock type: {weakness.lock}\n")
-                for level, text in pretty_print_requirement(weakness.lock.requirement, game.resource_database, level=1):
+                for level, text in pretty_format_requirement(
+                    weakness.lock.requirement, game.resource_database, level=1
+                ):
                     output.write("      {}{}\n".format("    " * level, text))
             else:
                 output.write("      No lock\n")

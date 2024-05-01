@@ -37,7 +37,7 @@ def test_msr_format_params(artifacts):
     result = RandovaniaGame.METROID_SAMUS_RETURNS.data.layout.preset_describer.format_params(configuration)
 
     if artifacts.prefer_anywhere:
-        dna_where = "Place anywhere"
+        dna_where = "Place at any item location"
     elif artifacts.prefer_metroids and artifacts.prefer_stronger_metroids and artifacts.prefer_bosses:
         dna_where = "Prefers Standard Metroids, Prefers Stronger Metroids, Prefers Bosses"
     elif artifacts.prefer_metroids and artifacts.prefer_stronger_metroids:
@@ -60,15 +60,15 @@ def test_msr_format_params(artifacts):
             "Progressive Beam, Progressive Suit, Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
         ],
-        "Gameplay": ["Starts at Surface - East - Landing Site"],
+        "Gameplay": ["Starts at Surface East - Landing Site"],
         "Difficulty": [],
         "Goal": (
             [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
         ),
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
-            "Charge Door Buff, Beam Door Buff, Beam Burst Buff",
-            "Open Area 3 Factory Interior East Shortcut, Remove Area Exit Grapple Blocks",
+            "Charge Beam Door Buff, Beam Door Buff, Beam Burst Buff",
+            "Open Area 3 Factory Interior East Shortcut",
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
         "Hints": ["DNA Hints: Area and room"],
