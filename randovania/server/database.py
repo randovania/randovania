@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING, Any, Self
 
 import cachetools
 import peewee
-import sentry_sdk
 from sentry_sdk.tracing_utils import record_sql_queries
 
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -37,9 +36,7 @@ if TYPE_CHECKING:
 
 class MonitoredDb(peewee.SqliteDatabase):
     def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):
-        with record_sql_queries(
-            sentry_sdk.Hub.current, self.cursor, sql, params, paramstyle="format", executemany=False
-        ):
+        with record_sql_queries(self.cursor, sql, params, paramstyle="format", executemany=False):
             return super().execute_sql(sql, params, commit)
 
 
