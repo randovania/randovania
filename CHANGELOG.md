@@ -7,9 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.1.0] - 2024-06-??
 
+### Metroid Dread
+
+#### Logic database
+
+##### Dairon
+
+- Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
+
 ### Metroid: Samus Returns
 
 - Added: Door Lock randomizer has been added.
+
 
 ## [8.0.0] - 2024-05-01
 
