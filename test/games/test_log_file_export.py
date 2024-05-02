@@ -105,6 +105,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Samus Returns
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
+        "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]
