@@ -11,4 +11,4 @@ ResourceInfo = SimpleResourceInfo | ItemResourceInfo | TrickResourceInfo | NodeR
 
 ResourceQuantity = tuple[ResourceInfo, int]
 ResourceGainTuple = tuple[ResourceQuantity, ...]
-ResourceGain = typing.Iterable[ResourceQuantity] | typing.ItemsView[ResourceInfo, int]
+ResourceGain = typing.Iterable[ResourceQuantity]
