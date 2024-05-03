@@ -254,6 +254,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_incompatible_model.items = list(node.incompatible_dock_weaknesses)
         self.dock_exclude_lock_rando_check.setChecked(node.exclude_from_dock_rando)
 
+        # UI custom name
+        self.ui_name_edit.setText(node.ui_custom_name)
+
     def fill_for_pickup(self, node: PickupNode) -> None:
         self.pickup_index_spin.setValue(node.pickup_index.index)
         signal_handling.set_combo_with_value(self.location_category_combo, node.location_category)
@@ -468,6 +471,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 None,
                 self.dock_exclude_lock_rando_check.isChecked(),
                 tuple(self.dock_incompatible_model.items),
+                None if len(self.ui_name_edit.text()) == 0 else self.ui_name_edit.text(),
             )
 
         elif node_type == PickupNode:

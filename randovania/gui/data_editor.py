@@ -753,6 +753,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             override_default_open_requirement=None,
             override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
+            ui_custom_name=None,
         )
 
         new_node_other_area = DockNode(
@@ -771,6 +772,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             override_default_open_requirement=None,
             override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
+            ui_custom_name=None,
         )
 
         self.editor.add_node(current_area, new_node_this_area)

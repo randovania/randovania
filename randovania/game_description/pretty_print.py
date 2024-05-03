@@ -124,6 +124,9 @@ def pretty_print_node_type(node: Node, region_list: RegionList, db: ResourceData
             message += "; Dock Lock Rando incompatible with: "
             message += ", ".join(weak.name for weak in node.incompatible_dock_weaknesses)
 
+        if node.ui_custom_name is not None:
+            message += f"; Custom name: {node.ui_custom_name}"
+
         return message
 
     elif isinstance(node, PickupNode):

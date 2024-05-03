@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>556</width>
-    <height>846</height>
+    <height>1004</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -240,13 +240,12 @@
     </widget>
    </item>
    <item>
-    <widget class="QComboBox" name="node_type_combo">
-    </widget>
+    <widget class="QComboBox" name="node_type_combo"/>
    </item>
    <item>
     <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_generic">
       <attribute name="title">
@@ -282,37 +281,7 @@
        <property name="bottomMargin">
         <number>2</number>
        </property>
-       <item row="0" column="0" colspan="2">
-        <widget class="QGroupBox" name="dock_connection_group">
-         <property name="title">
-          <string>Dock Connection</string>
-         </property>
-         <layout class="QHBoxLayout" name="dock_connection_layout">
-          <property name="leftMargin">
-           <number>2</number>
-          </property>
-          <property name="topMargin">
-           <number>4</number>
-          </property>
-          <property name="rightMargin">
-           <number>2</number>
-          </property>
-          <property name="bottomMargin">
-           <number>2</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="dock_connection_region_combo"/>
-          </item>
-          <item>
-           <widget class="QComboBox" name="dock_connection_area_combo"/>
-          </item>
-          <item>
-           <widget class="QComboBox" name="dock_connection_node_combo"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0" rowspan="3">
+       <item row="5" column="0" rowspan="4">
         <widget class="QGroupBox" name="dock_incompatible_box">
          <property name="title">
           <string>Incompatible Weaknesses for Dock Lock rando</string>
@@ -342,6 +311,33 @@
           </item>
          </layout>
         </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="ui_name_box">
+         <item>
+          <widget class="QLabel" name="ui_name_label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Custom name</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="ui_name_edit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="groupBox">
@@ -391,14 +387,14 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="5" column="1">
         <widget class="QPushButton" name="dock_update_name_button">
          <property name="text">
           <string>Update node name</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="8" column="1">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -411,7 +407,37 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="1">
+       <item row="0" column="0" colspan="2">
+        <widget class="QGroupBox" name="dock_connection_group">
+         <property name="title">
+          <string>Dock Connection</string>
+         </property>
+         <layout class="QHBoxLayout" name="dock_connection_layout">
+          <property name="leftMargin">
+           <number>2</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="dock_connection_region_combo"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="dock_connection_area_combo"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="dock_connection_node_combo"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="6" column="1">
         <widget class="QCheckBox" name="dock_exclude_lock_rando_check">
          <property name="text">
           <string>Exclude from Dock Lock rando</string>
