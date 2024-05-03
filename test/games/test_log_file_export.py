@@ -82,7 +82,8 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
 
     layout_names = [
         # Cross Game Multis
-        "all_game_multi.rdvgame",
+        "multi-cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2.rdvgame",
         "prime1_and_2_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
         "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
@@ -104,6 +105,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Samus Returns
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
+        "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]

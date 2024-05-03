@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING, Any, Self
 
 import cachetools
 import peewee
-import sentry_sdk
 from sentry_sdk.tracing_utils import record_sql_queries
 
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -37,9 +36,7 @@ if TYPE_CHECKING:
 
 class MonitoredDb(peewee.SqliteDatabase):
     def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):
-        with record_sql_queries(
-            sentry_sdk.Hub.current, self.cursor, sql, params, paramstyle="format", executemany=False
-        ):
+        with record_sql_queries(self.cursor, sql, params, paramstyle="format", executemany=False):
             return super().execute_sql(sql, params, commit)
 
 
@@ -118,11 +115,15 @@ class UserAccessToken(BaseModel):
         primary_key = peewee.CompositeKey("user", "name")
 
 
-@cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
-def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
+def _decompress_layout_description(layout: bytes, presets: tuple[str, ...]) -> dict:
     decoded = json.loads(zlib.decompress(layout).decode("utf-8"))
     decoded["info"]["presets"] = [VersionedPreset.from_str(preset).as_json for preset in presets]
-    return LayoutDescription.from_json_dict(decoded)
+    return decoded
+
+
+@cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
+def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
+    return LayoutDescription.from_json_dict(_decompress_layout_description(layout, presets))
 
 
 class MultiplayerSession(BaseModel):
@@ -177,6 +178,14 @@ class MultiplayerSession(BaseModel):
         else:
             self.layout_description_json = None
             self.game_details_json = None
+
+    def get_layout_description_as_json(self) -> dict | None:
+        """Get the stored LayoutDescription as a JSON object"""
+        if self.layout_description_json is not None:
+            return _decompress_layout_description(
+                self.layout_description_json, tuple(world.preset for world in self.get_ordered_worlds())
+            )
+        return None
 
     def get_layout_description_as_binary(self) -> bytes | None:
         if self.layout_description_json is not None:

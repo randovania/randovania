@@ -427,6 +427,38 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return elevator_dict
 
+    def _door_patches(self) -> list[dict[str, str]]:
+        wl = self.game.region_list
+
+        result = []
+        used_actors: dict[str, str] = {}
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            if "type" not in weakness.extra:
+                raise ValueError(
+                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness"
+                )
+
+            if "actor_name" not in node.extra:
+                print(f"Invalid door (no actor): {node}")
+                continue
+
+            result.append(
+                {
+                    "actor": (actor := self._teleporter_ref_for(node)),
+                    "door_type": (door_type := weakness.extra["type"]),
+                }
+            )
+            actor_idef = str(actor)
+            if used_actors.get(actor_idef, door_type) != door_type:
+                raise ValueError(
+                    f"Door for {wl.node_name(node)} ({actor}) previously "
+                    f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}."
+                )
+            used_actors[actor_idef] = door_type
+
+        return result
+
     def create_game_specific_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
@@ -482,6 +514,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "hints": self._encode_hints(self.rng),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
+            "door_patches": self._door_patches(),
         }
 
 

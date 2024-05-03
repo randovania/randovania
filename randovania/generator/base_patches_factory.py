@@ -12,7 +12,6 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
     from random import Random
 
-    from randovania.game_description.assignment import NodeConfigurationAssociation
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -47,18 +46,17 @@ class BasePatchesFactory:
             if rng_required:
                 raise e
 
-        # Configurable Nodes
-        try:
-            patches = patches.assign_node_configuration(self.configurable_node_assignment(configuration, game, rng))
-        except MissingRng as e:
-            if rng_required:
-                raise e
-
         # Starting Location
         try:
             patches = patches.assign_starting_location(
                 self.starting_location_for_configuration(configuration, game, rng)
             )
+        except MissingRng as e:
+            if rng_required:
+                raise e
+
+        try:
+            patches = patches.assign_game_specific(self.create_game_specific(configuration, game, rng))
         except MissingRng as e:
             if rng_required:
                 raise e
@@ -87,8 +85,8 @@ class BasePatchesFactory:
         """
         Adds dock connections if a game's patcher factory overwrites it. e.g. add teleporters
         :param configuration:
+        :param game:
         :param rng:
-        :param patches:
         :return:
         """
         yield from []
@@ -111,10 +109,5 @@ class BasePatchesFactory:
 
         return location
 
-    def configurable_node_assignment(
-        self,
-        configuration: BaseConfiguration,
-        game: GameDescription,
-        rng: Random,
-    ) -> Iterable[NodeConfigurationAssociation]:
-        yield from []
+    def create_game_specific(self, configuration: BaseConfiguration, game: GameDescription, rng: Random) -> dict:
+        return {}

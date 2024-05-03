@@ -7,11 +7,9 @@ from argparse import ArgumentParser
 from pathlib import Path
 from typing import Any
 
-from randovania.game_description import default_database
-from randovania.game_description.requirements.array_base import RequirementArrayBase
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description import default_database, trick_documentation
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
+from randovania.game_description.trick_documentation import TrickUsageState
 from randovania.games import binary_data, default_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib
@@ -20,9 +18,7 @@ from randovania.lib.enum_lib import iterate_enum
 if typing.TYPE_CHECKING:
     from argparse import _SubParsersAction
 
-    from randovania.game_description.db.area import Area
     from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
@@ -391,67 +387,30 @@ def pickups_per_area_command(sub_parsers):
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
-def _find_tricks_usage_documentation(requirement: Requirement) -> typing.Iterator[tuple[str, bool]]:
-    from randovania.layout.base.trick_level import LayoutTrickLevel
-
-    if not isinstance(requirement, RequirementArrayBase):
-        return
-
-    trick_resources = []
-    for it in requirement.items:
-        if isinstance(it, RequirementArrayBase):
-            yield from _find_tricks_usage_documentation(it)
-        elif isinstance(it, ResourceRequirement) and it.resource.resource_type == ResourceType.TRICK:
-            trick_resources.append(it)
-
-    if trick_resources:
-        yield (
-            ", ".join(
-                sorted(
-                    f"{req.resource.long_name} ({LayoutTrickLevel.from_number(req.amount).long_name})"
-                    for req in trick_resources
-                )
-            ),
-            requirement.comment is not None,
-        )
-
-
-def _flat_trick_usage(requirement: Requirement) -> dict[str, bool]:
-    doc: dict[str, bool] = {}
-    for usage, documented in sorted(set(_find_tricks_usage_documentation(requirement))):
-        doc[usage] = documented and doc.get(usage, True)
-    return doc
-
-
-def _get_area_connection_docs(area: Area) -> dict[str, dict[str, dict[str, bool]]]:
-    paths: dict[str, dict[str, dict[str, bool]]] = {}
-    for source, connections in area.connections.items():
-        paths[source.name] = {}
-        for target, requirement in connections.items():
-            trick_documentation = _flat_trick_usage(requirement)
-            if trick_documentation:
-                paths[source.name][target.name] = trick_documentation
-    return paths
-
-
 def trick_usage_documentation_logic(args: argparse.Namespace) -> None:
     gd = load_game_description(args)
     output_path: Path = args.output_path
 
+    symbol_for_state = {
+        TrickUsageState.DOCUMENTED: "Documented",
+        TrickUsageState.UNDOCUMENTED: "Missing",
+        TrickUsageState.SKIPPED: "Skipped",
+    }
+
     lines = []
     for region in gd.region_list.regions:
-        lines.append(f"# {region.name}")
+        lines.append(f"\n\n# {region.name}")
         for area in region.areas:
-            paths = _get_area_connection_docs(area)
+            paths = trick_documentation.get_area_connection_docs(area)
 
             if paths and any(paths.values()):
                 lines.append(f"\n## {area.name}")
                 for source_name, connections in paths.items():
                     if connections:
-                        for target_name, trick_documentation in connections.items():
+                        for target_name, docs in connections.items():
                             lines.append(f"### {source_name} -> {target_name}:")
-                            for it, used in trick_documentation.items():
-                                lines.append(f"- [{'X' if used else ' '}] {it}")
+                            for it, state in docs.items():
+                                lines.append(f"- ({symbol_for_state[state]}) {it}")
 
     output_path.write_text("\n".join(lines))
 

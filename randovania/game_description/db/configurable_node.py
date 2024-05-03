@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.node import Node, NodeContext
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.requirements.base import Requirement
 
 
@@ -16,5 +15,4 @@ class ConfigurableNode(Node):
         return f"ConfigurableNode({self.name!r})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        patches: GamePatches = context.patches  # type: ignore
-        return patches.configurable_nodes[context.node_provider.identifier_for_node(self)]
+        return context.node_provider.get_configurable_node_requirement(self.identifier)

@@ -14,7 +14,7 @@ colorama==0.4.6
     #   build
 docopt==0.6.2
     # via pyqt-distutils
-dulwich==0.21.7
+dulwich==0.22.1
     # via
     #   -c tools/requirements\../../requirements.txt
     #   -r tools/requirements/requirements-setuptools.in
@@ -28,13 +28,13 @@ packaging==24.0
     #   setuptools-scm
 pefile==2023.2.7
     # via pyinstaller
-pyinstaller==6.5.0
+pyinstaller==6.6.0
     # via -r tools/requirements/requirements-setuptools.in
-pyinstaller-hooks-contrib==2024.3
+pyinstaller-hooks-contrib==2024.5
     # via
     #   -r tools/requirements/requirements-setuptools.in
     #   pyinstaller
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via build
 pyqt-distutils==0.7.3
     # via -r tools/requirements/requirements-setuptools.in
@@ -58,9 +58,11 @@ wheel==0.43.0
     # via -r tools/requirements/requirements-setuptools.in
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==69.2.0
+setuptools==69.5.1
     # via
+    #   -c tools/requirements\../../requirements.txt
     #   -r tools/requirements/requirements-setuptools.in
+    #   dulwich
     #   pyinstaller
     #   pyinstaller-hooks-contrib
     #   randovania-scm-version-schema

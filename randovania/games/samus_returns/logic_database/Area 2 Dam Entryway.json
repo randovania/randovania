@@ -1204,13 +1204,11 @@
                     "pickup_index": 50,
                     "location_category": "minor",
                     "connections": {
-                        "Right of Paraby Swarm": {
-                            "type": "resource",
+                        "Next to Pickup": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1236,21 +1234,17 @@
                     "location_category": "major",
                     "connections": {
                         "Left Spawnpoint": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Right Spawnpoint": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1396,33 +1390,7 @@
                                 "negate": false
                             }
                         },
-                        "Right of Paraby Swarm": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Right Spawnpoint": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7400.0,
-                        "y": -2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "ST_DEBUG_Bestowal"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Lightning Armor)": {
+                        "Event - Unlock Door": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1431,58 +1399,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transport Access (Bottom)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock Door": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8099.305059169248,
-                        "y": -342.47875466603136,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
-                    "connections": {
-                        "Right of Paraby Swarm": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Right of Paraby Swarm": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7095.254546898578,
-                        "y": -1432.1459772853627,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1528,7 +1445,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "Damage",
+                                                                    "name": "Hazard",
                                                                     "amount": 250,
                                                                     "negate": false
                                                                 }
@@ -1541,7 +1458,85 @@
                                     }
                                 ]
                             }
+                        }
+                    }
+                },
+                "Right Spawnpoint": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7400.0,
+                        "y": -2300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Bestowal"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Lightning Armor)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Clip into the statue: https://youtu.be/nlu3akHbJew",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
+                        "Door to Transport Access (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Door": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8099.305059169248,
+                        "y": -342.47875466603136,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
+                    "connections": {
                         "Right Spawnpoint": {
                             "type": "resource",
                             "data": {
@@ -1550,8 +1545,94 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6416.4,
+                        "y": 165.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
-                        "Event - Unlock Door": {
+                        "Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Freeze the Moheek below the Crumble Block and Melee Clip right: https://youtu.be/3VLe-42BmeE",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MeleeClip",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "FrozenEnemy",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Right Spawnpoint": {
                             "type": "resource",
                             "data": {
                                 "type": "items",

@@ -88,7 +88,12 @@ class ResourceReader:
 
     def read_trick_resource_info(self, name: str, data: dict) -> TrickResourceInfo:
         return TrickResourceInfo(
-            self.make_index(), data["long_name"], name, data["description"], frozen_lib.wrap(data["extra"])
+            self.make_index(),
+            data["long_name"],
+            name,
+            data["description"],
+            data["require_documentation_above"],
+            frozen_lib.wrap(data["extra"]),
         )
 
     def read_resource_info_array(self, data: dict[str, dict], resource_type: ResourceType) -> list[SimpleResourceInfo]:
