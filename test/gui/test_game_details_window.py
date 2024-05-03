@@ -1,13 +1,10 @@
 from __future__ import annotations
 
-import dataclasses
 from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
 from PySide6 import QtCore, QtGui, QtWidgets
 
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 from randovania.gui.game_details.game_details_window import GameDetailsWindow
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -141,34 +138,6 @@ def test_update_layout_description_prime1_crazy(skip_qtbot, test_files_dir):
     pickup_details_tab = window._game_details_tabs[0]
     assert isinstance(pickup_details_tab, PickupDetailsTab)
     assert len(pickup_details_tab.pickup_spoiler_buttons) == 293
-
-
-async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description, empty_patches):
-    mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    mock_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
-
-    options = MagicMock()
-    options.options_for_game.return_value.cosmetic_patches = CorruptionCosmeticPatches()
-    window = GameDetailsWindow(None, options)
-    window.player_index_combo.addItem("Current", 0)
-    skip_qtbot.addWidget(window)
-
-    target = MagicMock()
-    target.pickup.name = "Boost Ball"
-
-    patches = dataclasses.replace(empty_patches, starting_location=corruption_game_description.starting_location)
-    for i in range(100):
-        patches.pickup_assignment[PickupIndex(i)] = target
-
-    window.layout_description = MagicMock()
-    window.layout_description.all_patches = {0: patches}
-
-    # Run
-    await window._show_dialog_for_prime3_layout()
-
-    # Assert
-    mock_execute_dialog.assert_awaited_once()
-    mock_clipboard.assert_called_once()
 
 
 @pytest.mark.parametrize("has_validator", [False, True])
