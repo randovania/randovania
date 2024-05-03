@@ -40,11 +40,16 @@ def generate_layout(
         games = {preset.game.short_name for preset in parameters.presets}
         span.set_tag("num_worlds", parameters.world_count)
         span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")
+        span.set_tag("amount_of_games", len(games))
+        span.set_tag("unique_games", sorted(set(games)))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
         span.set_tag(
             "dock_rando",
             any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
+        )
+        span.set_tag(
+            "minimal_logic", any(preset.configuration.trick_level.minimal_logic for preset in parameters.presets)
         )
 
         extra_args = {
