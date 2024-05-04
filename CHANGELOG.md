@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.1.0] - 2024-06-??
 
+- Fixed: MacGuffin placement respects vanilla item placement settings to not assign two items to one location.
+
 ### Metroid Dread
 
 #### Logic database

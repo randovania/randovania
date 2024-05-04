@@ -232,7 +232,7 @@ class Bootstrap:
             pool_results.starting
         )
 
-    def all_artifact_locations(
+    def all_preplaced_item_locations(
         self,
         game: GameDescription,
         config: BaseConfiguration,
@@ -246,24 +246,22 @@ class Bootstrap:
 
         return locations
 
-    def pre_place_artifacts(
+    def pre_place_items(
         self,
         rng: Random,
         locations: list[PickupNode],
         pool_results: PoolResults,
-        artifact_category: PickupCategory,
+        item_category: PickupCategory,
     ) -> None:
         pre_placed_indices = list(pool_results.assignment.keys())
         reduced_locations = [loc for loc in locations if loc.pickup_index not in pre_placed_indices]
 
         rng.shuffle(reduced_locations)
 
-        all_artifacts = [
-            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is artifact_category
-        ]
+        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is item_category]
         if len(all_artifacts) > len(reduced_locations):
             raise InvalidConfiguration(
-                f"Has {len(all_artifacts)} {artifact_category.long_name} in the pool, "
+                f"Has {len(all_artifacts)} {item_category.long_name} in the pool, "
                 f"but only {len(reduced_locations)} valid locations."
             )
 

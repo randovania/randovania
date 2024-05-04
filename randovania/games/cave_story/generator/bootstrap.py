@@ -76,8 +76,8 @@ class CSBootstrap(Bootstrap):
         if not configuration.puppies_anywhere:
             pickup_database = default_database.pickup_database_for_game(patches.game.game)
             puppies_category = pickup_database.pickup_categories["puppies"]
-            locations = self.all_artifact_locations(patches.game, patches.configuration, is_puppy_node)
-            self.pre_place_artifacts(rng, locations, results, puppies_category)
+            locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_puppy_node)
+            self.pre_place_items(rng, locations, results, puppies_category)
 
         # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
         if patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:
