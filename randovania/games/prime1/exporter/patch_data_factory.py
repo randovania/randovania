@@ -466,7 +466,7 @@ def _serialize_dock_modifications(
                 assert len(candidates) % 2 == 0
 
                 if max_index < -0.00001:
-                    raise Exception("Failed to find pairings for %s" % str(candidates))
+                    raise Exception(f"Failed to find pairings for {str(candidates)}")
 
                 (src_name, src_dock) = next_candidate(max_index)
 
