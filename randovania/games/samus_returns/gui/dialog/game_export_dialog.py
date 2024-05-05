@@ -162,7 +162,6 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         # Output to Citra
         self._citra_label_placeholder = self.citra_label.text()
-        self.update_citra_ui()
         self.tab_citra.serialize_options = dict
         self.tab_citra.restore_options = lambda p: None
         self.tab_citra.is_valid = lambda: True
@@ -173,6 +172,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             self.pal_radio.setChecked(True)
         self.ntsc_radio.toggled.connect(self.update_citra_ui)
         self.pal_radio.toggled.connect(self.update_citra_ui)
+        self.update_citra_ui()
 
         # Output to Custom
         self.custom_path_edit.textChanged.connect(self._on_custom_path_change)
