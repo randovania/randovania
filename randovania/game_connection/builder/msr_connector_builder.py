@@ -31,7 +31,7 @@ class MSRConnectorBuilder(ConnectorBuilder):
         self._status_message(f"Connecting to {self.ip}", log=False)
         connect_error = await self.executor.connect()
         if connect_error is not None:
-            self._status_message("Unable to connect to Dread", log=False)
+            self._status_message("Unable to connect to Samus Returns", log=False)
             return None
         self._status_message(f"Connected to {self.ip}")
         return MSRRemoteConnector(self.executor)

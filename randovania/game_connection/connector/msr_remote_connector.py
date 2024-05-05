@@ -17,8 +17,8 @@ from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.games.dread.exporter.patch_data_factory import get_resources_for_details
 from randovania.games.game import RandovaniaGame
+from randovania.games.samus_returns.exporter.patch_data_factory import get_resources_for_details
 
 if TYPE_CHECKING:
     from randovania.game_connection.executor.msr_executor import MSRExecutor
@@ -184,6 +184,7 @@ class MSRRemoteConnector(RemoteConnector):
 
         lua_code = get_lua_for_item(items_list)
         execute_string = f"RL.ReceivePickup({repr(message)},'{lua_code}'," f"{num_pickups},{self.inventory_index})"
+        print(execute_string)
         await self.executor.run_lua_code(execute_string)
 
         return

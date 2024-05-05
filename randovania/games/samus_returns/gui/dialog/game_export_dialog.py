@@ -18,6 +18,7 @@ from randovania.gui.dialog.game_export_dialog import (
     output_input_intersection_validator,
     path_in_edit,
     prompt_for_input_directory,
+    prompt_for_input_file,
     prompt_for_output_directory,
     spoiler_path_for_directory,
     update_validation,
@@ -114,6 +115,10 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         self.input_file_edit.textChanged.connect(self._on_input_file_change)
         self.input_file_button.clicked.connect(self._on_input_file_button)
 
+        # Input exheader
+        self.input_exheader_edit.textChanged.connect(self._on_input_exheader_change)
+        self.input_exheader_button.clicked.connect(self._on_input_exheader_button)
+
         # Target Platform
         if per_game.target_platform == MSRModPlatform.LUMA:
             self.luma_radio.setChecked(True)
@@ -197,6 +202,9 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         if per_game.input_directory is not None:
             self.input_file_edit.setText(str(per_game.input_directory))
 
+        if per_game.input_directory is not None:
+            self.input_exheader_edit.setText(str(per_game.input_exheader))
+
         if per_game.output_preference is not None:
             output_preference = json.loads(per_game.output_preference)
             tab_options = output_preference["tab_options"]
@@ -236,6 +244,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         return MSRPerGameOptions(
             cosmetic_patches=per_game.cosmetic_patches,
             input_directory=self.input_file,
+            input_exheader=self.input_exheader,
             target_platform=self.target_platform,
             target_version=self.target_version,
             output_preference=output_preference,
@@ -289,6 +298,10 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         else:
             return MSRGameVersion.PAL
 
+    @property
+    def input_exheader(self) -> Path | None:
+        return path_in_edit(self.input_exheader_edit)
+
     # Input file
 
     def _validate_input_file(self) -> None:
@@ -302,6 +315,21 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         input_file = prompt_for_input_directory(self, self.input_file_edit)
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
+
+    # Input exheader
+
+    def _validate_input_exheader(self) -> None:
+        # TODO: ...
+        common_qt_lib.set_error_border_stylesheet(self.input_exheader_edit, False)
+
+    def _on_input_exheader_change(self) -> None:
+        self._validate_input_exheader()
+        self.update_accept_validation()
+
+    def _on_input_exheader_button(self) -> None:
+        input_exheader = prompt_for_input_file(self, self.input_exheader_edit, ["bin"])
+        if input_exheader is not None:
+            self.input_exheader_edit.setText(str(input_exheader.absolute()))
 
     # SD Card
     def get_sd_card_output_path(self) -> Path:
@@ -409,7 +437,10 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
     def update_accept_validation(self) -> None:
         tab = self.output_tab_widget.currentWidget()
         self.accept_button.setEnabled(
-            hasattr(tab, "is_valid") and tab.is_valid() and not self.input_file_edit.has_error
+            hasattr(tab, "is_valid")
+            and tab.is_valid()
+            and not self.input_file_edit.has_error
+            and (self.input_exheader is None or not self.input_exheader_edit.has_error)
         )
 
     def get_game_export_params(self) -> GameExportParams:
@@ -441,6 +472,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         return MSRGameExportParams(
             spoiler_output=spoiler_path_for_directory(self.auto_save_spoiler, output_path),
             input_path=self.input_file,
+            input_exheader=self.input_exheader,
             output_path=output_path,
             target_platform=self.target_platform,
             target_version=self.target_version,
