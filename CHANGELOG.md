@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Lock randomizer has been added.
 - Fixed: If no seed was exported at a previous start of Randovania, the export window now shows the correct title ID in the output path for NTSC without having to switch to PAL and back to NTSC.
 
+#### Logic Database
+
+##### Area 1
+
+- Fixed: Metroid Caverns Hub - Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths. 
 
 ## [8.0.0] - 2024-05-01
 
