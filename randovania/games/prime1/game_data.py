@@ -104,11 +104,10 @@ game_data: game.GameData = game.GameData(
         (
             "Why do I not take heat damage in some rooms in Magmoor, despite not having Varia Suit?",
             "Some rooms in Magmoor are not coded to be superheated. These include:\n"
-            "- Elevator Rooms\n"
-            "- Storage Cavern\n"
-            "- Every room including and past Twin Fires\n"
+            "- All Elevator Rooms\n"
             "- Burning Trail\n"
-            "- Lake Access",
+            "- Storage Cavern\n"
+            "- Every room after Twin Fires Tunnel\n",
         ),
     ],
     web_info=game.GameWebInfo(
