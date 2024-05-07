@@ -107,7 +107,7 @@ game_data: game.GameData = game.GameData(
             "- All Elevator Rooms\n"
             "- Burning Trail and Lake Access\n"
             "- Storage Cavern\n"
-            "- Every room past Twin Fires Tunnel\n"
+            "- Every room past Twin Fires Tunnel\n",
         ),
     ],
     web_info=game.GameWebInfo(
