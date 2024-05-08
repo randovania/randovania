@@ -2,7 +2,7 @@
     "name": "Norfair",
     "extra": {},
     "areas": {
-        "Transport to Brinstar": {
+        "Norfair Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x344_y195"
@@ -29,7 +29,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Transport to Norfair",
+                        "area": "Norfair Prelude",
                         "node": "Teleporter to Norfair"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -38,7 +38,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Western lava-filled path": {
+                        "Door to Bubble Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -47,7 +47,7 @@
                         }
                     }
                 },
-                "Door to Main corridor": {
+                "Door to Ember Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -64,8 +64,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Main corridor",
-                        "node": "Door to Transport to Brinstar"
+                        "area": "Ember Hall",
+                        "node": "Door to Norfair Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -73,7 +73,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Western lava-filled path": {
+                        "Door to Bubble Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -82,7 +82,7 @@
                         }
                     }
                 },
-                "Door to Western lava-filled path": {
+                "Door to Bubble Wall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -99,8 +99,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Western lava-filled path",
-                        "node": "Door to Transport to Brinstar"
+                        "area": "Bubble Wall",
+                        "node": "Door to Norfair Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -115,7 +115,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Main corridor": {
+                        "Door to Ember Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -126,13 +126,13 @@
                 }
             }
         },
-        "Western lava-filled path": {
+        "Bubble Wall": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x272_y202"
             },
             "nodes": {
-                "Door to Transport to Brinstar": {
+                "Door to Norfair Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -149,8 +149,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Transport to Brinstar",
-                        "node": "Door to Western lava-filled path"
+                        "area": "Norfair Entrance",
+                        "node": "Door to Bubble Wall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -186,7 +186,7 @@
                     "pickup_index": 21,
                     "location_category": "major",
                     "connections": {
-                        "Door to Transport to Brinstar": {
+                        "Door to Norfair Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -202,7 +202,7 @@
                         }
                     }
                 },
-                "Door to Mini Blue-bubble shaft (Left)": {
+                "Door to Questionable Stairs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -219,8 +219,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Mini Blue-bubble shaft (Left)",
-                        "node": "Door to Western lava-filled path"
+                        "area": "Questionable Stairs",
+                        "node": "Door to Bubble Wall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -280,7 +280,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Mini Blue-bubble shaft (Left)": {
+                        "Door to Questionable Stairs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -295,13 +295,13 @@
                 }
             }
         },
-        "Mini Blue-bubble shaft (Left)": {
+        "Questionable Stairs": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x200_y210"
             },
             "nodes": {
-                "Door to Western lava-filled path": {
+                "Door to Bubble Wall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -318,8 +318,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Western lava-filled path",
-                        "node": "Door to Mini Blue-bubble shaft (Left)"
+                        "area": "Bubble Wall",
+                        "node": "Door to Questionable Stairs"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -327,7 +327,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Missile Tank tunnel": {
+                        "Door to Basalt Cache": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -336,7 +336,7 @@
                         }
                     }
                 },
-                "Door to Missile Tank tunnel": {
+                "Door to Basalt Cache": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -353,8 +353,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Missile Tank tunnel",
-                        "node": "Door to Mini Blue-bubble shaft (Left)"
+                        "area": "Basalt Cache",
+                        "node": "Door to Questionable Stairs"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -362,7 +362,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Western lava-filled path": {
+                        "Door to Bubble Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -373,7 +373,7 @@
                 }
             }
         },
-        "Missile Tank tunnel": {
+        "Basalt Cache": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x240_y217"
@@ -398,7 +398,7 @@
                     "pickup_index": 22,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Mini Blue-bubble shaft (Left)": {
+                        "Door to Questionable Stairs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -407,7 +407,7 @@
                         }
                     }
                 },
-                "Door to Mini Blue-bubble shaft (Left)": {
+                "Door to Questionable Stairs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -424,8 +424,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Mini Blue-bubble shaft (Left)",
-                        "node": "Door to Missile Tank tunnel"
+                        "area": "Questionable Stairs",
+                        "node": "Door to Basalt Cache"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -444,13 +444,13 @@
                 }
             }
         },
-        "Main corridor": {
+        "Ember Hall": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x408_y202"
             },
             "nodes": {
-                "Door to Transport to Brinstar": {
+                "Door to Norfair Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -467,8 +467,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Transport to Brinstar",
-                        "node": "Door to Main corridor"
+                        "area": "Norfair Entrance",
+                        "node": "Door to Ember Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -476,7 +476,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -485,7 +485,7 @@
                         }
                     }
                 },
-                "Door to Blue-bubble shaft": {
+                "Door to Bubble Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -502,8 +502,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Blue-bubble shaft",
-                        "node": "Door to Main corridor"
+                        "area": "Bubble Tower",
+                        "node": "Door to Ember Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -511,7 +511,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Transport to Brinstar": {
+                        "Door to Norfair Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -522,13 +522,13 @@
                 }
             }
         },
-        "Blue-bubble shaft": {
+        "Bubble Tower": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x472_y225"
             },
             "nodes": {
-                "Door to Main corridor": {
+                "Door to Ember Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -545,8 +545,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Main corridor",
-                        "node": "Door to Blue-bubble shaft"
+                        "area": "Ember Hall",
+                        "node": "Door to Bubble Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -554,7 +554,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ice Beam access corridor": {
+                        "Door to Item Trial (Ice Beam)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -589,7 +589,7 @@
                         }
                     }
                 },
-                "Door to Ice Beam access corridor": {
+                "Door to Item Trial (Ice Beam)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -606,8 +606,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Ice Beam access corridor",
-                        "node": "Door to Blue-bubble shaft"
+                        "area": "Item Trial (Ice Beam)",
+                        "node": "Door to Bubble Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -615,14 +615,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main corridor": {
+                        "Door to Ember Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Heated Missile corridor": {
+                        "Door to Weapons Cache": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -650,7 +650,7 @@
                         }
                     }
                 },
-                "Door to Heated Missile corridor": {
+                "Door to Weapons Cache": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -667,8 +667,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Heated Missile corridor",
-                        "node": "Door to Blue-bubble shaft"
+                        "area": "Weapons Cache",
+                        "node": "Door to Bubble Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -676,14 +676,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ice Beam access corridor": {
+                        "Door to Item Trial (Ice Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Upper-right path": {
+                        "Door to Hidden Cache": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -694,7 +694,7 @@
                         }
                     }
                 },
-                "Door to Upper-right path": {
+                "Door to Hidden Cache": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -711,8 +711,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Upper-right path",
-                        "node": "Door to Blue-bubble shaft"
+                        "area": "Hidden Cache",
+                        "node": "Door to Bubble Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -720,7 +720,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Heated Missile corridor": {
+                        "Door to Weapons Cache": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
@@ -744,7 +744,7 @@
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Gauntlet",
-                        "node": "Door to Blue-bubble shaft"
+                        "node": "Door to Bubble Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -752,20 +752,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Main corridor": {
+                        "Door to Ember Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Hi-Jump access corridor": {
+                        "Door to Item Trial (High Jump)": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Hi-Jump access corridor": {
+                "Door to Item Trial (High Jump)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -782,8 +782,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Hi-Jump access corridor",
-                        "node": "Door to Blue-bubble shaft"
+                        "area": "Item Trial (High Jump)",
+                        "node": "Door to Bubble Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -798,7 +798,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Path of vines": {
+                        "Door to Bubble Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -807,7 +807,7 @@
                         }
                     }
                 },
-                "Door to Path of vines": {
+                "Door to Bubble Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -824,8 +824,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Path of vines",
-                        "node": "Door to Blue-bubble shaft"
+                        "area": "Bubble Hall",
+                        "node": "Door to Bubble Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -833,7 +833,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hi-Jump access corridor": {
+                        "Door to Item Trial (High Jump)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -844,13 +844,13 @@
                 }
             }
         },
-        "Ice Beam access corridor": {
+        "Item Trial (Ice Beam)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x440_y172"
             },
             "nodes": {
-                "Door to Blue-bubble shaft": {
+                "Door to Bubble Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -867,8 +867,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Blue-bubble shaft",
-                        "node": "Door to Ice Beam access corridor"
+                        "area": "Bubble Tower",
+                        "node": "Door to Item Trial (Ice Beam)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -939,7 +939,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -971,7 +971,7 @@
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "Door to Ice Beam room": {
+                        "Door to Item Room (Ice Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -980,7 +980,7 @@
                         }
                     }
                 },
-                "Door to Ice Beam room": {
+                "Door to Item Room (Ice Beam)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -997,8 +997,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Ice Beam room",
-                        "node": "Door to Ice Beam access corridor"
+                        "area": "Item Room (Ice Beam)",
+                        "node": "Door to Item Trial (Ice Beam)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1017,7 +1017,7 @@
                 }
             }
         },
-        "Ice Beam room": {
+        "Item Room (Ice Beam)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x400_y172"
@@ -1042,7 +1042,7 @@
                     "pickup_index": 10,
                     "location_category": "major",
                     "connections": {
-                        "Door to Ice Beam access corridor": {
+                        "Door to Item Trial (Ice Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1051,7 +1051,7 @@
                         }
                     }
                 },
-                "Door to Ice Beam access corridor": {
+                "Door to Item Trial (Ice Beam)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1068,8 +1068,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Ice Beam access corridor",
-                        "node": "Door to Ice Beam room"
+                        "area": "Item Trial (Ice Beam)",
+                        "node": "Door to Item Room (Ice Beam)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1103,7 +1103,7 @@
                         }
                     }
                 },
-                "Door to Long bubble shaft": {
+                "Door to Cache Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1120,8 +1120,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Long bubble shaft",
-                        "node": "Door to Ice Beam room"
+                        "area": "Cache Access",
+                        "node": "Door to Item Room (Ice Beam)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1153,7 +1153,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ice Beam access corridor": {
+                        "Door to Item Trial (Ice Beam)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1183,7 +1183,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Long bubble shaft": {
+                        "Door to Cache Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1198,13 +1198,13 @@
                 }
             }
         },
-        "Long bubble shaft": {
+        "Cache Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x376_y157"
             },
             "nodes": {
-                "Door to Ice Beam room": {
+                "Door to Item Room (Ice Beam)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1221,8 +1221,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Ice Beam room",
-                        "node": "Door to Long bubble shaft"
+                        "area": "Item Room (Ice Beam)",
+                        "node": "Door to Cache Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1230,7 +1230,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Upper-right path": {
+                        "Door to Hidden Cache": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1239,7 +1239,7 @@
                         }
                     }
                 },
-                "Door to Upper-right path": {
+                "Door to Hidden Cache": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1256,8 +1256,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Upper-right path",
-                        "node": "Door to Long bubble shaft"
+                        "area": "Hidden Cache",
+                        "node": "Door to Cache Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1265,7 +1265,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ice Beam room": {
+                        "Door to Item Room (Ice Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1276,13 +1276,13 @@
                 }
             }
         },
-        "Upper-right path": {
+        "Hidden Cache": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x424_y142"
             },
             "nodes": {
-                "Door to Long bubble shaft": {
+                "Door to Cache Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1299,8 +1299,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Long bubble shaft",
-                        "node": "Door to Upper-right path"
+                        "area": "Cache Access",
+                        "node": "Door to Hidden Cache"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1332,7 +1332,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Long bubble shaft": {
+                        "Door to Cache Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1373,7 +1373,7 @@
                         }
                     }
                 },
-                "Door to Blue-bubble shaft": {
+                "Door to Bubble Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1390,8 +1390,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Blue-bubble shaft",
-                        "node": "Door to Upper-right path"
+                        "area": "Bubble Tower",
+                        "node": "Door to Hidden Cache"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1462,7 +1462,7 @@
                     "pickup_index": 15,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1480,13 +1480,13 @@
                 }
             }
         },
-        "Heated Missile corridor": {
+        "Weapons Cache": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x431_y157"
             },
             "nodes": {
-                "Door to Blue-bubble shaft": {
+                "Door to Bubble Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1503,8 +1503,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Blue-bubble shaft",
-                        "node": "Door to Heated Missile corridor"
+                        "area": "Bubble Tower",
+                        "node": "Door to Weapons Cache"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1603,7 +1603,7 @@
                     "pickup_index": 13,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1627,7 +1627,7 @@
                 "map_name": "Norfair/x375_y217"
             },
             "nodes": {
-                "Door to Blue-bubble shaft": {
+                "Door to Bubble Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1644,7 +1644,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Blue-bubble shaft",
+                        "area": "Bubble Tower",
                         "node": "Door to Gauntlet"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1677,7 +1677,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1833,13 +1833,13 @@
                 }
             }
         },
-        "Hi-Jump access corridor": {
+        "Item Trial (High Jump)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x448_y247"
             },
             "nodes": {
-                "Door to Blue-bubble shaft": {
+                "Door to Bubble Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1856,8 +1856,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Blue-bubble shaft",
-                        "node": "Door to Hi-Jump access corridor"
+                        "area": "Bubble Tower",
+                        "node": "Door to Item Trial (High Jump)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1865,7 +1865,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hi-Jump room": {
+                        "Door to Item Room (High Jump)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1874,7 +1874,7 @@
                         }
                     }
                 },
-                "Door to Hi-Jump room": {
+                "Door to Item Room (High Jump)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1891,8 +1891,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Hi-Jump room",
-                        "node": "Door to Hi-Jump access corridor"
+                        "area": "Item Room (High Jump)",
+                        "node": "Door to Item Trial (High Jump)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1900,7 +1900,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1911,13 +1911,13 @@
                 }
             }
         },
-        "Hi-Jump room": {
+        "Item Room (High Jump)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x392_y247"
             },
             "nodes": {
-                "Door to Hi-Jump access corridor": {
+                "Door to Item Trial (High Jump)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1934,8 +1934,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Hi-Jump access corridor",
-                        "node": "Door to Hi-Jump room"
+                        "area": "Item Trial (High Jump)",
+                        "node": "Door to Item Room (High Jump)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -1976,7 +1976,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Hi-Jump access corridor": {
+                        "Door to Item Trial (High Jump)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2010,7 +2010,7 @@
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "Door to Superheated runway": {
+                        "Door to Runway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2038,7 +2038,7 @@
                         }
                     }
                 },
-                "Door to Superheated runway": {
+                "Door to Runway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2055,8 +2055,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Superheated runway",
-                        "node": "Door to Hi-Jump room"
+                        "area": "Runway",
+                        "node": "Door to Item Room (High Jump)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2092,7 +2092,7 @@
                     "pickup_index": 16,
                     "location_category": "major",
                     "connections": {
-                        "Door to Hi-Jump access corridor": {
+                        "Door to Item Trial (High Jump)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2103,13 +2103,13 @@
                 }
             }
         },
-        "Superheated runway": {
+        "Runway": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x344_y246"
             },
             "nodes": {
-                "Door to Hi-Jump room": {
+                "Door to Item Room (High Jump)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2126,8 +2126,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Hi-Jump room",
-                        "node": "Door to Superheated runway"
+                        "area": "Item Room (High Jump)",
+                        "node": "Door to Runway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2135,7 +2135,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Brutal path": {
+                        "Door to Lava Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2144,7 +2144,7 @@
                         }
                     }
                 },
-                "Door to Brutal path": {
+                "Door to Lava Entryway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2161,8 +2161,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Brutal path",
-                        "node": "Door to Superheated runway"
+                        "area": "Lava Entryway",
+                        "node": "Door to Runway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2170,7 +2170,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hi-Jump room": {
+                        "Door to Item Room (High Jump)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2181,13 +2181,13 @@
                 }
             }
         },
-        "Brutal path": {
+        "Lava Entryway": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x312_y247"
             },
             "nodes": {
-                "Door to Superheated runway": {
+                "Door to Runway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2204,8 +2204,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Superheated runway",
-                        "node": "Door to Brutal path"
+                        "area": "Runway",
+                        "node": "Door to Lava Entryway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2213,7 +2213,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to East green bubble shaft (Top)": {
+                        "Door to Bubble Atrium": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2222,7 +2222,7 @@
                         }
                     }
                 },
-                "Door to East green bubble shaft (Top)": {
+                "Door to Bubble Atrium": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2239,8 +2239,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Top)",
-                        "node": "Door to Brutal path"
+                        "area": "Bubble Atrium",
+                        "node": "Door to Lava Entryway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2248,7 +2248,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Superheated runway": {
+                        "Door to Runway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2259,13 +2259,13 @@
                 }
             }
         },
-        "East green bubble shaft (Top)": {
+        "Bubble Atrium": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x280_y247"
             },
             "nodes": {
-                "Door to Brutal path": {
+                "Door to Lava Entryway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2282,8 +2282,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Brutal path",
-                        "node": "Door to East green bubble shaft (Top)"
+                        "area": "Lava Entryway",
+                        "node": "Door to Bubble Atrium"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2291,27 +2291,27 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Screw Attack corridor": {
+                        "Door to Item Trial (Screw Attack)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Three rock corridor": {
+                        "Door to Upper Lava Highway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Precarious path": {
+                        "Door to Gumdrop Hall": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Screw Attack corridor": {
+                "Door to Item Trial (Screw Attack)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2328,8 +2328,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Screw Attack corridor",
-                        "node": "Door to East green bubble shaft (Top)"
+                        "area": "Item Trial (Screw Attack)",
+                        "node": "Door to Bubble Atrium"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2337,13 +2337,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Brutal path": {
+                        "Door to Lava Entryway": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Three rock corridor": {
+                "Door to Upper Lava Highway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2360,8 +2360,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Three rock corridor",
-                        "node": "Door to East green bubble shaft (Top)"
+                        "area": "Upper Lava Highway",
+                        "node": "Door to Bubble Atrium"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2369,7 +2369,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Brutal path": {
+                        "Door to Lava Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2378,7 +2378,7 @@
                         }
                     }
                 },
-                "Door to Twin hill corridor": {
+                "Door to Lower Lava Highway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2395,8 +2395,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Twin hill corridor",
-                        "node": "Door to East green bubble shaft (Top)"
+                        "area": "Lower Lava Highway",
+                        "node": "Door to Bubble Atrium"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2404,7 +2404,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Precarious path": {
+                        "Door to Gumdrop Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2413,7 +2413,7 @@
                         }
                     }
                 },
-                "Door to Precarious path": {
+                "Door to Gumdrop Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2430,8 +2430,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Precarious path",
-                        "node": "Door to East green bubble shaft (Top)"
+                        "area": "Gumdrop Hall",
+                        "node": "Door to Bubble Atrium"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2439,14 +2439,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Brutal path": {
+                        "Door to Lava Entryway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Twin hill corridor": {
+                        "Door to Lower Lava Highway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2457,13 +2457,13 @@
                 }
             }
         },
-        "East green bubble shaft (Bottom)": {
+        "Bubble Corridor West": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x264_y307"
             },
             "nodes": {
-                "Door to Hopping-Mad Corridor": {
+                "Door to Destroyed Highway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2480,8 +2480,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Hopping-Mad Corridor",
-                        "node": "Door to East green bubble shaft (Bottom)"
+                        "area": "Destroyed Highway",
+                        "node": "Door to Bubble Corridor West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2489,7 +2489,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Vine-infested passage": {
+                        "Door to Bubble Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2498,7 +2498,7 @@
                         }
                     }
                 },
-                "Door to Vine-infested passage": {
+                "Door to Bubble Pillars": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2515,8 +2515,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Vine-infested passage",
-                        "node": "Door to East green bubble shaft (Bottom)"
+                        "area": "Bubble Pillars",
+                        "node": "Door to Bubble Corridor West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2524,20 +2524,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hopping-Mad Corridor": {
+                        "Door to Destroyed Highway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Dual tank chamber": {
+                        "Door to Bubble Cache": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Dual tank chamber": {
+                "Door to Bubble Cache": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2554,8 +2554,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Dual tank chamber",
-                        "node": "Door to East green bubble shaft (Bottom)"
+                        "area": "Bubble Cache",
+                        "node": "Door to Bubble Corridor West"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2563,7 +2563,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Vine-infested passage": {
+                        "Door to Bubble Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2574,13 +2574,13 @@
                 }
             }
         },
-        "Screw Attack corridor": {
+        "Item Trial (Screw Attack)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x256_y232"
             },
             "nodes": {
-                "Door to East green bubble shaft (Top)": {
+                "Door to Bubble Atrium": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2597,8 +2597,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Top)",
-                        "node": "Door to Screw Attack corridor"
+                        "area": "Bubble Atrium",
+                        "node": "Door to Item Trial (Screw Attack)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2606,7 +2606,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Screw Attack room": {
+                        "Door to Item Room (Screw Attack)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2615,7 +2615,7 @@
                         }
                     }
                 },
-                "Door to Screw Attack room": {
+                "Door to Item Room (Screw Attack)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2632,8 +2632,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Screw Attack room",
-                        "node": "Door to Screw Attack corridor"
+                        "area": "Item Room (Screw Attack)",
+                        "node": "Door to Item Trial (Screw Attack)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2641,7 +2641,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to East green bubble shaft (Top)": {
+                        "Door to Bubble Atrium": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2652,13 +2652,13 @@
                 }
             }
         },
-        "Screw Attack room": {
+        "Item Room (Screw Attack)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x232_y232"
             },
             "nodes": {
-                "Door to Screw Attack corridor": {
+                "Door to Item Trial (Screw Attack)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2675,8 +2675,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Screw Attack corridor",
-                        "node": "Door to Screw Attack room"
+                        "area": "Item Trial (Screw Attack)",
+                        "node": "Door to Item Room (Screw Attack)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2712,7 +2712,7 @@
                     "pickup_index": 23,
                     "location_category": "major",
                     "connections": {
-                        "Door to Screw Attack corridor": {
+                        "Door to Item Trial (Screw Attack)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2723,13 +2723,13 @@
                 }
             }
         },
-        "Three rock corridor": {
+        "Upper Lava Highway": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x240_y247"
             },
             "nodes": {
-                "Door to East green bubble shaft (Top)": {
+                "Door to Bubble Atrium": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2746,8 +2746,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Top)",
-                        "node": "Door to Three rock corridor"
+                        "area": "Bubble Atrium",
+                        "node": "Door to Upper Lava Highway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2755,7 +2755,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to West green bubble shaft": {
+                        "Door to Highway Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2764,7 +2764,7 @@
                         }
                     }
                 },
-                "Door to West green bubble shaft": {
+                "Door to Highway Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2781,8 +2781,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "West green bubble shaft",
-                        "node": "Door to Three rock corridor"
+                        "area": "Highway Access",
+                        "node": "Door to Upper Lava Highway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2790,7 +2790,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to East green bubble shaft (Top)": {
+                        "Door to Bubble Atrium": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2801,13 +2801,13 @@
                 }
             }
         },
-        "Twin hill corridor": {
+        "Lower Lava Highway": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x240_y262"
             },
             "nodes": {
-                "Door to East green bubble shaft (Top)": {
+                "Door to Bubble Atrium": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2824,8 +2824,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Top)",
-                        "node": "Door to Twin hill corridor"
+                        "area": "Bubble Atrium",
+                        "node": "Door to Lower Lava Highway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2833,7 +2833,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to West green bubble shaft": {
+                        "Door to Highway Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2842,7 +2842,7 @@
                         }
                     }
                 },
-                "Door to West green bubble shaft": {
+                "Door to Highway Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2859,8 +2859,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "West green bubble shaft",
-                        "node": "Door to Twin hill corridor"
+                        "area": "Highway Access",
+                        "node": "Door to Lower Lava Highway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2868,7 +2868,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to East green bubble shaft (Top)": {
+                        "Door to Bubble Atrium": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2879,13 +2879,13 @@
                 }
             }
         },
-        "Precarious path": {
+        "Gumdrop Hall": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x368_y262"
             },
             "nodes": {
-                "Door to East green bubble shaft (Top)": {
+                "Door to Bubble Atrium": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2902,8 +2902,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Top)",
-                        "node": "Door to Precarious path"
+                        "area": "Bubble Atrium",
+                        "node": "Door to Gumdrop Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2920,7 +2920,7 @@
                         }
                     }
                 },
-                "Door to Short green shaft": {
+                "Door to Lava Pier": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2937,8 +2937,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Short green shaft",
-                        "node": "Door to Precarious path"
+                        "area": "Lava Pier",
+                        "node": "Door to Gumdrop Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2970,7 +2970,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to East green bubble shaft (Top)": {
+                        "Door to Bubble Atrium": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2998,7 +2998,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Short green shaft": {
+                        "Door to Lava Pier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3013,13 +3013,13 @@
                 }
             }
         },
-        "Short green shaft": {
+        "Lava Pier": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x456_y270"
             },
             "nodes": {
-                "Door to Precarious path": {
+                "Door to Gumdrop Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3036,8 +3036,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Precarious path",
-                        "node": "Door to Short green shaft"
+                        "area": "Gumdrop Hall",
+                        "node": "Door to Lava Pier"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3045,13 +3045,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Fire-Sea Room": {
+                        "Door to Fire Sea": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Fire-Sea Room": {
+                "Door to Fire Sea": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3068,8 +3068,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Fire-Sea Room",
-                        "node": "Door to Short green shaft"
+                        "area": "Fire Sea",
+                        "node": "Door to Lava Pier"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3077,7 +3077,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Precarious path": {
+                        "Door to Gumdrop Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3088,7 +3088,7 @@
                 }
             }
         },
-        "Fire-Sea Room": {
+        "Fire Sea": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x423_y277"
@@ -3113,7 +3113,7 @@
                     "pickup_index": 17,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Short green shaft": {
+                        "Door to Lava Pier": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3124,7 +3124,7 @@
                         }
                     }
                 },
-                "Door to Short green shaft": {
+                "Door to Lava Pier": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3141,8 +3141,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Short green shaft",
-                        "node": "Door to Fire-Sea Room"
+                        "area": "Lava Pier",
+                        "node": "Door to Fire Sea"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3171,13 +3171,13 @@
                 }
             }
         },
-        "West green bubble shaft": {
+        "Highway Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x200_y269"
             },
             "nodes": {
-                "Door to Three rock corridor": {
+                "Door to Upper Lava Highway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3194,8 +3194,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Three rock corridor",
-                        "node": "Door to West green bubble shaft"
+                        "area": "Upper Lava Highway",
+                        "node": "Door to Highway Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3203,7 +3203,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Twin hill corridor": {
+                        "Door to Lower Lava Highway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3212,7 +3212,7 @@
                         }
                     }
                 },
-                "Door to Twin hill corridor": {
+                "Door to Lower Lava Highway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3229,8 +3229,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Twin hill corridor",
-                        "node": "Door to West green bubble shaft"
+                        "area": "Lower Lava Highway",
+                        "node": "Door to Highway Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3238,14 +3238,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Three rock corridor": {
+                        "Door to Upper Lava Highway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Hopping-Mad Corridor": {
+                        "Door to Destroyed Highway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3259,7 +3259,7 @@
                         }
                     }
                 },
-                "Door to Hopping-Mad Corridor": {
+                "Door to Destroyed Highway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3276,8 +3276,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Hopping-Mad Corridor",
-                        "node": "Door to West green bubble shaft"
+                        "area": "Destroyed Highway",
+                        "node": "Door to Highway Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3285,7 +3285,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Twin hill corridor": {
+                        "Door to Lower Lava Highway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3318,13 +3318,13 @@
                 }
             }
         },
-        "Hopping-Mad Corridor": {
+        "Destroyed Highway": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x232_y292"
             },
             "nodes": {
-                "Door to West green bubble shaft": {
+                "Door to Highway Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3341,8 +3341,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "West green bubble shaft",
-                        "node": "Door to Hopping-Mad Corridor"
+                        "area": "Highway Access",
+                        "node": "Door to Destroyed Highway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3350,7 +3350,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to East green bubble shaft (Bottom)": {
+                        "Door to Bubble Corridor West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3359,7 +3359,7 @@
                         }
                     }
                 },
-                "Door to East green bubble shaft (Bottom)": {
+                "Door to Bubble Corridor West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3376,8 +3376,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Bottom)",
-                        "node": "Door to Hopping-Mad Corridor"
+                        "area": "Bubble Corridor West",
+                        "node": "Door to Destroyed Highway"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3385,7 +3385,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to West green bubble shaft": {
+                        "Door to Highway Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3396,13 +3396,13 @@
                 }
             }
         },
-        "Vine-infested passage": {
+        "Bubble Pillars": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x296_y292"
             },
             "nodes": {
-                "Door to East green bubble shaft (Bottom)": {
+                "Door to Bubble Corridor West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3419,8 +3419,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Bottom)",
-                        "node": "Door to Vine-infested passage"
+                        "area": "Bubble Corridor West",
+                        "node": "Door to Bubble Pillars"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3428,7 +3428,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Single-block-wide bridge": {
+                        "Door to Bubble Corridor East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3437,7 +3437,7 @@
                         }
                     }
                 },
-                "Door to Single-block-wide bridge": {
+                "Door to Bubble Corridor East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3454,8 +3454,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Single-block-wide bridge",
-                        "node": "Door to Vine-infested passage"
+                        "area": "Bubble Corridor East",
+                        "node": "Door to Bubble Pillars"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3463,7 +3463,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to East green bubble shaft (Bottom)": {
+                        "Door to Bubble Corridor West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3474,13 +3474,13 @@
                 }
             }
         },
-        "Dual tank chamber": {
+        "Bubble Cache": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x296_y322"
             },
             "nodes": {
-                "Door to East green bubble shaft (Bottom)": {
+                "Door to Bubble Corridor West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3497,8 +3497,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "East green bubble shaft (Bottom)",
-                        "node": "Door to Dual tank chamber"
+                        "area": "Bubble Corridor West",
+                        "node": "Door to Bubble Cache"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3534,7 +3534,7 @@
                     "pickup_index": 25,
                     "location_category": "minor",
                     "connections": {
-                        "Door to East green bubble shaft (Bottom)": {
+                        "Door to Bubble Corridor West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3580,13 +3580,13 @@
                 }
             }
         },
-        "Single-block-wide bridge": {
+        "Bubble Corridor East": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x328_y300"
             },
             "nodes": {
-                "Door to Vine-infested passage": {
+                "Door to Bubble Pillars": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3603,8 +3603,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Vine-infested passage",
-                        "node": "Door to Single-block-wide bridge"
+                        "area": "Bubble Pillars",
+                        "node": "Door to Bubble Corridor East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3612,7 +3612,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Wave Beam access corridor": {
+                        "Door to Item Trial (Wave Beam)": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
@@ -3625,7 +3625,7 @@
                         }
                     }
                 },
-                "Door to Wave Beam access corridor": {
+                "Door to Item Trial (Wave Beam)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3642,8 +3642,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Wave Beam access corridor",
-                        "node": "Door to Single-block-wide bridge"
+                        "area": "Item Trial (Wave Beam)",
+                        "node": "Door to Bubble Corridor East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3651,7 +3651,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Vine-infested passage": {
+                        "Door to Bubble Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3678,7 +3678,7 @@
                     "default_connection": {
                         "region": "Norfair",
                         "area": "Path of Destruction",
-                        "node": "Door to Single-block-wide bridge"
+                        "node": "Door to Bubble Corridor East"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3686,7 +3686,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Vine-infested passage": {
+                        "Door to Bubble Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3697,13 +3697,13 @@
                 }
             }
         },
-        "Wave Beam access corridor": {
+        "Item Trial (Wave Beam)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x304_y307"
             },
             "nodes": {
-                "Door to Single-block-wide bridge": {
+                "Door to Bubble Corridor East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3720,8 +3720,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Single-block-wide bridge",
-                        "node": "Door to Wave Beam access corridor"
+                        "area": "Bubble Corridor East",
+                        "node": "Door to Item Trial (Wave Beam)"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3729,7 +3729,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Wave Beam room": {
+                        "Door to Item Room (Wave Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3738,7 +3738,7 @@
                         }
                     }
                 },
-                "Door to Wave Beam room": {
+                "Door to Item Room (Wave Beam)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3755,8 +3755,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Wave Beam room",
-                        "node": "Door to Wave Beam access corridor"
+                        "area": "Item Room (Wave Beam)",
+                        "node": "Door to Item Trial (Wave Beam)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3764,7 +3764,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Single-block-wide bridge": {
+                        "Door to Bubble Corridor East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3775,13 +3775,13 @@
                 }
             }
         },
-        "Wave Beam room": {
+        "Item Room (Wave Beam)": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x280_y307"
             },
             "nodes": {
-                "Door to Wave Beam access corridor": {
+                "Door to Item Trial (Wave Beam)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3798,8 +3798,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Wave Beam access corridor",
-                        "node": "Door to Wave Beam room"
+                        "area": "Item Trial (Wave Beam)",
+                        "node": "Door to Item Room (Wave Beam)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3835,7 +3835,7 @@
                     "pickup_index": 24,
                     "location_category": "major",
                     "connections": {
-                        "Door to Wave Beam access corridor": {
+                        "Door to Item Trial (Wave Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3852,7 +3852,7 @@
                 "map_name": "Norfair/x392_y292"
             },
             "nodes": {
-                "Door to Single-block-wide bridge": {
+                "Door to Bubble Corridor East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3869,7 +3869,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Single-block-wide bridge",
+                        "area": "Bubble Corridor East",
                         "node": "Door to Path of Destruction"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -3902,7 +3902,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Single-block-wide bridge": {
+                        "Door to Bubble Corridor East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3973,13 +3973,13 @@
                 }
             }
         },
-        "Path of vines": {
+        "Bubble Hall": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x424_y307"
             },
             "nodes": {
-                "Door to Blue-bubble shaft": {
+                "Door to Bubble Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3996,8 +3996,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Blue-bubble shaft",
-                        "node": "Door to Path of vines"
+                        "area": "Bubble Tower",
+                        "node": "Door to Bubble Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4005,7 +4005,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini Blue-bubble shaft (Right)": {
+                        "Door to Purple Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4014,7 +4014,7 @@
                         }
                     }
                 },
-                "Door to Mini Blue-bubble shaft (Right)": {
+                "Door to Purple Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4031,8 +4031,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Mini Blue-bubble shaft (Right)",
-                        "node": "Door to Path of vines"
+                        "area": "Purple Stairwell",
+                        "node": "Door to Bubble Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4040,7 +4040,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Blue-bubble shaft": {
+                        "Door to Bubble Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4051,13 +4051,13 @@
                 }
             }
         },
-        "Mini Blue-bubble shaft (Right)": {
+        "Purple Stairwell": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x376_y315"
             },
             "nodes": {
-                "Door to Path of vines": {
+                "Door to Bubble Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4074,8 +4074,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Path of vines",
-                        "node": "Door to Mini Blue-bubble shaft (Right)"
+                        "area": "Bubble Hall",
+                        "node": "Door to Purple Stairwell"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4083,7 +4083,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ridley Elevator": {
+                        "Door to Ridley Prelude": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4092,7 +4092,7 @@
                         }
                     }
                 },
-                "Door to Ridley Elevator": {
+                "Door to Ridley Prelude": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4109,8 +4109,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Ridley Elevator",
-                        "node": "Door to Mini Blue-bubble shaft (Right)"
+                        "area": "Ridley Prelude",
+                        "node": "Door to Purple Stairwell"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -4118,7 +4118,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Path of vines": {
+                        "Door to Bubble Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4129,7 +4129,7 @@
                 }
             }
         },
-        "Ridley Elevator": {
+        "Ridley Prelude": {
             "default_node": null,
             "extra": {
                 "map_name": "Norfair/x392_y321"
@@ -4156,7 +4156,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Eerie Cave",
+                        "area": "Ridley Entrance",
                         "node": "Teleporter to Norfair"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -4165,7 +4165,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini Blue-bubble shaft (Right)": {
+                        "Door to Purple Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4174,7 +4174,7 @@
                         }
                     }
                 },
-                "Door to Mini Blue-bubble shaft (Right)": {
+                "Door to Purple Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4191,8 +4191,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Mini Blue-bubble shaft (Right)",
-                        "node": "Door to Ridley Elevator"
+                        "area": "Purple Stairwell",
+                        "node": "Door to Ridley Prelude"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,

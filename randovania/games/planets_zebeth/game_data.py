@@ -55,6 +55,12 @@ def _exporter() -> PlanetsZebethGameExporter:
     return PlanetsZebethGameExporter()
 
 
+def _hash_words() -> list[str]:
+    from randovania.games.planets_zebeth.hash_words import HASH_WORDS
+
+    return HASH_WORDS
+
+
 game_data: game.GameData = game.GameData(
     short_name="Planets Zebeth",
     long_name="Metroid Planets (Zebeth)",
@@ -71,6 +77,7 @@ game_data: game.GameData = game.GameData(
             "which prevents modifying the code.",
         )
     ],
+    hash_words=_hash_words(),
     layout=game.GameLayout(
         configuration=layout.PlanetsZebethConfiguration,
         cosmetic_patches=layout.PlanetsZebethCosmeticPatches,

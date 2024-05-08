@@ -1,5 +1,5 @@
 {
-    "schema_version": 22,
+    "schema_version": 24,
     "game": "planets_zebeth",
     "resource_database": {
         "items": {
@@ -116,36 +116,43 @@
             "Combat": {
                 "long_name": "Combat",
                 "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Knowledge": {
                 "long_name": "Knowledge",
                 "description": "If this trick is enabled, the player may be expected to know certain hidden passageways or other lesser known facts.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Movement": {
                 "long_name": "Movement",
                 "description": "",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "Damage Boost": {
                 "long_name": "Damage Boost",
                 "description": "If this trick is enabled, the player may be expected to take damage from enemies to traverse rooms.",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "IBJ": {
                 "long_name": "IBJ",
                 "description": "",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "DIBJ": {
                 "long_name": "DIBJ",
                 "description": "",
+                "require_documentation_above": 0,
                 "extra": {}
             },
             "IceAbuse": {
                 "long_name": "Stand On Frozen Enemies",
                 "description": "If this trick is enabled, the player may be expected to freeze enemies with the Ice Beam and use them to traverse a room or collect items.",
+                "require_documentation_above": 0,
                 "extra": {}
             }
         },
@@ -189,110 +196,116 @@
         },
         "requirement_template": {
             "Can Use Bombs": {
-                "type": "and",
-                "data": {
-                    "comment": "Able to lay normal bombs",
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph Ball",
-                                "amount": 1,
-                                "negate": false
+                "display_name": "Can Use Bombs",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Able to lay normal bombs",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph Ball",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Bombs",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Bombs",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             },
             "Get rid of Larva Metroid": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": "Intended",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ice Beam",
-                                            "amount": 1,
-                                            "negate": false
+                "display_name": "Get rid of Larva Metroid",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "Intended",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Ice Beam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Use Bombs"
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 5,
-                                            "negate": false
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "TODO: change this to movement - freeze and go on",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Ice Beam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Use Bombs"
-                                    }
-                                ]
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "TODO: change this to movement",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
                             }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: change this to movement - freeze and go on",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ice Beam",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: change this to movement",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
             }
         },
@@ -304,7 +317,7 @@
     ],
     "starting_location": {
         "region": "Brinstar",
-        "area": "Corridor 1",
+        "area": "Maru Mari Hall",
         "node": "Starting Point"
     },
     "initial_states": {

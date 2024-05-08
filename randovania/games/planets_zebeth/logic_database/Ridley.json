@@ -2,7 +2,7 @@
     "name": "Ridley",
     "extra": {},
     "areas": {
-        "Eerie Cave": {
+        "Ridley Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x392_y360"
@@ -29,7 +29,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Norfair",
-                        "area": "Ridley Elevator",
+                        "area": "Ridley Prelude",
                         "node": "Teleporter to Ridley"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -38,14 +38,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Block room": {
+                        "Door to Block Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Ridley's shortcut": {
+                        "Door to Lava Foyer": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -54,7 +54,7 @@
                         }
                     }
                 },
-                "Door to Block room": {
+                "Door to Block Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -71,8 +71,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Block room",
-                        "node": "Door to Eerie Cave"
+                        "area": "Block Room",
+                        "node": "Door to Ridley Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -89,7 +89,7 @@
                         }
                     }
                 },
-                "Door to Ridley's shortcut": {
+                "Door to Lava Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -106,8 +106,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's shortcut",
-                        "node": "Door to Eerie Cave"
+                        "area": "Lava Foyer",
+                        "node": "Door to Ridley Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -126,13 +126,13 @@
                 }
             }
         },
-        "Block room": {
+        "Block Room": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x376_y367"
             },
             "nodes": {
-                "Door to Eerie Cave": {
+                "Door to Ridley Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -149,8 +149,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Eerie Cave",
-                        "node": "Door to Block room"
+                        "area": "Ridley Entrance",
+                        "node": "Door to Block Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -158,7 +158,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Cocoon cavern": {
+                        "Door to Block Room 2 the Blockening": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -167,7 +167,7 @@
                         }
                     }
                 },
-                "Door to Cocoon cavern": {
+                "Door to Block Room 2 the Blockening": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -184,8 +184,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Cocoon cavern",
-                        "node": "Door to Block room"
+                        "area": "Block Room 2 the Blockening",
+                        "node": "Door to Block Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -193,7 +193,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Eerie Cave": {
+                        "Door to Ridley Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -204,13 +204,13 @@
                 }
             }
         },
-        "Cocoon cavern": {
+        "Block Room 2 the Blockening": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x360_y359"
             },
             "nodes": {
-                "Door to Block room": {
+                "Door to Block Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -227,8 +227,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Block room",
-                        "node": "Door to Cocoon cavern"
+                        "area": "Block Room",
+                        "node": "Door to Block Room 2 the Blockening"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -236,7 +236,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Imago's hideout": {
+                        "Door to Purple Gauntlet": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -265,7 +265,7 @@
                                 ]
                             }
                         },
-                        "Door to Hall of pillars": {
+                        "Door to Hall of Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -274,7 +274,7 @@
                         }
                     }
                 },
-                "Door to Imago's hideout": {
+                "Door to Purple Gauntlet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -291,8 +291,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Imago's hideout",
-                        "node": "Door to Cocoon cavern"
+                        "area": "Purple Gauntlet",
+                        "node": "Door to Block Room 2 the Blockening"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -300,13 +300,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Block room": {
+                        "Door to Block Room": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Hall of pillars": {
+                "Door to Hall of Pillars": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -323,8 +323,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Hall of pillars",
-                        "node": "Door to Cocoon cavern"
+                        "area": "Hall of Pillars",
+                        "node": "Door to Block Room 2 the Blockening"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -332,7 +332,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Block room": {
+                        "Door to Block Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -343,7 +343,7 @@
                 }
             }
         },
-        "Imago's hideout": {
+        "Purple Gauntlet": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x311_y352"
@@ -368,7 +368,7 @@
                     "pickup_index": 27,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Cocoon cavern": {
+                        "Door to Block Room 2 the Blockening": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -377,7 +377,7 @@
                         }
                     }
                 },
-                "Door to Cocoon cavern": {
+                "Door to Block Room 2 the Blockening": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -394,8 +394,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Cocoon cavern",
-                        "node": "Door to Imago's hideout"
+                        "area": "Block Room 2 the Blockening",
+                        "node": "Door to Purple Gauntlet"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -414,13 +414,13 @@
                 }
             }
         },
-        "Hall of pillars": {
+        "Hall of Pillars": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x312_y367"
             },
             "nodes": {
-                "Door to Cocoon cavern": {
+                "Door to Block Room 2 the Blockening": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -437,8 +437,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Cocoon cavern",
-                        "node": "Door to Hall of pillars"
+                        "area": "Block Room 2 the Blockening",
+                        "node": "Door to Hall of Pillars"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -473,7 +473,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Artificial Passage",
-                        "node": "Door to Hall of pillars"
+                        "node": "Door to Hall of Pillars"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -505,7 +505,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Cocoon cavern": {
+                        "Door to Block Room 2 the Blockening": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -570,7 +570,7 @@
                 "map_name": "Ridley/x264_y382"
             },
             "nodes": {
-                "Door to Hall of pillars": {
+                "Door to Hall of Pillars": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -587,7 +587,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Hall of pillars",
+                        "area": "Hall of Pillars",
                         "node": "Door to Artificial Passage"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -631,14 +631,14 @@
                     "pickup_index": 28,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Hall of pillars": {
+                        "Door to Hall of Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Pronged hall": {
+                        "Door to Dessgeega Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -647,7 +647,7 @@
                         }
                     }
                 },
-                "Door to Pronged hall": {
+                "Door to Dessgeega Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -664,7 +664,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Pronged hall",
+                        "area": "Dessgeega Attic",
                         "node": "Door to Artificial Passage"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -682,7 +682,7 @@
                         }
                     }
                 },
-                "Door to Path over lava": {
+                "Door to Path of Reflection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -699,7 +699,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Path over lava",
+                        "area": "Path of Reflection",
                         "node": "Door to Artificial Passage"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -717,7 +717,7 @@
                         }
                     }
                 },
-                "Door to Cache Access": {
+                "Door to Green Bridge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -734,7 +734,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Cache Access",
+                        "area": "Green Bridge",
                         "node": "Door to Artificial Passage"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -767,7 +767,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Hall of pillars": {
+                        "Door to Hall of Pillars": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: ADD IBJ",
@@ -803,14 +803,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Path over lava": {
+                        "Door to Path of Reflection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Cache Access": {
+                        "Door to Green Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -821,7 +821,7 @@
                 }
             }
         },
-        "Pronged hall": {
+        "Dessgeega Attic": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x240_y367"
@@ -845,7 +845,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Artificial Passage",
-                        "node": "Door to Pronged hall"
+                        "node": "Door to Dessgeega Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -853,7 +853,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft of doom": {
+                        "Door to Tower of Doom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -862,7 +862,7 @@
                         }
                     }
                 },
-                "Door to Shaft of doom": {
+                "Door to Tower of Doom": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -879,8 +879,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Shaft of doom",
-                        "node": "Door to Pronged hall"
+                        "area": "Tower of Doom",
+                        "node": "Door to Dessgeega Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -899,7 +899,7 @@
                 }
             }
         },
-        "Path over lava": {
+        "Path of Reflection": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x240_y397"
@@ -923,7 +923,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Artificial Passage",
-                        "node": "Door to Path over lava"
+                        "node": "Door to Path of Reflection"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -931,7 +931,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Shaft of doom": {
+                        "Door to Tower of Doom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -940,7 +940,7 @@
                         }
                     }
                 },
-                "Door to Shaft of doom": {
+                "Door to Tower of Doom": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -957,8 +957,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Shaft of doom",
-                        "node": "Door to Path over lava"
+                        "area": "Tower of Doom",
+                        "node": "Door to Path of Reflection"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -977,13 +977,13 @@
                 }
             }
         },
-        "Shaft of doom": {
+        "Tower of Doom": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x216_y404"
             },
             "nodes": {
-                "Door to Pronged hall": {
+                "Door to Dessgeega Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1000,8 +1000,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Pronged hall",
-                        "node": "Door to Shaft of doom"
+                        "area": "Dessgeega Attic",
+                        "node": "Door to Tower of Doom"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1009,7 +1009,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Path over lava": {
+                        "Door to Path of Reflection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1018,7 +1018,7 @@
                         }
                     }
                 },
-                "Door to Path over lava": {
+                "Door to Path of Reflection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1035,8 +1035,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Path over lava",
-                        "node": "Door to Shaft of doom"
+                        "area": "Path of Reflection",
+                        "node": "Door to Tower of Doom"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1044,14 +1044,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pronged hall": {
+                        "Door to Dessgeega Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Zebbo Nest": {
+                        "Door to Infinite Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1060,7 +1060,7 @@
                         }
                     }
                 },
-                "Door to Zebbo Nest": {
+                "Door to Infinite Gauntlet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1077,8 +1077,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Zebbo Nest",
-                        "node": "Door to Shaft of doom"
+                        "area": "Infinite Gauntlet",
+                        "node": "Door to Tower of Doom"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1086,7 +1086,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Path over lava": {
+                        "Door to Path of Reflection": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: IBJ",
@@ -1102,13 +1102,13 @@
                 }
             }
         },
-        "Zebbo Nest": {
+        "Infinite Gauntlet": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x344_y442"
             },
             "nodes": {
-                "Door to Shaft of doom": {
+                "Door to Tower of Doom": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1125,8 +1125,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Shaft of doom",
-                        "node": "Door to Zebbo Nest"
+                        "area": "Tower of Doom",
+                        "node": "Door to Infinite Gauntlet"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1162,14 +1162,14 @@
                     "pickup_index": 30,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Shaft of doom": {
+                        "Door to Tower of Doom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Ridley's rightmost shaft": {
+                        "Door to Purple Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1178,7 +1178,7 @@
                         }
                     }
                 },
-                "Door to Ridley's rightmost shaft": {
+                "Door to Purple Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1195,8 +1195,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's rightmost shaft",
-                        "node": "Door to Zebbo Nest"
+                        "area": "Purple Tower",
+                        "node": "Door to Infinite Gauntlet"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1215,13 +1215,13 @@
                 }
             }
         },
-        "Ridley's rightmost shaft": {
+        "Purple Tower": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x472_y404"
             },
             "nodes": {
-                "Door to Zebbo Nest": {
+                "Door to Infinite Gauntlet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1238,8 +1238,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Zebbo Nest",
-                        "node": "Door to Ridley's rightmost shaft"
+                        "area": "Infinite Gauntlet",
+                        "node": "Door to Purple Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1247,7 +1247,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Multiviola Nest": {
+                        "Door to Green Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1256,7 +1256,7 @@
                         }
                     }
                 },
-                "Door to Replenishment station": {
+                "Door to The Wall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1273,8 +1273,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Replenishment station",
-                        "node": "Door to Ridley's rightmost shaft"
+                        "area": "The Wall",
+                        "node": "Door to Purple Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1282,14 +1282,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Multiviola Nest": {
+                        "Door to Green Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Ridley's shortcut": {
+                        "Door to Lava Foyer": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1298,7 +1298,7 @@
                         }
                     }
                 },
-                "Door to Multiviola Nest": {
+                "Door to Green Gauntlet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1315,8 +1315,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Multiviola Nest",
-                        "node": "Door to Ridley's rightmost shaft"
+                        "area": "Green Gauntlet",
+                        "node": "Door to Purple Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1324,14 +1324,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Zebbo Nest": {
+                        "Door to Infinite Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Replenishment station": {
+                        "Door to The Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1340,7 +1340,7 @@
                         }
                     }
                 },
-                "Door to Ridley's shortcut": {
+                "Door to Lava Foyer": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1357,8 +1357,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's shortcut",
-                        "node": "Door to Ridley's rightmost shaft"
+                        "area": "Lava Foyer",
+                        "node": "Door to Purple Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1366,7 +1366,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Replenishment station": {
+                        "Door to The Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1377,13 +1377,13 @@
                 }
             }
         },
-        "Middle corridor": {
+        "Central Cache": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x368_y397"
             },
             "nodes": {
-                "Door to Gambit shaft": {
+                "Door to Gambit Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1400,8 +1400,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Gambit shaft",
-                        "node": "Door to Middle corridor"
+                        "area": "Gambit Tower",
+                        "node": "Door to Central Cache"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1437,7 +1437,7 @@
                     "pickup_index": 31,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Gambit shaft": {
+                        "Door to Gambit Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1448,13 +1448,13 @@
                 }
             }
         },
-        "Gambit shaft": {
+        "Gambit Tower": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x344_y412"
             },
             "nodes": {
-                "Door to Cache Access": {
+                "Door to Green Bridge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1471,8 +1471,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Cache Access",
-                        "node": "Door to Gambit shaft"
+                        "area": "Green Bridge",
+                        "node": "Door to Gambit Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1480,7 +1480,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Middle corridor": {
+                        "Door to Central Cache": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1496,7 +1496,7 @@
                         }
                     }
                 },
-                "Door to Middle corridor": {
+                "Door to Central Cache": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1513,8 +1513,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Middle corridor",
-                        "node": "Door to Gambit shaft"
+                        "area": "Central Cache",
+                        "node": "Door to Gambit Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1522,7 +1522,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Cache Access": {
+                        "Door to Green Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1531,7 +1531,7 @@
                         }
                     }
                 },
-                "Door to Multiviola Nest": {
+                "Door to Green Gauntlet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1548,8 +1548,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Multiviola Nest",
-                        "node": "Door to Gambit shaft"
+                        "area": "Green Gauntlet",
+                        "node": "Door to Gambit Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1566,7 +1566,7 @@
                         }
                     }
                 },
-                "Door to Ridley's room access": {
+                "Door to Ominous Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1583,8 +1583,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's room access",
-                        "node": "Door to Gambit shaft"
+                        "area": "Ominous Hall",
+                        "node": "Door to Gambit Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1616,7 +1616,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Cache Access": {
+                        "Door to Green Bridge": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: ADD IBJ",
@@ -1628,14 +1628,14 @@
                                 ]
                             }
                         },
-                        "Door to Multiviola Nest": {
+                        "Door to Green Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Ridley's room access": {
+                        "Door to Ominous Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1646,7 +1646,7 @@
                 }
             }
         },
-        "Cache Access": {
+        "Green Bridge": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x304_y397"
@@ -1670,7 +1670,7 @@
                     "default_connection": {
                         "region": "Ridley",
                         "area": "Artificial Passage",
-                        "node": "Door to Cache Access"
+                        "node": "Door to Green Bridge"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1678,7 +1678,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gambit shaft": {
+                        "Door to Gambit Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1687,7 +1687,7 @@
                         }
                     }
                 },
-                "Door to Gambit shaft": {
+                "Door to Gambit Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1704,8 +1704,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Gambit shaft",
-                        "node": "Door to Cache Access"
+                        "area": "Gambit Tower",
+                        "node": "Door to Green Bridge"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1724,13 +1724,13 @@
                 }
             }
         },
-        "Multiviola Nest": {
+        "Green Gauntlet": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x408_y427"
             },
             "nodes": {
-                "Door to Gambit shaft": {
+                "Door to Gambit Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1747,8 +1747,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Gambit shaft",
-                        "node": "Door to Multiviola Nest"
+                        "area": "Gambit Tower",
+                        "node": "Door to Green Gauntlet"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1756,7 +1756,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ridley's rightmost shaft": {
+                        "Door to Purple Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1765,7 +1765,7 @@
                         }
                     }
                 },
-                "Door to Ridley's rightmost shaft": {
+                "Door to Purple Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1782,8 +1782,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's rightmost shaft",
-                        "node": "Door to Multiviola Nest"
+                        "area": "Purple Tower",
+                        "node": "Door to Green Gauntlet"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1791,7 +1791,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gambit shaft": {
+                        "Door to Gambit Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1802,13 +1802,13 @@
                 }
             }
         },
-        "Ridley's room access": {
+        "Ominous Hall": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x304_y427"
             },
             "nodes": {
-                "Door to Gambit shaft": {
+                "Door to Gambit Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1825,8 +1825,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Gambit shaft",
-                        "node": "Door to Ridley's room access"
+                        "area": "Gambit Tower",
+                        "node": "Door to Ominous Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1834,7 +1834,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ridley's room": {
+                        "Door to Ridley Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1843,7 +1843,7 @@
                         }
                     }
                 },
-                "Door to Ridley's room": {
+                "Door to Ridley Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1860,8 +1860,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's room",
-                        "node": "Door to Ridley's room access"
+                        "area": "Ridley Arena",
+                        "node": "Door to Ominous Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1869,7 +1869,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gambit shaft": {
+                        "Door to Gambit Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1880,13 +1880,13 @@
                 }
             }
         },
-        "Ridley's room": {
+        "Ridley Arena": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x264_y427"
             },
             "nodes": {
-                "Door to Ridley's room access": {
+                "Door to Ominous Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1903,8 +1903,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's room access",
-                        "node": "Door to Ridley's room"
+                        "area": "Ominous Hall",
+                        "node": "Door to Ridley Arena"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1921,7 +1921,7 @@
                         }
                     }
                 },
-                "Door to Ridley's reliquary": {
+                "Door to Lava Reliquary": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1938,8 +1938,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's reliquary",
-                        "node": "Door to Ridley's room"
+                        "area": "Lava Reliquary",
+                        "node": "Door to Ridley Arena"
                     },
                     "default_dock_weakness": "10 Missiles Door",
                     "exclude_from_dock_rando": false,
@@ -2030,14 +2030,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ridley's room access": {
+                        "Door to Ominous Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Ridley's reliquary": {
+                        "Door to Lava Reliquary": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2143,7 +2143,7 @@
                 }
             }
         },
-        "Ridley's reliquary": {
+        "Lava Reliquary": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x240_y427"
@@ -2177,7 +2177,7 @@
                         }
                     }
                 },
-                "Door to Ridley's room": {
+                "Door to Ridley Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2194,8 +2194,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's room",
-                        "node": "Door to Ridley's reliquary"
+                        "area": "Ridley Arena",
+                        "node": "Door to Lava Reliquary"
                     },
                     "default_dock_weakness": "10 Missiles Door",
                     "exclude_from_dock_rando": false,
@@ -2234,7 +2234,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Ridley's room": {
+                        "Door to Ridley Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2247,13 +2247,13 @@
                 }
             }
         },
-        "Ridley's shortcut": {
+        "Lava Foyer": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x432_y367"
             },
             "nodes": {
-                "Door to Eerie Cave": {
+                "Door to Ridley Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2270,8 +2270,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Eerie Cave",
-                        "node": "Door to Ridley's shortcut"
+                        "area": "Ridley Entrance",
+                        "node": "Door to Lava Foyer"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2279,7 +2279,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ridley's rightmost shaft": {
+                        "Door to Purple Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2288,7 +2288,7 @@
                         }
                     }
                 },
-                "Door to Ridley's rightmost shaft": {
+                "Door to Purple Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2305,8 +2305,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's rightmost shaft",
-                        "node": "Door to Ridley's shortcut"
+                        "area": "Purple Tower",
+                        "node": "Door to Lava Foyer"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2314,7 +2314,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Eerie Cave": {
+                        "Door to Ridley Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2325,13 +2325,13 @@
                 }
             }
         },
-        "Replenishment station": {
+        "The Wall": {
             "default_node": null,
             "extra": {
                 "map_name": "Ridley/x424_y397"
             },
             "nodes": {
-                "Door to Ridley's rightmost shaft": {
+                "Door to Purple Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2348,8 +2348,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Ridley",
-                        "area": "Ridley's rightmost shaft",
-                        "node": "Door to Replenishment station"
+                        "area": "Purple Tower",
+                        "node": "Door to The Wall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2381,7 +2381,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Ridley's rightmost shaft": {
+                        "Door to Purple Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,

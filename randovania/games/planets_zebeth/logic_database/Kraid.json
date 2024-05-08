@@ -2,7 +2,7 @@
     "name": "Kraid",
     "extra": {},
     "areas": {
-        "Entrance shaft": {
+        "Kraid Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x104_y337"
@@ -27,7 +27,7 @@
                     "dock_type": "teleporter",
                     "default_connection": {
                         "region": "Brinstar",
-                        "area": "Kraid Elevator",
+                        "area": "Kraid Prelude",
                         "node": "Teleporter to Kraid"
                     },
                     "default_dock_weakness": "Teleporter",
@@ -36,7 +36,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Barisute pit": {
+                        "Door to Arrival Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -45,7 +45,7 @@
                         }
                     }
                 },
-                "Door to Divided alcove": {
+                "Door to Back Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -62,8 +62,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Divided alcove",
-                        "node": "Door to Entrance shaft"
+                        "area": "Back Entrance",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -71,13 +71,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Sidehopper infested hall": {
+                        "Door to Hall of Rejection": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Sidehopper infested hall": {
+                "Door to Hall of Rejection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -94,8 +94,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Sidehopper infested hall",
-                        "node": "Door to Entrance shaft"
+                        "area": "Hall of Rejection",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -103,11 +103,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Divided alcove": {
+                        "Door to Back Entrance": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "Door to Corrosive pool": {
+                        "Door to Acid Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -133,7 +133,7 @@
                                 ]
                             }
                         },
-                        "Door to Gauntlet": {
+                        "Door to Hall of Returns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -161,7 +161,7 @@
                         }
                     }
                 },
-                "Door to Corrosive pool": {
+                "Door to Acid Gauntlet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -178,8 +178,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Corrosive pool",
-                        "node": "Door to Entrance shaft"
+                        "area": "Acid Gauntlet",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -187,7 +187,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Sidehopper infested hall": {
+                        "Door to Hall of Rejection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -196,7 +196,7 @@
                         }
                     }
                 },
-                "Door to Acid-filled runway": {
+                "Door to Blue Closet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -213,8 +213,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Acid-filled runway",
-                        "node": "Door to Entrance shaft"
+                        "area": "Blue Closet",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -222,7 +222,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Acidic concourse": {
+                        "Door to Pond Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -231,7 +231,7 @@
                         }
                     }
                 },
-                "Door to Barisute pit": {
+                "Door to Arrival Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -248,8 +248,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Barisute pit",
-                        "node": "Door to Entrance shaft"
+                        "area": "Arrival Chamber",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -264,7 +264,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Caged Sidehopper hall": {
+                        "Door to Upper Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -273,7 +273,7 @@
                         }
                     }
                 },
-                "Door to Gauntlet": {
+                "Door to Hall of Returns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -290,8 +290,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Gauntlet",
-                        "node": "Door to Entrance shaft"
+                        "area": "Hall of Returns",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -299,14 +299,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Sidehopper infested hall": {
+                        "Door to Hall of Rejection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Acidic concourse": {
+                        "Door to Pond Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -315,7 +315,7 @@
                         }
                     }
                 },
-                "Door to Caged Sidehopper hall": {
+                "Door to Upper Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -332,8 +332,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Caged Sidehopper hall",
-                        "node": "Door to Entrance shaft"
+                        "area": "Upper Hall",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -341,14 +341,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Barisute pit": {
+                        "Door to Arrival Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Acidic concourse": {
+                        "Door to Pond Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -357,7 +357,7 @@
                         }
                     }
                 },
-                "Door to Acidic concourse": {
+                "Door to Pond Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -374,8 +374,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Acidic concourse",
-                        "node": "Door to Entrance shaft"
+                        "area": "Pond Access",
+                        "node": "Door to Kraid Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -383,7 +383,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Corrosive pool": {
+                        "Door to Acid Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: unmorph jump",
@@ -409,21 +409,21 @@
                                 ]
                             }
                         },
-                        "Door to Acid-filled runway": {
+                        "Door to Blue Closet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Gauntlet": {
+                        "Door to Hall of Returns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Caged Sidehopper hall": {
+                        "Door to Upper Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -434,13 +434,13 @@
                 }
             }
         },
-        "Barisute pit": {
+        "Arrival Chamber": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x56_y307"
             },
             "nodes": {
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -457,8 +457,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Barisute pit"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Arrival Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -499,7 +499,7 @@
                     "pickup_index": 37,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -538,7 +538,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Bottomless Pond",
-                        "node": "Door to Barisute pit"
+                        "node": "Door to Arrival Chamber"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -557,7 +557,7 @@
                 }
             }
         },
-        "Caged Sidehopper hall": {
+        "Upper Hall": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x136_y307"
@@ -582,14 +582,14 @@
                     "pickup_index": 36,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Apex launcher shaft": {
+                        "Door to Apex Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -598,7 +598,7 @@
                         }
                     }
                 },
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -615,8 +615,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Caged Sidehopper hall"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Upper Hall"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -633,7 +633,7 @@
                         }
                     }
                 },
-                "Door to Apex launcher shaft": {
+                "Door to Apex Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -650,8 +650,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Apex launcher shaft",
-                        "node": "Door to Caged Sidehopper hall"
+                        "area": "Apex Tower",
+                        "node": "Door to Upper Hall"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -670,13 +670,13 @@
                 }
             }
         },
-        "Apex launcher shaft": {
+        "Apex Tower": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x168_y277"
             },
             "nodes": {
-                "Door to Caged Sidehopper hall": {
+                "Door to Upper Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -693,8 +693,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Caged Sidehopper hall",
-                        "node": "Door to Apex launcher shaft"
+                        "area": "Upper Hall",
+                        "node": "Door to Apex Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -702,7 +702,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Acid Worm's room": {
+                        "Door to Lower Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -711,7 +711,7 @@
                         }
                     }
                 },
-                "Door to Acid Worm's room": {
+                "Door to Lower Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -728,8 +728,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Acid Worm's room",
-                        "node": "Door to Apex launcher shaft"
+                        "area": "Lower Attic",
+                        "node": "Door to Apex Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -737,14 +737,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Caged Sidehopper hall": {
+                        "Door to Upper Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Chozo machine hall": {
+                        "Door to Central Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -753,7 +753,7 @@
                         }
                     }
                 },
-                "Door to Chozo machine hall": {
+                "Door to Central Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -770,8 +770,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Chozo machine hall",
-                        "node": "Door to Apex launcher shaft"
+                        "area": "Central Attic",
+                        "node": "Door to Apex Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -779,14 +779,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Acid Worm's room": {
+                        "Door to Lower Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Kraid's highest corridor": {
+                        "Door to Upper Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -795,7 +795,7 @@
                         }
                     }
                 },
-                "Door to Kraid's highest corridor": {
+                "Door to Upper Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -812,8 +812,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's highest corridor",
-                        "node": "Door to Apex launcher shaft"
+                        "area": "Upper Attic",
+                        "node": "Door to Apex Tower"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -821,7 +821,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Chozo machine hall": {
+                        "Door to Central Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -832,13 +832,13 @@
                 }
             }
         },
-        "Kraid's highest corridor": {
+        "Upper Attic": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x144_y247"
             },
             "nodes": {
-                "Door to Apex launcher shaft": {
+                "Door to Apex Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -855,8 +855,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Apex launcher shaft",
-                        "node": "Door to Kraid's highest corridor"
+                        "area": "Apex Tower",
+                        "node": "Door to Upper Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -864,7 +864,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Zeela-infested shaft": {
+                        "Door to Attic Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -873,7 +873,7 @@
                         }
                     }
                 },
-                "Door to Zeela-infested shaft": {
+                "Door to Attic Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -890,8 +890,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Zeela-infested shaft",
-                        "node": "Door to Kraid's highest corridor"
+                        "area": "Attic Access",
+                        "node": "Door to Upper Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -899,7 +899,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Apex launcher shaft": {
+                        "Door to Apex Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -910,13 +910,13 @@
                 }
             }
         },
-        "Zeela-infested shaft": {
+        "Attic Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x120_y262"
             },
             "nodes": {
-                "Door to Kraid's highest corridor": {
+                "Door to Upper Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -933,8 +933,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's highest corridor",
-                        "node": "Door to Zeela-infested shaft"
+                        "area": "Upper Attic",
+                        "node": "Door to Attic Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -942,7 +942,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Chozo machine hall": {
+                        "Door to Central Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -951,7 +951,7 @@
                         }
                     }
                 },
-                "Door to Chozo machine hall": {
+                "Door to Central Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -968,8 +968,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Chozo machine hall",
-                        "node": "Door to Zeela-infested shaft"
+                        "area": "Central Attic",
+                        "node": "Door to Attic Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -977,14 +977,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kraid's highest corridor": {
+                        "Door to Upper Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Acid Worm's room": {
+                        "Door to Lower Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -993,7 +993,7 @@
                         }
                     }
                 },
-                "Door to Acid Worm's room": {
+                "Door to Lower Attic": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1010,8 +1010,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Acid Worm's room",
-                        "node": "Door to Zeela-infested shaft"
+                        "area": "Lower Attic",
+                        "node": "Door to Attic Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1019,7 +1019,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Chozo machine hall": {
+                        "Door to Central Attic": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1030,13 +1030,13 @@
                 }
             }
         },
-        "Chozo machine hall": {
+        "Central Attic": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x144_y262"
             },
             "nodes": {
-                "Door to Apex launcher shaft": {
+                "Door to Apex Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1053,8 +1053,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Apex launcher shaft",
-                        "node": "Door to Chozo machine hall"
+                        "area": "Apex Tower",
+                        "node": "Door to Central Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1062,7 +1062,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Zeela-infested shaft": {
+                        "Door to Attic Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1071,7 +1071,7 @@
                         }
                     }
                 },
-                "Door to Zeela-infested shaft": {
+                "Door to Attic Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1088,8 +1088,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Zeela-infested shaft",
-                        "node": "Door to Chozo machine hall"
+                        "area": "Attic Access",
+                        "node": "Door to Central Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1097,7 +1097,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Apex launcher shaft": {
+                        "Door to Apex Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1108,13 +1108,13 @@
                 }
             }
         },
-        "Acid Worm's room": {
+        "Lower Attic": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x144_y277"
             },
             "nodes": {
-                "Door to Apex launcher shaft": {
+                "Door to Apex Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1131,8 +1131,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Apex launcher shaft",
-                        "node": "Door to Acid Worm's room"
+                        "area": "Apex Tower",
+                        "node": "Door to Lower Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1140,7 +1140,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Zeela-infested shaft": {
+                        "Door to Attic Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1149,7 +1149,7 @@
                         }
                     }
                 },
-                "Door to Zeela-infested shaft": {
+                "Door to Attic Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1166,8 +1166,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Zeela-infested shaft",
-                        "node": "Door to Acid Worm's room"
+                        "area": "Attic Access",
+                        "node": "Door to Lower Attic"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1175,7 +1175,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Apex launcher shaft": {
+                        "Door to Apex Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1186,13 +1186,13 @@
                 }
             }
         },
-        "Acidic concourse": {
+        "Pond Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x56_y322"
             },
             "nodes": {
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1209,8 +1209,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Acidic concourse"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Pond Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1245,7 +1245,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Bottomless Pond",
-                        "node": "Door to Acidic concourse"
+                        "node": "Door to Pond Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1253,7 +1253,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1270,7 +1270,7 @@
                 "map_name": "Kraid/x8_y352"
             },
             "nodes": {
-                "Door to Acidic concourse": {
+                "Door to Pond Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1287,7 +1287,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Acidic concourse",
+                        "area": "Pond Access",
                         "node": "Door to Bottomless Pond"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1296,7 +1296,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Barisute pit": {
+                        "Door to Arrival Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1331,7 +1331,7 @@
                         }
                     }
                 },
-                "Door to Barisute pit": {
+                "Door to Arrival Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1348,7 +1348,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Barisute pit",
+                        "area": "Arrival Chamber",
                         "node": "Door to Bottomless Pond"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1357,7 +1357,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Acidic concourse": {
+                        "Door to Pond Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1392,7 +1392,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Acidic concourse": {
+                        "Door to Pond Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1532,20 +1532,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ball launcher speedway": {
+                        "Door to Back Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Mini-Kraid's room": {
+                        "Door to Hall of Illusion": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Ball launcher speedway": {
+                "Door to Back Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1562,7 +1562,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Ball launcher speedway",
+                        "area": "Back Storage",
                         "node": "Door to Drain"
                     },
                     "default_dock_weakness": "Missile Door",
@@ -1580,7 +1580,7 @@
                         }
                     }
                 },
-                "Door to Mini-Kraid's room": {
+                "Door to Hall of Illusion": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1597,7 +1597,7 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Mini-Kraid's room",
+                        "area": "Hall of Illusion",
                         "node": "Door to Drain"
                     },
                     "default_dock_weakness": "Normal Door",
@@ -1609,7 +1609,7 @@
                 }
             }
         },
-        "Mini-Kraid's room": {
+        "Hall of Illusion": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x88_y412"
@@ -1633,7 +1633,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Drain",
-                        "node": "Door to Mini-Kraid's room"
+                        "node": "Door to Hall of Illusion"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1641,7 +1641,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hidden drop": {
+                        "Door to Green Parlor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1650,7 +1650,7 @@
                         }
                     }
                 },
-                "Door to Hidden drop": {
+                "Door to Green Parlor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1667,8 +1667,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Hidden drop",
-                        "node": "Door to Mini-Kraid's room"
+                        "area": "Green Parlor",
+                        "node": "Door to Hall of Illusion"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1687,13 +1687,13 @@
                 }
             }
         },
-        "Hidden drop": {
+        "Green Parlor": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x136_y412"
             },
             "nodes": {
-                "Door to Mini-Kraid's room": {
+                "Door to Hall of Illusion": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1710,8 +1710,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Mini-Kraid's room",
-                        "node": "Door to Hidden drop"
+                        "area": "Hall of Illusion",
+                        "node": "Door to Green Parlor"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1719,11 +1719,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Kraid's room access": {
+                        "Dock to Kraid Arena Access": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "Door to Replenishment station": {
+                        "Door to Lower Side Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1732,7 +1732,7 @@
                         }
                     }
                 },
-                "Dock to Kraid's room access": {
+                "Dock to Kraid Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1749,8 +1749,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's room access",
-                        "node": "Dock to Hidden drop"
+                        "area": "Kraid Arena Access",
+                        "node": "Dock to Green Parlor"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -1759,7 +1759,7 @@
                     "override_default_lock_requirement": null,
                     "connections": {}
                 },
-                "Door to Replenishment station": {
+                "Door to Lower Side Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1776,8 +1776,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Replenishment station",
-                        "node": "Door to Hidden drop"
+                        "area": "Lower Side Room Access",
+                        "node": "Door to Green Parlor"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1785,7 +1785,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Mini-Kraid's room": {
+                        "Door to Hall of Illusion": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1796,13 +1796,13 @@
                 }
             }
         },
-        "Replenishment station": {
+        "Lower Side Room Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x152_y412"
             },
             "nodes": {
-                "Door to Hidden drop": {
+                "Door to Green Parlor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1819,8 +1819,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Hidden drop",
-                        "node": "Door to Replenishment station"
+                        "area": "Green Parlor",
+                        "node": "Door to Lower Side Room Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1828,7 +1828,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Connecting shaft": {
+                        "Door to East Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1837,7 +1837,7 @@
                         }
                     }
                 },
-                "Door to Connecting shaft": {
+                "Door to East Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1854,8 +1854,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Connecting shaft",
-                        "node": "Door to Replenishment station"
+                        "area": "East Stairwell",
+                        "node": "Door to Lower Side Room Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1863,7 +1863,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Hidden drop": {
+                        "Door to Green Parlor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1874,13 +1874,13 @@
                 }
             }
         },
-        "Connecting shaft": {
+        "East Stairwell": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x168_y401"
             },
             "nodes": {
-                "Door to Replenishment station": {
+                "Door to Lower Side Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1897,8 +1897,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Replenishment station",
-                        "node": "Door to Connecting shaft"
+                        "area": "Lower Side Room Access",
+                        "node": "Door to East Stairwell"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1906,7 +1906,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ramp": {
+                        "Door to Upper Side Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1915,7 +1915,7 @@
                         }
                     }
                 },
-                "Door to Ramp": {
+                "Door to Upper Side Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1932,8 +1932,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Ramp",
-                        "node": "Door to Connecting shaft"
+                        "area": "Upper Side Room Access",
+                        "node": "Door to East Stairwell"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1941,7 +1941,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Replenishment station": {
+                        "Door to Lower Side Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1952,13 +1952,13 @@
                 }
             }
         },
-        "Ramp": {
+        "Upper Side Room Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x152_y397"
             },
             "nodes": {
-                "Door to Connecting shaft": {
+                "Door to East Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1975,8 +1975,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Connecting shaft",
-                        "node": "Door to Ramp"
+                        "area": "East Stairwell",
+                        "node": "Door to Upper Side Room Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -1984,7 +1984,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pit Block shaft": {
+                        "Door to Return Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1993,7 +1993,7 @@
                         }
                     }
                 },
-                "Door to Pit Block shaft": {
+                "Door to Return Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2010,8 +2010,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Pit Block shaft",
-                        "node": "Door to Ramp"
+                        "area": "Return Stairwell",
+                        "node": "Door to Upper Side Room Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2019,7 +2019,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Connecting shaft": {
+                        "Door to East Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2030,13 +2030,13 @@
                 }
             }
         },
-        "Pit Block shaft": {
+        "Return Stairwell": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x136_y386"
             },
             "nodes": {
-                "Door to Ramp": {
+                "Door to Upper Side Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2053,8 +2053,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Ramp",
-                        "node": "Door to Pit Block shaft"
+                        "area": "Upper Side Room Access",
+                        "node": "Door to Return Stairwell"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2062,13 +2062,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ball launcher speedway": {
+                        "Door to Back Storage": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }
                     }
                 },
-                "Door to Divided alcove": {
+                "Door to Back Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2085,8 +2085,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Divided alcove",
-                        "node": "Door to Pit Block shaft"
+                        "area": "Back Entrance",
+                        "node": "Door to Return Stairwell"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2094,7 +2094,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ball launcher speedway": {
+                        "Door to Back Storage": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2103,7 +2103,7 @@
                         }
                     }
                 },
-                "Door to Ball launcher speedway": {
+                "Door to Back Storage": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2120,8 +2120,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Ball launcher speedway",
-                        "node": "Door to Pit Block shaft"
+                        "area": "Back Storage",
+                        "node": "Door to Return Stairwell"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2129,11 +2129,11 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Ramp": {
+                        "Door to Upper Side Room Access": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         },
-                        "Door to Divided alcove": {
+                        "Door to Back Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2144,13 +2144,13 @@
                 }
             }
         },
-        "Ball launcher speedway": {
+        "Back Storage": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x88_y397"
             },
             "nodes": {
-                "Door to Pit Block shaft": {
+                "Door to Return Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2167,8 +2167,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Pit Block shaft",
-                        "node": "Door to Ball launcher speedway"
+                        "area": "Return Stairwell",
+                        "node": "Door to Back Storage"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2203,7 +2203,7 @@
                     "default_connection": {
                         "region": "Kraid",
                         "area": "Drain",
-                        "node": "Door to Ball launcher speedway"
+                        "node": "Door to Back Storage"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2239,7 +2239,7 @@
                     "pickup_index": 33,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Pit Block shaft": {
+                        "Door to Return Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2257,13 +2257,13 @@
                 }
             }
         },
-        "Divided alcove": {
+        "Back Entrance": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x120_y382"
             },
             "nodes": {
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2280,8 +2280,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Divided alcove"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Back Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2289,7 +2289,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pit Block shaft": {
+                        "Door to Return Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2298,7 +2298,7 @@
                         }
                     }
                 },
-                "Door to Pit Block shaft": {
+                "Door to Return Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2315,8 +2315,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Pit Block shaft",
-                        "node": "Door to Divided alcove"
+                        "area": "Return Stairwell",
+                        "node": "Door to Back Entrance"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2324,7 +2324,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2335,13 +2335,13 @@
                 }
             }
         },
-        "Sidehopper infested hall": {
+        "Hall of Rejection": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x80_y382"
             },
             "nodes": {
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2358,8 +2358,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Sidehopper infested hall"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Hall of Rejection"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2367,7 +2367,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pipe shaft": {
+                        "Door to Stairway of Hope": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2376,7 +2376,7 @@
                         }
                     }
                 },
-                "Door to Pipe shaft": {
+                "Door to Stairway of Hope": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2393,8 +2393,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Pipe shaft",
-                        "node": "Door to Sidehopper infested hall"
+                        "area": "Stairway of Hope",
+                        "node": "Door to Hall of Rejection"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2402,7 +2402,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2413,13 +2413,13 @@
                 }
             }
         },
-        "Pipe shaft": {
+        "Stairway of Hope": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x56_y366"
             },
             "nodes": {
-                "Door to Gauntlet": {
+                "Door to Hall of Returns": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2436,8 +2436,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Gauntlet",
-                        "node": "Door to Pipe shaft"
+                        "area": "Hall of Returns",
+                        "node": "Door to Stairway of Hope"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2445,7 +2445,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Sidehopper infested hall": {
+                        "Door to Hall of Rejection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2454,7 +2454,7 @@
                         }
                     }
                 },
-                "Door to Sidehopper infested hall": {
+                "Door to Hall of Rejection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2471,8 +2471,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Sidehopper infested hall",
-                        "node": "Door to Pipe shaft"
+                        "area": "Hall of Rejection",
+                        "node": "Door to Stairway of Hope"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2480,7 +2480,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Gauntlet": {
+                        "Door to Hall of Returns": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2491,13 +2491,13 @@
                 }
             }
         },
-        "Gauntlet": {
+        "Hall of Returns": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x80_y352"
             },
             "nodes": {
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2514,8 +2514,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Gauntlet"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Hall of Returns"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2523,7 +2523,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Pipe shaft": {
+                        "Door to Stairway of Hope": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2532,7 +2532,7 @@
                         }
                     }
                 },
-                "Door to Pipe shaft": {
+                "Door to Stairway of Hope": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2549,8 +2549,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Pipe shaft",
-                        "node": "Door to Gauntlet"
+                        "area": "Stairway of Hope",
+                        "node": "Door to Hall of Returns"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2558,7 +2558,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2569,13 +2569,13 @@
                 }
             }
         },
-        "Kraid's slope": {
+        "Waiting Room": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x160_y427"
             },
             "nodes": {
-                "Door to Block column shaft": {
+                "Door to Tower of Despair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2592,8 +2592,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Block column shaft",
-                        "node": "Door to Kraid's slope"
+                        "area": "Tower of Despair",
+                        "node": "Door to Waiting Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2601,7 +2601,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Kraid's room access": {
+                        "Door to Kraid Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2610,7 +2610,7 @@
                         }
                     }
                 },
-                "Door to Kraid's room access": {
+                "Door to Kraid Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2627,8 +2627,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's room access",
-                        "node": "Door to Kraid's slope"
+                        "area": "Kraid Arena Access",
+                        "node": "Door to Waiting Room"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2636,7 +2636,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Block column shaft": {
+                        "Door to Tower of Despair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2647,13 +2647,13 @@
                 }
             }
         },
-        "Kraid's room access": {
+        "Kraid Arena Access": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x136_y427"
             },
             "nodes": {
-                "Door to Kraid's slope": {
+                "Door to Waiting Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2670,8 +2670,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's slope",
-                        "node": "Door to Kraid's room access"
+                        "area": "Waiting Room",
+                        "node": "Door to Kraid Arena Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2688,7 +2688,7 @@
                         }
                     }
                 },
-                "Door to Kraid's room": {
+                "Door to Kraid Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2705,8 +2705,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's room",
-                        "node": "Door to Kraid's room access"
+                        "area": "Kraid Arena",
+                        "node": "Door to Kraid Arena Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -2723,7 +2723,7 @@
                         }
                     }
                 },
-                "Dock to Hidden drop": {
+                "Dock to Green Parlor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2740,8 +2740,8 @@
                     "dock_type": "other",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Hidden drop",
-                        "node": "Dock to Kraid's room access"
+                        "area": "Green Parlor",
+                        "node": "Dock to Kraid Arena Access"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2773,14 +2773,14 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Kraid's slope": {
+                        "Door to Waiting Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Kraid's room": {
+                        "Door to Kraid Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2791,13 +2791,13 @@
                 }
             }
         },
-        "Kraid's room": {
+        "Kraid Arena": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x120_y427"
             },
             "nodes": {
-                "Door to Kraid's room access": {
+                "Door to Kraid Arena Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2814,8 +2814,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's room access",
-                        "node": "Door to Kraid's room"
+                        "area": "Kraid Arena Access",
+                        "node": "Door to Kraid Arena"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -2857,7 +2857,7 @@
                     "valid_starting_location": false,
                     "event_name": "KraidDead",
                     "connections": {
-                        "Door to Kraid's room access": {
+                        "Door to Kraid Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2892,7 +2892,7 @@
                     "pickup_index": 32,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Kraid's room access": {
+                        "Door to Kraid Arena Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2969,13 +2969,13 @@
                 }
             }
         },
-        "Block column shaft": {
+        "Tower of Despair": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x184_y390"
             },
             "nodes": {
-                "Door to Corrosive pool": {
+                "Door to Acid Gauntlet": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2992,8 +2992,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Corrosive pool",
-                        "node": "Door to Block column shaft"
+                        "area": "Acid Gauntlet",
+                        "node": "Door to Tower of Despair"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3001,7 +3001,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Acid fall": {
+                        "Door to Acid Pier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3010,7 +3010,7 @@
                         }
                     }
                 },
-                "Door to Acid fall": {
+                "Door to Acid Pier": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3027,8 +3027,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Acid fall",
-                        "node": "Door to Block column shaft"
+                        "area": "Acid Pier",
+                        "node": "Door to Tower of Despair"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3036,14 +3036,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Corrosive pool": {
+                        "Door to Acid Gauntlet": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to Kraid's slope": {
+                        "Door to Waiting Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3052,7 +3052,7 @@
                         }
                     }
                 },
-                "Door to Kraid's slope": {
+                "Door to Waiting Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3069,8 +3069,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Kraid's slope",
-                        "node": "Door to Block column shaft"
+                        "area": "Waiting Room",
+                        "node": "Door to Tower of Despair"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3078,7 +3078,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Acid fall": {
+                        "Door to Acid Pier": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3089,7 +3089,7 @@
                 }
             }
         },
-        "Acid fall": {
+        "Acid Pier": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x159_y367"
@@ -3114,7 +3114,7 @@
                     "pickup_index": 34,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Block column shaft": {
+                        "Door to Tower of Despair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3123,7 +3123,7 @@
                         }
                     }
                 },
-                "Door to Block column shaft": {
+                "Door to Tower of Despair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3140,8 +3140,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Block column shaft",
-                        "node": "Door to Acid fall"
+                        "area": "Tower of Despair",
+                        "node": "Door to Acid Pier"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3160,13 +3160,13 @@
                 }
             }
         },
-        "Corrosive pool": {
+        "Acid Gauntlet": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x144_y352"
             },
             "nodes": {
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3183,8 +3183,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Corrosive pool"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Acid Gauntlet"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3192,7 +3192,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Block column shaft": {
+                        "Door to Tower of Despair": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3201,7 +3201,7 @@
                         }
                     }
                 },
-                "Door to Block column shaft": {
+                "Door to Tower of Despair": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3218,8 +3218,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Block column shaft",
-                        "node": "Door to Corrosive pool"
+                        "area": "Tower of Despair",
+                        "node": "Door to Acid Gauntlet"
                     },
                     "default_dock_weakness": "Normal Door",
                     "exclude_from_dock_rando": false,
@@ -3227,7 +3227,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3238,13 +3238,13 @@
                 }
             }
         },
-        "Acid-filled runway": {
+        "Blue Closet": {
             "default_node": null,
             "extra": {
                 "map_name": "Kraid/x136_y323"
             },
             "nodes": {
-                "Door to Entrance shaft": {
+                "Door to Kraid Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3261,8 +3261,8 @@
                     "dock_type": "door",
                     "default_connection": {
                         "region": "Kraid",
-                        "area": "Entrance shaft",
-                        "node": "Door to Acid-filled runway"
+                        "area": "Kraid Entrance",
+                        "node": "Door to Blue Closet"
                     },
                     "default_dock_weakness": "Missile Door",
                     "exclude_from_dock_rando": false,
@@ -3295,7 +3295,7 @@
                     "pickup_index": 35,
                     "location_category": "minor",
                     "connections": {
-                        "Door to Entrance shaft": {
+                        "Door to Kraid Entrance": {
                             "type": "template",
                             "data": "Can Use Bombs"
                         }

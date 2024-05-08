@@ -1,104 +1,104 @@
 ----------------
-Eerie Cave
+Ridley Entrance
 Extra - map_name: Ridley/x392_y360
 > Teleporter to Norfair; Heals? True; Spawn Point
   * Layers: default
-  * Teleporter to Ridley Elevator/Teleporter to Ridley
+  * Teleporter to Ridley Prelude/Teleporter to Ridley
   * Extra - object_id: 100066
   * Extra - global_x: 6272
   * Extra - global_y: 5632
-  > Door to Block room
+  > Door to Block Room
       Trivial
-  > Door to Ridley's shortcut
+  > Door to Lava Foyer
       Trivial
 
-> Door to Block room; Heals? False
+> Door to Block Room; Heals? False
   * Layers: default
-  * Normal Door to Block room/Door to Eerie Cave
+  * Normal Door to Block Room/Door to Ridley Entrance
   > Teleporter to Norfair
       Trivial
 
-> Door to Ridley's shortcut; Heals? False
+> Door to Lava Foyer; Heals? False
   * Layers: default
-  * Normal Door to Ridley's shortcut/Door to Eerie Cave
+  * Normal Door to Lava Foyer/Door to Ridley Entrance
   > Teleporter to Norfair
       Trivial
 
 ----------------
-Block room
+Block Room
 Extra - map_name: Ridley/x376_y367
-> Door to Eerie Cave; Heals? False
+> Door to Ridley Entrance; Heals? False
   * Layers: default
-  * Normal Door to Eerie Cave/Door to Block room
-  > Door to Cocoon cavern
+  * Normal Door to Ridley Entrance/Door to Block Room
+  > Door to Block Room 2 the Blockening
       Trivial
 
-> Door to Cocoon cavern; Heals? False
+> Door to Block Room 2 the Blockening; Heals? False
   * Layers: default
-  * Normal Door to Cocoon cavern/Door to Block room
-  > Door to Eerie Cave
+  * Normal Door to Block Room 2 the Blockening/Door to Block Room
+  > Door to Ridley Entrance
       Trivial
 
 ----------------
-Cocoon cavern
+Block Room 2 the Blockening
 Extra - map_name: Ridley/x360_y359
-> Door to Block room; Heals? False
+> Door to Block Room; Heals? False
   * Layers: default
-  * Normal Door to Block room/Door to Cocoon cavern
-  > Door to Imago's hideout
+  * Normal Door to Block Room/Door to Block Room 2 the Blockening
+  > Door to Purple Gauntlet
       Any of the following:
           Hi-Jump Boots
           # TODO: Add movement/IBJ
           Can Use Bombs
-  > Door to Hall of pillars
+  > Door to Hall of Pillars
       Trivial
 
-> Door to Imago's hideout; Heals? False
+> Door to Purple Gauntlet; Heals? False
   * Layers: default
-  * Normal Door to Imago's hideout/Door to Cocoon cavern
-  > Door to Block room
+  * Normal Door to Purple Gauntlet/Door to Block Room 2 the Blockening
+  > Door to Block Room
       Can Use Bombs
 
-> Door to Hall of pillars; Heals? False
+> Door to Hall of Pillars; Heals? False
   * Layers: default
-  * Normal Door to Hall of pillars/Door to Cocoon cavern
-  > Door to Block room
+  * Normal Door to Hall of Pillars/Door to Block Room 2 the Blockening
+  > Door to Block Room
       Trivial
 
 ----------------
-Imago's hideout
+Purple Gauntlet
 Extra - map_name: Ridley/x311_y352
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 27; Category? Minor
   * Extra - object_id: 100053
-  > Door to Cocoon cavern
+  > Door to Block Room 2 the Blockening
       Trivial
 
-> Door to Cocoon cavern; Heals? False
+> Door to Block Room 2 the Blockening; Heals? False
   * Layers: default
-  * Normal Door to Cocoon cavern/Door to Imago's hideout
+  * Normal Door to Block Room 2 the Blockening/Door to Purple Gauntlet
   > Pickup (Missile Tank)
       Trivial
 
 ----------------
-Hall of pillars
+Hall of Pillars
 Extra - map_name: Ridley/x312_y367
-> Door to Cocoon cavern; Heals? False
+> Door to Block Room 2 the Blockening; Heals? False
   * Layers: default
-  * Normal Door to Cocoon cavern/Door to Hall of pillars
+  * Normal Door to Block Room 2 the Blockening/Door to Hall of Pillars
   > Tunnel entrance (Right)
       Trivial
 
 > Door to Artificial Passage; Heals? False
   * Layers: default
-  * Missile Door to Artificial Passage/Door to Hall of pillars
+  * Missile Door to Artificial Passage/Door to Hall of Pillars
   > Tunnel entrance (Left)
       Trivial
 
 > Tunnel entrance (Right); Heals? False
   * Layers: default
-  > Door to Cocoon cavern
+  > Door to Block Room 2 the Blockening
       Trivial
   > Tunnel entrance (Left)
       Can Use Bombs
@@ -113,9 +113,9 @@ Extra - map_name: Ridley/x312_y367
 ----------------
 Artificial Passage
 Extra - map_name: Ridley/x264_y382
-> Door to Hall of pillars; Heals? False
+> Door to Hall of Pillars; Heals? False
   * Layers: default
-  * Missile Door to Hall of pillars/Door to Artificial Passage
+  * Missile Door to Hall of Pillars/Door to Artificial Passage
   > Pickup (Energy Tank)
       Trivial
   > Pit
@@ -125,33 +125,33 @@ Extra - map_name: Ridley/x264_y382
   * Layers: default
   * Pickup 28; Category? Minor
   * Extra - object_id: 100054
-  > Door to Hall of pillars
+  > Door to Hall of Pillars
       Trivial
-  > Door to Pronged hall
+  > Door to Dessgeega Attic
       Trivial
 
-> Door to Pronged hall; Heals? False
+> Door to Dessgeega Attic; Heals? False
   * Layers: default
-  * Normal Door to Pronged hall/Door to Artificial Passage
+  * Normal Door to Dessgeega Attic/Door to Artificial Passage
   > Pickup (Energy Tank)
       Trivial
 
-> Door to Path over lava; Heals? False
+> Door to Path of Reflection; Heals? False
   * Layers: default
-  * Normal Door to Path over lava/Door to Artificial Passage
+  * Normal Door to Path of Reflection/Door to Artificial Passage
   > Bottom part
       Trivial
 
-> Door to Cache Access; Heals? False
+> Door to Green Bridge; Heals? False
   * Layers: default
-  * Normal Door to Cache Access/Door to Artificial Passage
+  * Normal Door to Green Bridge/Door to Artificial Passage
   > Bottom part
       Trivial
 
 > Pit; Heals? False
   * Layers: default
   * The pit is 2 block large
-  > Door to Hall of pillars
+  > Door to Hall of Pillars
       # TODO: ADD IBJ
       Can Use Bombs
   > Bottom part
@@ -159,71 +159,71 @@ Extra - map_name: Ridley/x264_y382
 
 > Bottom part; Heals? False
   * Layers: default
-  > Door to Path over lava
+  > Door to Path of Reflection
       Trivial
-  > Door to Cache Access
+  > Door to Green Bridge
       Trivial
 
 ----------------
-Pronged hall
+Dessgeega Attic
 Extra - map_name: Ridley/x240_y367
 > Door to Artificial Passage; Heals? False
   * Layers: default
-  * Normal Door to Artificial Passage/Door to Pronged hall
-  > Door to Shaft of doom
+  * Normal Door to Artificial Passage/Door to Dessgeega Attic
+  > Door to Tower of Doom
       Trivial
 
-> Door to Shaft of doom; Heals? False
+> Door to Tower of Doom; Heals? False
   * Layers: default
-  * Normal Door to Shaft of doom/Door to Pronged hall
+  * Normal Door to Tower of Doom/Door to Dessgeega Attic
   > Door to Artificial Passage
       Trivial
 
 ----------------
-Path over lava
+Path of Reflection
 Extra - map_name: Ridley/x240_y397
 > Door to Artificial Passage; Heals? False
   * Layers: default
-  * Normal Door to Artificial Passage/Door to Path over lava
-  > Door to Shaft of doom
+  * Normal Door to Artificial Passage/Door to Path of Reflection
+  > Door to Tower of Doom
       Trivial
 
-> Door to Shaft of doom; Heals? False
+> Door to Tower of Doom; Heals? False
   * Layers: default
-  * Normal Door to Shaft of doom/Door to Path over lava
+  * Normal Door to Tower of Doom/Door to Path of Reflection
   > Door to Artificial Passage
       Trivial
 
 ----------------
-Shaft of doom
+Tower of Doom
 Extra - map_name: Ridley/x216_y404
-> Door to Pronged hall; Heals? False
+> Door to Dessgeega Attic; Heals? False
   * Layers: default
-  * Normal Door to Pronged hall/Door to Shaft of doom
-  > Door to Path over lava
+  * Normal Door to Dessgeega Attic/Door to Tower of Doom
+  > Door to Path of Reflection
       Trivial
 
-> Door to Path over lava; Heals? False
+> Door to Path of Reflection; Heals? False
   * Layers: default
-  * Normal Door to Path over lava/Door to Shaft of doom
-  > Door to Pronged hall
+  * Normal Door to Path of Reflection/Door to Tower of Doom
+  > Door to Dessgeega Attic
       Trivial
-  > Door to Zebbo Nest
+  > Door to Infinite Gauntlet
       Trivial
 
-> Door to Zebbo Nest; Heals? False
+> Door to Infinite Gauntlet; Heals? False
   * Layers: default
-  * Normal Door to Zebbo Nest/Door to Shaft of doom
-  > Door to Path over lava
+  * Normal Door to Infinite Gauntlet/Door to Tower of Doom
+  > Door to Path of Reflection
       # TODO: IBJ
       Can Use Bombs
 
 ----------------
-Zebbo Nest
+Infinite Gauntlet
 Extra - map_name: Ridley/x344_y442
-> Door to Shaft of doom; Heals? False
+> Door to Tower of Doom; Heals? False
   * Layers: default
-  * Normal Door to Shaft of doom/Door to Zebbo Nest
+  * Normal Door to Tower of Doom/Door to Infinite Gauntlet
   > Pickup (Missile Tank)
       Trivial
 
@@ -231,54 +231,54 @@ Extra - map_name: Ridley/x344_y442
   * Layers: default
   * Pickup 30; Category? Minor
   * Extra - object_id: 100056
-  > Door to Shaft of doom
+  > Door to Tower of Doom
       Trivial
-  > Door to Ridley's rightmost shaft
+  > Door to Purple Tower
       Trivial
 
-> Door to Ridley's rightmost shaft; Heals? False
+> Door to Purple Tower; Heals? False
   * Layers: default
-  * Normal Door to Ridley's rightmost shaft/Door to Zebbo Nest
+  * Normal Door to Purple Tower/Door to Infinite Gauntlet
   > Pickup (Missile Tank)
       Trivial
 
 ----------------
-Ridley's rightmost shaft
+Purple Tower
 Extra - map_name: Ridley/x472_y404
-> Door to Zebbo Nest; Heals? False
+> Door to Infinite Gauntlet; Heals? False
   * Layers: default
-  * Normal Door to Zebbo Nest/Door to Ridley's rightmost shaft
-  > Door to Multiviola Nest
+  * Normal Door to Infinite Gauntlet/Door to Purple Tower
+  > Door to Green Gauntlet
       Trivial
 
-> Door to Replenishment station; Heals? False
+> Door to The Wall; Heals? False
   * Layers: default
-  * Normal Door to Replenishment station/Door to Ridley's rightmost shaft
-  > Door to Multiviola Nest
+  * Normal Door to The Wall/Door to Purple Tower
+  > Door to Green Gauntlet
       Trivial
-  > Door to Ridley's shortcut
+  > Door to Lava Foyer
       Trivial
 
-> Door to Multiviola Nest; Heals? False
+> Door to Green Gauntlet; Heals? False
   * Layers: default
-  * Normal Door to Multiviola Nest/Door to Ridley's rightmost shaft
-  > Door to Zebbo Nest
+  * Normal Door to Green Gauntlet/Door to Purple Tower
+  > Door to Infinite Gauntlet
       Trivial
-  > Door to Replenishment station
+  > Door to The Wall
       Trivial
 
-> Door to Ridley's shortcut; Heals? False
+> Door to Lava Foyer; Heals? False
   * Layers: default
-  * Normal Door to Ridley's shortcut/Door to Ridley's rightmost shaft
-  > Door to Replenishment station
+  * Normal Door to Lava Foyer/Door to Purple Tower
+  > Door to The Wall
       Trivial
 
 ----------------
-Middle corridor
+Central Cache
 Extra - map_name: Ridley/x368_y397
-> Door to Gambit shaft; Heals? False
+> Door to Gambit Tower; Heals? False
   * Layers: default
-  * Normal Door to Gambit shaft/Door to Middle corridor
+  * Normal Door to Gambit Tower/Door to Central Cache
   > Pickup (Missile Tank)
       Trivial
 
@@ -286,105 +286,105 @@ Extra - map_name: Ridley/x368_y397
   * Layers: default
   * Pickup 31; Category? Minor
   * Extra - object_id: 100057
-  > Door to Gambit shaft
+  > Door to Gambit Tower
       Trivial
 
 ----------------
-Gambit shaft
+Gambit Tower
 Extra - map_name: Ridley/x344_y412
-> Door to Cache Access; Heals? False
+> Door to Green Bridge; Heals? False
   * Layers: default
-  * Normal Door to Cache Access/Door to Gambit shaft
-  > Door to Middle corridor
+  * Normal Door to Green Bridge/Door to Gambit Tower
+  > Door to Central Cache
       Trivial
   > Bottom part
       Trivial
 
-> Door to Middle corridor; Heals? False
+> Door to Central Cache; Heals? False
   * Layers: default
-  * Normal Door to Middle corridor/Door to Gambit shaft
-  > Door to Cache Access
+  * Normal Door to Central Cache/Door to Gambit Tower
+  > Door to Green Bridge
       Trivial
 
-> Door to Multiviola Nest; Heals? False
+> Door to Green Gauntlet; Heals? False
   * Layers: default
-  * Normal Door to Multiviola Nest/Door to Gambit shaft
+  * Normal Door to Green Gauntlet/Door to Gambit Tower
   > Bottom part
       Trivial
 
-> Door to Ridley's room access; Heals? False
+> Door to Ominous Hall; Heals? False
   * Layers: default
-  * Normal Door to Ridley's room access/Door to Gambit shaft
+  * Normal Door to Ominous Hall/Door to Gambit Tower
   > Bottom part
       Trivial
 
 > Bottom part; Heals? False
   * Layers: default
-  > Door to Cache Access
+  > Door to Green Bridge
       # TODO: ADD IBJ
       Can Use Bombs
-  > Door to Multiviola Nest
+  > Door to Green Gauntlet
       Trivial
-  > Door to Ridley's room access
+  > Door to Ominous Hall
       Trivial
 
 ----------------
-Cache Access
+Green Bridge
 Extra - map_name: Ridley/x304_y397
 > Door to Artificial Passage; Heals? False
   * Layers: default
-  * Normal Door to Artificial Passage/Door to Cache Access
-  > Door to Gambit shaft
+  * Normal Door to Artificial Passage/Door to Green Bridge
+  > Door to Gambit Tower
       Trivial
 
-> Door to Gambit shaft; Heals? False
+> Door to Gambit Tower; Heals? False
   * Layers: default
-  * Normal Door to Gambit shaft/Door to Cache Access
+  * Normal Door to Gambit Tower/Door to Green Bridge
   > Door to Artificial Passage
       Trivial
 
 ----------------
-Multiviola Nest
+Green Gauntlet
 Extra - map_name: Ridley/x408_y427
-> Door to Gambit shaft; Heals? False
+> Door to Gambit Tower; Heals? False
   * Layers: default
-  * Normal Door to Gambit shaft/Door to Multiviola Nest
-  > Door to Ridley's rightmost shaft
+  * Normal Door to Gambit Tower/Door to Green Gauntlet
+  > Door to Purple Tower
       Trivial
 
-> Door to Ridley's rightmost shaft; Heals? False
+> Door to Purple Tower; Heals? False
   * Layers: default
-  * Normal Door to Ridley's rightmost shaft/Door to Multiviola Nest
-  > Door to Gambit shaft
+  * Normal Door to Purple Tower/Door to Green Gauntlet
+  > Door to Gambit Tower
       Trivial
 
 ----------------
-Ridley's room access
+Ominous Hall
 Extra - map_name: Ridley/x304_y427
-> Door to Gambit shaft; Heals? False
+> Door to Gambit Tower; Heals? False
   * Layers: default
-  * Normal Door to Gambit shaft/Door to Ridley's room access
-  > Door to Ridley's room
+  * Normal Door to Gambit Tower/Door to Ominous Hall
+  > Door to Ridley Arena
       Trivial
 
-> Door to Ridley's room; Heals? False
+> Door to Ridley Arena; Heals? False
   * Layers: default
-  * Normal Door to Ridley's room/Door to Ridley's room access
-  > Door to Gambit shaft
+  * Normal Door to Ridley Arena/Door to Ominous Hall
+  > Door to Gambit Tower
       Trivial
 
 ----------------
-Ridley's room
+Ridley Arena
 Extra - map_name: Ridley/x264_y427
-> Door to Ridley's room access; Heals? False
+> Door to Ominous Hall; Heals? False
   * Layers: default
-  * Normal Door to Ridley's room access/Door to Ridley's room
+  * Normal Door to Ominous Hall/Door to Ridley Arena
   > Platform
       Trivial
 
-> Door to Ridley's reliquary; Heals? False
+> Door to Lava Reliquary; Heals? False
   * Layers: default
-  * 10 Missiles Door to Ridley's reliquary/Door to Ridley's room
+  * 10 Missiles Door to Lava Reliquary/Door to Ridley Arena
   > Platform
       All of the following:
           Morph Ball
@@ -401,9 +401,9 @@ Extra - map_name: Ridley/x264_y427
 
 > Platform; Heals? False
   * Layers: default
-  > Door to Ridley's room access
+  > Door to Ominous Hall
       Trivial
-  > Door to Ridley's reliquary
+  > Door to Lava Reliquary
       Can Use Bombs
   > Event - Ridley Killed
       All of the following:
@@ -426,7 +426,7 @@ Extra - map_name: Ridley/x264_y427
       Trivial
 
 ----------------
-Ridley's reliquary
+Lava Reliquary
 Extra - map_name: Ridley/x240_y427
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -435,9 +435,9 @@ Extra - map_name: Ridley/x240_y427
   > Fake lava
       Trivial
 
-> Door to Ridley's room; Heals? False
+> Door to Ridley Arena; Heals? False
   * Layers: default
-  * 10 Missiles Door to Ridley's room/Door to Ridley's reliquary
+  * 10 Missiles Door to Ridley Arena/Door to Lava Reliquary
   > Fake lava
       Trivial
 
@@ -445,36 +445,36 @@ Extra - map_name: Ridley/x240_y427
   * Layers: default
   > Pickup (Energy Tank)
       Trivial
-  > Door to Ridley's room
+  > Door to Ridley Arena
       Hi-Jump Boots
 
 ----------------
-Ridley's shortcut
+Lava Foyer
 Extra - map_name: Ridley/x432_y367
-> Door to Eerie Cave; Heals? False
+> Door to Ridley Entrance; Heals? False
   * Layers: default
-  * Normal Door to Eerie Cave/Door to Ridley's shortcut
-  > Door to Ridley's rightmost shaft
+  * Normal Door to Ridley Entrance/Door to Lava Foyer
+  > Door to Purple Tower
       Trivial
 
-> Door to Ridley's rightmost shaft; Heals? False
+> Door to Purple Tower; Heals? False
   * Layers: default
-  * Normal Door to Ridley's rightmost shaft/Door to Ridley's shortcut
-  > Door to Eerie Cave
+  * Normal Door to Purple Tower/Door to Lava Foyer
+  > Door to Ridley Entrance
       Trivial
 
 ----------------
-Replenishment station
+The Wall
 Extra - map_name: Ridley/x424_y397
-> Door to Ridley's rightmost shaft; Heals? False
+> Door to Purple Tower; Heals? False
   * Layers: default
-  * Normal Door to Ridley's rightmost shaft/Door to Replenishment station
+  * Normal Door to Purple Tower/Door to The Wall
   > Air hole
       Trivial
 
 > Air hole; Heals? True
   * Layers: default
   * Kill enemies coming from there to get health and ammo
-  > Door to Ridley's rightmost shaft
+  > Door to Purple Tower
       Trivial
 

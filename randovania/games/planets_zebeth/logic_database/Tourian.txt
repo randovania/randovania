@@ -1,70 +1,70 @@
 ----------------
-Entrance shaft
+Tourian Entrance
 Extra - map_name: Tourian/x40_y75
 > Teleporter to Brinstar; Heals? True
   * Layers: default
-  * Teleporter to Transport to Tourian/Teleporter to Tourian; Excluded from Dock Lock Rando
+  * Teleporter to Tourian Prelude/Teleporter to Tourian; Excluded from Dock Lock Rando
   * Extra - object_id: 100022
-  > Door to Lava passage
+  > Door to Testing Chamber
       Get rid of Larva Metroid
 
-> Door to Lava passage; Heals? False
+> Door to Testing Chamber; Heals? False
   * Layers: default
-  * 10 Missiles Door to Lava passage/Door to Entrance shaft
+  * 10 Missiles Door to Testing Chamber/Door to Tourian Entrance
   > Teleporter to Brinstar
       Get rid of Larva Metroid
 
 ----------------
-Lava passage
+Testing Chamber
 Extra - map_name: Tourian/x96_y97
-> Door to Entrance shaft; Heals? False
+> Door to Tourian Entrance; Heals? False
   * Layers: default
-  * 10 Missiles Door to Entrance shaft/Door to Lava passage
-  > Door to Ledged shaft
+  * 10 Missiles Door to Tourian Entrance/Door to Testing Chamber
+  > Door to Rinka Tower
       Get rid of Larva Metroid
 
-> Door to Ledged shaft; Heals? False
+> Door to Rinka Tower; Heals? False
   * Layers: default
-  * Missile Door to Ledged shaft/Door to Lava passage
-  > Door to Entrance shaft
+  * Missile Door to Rinka Tower/Door to Testing Chamber
+  > Door to Tourian Entrance
       Get rid of Larva Metroid
 
 ----------------
-Ledged shaft
+Rinka Tower
 Extra - map_name: Tourian/x152_y127
-> Door to Lava passage; Heals? False
+> Door to Testing Chamber; Heals? False
   * Layers: default
-  * Missile Door to Lava passage/Door to Ledged shaft
-  > Door to Rinka hall
+  * Missile Door to Testing Chamber/Door to Rinka Tower
+  > Door to Pipe Hall
       Get rid of Larva Metroid
 
-> Door to Rinka hall; Heals? False
+> Door to Pipe Hall; Heals? False
   * Layers: default
-  * Missile Door to Rinka hall/Door to Ledged shaft
-  > Door to Lava passage
+  * Missile Door to Pipe Hall/Door to Rinka Tower
+  > Door to Testing Chamber
       Get rid of Larva Metroid
 
 ----------------
-Rinka hall
+Pipe Hall
 Extra - map_name: Tourian/x104_y157
-> Door to Ledged shaft; Heals? False
+> Door to Rinka Tower; Heals? False
   * Layers: default
-  * Missile Door to Ledged shaft/Door to Rinka hall
-  > Door to Zebesian Command Center
+  * Missile Door to Rinka Tower/Door to Pipe Hall
+  > Door to Command Center
       Get rid of Larva Metroid
 
-> Door to Zebesian Command Center; Heals? False
+> Door to Command Center; Heals? False
   * Layers: default
-  * Normal Door to Zebesian Command Center/Door to Rinka hall
-  > Door to Ledged shaft
+  * Normal Door to Command Center/Door to Pipe Hall
+  > Door to Rinka Tower
       Get rid of Larva Metroid
 
 ----------------
-Zebesian Command Center
+Command Center
 Extra - map_name: Tourian/x40_y157
-> Door to Rinka hall; Heals? False
+> Door to Pipe Hall; Heals? False
   * Layers: default
-  * Normal Door to Rinka hall/Door to Zebesian Command Center
+  * Normal Door to Pipe Hall/Door to Command Center
   > Gate 1
       Trivial
 
@@ -104,15 +104,15 @@ Extra - map_name: Tourian/x40_y157
   > Mother Brain
       Trivial
 
-> Dock to Escape shaft; Heals? False
+> Dock to Escape Route; Heals? False
   * Layers: default
-  * Open Passage to Escape shaft/Door to Zebesian Command Center
+  * Open Passage to Escape Route/Door to Command Center
   > Mother Brain
       After Mother Brain Boss Killed
 
 > Gate 1; Heals? False
   * Layers: default
-  > Door to Rinka hall
+  > Door to Pipe Hall
       Trivial
   > Event - Gate 1
       Missiles ≥ 10
@@ -132,7 +132,7 @@ Extra - map_name: Tourian/x40_y157
   * Layers: default
   > Event - Mother Brain
       Missiles ≥ 33
-  > Dock to Escape shaft
+  > Dock to Escape Route
       After Mother Brain Boss Killed
   > Gate 5
       Trivial
@@ -165,23 +165,23 @@ Extra - map_name: Tourian/x40_y157
       Trivial
 
 ----------------
-Escape shaft
+Escape Route
 Extra - map_name: Tourian/x8_y97
-> Door to Zebesian Command Center; Heals? False
+> Door to Command Center; Heals? False
   * Layers: default
-  * Normal Door to Zebesian Command Center/Dock to Escape shaft
-  > Teleporter to Escape shaft
+  * Normal Door to Command Center/Dock to Escape Route
+  > Teleporter to Escape Route
       Trivial
 
-> Teleporter to Escape shaft; Heals? False
+> Teleporter to Escape Route; Heals? False
   * Layers: default
-  * Teleporter to Escape shaft/Event - End Game
-  > Door to Zebesian Command Center
+  * Teleporter to Escape Route/Event - End Game
+  > Door to Command Center
       Trivial
 
 > Event - End Game; Heals? False
   * Layers: default
   * Event Credits
-  > Teleporter to Escape shaft
+  > Teleporter to Escape Route
       Trivial
 
