@@ -280,6 +280,7 @@ class MSRExecutor:
 
     async def run_lua_code(self, current: str) -> None:
         self.code = current
+        # TODO: If lua code is too large. Abort!
         self._socket.writer.write(self._build_packet(PacketType.PACKET_REMOTE_LUA_EXEC, current.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
 
