@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.1.0] - 2024-06-??
 
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
+
 ### Metroid Dread
 
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
