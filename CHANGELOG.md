@@ -7,10 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.1.0] - 2024-06-??
 
-### Discord Bot
-
-- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
-
 ### AM2R
 
 #### Logic Database
@@ -18,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Distribution Center
 
 - Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
+
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
 
 ##### The Tower
 
