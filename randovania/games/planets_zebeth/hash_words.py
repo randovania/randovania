@@ -1,4 +1,4 @@
-[
+HASH_WORDS = [
     "Acid",
     "Attack",
     "Ball",
@@ -55,5 +55,5 @@
     "Zebes",
     "Zebetite",
     "Zeela",
-    "Zoomer"
+    "Zoomer",
 ]
