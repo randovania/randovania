@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Dairon
 
 - Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
+- Added: Using Stand on Frozen Enemies trick to get the item in Big Hub, using either Flash Shift or Spin Boost.
 
 ### Metroid: Samus Returns
 
