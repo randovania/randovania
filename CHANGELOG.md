@@ -15,13 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
 
-### Discord Bot
-
-- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
-
 ##### The Tower
 
 - Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
+
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
 
 ### Metroid Dread
 
