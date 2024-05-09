@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
 
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
+
 ### Metroid Dread
 
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
