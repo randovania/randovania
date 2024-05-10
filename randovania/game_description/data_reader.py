@@ -338,6 +338,7 @@ class RegionReader:
                             for name in data["incompatible_dock_weaknesses"]
                         ]
                     ),
+                    ui_custom_name=data["ui_custom_name"],
                 )
 
             elif node_type == "pickup":

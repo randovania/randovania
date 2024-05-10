@@ -19,6 +19,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
+from randovania.games.common import elevators
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout import translator_configuration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -34,7 +35,6 @@ from randovania.layout import filtered_database
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
-from randovania.patching.prime import elevators
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_pickup_to_state
@@ -503,7 +503,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                         node_item.setFlags(node_item.flags() & ~Qt.ItemIsUserCheckable)
                     self._node_to_item[node] = node_item
 
-    def setup_teleporters(self):
+    def setup_teleporters(self) -> None:
         self._teleporter_id_to_combo = {}
 
         if not hasattr(self.game_configuration, "teleporters"):
@@ -522,11 +522,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 nodes_by_region[name].append(node)
 
                 location = node.identifier
-                targets[
-                    elevators.get_short_elevator_or_area_name(
-                        self.game_configuration.game, region_list, location.area_identifier, True
-                    )
-                ] = location
+                targets[elevators.get_elevator_or_area_name(self.game_description, region_list, location, True)] = (
+                    location
+                )
 
         if teleporters_config.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             targets = {}
@@ -540,9 +538,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for region_name in sorted(nodes_by_region.keys()):
             nodes = nodes_by_region[region_name]
-            nodes_locations = [region_list.identifier_for_node(node).area_identifier for node in nodes]
+            nodes_locations = [region_list.identifier_for_node(node) for node in nodes]
             nodes_names = [
-                elevators.get_short_elevator_or_area_name(self.game_configuration.game, region_list, location, False)
+                elevators.get_elevator_or_area_name(self.game_description, region_list, location, False)
                 for location in nodes_locations
             ]
 

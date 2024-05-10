@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtWidgets
 
 from randovania.game_description.db.area import Area
-from randovania.patching.prime import elevators
+from randovania.games.common import elevators
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
@@ -129,12 +129,15 @@ class NodeListHelper:
                 assert isinstance(area, Area)
                 group_box = region_to_group[region.correct_name(area.in_dark_aether)]
                 area_check = QtWidgets.QCheckBox(group_box)
-                area_check.setText(
-                    elevators.get_elevator_name_or_default(
-                        self.game_description.game, region.name, area.name, area.name
-                    ).replace("&", "&&")
-                )
                 area_check.area_location = self.game_description.region_list.identifier_for_area(area)
+                area_text = area.name
+                if len(nodes_by_area[area_check.area_location]) == 1:
+                    first_node = nodes_by_area[area_check.area_location][0]
+                    area_text = elevators.get_elevator_name_or_default(
+                        self.game_description, first_node.identifier, area_text
+                    )
+                area_text = area_text.replace("&", "&&")
+                area_check.setText(area_text)
                 area_check.stateChanged.connect(functools.partial(_on_check_area, area_check))
                 area_check.setTristate(True)
                 group_box.vertical_layout.addWidget(area_check)
@@ -142,7 +145,11 @@ class NodeListHelper:
 
                 for node in nodes_by_area[area_check.area_location]:
                     node_check = QtWidgets.QCheckBox(group_box)
-                    node_check.setText(node.name.replace("&", "&&"))
+                    node_check.setText(
+                        elevators.get_elevator_name_or_default(
+                            self.game_description, node.identifier, node.name
+                        ).replace("&", "&&")
+                    )
                     node_check.node_location = node.identifier
                     node_check.stateChanged.connect(functools.partial(_on_check_node, node_check))
 
