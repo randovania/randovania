@@ -432,7 +432,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
         )
 
         pipes = {
-            node.extra["instance_id"]: {
+            str(node.extra["instance_id"]): {
                 "dest_x": connection.extra["dest_x"],
                 "dest_y": connection.extra["dest_y"],
                 "dest_room": self.game.region_list.area_by_area_location(connection.identifier.area_identifier).extra[

@@ -537,16 +537,16 @@ def _migrate_v27(data: dict) -> dict:
         if game_name != "am2r":
             continue
 
-    migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a5_pipe_rename"]
+        migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a5_pipe_rename"]
 
-    dock_connections = game.get("dock_connections")
-    if dock_connections is not None and dock_connections is not {}:
-        for old_node, new_node in migration["nodes"].items():
-            if old_node in dock_connections.keys():
-                dock_connections[new_node] = dock_connections.pop(old_node)
-            for orig_connection, new_connection in dock_connections.items():
-                if old_node == new_connection:
-                    dock_connections[orig_connection] = new_node
+        dock_connections = game.get("dock_connections")
+        if dock_connections is not None and dock_connections is not {}:
+            for old_node, new_node in migration["nodes"].items():
+                if old_node in dock_connections.keys():
+                    dock_connections[new_node] = dock_connections.pop(old_node)
+                for orig_connection, new_connection in dock_connections.items():
+                    if old_node == new_connection:
+                        dock_connections[orig_connection] = new_node
 
     return data
 
