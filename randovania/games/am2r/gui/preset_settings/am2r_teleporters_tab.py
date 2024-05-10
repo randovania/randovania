@@ -50,14 +50,14 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         ),
     }
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         self.setupUi(self)
 
     @classmethod
     def tab_title(cls) -> str:
         return "Transport Pipes"
 
-    def _create_source_teleporters(self):
+    def _create_source_teleporters(self) -> None:
         row = 0
         region_list = self.game_description.region_list
 
@@ -99,7 +99,7 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
 
             row += 1
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, AM2RConfiguration)
         config_teleporters: TeleporterConfiguration = config.teleporters

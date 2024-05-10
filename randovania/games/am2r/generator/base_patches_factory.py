@@ -62,8 +62,9 @@ class AM2RBasePatchesFactory(BasePatchesFactory):
         return parent.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
-        self, configuration: AM2RConfiguration, game: GameDescription, rng: Random
+        self, configuration: BaseConfiguration, game: GameDescription, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
+        assert isinstance(configuration, AM2RConfiguration)
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
