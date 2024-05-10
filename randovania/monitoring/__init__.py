@@ -58,11 +58,17 @@ def _filter_data(data: object, str_filter: typing.Callable[[str], str]) -> typin
 _HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\])([^/\\]+)([/\\])")
 
 
-def _filter_user_home(data):
+def _filter_user_home(data: typing.Any) -> typing.Any | None:
     def filter_home(s: str) -> str:
         return _HOME_RE.sub(r"\1<redacted>\3", s)
 
     return _filter_data(data, filter_home)
+
+
+def before_breadcrumb(crumb: dict[str, typing.Any], hint: dict[str, typing.Any]) -> dict[str, typing.Any] | None:
+    # Crumb is a dictionary, so this function will always return None and modify crumb in-place instead.
+    _filter_user_home(crumb)
+    return crumb
 
 
 def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude_server_name: bool = False) -> None:
@@ -113,6 +119,7 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         server_name=server_name,
         auto_session_tracking=include_flask,
         event_scrubber=HomeEventScrubber(),
+        before_breadcrumb=before_breadcrumb,
     )
     sentry_sdk.set_context(
         "os",
@@ -127,6 +134,7 @@ def client_init() -> None:
     _init(False, "client", exclude_server_name=True)
 
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
+    sentry_sdk.set_tag("cpu.architecture", platform.machine())
 
     # Ignore the "packet queue is empty, aborting" message
     # It causes a disconnect, but we smoothly reconnect in that case.

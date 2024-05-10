@@ -67,7 +67,7 @@ class FaqCommandCog(RandovaniaCog):
     async def website(self, context: discord.ApplicationContext):
         """Posts information about Randovania's website."""
         embed = discord.Embed(
-            title="https://randovania.github.io/",
+            title="https://randovania.org/",
             description=(
                 "In the website, you'll find download links to Randovania and instructions on how to get started!"
             ),

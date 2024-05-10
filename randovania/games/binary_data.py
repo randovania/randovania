@@ -222,6 +222,7 @@ ConstructNode = NodeAdapter(
                     incompatible_dock_weaknesses=PrefixedArray(VarInt, String),
                     override_default_open_requirement=OptionalValue(ConstructRequirement),
                     override_default_lock_requirement=OptionalValue(ConstructRequirement),
+                    ui_custom_name=OptionalValue(String),
                 ),
                 "pickup": Struct(
                     **NodeBaseFields,

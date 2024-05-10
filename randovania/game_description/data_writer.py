@@ -280,6 +280,7 @@ def write_node(node: Node) -> dict:
         data["incompatible_dock_weaknesses"] = [weak.name for weak in node.incompatible_dock_weaknesses]
         data["override_default_open_requirement"] = write_optional_requirement(node.override_default_open_requirement)
         data["override_default_lock_requirement"] = write_optional_requirement(node.override_default_lock_requirement)
+        data["ui_custom_name"] = node.ui_custom_name
 
     elif isinstance(node, PickupNode):
         data["node_type"] = "pickup"

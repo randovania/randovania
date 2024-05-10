@@ -7,18 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.1.0] - 2024-06-??
 
+### AM2R
+
+#### Logic Database
+
+##### Distribution Center
+
+- Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
+
+##### The Tower
+
+- Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
+
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
+
 ### Metroid Dread
 
+- Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
+
 #### Logic database
+
+#### Burenia
+
+- Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Tunnels (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Tunnels (Beginner) with 1 Flash Charge.
 
 ##### Dairon
 
 - Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
+- Added: Using Stand on Frozen Enemies trick to get the item in Big Hub, using either Flash Shift or Spin Boost.
+
+### Metroid Prime
+
+- Changed: The map tracker uses the same names for elevators as when editing a preset.
 
 ### Metroid: Samus Returns
 
 - Added: Door Lock randomizer has been added.
+- Fixed: If no seed was exported at a previous start of Randovania, the export window now shows the correct title ID in the output path for NTSC without having to switch to PAL and back to NTSC.
+- Fixed: Removed an incorrect start location from Area 4 Central Caves, which failed when exporting the game.
 
+#### Logic Database
+
+##### Area 1
+
+- Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths. 
 
 ## [8.0.0] - 2024-05-01
 
