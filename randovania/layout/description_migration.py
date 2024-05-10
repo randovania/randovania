@@ -528,6 +528,7 @@ def _migrate_v26(data: dict) -> dict:
 
     return data
 
+
 def _migrate_v27(data: dict) -> dict:
     game_modifications = data["game_modifications"]
 
