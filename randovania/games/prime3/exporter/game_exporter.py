@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import dataclasses
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -12,8 +11,7 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True)
 class CorruptionGameExportParams(GameExportParams):
-    input_path: Path
-    output_path: Path
+    pass
 
 
 class CorruptionGameExporter(GameExporter):
