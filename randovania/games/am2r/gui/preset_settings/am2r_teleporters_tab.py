@@ -29,15 +29,9 @@ if TYPE_CHECKING:
 class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeListHelper):
     teleporter_mode_to_description = {
         TeleporterShuffleMode.VANILLA: "All transport pipes are connected to where they do in the original game.",
-        TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
-            "After taking a transport pipe, the transport pipe in the room you are in will bring"
-            " you back to where you were. "
-            "A transport pipe will never connect to another in the same region. "
-            "This is the only setting that guarantees all regions are reachable."
-        ),
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
             "After taking a transport pipe, the transport pipe in the room you are in"
-            " will bring you back to where you were."
+            " will bring you back to where you were. Transport pipes can connect to another one in the same region."
         ),
         TeleporterShuffleMode.ONE_WAY_TELEPORTER: (
             "All transport pipes bring you to a transport pipe room, but going backwards can go somewhere else. "
