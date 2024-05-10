@@ -70,7 +70,7 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         }
 
         self._teleporters_source_for_location = copy.copy(checks)
-        self._teleporters_source_destination = {}
+        self._teleporters_source_destination: dict[NodeIdentifier, NodeIdentifier | None] = {}
 
         for location in sorted(locations, key=lambda loc: (0, checks[loc].text())):
             if location not in checks:
