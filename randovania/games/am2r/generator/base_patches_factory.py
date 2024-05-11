@@ -32,6 +32,11 @@ class AM2RBasePatchesFactory(BasePatchesFactory):
 
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         blue_door = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
+        door_type = game.dock_weakness_database.find_type("door")
+        open_transition_door = game.dock_weakness_database.get_by_weakness("door", "Open Transition")
+        are_transitions_shuffled = (
+            open_transition_door in configuration.dock_rando.types_state[door_type].can_change_from
+        )
 
         # TODO: separate these two into functions, so that they can be tested more easily?
         if configuration.blue_save_doors or configuration.force_blue_labs:
@@ -41,8 +46,11 @@ class AM2RBasePatchesFactory(BasePatchesFactory):
                 ):
                     for node in area.nodes:
                         if isinstance(node, DockNode) and node.dock_type.short_name == "door":
-                            dock_weakness.append((node, blue_door))
-                            # TODO: This is not correct in entrance rando
-                            dock_weakness.append((get_node(node.default_connection, DockNode), blue_door))
+                            if node.default_dock_weakness != open_transition_door or (
+                                node.default_dock_weakness == open_transition_door and are_transitions_shuffled
+                            ):
+                                dock_weakness.append((node, blue_door))
+                                # TODO: This is not correct in entrance rando
+                                dock_weakness.append((get_node(node.default_connection, DockNode), blue_door))
 
         return parent.assign_dock_weakness(dock_weakness)
