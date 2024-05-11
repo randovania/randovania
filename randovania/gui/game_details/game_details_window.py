@@ -7,10 +7,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 import randovania
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
 from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
@@ -30,6 +27,7 @@ from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 
 if typing.TYPE_CHECKING:
+    from randovania.games.game import RandovaniaGame
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.layout.layout_description import LayoutDescription
@@ -153,76 +151,6 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
         self._trick_usage_popup.open()
 
-    async def _show_dialog_for_prime3_layout(self):
-        from randovania.game_description import default_database
-        from randovania.games.prime3.layout.corruption_configuration import (
-            CorruptionConfiguration,
-        )
-        from randovania.games.prime3.layout.corruption_cosmetic_patches import (
-            CorruptionCosmeticPatches,
-        )
-        from randovania.games.prime3.patcher import gollop_corruption_patcher
-
-        cosmetic = typing.cast(
-            CorruptionCosmeticPatches,
-            self._options.options_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION).cosmetic_patches,
-        )
-        configuration = typing.cast(
-            CorruptionConfiguration,
-            self.layout_description.get_preset(self.current_player_index).configuration,
-        )
-        patches = self.layout_description.all_patches[self.current_player_index]
-        game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
-        pickup_names = []
-        for index in range(game.region_list.num_pickup_nodes):
-            p_index = PickupIndex(index)
-            if p_index in patches.pickup_assignment:
-                name = patches.pickup_assignment[p_index].pickup.name
-            else:
-                name = "Missile Expansion"
-            pickup_names.append(name)
-
-        layout_string = gollop_corruption_patcher.layout_string_for_items(pickup_names)
-        starting_location = patches.starting_location
-
-        starting_items = patches.starting_resources()
-        starting_items.add_resource_gain(
-            [
-                (
-                    game.resource_database.get_item_by_name("Suit Type"),
-                    cosmetic.player_suit.value,
-                ),
-            ]
-        )
-        if configuration.start_with_corrupted_hypermode:
-            hypermode_original = 0
-        else:
-            hypermode_original = 1
-
-        starting_items = gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)
-        commands = "\n".join(
-            [
-                f'set seed="{layout_string}"',
-                f'set "starting_items={starting_items}"',
-                f'set "starting_location={gollop_corruption_patcher.starting_location_for(game, starting_location)}"',
-                f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
-                f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
-            ]
-        )
-        dialog_text = (
-            "There is no integrated patcher for Metroid Prime 3: Corruption games.\n"
-            "Download the randomizer for it from #corruption-general in the Metroid Prime Randomizer Discord, "
-            "and use the following commands as a seed.\n\n"
-            f"\n{commands}"
-        )
-
-        message_box = ScrollLabelDialog(self, dialog_text, "Commands for patcher")
-        message_box.resize(750, 200)
-        message_box.label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-        common_qt_lib.set_clipboard(commands)
-        await async_dialog.execute_dialog(message_box)
-
     @property
     def current_player_game(self) -> RandovaniaGame:
         return self.layout_description.get_preset(self.current_player_index).game
@@ -243,8 +171,6 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
         game = self.current_player_game
-        if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            return await self._show_dialog_for_prime3_layout()
 
         cosmetic_patches = options.options_for_game(game).cosmetic_patches
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
