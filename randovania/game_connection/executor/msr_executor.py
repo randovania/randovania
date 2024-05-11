@@ -5,6 +5,7 @@ import dataclasses
 import logging
 import re
 import struct
+import typing
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
@@ -35,7 +36,6 @@ class PacketType(IntEnum):
     PACKET_HANDSHAKE = b"1"
     PACKET_LOG_MESSAGE = b"2"
     PACKET_REMOTE_LUA_EXEC = b"3"
-    # PACKET_KEEP_ALIVE = b"4"
     PACKET_NEW_INVENTORY = b"5"
     PACKET_COLLECTED_INDICES = b"6"
     PACKET_RECEIVED_PICKUPS = b"7"
@@ -51,8 +51,7 @@ class ClientInterests(IntEnum):
 # FIXME: This is a copy of ODR's implementation just that the first param is a path instead of a name
 # for a file within ODR's template folder
 def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: bool = False) -> str:
-    # FIXME: I mean...technically this is working but stupid to rely on Dread patcher for MSR connector :)
-    from open_dread_rando.misc_patches.lua_util import lua_convert
+    from open_samus_returns_rando.misc_patches.lua_util import lua_convert  # type: ignore
 
     code = file.read_text()
     for key, content in replacement.items():
@@ -150,18 +149,18 @@ class MSRExecutor:
 
             # Send handhshake
             self.logger.debug("Connection open, set interests.")
-            interests = ClientInterests.MULTIWORLD | ClientInterests.LOGGING
+            interests = ClientInterests.MULTIWORLD  # | ClientInterests.LOGGING
             writer.write(self._build_packet(PacketType.PACKET_HANDSHAKE, interests.to_bytes(1, "little")))
             await asyncio.wait_for(writer.drain(), timeout=30)
             await self._read_response()
 
             # Send API details request
             self.logger.debug("Requesting API details.")
-            await self.run_lua_code("return string.format('%d,%d,%s', RL.Version, RL.BufferSize," "Init.sLayoutUUID)")
+            await self.run_lua_code("return string.format('%d,%d,%s', RL.Version, RL.BufferSize, Init.sLayoutUUID)")
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
-            response = await self._read_response()
+            response = typing.cast(bytes, await self._read_response())
             (api_version, buffer_size, self.layout_uuid_str) = response.decode("ascii").split(",")
             self.logger.debug(
                 "Remote replied with API level %s, buffer_size %s and layout_uuid %s, " "connection successful.",
@@ -213,21 +212,25 @@ class MSRExecutor:
         return self._socket is not None
 
     def _build_packet(self, type: PacketType, msg: bytes | None) -> bytes:
-        retBytes: bytearray = bytearray()
-        retBytes.append(type.value)
-        if type == PacketType.PACKET_REMOTE_LUA_EXEC:
-            retBytes.extend(len(msg).to_bytes(length=4, byteorder="little"))
-        if type in [PacketType.PACKET_REMOTE_LUA_EXEC, PacketType.PACKET_HANDSHAKE]:
-            retBytes.extend(msg)
+        retBytes: bytearray = bytearray(type.to_bytes())
+        if msg is not None:
+            if type == PacketType.PACKET_REMOTE_LUA_EXEC:
+                retBytes.extend(len(msg).to_bytes(length=4, byteorder="little"))
+            if type in [PacketType.PACKET_REMOTE_LUA_EXEC, PacketType.PACKET_HANDSHAKE]:
+                retBytes.extend(msg)
         return retBytes
 
     async def _read_response(self) -> bytes | None:
+        if self._socket is None:
+            return None
         packet_type: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
         if len(packet_type) == 0:
             raise OSError("missing packet type")
         return await self._parse_packet(packet_type[0])
 
     async def _parse_packet(self, packet_type: int) -> bytes | None:
+        if self._socket is None:
+            return None
         response = None
         match packet_type:
             case PacketType.PACKET_MALFORMED:
@@ -256,7 +259,6 @@ class MSRExecutor:
                 data: bytes = await asyncio.wait_for(self._socket.reader.read(length), timeout=15)
                 if is_success:
                     response = data
-                    self.logger.debug("Lua executed")
                 else:
                     self.logger.debug("Running lua code throw an error. Try again.")
                     self.logger.debug(data)
@@ -278,13 +280,27 @@ class MSRExecutor:
                     self.logger.debug(response.decode("utf-8"))
         return response
 
+    async def _check_header(self) -> None:
+        if self._socket is None:
+            return None
+        received_number = await asyncio.wait_for(self._socket.reader.read(1), None)
+        if received_number[0] != self._socket.request_number:
+            num_as_string = received_number.decode("ascii")
+            raise MSRLuaException(f"Expected response {self._socket.request_number}, got {num_as_string}")
+
     async def run_lua_code(self, current: str) -> None:
+        if self._socket is None:
+            return
         self.code = current
-        # TODO: If lua code is too large. Abort!
+        if len(current) >= self._socket.buffer_size:
+            self.logger.debug("The following lua code is too big for the buffer!")
+            self.logger.debug(current)
+            return
         self._socket.writer.write(self._build_packet(PacketType.PACKET_REMOTE_LUA_EXEC, current.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
 
     async def bootstrap(self) -> None:
+        assert self._socket is not None, "Bootstrap code should only be send when connected to Samus Returns."
         game = default_database.game_description_for(RandovaniaGame.METROID_SAMUS_RETURNS)
         all_code = get_bootstrapper_for(game)
 
@@ -307,11 +323,6 @@ class MSRExecutor:
         # Run last block
         await self.run_lua_code(current)
         await self._read_response()
-
-    async def _check_header(self) -> None:
-        received_number = await asyncio.wait_for(self._socket.reader.read(1), None)
-        if received_number[0] != self._socket.request_number:
-            raise MSRLuaException(f"Expected response {self._socket.request_number}, got {received_number}")
 
     async def read_loop(self) -> None:
         while self.is_connected():
