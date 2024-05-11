@@ -55,7 +55,7 @@ class MSRCosmeticPatches(BaseCosmeticPatches):
         return cls()
 
     @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
 
     def __post_init__(self) -> None:

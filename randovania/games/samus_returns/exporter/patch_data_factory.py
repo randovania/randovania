@@ -29,6 +29,9 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
     from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
+    from randovania.interface_common.players_configuration import PlayersConfiguration
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.layout.layout_description import LayoutDescription
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "Nothing"): ["itemsphere"],
@@ -106,8 +109,13 @@ class MSRPatchDataFactory(PatchDataFactory):
     cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        description: LayoutDescription,
+        players_config: PlayersConfiguration,
+        cosmetic_patches: BaseCosmeticPatches,
+    ) -> None:
+        super().__init__(description, players_config, cosmetic_patches)
         self.memo_data = MSRAcquiredMemo.with_expansion_text()
 
         tank = self.configuration.energy_per_tank
