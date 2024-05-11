@@ -47,6 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Lock randomizer has been added.
 - Fixed: If no seed was exported at a previous start of Randovania, the export window now shows the correct title ID in the output path for NTSC without having to switch to PAL and back to NTSC.
 - Fixed: Removed an incorrect start location from Area 4 Central Caves, which failed when exporting the game.
+- Fixed: Typo on the exporting dialog.
+- Fixed: Common case where a modified input RomFS was considered being unmodified.
 
 #### Logic Database
 
