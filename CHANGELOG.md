@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
+
 #### Logic Database
 
 ##### Distribution Center
