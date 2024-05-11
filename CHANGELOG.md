@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
 
+##### Genetics Laboratory
+
+- Added: Waterfalls Exterior: Hypermode option of climbing the room with Walljumps and Morph Glides.
+
 ##### The Tower
 
 - Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
