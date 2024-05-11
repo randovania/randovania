@@ -90,6 +90,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # AM2R
         "am2r/starter_preset.rdvgame",  # starter preset
         "am2r/door_lock.rdvgame",  # starter preset+door lock rando
+        "am2r/door_lock_open.rdvgame",  # starter preset+door lock rando with open transitions
         "am2r/progressive_items.rdvgame",  # Starter preset+progressive items
         "am2r/starting_items.rdvgame",  # Starter preset + random starting items
         # Dread

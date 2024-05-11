@@ -51,71 +51,47 @@
         "Metroid DNA 46": 1
     },
     "starting_location": {
-        "save_room": 0
+        "save_room": 1
     },
     "pickups": {
         "oItemBomb": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSpaceJump",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Space Jump",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Space Jump acquired",
+                "description": "Jump continuously in the air"
             }
         },
         "oItemSpiderBall": {
             "sprite_details": {
-                "name": "sItemBomb",
+                "name": "sItemEnergyTank",
                 "speed": 0.2
             },
-            "item_effect": "Bombs",
+            "item_effect": "Energy Tank",
             "quantity": 1,
             "text": {
-                "header": "Bombs acquired",
-                "description": "Press | in Morph Ball to deploy"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 98 units"
             }
         },
         "oItemJumpBall": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemHijump": {
             "sprite_details": {
-                "name": "sItemSpiderBall",
-                "speed": 0.2
-            },
-            "item_effect": "Spider Ball",
-            "quantity": 1,
-            "text": {
-                "header": "Spider Ball acquired",
-                "description": "Press or hold | in Morph Ball mode to climb walls"
-            }
-        },
-        "oItemVaria": {
-            "sprite_details": {
-                "name": "sItemVariaSuit",
-                "speed": 0.2
-            },
-            "item_effect": "Varia Suit",
-            "quantity": 1,
-            "text": {
-                "header": "Varia Suit acquired",
-                "description": "Reduces Damage taken by 50%"
-            }
-        },
-        "oItemSpaceJump": {
-            "sprite_details": {
                 "name": "sItemEnergyTank",
                 "speed": 0.2
             },
@@ -123,58 +99,22 @@
             "quantity": 1,
             "text": {
                 "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "description": "Suit Energy increased by 98 units"
             }
         },
-        "oItemSpeedBooster": {
+        "oItemVaria": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemScrewAttack": {
-            "sprite_details": {
-                "name": "sItemHijump",
+                "name": "sItemPBombLauncher",
                 "speed": 0.2
             },
-            "item_effect": "Hi-Jump Boots",
-            "quantity": 1,
+            "item_effect": "Power Bomb Launcher",
+            "quantity": 2,
             "text": {
-                "header": "Hi-Jump Boots acquired",
-                "description": "Maximum Jump height increased"
+                "header": "Got Power Bomb Launcher",
+                "description": "Power Bombs can now be used. Power Bomb capacity increased by 2"
             }
         },
-        "oItemGravity": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemCBeam": {
-            "sprite_details": {
-                "name": "sItemWaveBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Wave Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Wave Beam acquired",
-                "description": "Beams can now go through solid objects"
-            }
-        },
-        "oItemIBeam": {
+        "oItemSpaceJump": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -186,64 +126,124 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemWBeam": {
+        "oItemSpeedBooster": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSuperMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
-        "oItemSBeam": {
+        "oItemScrewAttack": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemPBeam": {
-            "sprite_details": {
-                "name": "sItemShinyMissile",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
             "item_effect": "Missile Tank",
             "quantity": 5,
             "text": {
-                "header": "Got Shiny Missile Tank",
+                "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemGravity": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
+            }
+        },
+        "oItemCBeam": {
+            "sprite_details": {
+                "name": "sItemScrewAttack",
+                "speed": 0.2
+            },
+            "item_effect": "Screw Attack",
+            "quantity": 1,
+            "text": {
+                "header": "Screw Attack acquired",
+                "description": "Jump into enemies to inflict massive damage"
+            }
+        },
+        "oItemIBeam": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
+            }
+        },
+        "oItemWBeam": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
+            }
+        },
+        "oItemSBeam": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemPBeam": {
+            "sprite_details": {
+                "name": "sItemPlasmaBeam",
+                "speed": 0.2
+            },
+            "item_effect": "Plasma Beam",
+            "quantity": 1,
+            "text": {
+                "header": "Plasma Beam acquired",
+                "description": "Beams can pierce enemies"
             }
         },
         "oItemETank_50": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemIceBeam",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Ice Beam",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Ice Beam acquired",
+                "description": "Instantly freeze enemies. Extra damage"
             }
         },
         "oItemSM_51": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_52": {
@@ -260,38 +260,38 @@
         },
         "oItemM_53": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_54": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_55": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemSmallHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemM_56": {
@@ -308,14 +308,14 @@
         },
         "oItemM_57": {
             "sprite_details": {
-                "name": "sItemPowerBomb",
+                "name": "sItemSMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
             "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
             }
         },
         "oItemPB_58": {
@@ -327,34 +327,22 @@
             "quantity": 1,
             "text": {
                 "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "description": "Suit Energy increased by 98 units"
             }
         },
         "oItemPB_59": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissileDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemM_60": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_100": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -366,7 +354,7 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemM_101": {
+        "oItemM_100": {
             "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
@@ -376,30 +364,42 @@
             "text": {
                 "header": "Nothing acquired",
                 "description": "A useless item"
+            }
+        },
+        "oItemM_101": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
             }
         },
         "oItemM_102": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemETank_103": {
             "sprite_details": {
-                "name": "sItemGravitySuit",
+                "name": "sItemMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Gravity Suit",
-            "quantity": 1,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Gravity Suit acquired",
-                "description": "Liquid friction eliminated - Improved Defense"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemM_104": {
@@ -416,6 +416,18 @@
         },
         "oItemM_105": {
             "sprite_details": {
+                "name": "sItemSpazerBeam",
+                "speed": 0.2
+            },
+            "item_effect": "Spazer Beam",
+            "quantity": 1,
+            "text": {
+                "header": "Spazer Beam acquired",
+                "description": "Beams now have a wider range"
+            }
+        },
+        "oItemM_106": {
+            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -426,28 +438,16 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemM_106": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
         "oItemM_107": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemETank_108": {
@@ -464,38 +464,38 @@
         },
         "oItemM_109": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemChargeBeam",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Charge Beam",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Charge Beam acquired",
+                "description": "Hold | to charge your beam"
             }
         },
         "oItemSM_110": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemM_111": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemEnergyTank",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Energy Tank",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 98 units"
             }
         },
         "oItemPB_112": {
@@ -512,29 +512,41 @@
         },
         "oItemM_150": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_151": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemM_152": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
+            }
+        },
+        "oItemM_153": {
             "sprite_details": {
                 "name": "sItemPowerBomb",
                 "speed": 0.2
@@ -546,64 +558,52 @@
                 "description": "Power Bomb capacity increased by 2"
             }
         },
-        "oItemM_153": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
         "oItemM_154": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemM_155": {
             "sprite_details": {
-                "name": "sItemSpazerBeam",
+                "name": "sItemMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Spazer Beam",
-            "quantity": 1,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Spazer Beam acquired",
-                "description": "Beams now have a wider range"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemM_156": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemVariaSuit",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
+            "item_effect": "Varia Suit",
             "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Varia Suit acquired",
+                "description": "Reduces Damage taken by 50%"
             }
         },
         "oItemETank_157": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemETank_158": {
@@ -620,14 +620,14 @@
         },
         "oItemM_159": {
             "sprite_details": {
-                "name": "sItemSpeedBooster",
-                "speed": 0.5
+                "name": "sItemPBombDrop",
+                "speed": 0.2
             },
-            "item_effect": "Speed Booster",
+            "item_effect": "Power Bomb Drop",
             "quantity": 1,
             "text": {
-                "header": "Speed Booster acquired",
-                "description": "Run continuously to begin Speed Boosting"
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
             }
         },
         "oItemPB_160": {
@@ -644,30 +644,6 @@
         },
         "oItemM_161": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemSM_162": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemM_163": {
-            "sprite_details": {
                 "name": "sItemEnergyTank",
                 "speed": 0.2
             },
@@ -675,22 +651,82 @@
             "quantity": 1,
             "text": {
                 "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "description": "Suit Energy increased by 98 units"
+            }
+        },
+        "oItemSM_162": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
+            }
+        },
+        "oItemM_163": {
+            "sprite_details": {
+                "name": "sItemSpiderBall",
+                "speed": 0.2
+            },
+            "item_effect": "Spider Ball",
+            "quantity": 1,
+            "text": {
+                "header": "Spider Ball acquired",
+                "description": "Press or hold | in Morph Ball mode to climb walls"
             }
         },
         "oItemETank_200": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSMissileLauncher",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Super Missile Launcher",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got SuperMissile Launcher",
+                "description": "Super Missiles can now be fired. Super Missile capacity increased by 2"
             }
         },
         "oItemETank_201": {
+            "sprite_details": {
+                "name": "sItemGravitySuit",
+                "speed": 0.2
+            },
+            "item_effect": "Gravity Suit",
+            "quantity": 1,
+            "text": {
+                "header": "Gravity Suit acquired",
+                "description": "Liquid friction eliminated - Improved Defense"
+            }
+        },
+        "oItemM_202": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
+            }
+        },
+        "oItemM_203": {
+            "sprite_details": {
+                "name": "sItemBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Bombs",
+            "quantity": 1,
+            "text": {
+                "header": "Bombs acquired",
+                "description": "Press | in Morph Ball to deploy"
+            }
+        },
+        "oItemM_204": {
             "sprite_details": {
                 "name": "sItemPowerBomb",
                 "speed": 0.2
@@ -702,19 +738,7 @@
                 "description": "Power Bomb capacity increased by 2"
             }
         },
-        "oItemM_202": {
-            "sprite_details": {
-                "name": "sItemChargeBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Charge Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Charge Beam acquired",
-                "description": "Hold | to charge your beam"
-            }
-        },
-        "oItemM_203": {
+        "oItemM_205": {
             "sprite_details": {
                 "name": "sItemSuperMissile",
                 "speed": 0.2
@@ -726,43 +750,43 @@
                 "description": "Super Missile capacity increased by 2"
             }
         },
-        "oItemM_204": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemM_205": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
         "oItemSM_206": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemSM_207": {
+            "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 98 units"
+            }
+        },
+        "oItemM_208": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemSM_209": {
             "sprite_details": {
                 "name": "sItemJumpBall",
                 "speed": 0.2
@@ -772,30 +796,6 @@
             "text": {
                 "header": "Spring Ball acquired",
                 "description": "Press | in Morph Ball mode"
-            }
-        },
-        "oItemM_208": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemSM_209": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_210": {
@@ -812,6 +812,18 @@
         },
         "oItemM_211": {
             "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemPB_212": {
+            "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
             },
@@ -822,28 +834,16 @@
                 "description": "A useless item"
             }
         },
-        "oItemPB_212": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
         "oItemPB_213": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_214": {
@@ -860,14 +860,14 @@
         },
         "oItemSM_215": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_250": {
@@ -896,42 +896,30 @@
         },
         "oItemM_252": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemPowerBomb",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemPB_253": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemETank_254": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_255": {
-            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -940,6 +928,18 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemM_255": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemSM_256": {
@@ -956,14 +956,14 @@
         },
         "oItemM_257": {
             "sprite_details": {
-                "name": "sItemScrewAttack",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Screw Attack",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Screw Attack acquired",
-                "description": "Jump into enemies to inflict massive damage"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemPB_258": {
@@ -992,26 +992,26 @@
         },
         "oItemSM_300": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemPB_301": {
             "sprite_details": {
-                "name": "sItemSMissileLauncher",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Launcher",
-            "quantity": 5,
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
             "text": {
-                "header": "Got SuperMissile Launcher",
-                "description": "Super Missiles can now be fired. Super Missile capacity increased by 5"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemPB_302": {
@@ -1028,14 +1028,14 @@
         },
         "oItemM_303": {
             "sprite_details": {
-                "name": "sItemPlasmaBeam",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Plasma Beam",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Plasma Beam acquired",
-                "description": "Beams can pierce enemies"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_304": {
@@ -1052,18 +1052,6 @@
         },
         "oItemSM_305": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemETank_306": {
-            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -1074,43 +1062,7 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemM_307": {
-            "sprite_details": {
-                "name": "sItemIceBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Ice Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Ice Beam acquired",
-                "description": "Instantly freeze enemies. Extra damage"
-            }
-        },
-        "oItemM_308": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemM_309": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_350": {
+        "oItemETank_306": {
             "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
@@ -1122,12 +1074,60 @@
                 "description": "A useless item"
             }
         },
+        "oItemM_307": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
+            }
+        },
+        "oItemM_308": {
+            "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 98 units"
+            }
+        },
+        "oItemM_309": {
+            "sprite_details": {
+                "name": "sItemNothing",
+                "speed": 0.3333
+            },
+            "item_effect": "Nothing",
+            "quantity": 1,
+            "text": {
+                "header": "Nothing acquired",
+                "description": "A useless item"
+            }
+        },
+        "oItemDNA_350": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 6",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
         "oItemDNA_351": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
             },
-            "item_effect": "Metroid DNA 9",
+            "item_effect": "Metroid DNA 4",
             "quantity": 1,
             "text": {
                 "header": "Metroid DNA acquired",
@@ -1136,50 +1136,50 @@
         },
         "oItemDNA_352": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSuperMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemDNA_353": {
             "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
+                "name": "sItemHijump",
+                "speed": 0.2
             },
-            "item_effect": "Metroid DNA 3",
+            "item_effect": "Hi-Jump Boots",
             "quantity": 1,
             "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
+                "header": "Hi-Jump Boots acquired",
+                "description": "Maximum Jump height increased"
             }
         },
         "oItemDNA_354": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
+                "name": "sItemSpeedBooster",
+                "speed": 0.5
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Speed Booster",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Speed Booster acquired",
+                "description": "Run continuously to begin Speed Boosting"
             }
         },
         "oItemDNA_355": {
             "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
+                "name": "sItemPBombDrop",
+                "speed": 0.2
             },
-            "item_effect": "Metroid DNA 10",
+            "item_effect": "Power Bomb Drop",
             "quantity": 1,
             "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
             }
         },
         "oItemDNA_356": {
@@ -1196,53 +1196,41 @@
         },
         "oItemDNA_357": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSuperMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemDNA_358": {
             "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Metroid DNA 8",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemDNA_359": {
             "sprite_details": {
-                "name": "sItemPowerBomb",
+                "name": "sItemSmallHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
             "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemDNA_360": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_361": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1252,6 +1240,18 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_361": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
             }
         },
         "oItemDNA_362": {
@@ -1268,14 +1268,14 @@
         },
         "oItemDNA_363": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemDNA_364": {
@@ -1292,29 +1292,41 @@
         },
         "oItemDNA_365": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemWaveBeam",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Wave Beam",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Wave Beam acquired",
+                "description": "Beams can now go through solid objects"
             }
         },
         "oItemDNA_366": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemDNA_367": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
+            }
+        },
+        "oItemDNA_368": {
             "sprite_details": {
                 "name": "sItemEnergyTank",
                 "speed": 0.2
@@ -1323,47 +1335,47 @@
             "quantity": 1,
             "text": {
                 "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
-            }
-        },
-        "oItemDNA_368": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "description": "Suit Energy increased by 98 units"
             }
         },
         "oItemDNA_369": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemDNA_370": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSmallHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
+            "item_effect": "Small Health Drop",
             "quantity": 5,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemDNA_371": {
             "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_372": {
+            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -1374,19 +1386,31 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemDNA_372": {
+        "oItemDNA_373": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
             },
-            "item_effect": "Metroid DNA 5",
+            "item_effect": "Metroid DNA 3",
             "quantity": 1,
             "text": {
                 "header": "Metroid DNA acquired",
                 "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_373": {
+        "oItemDNA_374": {
+            "sprite_details": {
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
+            "text": {
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
+            }
+        },
+        "oItemDNA_375": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1398,31 +1422,67 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemDNA_374": {
+        "oItemDNA_376": {
             "sprite_details": {
-                "name": "sItemSpaceJump",
+                "name": "sItemEnergyTank",
                 "speed": 0.2
             },
-            "item_effect": "Space Jump",
+            "item_effect": "Energy Tank",
             "quantity": 1,
             "text": {
-                "header": "Space Jump acquired",
-                "description": "Jump continuously in the air"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 98 units"
             }
         },
-        "oItemDNA_375": {
+        "oItemDNA_377": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
-        "oItemDNA_376": {
+        "oItemDNA_378": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 10",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_379": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_380": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_381": {
             "sprite_details": {
                 "name": "sItemSuperMissile",
                 "speed": 0.2
@@ -1434,76 +1494,16 @@
                 "description": "Super Missile capacity increased by 2"
             }
         },
-        "oItemDNA_377": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 4",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_378": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_379": {
-            "sprite_details": {
-                "name": "sItemPBombLauncher",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Launcher",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Launcher",
-                "description": "Power Bombs can now be used. Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_380": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_381": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 2",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
         "oItemDNA_382": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
+                "name": "sItemDNA",
+                "speed": 0.28
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Metroid DNA 5",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
         "oItemDNA_383": {
@@ -1515,46 +1515,10 @@
             "quantity": 1,
             "text": {
                 "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "description": "Suit Energy increased by 98 units"
             }
         },
         "oItemDNA_384": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_385": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 6",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_386": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_387": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1566,19 +1530,19 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemDNA_388": {
+        "oItemDNA_385": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
-                "speed": 0.2
+                "name": "sItemDNA",
+                "speed": 0.28
             },
-            "item_effect": "Energy Tank",
+            "item_effect": "Metroid DNA 2",
             "quantity": 1,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_389": {
+        "oItemDNA_386": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
@@ -1590,7 +1554,19 @@
                 "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_390": {
+        "oItemDNA_387": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 8",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_388": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1600,21 +1576,33 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_389": {
+            "sprite_details": {
+                "name": "sItemMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Drop",
+            "quantity": 2,
+            "text": {
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
+            }
+        },
+        "oItemDNA_390": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemDNA_391": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_392": {
             "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
@@ -1626,7 +1614,43 @@
                 "description": "A useless item"
             }
         },
+        "oItemDNA_392": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
         "oItemDNA_393": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
+            }
+        },
+        "oItemDNA_394": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 9",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_395": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
@@ -1636,30 +1660,6 @@
             "text": {
                 "header": "Metroid DNA acquired",
                 "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_394": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_395": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 1,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
             }
         }
     },
@@ -10091,14 +10091,14 @@
         "skip_cutscenes": true,
         "skip_save_cutscene": false,
         "skip_item_cutscenes": false,
-        "energy_per_tank": 100,
+        "energy_per_tank": 98,
         "grave_grotto_blocks": false,
         "fusion_mode": false,
         "supers_on_missile_doors": true,
         "nest_pipes": true,
         "softlock_prevention_blocks": true,
-        "a3_entrance_blocks": false,
-        "screw_blocks": false,
+        "a3_entrance_blocks": true,
+        "screw_blocks": true,
         "sabre_designed_skippy": false,
         "locked_missile_text": {
             "header": "Got Locked Missile Tank",
@@ -10117,32 +10117,512 @@
         "require_pb_launcher": true
     },
     "door_locks": {
+        "100948": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "101098": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "101302": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "101303": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "101323": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "101324": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "101402": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "101403": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "101422": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "101540": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "101610": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
         "101612": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "101657": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "101844": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "101956": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "102176": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "102614": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "102617": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "102822": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "103228": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "103270": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "103523": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "103737": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "104414": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "104675": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "104676": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "104963": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "104964": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "105064": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "105774": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "105815": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "106332": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "106333": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "106358": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "106386": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "106387": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "106901": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "106902": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "107068": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "107261": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "107611": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "122750": {
+            "lock": "Tower Energy Restored Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "122899": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
-        "108232": {
+        "122898": {
+            "lock": "Tower Energy Restored Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "122978": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "123858": {
+            "lock": "Spazer Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "123894": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "123933": {
+            "lock": "Spazer Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "124160": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108039": {
             "lock": "Missile Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
-        "108382": {
+        "108040": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108232": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
+        },
+        "108256": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108287": {
+            "lock": "Missile Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108285": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "108314": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108318": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108319": {
+            "lock": "Locked Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "108379": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "108382": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108438": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108445": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "108557": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108492": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108497": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "108507": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108510": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108539": {
+            "lock": "Spazer Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108577": {
+            "lock": "Locked Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108578": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "108618": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "108656": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
         },
         "108658": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "108723": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "109096": {
+            "lock": "Spazer Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "109304": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "109308": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "109311": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "109468": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "109598": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "109656": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "109738": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "110049": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "110050": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "110051": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "110043": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
+        },
+        "110172": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "110173": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "110200": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "110201": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "110263": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "110264": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
         },
         "110421": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "110437": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "110489": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "110608": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "110748": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "400002": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
-        "110608": {
+        "110796": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "110869": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "110877": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "110894": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
@@ -10152,38 +10632,893 @@
             "is_dock": false,
             "facing_direction": "invalid"
         },
+        "111054": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "111183": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "111186": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "111194": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
         "111244": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
-        "114250": {
+        "111242": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "111277": {
             "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "111532": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "111580": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "111581": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "111649": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "111667": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "111668": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "111778": {
+            "lock": "Plasma Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "111840": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "112031": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "112032": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "112033": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "112388": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "112629": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "112631": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "113031": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "113636": {
+            "lock": "Plasma Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "113702": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "113755": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "113756": {
+            "lock": "Tower Energy Restored Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "113757": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "113765": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "113985": {
+            "lock": "Tower Energy Restored Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "113986": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "114099": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "114100": {
+            "lock": "Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "114250": {
+            "lock": "Charge Beam Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
         "114721": {
-            "lock": "Power Bomb Door",
+            "lock": "Bomb Door",
             "is_dock": false,
             "facing_direction": "invalid"
+        },
+        "114831": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "114953": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "115067": {
+            "lock": "Power Bomb Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "115126": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "115210": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "115149": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "115233": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "115254": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "115736": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "115737": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "116032": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
         },
         "116035": {
-            "lock": "Normal Door",
+            "lock": "Spider Ball Door",
             "is_dock": false,
             "facing_direction": "invalid"
+        },
+        "116073": {
+            "lock": "Spider Ball Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "116374": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "116448": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "116449": {
+            "lock": "Screw Attack Door",
+            "is_dock": true,
+            "facing_direction": "left"
         },
         "116700": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "116699": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "116779": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "116994": {
+            "lock": "Screw Attack Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "116995": {
+            "lock": "Screw Attack Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "117205": {
+            "lock": "Screw Attack Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "117206": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "117293": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "117294": {
+            "lock": "Bomb Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "117499": {
+            "lock": "Spazer Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "117956": {
+            "lock": "Bomb Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "117958": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "118053": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "118054": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "118488": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "118490": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "118690": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "118691": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "118692": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "118877": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "118878": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "119239": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "119329": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "119469": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "119540": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "119541": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "119846": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "119847": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "119956": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "120221": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "120486": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "121230": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "121232": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "121404": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "125465": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
-        "125934": {
+        "125458": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "125485": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "125503": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "125529": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "125842": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "125905": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "126190": {
             "lock": "Missile Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
-        "134570": {
+        "125934": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "125935": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "126520": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "127042": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "127419": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "127472": {
+            "lock": "Super Missile Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "127504": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "127511": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "127528": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "127560": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "127649": {
             "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127650": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127719": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127720": {
+            "lock": "Arachnus-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127809": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127810": {
+            "lock": "Arachnus-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127890": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127838": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "127943": {
+            "lock": "Plasma Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128037": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128065": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128064": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128421": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128420": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128525": {
+            "lock": "Plasma Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128625": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128607": {
+            "lock": "Power Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "128664": {
+            "lock": "Power Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "129395": {
+            "lock": "Missile Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "129386": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "129520": {
+            "lock": "Plasma Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "131683": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "132495": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "132468": {
+            "lock": "Missile Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "132467": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "132574": {
+            "lock": "Power Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "132575": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133428": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133427": {
+            "lock": "Missile Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133481": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133480": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133499": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133498": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133512": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133514": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133513": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133616": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133615": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133682": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133681": {
+            "lock": "Missile Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133732": {
+            "lock": "Missile Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133731": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133805": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133806": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133836": {
+            "lock": "Tower Energy Restored Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133841": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133903": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133904": {
+            "lock": "Tower Energy Restored Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133914": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133917": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133911": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133982": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "133981": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134067": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134068": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134069": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134402": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134401": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134427": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134426": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134480": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134481": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134495": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134570": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134563": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134613": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134644": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134645": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134661": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134662": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134670": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134710": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134711": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134883": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134884": {
+            "lock": "Missile Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "134899": {
+            "lock": "Missile Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
@@ -10192,31 +11527,611 @@
             "is_dock": false,
             "facing_direction": "invalid"
         },
-        "135298": {
+        "135046": {
             "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135119": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135156": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135157": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135204": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135205": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135221": {
+            "lock": "Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135232": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135253": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135298": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135317": {
+            "lock": "Screw Attack Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135329": {
+            "lock": "Power Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135330": {
+            "lock": "Locked Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
         "135404": {
+            "lock": "Spazer Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135449": {
+            "lock": "Spazer Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135448": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
         },
+        "135598": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135756": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135783": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135801": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "135800": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136064": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "136099": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "136376": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136414": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136415": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136413": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136488": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136487": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136503": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136516": {
+            "lock": "Spider Ball Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136515": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136529": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136531": {
+            "lock": "Spider Ball Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136607": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136608": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136637": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136632": {
+            "lock": "Plasma Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
         "136636": {
+            "lock": "Arachnus-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136678": {
+            "lock": "Power Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136676": {
+            "lock": "Plasma Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136689": {
+            "lock": "Power Bomb Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136853": {
+            "lock": "Arachnus-Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136854": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "136869": {
+            "lock": "Research Site Open Hatch",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "137593": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "137845": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "138131": {
+            "lock": "Locked Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "138266": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "138439": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "138471": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "138494": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "138544": {
+            "lock": "Charge Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "138799": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "138849": {
+            "lock": "Locked Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "139884": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "140258": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "140803": {
+            "lock": "Spazer Beam Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "141243": {
+            "lock": "Spazer Beam Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "141246": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "141569": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "144370": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "144651": {
+            "lock": "Guardian-Locked Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "144652": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "144867": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "145727": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "145811": {
+            "lock": "Spider Ball Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "145824": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "145832": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "146501": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146514": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146513": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146532": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146531": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146535": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146563": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146602": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146601": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146836": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146900": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146934": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146935": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146959": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146956": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147000": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147001": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147042": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147043": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147081": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147287": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147404": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147405": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147656": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147703": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "147904": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "147905": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "148221": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "148222": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "left"
+        },
+        "148553": {
+            "lock": "Normal Door",
+            "is_dock": true,
+            "facing_direction": "right"
+        },
+        "149522": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149406": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149560": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149559": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149600": {
+            "lock": "Hydro Station Water Turbine",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149598": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149597": {
+            "lock": "Wave Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149599": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "400001": {
+            "lock": "Locked Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "400000": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149696": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149708": {
+            "lock": "Charge Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149718": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149758": {
+            "lock": "Wave Beam Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149807": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149808": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149828": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149853": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149890": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "149889": {
             "lock": "Normal Door",
             "is_dock": false,
             "facing_direction": "invalid"
         }
     },
     "hints": {
-        "septogg_a0": "Metroid DNA is located in The Depths - Bubble Lair Omega Nest East.",
-        "septogg_a1": "*According to all known laws of aviation, there is no way that a Septogg should be able to fly. Its wings are too small to get its fat little body off the ground. The Septogg, of course, flies anyway.*",
-        "septogg_a2": "Metroid DNA is located in Hydro Station - Inner Alpha Nest South.#-#Metroid DNA is located in Industrial Complex - Breeding Grounds Gamma Nest South East.#-#Metroid DNA is located in Hydro Station - Hydro Station Entrance.#-#Metroid DNA is located in The Depths - Hideout Alpha Nest.",
-        "septogg_a3": "*Judging by the architecture on SR-388, the Chozo's favourite transportation device seem to be TUUUUUUUUUBES!*",
-        "septogg_a4": "Metroid DNA is located in The Tower - Exterior Zeta Nest East.#-#Metroid DNA is located in Golden Temple - Exterior Alpha Nest.",
-        "septogg_a5": "Metroid DNA is located in Golden Temple - Breeding Grounds Alpha Nest South West.#-#Metroid DNA is located in Industrial Complex - Breeding Grounds Gamma Nest West.#-#Metroid DNA is located in The Tower - Gamma Nest West.",
-        "septogg_a6": "*According to all known laws of aviation, there is no way that a Septogg should be able to fly. Its wings are too small to get its fat little body off the ground. The Septogg, of course, flies anyway.*",
-        "chozo_labs": "Ice Beam is located in Distribution Center."
+        "septogg_a0": "*If you see an Omega Metroid shinesparking towards your general direction, run.*",
+        "septogg_a1": "Metroid DNA is located in The Depths - Bubble Lair Omega Nest North West.",
+        "septogg_a2": "*You are faced with an overwhelming amount of cute Septogg noises. Accept your helplessness.*",
+        "septogg_a3": "Metroid DNA is located in Main Caves - Mining Facility Gamma Nest.#-#Metroid DNA is located in The Tower - Gamma Nest West.#-#Metroid DNA is located in Hydro Station - Breeding Grounds Gamma Nest.#-#Metroid DNA is located in Distribution Center - Dual Gamma Nest.",
+        "septogg_a4": "Metroid DNA is located in Industrial Complex - Breeding Grounds Gamma Nest Center.",
+        "septogg_a5": "Metroid DNA is located in The Depths - Bubble Lair Omega Nest South West.#-#Metroid DNA is located in Distribution Center - Dual Gamma Nest.#-#Metroid DNA is located in Main Caves - Surface Alpha Nest.",
+        "septogg_a6": "Metroid DNA is located in Golden Temple - Exterior Alpha Nest.",
+        "chozo_labs": "Ice Beam is located in GFS Thoth."
     },
     "cosmetics": {
         "show_unexplored_map": true,
@@ -10227,5 +12142,5 @@
         "room_names_on_hud": "WITH_FADE",
         "music_shuffle": {}
     },
-    "credits_spoiler": "*Major Item Locations;;*Bombs;/Golden Temple - Spider Ball Chamber;;*Spider Ball;/Hydro Station - Hi-Jump Chamber;;*Spring Ball;/Industrial Complex - Lower Factory Hub;;*Screw Attack;/The Tower - Tower Exterior North;;*Varia Suit;/Hydro Station - Varia Chamber;;*Space Jump;/Industrial Complex - Exterior Gamma Nest;;*Speed Booster;/Hydro Station - Varia Chamber Access;;*Hi-Jump Boots;/Distribution Center - Screw Attack Chamber;;*Gravity Suit;/Golden Temple - 1-Orb Hallway;;*Charge Beam;/Industrial Complex - Industrial Complex Exterior;;*Ice Beam;/Distribution Center - Facility Storage Tower Route North;;*Wave Beam;/Golden Temple - Charge Beam Chamber;;*Spazer Beam;/Hydro Station - Hydro Station Basement;;*Plasma Beam;/Distribution Center - Spiky Spider Trial Reward Room;;*Super Missile Launcher;/Distribution Center - Meboid Blockade Interior;;*Power Bomb Launcher;/Industrial Complex - Breeding Grounds Gamma Nest North;;*Metroid DNA 1;/The Depths - Bubble Lair Omega Nest East;;*Metroid DNA 10;/Hydro Station - Hydro Station Entrance;;*Metroid DNA 2;/Industrial Complex - Breeding Grounds Gamma Nest South East;;*Metroid DNA 3;/Golden Temple - Breeding Grounds Alpha Nest South West;;*Metroid DNA 4;/Industrial Complex - Breeding Grounds Gamma Nest West;;*Metroid DNA 5;/The Depths - Hideout Alpha Nest;;*Metroid DNA 6;/The Tower - Gamma Nest West;;*Metroid DNA 7;/The Tower - Exterior Zeta Nest East;;*Metroid DNA 8;/Hydro Station - Inner Alpha Nest South;;*Metroid DNA 9;/Golden Temple - Exterior Alpha Nest;;"
+    "credits_spoiler": "*Major Item Locations;;*Bombs;/Industrial Complex - Upper Factory Save Station;;*Spider Ball;/Hydro Station - Hydro Station Exterior;;*Spring Ball;/Industrial Complex - Breeding Grounds Fly Stadium;;*Screw Attack;/Golden Temple - Charge Beam Chamber;;*Varia Suit;/Hydro Station - Hydro Station Basement;;*Space Jump;/Golden Temple - Bomb Chamber;;*Speed Booster;/Golden Temple - Breeding Grounds Alpha Nest South East;;*Hi-Jump Boots;/Golden Temple - Breeding Grounds Alpha Nest South West;;*Gravity Suit;/Industrial Complex - Upper Factory Alpha Nest;;*Charge Beam;/Golden Temple - Golden Temple Exterior;;*Ice Beam;/GFS Thoth - Genesis Arena;;*Wave Beam;/Main Caves - Research Site;;*Spazer Beam;/Golden Temple - Armory;;*Plasma Beam;/The Tower - Plasma Beam Chamber;;*Super Missile Launcher;/Industrial Complex - Exterior Maze;;*Power Bomb Launcher;/Hydro Station - Varia Chamber;;*Metroid DNA 1;/The Depths - Bubble Lair Omega Nest South West;;*Metroid DNA 10;/Industrial Complex - Breeding Grounds Gamma Nest Center;;*Metroid DNA 2;/The Tower - Gamma Nest West;;*Metroid DNA 3;/Hydro Station - Breeding Grounds Gamma Nest;;*Metroid DNA 4;/Golden Temple - Exterior Alpha Nest;;*Metroid DNA 5;/Main Caves - Mining Facility Gamma Nest;;*Metroid DNA 6;/Main Caves - Surface Alpha Nest;;*Metroid DNA 7;/Distribution Center - Dual Gamma Nest;;*Metroid DNA 8;/Distribution Center - Dual Gamma Nest;;*Metroid DNA 9;/The Depths - Bubble Lair Omega Nest North West;;"
 }
