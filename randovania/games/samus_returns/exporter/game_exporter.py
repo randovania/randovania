@@ -101,7 +101,7 @@ class MSRGameExporter(GameExporter):
 
             open_samus_returns_rando.patch_with_status_update(
                 export_params.input_path,
-                export_params.input_exheader,
+                # export_params.input_exheader, # TODO: Activate if running from source / when open for testing
                 export_params.output_path,
                 patch_data,
                 lambda progress, msg: patcher_update(msg, progress),

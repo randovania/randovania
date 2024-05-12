@@ -22,7 +22,7 @@ class ConnectorBuilderChoice(Enum):
         return _pretty_backend_name[self]
 
     def is_usable(self) -> bool:
-        if self is ConnectorBuilderChoice.DEBUG:
+        if self is ConnectorBuilderChoice.DEBUG or self is ConnectorBuilderChoice.MSR:
             if randovania.is_frozen() or not randovania.is_dev_version():
                 return False
 

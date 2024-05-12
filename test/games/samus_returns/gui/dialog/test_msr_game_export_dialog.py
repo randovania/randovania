@@ -188,6 +188,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
+        input_exheader=None,
         target_platform=MSRModPlatform.LUMA,
         target_version=MSRGameVersion.NTSC,
         output_preference=json.dumps(
@@ -213,6 +214,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     assert result == MSRGameExportParams(
         spoiler_output=output_path.joinpath("spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
+        input_exheader=None,
         output_path=output_path,
         target_platform=MSRModPlatform.LUMA,
         target_version=MSRGameVersion.NTSC,
@@ -245,6 +247,7 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
     assert result == MSRGameExportParams(
         spoiler_output=citra_path.joinpath("spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
+        input_exheader=None,
         output_path=citra_path,
         target_platform=MSRModPlatform.CITRA,
         target_version=MSRGameVersion.NTSC,
@@ -261,6 +264,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
+        input_exheader=None,
         target_platform=MSRModPlatform.LUMA,
         target_version=MSRGameVersion.PAL,
         output_preference=json.dumps(
@@ -287,6 +291,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
     assert result == MSRGameExportParams(
         spoiler_output=tmp_path.joinpath("internal", "msr", "contents", "spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
+        input_exheader=None,
         output_path=tmp_path.joinpath("internal", "msr", "contents"),
         target_platform=MSRModPlatform.LUMA,
         target_version=MSRGameVersion.PAL,
@@ -307,6 +312,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
+        input_exheader=None,
         output_preference=json.dumps(
             {
                 "selected_tab": "custom",
@@ -327,6 +333,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     assert result == MSRGameExportParams(
         spoiler_output=tmp_path.joinpath("output", "spoiler.rdvgame"),
         input_path=tmp_path.joinpath("input"),
+        input_exheader=None,
         output_path=tmp_path.joinpath("output"),
         target_platform=MSRModPlatform.CITRA,
         target_version=MSRGameVersion.NTSC,

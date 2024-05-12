@@ -4,17 +4,20 @@ import json
 import logging
 import os
 import platform
+import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
+import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
+    is_file_validator,
     output_input_intersection_validator,
     path_in_edit,
     prompt_for_input_directory,
@@ -96,7 +99,17 @@ def romfs_validation(line: QtWidgets.QLineEdit) -> bool:
     )
 
 
-#
+def exheader_validation(path: Path | None) -> bool:
+    if is_file_validator(path):
+        return True
+    path_typed = typing.cast(Path, path)  # this is always true because is_file_validator is true for None
+    with Path.open(path_typed, "rb") as exheader:
+        if b"MATADORA" not in exheader.read(8):
+            return True
+        else:
+            return False
+
+
 class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -118,6 +131,10 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         # Input exheader
         self.input_exheader_edit.textChanged.connect(self._on_input_exheader_change)
         self.input_exheader_button.clicked.connect(self._on_input_exheader_button)
+        if not randovania.is_dev_version() or randovania.is_frozen():
+            self.input_exheader_button.hide()
+            self.input_exheader_edit.hide()
+            self.input_exheader_label.hide()
 
         # Target Platform
         if per_game.target_platform == MSRModPlatform.LUMA:
@@ -202,7 +219,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         if per_game.input_directory is not None:
             self.input_file_edit.setText(str(per_game.input_directory))
 
-        if per_game.input_directory is not None:
+        if per_game.input_exheader is not None:
             self.input_exheader_edit.setText(str(per_game.input_exheader))
 
         if per_game.output_preference is not None:
@@ -319,8 +336,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
     # Input exheader
 
     def _validate_input_exheader(self) -> None:
-        # TODO: ...
-        common_qt_lib.set_error_border_stylesheet(self.input_exheader_edit, False)
+        common_qt_lib.set_error_border_stylesheet(self.input_exheader_edit, exheader_validation(self.input_exheader))
 
     def _on_input_exheader_change(self) -> None:
         self._validate_input_exheader()

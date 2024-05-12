@@ -161,6 +161,6 @@ game_data: game.GameData = game.GameData(
     generator=_generator,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
-    defaults_available_in_game_sessions=True,
+    defaults_available_in_game_sessions=False,
     multiple_start_nodes_per_area=True,
 )

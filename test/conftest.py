@@ -321,6 +321,35 @@ def dread_spider_pickup(default_generator_params) -> PickupEntry:
 
 
 @pytest.fixture()
+def msr_ice_beam_pickup(default_generator_params) -> PickupEntry:
+    msr_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_SAMUS_RETURNS)
+    return PickupEntry(
+        name="Ice Beam",
+        model=PickupModel(
+            game=RandovaniaGame.METROID_SAMUS_RETURNS,
+            name="powerup_icebeam",
+        ),
+        pickup_category=msr_pickup_database.pickup_categories["misc"],
+        broad_category=msr_pickup_database.pickup_categories["misc"],
+        progression=(
+            (
+                ItemResourceInfo(
+                    resource_index=24,
+                    long_name="Ice Beam",
+                    short_name="Ice",
+                    max_capacity=1,
+                    extra=frozendict({"item_id": "ITEM_WEAPON_ICE_BEAM"}),
+                ),
+                1,
+            ),
+        ),
+        generator_params=default_generator_params,
+        resource_lock=None,
+        unlocks_resource=False,
+    )
+
+
+@pytest.fixture()
 def am2r_varia_pickup(default_generator_params) -> PickupEntry:
     am2r_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.AM2R)
     return PickupEntry(
