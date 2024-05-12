@@ -268,6 +268,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 "header": text_data["Locked Power Bomb Tank"]["text_header"],
                 "description": pb_text,
             },
+            "required_amount_of_dna": 46 - (config.artifacts.placed_artifacts - config.artifacts.required_artifacts),
         }
         for item, state in config.ammo_pickup_configuration.pickups_state.items():
             launcher_dict = {
