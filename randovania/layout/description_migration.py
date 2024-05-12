@@ -548,6 +548,12 @@ def _migrate_v27(data: dict) -> dict:
                     if old_node == new_connection:
                         dock_connections[orig_connection] = new_node
 
+        dock_weakness = game.get("dock_weakness")
+        if dock_weakness is not None and dock_weakness is not {}:
+            for old_name, new_name in migration["doors"].items():
+                if old_name in dock_weakness.keys():
+                    dock_weakness[new_name] = dock_weakness.pop(old_name)
+
     return data
 
 
