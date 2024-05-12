@@ -21,7 +21,6 @@ from randovania.layout.lib.teleporters import (
 if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
-    from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.layout.preset import Preset
 
@@ -56,9 +55,6 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         region_list = self.game_description.region_list
 
         locations = TeleporterList.nodes_list(self.game_enum)
-        node_identifiers: dict[NodeIdentifier, Area] = {
-            loc: region_list.area_by_area_location(loc.area_identifier) for loc in locations
-        }
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
         }
@@ -72,14 +68,6 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
 
             self.teleporters_source_layout.addWidget(checks.pop(location), row, 1)
 
-            other_locations = [
-                node.default_connection
-                for node in node_identifiers[location].nodes
-                if isinstance(node, DockNode)
-                and node.dock_type in self.teleporter_types
-                and region_list.identifier_for_node(node) == location
-            ]
-            assert len(other_locations) == 1
             teleporter_in_target = typing.cast(DockNode, region_list.node_by_identifier(location)).default_connection
 
             self._teleporters_source_destination[location] = None
@@ -114,7 +102,7 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
 
         for origin, destination in self._teleporters_source_destination.items():
             origin_check = self._teleporters_source_for_location[origin]
-            dest_check = self._teleporters_source_for_location.get(destination)
+            dest_check = self._teleporters_source_for_location.get(destination) if destination is not None else None
 
             assert origin_check or dest_check
 

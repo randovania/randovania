@@ -71,7 +71,7 @@ class AM2RPresetDescriber(GamePresetDescriber):
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {
-                    f"Elevators/Shuttles: {configuration.teleporters.description('transporters')}": (
+                    f"Transport Pipes: {configuration.teleporters.description('transporters')}": (
                         not configuration.teleporters.is_vanilla
                     )
                 },
