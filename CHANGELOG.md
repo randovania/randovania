@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
+- Added: Exposed Open Transitions for Door Lock Rando. Shuffling these in, will place Doors on all 4-Tile high transitions.
+- Added: Transport Pipe randomizer. If enabled, it will change where Transport Pipes lead to.
 
 #### Logic Database
 
