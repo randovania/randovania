@@ -46,6 +46,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
 - Added: Using Stand on Frozen Enemies trick to get the item in Big Hub, using either Flash Shift or Spin Boost.
 
+##### Ferenia
+
+- Added: Climb Sloped Surfaces (Intermediate) with Flash Shift to reach the pickup in Pitfall Puzzle Room, with 2 Flash Charges.
+- Added: Climb Sloped Surfaces (Beginner) with Flash Shift to climb the slope at the bottom of Speedboost Slopes Maze, with 1 Flach Charge.
+
 ##### Ghavoran
 
 - Changed: Climbing to the pickup at the top of Spin Boost Tower using Flash Shift has been reclassified from Climb Sloped Tunnels to Climb Sloped Surfaces.
