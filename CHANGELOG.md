@@ -71,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Area 1
 
-- Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths. 
+- Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths.
 
 ## [8.0.0] - 2024-05-01
 
