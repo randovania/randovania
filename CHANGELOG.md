@@ -35,14 +35,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic database
 
+- Added: New trick: Climb Sloped Surfaces.
+
 #### Burenia
 
-- Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Tunnels (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Tunnels (Beginner) with 1 Flash Charge.
+- Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Surfaces (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Surfaces (Beginner) with 1 Flash Charge.
 
 ##### Dairon
 
 - Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
 - Added: Using Stand on Frozen Enemies trick to get the item in Big Hub, using either Flash Shift or Spin Boost.
+
+##### Ghavoran
+
+- Changed: Climbing to the pickup at the top of Spin Boost Tower using Flash Shift has been reclassified from Climb Sloped Tunnels to Climb Sloped Surfaces.
 
 ### Metroid Prime
 
