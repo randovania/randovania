@@ -71,6 +71,11 @@ class AM2RPresetDescriber(GamePresetDescriber):
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
                 {
+                    f"Transport Pipes: {configuration.teleporters.description('transporters')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
+                {
                     "Enable Septoggs": configuration.septogg_helpers,
                     "Add new Nest Pipes": configuration.nest_pipes,
                     "Respawn bomb blocks": configuration.respawn_bomb_blocks,

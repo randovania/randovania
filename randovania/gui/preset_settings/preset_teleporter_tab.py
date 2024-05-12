@@ -11,6 +11,7 @@ from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.lib.teleporters import (
     TeleporterList,
+    TeleporterShuffleMode,
     TeleporterTargetList,
 )
 
@@ -28,7 +29,7 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
     _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
-    teleporter_mode_to_description = []
+    teleporter_mode_to_description: dict[TeleporterShuffleMode, str] = {}
     teleporters_layout: QtWidgets.QVBoxLayout
     teleporters_combo: ScrollProtectedComboBox
     teleporters_description_label: QtWidgets.QLabel
