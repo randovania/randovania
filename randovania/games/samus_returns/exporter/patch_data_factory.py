@@ -419,7 +419,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             if node.dock_type not in self.game.dock_weakness_database.all_teleporter_dock_types:
                 continue
 
-            scenario = self.game.region_list.nodes_to_region(node).extra["scenario_id"]
+            scenario = self._level_name_for(node)
             actor_name = node.extra["actor_name"]
             if elevator_dict.get(scenario, None) is None:
                 elevator_dict[scenario] = {}
