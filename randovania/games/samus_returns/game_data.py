@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from randovania.games import game
 from randovania.games.samus_returns import layout
 from randovania.games.samus_returns.layout.preset_describer import MSRPresetDescriber
 from randovania.games.samus_returns.pickup_database import progressive_items
 
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 
     return MSRPerGameOptions
@@ -25,13 +32,13 @@ def _gui() -> game.GameGui:
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.samus_returns.exporter.patch_data_factory import MSRPatchDataFactory
 
     return MSRPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.samus_returns.exporter.game_exporter import MSRGameExporter
 
     return MSRGameExporter()

@@ -304,6 +304,13 @@ Templates
 Dock Weaknesses
 
 > Door
+  * Open Transition
+      Extra - is_dock: True
+      Open:
+          Trivial
+      No lock
+
+
   * Normal Door
       Open:
           Trivial
@@ -311,6 +318,7 @@ Dock Weaknesses
 
 
   * Normal Door (Forced)
+      Extra - door_name: Normal Door
       Open:
           Trivial
       No lock
@@ -388,7 +396,8 @@ Dock Weaknesses
       No lock
 
 
-  * Metroid Queen-Locked Door
+  * Queen Metroid-Locked Door
+      Extra - door_name: Queen-Locked Door
       Open:
           After Boss - Queen Defeated
       No lock
@@ -531,6 +540,7 @@ Dock Weaknesses
           Industrial Complex EMP Door
           Missile Door
           Normal Door
+          Open Transition
           Power Bomb Door
           Research Site Open Hatch
           Super Missile Door
@@ -559,6 +569,7 @@ Dock Weaknesses
           Normal Door
           Plasma Beam Door
           Power Bomb Door
+          Queen Metroid-Locked Door
           Research Site Open Hatch
           Screw Attack Door
           Serris-Locked Door

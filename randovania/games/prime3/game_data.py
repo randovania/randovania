@@ -14,9 +14,9 @@ if typing.TYPE_CHECKING:
 
 
 def _options() -> type[PerGameOptions]:
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.games.prime3.exporter.options import CorruptionPerGameOptions
 
-    return PerGameOptions
+    return CorruptionPerGameOptions
 
 
 def _gui() -> game.GameGui:
