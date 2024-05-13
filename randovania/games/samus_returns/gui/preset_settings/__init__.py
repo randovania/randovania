@@ -14,6 +14,7 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
     from randovania.games.samus_returns.gui.preset_settings.msr_hints_tab import PresetMSRHints
     from randovania.games.samus_returns.gui.preset_settings.msr_patches_tab import PresetMSRPatches
     from randovania.games.samus_returns.gui.preset_settings.msr_reserves_tab import PresetMSRReserves
+    from randovania.games.samus_returns.gui.preset_settings.msr_teleporters_tab import PresetTeleportersMSR
     from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -26,10 +27,11 @@ def msr_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list
         PresetGeneration,
         PresetMSRGoal,
         PresetMSRHints,
-        PresetMetroidStartingArea,
-        PresetDockRando,
         PresetLocationPool,
         MetroidPresetItemPool,
+        PresetMetroidStartingArea,
+        PresetTeleportersMSR,
+        PresetDockRando,
         PresetMSRAeion,
         PresetMSRReserves,
         PresetMSRPatches,
