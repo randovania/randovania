@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: When Doors are shuffled over Research Site Hatches, they are now not obscured by the rock background.
 - Fixed: Events followed by pickups are now better weighted during generation.
 - Fixed: When Research Site Hatches are shuffled to Ammo doors (Missile, Super Missile, Power Bomb), they will now get unlocked automatically when going through them.
+- Fixed: During generation, the starting health is now properly accounted for when deciding how many Energy Tanks (and similar) are needed for a requirement.
 
 #### Logic Database
 
@@ -68,7 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Area 1
 
-- Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths. 
+- Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths.
 
 ## [8.0.0] - 2024-05-01
 
