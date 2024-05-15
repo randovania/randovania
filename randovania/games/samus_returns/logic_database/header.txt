@@ -346,6 +346,13 @@ Dock Weaknesses
           Impossible
 
 
+  * Permanently Locked Door
+      Extra - type: locked
+      Open:
+          Impossible
+      No lock
+
+
   * Power Beam Door
       Extra - type: power_beam
       Open:
@@ -422,9 +429,41 @@ Dock Weaknesses
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
           Lay Power Bomb
 
+
+  * Ice Beam Door
+      Extra - type: ice_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Ice Beam
+
+
+  * Grapple Beam Door
+      Extra - type: grapple_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Grapple Beam
+
+
+  * Bomb Door
+      Extra - type: bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Bomb
+
+
+  * Beam Burst Door
+      Extra - type: beam_burst
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Beam Burst
+
   > Dock Rando:
       Unlocked: Power Beam Door
-      Locked: Access Closed
+      Locked: Permanently Locked Door
       Change from:
           Charge Beam Door
           Missile Door
@@ -435,8 +474,13 @@ Dock Weaknesses
           Super Missile Door
           Wave Beam Door
       Change to:
+          Beam Burst Door
+          Bomb Door
           Charge Beam Door
+          Grapple Beam Door
+          Ice Beam Door
           Missile Door
+          Permanently Locked Door
           Plasma Beam Door
           Power Beam Door
           Power Bomb Door
