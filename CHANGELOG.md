@@ -29,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Waterfalls Exterior: Hypermode option of climbing the room with Walljumps and Morph Glides.
 
+##### Golden Temple
+
+- Added: Golden Temple Exterior: A video for the Walljump to Exterior Alpha Nest.
+
 ##### The Tower
 
 - Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
