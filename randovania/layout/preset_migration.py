@@ -1096,6 +1096,13 @@ def _migrate_v77(preset: dict) -> dict:
 
 
 def _migrate_v78(preset: dict) -> dict:
+    if preset["game"] == "samus_returns":
+        preset["configuration"]["teleporters"] = {"mode": "vanilla", "excluded_teleporters": [], "excluded_targets": []}
+
+    return preset
+
+
+def _migrate_v79(preset: dict) -> dict:
     if preset["game"] == "am2r":
         preset["configuration"]["artifacts"]["placed_artifacts"] = preset["configuration"]["artifacts"][
             "required_artifacts"
@@ -1182,7 +1189,8 @@ _MIGRATIONS = [
     _migrate_v75,
     _migrate_v76,  # msr door lock rando
     _migrate_v77,
-    _migrate_v78,
+    _migrate_v78,  # msr elevator rando
+    _migrate_v79,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

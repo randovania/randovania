@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
@@ -56,7 +55,7 @@ class EventPickupNode(ResourceNode):
         return self.pickup_node.resource(context)
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return ResourceRequirement.simple(self.pickup_node.resource(context))
+        return self.pickup_node.requirement_to_leave(context)
 
     def can_collect(self, context: NodeContext) -> bool:
         event_collect = self.event_node.can_collect(context)
