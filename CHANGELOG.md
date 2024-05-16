@@ -65,12 +65,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
-- **Major** - Added: Door Lock randomizer has been added, including new door types.
+- **Major** - Added: Door Lock randomizer has been added, along with new door types.
 - **Major** - Added: Elevator randomizer has been added.
+- Changed: DNA hints now just say "DNA" instead of "Metroid DNA".
 - Fixed: If no seed was exported at a previous start of Randovania, the export window now shows the correct title ID in the output path for NTSC without having to switch to PAL and back to NTSC.
 - Fixed: Removed an incorrect start location from Area 4 Central Caves, which failed when exporting the game.
 - Fixed: Typo on the exporting dialog.
 - Fixed: Common case where a modified input RomFS was considered being unmodified.
+- Fixed: Starting at Area 3 Factory Exterior - Beam Burst Chamber & Tsumuri Station no longer spawns Samus out of bounds.
 
 #### Logic Database
 
