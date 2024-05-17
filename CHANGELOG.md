@@ -25,10 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Distribution Center
 
 - Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
+- Fixed: Gravity Area Trapdoor: Shinesparking up is now impossible on Door Lock Rando.
+- Fixed: Gravity Area Shaft: Shinesparking up is now impossible on Door Lock Rando and also properly accounts for Missiles.
 
 ##### Genetics Laboratory
 
 - Added: Waterfalls Exterior: Hypermode option of climbing the room with Walljumps and Morph Glides.
+- Fixed: Hatchling Room Underside: Shinesparking up is now impossible on Door Lock Rando.
 
 ##### Golden Temple
 
