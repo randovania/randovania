@@ -62,6 +62,15 @@ class AM2RBootstrap(MetroidBootstrap):
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("DoorLockRando")
 
+            door_db = configuration.dock_rando.weakness_database
+            door_type = door_db.find_type("door")
+            open_transition_door = door_db.get_by_weakness("door", "Open Transition")
+            are_transitions_shuffled = (
+                open_transition_door in configuration.dock_rando.types_state[door_type].can_change_from
+            )
+            if are_transitions_shuffled:
+                enabled_resources.add("ShuffledOpenHatches")
+
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
