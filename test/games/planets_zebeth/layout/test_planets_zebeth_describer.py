@@ -34,7 +34,7 @@ def test_planets_zebeth_format_params(preset_name):
     # Assert
     assert dict(result) == {
         "Game Changes": [],
-        "Gameplay": ["Starts at Brinstar - Corridor 1"],
+        "Gameplay": ["Starts at Brinstar - Maru Mari Hall"],
         "Goal": [dna_where],
         "Item Pool": ["Size: 42 of 42", "Vanilla starting items"],
         "Logic Settings": ["All tricks disabled"],

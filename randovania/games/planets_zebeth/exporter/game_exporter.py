@@ -33,6 +33,12 @@ class PlanetsZebethGameExporter(GameExporter):
         """
         return False
 
+    def export_params_type(self) -> type[GameExportParams]:
+        """
+        Returns the type of the GameExportParams expected by this exporter.
+        """
+        return PlanetsZebethGameExportParams
+
     def _do_export_game(
         self,
         patch_data: dict,
