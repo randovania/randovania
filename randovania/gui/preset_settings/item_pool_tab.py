@@ -365,7 +365,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             current_column = 0
 
-            def add_column(widget: QtWidgets.QWidget):
+            def add_column(widget: QtWidgets.QWidget) -> None:
                 nonlocal current_column
                 layout.addWidget(widget, current_row, current_column)
                 current_column += 1
