@@ -1111,6 +1111,17 @@ def _migrate_v79(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v80(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        items = ["Long Beam", "Infinite Bomb Jump", "Walljump"]
+        for i in items:
+            preset["configuration"]["standard_pickup_configuration"]["pickups_state"][i] = {
+                "num_included_in_starting_pickups": 1
+            }
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1191,6 +1202,7 @@ _MIGRATIONS = [
     _migrate_v77,
     _migrate_v78,  # msr elevator rando
     _migrate_v79,
+    _migrate_v80,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
