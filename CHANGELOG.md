@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.1.0] - 2024-06-??
 
+- Changed: In Item Pool tab, improved the presentation for configuring ammo.
+- Fixed: Events followed by pickups are now better weighted during generation.
+- Fixed: During generation, the starting health is now properly accounted for when deciding how many Energy Tanks (and similar) are needed for a requirement.
+
 ### AM2R
 
 - Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
@@ -16,9 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The following sprites were changed in order to fit more with AM2R's art style: Ice Missiles and Storm Missiles for Dread, Annihilator Beam, Dark Suit, Dark Visor, Echo Visor, Light Suit and Progressive Suit for Echoes, Gravity Suit, Phazon Suit and Varia Suit for Prime 1.
 - Changed: When Doors are shuffled over Research Site Hatches, they are now not obscured by the rock background.
 - Changed: The Starter Preset now has `Unlock Genetics Laboratory Doors` enabled.
-- Fixed: Events followed by pickups are now better weighted during generation.
 - Fixed: When Research Site Hatches are shuffled to Ammo doors (Missile, Super Missile, Power Bomb), they will now get unlocked automatically when going through them.
-- Fixed: During generation, the starting health is now properly accounted for when deciding how many Energy Tanks (and similar) are needed for a requirement.
 
 #### Logic Database
 

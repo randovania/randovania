@@ -18,7 +18,8 @@ if TYPE_CHECKING:
 
 class AmmoPickupWidgets(NamedTuple):
     pickup_spinbox: QtWidgets.QSpinBox
-    expected_count: QtWidgets.QLabel
+    expected_count: QtWidgets.QLabel | None
+    expected_template: str
     pickup_box: QtWidgets.QGroupBox
     require_main_item_check: QtWidgets.QCheckBox | None
 

@@ -82,14 +82,11 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
 
         if pickup.ammo:
             ammo_names = " and ".join(resources_database.get_item(ammo_index).long_name for ammo_index in pickup.ammo)
-            self.provided_ammo_label.setText(
-                f"<html><head/><body><p>{ammo_names} provided by {pickup.name}</p></body></html>"
-            )
             self.provided_ammo_spinbox.setMaximum(
                 min(resources_database.get_item(ammo_index).max_capacity for ammo_index in pickup.ammo)
             )
+            self.provided_ammo_spinbox.setSuffix(f" {ammo_names}")
         else:
-            self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
 
         if self._pickup.description is not None:
