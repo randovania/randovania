@@ -16,6 +16,7 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_bosses: bool
     prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
+    placed_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
 
 
 @dataclasses.dataclass(frozen=True)
@@ -48,5 +49,13 @@ class AM2RConfiguration(BaseConfiguration):
 
         if self.nest_pipes:
             result.add("new-pipes")
+
+        return result
+
+    def unsupported_features(self) -> list[str]:
+        result = super().unsupported_features()
+
+        if self.artifacts.required_artifacts > self.artifacts.placed_artifacts:
+            result.append("The amount of required DNA cannot be higher than the total amount of placed DNA.")
 
         return result

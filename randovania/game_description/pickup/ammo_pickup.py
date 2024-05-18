@@ -32,6 +32,9 @@ class AmmoPickupDefinition(JsonDataclass):
     temporary: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     allows_negative: bool | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    include_expected_counts: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
+    explain_other_sources: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
+    mention_limit: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
 
     def __post_init__(self) -> None:

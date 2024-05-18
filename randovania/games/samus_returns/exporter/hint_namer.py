@@ -80,7 +80,7 @@ class MSRHintNamer(HintNamer):
         # patch the name here instead. Fix it there at one point.
         name = resource.long_name
         if resource.short_name.startswith("Metroid DNA "):
-            name = "Metroid DNA"
+            name = "DNA"
         return fmt.format(
             name,
             determiner,
