@@ -299,14 +299,15 @@ class AM2RPatchDataFactory(PatchDataFactory):
         ice = [(self.game.resource_database.get_item("Ice Beam"))]
         dna_hint_mapping = {}
         hint_config = self.configuration.hints
+        hint_namer = AM2RHintNamer(self.description.all_patches, self.players_config)
         if hint_config.artifacts != ItemHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                AM2RHintNamer(self.description.all_patches, self.players_config),
+                hint_namer,
                 hint_config.artifacts == ItemHintMode.HIDE_AREA,
                 artifacts,
-                False,  # TODO: set this to true, when patcher supports setting colors!
+                True,
             )
         else:
             dna_hint_mapping = {k: f"{k.long_name} is hidden somewhere on SR-388." for k in artifacts}
@@ -325,7 +326,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = [rng.choice(JOKE_HINTS + [dud_hint])]
+                shuffled_hints = [hint_namer.format_joke(rng.choice(JOKE_HINTS + [dud_hint]), True)]
             septogg_hints[f"septogg_a{i}"] = gm_newline.join(shuffled_hints)
 
         ice_hint = {}
@@ -333,10 +334,10 @@ class AM2RPatchDataFactory(PatchDataFactory):
             temp_ice_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                AM2RHintNamer(self.description.all_patches, self.players_config),
+                hint_namer,
                 hint_config.ice_beam == ItemHintMode.HIDE_AREA,
                 ice,
-                False,  # TODO: set this to true, when patcher supports setting colors!
+                True,
             )
             ice_hint = {"chozo_labs": temp_ice_hint[ice[0]]}
         else:
