@@ -126,7 +126,7 @@ class AM2RHintNamer(HintNamer):
         return colorize_text(self.color_joke, joke, with_color)
 
     @property
-    def color_joke(self):
+    def color_joke(self) -> AM2RColor:
         return AM2RColor.GREEN
 
     @property
