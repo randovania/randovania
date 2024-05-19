@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 def test_select_by_identifier(skip_qtbot: pytestqt.qtbot.QtBot, blank_game_description: GameDescription) -> None:
-    widget = NodeSelectorWidget(blank_game_description.region_list)
+    widget = NodeSelectorWidget(blank_game_description.region_list, lambda n: True)
     skip_qtbot.addWidget(widget)
 
     identifier = NodeIdentifier.create("Intro", "Explosive Depot", "Pickup (Explosive)")

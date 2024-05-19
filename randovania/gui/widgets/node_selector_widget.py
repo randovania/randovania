@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
@@ -15,9 +16,10 @@ if TYPE_CHECKING:
 class NodeSelectorWidget(QtWidgets.QWidget):
     SelectedNodeChanged = QtCore.Signal()
 
-    def __init__(self, region_list: RegionList):
+    def __init__(self, region_list: RegionList, node_filter_criteria: Callable[[Node], bool]):
         super().__init__()
         self.region_list = region_list
+        self.node_filter_criteria = node_filter_criteria
 
         self.line_layout = QtWidgets.QHBoxLayout()
         self.line_layout.setContentsMargins(0, 0, 0, 0)
@@ -54,9 +56,11 @@ class NodeSelectorWidget(QtWidgets.QWidget):
 
         signal_handling.clear_without_notify(self.node_combo)
         for node in area.nodes:
-            self.node_combo.addItem(node.name, userData=node)
+            if self.node_filter_criteria(node):
+                self.node_combo.addItem(node.name, userData=node)
 
-        assert self.node_combo.count() > 0
+        if not self.node_combo.count():
+            self.node_combo.addItem("<No Valid Options>", userData=None)
 
     def on_node_combo(self, _: None) -> None:
         self.SelectedNodeChanged.emit()
@@ -67,5 +71,5 @@ class NodeSelectorWidget(QtWidgets.QWidget):
         self.area_combo.setCurrentIndex(self.area_combo.findText(identifier.area))
         self.node_combo.setCurrentIndex(self.node_combo.findText(identifier.node))
 
-    def selected_node(self) -> Node:
+    def selected_node(self) -> Node | None:
         return self.node_combo.currentData()

@@ -5,6 +5,7 @@ import typing
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
@@ -98,17 +99,20 @@ def _create_default_template_requirement(resource_database: ResourceDatabase) ->
 
 def _create_default_node_requirement(region_list: RegionList) -> NodeRequirement:
     for node in region_list.all_nodes:
-        if node is not None:
+        if isinstance(node, ResourceNode):
             return NodeRequirement(node.identifier)
     raise RuntimeError("No nodes?!")
 
 
 class BaseEditor:
-    def deleteLater(self) -> None:
+    def delete_later(self) -> None:
         raise NotImplementedError
 
     @property
-    def current_requirement(self) -> Requirement:
+    def current_requirement(self) -> Requirement | None:
+        raise NotImplementedError
+
+    def requirement_type(self) -> type[Requirement]:
         raise NotImplementedError
 
 
@@ -187,7 +191,7 @@ class ResourceRequirementEditor(BaseEditor):
         old_combo.deleteLater()
         self._update_visible_elements_by_type()
 
-    def deleteLater(self) -> None:
+    def delete_later(self) -> None:
         for widget in self._all_widgets:
             widget.deleteLater()
 
@@ -221,6 +225,9 @@ class ResourceRequirementEditor(BaseEditor):
             negate = False
 
         return ResourceRequirement.create(self.resource_name_combo.currentData(), quantity, negate)
+
+    def requirement_type(self) -> type[Requirement]:
+        return ResourceRequirement
 
 
 class ArrayRequirementEditor(BaseEditor):
@@ -268,7 +275,7 @@ class ArrayRequirementEditor(BaseEditor):
     def _create_item(self, item: Requirement) -> None:
         def on_remove() -> None:
             self._editors.remove(nested_editor)
-            nested_editor.deleteLater()
+            nested_editor.delete_later()
 
         nested_editor = RequirementEditor(
             self.group_box, self.item_layout, self.resource_database, self.region_list, on_remove=on_remove
@@ -282,23 +289,27 @@ class ArrayRequirementEditor(BaseEditor):
         self.item_layout.removeWidget(self.new_item_button)
         self.item_layout.addWidget(self.new_item_button)
 
-    def deleteLater(self) -> None:
+    def delete_later(self) -> None:
         self.group_box.deleteLater()
         self.comment_text_box.deleteLater()
         for editor in self._editors:
-            editor.deleteLater()
+            editor.delete_later()
         self.new_item_button.deleteLater()
 
     @property
-    def current_requirement(self) -> RequirementArrayBase:
+    def current_requirement(self) -> RequirementArrayBase | None:
         comment: str | None = self.comment_text_box.text().strip()
         if comment == "":
             comment = None
 
-        return self._array_type(
-            [editor.current_requirement for editor in self._editors],
-            comment=comment,
-        )
+        nested = [editor.current_requirement for editor in self._editors]
+        if any(it is None for it in nested):
+            return None
+
+        return self._array_type(nested, comment=comment)
+
+    def requirement_type(self) -> type[Requirement]:
+        return self._array_type
 
 
 class TemplateRequirementEditor(BaseEditor):
@@ -326,12 +337,15 @@ class TemplateRequirementEditor(BaseEditor):
         self.template_name_combo = template_name_combo
         self.layout.addWidget(self.template_name_combo)
 
-    def deleteLater(self) -> None:
+    def delete_later(self) -> None:
         self.template_name_combo.deleteLater()
 
     @property
     def current_requirement(self) -> RequirementTemplate:
         return RequirementTemplate(self.template_name_combo.currentData())
+
+    def requirement_type(self) -> type[Requirement]:
+        return RequirementTemplate
 
 
 class NodeRequirementEditor(BaseEditor):
@@ -344,17 +358,25 @@ class NodeRequirementEditor(BaseEditor):
     ):
         self.parent = parent
         self.layout = layout
-        self.selector = NodeSelectorWidget(region_list)
+        self.selector = NodeSelectorWidget(
+            region_list, lambda node: isinstance(node, ResourceNode) and not node.is_derived_node
+        )
         self.selector.select_by_identifier(item.node_identifier)
 
         self.layout.addWidget(self.selector)
 
-    def deleteLater(self) -> None:
+    def delete_later(self) -> None:
         self.selector.deleteLater()
 
     @property
-    def current_requirement(self) -> NodeRequirement:
-        return NodeRequirement(self.selector.selected_node().identifier)
+    def current_requirement(self) -> NodeRequirement | None:
+        selected_node = self.selector.selected_node()
+        if selected_node is not None:
+            return NodeRequirement(selected_node.identifier)
+        return None
+
+    def requirement_type(self) -> type[Requirement]:
+        return NodeRequirement
 
 
 class RequirementEditor:
@@ -436,7 +458,7 @@ class RequirementEditor:
     def _on_change_requirement_type(self) -> None:
         assert self._editor is not None
         current_requirement = self.current_requirement
-        self._editor.deleteLater()
+        self._editor.delete_later()
 
         if isinstance(current_requirement, ResourceRequirement):
             self._last_resource = current_requirement
@@ -451,7 +473,7 @@ class RequirementEditor:
         elif isinstance(current_requirement, NodeRequirement):
             pass
 
-        else:
+        elif current_requirement is not None:
             raise RuntimeError(f"Unknown requirement type: {type(current_requirement)} - {current_requirement}")
 
         new_requirement: Requirement
@@ -473,17 +495,17 @@ class RequirementEditor:
 
         self.create_specialized_editor(new_requirement)
 
-    def deleteLater(self) -> None:
+    def delete_later(self) -> None:
         if self.remove_button is not None:
             self.remove_button.deleteLater()
 
         self.requirement_type_combo.deleteLater()
 
         if self._editor is not None:
-            self._editor.deleteLater()
+            self._editor.delete_later()
 
     @property
-    def current_requirement(self) -> Requirement:
+    def current_requirement(self) -> Requirement | None:
         assert self._editor is not None
         return self._editor.current_requirement
 
@@ -514,14 +536,24 @@ class ConnectionsEditor(QtWidgets.QDialog, Ui_ConnectionEditor):
         self._root_editor.create_specialized_editor(requirement)
 
     def deleteLater(self) -> None:
-        self._root_editor.deleteLater()
+        self._root_editor.delete_later()
 
-    def build_requirement(self) -> Requirement:
+    def build_requirement(self) -> Requirement | None:
         return self._root_editor.current_requirement
 
     @property
     def final_requirement(self) -> Requirement | None:
         result = self.build_requirement()
+        assert result is not None
         if result == Requirement.impossible():
             return None
         return result
+
+    def accept(self) -> None:
+        result = self.build_requirement()
+        if result is None:
+            QtWidgets.QMessageBox.critical(
+                self, "Invalid Configuration", "Unable to confirm selection, invalid values found."
+            )
+        else:
+            super().accept()

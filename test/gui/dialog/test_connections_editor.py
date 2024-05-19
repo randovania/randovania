@@ -6,6 +6,7 @@ import pytest
 from PySide6 import QtWidgets
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
+from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -76,7 +77,11 @@ def test_build_change_root(
         expected = None
 
     elif resource_type == NodeRequirement:
-        expected = NodeRequirement(next(iter(echoes_game_description.region_list.iterate_nodes())).identifier)
+        expected = NodeRequirement(
+            next(
+                node for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, ResourceNode)
+            ).identifier
+        )
 
     elif resource_type == RequirementTemplate:
         expected = RequirementTemplate(next(iter(gd.resource_database.requirement_template.keys())))
