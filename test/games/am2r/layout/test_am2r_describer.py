@@ -62,6 +62,10 @@ def test_am2r_format_params(artifacts) -> None:
             else [dna_where]
         ),
         "Hints": ["DNA Hint: Area and room", "Ice Beam Hint: Area only"],
-        "Item Pool": [f"Size: {118+artifacts.placed_artifacts} of 134", "Vanilla starting items"],
+        "Item Pool": [
+            f"Size: {118+artifacts.placed_artifacts} of 134",
+            "Excludes Varia Suit, Space Jump, Hi-Jump Boots, Gravity Suit",
+            "Shuffles 2x Progressive Jump, 2x Progressive Suit",
+        ],
         "Logic Settings": ["All tricks disabled"],
     }
