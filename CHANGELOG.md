@@ -37,6 +37,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: New trick: Climb Sloped Surfaces.
 
+#### Artaria
+
+- Changed: Climbing the slope in EMMI Zone Spinner with Spin Boost has been reclassified from Movement to Climb Sloped Surfaces.
+- Changed: Using Speed Booster to climb the slope in EMMI Zone Spinner has been reclassified to Speed Booster Conservation.
+- Added: Wall Jump (Beginner) is now an option for reaching the bottom part of the slope in EMMI Zone Spinner.
+- Changed: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with no items has been reclassified from Movement (Advanced) to Climb Sloped Surfaces (Expert).
+- Added: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with Phantom Cloak and Climb Sloped Surfaces (Advanced).
+- In Waterfall: Getting from Right of Rotatable to Tower Middle  with Spin Boost now requires Climb Sloped Surfaces (Beginner).
+
 #### Burenia
 
 - Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Surfaces (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Surfaces (Beginner) with 1 Flash Charge.
@@ -54,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Changed: Climbing to the pickup at the top of Spin Boost Tower using Flash Shift has been reclassified from Climb Sloped Tunnels to Climb Sloped Surfaces.
+- Changed: Climbing to the pickup at the top of Spin Boost Tower Using Flash Shit, the Wall Jump has been reduced from Advanced to Intermediate.
 
 ### Metroid Prime
 
