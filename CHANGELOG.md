@@ -45,7 +45,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Upper Factory Gamma Nest: Leaving to the top with Spider Ball or IBJ now requires the Gamma to be dead first.
 - Changed: Upper Factory Gamma Nest: Leaving to the top with only Walljump is now an Expert Walljump instead of Advanced.
 - Changed: Upper Factory Gamma Nest: Leaving to the top with Walljumps and the Septoggs is now an Intermediate Walljump instead of Beginner.
+- Changed: Fighting Torizo without any Beam Upgrades is now Advanced Combat.
 
+##### GFS Thoth
+
+- Changed: Fighting Genesis without any Beam Upgrades is now Expert Combat.
 
 ##### Golden Temple
 
