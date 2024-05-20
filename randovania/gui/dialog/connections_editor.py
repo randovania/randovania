@@ -302,9 +302,12 @@ class ArrayRequirementEditor(BaseEditor):
         if comment == "":
             comment = None
 
-        nested = [editor.current_requirement for editor in self._editors]
-        if any(it is None for it in nested):
-            return None
+        nested: list[Requirement] = []
+        for editor in self._editors:
+            req = editor.current_requirement
+            if req is None:
+                return None
+            nested.append(req)
 
         return self._array_type(nested, comment=comment)
 
