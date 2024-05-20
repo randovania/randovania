@@ -106,6 +106,10 @@ jobs:
         run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
         if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
 
+      - name: build ui files for test game too
+        run: python setup.py build_ui
+        if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
+
       - name: run pytest (no resolver)
         run: $PREFIX python -m pytest --cov randovania --cov-report=xml --skip-resolver-tests -n auto --durations=100
         shell: bash

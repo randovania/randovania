@@ -41,7 +41,8 @@ from randovania.lib import json_lib
 if TYPE_CHECKING:
     from argparse import ArgumentParser
 
-_GAMES_PATH = Path(__file__).parents[2].joinpath("games")
+_ROOT_PATH = Path(__file__).parents[2]
+_GAMES_PATH = _ROOT_PATH.joinpath("games")
 
 class_name_re = re.compile(r"\bBlank([A-Z][a-z])")
 enum_name_re = re.compile(r"^[A-Z][A-Z0-9_]+$")
@@ -73,7 +74,7 @@ def update_game_py(enum_name: str, enum_value: str):
         f.writelines(game_py)
 
 
-def copy_python_code(
+def copy_files_code(
     enum_name: str,
     enum_value: str,
     short_name: str,
@@ -94,19 +95,32 @@ def copy_python_code(
         if relative.as_posix().startswith("assets"):
             continue
 
+        relative = relative.with_name(relative.name.replace("blank_", f"{enum_value}_"))
         new_path = new_root.joinpath(relative)
 
         if file.is_dir():
             new_path.mkdir(exist_ok=True)
             continue
 
+        elif file.name == ".gitignore":
+            new_root.joinpath(relative).write_text(file.read_text())
+            continue
+
+        elif file.suffix == ".ui":
+            code = file.read_text()
+            code = code.replace(">Blank", f">{short_name}")
+            new_root.joinpath(relative).write_text(code)
+            continue
+
         elif file.suffix != ".py":
             continue
 
         code = file.read_text()
-        code = code.replace("randovania.games.blank", f"randovania.games.{enum_value}")
+        code = code.replace("blank", enum_value)
         code = class_name_re.sub(short_name + r"\1", code)
+        code = code.replace("PresetBlankPatches", f"Preset{short_name}Patches")
         code = code.replace("RandovaniaGame.BLANK", f"RandovaniaGame.{enum_name}")
+        code = code.replace("_Blank", f"_{short_name}")
 
         if relative.as_posix() == "game_data.py":
             code = code.replace('short_name="Blank"', f'short_name="{short_name}"')
@@ -316,6 +330,18 @@ def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, p
         VersionedPreset.with_preset(new_preset).save_to_file(_GAMES_PATH.joinpath(new_game.value, "presets", path))
 
 
+def update_pyuic(enum_value: str) -> None:
+    new_entry = [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
+
+    pyuic_path = _ROOT_PATH.parent.joinpath("pyuic.json")
+    pyuic = json_lib.read_path(pyuic_path)
+    if not any(it == new_entry for it in pyuic["files"]):
+        pyuic["files"].append(
+            [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
+        )
+    json_lib.write_path(pyuic_path, pyuic)
+
+
 def new_game_command_logic(args):
     enum_name: str = args.enum_name
     enum_value: str = args.enum_value
@@ -339,8 +365,9 @@ def new_game_command_logic(args):
         print(f"Error! {v}")
         raise SystemExit(1)
 
-    copy_python_code(enum_name, enum_value, short_name, long_name)
+    copy_files_code(enum_name, enum_value, short_name, long_name)
     update_game_py(enum_name, enum_value)
+    update_pyuic(enum_value)
 
     json_lib.write_path(_GAMES_PATH.joinpath(enum_value).joinpath("assets", "migration_data.json"), {})
 
