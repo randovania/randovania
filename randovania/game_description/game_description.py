@@ -194,7 +194,10 @@ class GameDescription:
                 resource_database=self.resource_database,
                 layers=self.layers,
                 dock_weakness_database=self.dock_weakness_database,
-                region_list=RegionList([region.duplicate() for region in self.region_list.regions]),
+                region_list=RegionList(
+                    [region.duplicate() for region in self.region_list.regions],
+                    self.region_list.flatten_to_set_on_patch,
+                ),
                 victory_condition=self.victory_condition,
                 starting_location=self.starting_location,
                 initial_states=copy.copy(self.initial_states),

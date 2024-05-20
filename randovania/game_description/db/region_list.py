@@ -31,6 +31,7 @@ _NodesTuple = tuple[Node | None, ...]
 @dataclasses.dataclass(init=False, slots=True)
 class RegionList(NodeProvider):
     regions: list[Region]
+    flatten_to_set_on_patch: bool
 
     _nodes_to_area: dict[NodeIndex, Area]
     _nodes_to_region: dict[NodeIndex, Region]
@@ -46,10 +47,12 @@ class RegionList(NodeProvider):
     def __deepcopy__(self, memodict: dict) -> RegionList:
         return RegionList(
             regions=copy.deepcopy(self.regions, memodict),
+            flatten_to_set_on_patch=self.flatten_to_set_on_patch,
         )
 
-    def __init__(self, regions: list[Region]):
+    def __init__(self, regions: list[Region], flatten_to_set_on_patch: bool = False):
         self.regions = regions
+        self.flatten_to_set_on_patch = flatten_to_set_on_patch
         self._patched_node_connections = None
         self._patches_dock_open_requirements = None
         self._patches_dock_lock_requirements = None
@@ -199,14 +202,19 @@ class RegionList(NodeProvider):
         :return:
         """
 
-        from randovania.game_description.requirements.requirement_and import RequirementAnd
-        from randovania.game_description.requirements.requirement_or import RequirementOr
+        if self.flatten_to_set_on_patch:
+            from randovania.game_description.requirements.requirement_and import RequirementAnd
+            from randovania.game_description.requirements.requirement_or import RequirementOr
 
-        def flatten_to_set(requirement: Requirement) -> Requirement:
-            patched = requirement.patch_requirements(damage_multiplier, context)
-            return RequirementOr(
-                [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
-            ).simplify()
+            def flatten_to_set(requirement: Requirement) -> Requirement:
+                patched = requirement.patch_requirements(damage_multiplier, context)
+                return RequirementOr(
+                    [RequirementAnd(alternative.values()) for alternative in patched.as_set(context).alternatives]
+                ).simplify()
+        else:
+
+            def flatten_to_set(requirement: Requirement) -> Requirement:
+                return requirement.patch_requirements(damage_multiplier, context).simplify()
 
         # Area Connections
         self._patched_node_connections = {
