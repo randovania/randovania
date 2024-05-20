@@ -94,6 +94,7 @@ def copy_python_code(
         if relative.as_posix().startswith("assets"):
             continue
 
+        relative = relative.with_name(relative.name.replace("blank_", f"{enum_value}_"))
         new_path = new_root.joinpath(relative)
 
         if file.is_dir():
@@ -105,7 +106,9 @@ def copy_python_code(
 
         code = file.read_text()
         code = code.replace("randovania.games.blank", f"randovania.games.{enum_value}")
+        code = code.replace(".blank_", f".{enum_value}_")
         code = class_name_re.sub(short_name + r"\1", code)
+        code = code.replace("PresetBlankPatches", f"Preset{short_name}Patches")
         code = code.replace("RandovaniaGame.BLANK", f"RandovaniaGame.{enum_name}")
 
         if relative.as_posix() == "game_data.py":
