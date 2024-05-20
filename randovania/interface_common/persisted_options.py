@@ -172,6 +172,13 @@ def _dread_linux_ryujinx_path(options: dict) -> dict:
     return options
 
 
+def _msr_cosmetic_laser_color(options: dict) -> dict:
+    if "cosmetic_patches" in options.get("game_samus_returns", {}):
+        options["game_samus_returns"]["cosmetic_patches"].pop("use_grapple_laser_color")
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -203,6 +210,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added Dread's music sliders
     _only_new_fields,  # added Dread's "Access Permanently Closed" alt-shield
     _dread_linux_ryujinx_path,  # added Dread Ryujinx export to Unix systems
+    _msr_cosmetic_laser_color,  # remove the Grapple Laser color checkbox for MSR Cosmetics
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

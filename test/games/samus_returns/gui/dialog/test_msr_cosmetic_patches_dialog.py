@@ -23,17 +23,6 @@ def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_laser_color=True)
 
 
-def test_custom_grapple_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
-    cosmetic_patches = MSRCosmeticPatches(use_grapple_laser_color=False)
-
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
-    skip_qtbot.addWidget(dialog)
-
-    skip_qtbot.mouseClick(dialog.custom_grapple_laser_color_check, QtCore.Qt.MouseButton.LeftButton)
-
-    assert dialog.cosmetic_patches == MSRCosmeticPatches(use_grapple_laser_color=True)
-
-
 def test_custom_energy_tank_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     cosmetic_patches = MSRCosmeticPatches(use_energy_tank_color=False)
 
