@@ -19,4 +19,6 @@ def test_select_by_identifier(skip_qtbot: pytestqt.qtbot.QtBot, blank_game_descr
     assert widget.selected_node() is None
     widget.select_by_identifier(identifier)
 
-    assert widget.selected_node().identifier == identifier
+    selected_node = widget.selected_node()
+    assert selected_node is not None
+    assert selected_node.identifier == identifier
