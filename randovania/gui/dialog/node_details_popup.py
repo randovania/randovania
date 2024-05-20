@@ -143,7 +143,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for region in sorted(game.region_list.regions, key=lambda x: x.name):
             self.dock_connection_region_combo.addItem(region.name, userData=region)
             self.teleporter_destination_region_combo.addItem(region.name, userData=region)
-        refresh_if_needed(self.teleporter_destination_region_combo, self.on_dock_connection_region_combo)
+        refresh_if_needed(self.dock_connection_region_combo, self.on_dock_connection_region_combo)
         refresh_if_needed(self.teleporter_destination_region_combo, self.on_teleporter_destination_region_combo)
 
         for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
@@ -253,6 +253,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         signal_handling.set_combo_with_value(self.dock_weakness_combo, node.default_dock_weakness)
         self.dock_incompatible_model.items = list(node.incompatible_dock_weaknesses)
         self.dock_exclude_lock_rando_check.setChecked(node.exclude_from_dock_rando)
+
+        # UI custom name
+        self.ui_name_edit.setText(node.ui_custom_name)
 
     def fill_for_pickup(self, node: PickupNode) -> None:
         self.pickup_index_spin.setValue(node.pickup_index.index)
@@ -410,7 +413,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.set_teleporter_network_activated_by(requirement)
 
     async def _open_connections_editor(self, requirement: Requirement) -> Requirement | None:
-        self._edit_popup = ConnectionsEditor(self, self.game.resource_database, requirement)
+        self._edit_popup = ConnectionsEditor(self, self.game.resource_database, self.game.region_list, requirement)
         self._edit_popup.setModal(True)
         try:
             result = await async_dialog.execute_dialog(self._edit_popup)
@@ -468,6 +471,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 None,
                 self.dock_exclude_lock_rando_check.isChecked(),
                 tuple(self.dock_incompatible_model.items),
+                None if len(self.ui_name_edit.text()) == 0 else self.ui_name_edit.text(),
             )
 
         elif node_type == PickupNode:

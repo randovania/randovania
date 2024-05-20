@@ -16,7 +16,7 @@ from PySide6.QtCore import Qt, QUrl, Signal
 from qasync import asyncSlot
 
 import randovania
-from randovania import VERSION, get_readme_section
+from randovania import VERSION, get_readme_section, monitoring
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
@@ -381,12 +381,16 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             self._set_main_tab_visible(self.tab_game_list, False)
 
     def _select_game(self, game: RandovaniaGame):
-        # Set the game we want first, so we don't waste CPU creating wrong widgets
-        self.tab_game_details.set_current_game(game)
+        with monitoring.start_transaction(op="task", name="load_game_tab") as span:
+            span.set_tag("game", game)
+            span.set_tag("first_show", self.tab_game_details._first_show)
+            # Set the game we want first, so we don't waste CPU creating wrong widgets
+            self.tab_game_details.set_current_game(game)
 
-        # Make sure the target tab is visible, but don't use set_games_selector_visible to avoid hiding the current tab
-        self.set_games_selector_visible(False)
-        self._set_main_tab(self.tab_game_details)
+            # Make sure the target tab is visible, but don't use set_games_selector_visible to
+            # avoid hiding the current tab
+            self.set_games_selector_visible(False)
+            self._set_main_tab(self.tab_game_details)
 
     # Delayed Initialization
     @asyncSlot()

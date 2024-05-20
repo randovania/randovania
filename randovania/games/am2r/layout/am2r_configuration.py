@@ -4,6 +4,7 @@ import dataclasses
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.games.am2r.layout.am2r_teleporters import AM2RTeleporterConfiguration
 from randovania.games.am2r.layout.hint_configuration import HintConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -15,6 +16,7 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_bosses: bool
     prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
+    placed_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 46, "precision": 1})
 
 
 @dataclasses.dataclass(frozen=True)
@@ -22,6 +24,7 @@ class AM2RConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     softlock_prevention_blocks: bool
     septogg_helpers: bool
+    teleporters: AM2RTeleporterConfiguration
     skip_cutscenes: bool
     skip_save_cutscene: bool
     skip_item_cutscenes: bool
@@ -46,5 +49,13 @@ class AM2RConfiguration(BaseConfiguration):
 
         if self.nest_pipes:
             result.add("new-pipes")
+
+        return result
+
+    def unsupported_features(self) -> list[str]:
+        result = super().unsupported_features()
+
+        if self.artifacts.required_artifacts > self.artifacts.placed_artifacts:
+            result.append("The amount of required DNA cannot be higher than the total amount of placed DNA.")
 
         return result

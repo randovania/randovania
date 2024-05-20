@@ -2,6 +2,7 @@
 Hideout Entrance
 Extra - map_name: rm_a6a01
 Extra - minimap_data: [{'x': 34, 'y': 53}]
+Extra - light_level: 0
 > Horizontal Dock to Ramulken Road; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Ramulken Road/Horizontal Dock to Hideout Entrance
@@ -21,6 +22,7 @@ Extra - minimap_data: [{'x': 34, 'y': 53}]
 Ramulken Road
 Extra - map_name: rm_a6a02
 Extra - minimap_data: [{'x': 30, 'y': 53}, {'x': 31, 'y': 53}, {'x': 32, 'y': 53}, {'x': 33, 'y': 53}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Entrance; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Entrance/Horizontal Dock to Ramulken Road
@@ -37,6 +39,7 @@ Extra - minimap_data: [{'x': 30, 'y': 53}, {'x': 31, 'y': 53}, {'x': 32, 'y': 53
 Skreek and Ramulken Pool
 Extra - map_name: rm_a6a03
 Extra - minimap_data: [{'x': 26, 'y': 54}, {'x': 27, 'y': 54}, {'x': 28, 'y': 54}, {'x': 29, 'y': 53}, {'x': 29, 'y': 54}]
+Extra - light_level: 0
 > Horizontal Dock to Ramulken Road; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Ramulken Road/Horizontal Dock to Skreek and Ramulken Pool
@@ -77,15 +80,16 @@ Extra - minimap_data: [{'x': 26, 'y': 54}, {'x': 27, 'y': 54}, {'x': 28, 'y': 54
 Rocky Boulder
 Extra - map_name: rm_a6a04
 Extra - minimap_data: [{'x': 25, 'y': 54}, {'x': 25, 'y': 55}]
+Extra - light_level: 0
 > Horizontal Dock to Skreek and Ramulken Pool; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Skreek and Ramulken Pool/Horizontal Dock to Rocky Boulder
-  > Horizontal Dock to Skreek and Skorp Space
+  > Door to Skreek and Skorp Space
       Trivial
 
-> Horizontal Dock to Skreek and Skorp Space; Heals? False
+> Door to Skreek and Skorp Space; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Skreek and Skorp Space/Horizontal Dock to Rocky Boulder
+  * Open Transition to Skreek and Skorp Space/Door to Rocky Boulder
   * Extra - instance_id: 137593
   * Extra - facing: right
   * Extra - x: 0
@@ -97,9 +101,10 @@ Extra - minimap_data: [{'x': 25, 'y': 54}, {'x': 25, 'y': 55}]
 Skreek and Skorp Space
 Extra - map_name: rm_a6a05
 Extra - minimap_data: [{'x': 20, 'y': 55}, {'x': 21, 'y': 55}, {'x': 22, 'y': 55}, {'x': 23, 'y': 55}, {'x': 24, 'y': 55}]
-> Horizontal Dock to Rocky Boulder; Heals? False
+Extra - light_level: 0
+> Door to Rocky Boulder; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Rocky Boulder/Horizontal Dock to Skreek and Skorp Space
+  * Open Transition to Rocky Boulder/Door to Skreek and Skorp Space
   * Extra - instance_id: 137845
   * Extra - facing: left
   * Extra - x: 1600
@@ -110,22 +115,23 @@ Extra - minimap_data: [{'x': 20, 'y': 55}, {'x': 21, 'y': 55}, {'x': 22, 'y': 55
 > Horizontal Dock to Hideout Hub; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Hub/Horizontal Dock to Skreek and Skorp Space
-  > Horizontal Dock to Rocky Boulder
+  > Door to Rocky Boulder
       Destroy Ice Barrier
 
 ----------------
 Hideout Hub
 Extra - map_name: rm_a6a06
 Extra - minimap_data: [{'x': 18, 'y': 53}, {'x': 18, 'y': 54}, {'x': 18, 'y': 55}, {'x': 19, 'y': 53}, {'x': 19, 'y': 54}, {'x': 19, 'y': 55}]
+Extra - light_level: 0
 > Horizontal Dock to Skreek and Skorp Space; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Skreek and Skorp Space/Horizontal Dock to Hideout Hub
   > Horizontal Dock to Ridley Room
       Trivial
 
-> Horizontal Dock to Hideout Hub Access East; Heals? False
+> Door to Hideout Hub Access East; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Hub Access East/Horizontal Dock to Hideout Hub
+  * Open Transition to Hideout Hub Access East/Door to Hideout Hub
   * Extra - instance_id: 138131
   * Extra - facing: left
   * Extra - x: 640
@@ -140,35 +146,36 @@ Extra - minimap_data: [{'x': 18, 'y': 53}, {'x': 18, 'y': 54}, {'x': 18, 'y': 55
   * 3-Tiles High Dock to Ridley Room/Horizontal Dock to Hideout Hub
   > Horizontal Dock to Skreek and Skorp Space
       Trivial
-  > Horizontal Dock to Hideout Hub Access East
+  > Door to Hideout Hub Access East
       All of the following:
           # After killing omega
           Any of the following:
               # Get onto floating platform
               Space Jump or Can Use Spider Ball
-              Hi-Jump Boots and Walljump (Beginner)
+              Hi-Jump Boots and Walljump (Beginner) and Can Walljump
               # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
 
 > Horizontal Dock to Hideout Hub Access West; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Hub Access West/Horizontal Dock to Hideout Hub
-  > Horizontal Dock to Hideout Hub Access East
+  > Door to Hideout Hub Access East
       Trivial
 
 ----------------
 Hideout Hub Access West
 Extra - map_name: rm_a6a07
 Extra - minimap_data: [{'x': 16, 'y': 52}, {'x': 17, 'y': 52}, {'x': 17, 'y': 53}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Hub; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Hub/Horizontal Dock to Hideout Hub Access West
-  > Horizontal Dock to Hideout Alpha Nest Access West
+  > Door to Hideout Alpha Nest Access West
       Trivial
 
-> Horizontal Dock to Hideout Alpha Nest Access West; Heals? False
+> Door to Hideout Alpha Nest Access West; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Alpha Nest Access West/Horizontal Dock to Hideout Hub Access West
+  * Open Transition to Hideout Alpha Nest Access West/Door to Hideout Hub Access West
   * Extra - instance_id: 138266
   * Extra - facing: right
   * Extra - x: 0
@@ -180,9 +187,10 @@ Extra - minimap_data: [{'x': 16, 'y': 52}, {'x': 17, 'y': 52}, {'x': 17, 'y': 53
 Hideout Alpha Nest Access West
 Extra - map_name: rm_a6a08
 Extra - minimap_data: [{'x': 15, 'y': 50}, {'x': 15, 'y': 51}, {'x': 15, 'y': 52}]
-> Horizontal Dock to Hideout Hub Access West; Heals? False
+Extra - light_level: 0
+> Door to Hideout Hub Access West; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Hub Access West/Horizontal Dock to Hideout Alpha Nest Access West
+  * Open Transition to Hideout Hub Access West/Door to Hideout Alpha Nest Access West
   * Extra - instance_id: 138439
   * Extra - facing: left
   * Extra - x: 320
@@ -193,26 +201,27 @@ Extra - minimap_data: [{'x': 15, 'y': 50}, {'x': 15, 'y': 51}, {'x': 15, 'y': 52
 > Horizontal Dock to Hideout Alpha Nest; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Alpha Nest/Horizontal Dock to Hideout Alpha Nest Access West
-  > Horizontal Dock to Hideout Hub Access West
+  > Door to Hideout Hub Access West
       Trivial
 
 ----------------
 Hideout Alpha Nest
 Extra - map_name: rm_a6a09
 Extra - minimap_data: [{'x': 16, 'y': 50}, {'x': 17, 'y': 50}, {'x': 18, 'y': 49}, {'x': 18, 'y': 50}, {'x': 19, 'y': 49}, {'x': 19, 'y': 50}, {'x': 20, 'y': 49}, {'x': 20, 'y': 50}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Alpha Nest Access West; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Alpha Nest Access West/Horizontal Dock to Hideout Alpha Nest
-  > Horizontal Dock to Hideout Alpha Nest Access East
+  > Door to Hideout Alpha Nest Access East
       Trivial
-  > Horizontal Dock to Hideout Omega Nest Access
+  > Door to Hideout Omega Nest Access
       Hijump With Power Grip Wall
   > Event - Alpha
       Defeat dodging Alpha
 
-> Horizontal Dock to Hideout Alpha Nest Access East; Heals? False
+> Door to Hideout Alpha Nest Access East; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Alpha Nest Access East/Horizontal Dock to Hideout Alpha Nest
+  * Open Transition to Hideout Alpha Nest Access East/Door to Hideout Alpha Nest
   * Extra - instance_id: 138471
   * Extra - facing: left
   * Extra - x: 1600
@@ -220,9 +229,9 @@ Extra - minimap_data: [{'x': 16, 'y': 50}, {'x': 17, 'y': 50}, {'x': 18, 'y': 49
   > Horizontal Dock to Hideout Alpha Nest Access West
       Trivial
 
-> Horizontal Dock to Hideout Omega Nest Access; Heals? False
+> Door to Hideout Omega Nest Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Omega Nest Access/Horizontal Dock to Hideout Alpha Nest
+  * Open Transition to Hideout Omega Nest Access/Door to Hideout Alpha Nest
   * Extra - instance_id: 138494
   * Extra - facing: left
   * Extra - x: 1280
@@ -249,15 +258,16 @@ Extra - minimap_data: [{'x': 16, 'y': 50}, {'x': 17, 'y': 50}, {'x': 18, 'y': 49
 Hideout Omega Nest Access
 Extra - map_name: rm_a6a09A
 Extra - minimap_data: [{'x': 20, 'y': 49}, {'x': 21, 'y': 48}, {'x': 21, 'y': 49}, {'x': 22, 'y': 47}, {'x': 22, 'y': 48}, {'x': 23, 'y': 47}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Omega Nest; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Omega Nest/Horizontal Dock to Hideout Omega Nest Access
-  > Horizontal Dock to Hideout Alpha Nest
+  > Door to Hideout Alpha Nest
       Trivial
 
-> Horizontal Dock to Hideout Alpha Nest; Heals? False
+> Door to Hideout Alpha Nest; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Alpha Nest/Horizontal Dock to Hideout Omega Nest Access
+  * Open Transition to Hideout Alpha Nest/Door to Hideout Omega Nest Access
   * Extra - instance_id: 138544
   * Extra - facing: right
   * Extra - x: 0
@@ -269,6 +279,7 @@ Extra - minimap_data: [{'x': 20, 'y': 49}, {'x': 21, 'y': 48}, {'x': 21, 'y': 49
 Hideout Omega Nest
 Extra - map_name: rm_a6a09B
 Extra - minimap_data: [{'x': 24, 'y': 47}, {'x': 25, 'y': 47}, {'x': 26, 'y': 47}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Storage; Heals? False
   * Layers: default
   * 2-Tiles High Dock to Hideout Storage/Horizontal Dock to Hideout Omega Nest
@@ -281,7 +292,7 @@ Extra - minimap_data: [{'x': 24, 'y': 47}, {'x': 25, 'y': 47}, {'x': 26, 'y': 47
               Any of the following:
                   Space Jump or Can Use Spider Ball
                   # IBJ over them https://www.youtube.com/watch?v=I7IayKDp2ss
-                  Infinite Bomb Jumping (Expert) and Can Use Bombs
+                  Infinite Bomb Jumping (Expert) and Can IBJ and Can Use Bombs
                   # Heavy RNG until Omega hops over you in a desired way
                   Morph Ball and Movement (Hypermode)
 
@@ -296,7 +307,7 @@ Extra - minimap_data: [{'x': 24, 'y': 47}, {'x': 25, 'y': 47}, {'x': 26, 'y': 47
               Any of the following:
                   Space Jump or Can Use Spider Ball
                   # IBJ over it https://www.youtube.com/watch?v=I7IayKDp2ss
-                  Infinite Bomb Jumping (Expert) and Can Use Bombs
+                  Infinite Bomb Jumping (Expert) and Can IBJ and Can Use Bombs
                   # Heavy RNG until Omega hops over you in a desired way
                   Morph Ball and Movement (Hypermode) and Power Grip Wall
           All of the following:
@@ -327,6 +338,7 @@ Extra - minimap_data: [{'x': 24, 'y': 47}, {'x': 25, 'y': 47}, {'x': 26, 'y': 47
 Hideout Storage
 Extra - map_name: rm_a6a09C
 Extra - minimap_data: [{'x': 27, 'y': 47}, {'x': 28, 'y': 47}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Omega Nest; Heals? False
   * Layers: default
   * 2-Tiles High Dock to Hideout Omega Nest/Horizontal Dock to Hideout Storage
@@ -344,9 +356,10 @@ Extra - minimap_data: [{'x': 27, 'y': 47}, {'x': 28, 'y': 47}]
 Hideout Alpha Nest Access East
 Extra - map_name: rm_a6a10
 Extra - minimap_data: [{'x': 21, 'y': 50}, {'x': 21, 'y': 51}, {'x': 21, 'y': 52}, {'x': 22, 'y': 52}, {'x': 22, 'y': 53}]
-> Horizontal Dock to Hideout Alpha Nest; Heals? False
+Extra - light_level: 0
+> Door to Hideout Alpha Nest; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Alpha Nest/Horizontal Dock to Hideout Alpha Nest Access East
+  * Open Transition to Hideout Alpha Nest/Door to Hideout Alpha Nest Access East
   * Extra - instance_id: 138799
   * Extra - facing: right
   * Extra - x: 0
@@ -363,7 +376,7 @@ Extra - minimap_data: [{'x': 21, 'y': 50}, {'x': 21, 'y': 51}, {'x': 21, 'y': 52
 > Horizontal Dock to Hideout Save Station; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Save Station/Horizontal Dock to Hideout Alpha Nest Access East
-  > Horizontal Dock to Hideout Alpha Nest
+  > Door to Hideout Alpha Nest
       Hijump With Power Grip Wall
   > Horizontal Dock to Hideout Hub Access East
       Trivial
@@ -372,17 +385,18 @@ Extra - minimap_data: [{'x': 21, 'y': 50}, {'x': 21, 'y': 51}, {'x': 21, 'y': 52
 Hideout Hub Access East
 Extra - map_name: rm_a6a11
 Extra - minimap_data: [{'x': 20, 'y': 53}, {'x': 21, 'y': 53}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Alpha Nest Access East; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Alpha Nest Access East/Horizontal Dock to Hideout Hub Access East
-  > Horizontal Dock to Hideout Hub
+  > Door to Hideout Hub
       Trivial
   > Pipe to Bubble Lair Shinespark Cave East
       Morph Ball
 
-> Horizontal Dock to Hideout Hub; Heals? False
+> Door to Hideout Hub; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hideout Hub/Horizontal Dock to Hideout Hub Access East
+  * Open Transition to Hideout Hub/Door to Hideout Hub Access East
   * Extra - instance_id: 138849
   * Extra - facing: right
   * Extra - x: 0
@@ -392,7 +406,7 @@ Extra - minimap_data: [{'x': 20, 'y': 53}, {'x': 21, 'y': 53}]
 
 > Pipe to Bubble Lair Shinespark Cave East; Heals? False
   * Layers: default
-  * Teleporter to Bubble Lair Shinespark Cave East/Pipe to Hideout Hub Access East
+  * Teleporter to Bubble Lair Shinespark Cave East/Pipe to Hideout Hub Access East; Custom name: The Depths - Hideout Pipe
   * Extra - instance_id: 400003
   * Extra - dest_x: 376
   * Extra - dest_y: 208
@@ -403,6 +417,7 @@ Extra - minimap_data: [{'x': 20, 'y': 53}, {'x': 21, 'y': 53}]
 Ridley Room
 Extra - map_name: rm_a6a12
 Extra - minimap_data: [{'x': 16, 'y': 55}, {'x': 16, 'y': 56}, {'x': 17, 'y': 55}, {'x': 17, 'y': 56}]
+Extra - light_level: 0
 > Horizontal Dock to Hideout Hub; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Hub/Horizontal Dock to Ridley Room
@@ -423,10 +438,12 @@ Extra - minimap_data: [{'x': 16, 'y': 55}, {'x': 16, 'y': 56}, {'x': 17, 'y': 55
           Any of the following:
               Hi-Jump Boots or Space Jump or Can Use Spider Ball
               # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
               All of the following:
                   Morph Glide (Intermediate)
-                  Power Grip or Walljump (Intermediate)
+                  Any of the following:
+                      Power Grip
+                      Walljump (Intermediate) and Can Walljump
   > Tunnel to Skorp Lava Pool
       Tunnel Climb
 
@@ -434,6 +451,7 @@ Extra - minimap_data: [{'x': 16, 'y': 55}, {'x': 16, 'y': 56}, {'x': 17, 'y': 55
 Skorp Lava Pool
 Extra - map_name: rm_a6a13
 Extra - minimap_data: [{'x': 12, 'y': 56}, {'x': 12, 'y': 57}, {'x': 13, 'y': 56}, {'x': 13, 'y': 57}, {'x': 14, 'y': 56}, {'x': 14, 'y': 57}, {'x': 15, 'y': 56}, {'x': 15, 'y': 57}]
+Extra - light_level: 0
 > Tunnel to Ridley Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Ridley Room/Tunnel to Skorp Lava Pool
@@ -469,6 +487,7 @@ Extra - minimap_data: [{'x': 12, 'y': 56}, {'x': 12, 'y': 57}, {'x': 13, 'y': 56
 Skorp Lava Pool Access
 Extra - map_name: rm_a6a14
 Extra - minimap_data: [{'x': 11, 'y': 55}, {'x': 11, 'y': 56}]
+Extra - light_level: 0
 > Horizontal Dock to Skorp Lava Pool; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Skorp Lava Pool/Horizontal Dock to Skorp Lava Pool Access
@@ -494,6 +513,7 @@ Omega Nest Entrance Save Station
 Extra - map_name: rm_a6a15
 Extra - minimap_data: [{'x': 10, 'y': 56}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 21
@@ -510,15 +530,16 @@ Extra - unlocked_save_station: True
 8-Shaped Cave
 Extra - map_name: rm_a6a16
 Extra - minimap_data: [{'x': 10, 'y': 52}, {'x': 10, 'y': 53}, {'x': 10, 'y': 54}, {'x': 10, 'y': 55}]
+Extra - light_level: 0
 > Horizontal Dock to Skorp Lava Pool Access; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Skorp Lava Pool Access/Horizontal Dock to 8-Shaped Cave
-  > Horizontal Dock to Glowfly Maze Access
+  > Door to Glowfly Maze Access
       Space Jump Wall
 
-> Horizontal Dock to Glowfly Maze Access; Heals? False
+> Door to Glowfly Maze Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Glowfly Maze Access/Horizontal Dock to 8-Shaped Cave
+  * Open Transition to Glowfly Maze Access/Door to 8-Shaped Cave
   * Extra - instance_id: 139884
   * Extra - facing: left
   * Extra - x: 320
@@ -530,9 +551,10 @@ Extra - minimap_data: [{'x': 10, 'y': 52}, {'x': 10, 'y': 53}, {'x': 10, 'y': 54
 Glowfly Maze Access
 Extra - map_name: rm_a6a17
 Extra - minimap_data: [{'x': 11, 'y': 49}, {'x': 11, 'y': 50}, {'x': 11, 'y': 51}, {'x': 11, 'y': 52}, {'x': 12, 'y': 46}, {'x': 12, 'y': 47}, {'x': 12, 'y': 48}, {'x': 12, 'y': 49}]
-> Horizontal Dock to 8-Shaped Cave; Heals? False
+Extra - light_level: 0
+> Door to 8-Shaped Cave; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to 8-Shaped Cave/Horizontal Dock to Glowfly Maze Access
+  * Open Transition to 8-Shaped Cave/Door to Glowfly Maze Access
   * Extra - instance_id: 140258
   * Extra - facing: right
   * Extra - x: 0
@@ -543,13 +565,14 @@ Extra - minimap_data: [{'x': 11, 'y': 49}, {'x': 11, 'y': 50}, {'x': 11, 'y': 51
 > Horizontal Dock to Glowfly Maze; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Glowfly Maze/Horizontal Dock to Glowfly Maze Access
-  > Horizontal Dock to 8-Shaped Cave
+  > Door to 8-Shaped Cave
       Trivial
 
 ----------------
 Glowfly Maze
 Extra - map_name: rm_a6a18
 Extra - minimap_data: [{'x': 13, 'y': 46}, {'x': 14, 'y': 46}, {'x': 15, 'y': 46}, {'x': 16, 'y': 46}, {'x': 17, 'y': 46}]
+Extra - light_level: 1
 > Horizontal Dock to Glowfly Maze Access; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Glowfly Maze Access/Horizontal Dock to Glowfly Maze
@@ -577,18 +600,19 @@ Extra - minimap_data: [{'x': 13, 'y': 46}, {'x': 14, 'y': 46}, {'x': 15, 'y': 46
 Bubble Lair Shinespark Cave Access
 Extra - map_name: rm_a6b01
 Extra - minimap_data: [{'x': 18, 'y': 45}, {'x': 18, 'y': 46}, {'x': 19, 'y': 45}]
+Extra - light_level: 2
 > Horizontal Dock to Glowfly Maze; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Glowfly Maze/Horizontal Dock to Bubble Lair Shinespark Cave Access
   * Extra - instance_id: 140802
   * Extra - source_x: 0
   * Extra - source_y: 384
-  > Horizontal Dock to Bubble Lair Shinespark Cave
+  > Door to Bubble Lair Shinespark Cave
       Trivial
 
-> Horizontal Dock to Bubble Lair Shinespark Cave; Heals? False
+> Door to Bubble Lair Shinespark Cave; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Bubble Lair Shinespark Cave/Horizontal Dock to Bubble Lair Shinespark Cave Access
+  * Open Transition to Bubble Lair Shinespark Cave/Door to Bubble Lair Shinespark Cave Access
   * Extra - instance_id: 140803
   * Extra - facing: left
   * Extra - x: 640
@@ -600,9 +624,10 @@ Extra - minimap_data: [{'x': 18, 'y': 45}, {'x': 18, 'y': 46}, {'x': 19, 'y': 45
 Bubble Lair Shinespark Cave
 Extra - map_name: rm_a6b02
 Extra - minimap_data: [{'x': 20, 'y': 39}, {'x': 20, 'y': 40}, {'x': 20, 'y': 41}, {'x': 20, 'y': 42}, {'x': 20, 'y': 43}, {'x': 20, 'y': 44}, {'x': 20, 'y': 45}]
-> Horizontal Dock to Bubble Lair Shinespark Cave Access; Heals? False
+Extra - light_level: 3
+> Door to Bubble Lair Shinespark Cave Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Bubble Lair Shinespark Cave Access/Horizontal Dock to Bubble Lair Shinespark Cave
+  * Open Transition to Bubble Lair Shinespark Cave Access/Door to Bubble Lair Shinespark Cave
   * Extra - instance_id: 141243
   * Extra - facing: right
   * Extra - x: 0
@@ -611,7 +636,7 @@ Extra - minimap_data: [{'x': 20, 'y': 39}, {'x': 20, 'y': 40}, {'x': 20, 'y': 41
       Trivial
   > Horizontal Dock to Bubble Lair Hub
       All of the following:
-          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando and Disabled Shuffled Open Transitions
           Any of the following:
               Power Grip Wall
               Morph Ball and Morph Glide (Beginner)
@@ -619,18 +644,18 @@ Extra - minimap_data: [{'x': 20, 'y': 39}, {'x': 20, 'y': 40}, {'x': 20, 'y': 41
 > Horizontal Dock to Bubble Lair Shinespark Cave East (Bottom); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Shinespark Cave East/Horizontal Dock to Bubble Lair Shinespark Cave (Bottom Right)
-  > Horizontal Dock to Bubble Lair Shinespark Cave Access
+  > Door to Bubble Lair Shinespark Cave Access
       Trivial
 
 > Horizontal Dock to Bubble Lair Shinespark Cave East (Top); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Shinespark Cave East/Horizontal Dock to Bubble Lair Shinespark Cave (Middle Right)
-  > Horizontal Dock to Bubble Lair Shinespark Cave West (Bottom)
+  > Door to Bubble Lair Shinespark Cave West
       Power Grip Wall
 
-> Horizontal Dock to Bubble Lair Shinespark Cave West (Bottom); Heals? False
+> Door to Bubble Lair Shinespark Cave West; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Bubble Lair Shinespark Cave West/Horizontal Dock to Bubble Lair Shinespark Cave (Middle Left)
+  * Open Transition to Bubble Lair Shinespark Cave West/Door to Bubble Lair Shinespark Cave
   * Extra - instance_id: 141246
   * Extra - facing: right
   * Extra - x: 0
@@ -638,26 +663,27 @@ Extra - minimap_data: [{'x': 20, 'y': 39}, {'x': 20, 'y': 40}, {'x': 20, 'y': 41
   > Horizontal Dock to Bubble Lair Shinespark Cave East (Top)
       Trivial
 
-> Horizontal Dock to Bubble Lair Shinespark Cave West (Top); Heals? False
+> Horizontal Dock to Bubble Lair Shinespark Cave West; Heals? False
   * Layers: default
-  * 3-Tiles High Dock to Bubble Lair Shinespark Cave West/Horizontal Dock to Bubble Lair Shinespark Cave (Upper Left)
+  * 3-Tiles High Dock to Bubble Lair Shinespark Cave West/Horizontal Dock to Bubble Lair Shinespark Cave
   > Horizontal Dock to Bubble Lair Hub
       Any of the following:
           Space Jump or Can Use Spider Ball
-          Hi-Jump Boots and Walljump (Beginner)
+          Hi-Jump Boots and Walljump (Beginner) and Can Walljump
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
 
 > Horizontal Dock to Bubble Lair Hub; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Hub/Horizontal Dock to Bubble Lair Shinespark Cave
-  > Horizontal Dock to Bubble Lair Shinespark Cave West (Top)
+  > Horizontal Dock to Bubble Lair Shinespark Cave West
       Trivial
 
 ----------------
 Bubble Lair Shinespark Cave East
 Extra - map_name: rm_a6b03
 Extra - minimap_data: [{'x': 21, 'y': 44}, {'x': 21, 'y': 45}]
+Extra - light_level: 3
 > Horizontal Dock to Bubble Lair Shinespark Cave (Bottom Right); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Shinespark Cave/Horizontal Dock to Bubble Lair Shinespark Cave East (Bottom)
@@ -674,7 +700,7 @@ Extra - minimap_data: [{'x': 21, 'y': 44}, {'x': 21, 'y': 45}]
 
 > Pipe to Hideout Hub Access East; Heals? False
   * Layers: default
-  * Teleporter to Hideout Hub Access East/Pipe to Bubble Lair Shinespark Cave East
+  * Teleporter to Hideout Hub Access East/Pipe to Bubble Lair Shinespark Cave East; Custom name: The Depths - Shinespark Cave Pipe
   * Extra - instance_id: 400004
   * Extra - dest_x: 216
   * Extra - dest_y: 400
@@ -685,26 +711,28 @@ Extra - minimap_data: [{'x': 21, 'y': 44}, {'x': 21, 'y': 45}]
 Bubble Lair Shinespark Cave West
 Extra - map_name: rm_a6b04
 Extra - minimap_data: [{'x': 19, 'y': 40}, {'x': 19, 'y': 41}, {'x': 19, 'y': 42}]
-> Horizontal Dock to Bubble Lair Shinespark Cave (Middle Left); Heals? False
+Extra - light_level: 3
+> Door to Bubble Lair Shinespark Cave; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Bubble Lair Shinespark Cave/Horizontal Dock to Bubble Lair Shinespark Cave West (Bottom)
+  * Open Transition to Bubble Lair Shinespark Cave/Door to Bubble Lair Shinespark Cave West
   * Extra - instance_id: 141569
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 640
-  > Horizontal Dock to Bubble Lair Shinespark Cave (Upper Left)
+  > Horizontal Dock to Bubble Lair Shinespark Cave
       Power Grip Wall
 
-> Horizontal Dock to Bubble Lair Shinespark Cave (Upper Left); Heals? False
+> Horizontal Dock to Bubble Lair Shinespark Cave; Heals? False
   * Layers: default
-  * 3-Tiles High Dock to Bubble Lair Shinespark Cave/Horizontal Dock to Bubble Lair Shinespark Cave West (Top)
-  > Horizontal Dock to Bubble Lair Shinespark Cave (Middle Left)
+  * 3-Tiles High Dock to Bubble Lair Shinespark Cave/Horizontal Dock to Bubble Lair Shinespark Cave West
+  > Door to Bubble Lair Shinespark Cave
       Trivial
 
 ----------------
 Bubble Lair Hub
 Extra - map_name: rm_a6b05
 Extra - minimap_data: [{'x': 21, 'y': 29}, {'x': 21, 'y': 30}, {'x': 21, 'y': 31}, {'x': 21, 'y': 32}, {'x': 21, 'y': 33}, {'x': 21, 'y': 34}, {'x': 21, 'y': 35}, {'x': 21, 'y': 36}, {'x': 21, 'y': 37}, {'x': 21, 'y': 38}, {'x': 21, 'y': 39}]
+Extra - light_level: 4
 > Horizontal Dock to Bubble Lair Shinespark Cave; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Shinespark Cave/Horizontal Dock to Bubble Lair Hub
@@ -746,6 +774,7 @@ Bubble Lair Save Station
 Extra - map_name: rm_a6b06
 Extra - minimap_data: [{'x': 22, 'y': 39}]
 Extra - unlocked_save_station: True
+Extra - light_level: 3
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 22
@@ -762,6 +791,7 @@ Extra - unlocked_save_station: True
 Bubble Lair Omega Nest North West Access
 Extra - map_name: rm_a6b07
 Extra - minimap_data: [{'x': 17, 'y': 29}, {'x': 17, 'y': 30}, {'x': 18, 'y': 29}, {'x': 18, 'y': 30}, {'x': 19, 'y': 29}, {'x': 19, 'y': 30}, {'x': 20, 'y': 29}, {'x': 20, 'y': 30}]
+Extra - light_level: 3
 > Horizontal Dock to Bubble Lair Hub; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Hub/Horizontal Dock to Bubble Lair Omega Nest North West Access
@@ -786,6 +816,7 @@ Extra - minimap_data: [{'x': 17, 'y': 29}, {'x': 17, 'y': 30}, {'x': 18, 'y': 29
 Bubble Lair Omega Nest North West
 Extra - map_name: rm_a6b08
 Extra - minimap_data: [{'x': 15, 'y': 29}, {'x': 16, 'y': 29}]
+Extra - light_level: 2
 > Tunnel to Bubble Lair Omega Nest North West Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Bubble Lair Omega Nest North West Access/Tunnel to Bubble Lair Omega Nest North West
@@ -811,6 +842,7 @@ Extra - minimap_data: [{'x': 15, 'y': 29}, {'x': 16, 'y': 29}]
 Bubble Lair Omega Nest East Access
 Extra - map_name: rm_a6b09
 Extra - minimap_data: [{'x': 22, 'y': 31}, {'x': 23, 'y': 31}, {'x': 24, 'y': 31}, {'x': 25, 'y': 31}]
+Extra - light_level: 3
 > Horizontal Dock to Bubble Lair Hub; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Hub/Horizontal Dock to Bubble Lair Omega Nest East Access
@@ -831,6 +863,7 @@ Extra - minimap_data: [{'x': 22, 'y': 31}, {'x': 23, 'y': 31}, {'x': 24, 'y': 31
 Bubble Lair Omega Nest East
 Extra - map_name: rm_a6b10
 Extra - minimap_data: [{'x': 26, 'y': 31}, {'x': 27, 'y': 31}]
+Extra - light_level: 2
 > Tunnel to Bubble Lair Omega Nest East Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Bubble Lair Omega Nest East Access/Tunnel to Bubble Lair Omega Nest East
@@ -856,6 +889,7 @@ Extra - minimap_data: [{'x': 26, 'y': 31}, {'x': 27, 'y': 31}]
 Bubble Lair Omega Nest South West Access
 Extra - map_name: rm_a6b11
 Extra - minimap_data: [{'x': 16, 'y': 34}, {'x': 17, 'y': 34}, {'x': 18, 'y': 34}, {'x': 19, 'y': 34}, {'x': 20, 'y': 34}]
+Extra - light_level: 3
 > Horizontal Dock to Bubble Lair Hub; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Hub/Horizontal Dock to Bubble Lair Omega Nest South West Access
@@ -898,7 +932,7 @@ Extra - minimap_data: [{'x': 16, 'y': 34}, {'x': 17, 'y': 34}, {'x': 18, 'y': 34
 
 > Pipe to Genetics Laboratory; Heals? False
   * Layers: new-pipes
-  * Teleporter to Waterfall Passage Top/Pipe to The Depths
+  * Teleporter to Waterfall Passage Top/Pipe to The Depths; Custom name: The Depths - Bubble Lair Pipe
   * Extra - instance_id: 400005
   * Extra - dest_x: 104
   * Extra - dest_y: 192
@@ -909,6 +943,7 @@ Extra - minimap_data: [{'x': 16, 'y': 34}, {'x': 17, 'y': 34}, {'x': 18, 'y': 34
 Bubble Lair Omega Nest South West
 Extra - map_name: rm_a6b12
 Extra - minimap_data: [{'x': 14, 'y': 34}, {'x': 15, 'y': 34}]
+Extra - light_level: 2
 > Tunnel to Bubble Lair Omega Nest South West Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Bubble Lair Omega Nest South West Access/Tunnel to Bubble Lair Omega Nest South West
@@ -934,6 +969,7 @@ Extra - minimap_data: [{'x': 14, 'y': 34}, {'x': 15, 'y': 34}]
 Bubble Lair Curved Bubble Pillar
 Extra - map_name: rm_a6b13
 Extra - minimap_data: [{'x': 17, 'y': 37}, {'x': 17, 'y': 38}, {'x': 17, 'y': 39}, {'x': 17, 'y': 40}, {'x': 17, 'y': 41}, {'x': 17, 'y': 42}, {'x': 18, 'y': 35}, {'x': 18, 'y': 36}, {'x': 18, 'y': 37}]
+Extra - light_level: 2
 > Vertical Dock to Bubble Lair Omega Nest South West Access; Heals? False
   * Layers: default
   * 4-Tiles Wide Dock to Bubble Lair Omega Nest South West Access/Vertical Dock to Bubble Lair Curved Bubble Pillar
@@ -950,14 +986,17 @@ Extra - minimap_data: [{'x': 17, 'y': 37}, {'x': 17, 'y': 38}, {'x': 17, 'y': 39
               Can Use Power Bombs
               All of the following:
                   Can Use Bombs
-                  Infinite Bomb Jumping (Beginner) or Mid-Air Morph (Intermediate) or Can Use Spider Ball
+                  Any of the following:
+                      Mid-Air Morph (Intermediate) or Can Use Spider Ball
+                      Infinite Bomb Jumping (Beginner) and Can IBJ
 
 > Top Pillar; Heals? False
   * Layers: default
   > Vertical Dock to Bubble Lair Omega Nest South West Access
       Any of the following:
-          Space Jump or Walljump (Intermediate) or Can Use Spider Ball
+          Space Jump or Can Use Spider Ball
           Hi-Jump Boots and Power Grip
+          Walljump (Intermediate) and Can Walljump
   > Above Bomb Blocks
       Morph Ball
 
@@ -970,14 +1009,15 @@ Extra - minimap_data: [{'x': 17, 'y': 37}, {'x': 17, 'y': 38}, {'x': 17, 'y': 39
           Morph Ball
           Any of the following:
               Space Jump or Can Use Spider Ball
-              Hi-Jump Boots and Walljump (Intermediate)
+              Hi-Jump Boots and Walljump (Intermediate) and Can Walljump
               # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
 
 ----------------
 Bubble Lair Halzyn Housing
 Extra - map_name: rm_a6b14
 Extra - minimap_data: [{'x': 11, 'y': 42}, {'x': 12, 'y': 42}, {'x': 12, 'y': 43}, {'x': 13, 'y': 41}, {'x': 13, 'y': 42}, {'x': 13, 'y': 43}, {'x': 14, 'y': 41}, {'x': 14, 'y': 42}, {'x': 14, 'y': 43}, {'x': 15, 'y': 41}, {'x': 15, 'y': 42}, {'x': 16, 'y': 42}]
+Extra - light_level: 1
 > Horizontal Dock to Bubble Lair Curved Bubble Pillar; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Curved Bubble Pillar/Horizontal Dock to Bubble Lair Halzyn Housing
@@ -1014,6 +1054,7 @@ Extra - minimap_data: [{'x': 11, 'y': 42}, {'x': 12, 'y': 42}, {'x': 12, 'y': 43
 Bubble Lair Skorp Snag
 Extra - map_name: rm_a6b15
 Extra - minimap_data: [{'x': 10, 'y': 39}, {'x': 10, 'y': 40}, {'x': 10, 'y': 41}, {'x': 10, 'y': 42}]
+Extra - light_level: 0
 > Horizontal Dock to Bubble Lair Halzyn Housing; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Halzyn Housing/Horizontal Dock to Bubble Lair Skorp Snag
@@ -1025,15 +1066,15 @@ Extra - minimap_data: [{'x': 10, 'y': 39}, {'x': 10, 'y': 40}, {'x': 10, 'y': 41
   * 3-Tiles High Dock to Bubble Lair Exit Save Station/Horizontal Dock to Bubble Lair Skorp Snag
   > Horizontal Dock to Bubble Lair Halzyn Housing
       Trivial
-  > Horizontal Dock to Waterfalls Entryway
+  > Door to Waterfalls Entryway
       All of the following:
           Space Jump Wall
           # Damage reqs
           Screw Attack or Combat (Advanced) or Normal Damage ≥ 150
 
-> Horizontal Dock to Waterfalls Entryway; Heals? False
+> Door to Waterfalls Entryway; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Waterfalls Entryway/Horizontal Dock to Bubble Lair Skorp Snag
+  * Open Transition to Waterfalls Entryway/Door to Bubble Lair Skorp Snag
   * Extra - instance_id: 144370
   * Extra - facing: left
   * Extra - x: 320
@@ -1047,6 +1088,7 @@ Bubble Lair Exit Save Station
 Extra - map_name: rm_a6b16
 Extra - minimap_data: [{'x': 9, 'y': 42}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Horizontal Dock to Bubble Lair Skorp Snag; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bubble Lair Skorp Snag/Horizontal Dock to Bubble Lair Exit Save Station
@@ -1063,26 +1105,27 @@ Extra - unlocked_save_station: True
 Waterfalls Entryway
 Extra - map_name: rm_a6b17
 Extra - minimap_data: [{'x': 11, 'y': 37}, {'x': 11, 'y': 39}, {'x': 12, 'y': 37}, {'x': 12, 'y': 38}, {'x': 12, 'y': 39}]
-> Horizontal Dock to Bubble Lair Skorp Snag; Heals? False
+Extra - light_level: 0
+> Door to Bubble Lair Skorp Snag; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Bubble Lair Skorp Snag/Horizontal Dock to Waterfalls Entryway
+  * Open Transition to Bubble Lair Skorp Snag/Door to Waterfalls Entryway
   * Extra - instance_id: 144651
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 592
-  > Horizontal Dock to Genetics Laboratory
+  > Door to Genetics Laboratory
       Any of the following:
           Space Jump Wall
           Speed Booster and Shinesparking Tricks (Beginner)
 
-> Horizontal Dock to Genetics Laboratory; Heals? False
+> Door to Genetics Laboratory; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Waterfall Passage Far Bottom/Horizontal Dock to The Depths
+  * Open Transition to Waterfall Passage Far Bottom/Door to The Depths
   * Extra - instance_id: 144652
   * Extra - facing: right
   * Extra - x: 320
   * Extra - y: 144
-  > Horizontal Dock to Bubble Lair Skorp Snag
+  > Door to Bubble Lair Skorp Snag
       Trivial
 
 ----------------
@@ -1090,6 +1133,7 @@ Hideout Save Station
 Extra - map_name: rm_a6a10B
 Extra - minimap_data: [{'x': 23, 'y': 53}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True
   * Layers: default
   * Extra - save_room: 26

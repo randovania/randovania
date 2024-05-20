@@ -7,20 +7,88 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.1.0] - 2024-06-??
 
-- Fixed: MacGuffin placement respects vanilla item placement settings to not assign two items to one location.
+- Changed: In Item Pool tab, improved the presentation for configuring ammo.
+- Fixed: Events followed by pickups are now better weighted during generation.
+- Fixed: During generation, the starting health is now properly accounted for when deciding how many Energy Tanks (and similar) are needed for a requirement.
+- Fixed: Text in the Customize Preset window's Randomizer Logic > Generation tab is now game-neutral.
+- Fixed: Items placed before standard generation now respect vanilla item placement settings to not assign two items to one location.
+
+### AM2R
+
+- **Major** - Added: Transport Pipe randomizer. If enabled, it will change where Transport Pipes lead to.
+- Added: Walljump and Infinite Bomb Jumping have been added as items.
+- Added: It is now possible to have a seperate shuffled amount and required amount of DNA.
+- Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
+- Added: Exposed Open Transitions for Door Lock Rando. Shuffling these in, will place Doors on all 4-Tile high transitions.
+- The following sprites have been added: Spider Ball for Prime 1, Missile Launcher, Speed Booster Upgrades and Super Missile Launcher for Dread.
+- Changed: The following sprites were changed in order to fit more with AM2R's art style: Ice Missiles and Storm Missiles for Dread, Annihilator Beam, Dark Suit, Dark Visor, Echo Visor, Light Suit and Progressive Suit for Echoes, Gravity Suit, Phazon Suit and Varia Suit for Prime 1.
+- Changed: When Doors are shuffled over Research Site Hatches, they are now not obscured by the rock background.
+- Changed: The Starter Preset now has `Unlock Genetics Laboratory Doors` enabled.
+- Changed: The Starter Preset now has Progressive Jumps and Progressive Suits enabled.
+- Fixed: When Research Site Hatches are shuffled to Ammo doors (Missile, Super Missile, Power Bomb), they will now get unlocked automatically when going through them.
+
+#### Logic Database
+
+##### Distribution Center
+
+- Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
+- Fixed: Gravity Area Trapdoor: Shinesparking up is now impossible on Door Lock Rando.
+- Fixed: Gravity Area Shaft: Shinesparking up is now impossible on Door Lock Rando and also properly accounts for Missiles.
+
+##### Genetics Laboratory
+
+- Added: Waterfalls Exterior: Hypermode option of climbing the room with Walljumps and Morph Glides.
+- Fixed: Hatchling Room Underside: Shinesparking up is now impossible on Door Lock Rando.
+
+##### Golden Temple
+
+- Added: Golden Temple Exterior: A video for the Walljump to Exterior Alpha Nest.
+
+##### The Tower
+
+- Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
+- Changed: Tower Activation Station: The left door is excluded from becoming a Locked Door, to avoid incompletable seeds.
+- Changed: Plasma Beam Chamber Access: The right door is excluded from becoming a Locked Door, to avoid incompletable seeds.
+
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
 
 ### Metroid Dread
 
+- Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
+
 #### Logic database
+
+#### Burenia
+
+- Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Tunnels (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Tunnels (Beginner) with 1 Flash Charge.
 
 ##### Dairon
 
 - Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
+- Added: Using Stand on Frozen Enemies trick to get the item in Big Hub, using either Flash Shift or Spin Boost.
+
+### Metroid Prime
+
+- Changed: The map tracker uses the same names for elevators as when editing a preset.
 
 ### Metroid: Samus Returns
 
-- Added: Door Lock randomizer has been added.
+- **Major** - Added: Door Lock randomizer has been added, along with new door types.
+- **Major** - Added: Elevator randomizer has been added.
+- Changed: DNA hints now just say "DNA" instead of "Metroid DNA".
+- Fixed: If no seed was exported at a previous start of Randovania, the export window now shows the correct title ID in the output path for NTSC without having to switch to PAL and back to NTSC.
+- Fixed: Removed an incorrect start location from Area 4 Central Caves, which failed when exporting the game.
+- Fixed: Typo on the exporting dialog.
+- Fixed: Common case where a modified input RomFS was considered being unmodified.
+- Fixed: Starting at Area 3 Factory Exterior - Beam Burst Chamber & Tsumuri Station no longer spawns Samus out of bounds.
 
+#### Logic Database
+
+##### Area 1
+
+- Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths.
 
 ## [8.0.0] - 2024-05-01
 

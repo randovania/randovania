@@ -52,7 +52,7 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
 
         signal_handling.on_checked(check, persist)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = typing.cast(MSRConfiguration, preset.configuration)
 
         for f in _FIELDS:

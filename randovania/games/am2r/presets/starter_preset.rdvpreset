@@ -1,5 +1,5 @@
 {
-    "schema_version": 66,
+    "schema_version": 79,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "b65bf9d8-f962-4f9a-b28f-b46c03ef3d76",
@@ -42,22 +42,26 @@
                     "num_shuffled_pickups": 1
                 },
                 "Varia Suit": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 0
                 },
                 "Space Jump": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 0
                 },
                 "Speed Booster": {
                     "num_shuffled_pickups": 1
                 },
                 "Hi-Jump Boots": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 0
                 },
-                "Progressive Jump": {},
+                "Progressive Jump": {
+                    "num_shuffled_pickups": 2
+                },
                 "Gravity Suit": {
-                    "num_shuffled_pickups": 1
+                    "num_shuffled_pickups": 0
                 },
-                "Progressive Suit": {},
+                "Progressive Suit": {
+                    "num_shuffled_pickups": 2
+                },
                 "Charge Beam": {
                     "num_shuffled_pickups": 1
                 },
@@ -104,74 +108,82 @@
         },
         "ammo_pickup_configuration": {
             "pickups_state": {
-                "Missile Expansion": {
+                "Small Health Drop": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 5,
+                    "requires_main_item": true
+                },
+                "Big Health Drop": {
+                    "ammo_count": [
+                        20
+                    ],
+                    "pickup_count": 10,
+                    "requires_main_item": true
+                },
+                "Missile Drop": {
+                    "ammo_count": [
+                        2
+                    ],
+                    "pickup_count": 5,
+                    "requires_main_item": true
+                },
+                "Super Missile Drop": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 5,
+                    "requires_main_item": true
+                },
+                "Power Bomb Drop": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 5,
+                    "requires_main_item": true
+                },
+                "Speed Booster Upgrade": {
+                    "ammo_count": [
+                        15
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": true
+                },
+                "Flashlight": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": true
+                },
+                "Blindfold": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": true
+                },
+                "Missile Tank": {
                     "ammo_count": [
                         5
                     ],
                     "pickup_count": 44,
                     "requires_main_item": true
                 },
-                "Super Missile Expansion": {
+                "Super Missile Tank": {
                     "ammo_count": [
                         2
                     ],
                     "pickup_count": 9,
                     "requires_main_item": true
                 },
-                "Power Bomb Expansion": {
+                "Power Bomb Tank": {
                     "ammo_count": [
                         2
                     ],
                     "pickup_count": 9,
                     "requires_main_item": true
-                },
-                "Small Health Drop": {
-                    "ammo_count": [
-                        5
-                    ],
-                    "pickup_count": 5
-                },
-                "Big Health Drop": {
-                    "ammo_count": [
-                        20
-                    ],
-                    "pickup_count": 10
-                },
-                "Missile Drop": {
-                    "ammo_count": [
-                        2
-                    ],
-                    "pickup_count": 5
-                },
-                "Super Missile Drop": {
-                    "ammo_count": [
-                        1
-                    ],
-                    "pickup_count": 5
-                },
-                "Power Bomb Drop": {
-                    "ammo_count": [
-                        1
-                    ],
-                    "pickup_count": 5
-                },
-                "Speed Booster Upgrade": {
-                    "ammo_count": [
-                        15
-                    ],
-                    "pickup_count": 0
-                },
-                "Flashlight": {
-                    "ammo_count": [
-                        1
-                    ],
-                    "pickup_count": 0
-                },
-                "Blindfold": {
-                    "ammo_count": [
-                        1
-                    ],
-                    "pickup_count": 0
                 }
             }
         },
@@ -201,12 +213,17 @@
                 }
             }
         },
-        "single_set_for_pickups_that_solve": false,
-        "staggered_multi_pickup_placement": false,
+        "single_set_for_pickups_that_solve": true,
+        "staggered_multi_pickup_placement": true,
         "check_if_beatable_after_base_patches": false,
         "energy_per_tank": 100,
         "softlock_prevention_blocks": true,
         "septogg_helpers": true,
+        "teleporters": {
+            "mode": "vanilla",
+            "excluded_teleporters": [],
+            "excluded_targets": []
+        },
         "skip_cutscenes": true,
         "skip_save_cutscene": false,
         "skip_item_cutscenes": false,
@@ -226,6 +243,8 @@
         "supers_on_missile_doors": true,
         "grave_grotto_blocks": false,
         "nest_pipes": true,
-        "a3_entrance_blocks": true
+        "a3_entrance_blocks": true,
+        "blue_save_doors": false,
+        "force_blue_labs": true
     }
 }

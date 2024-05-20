@@ -267,7 +267,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
     r2 = sorted(sorted(a.name for a in it) for it in result)
     base = ["Boost Ball", "Echo Visor"]
     bomb = "Morph Ball Bomb"
-    tanks = ["Energy Tank"] * 8
+    tanks = ["Energy Tank"] * 7
     missiles = ["Missile Expansion"] * 12
 
     if has_light_beam:

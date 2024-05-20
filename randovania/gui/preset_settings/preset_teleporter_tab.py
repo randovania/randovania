@@ -5,14 +5,15 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
+from randovania.games.common import elevators
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.lib.teleporters import (
     TeleporterList,
+    TeleporterShuffleMode,
     TeleporterTargetList,
 )
-from randovania.patching.prime import elevators
 
 if TYPE_CHECKING:
     from randovania.game_description.db.area_identifier import AreaIdentifier
@@ -28,7 +29,7 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
     _teleporters_target_for_region: dict[str, QtWidgets.QCheckBox]
     _teleporters_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
     _teleporters_target_for_node: dict[NodeIdentifier, QtWidgets.QCheckBox]
-    teleporter_mode_to_description = []
+    teleporter_mode_to_description: dict[TeleporterShuffleMode, str] = {}
     teleporters_layout: QtWidgets.QVBoxLayout
     teleporters_combo: ScrollProtectedComboBox
     teleporters_description_label: QtWidgets.QLabel
@@ -105,9 +106,9 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
                 excluded_targets=config.excluded_targets.ensure_has_locations(areas, not checked),
             )
 
-    def _create_check_for_source_teleporters(self, location: NodeIdentifier):
+    def _create_check_for_source_teleporters(self, location: NodeIdentifier) -> QtWidgets.QCheckBox:
         name = elevators.get_elevator_or_area_name(
-            self.game_enum, self.game_description.region_list, location.area_identifier, True
+            self.game_description, self.game_description.region_list, location, True
         )
 
         check = QtWidgets.QCheckBox(self.teleporters_source_group)

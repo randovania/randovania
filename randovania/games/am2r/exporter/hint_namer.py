@@ -19,11 +19,9 @@ class AM2RColor(Enum):
     WHITE = "{white}"
     YELLOW = "{yellow}"
     RED = "{red}"
-    PINK = "{pink}"
-    GREEN = "{green}"
-    BLUE = "{blue}"
-    LIGHT_BLUE = "{light_blue}"
-    DIM_BLUE = "{dim_blue}"
+    PINK = "{fuchsia}"
+    GREEN = "{lime}"
+    BLUE = "{aqua}"
 
 
 def _area_name(region_list: RegionList, pickup_node: PickupNode, hide_region: bool) -> str:
@@ -123,6 +121,13 @@ class AM2RHintNamer(HintNamer):
 
     def format_player(self, name: str, with_color: bool) -> str:
         return colorize_text(self.color_player, name, with_color)
+
+    def format_joke(self, joke: str, with_color: bool) -> str:
+        return colorize_text(self.color_joke, joke, with_color)
+
+    @property
+    def color_joke(self) -> AM2RColor:
+        return AM2RColor.GREEN
 
     @property
     def color_player(self) -> AM2RColor:

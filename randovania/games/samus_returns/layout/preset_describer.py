@@ -92,7 +92,13 @@ class MSRPresetDescriber(GamePresetDescriber):
                     "Missile Reserve Tank": has_shuffled_item(standard_pickups, "Missile Reserve Tank"),
                 },
             ],
-            "Gameplay": [],
+            "Gameplay": [
+                {
+                    f"Elevators: {configuration.teleporters.description('elevators')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
+            ],
             "Goal": describe_artifacts(configuration.artifacts),
             "Game Changes": [
                 message_for_required_mains(

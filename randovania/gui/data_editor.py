@@ -181,7 +181,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.update_game(self.original_game_description)
 
-        self.resource_editor = ResourceDatabaseEditor(self, self.resource_database)
+        self.resource_editor = ResourceDatabaseEditor(self, self.resource_database, self.region_list)
         self.resource_editor.setFeatures(
             self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
         )
@@ -593,7 +593,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert target_node is not None
 
         requirement = self.current_area.connections[from_node].get(target_node, Requirement.impossible())
-        editor = ConnectionsEditor(self, self.resource_database, requirement)
+        editor = ConnectionsEditor(self, self.resource_database, self.region_list, requirement)
         if await self._execute_edit_dialog(editor):
             self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
             self.update_connections()
@@ -753,6 +753,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             override_default_open_requirement=None,
             override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
+            ui_custom_name=None,
         )
 
         new_node_other_area = DockNode(
@@ -771,6 +772,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             override_default_open_requirement=None,
             override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
+            ui_custom_name=None,
         )
 
         self.editor.add_node(current_area, new_node_this_area)

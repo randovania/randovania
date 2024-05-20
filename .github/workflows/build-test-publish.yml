@@ -224,7 +224,7 @@ jobs:
           Import-PfxCertificate -FilePath certificate/certificate.pfx -CertStoreLocation Cert:\CurrentUser\My -Password (ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText)
 
       - name: Deploy Advanced Installer
-        uses: caphyon/advinst-github-action@v1.1
+        uses: caphyon/advinst-github-action@v2.0
         with:
           advinst-version: '21.1'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}

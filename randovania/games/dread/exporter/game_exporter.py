@@ -74,6 +74,7 @@ class DreadGameExporter(GameExporter):
         patch_data["mod_compatibility"] = export_params.target_platform.value
         patch_data["mod_category"] = "romfs" if export_params.use_exlaunch else "pkg"
         monitoring.set_tag("dread_mod_category", patch_data["mod_category"])
+        monitoring.set_tag("dread_target_platform", patch_data["mod_compatibility"])
 
         from open_dread_rando.version import version as open_dread_rando_version
 

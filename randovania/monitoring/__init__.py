@@ -134,6 +134,7 @@ def client_init() -> None:
     _init(False, "client", exclude_server_name=True)
 
     sentry_sdk.set_tag("frozen", randovania.is_frozen())
+    sentry_sdk.set_tag("cpu.architecture", platform.machine())
 
     # Ignore the "packet queue is empty, aborting" message
     # It causes a disconnect, but we smoothly reconnect in that case.

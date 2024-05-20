@@ -12,6 +12,7 @@ from PySide6.QtCore import Qt
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -22,8 +23,10 @@ from randovania.gui.lib.connections_visualizer import create_tree_items_for_requ
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
+    from types import EllipsisType
+
+    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 @dataclasses.dataclass(frozen=True)
@@ -34,11 +37,12 @@ class FieldDefinition:
     from_qt: typing.Callable[[typing.Any], tuple[bool, typing.Any]]
 
 
-def encode_extra(qt_value):
+def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
     try:
         decoded = json.loads(qt_value)
         if isinstance(decoded, dict):
             return True, frozen_lib.wrap(decoded)
+        return False, None
     except json.JSONDecodeError:
         return False, None
 
@@ -57,10 +61,10 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         self.resource_type = resource_type
         self.allow_edits = True
 
-    def _get_items(self):
-        return self.db.get_by_type(self.resource_type)
+    def _get_items(self) -> list[ResourceInfo]:
+        return typing.cast(list[ResourceInfo], self.db.get_by_type(self.resource_type))
 
-    def set_allow_edits(self, value: bool):
+    def set_allow_edits(self, value: bool) -> None:
         self.beginResetModel()
         self.allow_edits = value
         self.endResetModel()
@@ -68,7 +72,9 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
     def all_columns(self) -> list[FieldDefinition]:
         return GENERIC_FIELDS
 
-    def headerData(self, section: int, orientation: QtCore.Qt.Orientation, role: int = ...) -> typing.Any:
+    def headerData(
+        self, section: int, orientation: QtCore.Qt.Orientation, role: int | EllipsisType = ...
+    ) -> typing.Any:
         if role != Qt.ItemDataRole.DisplayRole:
             return None
 
@@ -77,16 +83,18 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
 
         return self.all_columns()[section].display_name
 
-    def rowCount(self, parent: QtCore.QModelIndex = ...) -> int:
+    def rowCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
         result = len(self._get_items())
         if self.allow_edits:
             result += 1
         return result
 
-    def columnCount(self, parent: QtCore.QModelIndex = ...) -> int:
+    def columnCount(self, parent: QtCore.QModelIndex | QtCore.QPersistentModelIndex | EllipsisType = ...) -> int:
         return len(self.all_columns())
 
-    def data(self, index: QtCore.QModelIndex, role: int = ...) -> typing.Any:
+    def data(
+        self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex, role: int | EllipsisType = ...
+    ) -> typing.Any:
         if role not in {Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole}:
             return None
 
@@ -102,11 +110,16 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         else:
             return ""
 
-    def setData(self, index: QtCore.QModelIndex, value: typing.Any, role: int = ...) -> bool:
+    def setData(
+        self,
+        index: QtCore.QModelIndex | QtCore.QPersistentModelIndex,
+        value: typing.Any,
+        role: int | EllipsisType = ...,
+    ) -> bool:
         if role == Qt.ItemDataRole.EditRole:
             all_items = self._get_items()
             if index.row() < len(all_items):
-                resource = all_items[index.row()]
+                resource: ResourceInfo = all_items[index.row()]
                 field = self.all_columns()[index.column()]
                 valid, new_value = field.from_qt(value)
                 if valid:
@@ -124,7 +137,7 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
                     return self.append_item(self._create_item(value))
         return False
 
-    def _create_item(self, short_name) -> ResourceInfo:
+    def _create_item(self, short_name: str) -> ResourceInfo:
         return SimpleResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, self.resource_type)
 
     def append_item(self, resource: ResourceInfo) -> bool:
@@ -135,7 +148,7 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         self.endInsertRows()
         return True
 
-    def flags(self, index: QtCore.QModelIndex) -> QtCore.Qt.ItemFlag:
+    def flags(self, index: QtCore.QModelIndex | QtCore.QPersistentModelIndex) -> QtCore.Qt.ItemFlag:
         result = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
         if self.allow_edits:
             if index.row() == len(self._get_items()):
@@ -155,10 +168,10 @@ class ResourceDatabaseItemModel(ResourceDatabaseGenericModel):
     def __init__(self, db: ResourceDatabase):
         super().__init__(db, ResourceType.ITEM)
 
-    def all_columns(self):
+    def all_columns(self) -> list[FieldDefinition]:
         return ITEM_FIELDS
 
-    def _create_item(self, short_name) -> ItemResourceInfo:
+    def _create_item(self, short_name: str) -> ItemResourceInfo:
         return ItemResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, 1)
 
 
@@ -170,10 +183,10 @@ class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
     def __init__(self, db: ResourceDatabase):
         super().__init__(db, ResourceType.TRICK)
 
-    def all_columns(self):
+    def all_columns(self) -> list[FieldDefinition]:
         return TRICK_FIELDS
 
-    def _create_item(self, short_name) -> TrickResourceInfo:
+    def _create_item(self, short_name: str) -> TrickResourceInfo:
         return TrickResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, "")
 
 
@@ -202,12 +215,13 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
 
     ResourceChanged = QtCore.Signal(object)
 
-    def __init__(self, parent: QtWidgets.QWidget, db: ResourceDatabase):
+    def __init__(self, parent: QtWidgets.QWidget, db: ResourceDatabase, region_list: RegionList):
         super().__init__(parent)
         self.setupUi(self)
         set_default_window_icon(self)
 
         self.db = db
+        self.region_list = region_list
         self.tab_item.setModel(ResourceDatabaseItemModel(db))
         self.tab_event.setModel(ResourceDatabaseGenericModel(db, ResourceType.EVENT))
         self.tab_trick.setModel(ResourceDatabaseTrickModel(db))
@@ -230,26 +244,32 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
             self.create_template_editor(name)
 
     @property
-    def _all_tabs(self):
+    def _all_tabs(self) -> list[QtWidgets.QTableView]:
         return [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage, self.tab_version, self.tab_misc]
 
     def _on_data_changed(
-        self, model: ResourceDatabaseGenericModel, top_left: QtCore.QModelIndex, bottom_right: QtCore.QModelIndex, roles
-    ):
+        self,
+        model: ResourceDatabaseGenericModel,
+        top_left: QtCore.QModelIndex,
+        bottom_right: QtCore.QModelIndex,
+        roles: None,
+    ) -> None:
         first_row = top_left.row()
         last_row = bottom_right.row()
         if first_row == last_row:
             self.ResourceChanged.emit(self.db.get_by_type(model.resource_type)[first_row])
 
-    def set_allow_edits(self, value: bool):
+    def set_allow_edits(self, value: bool) -> None:
         for tab in self._all_tabs:
-            tab.model().set_allow_edits(value)
+            tab_model = tab.model()
+            assert isinstance(tab_model, ResourceDatabaseGenericModel)
+            tab_model.set_allow_edits(value)
 
         self.create_new_template_item.setHidden(not value)
         for editor in self.editor_for_template.values():
             editor.edit_item.setHidden(not value)
 
-    def create_new_template(self):
+    def create_new_template(self) -> None:
         template_name, did_confirm = QtWidgets.QInputDialog.getText(self, "New Template", "Insert template name:")
         if not did_confirm or template_name == "":
             return
@@ -293,7 +313,7 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
 
     def edit_template(self, name: str) -> None:
         template = self.db.requirement_template[name]
-        editor = ConnectionsEditor(self, self.db, template.requirement)
+        editor = ConnectionsEditor(self, self.db, self.region_list, template.requirement)
         result = editor.exec_()
         if result == QtWidgets.QDialog.DialogCode.Accepted:
             final_req = editor.final_requirement
