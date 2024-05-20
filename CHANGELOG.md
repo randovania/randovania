@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Events followed by pickups are now better weighted during generation.
 - Fixed: During generation, the starting health is now properly accounted for when deciding how many Energy Tanks (and similar) are needed for a requirement.
 - Fixed: Text in the Customize Preset window's Randomizer Logic > Generation tab is now game-neutral.
+- Fixed: Items placed before standard generation now respect vanilla item placement settings to not assign two items to one location.
 
 ### AM2R
 

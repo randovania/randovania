@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.resolver.bootstrap import Bootstrap, EnergyConfig
@@ -10,12 +11,19 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
     from random import Random
 
+    from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+
+
+def is_puppy_node(node: PickupNode, config: BaseConfiguration) -> bool:
+    # skip 65 and 67 since they both require all 5 puppies
+    PUPPY_INDICES = [PickupIndex(i) for i in range(57, 67) if i != 65]
+    return node.pickup_index in PUPPY_INDICES
 
 
 class CSBootstrap(Bootstrap):
@@ -66,12 +74,10 @@ class CSBootstrap(Bootstrap):
 
         # puppies
         if not configuration.puppies_anywhere:
-            puppy_indices = get_valid_indices(PUPPY_INDICES)
-            rng.shuffle(puppy_indices)
-            puppies = [p for p in results.to_place if p.pickup_category.name == "puppies"]
-            for p in puppies:
-                results.to_place.remove(p)
-                results.assignment[puppy_indices.pop()] = p
+            pickup_database = default_database.pickup_database_for_game(patches.game.game)
+            puppies_category = pickup_database.pickup_categories["puppies"]
+            locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_puppy_node)
+            self.pre_place_items(rng, locations, results, puppies_category)
 
         # weapon to break blocks in first cave (do it this way to ensure a particular distribution chance)
         if patches.starting_location.area in {"Start Point", "First Cave", "Hermit Gunsmith"}:
@@ -114,9 +120,6 @@ class CSBootstrap(Bootstrap):
 
         return super().assign_pool_results(rng, patches, results)
 
-
-# skip 65 and 67 since they both require all 5 puppies
-PUPPY_INDICES = [PickupIndex(i) for i in range(57, 67) if i != 65]
 
 FIRST_CAVE_INDICES = [PickupIndex(32), PickupIndex(33)]
 
