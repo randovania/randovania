@@ -399,8 +399,6 @@ class MSRPatchDataFactory(PatchDataFactory):
         if self.cosmetic_patches.use_laser_color:
             cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
             cosmetic_patches["laser_unlocked_color"] = [x / 255 for x in c.laser_unlocked_color]
-
-        if self.cosmetic_patches.use_grapple_laser_color:
             cosmetic_patches["grapple_laser_locked_color"] = [x / 255 for x in c.grapple_laser_locked_color]
             cosmetic_patches["grapple_laser_unlocked_color"] = [x / 255 for x in c.grapple_laser_unlocked_color]
 
