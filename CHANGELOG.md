@@ -124,6 +124,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths.
 
+##### Area 3 Metroid Caverns
+
+- Added: Caverns Teleporter East - Reaching the Missile now has correct requirements with High Jump Boots, requiring either a Super Jump (Advanced), Unmorph Extend (Intermediate), or Freezing the Gullugg (Intermediate).
+
 ## [8.0.0] - 2024-05-01
 
 - **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
