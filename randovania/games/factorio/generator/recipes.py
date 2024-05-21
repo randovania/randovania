@@ -40,6 +40,7 @@ def make_random_recipe(
 
     def mutate_function(individual: list[int]) -> None:
         if rng.randrange(4) == 0:
+            # 25% chance of increasing the ingredient cost of an existing ingredient
             idx = [i for i, v in enumerate(individual) if v > 0]
             if idx:
                 individual[rng.choice(idx)] += 1
@@ -73,8 +74,8 @@ def make_random_recipe(
                 if item_count > max_items:
                     return 0
 
-        # if cost > target_complexity.cost or craft > target_complexity.craft:
-        #     return 0
+        if cost > target_complexity.cost or craft > target_complexity.craft:
+            return 0
 
         target = fitness_for(cost, craft)
         return min(target_fitness - math.fabs(target - target_fitness), good_enough_fitness)
@@ -97,7 +98,6 @@ def make_random_recipe(
 
     # print("REFERENCE", target_fitness, "ACTUAL", result[0])
     # print(reference_item, result[1])
-    # print(f"Time: {end - start:0.2f}s")
     return result[1]
 
 
