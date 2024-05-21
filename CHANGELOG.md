@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - **Major** - Added: Transport Pipe randomizer. If enabled, it will change where Transport Pipes lead to.
-- Added: Walljump and Infinite Bomb Jumping have been added as items.
+- Added: Long Beam, Walljump and Infinite Bomb Jumping have been added as items.
 - Added: It is now possible to have a seperate shuffled amount and required amount of DNA.
 - Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
 - Added: Exposed Open Transitions for Door Lock Rando. Shuffling these in, will place Doors on all 4-Tile high transitions.
@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Distribution Center
 
 - Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
+- Changed: Dual Gammas: Fighting them with Charge Beam now requires you to be able to climb the platforms in the room.
 - Fixed: Gravity Area Trapdoor: Shinesparking up is now impossible on Door Lock Rando.
 - Fixed: Gravity Area Shaft: Shinesparking up is now impossible on Door Lock Rando and also properly accounts for Missiles.
 
@@ -39,6 +40,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Waterfalls Exterior: Hypermode option of climbing the room with Walljumps and Morph Glides.
 - Fixed: Hatchling Room Underside: Shinesparking up is now impossible on Door Lock Rando.
+
+##### Industrial Complex
+
+- Changed: Upper Factory Gamma Nest: Leaving to the top with Spider Ball or IBJ now requires the Gamma to be dead first.
+- Changed: Upper Factory Gamma Nest: Leaving to the top with only Walljump is now an Expert Walljump instead of Advanced.
+- Changed: Upper Factory Gamma Nest: Leaving to the top with Walljumps and the Septoggs is now an Intermediate Walljump instead of Beginner.
+- Changed: Fighting Torizo without any Beam Upgrades is now Advanced Combat.
+
+##### GFS Thoth
+
+- Changed: Fighting Genesis without any Beam Upgrades is now Expert Combat.
 
 ##### Golden Temple
 
@@ -60,14 +72,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic database
 
+- Added: New trick: Climb Sloped Surfaces.
+
+#### Artaria
+
+- Changed: Climbing the slope in EMMI Zone Spinner with Spin Boost has been reclassified from Movement to Climb Sloped Surfaces.
+- Changed: Using Speed Booster to climb the slope in EMMI Zone Spinner has been reclassified to Speed Booster Conservation.
+- Added: Wall Jump (Beginner) is now an option for reaching the bottom part of the slope in EMMI Zone Spinner.
+- Changed: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with no items has been reclassified from Movement (Advanced) to Climb Sloped Surfaces (Expert).
+- Added: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with Phantom Cloak and Climb Sloped Surfaces (Advanced).
+- In Waterfall: Getting from Right of Rotatable to Tower Middle  with Spin Boost now requires Climb Sloped Surfaces (Beginner).
+
 #### Burenia
 
-- Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Tunnels (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Tunnels (Beginner) with 1 Flash Charge.
+- Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Surfaces (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Surfaces (Beginner) with 1 Flash Charge.
 
 ##### Dairon
 
 - Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
 - Added: Using Stand on Frozen Enemies trick to get the item in Big Hub, using either Flash Shift or Spin Boost.
+
+##### Ferenia
+
+- Added: Climb Sloped Surfaces (Intermediate) with Flash Shift to reach the pickup in Pitfall Puzzle Room, with 2 Flash Charges.
+- Added: Climb Sloped Surfaces (Beginner) with Flash Shift to climb the slope at the bottom of Speedboost Slopes Maze, with 1 Flach Charge.
+
+##### Ghavoran
+
+- Changed: Climbing to the pickup at the top of Spin Boost Tower using Flash Shift has been reclassified from Climb Sloped Tunnels to Climb Sloped Surfaces.
+- Changed: Climbing to the pickup at the top of Spin Boost Tower Using Flash Shit, the Wall Jump has been reduced from Advanced to Intermediate.
 
 ### Metroid Prime
 
