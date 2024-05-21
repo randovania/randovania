@@ -95,6 +95,8 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "am2r/starting_items.rdvgame",  # Starter preset + random starting items
         "am2r/transport_pipe_shuffle.rdvgame",  # Starter preset + shuffled transport pipes
         "am2r/custom_dna_required.rdvgame",  # Has 20/30 dna
+        # Factorio
+        "factorio/starter_preset.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings

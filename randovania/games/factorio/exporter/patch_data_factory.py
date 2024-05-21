@@ -56,7 +56,7 @@ class FactorioPatchDataFactory(PatchDataFactory):
                     "cost": {
                         "count": node.extra["count"],
                         "time": node.extra["time"],
-                        "ingredients": node.extra["ingredients"],
+                        "ingredients": list(node.extra["ingredients"]),
                     },
                     "prerequisites": prerequisites,
                     "unlocks": [
