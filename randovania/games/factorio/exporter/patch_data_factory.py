@@ -53,6 +53,7 @@ class FactorioPatchDataFactory(PatchDataFactory):
                     "locale_name": exported.name,
                     "description": exported.description,
                     "icon": exported.model.name,
+                    "icon_size": 64 if exported.model.name.startswith("__base__/graphics/icons") else 256,
                     "cost": {
                         "count": node.extra["count"],
                         "time": node.extra["time"],
