@@ -126,7 +126,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Area 3 Metroid Caverns
 
-- Added: Caverns Teleporter East - Reaching the Missile now has correct requirements with High Jump Boots, requiring either a Super Jump (Advanced), Unmorph Extend (Intermediate), or Freezing the Gullugg (Intermediate).
+- Added: Caverns Teleporter East - Reaching the pickup now has correct requirements with High Jump Boots, requiring either a Super Jump (Advanced), Unmorph Extend (Intermediate), or Freezing the Gullugg (Intermediate).
 
 ## [8.0.0] - 2024-05-01
 
