@@ -39,10 +39,18 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import copy
 import random
+import typing
 from operator import attrgetter
+
+SeedData = typing.TypeVar("SeedData")
+Fitness: typing.TypeAlias = float
+Genes: typing.TypeAlias = list[int]
 
 
 class GeneticAlgorithm:
+    tournament_size: int
+    fitness_function: typing.Callable[[Genes, list[SeedData]], Fitness] | None
+
     """Genetic Algorithm class.
 
     This is the main class that controls the functionality of the Genetic
@@ -66,7 +74,7 @@ class GeneticAlgorithm:
 
     def __init__(
         self,
-        seed_data,
+        seed_data: list[SeedData],
         population_size: int = 50,
         generations: int = 100,
         crossover_probability: float = 0.8,
@@ -100,7 +108,7 @@ class GeneticAlgorithm:
 
         self.current_generation: list[Chromosome] = []
 
-        def create_individual(seed_data):
+        def create_individual(seed_data: list[SeedData]) -> Genes:
             """Create a candidate solution representation.
 
             e.g. for a bit array representation:
@@ -114,7 +122,7 @@ class GeneticAlgorithm:
             """
             return [rng.randint(0, 1) for _ in range(len(seed_data))]
 
-        def crossover(parent_1, parent_2):
+        def crossover(parent_1: Genes, parent_2: Genes) -> tuple[Genes, Genes]:
             """Crossover (mate) two parents to produce two children.
 
             :param parent_1: candidate solution representation (list)
@@ -127,16 +135,16 @@ class GeneticAlgorithm:
             child_2 = parent_2[:index] + parent_1[index:]
             return child_1, child_2
 
-        def mutate(individual):
+        def mutate(individual: Genes) -> None:
             """Reverse the bit of a random index in an individual."""
             mutate_index = rng.randrange(len(individual))
             individual[mutate_index] = (0, 1)[individual[mutate_index] == 0]
 
-        def random_selection(population):
+        def random_selection(population: list[Chromosome]) -> Chromosome:
             """Select and return a random member of the population."""
             return rng.choice(population)
 
-        def tournament_selection(population):
+        def tournament_selection(population: list[Chromosome]) -> Chromosome:
             """Select a random number of individuals from the population and
             return the fittest member of them all.
             """
@@ -155,7 +163,7 @@ class GeneticAlgorithm:
         self.mutate_function = mutate
         self.selection_function = self.tournament_selection
 
-    def create_initial_population(self):
+    def create_initial_population(self) -> None:
         """Create members of the first population randomly."""
         initial_population = []
         for _ in range(self.population_size):
@@ -164,24 +172,25 @@ class GeneticAlgorithm:
             initial_population.append(individual)
         self.current_generation = initial_population
 
-    def calculate_population_fitness(self):
+    def calculate_population_fitness(self) -> None:
         """Calculate the fitness of every member of the given population using
         the supplied fitness_function.
         """
+        assert self.fitness_function is not None
         for individual in self.current_generation:
             individual.fitness = self.fitness_function(individual.genes, self.seed_data)
 
-    def rank_population(self):
+    def rank_population(self) -> None:
         """Sort the population by fitness according to the order defined by
         maximise_fitness.
         """
         self.current_generation.sort(key=attrgetter("fitness"), reverse=self.maximise_fitness)
 
-    def create_new_population(self):
+    def create_new_population(self) -> None:
         """Create a new population using the genetic operators (selection,
         crossover, and mutation) supplied.
         """
-        new_population = []
+        new_population: list[Chromosome] = []
         elite = self.current_generation[0]
         selection = self.selection_function
 
@@ -213,7 +222,7 @@ class GeneticAlgorithm:
 
         self.current_generation = new_population
 
-    def create_first_generation(self):
+    def create_first_generation(self) -> None:
         """Create the first population, calculate the population's fitness and
         rank the population by fitness according to the order specified.
         """
@@ -221,7 +230,7 @@ class GeneticAlgorithm:
         self.calculate_population_fitness()
         self.rank_population()
 
-    def create_next_generation(self):
+    def create_next_generation(self) -> None:
         """Create subsequent populations, calculate the population fitness and
         rank the population by fitness in the order specified.
         """
@@ -229,21 +238,21 @@ class GeneticAlgorithm:
         self.calculate_population_fitness()
         self.rank_population()
 
-    def run(self):
+    def run(self) -> None:
         """Run (solve) the Genetic Algorithm."""
         self.create_first_generation()
 
         for _ in range(1, self.generations):
             self.create_next_generation()
 
-    def best_individual(self):
+    def best_individual(self) -> tuple[Fitness, Genes]:
         """Return the individual with the best fitness in the current
         generation.
         """
         best = self.current_generation[0]
         return (best.fitness, best.genes)
 
-    def last_generation(self):
+    def last_generation(self) -> typing.Iterable[tuple[Fitness, Genes]]:
         """Return members of the last generation as a generator function."""
         return ((member.fitness, member.genes) for member in self.current_generation)
 
@@ -253,11 +262,11 @@ class Chromosome:
     representation.
     """
 
-    def __init__(self, genes):
+    def __init__(self, genes: Genes):
         """Initialise the Chromosome."""
         self.genes = genes
-        self.fitness = 0
+        self.fitness = 0.0
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return initialised Chromosome representation in human readable form."""
         return repr((self.fitness, self.genes))
