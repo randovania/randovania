@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - **Major** - Added: Transport Pipe randomizer. If enabled, it will change where Transport Pipes lead to.
-- Added: Walljump and Infinite Bomb Jumping have been added as items.
+- Added: Long Beam, Walljump and Infinite Bomb Jumping have been added as items.
 - Added: It is now possible to have a seperate shuffled amount and required amount of DNA.
 - Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
 - Added: Exposed Open Transitions for Door Lock Rando. Shuffling these in, will place Doors on all 4-Tile high transitions.
@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Distribution Center
 
 - Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
+- Changed: Dual Gammas: Fighting them with Charge Beam now requires you to be able to climb the platforms in the room.
 - Fixed: Gravity Area Trapdoor: Shinesparking up is now impossible on Door Lock Rando.
 - Fixed: Gravity Area Shaft: Shinesparking up is now impossible on Door Lock Rando and also properly accounts for Missiles.
 
@@ -39,6 +40,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Waterfalls Exterior: Hypermode option of climbing the room with Walljumps and Morph Glides.
 - Fixed: Hatchling Room Underside: Shinesparking up is now impossible on Door Lock Rando.
+
+##### Industrial Complex
+
+- Changed: Upper Factory Gamma Nest: Leaving to the top with Spider Ball or IBJ now requires the Gamma to be dead first.
+- Changed: Upper Factory Gamma Nest: Leaving to the top with only Walljump is now an Expert Walljump instead of Advanced.
+- Changed: Upper Factory Gamma Nest: Leaving to the top with Walljumps and the Septoggs is now an Intermediate Walljump instead of Beginner.
+- Changed: Fighting Torizo without any Beam Upgrades is now Advanced Combat.
+
+##### GFS Thoth
+
+- Changed: Fighting Genesis without any Beam Upgrades is now Expert Combat.
 
 ##### Golden Temple
 
