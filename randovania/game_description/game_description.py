@@ -23,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
     from randovania.games.game import RandovaniaGame
@@ -80,6 +81,7 @@ class GameDescription:
     region_list: RegionList
     _used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None
     mutable: bool = False
+    _victory_condition_as_set: RequirementSet | None = None
 
     def __deepcopy__(self, memodict: dict) -> GameDescription:
         new_game = GameDescription(
@@ -133,10 +135,12 @@ class GameDescription:
         if not self.mutable:
             raise ValueError("self is not mutable")
 
-        self.region_list.patch_requirements(
-            damage_multiplier, self.create_node_context(resources), self.dock_weakness_database
-        )
+        context = self.create_node_context(resources)
+        self.region_list.patch_requirements(damage_multiplier, context, self.dock_weakness_database)
         self._dangerous_resources = None
+        self._victory_condition_as_set = self.victory_condition.patch_requirements(damage_multiplier, context).as_set(
+            context
+        )
 
     def get_prefilled_docks(self) -> list[int | None]:
         region_list = self.region_list
@@ -205,6 +209,11 @@ class GameDescription:
             )
             result.mutable = True
             return result
+
+    def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
+        if self._victory_condition_as_set is not None:
+            return self._victory_condition_as_set
+        return self.victory_condition.as_set(context)
 
 
 def _resources_for_damage(

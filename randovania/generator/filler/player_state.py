@@ -138,7 +138,8 @@ class PlayerState:
         return result
 
     def victory_condition_satisfied(self) -> bool:
-        return self.game.victory_condition.satisfied(self.reach.state.node_context(), self.reach.state.energy)
+        context = self.reach.state.node_context()
+        return self.game.victory_condition_as_set(context).satisfied(context, self.reach.state.energy)
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget) -> None:
         self.num_assigned_pickups += 1
