@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import pprint
 import typing
 from typing import TYPE_CHECKING
 
@@ -96,8 +95,6 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
                     "ingredients": [recipe_ingredient(item_name, amount) for item_name, amount in ingredients],
                 }
             )
-
-        pprint.pp(custom_recipes)
 
         return {
             "recipes": custom_recipes,
