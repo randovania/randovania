@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
-from unittest.mock import ANY, AsyncMock, MagicMock, patch
+from typing import TYPE_CHECKING
+from unittest.mock import ANY, AsyncMock, MagicMock
 
 import pytest
 from PySide6 import QtWidgets
@@ -18,6 +19,9 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow, _ui_patch_and_simplify
+
+if TYPE_CHECKING:
+    import pytest_mock
 
 
 def test_select_area_by_name(
@@ -39,28 +43,29 @@ def test_select_area_by_name(
 
 
 @pytest.mark.parametrize("accept", [False, True])
-@patch("randovania.gui.data_editor.ConnectionsEditor")
 async def test_open_edit_connection(
-    mock_connections_editor: MagicMock,
     accept: bool,
     echoes_game_data,
     skip_qtbot,
-    mocker,
+    mocker: pytest_mock.MockerFixture,
 ):
     # Setup
+    mock_connections_editor = mocker.patch("randovania.gui.data_editor.ConnectionsEditor")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     window = DataEditorWindow(echoes_game_data, None, False, True)
     window.editor = MagicMock()
     skip_qtbot.addWidget(window)
 
     editor = mock_connections_editor.return_value
-    execute_dialog.return_value = QtWidgets.QDialog.Accepted if accept else QtWidgets.QDialog.Rejected
+    execute_dialog.return_value = (
+        QtWidgets.QDialog.DialogCode.Accepted if accept else QtWidgets.QDialog.DialogCode.Rejected
+    )
 
     # Run
     await window._open_edit_connection()
 
     # Assert
-    mock_connections_editor.assert_called_once_with(window, window.resource_database, ANY)
+    mock_connections_editor.assert_called_once_with(window, window.resource_database, window.region_list, ANY)
     if accept:
         window.editor.edit_connections.assert_called_once_with(
             window.current_area, window.current_node, window.current_connection_node, editor.final_requirement

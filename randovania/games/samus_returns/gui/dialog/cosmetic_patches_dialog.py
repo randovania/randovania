@@ -30,7 +30,6 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         super().connect_signals()
 
         self._persist_check_field(self.custom_laser_color_check, "use_laser_color")
-        self._persist_check_field(self.custom_grapple_laser_color_check, "use_grapple_laser_color")
         self._persist_check_field(self.custom_energy_tank_color_check, "use_energy_tank_color")
         self._persist_check_field(self.custom_aeion_bar_color_check, "use_aeion_bar_color")
         self._persist_check_field(self.custom_ammo_hud_color_check, "use_ammo_hud_color")
@@ -62,7 +61,6 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
 
     def on_new_cosmetic_patches(self, patches: MSRCosmeticPatches) -> None:
         self.custom_laser_color_check.setChecked(patches.use_laser_color)
-        self.custom_grapple_laser_color_check.setChecked(patches.use_grapple_laser_color)
         self.custom_energy_tank_color_check.setChecked(patches.use_energy_tank_color)
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
