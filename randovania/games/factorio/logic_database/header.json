@@ -158,9 +158,9 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
+                        "transport-belt",
                         "underground-belt",
-                        "splitter",
-                        "transport-belt"
+                        "splitter"
                     ]
                 }
             },
@@ -1095,6 +1095,15 @@
                     ]
                 }
             },
+            "longer-handed-inserter": {
+                "long_name": "Longer-handed inserter",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "longer-handed-inserter"
+                    ]
+                }
+            },
             "oil-cracking": {
                 "long_name": "Oil cracking",
                 "max_capacity": 1,
@@ -1166,6 +1175,13 @@
             },
             "regular-inserter-capacity-bonus": {
                 "long_name": "Regular inserter capacity bonus",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": []
+                }
+            },
+            "research-productivity": {
+                "long_name": "Lab research Productivity",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": []
@@ -1934,6 +1950,37 @@
                     }
                 }
             },
+            "craft-burner-assembling-machine": {
+                "display_name": "Craft Burner assembling machine",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "craft-iron-gear-wheel"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-copper-cable"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-burner-inserter"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
             "craft-burner-inserter": {
                 "display_name": "Craft Burner inserter",
                 "requirement": {
@@ -1953,6 +2000,37 @@
                                         {
                                             "type": "template",
                                             "data": "craft-iron-gear-wheel"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "craft-burner-lab": {
+                "display_name": "Craft Burner lab",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "craft-iron-gear-wheel"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-copper-cable"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-burner-inserter"
                                         }
                                     ]
                                 }
@@ -5110,6 +5188,42 @@
                                         {
                                             "type": "template",
                                             "data": "craft-iron-plate"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-inserter"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "craft-longer-handed-inserter": {
+                "display_name": "Craft Longer-handed inserter",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "longer-handed-inserter",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "craft-iron-stick"
                                         },
                                         {
                                             "type": "template",
@@ -9060,53 +9174,27 @@
             "craft-copper-ore": {
                 "display_name": "Mine Copper ore",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "use-burner-mining-drill"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-electric-mining-drill"
-                            }
-                        ]
+                        "items": []
                     }
                 }
             },
             "craft-crude-oil": {
                 "display_name": "Mine Crude oil",
                 "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "use-pumpjack"
-                            }
-                        ]
-                    }
+                    "type": "template",
+                    "data": "use-pumpjack"
                 }
             },
             "craft-iron-ore": {
                 "display_name": "Mine Iron ore",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "use-burner-mining-drill"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-electric-mining-drill"
-                            }
-                        ]
+                        "items": []
                     }
                 }
             },
@@ -9150,19 +9238,10 @@
             "craft-stone": {
                 "display_name": "Mine Stone",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "use-burner-mining-drill"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-electric-mining-drill"
-                            }
-                        ]
+                        "items": []
                     }
                 }
             },
@@ -9188,16 +9267,8 @@
             "craft-water": {
                 "display_name": "Mine Water",
                 "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "has-offshore-pump"
-                            }
-                        ]
-                    }
+                    "type": "template",
+                    "data": "has-offshore-pump"
                 }
             },
             "craft-wood": {
@@ -9914,8 +9985,28 @@
                     }
                 }
             },
+            "has-burner-assembling-machine": {
+                "display_name": "Unlocked Burner assembling machine",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": []
+                    }
+                }
+            },
             "has-burner-inserter": {
                 "display_name": "Unlocked Burner inserter",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": []
+                    }
+                }
+            },
+            "has-burner-lab": {
+                "display_name": "Unlocked Burner lab",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -11472,6 +11563,26 @@
                                 "data": {
                                     "type": "items",
                                     "name": "long-handed-inserter",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "has-longer-handed-inserter": {
+                "display_name": "Unlocked Longer-handed inserter",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "longer-handed-inserter",
                                     "amount": 1,
                                     "negate": false
                                 }

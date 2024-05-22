@@ -100,12 +100,13 @@ _k_electric_entities = [
 
 _k_fuel_production = template_req("craft-coal")
 
-_k_basic_mining = or_req(
-    [
-        template_req("use-burner-mining-drill"),
-        template_req("use-electric-mining-drill"),
-    ]
-)
+# _k_basic_mining = or_req(
+#     [
+#         template_req("use-burner-mining-drill"),
+#         template_req("use-electric-mining-drill"),
+#     ]
+# )
+_k_basic_mining = and_req([])
 
 _k_miner_for_resource = {
     "raw-fish": and_req([]),
@@ -115,11 +116,7 @@ _k_miner_for_resource = {
     "iron-ore": _k_basic_mining,
     "copper-ore": _k_basic_mining,
     "stone": _k_basic_mining,
-    "water": and_req(
-        [
-            template_req("has-offshore-pump"),
-        ]
-    ),
+    "water": template_req("has-offshore-pump"),
     "steam": or_req(
         [
             and_req(
@@ -145,11 +142,7 @@ _k_miner_for_resource = {
             template_req("craft-sulfuric-acid"),
         ]
     ),
-    "crude-oil": and_req(
-        [
-            template_req("use-pumpjack"),
-        ]
-    ),
+    "crude-oil": template_req("use-pumpjack"),
 }
 
 _k_tier_requirements = [
@@ -349,6 +342,10 @@ def create_pickups(techs_raw: dict, tech_csv: dict) -> dict:
                 "preferred_location_category": "major" if data["category"] != "enhancement" else "minor",
                 "expected_case_for_describer": "shuffled",
             }
+
+    result["Rocket Silo"]["expected_case_for_describer"] = "vanilla"
+    result["Rocket Silo"]["original_location"] = 136
+    result["Rocket Silo"]["hide_from_gui"] = True
 
     return result
 

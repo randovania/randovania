@@ -1649,7 +1649,8 @@
                 9
             ]
         ],
-        "result": "assembling-machine-1"
+        "result": "assembling-machine-1",
+        "order": "assembling-machine-1"
     },
     "repair-pack": {
         "type": "recipe",
@@ -1735,6 +1736,7 @@
     "assembling-machine-2": {
         "type": "recipe",
         "name": "assembling-machine-2",
+        "order": "assembling-machine-2",
         "enabled": false,
         "ingredients": [
             [
@@ -2953,7 +2955,8 @@
                 2
             ]
         ],
-        "result": "assembling-machine-3"
+        "result": "assembling-machine-3",
+        "order": "assembling-machine-3"
     },
     "tank": {
         "type": "recipe",
@@ -4369,6 +4372,85 @@
             ]
         ],
         "result": "steam-turbine"
+    },
+    "burner-lab": {
+        "type": "recipe",
+        "name": "burner-lab",
+        "category": "crafting",
+        "enabled": true,
+        "energy_required": 5,
+        "ingredients": [
+            {
+                "type": "item",
+                "name": "iron-gear-wheel",
+                "amount": 15
+            },
+            {
+                "type": "item",
+                "name": "copper-cable",
+                "amount": 30
+            },
+            {
+                "type": "item",
+                "name": "burner-inserter",
+                "amount": 5
+            }
+        ],
+        "results": [
+            {
+                "type": "item",
+                "name": "burner-lab",
+                "amount": 1
+            }
+        ]
+    },
+    "burner-assembling-machine": {
+        "type": "recipe",
+        "name": "burner-assembling-machine",
+        "category": "crafting",
+        "order": "assembling-machine-0",
+        "enabled": true,
+        "energy_required": 5,
+        "ingredients": [
+            {
+                "type": "item",
+                "name": "iron-gear-wheel",
+                "amount": 10
+            },
+            {
+                "type": "item",
+                "name": "copper-cable",
+                "amount": 10
+            },
+            {
+                "type": "item",
+                "name": "burner-inserter",
+                "amount": 3
+            }
+        ],
+        "results": [
+            {
+                "type": "item",
+                "name": "burner-assembling-machine",
+                "amount": 1
+            }
+        ]
+    },
+    "longer-handed-inserter": {
+        "type": "recipe",
+        "name": "longer-handed-inserter",
+        "enabled": false,
+        "ingredients": [
+            [
+                "iron-stick",
+                4
+            ],
+            [
+                "inserter",
+                3
+            ]
+        ],
+        "result": "longer-handed-inserter"
     },
     "fill-water-barrel": {
         "type": "recipe",

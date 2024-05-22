@@ -889,16 +889,16 @@
         "icon": "__base__/graphics/technology/logistics-1.png",
         "effects": [
             {
+                "recipe": "transport-belt",
+                "type": "unlock-recipe"
+            },
+            {
                 "type": "unlock-recipe",
                 "recipe": "underground-belt"
             },
             {
                 "type": "unlock-recipe",
                 "recipe": "splitter"
-            },
-            {
-                "recipe": "transport-belt",
-                "type": "unlock-recipe"
             }
         ],
         "unit": {
@@ -5050,6 +5050,30 @@
             "time": 15
         }
     },
+    "longer-handed-inserter": {
+        "name": "longer-handed-inserter",
+        "effects": [
+            {
+                "recipe": "longer-handed-inserter",
+                "type": "unlock-recipe"
+            }
+        ],
+        "icon": "__base__/graphics/technology/fast-inserter.png",
+        "icon_mipmaps": 4,
+        "icon_size": 256,
+        "type": "technology",
+        "order": "d-b",
+        "unit": {
+            "count": 10,
+            "ingredients": [
+                [
+                    "automation-science-pack",
+                    1
+                ]
+            ],
+            "time": 15
+        }
+    },
     "oil-cracking": {
         "name": "oil-cracking",
         "effects": [
@@ -5202,9 +5226,9 @@
                 "recipe": "steam-engine"
             }
         ],
-        "icon": "__base__/graphics/technology/electric-energy-acumulators.png",
+        "icon": "__base__/graphics/icons/steam-engine.png",
         "icon_mipmaps": 4,
-        "icon_size": 256,
+        "icon_size": 64,
         "type": "technology",
         "order": "d-b",
         "unit": {
@@ -5253,6 +5277,48 @@
         "icon": "__base__/graphics/technology/inserter-capacity.png",
         "icon_mipmaps": 4,
         "icon_size": 256,
+        "max_level": "infinite",
+        "upgrade": true,
+        "type": "technology",
+        "order": "d-b",
+        "unit": {
+            "count": 10,
+            "ingredients": [
+                [
+                    "automation-science-pack",
+                    1
+                ]
+            ],
+            "time": 15
+        }
+    },
+    "research-productivity": {
+        "name": "research-productivity",
+        "effects": [
+            {
+                "type": "laboratory-productivity",
+                "modifier": 10
+            }
+        ],
+        "icons": [
+            {
+                "icon": "__base__/graphics/technology/research-speed.png",
+                "icon_size": 256,
+                "icon_mipmaps": 4
+            },
+            {
+                "icon": "__core__/graphics/icons/technology/constants/constant-mining-productivity.png",
+                "icon_size": 128,
+                "icon_mipmaps": 3,
+                "shift": [
+                    100,
+                    100
+                ]
+            }
+        ],
+        "icon_mipmaps": 4,
+        "icon_size": 256,
+        "max_level": "infinite",
         "upgrade": true,
         "type": "technology",
         "order": "d-b",
