@@ -73,6 +73,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     border_x: float = 75
     border_y: float = 75
     canvas_size: QSizeF
+    flip_y: bool = False
 
     _next_node_location: NodeLocation = NodeLocation(0.0, 0.0, 0.0)
     CreateNodeRequest = Signal(NodeLocation)
@@ -136,6 +137,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def update_region_bounds(self):
         if self.region is None:
             return
+
+        self.flip_y = self.region.extra.get("map_flip_y", False)
 
         min_x, min_y = math.inf, math.inf
         max_x, max_y = -math.inf, -math.inf
@@ -392,12 +395,21 @@ class DataEditorCanvas(QtWidgets.QWidget):
         else:
             x, y = pos[0], pos[1]
 
-        return QPointF(self.scale * (x - self.area_bounds.min_x), self.scale * (self.area_bounds.max_y - y))
+        scaled_x = self.scale * (x - self.area_bounds.min_x)
+        if self.flip_y:
+            scaled_y = self.scale * (y - self.area_bounds.min_y)
+        else:
+            scaled_y = self.scale * (self.area_bounds.max_y - y)
+
+        return QPointF(scaled_x, scaled_y)
 
     def qt_local_to_game_loc(self, pos: QPointF) -> NodeLocation:
-        return NodeLocation(
-            (pos.x() / self.scale) + self.area_bounds.min_x, self.area_bounds.max_y - (pos.y() / self.scale), 0.0
-        )
+        x = (pos.x() / self.scale) + self.area_bounds.min_x
+        if self.flip_y:
+            y = (pos.y() / self.scale) + self.area_bounds.min_y
+        else:
+            y = self.area_bounds.max_y - (pos.y() / self.scale)
+        return NodeLocation(x, y, 0.0)
 
     def get_area_canvas_offset(self):
         return QPointF(
@@ -429,8 +441,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
             # Calculate the top-left corner and bottom-right of the background image
             percent_x_start = (abounds.min_x - wbounds.min_x - scaled_border_x) / (wbounds.max_x - wbounds.min_x)
             percent_x_end = (abounds.max_x - wbounds.min_x + scaled_border_x) / (wbounds.max_x - wbounds.min_x)
-            percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border_y) / (wbounds.max_y - wbounds.min_y)
-            percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
+
+            if self.flip_y:
+                percent_y_start = (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
+                percent_y_end = (abounds.max_y - wbounds.min_y + scaled_border_y) / (wbounds.max_y - wbounds.min_y)
+            else:
+                percent_y_start = 1 - (abounds.max_y - wbounds.min_y + scaled_border_y) / (
+                    wbounds.max_y - wbounds.min_y
+                )
+                percent_y_end = 1 - (abounds.min_y - wbounds.min_y - scaled_border_y) / (wbounds.max_y - wbounds.min_y)
 
             painter.drawImage(
                 QRectF(
@@ -521,6 +540,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 painter.drawEllipse(p, 7, 7)
             painter.drawEllipse(p, 5, 5)
             centered_text(painter, p + QPointF(0, 15), node.name)
+
+        painter.end()
 
     def set_zoom_value(self, new_zoom):
         self.additional_zoom = new_zoom / 20
