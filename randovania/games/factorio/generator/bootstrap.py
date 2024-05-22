@@ -30,9 +30,12 @@ class FactorioBootstrap(Bootstrap):
             result_item: str = recipe["recipe_name"]
 
             template = game.resource_database.requirement_template[f"craft-{result_item}"]
-            assert isinstance(template.requirement, RequirementOr)
-            assert len(template.requirement.items) == 1
-            old_requirement = template.requirement.items[0]
+            if isinstance(template.requirement, RequirementOr):
+                assert isinstance(template.requirement, RequirementOr)
+                assert len(template.requirement.items) == 1
+                old_requirement = template.requirement.items[0]
+            else:
+                old_requirement = template.requirement
             assert isinstance(old_requirement, RequirementAnd)
 
             new_items = [old_requirement.items[0]]

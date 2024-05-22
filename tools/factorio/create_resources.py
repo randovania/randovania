@@ -31,10 +31,14 @@ def tech_req(tech_name: str) -> dict:
 
 
 def and_req(entries: list, comment: str | None = None) -> dict:
+    if len(entries) == 1:
+        return entries[0]
     return {"type": "and", "data": {"comment": comment, "items": entries}}
 
 
 def or_req(entries: list, comment: str | None = None) -> dict:
+    if len(entries) == 1:
+        return entries[0]
     return {"type": "or", "data": {"comment": comment, "items": entries}}
 
 
