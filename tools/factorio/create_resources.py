@@ -74,10 +74,10 @@ def get_localized_name(n: str) -> str:
 
 _k_items_for_crafting_category = {
     "crafting": [],
-    "advanced-crafting": ["assembling-machine-1", "assembling-machine-2", "assembling-machine-3"],
-    "smelting": ["stone-furnace", "steel-furnace", "electric-furnace"],
+    "advanced-crafting": ["assembling-machine-1"],  # , "assembling-machine-2", "assembling-machine-3"],
+    "smelting": [],  # ["stone-furnace", "steel-furnace", "electric-furnace"],
     "chemistry": ["chemical-plant"],
-    "crafting-with-fluid": ["assembling-machine-2", "assembling-machine-3"],
+    "crafting-with-fluid": ["assembling-machine-2"],  # , "assembling-machine-3"],
     "oil-processing": ["oil-refinery"],
     "rocket-building": ["rocket-silo"],
     "centrifuging": ["centrifuge"],

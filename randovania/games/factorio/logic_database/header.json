@@ -4932,35 +4932,6 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": "items",
-                                                "name": "advanced-oil-processing",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "perform-oil-processing"
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "craft-water"
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "craft-crude-oil"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
                                                 "name": "oil-processing",
                                                 "amount": 1,
                                                 "negate": false
@@ -5002,35 +4973,6 @@
                                         {
                                             "type": "template",
                                             "data": "craft-steam"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "oil-cracking",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "perform-chemistry"
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "craft-water"
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "craft-light-oil"
                                         }
                                     ]
                                 }
@@ -7628,24 +7570,8 @@
             "perform-advanced-crafting": {
                 "display_name": "Perform advanced-crafting",
                 "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "use-assembling-machine-1"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-assembling-machine-2"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-assembling-machine-3"
-                            }
-                        ]
-                    }
+                    "type": "template",
+                    "data": "use-assembling-machine-1"
                 }
             },
             "perform-centrifuging": {
@@ -7675,20 +7601,8 @@
             "perform-crafting-with-fluid": {
                 "display_name": "Perform crafting-with-fluid",
                 "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "use-assembling-machine-2"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-assembling-machine-3"
-                            }
-                        ]
-                    }
+                    "type": "template",
+                    "data": "use-assembling-machine-2"
                 }
             },
             "perform-oil-processing": {
@@ -7708,23 +7622,10 @@
             "perform-smelting": {
                 "display_name": "Perform smelting",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "use-stone-furnace"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-steel-furnace"
-                            },
-                            {
-                                "type": "template",
-                                "data": "use-electric-furnace"
-                            }
-                        ]
+                        "items": []
                     }
                 }
             },
@@ -9432,25 +9333,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "advanced-oil-processing",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
                                     "name": "coal-liquefaction",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "oil-cracking",
                                     "amount": 1,
                                     "negate": false
                                 }

@@ -35,8 +35,13 @@ def get_recipes_for(recipes_raw: dict) -> dict[str, set[str]]:
 
     # Manual Overrides
     recipes_for["uranium-235"].remove("uranium-processing")  # no expecting 235 for science without kovarex
+
     recipes_for["uranium-238"].remove("kovarex-enrichment-process")  # costs more 238 than makes
     recipes_for["uranium-238"].remove("nuclear-fuel-reprocessing")  # not viable either
+
+    recipes_for["petroleum-gas"].remove("advanced-oil-processing")  # progressive with basic
+    recipes_for["petroleum-gas"].remove("light-oil-cracking")  # implies into having gas already
+
     del recipes_for["electric-energy-interface"]  # cheat item
 
     return recipes_for
