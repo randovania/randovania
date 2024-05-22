@@ -74,6 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic database
 
 - Added: New trick: Climb Sloped Surfaces.
+- Changed: In the preset energy tab, the explanation of environmental damage being non-logical is now less misleading.
 
 #### Artaria
 
