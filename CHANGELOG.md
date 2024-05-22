@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.1.0] - 2024-06-??
 
 - Changed: In Item Pool tab, improved the presentation for configuring ammo.
+- Changed: Error messages have been made more detailed if Randovania is unable to connect to Dolphin.
 - Fixed: Events followed by pickups are now better weighted during generation.
 - Fixed: During generation, the starting health is now properly accounted for when deciding how many Energy Tanks (and similar) are needed for a requirement.
 - Fixed: Text in the Customize Preset window's Randomizer Logic > Generation tab is now game-neutral.
@@ -20,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: It is now possible to have a seperate shuffled amount and required amount of DNA.
 - Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
 - Added: Exposed Open Transitions for Door Lock Rando. Shuffling these in, will place Doors on all 4-Tile high transitions.
-- The following sprites have been added: Spider Ball for Prime 1, Missile Launcher, Speed Booster Upgrades and Super Missile Launcher for Dread.
+- Added: The following sprites have been added: Spider Ball for Prime 1, Missile Launcher, Speed Booster Upgrades and Super Missile Launcher for Dread.
 - Changed: The following sprites were changed in order to fit more with AM2R's art style: Ice Missiles and Storm Missiles for Dread, Annihilator Beam, Dark Suit, Dark Visor, Echo Visor, Light Suit and Progressive Suit for Echoes, Gravity Suit, Phazon Suit and Varia Suit for Prime 1.
 - Changed: When Doors are shuffled over Research Site Hatches, they are now not obscured by the rock background.
 - Changed: The Starter Preset now has `Unlock Genetics Laboratory Doors` enabled.
