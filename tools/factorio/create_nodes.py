@@ -1,11 +1,11 @@
-import collections
 import json
 import math
-import string
 import typing
 from pathlib import Path
 
 import networkx
+
+from tools.factorio import util
 
 _custom_tech = [
     # custom tech
@@ -98,41 +98,26 @@ def make_pickup(index: int, *, is_major: bool = False, connections=None) -> dict
     }
 
 
-def get_letter_combo(index: int) -> str:
-    first = index // len(string.ascii_lowercase)
-    second = index % len(string.ascii_lowercase)
-    return string.ascii_lowercase[first] + string.ascii_lowercase[second]
-
-
 def complexity_for(tech: dict) -> int:
     pack_count = len(tech["unit"]["ingredients"])
     raw_cost = math.floor(tech["unit"]["count"] * tech["unit"]["time"] * math.sqrt(pack_count))
     return math.floor(math.log(raw_cost)) - 3
 
 
-def main():
-    factorio_path = Path(r"F:/Factorio_1.1.91-rdv-mod")
-    rdv_factorio_path = Path(__file__).parents[2].joinpath("randovania/games/factorio")
-    region_path = rdv_factorio_path.joinpath("logic_database/Tech.json")
-
-    raw_dump_path = factorio_path.joinpath("script-output/data-raw-dump.json")
-
-    with raw_dump_path.open() as f:
-        raw_dump: dict[str, dict[str, typing.Any]] = json.load(f)
-
-    techs_raw = {key: value for key, value in raw_dump["technology"].items() if not key.startswith("randovania-")}
-
+def _load_existing_ids(region_path: Path) -> dict[str, int]:
     try:
         with region_path.open() as f:
-            existing_ids = {
+            return {
                 node: node_data["pickup_index"]
                 for node, node_data in json.load(f)["areas"]["Tech Tree"]["nodes"].items()
                 if node_data["node_type"] == "pickup"
             }
 
     except FileNotFoundError:
-        existing_ids = {}
+        return {}
 
+
+def make_gen_id(existing_ids: dict[str, int]) -> typing.Callable[[], int]:
     used_ids = set(existing_ids.values())
 
     def gen_id() -> int:
@@ -142,10 +127,28 @@ def main():
             current_pickup_index += 1
         return current_pickup_index
 
+    return gen_id
+
+
+def main():
+    factorio_path = Path(r"F:/Factorio_1.1.91-rdv-mod")
+    rdv_factorio_path = Path(__file__).parents[2].joinpath("randovania/games/factorio")
+    region_path = rdv_factorio_path.joinpath("logic_database/Tech.json")
+
+    util.read_locales(factorio_path)
+
+    raw_dump_path = factorio_path.joinpath("script-output/data-raw-dump.json")
+
+    with raw_dump_path.open() as f:
+        raw_dump: dict[str, dict[str, typing.Any]] = json.load(f)
+
+    techs_raw = {key: value for key, value in raw_dump["technology"].items() if not key.startswith("randovania-")}
+
+    existing_ids = _load_existing_ids(region_path)
+    gen_id = make_gen_id(existing_ids)
+
     graph = networkx.DiGraph()
-    techs_by_pack = collections.defaultdict(int)
     pack_for_tech = {}
-    last_letter_for_pack_combo = {}
     pickup_nodes = {}
 
     for tech_name, tech in techs_raw.items():
@@ -166,15 +169,9 @@ def main():
             graph.add_edge(it, tech_name)
 
     for tech_name in networkx.topological_sort(graph):
-        pack = pack_for_tech[tech_name]
-        pack_letters = "".join(it[0] for it in pack)
-        letter = get_letter_combo(techs_by_pack[pack])
-        techs_by_pack[pack] += 1
-
-        last_letter_for_pack_combo[pack_letters] = letter
         pickup_nodes[tech_name] = {
-            "node_name": f"Pickup ({pack_letters.upper()} {techs_by_pack[pack]})",
-            "tech_name": f"randovania-{pack_letters.lower()}-{letter}",
+            "node_name": f"Pickup ({util.get_localized_name(tech_name)})",
+            "tech_name": f"randovania-{tech_name}",
             "complexity": complexity_for(techs_raw[tech_name]),
         }
 

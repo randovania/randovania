@@ -1,5 +1,4 @@
 import argparse
-import configparser
 import csv
 import json
 import typing
@@ -7,8 +6,7 @@ from pathlib import Path
 
 from randovania.games.factorio.data_importer import data_parser
 from randovania.lib import json_lib
-
-locale = configparser.ConfigParser()
+from tools.factorio import util
 
 
 def template_req(name: str) -> dict:
@@ -40,36 +38,6 @@ def or_req(entries: list, comment: str | None = None) -> dict:
     if len(entries) == 1:
         return entries[0]
     return {"type": "or", "data": {"comment": comment, "items": entries}}
-
-
-def get_localized_name(n: str) -> str:
-    for k in ["item-name", "entity-name", "fluid-name", "equipment-name", "recipe-name", "technology-name"]:
-        if n in locale[k]:
-            return locale[k][n]
-        if f"{n}-1" in locale[k]:
-            return locale[k][f"{n}-1"]
-
-    if n.startswith("fill-"):
-        return f"Fill {locale['fluid-name'][n[5:-7]]} barrel"
-
-    if n.endswith("-barrel"):
-        return f"{locale['fluid-name'][n[:-7]]} barrel"
-
-    hardcoded_names = {
-        "solid-fuel-from-heavy-oil": "Solid Fuel (Heavy Oil)",
-        "solid-fuel-from-light-oil": "Solid Fuel (Light Oil)",
-        "solid-fuel-from-petroleum-gas": "Solid Fuel (Petroleum Gas)",
-    }
-
-    try:
-        return hardcoded_names[n]
-    except KeyError:
-        i = n.rfind("-")
-        if i != -1:
-            front, number = n[:i], n[i + 1 :]
-            if number.isdigit():
-                return f"{get_localized_name(front)} {number}"
-        raise
 
 
 _k_items_for_crafting_category = {
@@ -203,7 +171,7 @@ def create_resources(header: dict, techs_for_recipe: dict) -> None:
 
     for tech_name, recipes_unlocked in techs_for_recipe.items():
         header["resource_database"]["items"][tech_name] = {
-            "long_name": get_localized_name(tech_name),
+            "long_name": util.get_localized_name(tech_name),
             "max_capacity": 1,
             "extra": {"recipes_unlocked": recipes_unlocked},
         }
@@ -274,7 +242,7 @@ def update_templates(header: dict, recipes_raw: dict, techs_for_recipe: dict[str
 
     # Add the templates for crafting all recipes
     for item_name, recipes in data_parser.get_recipes_for(recipes_raw).items():
-        localized_name = get_localized_name(item_name)
+        localized_name = util.get_localized_name(item_name)
 
         techs = set()
         for recipe in recipes:
@@ -296,7 +264,7 @@ def update_templates(header: dict, recipes_raw: dict, techs_for_recipe: dict[str
 
     # Mining all resources
     for resource_name, requirement in _k_miner_for_resource.items():
-        localized_name = get_localized_name(resource_name)
+        localized_name = util.get_localized_name(resource_name)
         header["resource_database"]["requirement_template"][f"craft-{resource_name}"] = {
             "display_name": f"Mine {localized_name}",
             "requirement": requirement,
@@ -403,14 +371,7 @@ def main():
     header_path = rdv_factorio_path.joinpath("logic_database/header.json")
 
     raw_dump_path = factorio_path.joinpath("script-output/data-raw-dump.json")
-
-    locale.read(
-        [
-            factorio_path.joinpath("data/base/locale/en/base.cfg"),
-            factorio_path.joinpath("mods/randovania-layout/locale/en/strings.cfg"),
-        ]
-    )
-
+    util.read_locales(factorio_path)
     tech_csv = read_tech_csv(csv_path)
 
     with raw_dump_path.open() as f:
