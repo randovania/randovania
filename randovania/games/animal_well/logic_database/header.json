@@ -3,19 +3,224 @@
     "game": "animal_well",
     "resource_database": {
         "items": {
-            "Weapon": {
-                "long_name": "Powerful Weapon",
+            "Firecracker": {
+                "long_name": "firecracker",
                 "max_capacity": 1,
                 "extra": {}
             },
-            "VictoryKey": {
-                "long_name": "Victory Key",
+            "Animal Flute": {
+                "long_name": "animal flute",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 169
+                }
+            },
+            "Lantern": {
+                "long_name": "lantern",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 109
+                }
+            },
+            "Top": {
+                "long_name": "top",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 634
+                }
+            },
+            "Disc": {
+                "long_name": "disc",
                 "max_capacity": 1,
                 "extra": {}
+            },
+            "Bubble Wand": {
+                "long_name": "b. wand",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 162
+                }
+            },
+            "Better Bubble Wand": {
+                "long_name": "b. b. wand",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 708
+                }
+            },
+            "Yo-Yo": {
+                "long_name": "yoyo",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 334
+                }
+            },
+            "Slink": {
+                "long_name": "slink",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 417
+                }
+            },
+            "Remote": {
+                "long_name": "remote",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 466
+                }
+            },
+            "Bouncy Ball": {
+                "long_name": "b. ball",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 637
+                }
+            },
+            "Wheel": {
+                "long_name": "wheel",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 643
+                }
+            },
+            "UV Lantern": {
+                "long_name": "uv lantern",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 323
+                }
+            },
+            "Map": {
+                "long_name": "map",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 214
+                }
+            },
+            "Stamps": {
+                "long_name": "stamps",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 149
+                }
+            },
+            "Pencil": {
+                "long_name": "pencil",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 442
+                }
+            },
+            "Blue Flame": {
+                "long_name": "b. flame",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 627,
+                    "tile_param": 0
+                }
+            },
+            "Pink Flame": {
+                "long_name": "p. flame",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 627,
+                    "tile_param": 1
+                }
+            },
+            "Violet Flame": {
+                "long_name": "v. flame",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 627,
+                    "tile_param": 2
+                }
+            },
+            "Green Flame": {
+                "long_name": "g. flame",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 627,
+                    "tile_param": 3
+                }
+            },
+            "Snake Medal": {
+                "long_name": "s medal",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 469
+                }
+            },
+            "Eel Medal": {
+                "long_name": "e medal",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 679
+                }
+            },
+            "Kangaroo Medal Shards": {
+                "long_name": "k shard",
+                "max_capacity": 3,
+                "extra": {}
+            },
+            "Mock Disc": {
+                "long_name": "mock disc",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 382
+                }
+            },
+            "65th Egg": {
+                "long_name": "65th egg",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 711
+                }
+            },
+            "House Key": {
+                "long_name": "house key",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 611
+                }
+            },
+            "Office Key": {
+                "long_name": "office key",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 617
+                }
+            },
+            "Fanny Pack": {
+                "long_name": "f. pack",
+                "max_capacity": 1,
+                "extra": {
+                    "tile_id": 780
+                }
+            },
+            "Key": {
+                "long_name": "key",
+                "max_capacity": 4,
+                "extra": {
+                    "tile_id": 40
+                }
+            },
+            "Match": {
+                "long_name": "match",
+                "max_capacity": 9,
+                "extra": {
+                    "tile_id": 41
+                }
+            },
+            "Egg": {
+                "long_name": "egg",
+                "max_capacity": 64,
+                "extra": {
+                    "tile_id": 90
+                }
             },
             "Health": {
-                "long_name": "Health",
-                "max_capacity": 500,
+                "long_name": "hearts",
+                "max_capacity": 4,
                 "extra": {}
             }
         },
@@ -1141,11 +1346,71 @@
                 "extra": {}
             }
         },
-        "tricks": {},
+        "tricks": {
+            "bubbleJump": {
+                "long_name": "Bubble Jump",
+                "description": "chain jumps infinitely using b. wand",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "knowledge": {
+                "long_name": "Knowledge",
+                "description": "oh god",
+                "require_documentation_above": 0,
+                "extra": {}
+            }
+        },
         "damage": {},
         "versions": {},
         "misc": {},
-        "requirement_template": {},
+        "requirement_template": {
+            "Infinite Bubble Jump": {
+                "display_name": "Simple Bubble Jump",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Better Bubble Wand",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bubble Wand",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "bubbleJump",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
         "damage_reductions": [],
         "energy_tank_item_index": "Health"
     },
@@ -1160,12 +1425,47 @@
     "initial_states": {},
     "minimal_logic": null,
     "victory_condition": {
-        "type": "resource",
+        "type": "and",
         "data": {
-            "type": "items",
-            "name": "VictoryKey",
-            "amount": 1,
-            "negate": false
+            "comment": null,
+            "items": [
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "Blue Flame",
+                        "amount": 1,
+                        "negate": false
+                    }
+                },
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "Pink Flame",
+                        "amount": 1,
+                        "negate": false
+                    }
+                },
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "Violet Flame",
+                        "amount": 1,
+                        "negate": false
+                    }
+                },
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "Green Flame",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            ]
         }
     },
     "dock_weakness_database": {
