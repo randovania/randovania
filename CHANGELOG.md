@@ -105,8 +105,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Crashes in several rooms when skipping cutscenes exactly 1 second from the end
-- Fixed: Incorrect shield texture for vertical **PowerBeamOnly** doors
+- Fixed: Crashes in several rooms when pressing start to skip cutscene exactly 1 second from the end of cutscene
+- Fixed: Incorrect shield texture for vertical **Power Beam Only** doors
 - Fixed: Elite Research - Stutter when loading room
 - Fixed: Ruined Shrine Access - Still playing Beetle fight music after leaving
 - Fixed: Research Entrance - Soflock if player kills pirates before touching the cutscene trigger (reverse labs)
@@ -119,8 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Mine Security Station: Timing of activation of Wave Pirates is now the same regardless of what death animation the Shadow Pirates Play
 - Changed: Mine Security Station: Adjusted cutscene trigger so it can't be accidentally skipped
 - Changed: Ruined Shrine: Adjusted position of the cutscene skip lock-on point
-- Changed: Minor item acquisition jingle for health/pb/missile refill instead of major
-- Changed: Sun Tower Elevator: Rotated Samus Actor 90 degrees
+- Changed: Sun Tower Elevator: [Cosmetic] Samus Actor turned 90 degrees in cutscene
 - Changed: The map tracker uses the same names for elevators as when editing a preset.
 
 ### Metroid: Samus Returns
