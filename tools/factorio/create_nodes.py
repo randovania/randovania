@@ -34,8 +34,11 @@ _upgrade_techs_templates = {
     "inserter-capacity-bonus-{}": 7,
     "braking-force-{}": 7,
 }
-_upgrade_tech = [
-    template.format(i + 1) for template, max_tier in _upgrade_techs_templates.items() for i in range(2, max_tier)
+_base_upgrade_tiers = 2
+_bonus_upgrade_tech = [
+    template.format(i + 1)
+    for template, max_tier in _upgrade_techs_templates.items()
+    for i in range(_base_upgrade_tiers, max_tier)
 ]
 
 trivial_req = {"type": "and", "data": {"comment": None, "items": []}}
@@ -155,9 +158,6 @@ def main():
         if tech_name in _custom_tech:
             continue
 
-        if tech_name in _upgrade_tech:
-            continue
-
         packs = tuple(sorted(it[0] for it in tech["unit"]["ingredients"]))
         if "space-science-pack" in packs:
             continue
@@ -219,6 +219,8 @@ def main():
         node["extra"]["count"] = techs_raw[tech_name]["unit"]["count"]
         node["extra"]["time"] = techs_raw[tech_name]["unit"]["time"]
         node["extra"]["ingredients"] = pack_for_tech[tech_name]
+        if tech_name in _bonus_upgrade_tech:
+            node["layers"] = ["full_tree"]
         nodes[node_details["node_name"]] = node
 
     for tech_name in networkx.topological_sort(graph):
