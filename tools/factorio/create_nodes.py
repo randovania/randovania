@@ -23,17 +23,19 @@ _custom_tech = [
     "research-productivity",
 ]
 
-_techs_to_ignore = [
-    # repeatable upgrade tech
-    *[f"refined-flammables-{i + 1}" for i in range(2, 6)],
-    *[f"energy-weapons-damage-{i + 1}" for i in range(2, 6)],
-    *[f"stronger-explosives-{i + 1}" for i in range(2, 6)],
-    *[f"laser-shooting-speed-{i + 1}" for i in range(2, 7)],
-    *[f"follower-robot-count-{i + 1}" for i in range(2, 6)],
-    *[f"weapon-shooting-speed-{i + 1}" for i in range(2, 6)],
-    *[f"physical-projectile-damage-{i + 1}" for i in range(2, 6)],
-    *[f"inserter-capacity-bonus-{i + 1}" for i in range(2, 7)],
-    *[f"braking-force-{i + 1}" for i in range(2, 7)],
+_upgrade_techs_templates = {
+    "refined-flammables-{}": 6,
+    "energy-weapons-damage-{}": 6,
+    "stronger-explosives-{}": 6,
+    "laser-shooting-speed-{}": 7,
+    "follower-robot-count-{}": 6,
+    "weapon-shooting-speed-{}": 6,
+    "physical-projectile-damage-{}": 6,
+    "inserter-capacity-bonus-{}": 7,
+    "braking-force-{}": 7,
+}
+_upgrade_tech = [
+    template.format(i + 1) for template, max_tier in _upgrade_techs_templates.items() for i in range(2, max_tier)
 ]
 
 trivial_req = {"type": "and", "data": {"comment": None, "items": []}}
@@ -86,13 +88,11 @@ def make_dock(target_area: str, target_node: str, connections=None):
 current_pickup_index = -1
 
 
-def make_pickup(*, is_major: bool = False, connections=None) -> dict[str, typing.Any]:
-    global current_pickup_index
-    current_pickup_index += 1
+def make_pickup(index: int, *, is_major: bool = False, connections=None) -> dict[str, typing.Any]:
     return {
         "node_type": "pickup",
         **make_node_base(),
-        "pickup_index": current_pickup_index,
+        "pickup_index": index,
         "location_category": "major" if is_major else "minor",
         "connections": connections or {},
     }
@@ -122,6 +122,26 @@ def main():
 
     techs_raw = {key: value for key, value in raw_dump["technology"].items() if not key.startswith("randovania-")}
 
+    try:
+        with region_path.open() as f:
+            existing_ids = {
+                node: node_data["pickup_index"]
+                for node, node_data in json.load(f)["areas"]["Tech Tree"]["nodes"].items()
+                if node_data["node_type"] == "pickup"
+            }
+
+    except FileNotFoundError:
+        existing_ids = {}
+
+    used_ids = set(existing_ids.values())
+
+    def gen_id() -> int:
+        global current_pickup_index
+        current_pickup_index += 1
+        while current_pickup_index in used_ids:
+            current_pickup_index += 1
+        return current_pickup_index
+
     graph = networkx.DiGraph()
     techs_by_pack = collections.defaultdict(int)
     pack_for_tech = {}
@@ -132,7 +152,7 @@ def main():
         if tech_name in _custom_tech:
             continue
 
-        if tech_name in _techs_to_ignore:
+        if tech_name in _upgrade_tech:
             continue
 
         packs = tuple(sorted(it[0] for it in tech["unit"]["ingredients"]))
@@ -192,7 +212,11 @@ def main():
 
     for tech_name in networkx.topological_sort(graph):
         node_details = pickup_nodes[tech_name]
-        node = make_pickup(is_major=True)
+        if node_details["node_name"] in existing_ids:
+            new_id = existing_ids[node_details["node_name"]]
+        else:
+            new_id = gen_id()
+        node = make_pickup(new_id, is_major=True)
         node["extra"]["original_tech"] = tech_name
         node["extra"]["tech_name"] = node_details["tech_name"]
         node["extra"]["count"] = techs_raw[tech_name]["unit"]["count"]
