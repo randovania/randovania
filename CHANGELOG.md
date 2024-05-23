@@ -70,11 +70,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
+- Changed: In the preset energy tab, the explanation of environmental damage being non-logical is now less misleading.
 
 #### Logic database
 
 - Added: New trick: Climb Sloped Surfaces.
-- Changed: In the preset energy tab, the explanation of environmental damage being non-logical is now less misleading.
 
 #### Artaria
 
