@@ -324,6 +324,25 @@ def read_tech_csv(csv_path: Path) -> dict:
     return result
 
 
+_custom_shuffled_count = {
+    "Energy Weapons Damage": 0,
+    "Follower Robot Count": 0,
+    "Laser Shooting Speed": 0,
+    "Mining Productivity": 4,
+    "Physical Projectile Damage": 0,
+    "Refined Flammables": 0,
+    "Regular Inserter Capacity Bonus": 3,
+    "Research Speed": 5,
+    "Stack Inserter Capacity Bonus": 4,
+    "Stronger Explosives": 0,
+    "Research Productivity": 5,
+    "Toolbelt": 3,
+    "Weapon Shooting Speed": 0,
+    "Worker Robots Speed": 5,
+    "Worker Robots Storage": 5,
+}
+
+
 def create_pickups(techs_raw: dict, tech_csv: dict) -> dict:
     result = {}
 
@@ -337,6 +356,7 @@ def create_pickups(techs_raw: dict, tech_csv: dict) -> dict:
                 icon = tech["icons"][0]["icon"]
             else:
                 icon = tech["icon"]
+
             result[pickup_name] = {
                 "pickup_category": data["category"],
                 "broad_category": data["category"],
@@ -346,6 +366,11 @@ def create_pickups(techs_raw: dict, tech_csv: dict) -> dict:
                 "preferred_location_category": "major" if data["category"] != "enhancement" else "minor",
                 "expected_case_for_describer": "shuffled",
             }
+            if pickup_name in _custom_shuffled_count:
+                if _custom_shuffled_count[pickup_name] == 0:
+                    result[pickup_name]["expected_case_for_describer"] = "missing"
+                else:
+                    result[pickup_name]["custom_count_for_shuffled_case"] = _custom_shuffled_count[pickup_name]
 
     result["Rocket Silo"]["expected_case_for_describer"] = "vanilla"
     result["Rocket Silo"]["original_location"] = 136
