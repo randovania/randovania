@@ -199,7 +199,7 @@
             },
             "Key": {
                 "long_name": "key",
-                "max_capacity": 4,
+                "max_capacity": 6,
                 "extra": {
                     "tile_id": 40
                 }
@@ -1404,6 +1404,46 @@
                                             }
                                         }
                                     ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Unlock Key Door": {
+                "display_name": "Unlock Key Door",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Require all keys as a naive way to handle worst-case usage",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Key",
+                                    "amount": 6,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Light Candle": {
+                "display_name": "Light Candle",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Since you need to light all candles to achieve anything, just pretend you can't light them until you have all the matches",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Match",
+                                    "amount": 9,
+                                    "negate": false
                                 }
                             }
                         ]
