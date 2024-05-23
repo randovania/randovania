@@ -7,9 +7,10 @@ from pathlib import Path
 
 import networkx
 
-_techs_to_ignore = [
+_custom_tech = [
     # custom tech
     "long-handed-inserter",
+    "longer-handed-inserter",
     "oil-cracking",
     "solid-fuel",
     "light-armor",
@@ -18,6 +19,11 @@ _techs_to_ignore = [
     "steam-power",
     "automation-science-pack",
     "regular-inserter-capacity-bonus",
+    "stack-inserter-capacity-bonus",
+    "research-productivity",
+]
+
+_techs_to_ignore = [
     # repeatable upgrade tech
     *[f"refined-flammables-{i + 1}" for i in range(2, 6)],
     *[f"energy-weapons-damage-{i + 1}" for i in range(2, 6)],
@@ -123,6 +129,9 @@ def main():
     pickup_nodes = {}
 
     for tech_name, tech in techs_raw.items():
+        if tech_name in _custom_tech:
+            continue
+
         if tech_name in _techs_to_ignore:
             continue
 
@@ -209,6 +218,13 @@ def main():
         for previous_node in previous_nodes:
             node["connections"][previous_node] = trivial_req
             nodes[previous_node]["connections"][node_name] = requirement
+
+    node_order = list(nodes)
+    for node in nodes.values():
+        node["connections"] = {
+            target: node["connections"][target]
+            for target in sorted(node["connections"], key=lambda n: node_order.index(n))
+        }
 
     with region_path.open("w") as f:
         json.dump(
