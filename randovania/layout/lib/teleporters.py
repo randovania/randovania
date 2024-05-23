@@ -96,6 +96,8 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
     mode: TeleporterShuffleMode
     excluded_teleporters: TeleporterList
     excluded_targets: TeleporterTargetList
+    allow_dead_ends: bool
+    num_excluded_regions: int = dataclasses.field(metadata={"min": 0, "max": 127, "precision": 1})
 
     @property
     def game(self) -> RandovaniaGame:

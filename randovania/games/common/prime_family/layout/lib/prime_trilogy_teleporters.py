@@ -11,8 +11,6 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 class PrimeTrilogyTeleporterConfiguration(TeleporterConfiguration):
     skip_final_bosses: bool
     allow_unvisited_room_names: bool
-    allow_dead_ends: bool
-    num_excluded_regions: int
 
     @property
     def can_use_unvisited_room_names(self) -> bool:

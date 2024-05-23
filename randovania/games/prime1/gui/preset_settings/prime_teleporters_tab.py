@@ -197,8 +197,10 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
         self.teleporters_target_group.setEnabled(config_teleporters.has_shuffled_target)
         self.skip_final_bosses_check.setChecked(config_teleporters.skip_final_bosses)
 
+        self.excluded_regions_spin.setValue(config_teleporters.num_excluded_regions)
         self.excluded_regions_group.setVisible(config_teleporters.mode != TeleporterShuffleMode.VANILLA)
 
+        self.allow_dead_ends_check.setChecked(config_teleporters.allow_dead_ends)
         self.allow_dead_ends_group.setVisible(
             config_teleporters.mode
             in [

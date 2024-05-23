@@ -1052,9 +1052,10 @@ def _migrate_v73(preset: dict) -> dict:
 
 
 def _migrate_v74(preset: dict) -> dict:
-    if preset["game"] in ["prime1", "prime2"]:
-        preset["configuration"]["teleporters"]["allow_dead_ends"] = False
-        preset["configuration"]["teleporters"]["num_excluded_regions"] = 0
+    teleporters = preset["configuration"].get("teleporters")
+    if teleporters:
+        teleporters["allow_dead_ends"] = False
+        teleporters["num_excluded_regions"] = 0
 
     return preset
 
