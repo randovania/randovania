@@ -105,7 +105,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Changed: The map tracker uses the same names for elevators as when editing a preset.
+- Fixed: Crashes in several rooms when pressing start to skip cutscene exactly 1 second from the end of cutscene
+- Fixed: Incorrect shield texture for vertical **Power Beam Only** doors
+- Fixed: Elite Research - Stutter when loading room
+- Fixed: Ruined Shrine Access - Still playing Beetle fight music after leaving
+- Fixed: Mine Security Station - Wave Pirates not dropping down if the player didn't skip the cutscene immediately
+- Fixed: Reactor Core - Escape music restarting when leaving after killing PQ
+- Fixed: Furnace - Ghost elements re-appearing when re-entering from East Furnace Access
+- Fixed: Main Plaza - Vault Ledge door cosmetic fix
+- Fixed: Control Tower - Flying Pirates incorrectly flying away from the player when skipping cutscene
+- Fixed: Research Core - Combat Visor being forced upon grabbing the pickup on Competitive Cutscene mode
+- Fixed: Research Entrance - Soflock if player kills pirates before touching the cutscene trigger (reverse labs)
+- Fixed: Research Entrance - Fog disappearing after clearing the 1st Pass Pirates and before the 2nd Pass Shadow Pirates
+- Fixed: Energy Core - Underwater sound incorrectly playing even if you are not underwater
+- Fixed: Energy Core - Puzzle music no longer interrupts countdown if player re-enters room
+- Fixed: Ruined Shrine: Beetle music incorrectly continues playing after leaving towards Main Plaza
+- Fixed: Save Station B - Incorrectly playing save station music instead of Phendrana music if the player leaves too quickly
+- Fixed: Observatory - Projector activation cutscene skip activating the projector twice if skipped the cutscene late
+- Fixed: Observatory - Fixed incorrect music playing when the projector is active
+- Fixed: Observatory - Panel activation cutscene incorrectly playing on 2nd Pass when the projector is already active
+- Changed: The map tracker uses the same names for elevators as when editing a preset
+- Changed: Updated tournament winners scan
+- Changed: Ventilation Shaft: Cutscene skip no longer waits for load
+- Changed: Mine Security Station: Timing of activation of Wave Pirates is now the same regardless of what death animation the Shadow Pirates Play
+- Changed: Mine Security Station: Adjusted cutscene trigger so it can't be accidentally skipped
+- Changed: Ruined Shrine: Adjusted position of the cutscene skip lock-on point
+- Changed: Control Tower - "Doors Unlocked" HUD Memo in Control Tower once the fight is done on Competitive Cutscene mode
+- Changed: Ruined Fountain - Morph Ball can no longer get stuck at the bend in Spider Track
+- Changed: Ruined Courtyard - Cosmetic improvement to the lower water cutscene
+- Changed: Energy Core - Increased the size of the Load Trigger to Furnace Access
+- Changed: Hive Totem - Adjusted the Hive Totem scan position to match PAL
+- Changed: Hive Totem - Comsetic improvements to intro cutscene
+- Changed: Sun Tower Elevator: Cutscene now shows Samus facing the correct direction
+- Changed: Observatory - Restored an unused particle effect for the projector
+- Changed: Observatory - The projector now loads activated instead of activating immediately upon load
 
 ### Metroid: Samus Returns
 
