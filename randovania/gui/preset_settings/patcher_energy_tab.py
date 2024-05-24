@@ -60,7 +60,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.heated_damage_spin.valueChanged.connect(self._persist_argument("heat_damage"))
 
         else:
-            self.damage_reduction_combo.setVisible(False)
+            self.damage_reduction_box.setVisible(False)
             self.heated_damage_box.setVisible(False)
 
         # In-Game Difficulty
