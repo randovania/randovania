@@ -3,8 +3,8 @@ import dataclasses
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.games.am2r.gui.generated.preset_am2r_hints_ui import Ui_PresetAM2RHints
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
-from randovania.gui.generated.preset_am2r_hints_ui import Ui_PresetAM2RHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
