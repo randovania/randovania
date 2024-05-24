@@ -69,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: The Morph Launcher leading to Experiment Z-57 will no longer cause Thermal Doors to temporarily be closed.
 - Changed: The exporting dialog now links to a guide that explains how to dump the RomFS.
 - Fixed: Typo on the exporting dialog.
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
