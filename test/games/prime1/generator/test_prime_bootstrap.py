@@ -88,4 +88,4 @@ def test_prime1_additive_damage_reduction(prime1_resource_database, expected, su
     result = bootstrap.prime1_additive_damage_reduction(prime1_resource_database, current_resources)
 
     # Assert
-    assert abs(result - expected) < 0.000001
+    assert result == pytest.approx(expected)
