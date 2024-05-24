@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.prime1.gui.generated.preset_prime_hints_ui import Ui_PresetPrimeHints
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
-from randovania.gui.generated.preset_prime_hints_ui import Ui_PresetPrimeHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

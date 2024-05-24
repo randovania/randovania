@@ -9,7 +9,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.games.prime2.exporter.patch_data_factory import (
     should_keep_elevator_sounds,
 )
-from randovania.gui.generated.preset_teleporters_prime2_ui import (
+from randovania.games.prime2.gui.generated.preset_teleporters_prime2_ui import (
     Ui_PresetTeleportersPrime2,
 )
 from randovania.gui.lib import signal_handling

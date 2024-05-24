@@ -12,6 +12,7 @@ from PySide6 import QtGui, QtWidgets
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
+from randovania.games.samus_returns.gui.generated.msr_game_export_dialog_ui import Ui_MSRGameExportDialog
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
@@ -22,7 +23,6 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for_directory,
     update_validation,
 )
-from randovania.gui.generated.msr_game_export_dialog_ui import Ui_MSRGameExportDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.lib.ftp_uploader import FtpUploader
 from randovania.lib.windows_drives import get_windows_drives

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime3.gui.generated.games_tab_corruption_widget_ui import Ui_CorruptionGameTabWidget
 from randovania.gui.corruption_layout_editor import CorruptionLayoutEditor
-from randovania.gui.generated.games_tab_corruption_widget_ui import Ui_CorruptionGameTabWidget
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 
 

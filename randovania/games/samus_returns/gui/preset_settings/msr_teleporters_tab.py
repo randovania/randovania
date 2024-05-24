@@ -5,10 +5,10 @@ import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
-from randovania.gui.generated.preset_teleporters_msr_ui import (
+from randovania.games.samus_returns.gui.generated.preset_teleporters_msr_ui import (
     Ui_PresetTeleportersMSR,
 )
+from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_teleporter_tab import PresetTeleporterTab

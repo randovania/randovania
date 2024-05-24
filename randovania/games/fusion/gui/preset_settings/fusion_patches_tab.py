@@ -4,8 +4,8 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.games.fusion.gui.generated.preset_fusion_patches_ui import Ui_PresetFusionPatches
 from randovania.games.fusion.layout import FusionConfiguration
-from randovania.gui.generated.preset_fusion_patches_ui import Ui_PresetFusionPatches
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

@@ -4,8 +4,8 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.games.prime1.gui.generated.preset_prime_qol_ui import Ui_PresetPrimeQol
 from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode
-from randovania.gui.generated.preset_prime_qol_ui import Ui_PresetPrimeQol
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
