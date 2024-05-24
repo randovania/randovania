@@ -69,6 +69,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: The exporting dialog now links to a guide that explains how to dump the RomFS.
+- Fixed: Typo on the exporting dialog.
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
 
 #### Logic database
