@@ -74,6 +74,26 @@ def test_replace_node(game_editor):
     assert dock_to_landing.default_connection.node == "FooBar"
 
 
+def test_replace_generic_node_with_dock(game_editor):
+    # Setup
+    region_list = game_editor.game.region_list
+    loc = AreaIdentifier("Temple Grounds", "Landing Site")
+
+    landing_site = region_list.area_by_area_location(loc)
+    source = landing_site.node_with_name("Save Station")
+    door = landing_site.node_with_name("Door to Service Access")
+    assert isinstance(door, DockNode)
+
+    new_node = dataclasses.replace(door, identifier=door.identifier.renamed("FooBar"))
+
+    # Run
+    game_editor.replace_node(landing_site, source, new_node)
+
+    # Assert
+    assert landing_site.node_with_name("Save Station") is None
+    assert landing_site.node_with_name("FooBar") is new_node
+
+
 def test_replace_node_unknown_node(game_editor):
     # Setup
     region_list = game_editor.game.region_list

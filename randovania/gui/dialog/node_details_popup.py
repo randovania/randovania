@@ -144,6 +144,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.dock_connection_region_combo.addItem(region.name, userData=region)
             self.teleporter_destination_region_combo.addItem(region.name, userData=region)
         refresh_if_needed(self.dock_connection_region_combo, self.on_dock_connection_region_combo)
+        refresh_if_needed(self.dock_connection_area_combo, self.on_dock_connection_area_combo)
         refresh_if_needed(self.teleporter_destination_region_combo, self.on_teleporter_destination_region_combo)
 
         for event in sorted(game.resource_database.event, key=lambda it: it.long_name):
