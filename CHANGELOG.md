@@ -17,12 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - **Major** - Added: Transport Pipe randomizer. If enabled, it will change where Transport Pipes lead to.
-- Added: Long Beam, Walljump and Infinite Bomb Jumping have been added as items.
+- **Major** - Added: Long Beam, Walljump Boots and Infinite Bomb Propulsion have been added as items.
 - Added: It is now possible to have a seperate shuffled amount and required amount of DNA.
 - Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
 - Added: Exposed Open Transitions for Door Lock Rando. Shuffling these in, will place Doors on all 4-Tile high transitions.
+- Added: All Bosses now drop Power Bombs.
 - Added: The following sprites have been added: Spider Ball for Prime 1, Missile Launcher, Speed Booster Upgrades and Super Missile Launcher for Dread.
 - Changed: The following sprites were changed in order to fit more with AM2R's art style: Ice Missiles and Storm Missiles for Dread, Annihilator Beam, Dark Suit, Dark Visor, Echo Visor, Light Suit and Progressive Suit for Echoes, Gravity Suit, Phazon Suit and Varia Suit for Prime 1.
+- Changed: The hints are now in color.
+- Changed: The sprites for the EMP doors have been changed to be more distinct.
 - Changed: When Doors are shuffled over Research Site Hatches, they are now not obscured by the rock background.
 - Changed: The Starter Preset now has `Unlock Genetics Laboratory Doors` enabled.
 - Changed: The Starter Preset now has Progressive Jumps and Progressive Suits enabled.
