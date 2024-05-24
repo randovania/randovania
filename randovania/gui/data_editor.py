@@ -222,7 +222,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.game_description = game
         self.editor = Editor(self.game_description)
         self.region_list = self.game_description.region_list
-        self.area_view_canvas.select_game(self.game_description.game)
+        self.area_view_canvas.select_game(self.game_description)
 
         self.region_selector_box.clear()
         for region in sorted(self.region_list.regions, key=lambda x: x.name):
@@ -358,6 +358,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_selector_box.setCurrentIndex(self.area_selector_box.findText(area_name))
 
     def focus_on_area(self, area: Area):
+        self.focus_on_region(self.region_list.region_with_area(area))
         signal_handling.set_combo_with_value(self.area_selector_box, area)
 
     def focus_on_node(self, node: Node):

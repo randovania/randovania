@@ -17,6 +17,7 @@ from randovania.game_description.requirements.base import Requirement
 
 if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
+    from randovania.game_description.game_description import GameDescription
     from randovania.games.game import RandovaniaGame
     from randovania.resolver.state import State
 
@@ -57,7 +58,9 @@ def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
 
 class DataEditorCanvas(QtWidgets.QWidget):
     game: RandovaniaGame | None = None
+    description: GameDescription | None = None
     region: Region | None = None
+    areas: list[Area] = []
     area: Area | None = None
     highlighted_node: Node | None = None
     connected_node: Node | None = None
@@ -112,13 +115,23 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def set_edit_mode(self, value: bool):
         self.edit_mode = value
 
-    def select_game(self, game: RandovaniaGame):
-        self.game = game
+    def select_game(self, description: GameDescription):
+        self.game = description.game
+        self.description = description
 
     def select_region(self, region: Region):
         self.region = region
+        if (shared_map := region.extra.get("shared_map")) is not None:
+            image_name = shared_map
+            self.areas = []
+            for r in self.description.region_list.regions:
+                if r.extra["shared_map"] == shared_map:
+                    self.areas.extend(r.areas)
+        else:
+            image_name = region.name
+            self.areas = region.areas
         image_path = (
-            self.game.data_path.joinpath("assets", "maps", f"{region.name}.png") if self.game is not None else None
+            self.game.data_path.joinpath("assets", "maps", f"{image_name}.png") if self.game is not None else None
         )
         if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
@@ -143,7 +156,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         min_x, min_y = math.inf, math.inf
         max_x, max_y = -math.inf, -math.inf
 
-        for area in self.region.areas:
+        for area in self.areas:
             total_boundings = area.extra.get("total_boundings")
             if total_boundings is None:
                 continue
@@ -255,7 +268,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def _other_areas_at_position(self, qt_local_position: QPointF):
         result = []
 
-        for area in self.region.areas:
+        for area in self.areas:
             if "total_boundings" not in area.extra or area == self.area:
                 continue
 
