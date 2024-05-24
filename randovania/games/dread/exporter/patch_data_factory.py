@@ -373,7 +373,7 @@ class DreadPatchDataFactory(PatchDataFactory):
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
-        cosmetic_dict = {
+        cosmetic_dict: dict = {
             "config": {
                 "AIManager": {
                     "bShowBossLifebar": c.show_boss_lifebar,
@@ -404,7 +404,7 @@ class DreadPatchDataFactory(PatchDataFactory):
             },
         }
 
-        if not c.show_room_names.value == "NEVER":
+        if c.show_room_names.value != "NEVER":
             cosmetic_dict["lua"]["camera_names_dict"] = self._build_area_name_dict()
         elif not self.configuration.teleporters.is_vanilla:
             cosmetic_dict["lua"]["custom_init"]["enable_room_name_display"] = "ALWAYS"
