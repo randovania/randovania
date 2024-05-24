@@ -2947,26 +2947,26 @@
                                                                                                 }
                                                                                             ]
                                                                                         }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Combat",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "damage",
-                                                                                            "name": "Damage",
-                                                                                            "amount": 149,
-                                                                                            "negate": false
-                                                                                        }
                                                                                     }
                                                                                 ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 149,
+                                                                                "negate": false
                                                                             }
                                                                         }
                                                                     ]
@@ -9865,7 +9865,7 @@
                         "Pickup (Main Power Bombs)": {
                             "type": "and",
                             "data": {
-                                "comment": "Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/rDCTXaNmypI",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9882,15 +9882,6 @@
                                             "type": "tricks",
                                             "name": "IS",
                                             "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 280,
                                             "negate": false
                                         }
                                     },
@@ -9927,6 +9918,49 @@
                                             "name": "Boost",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/rDCTXaNmypI",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 280,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 680,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]

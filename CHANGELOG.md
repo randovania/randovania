@@ -146,7 +146,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Magmoor Caverns
 
-- Changed: Geothermal Core: Various Puddle Spore requirements now require Before Storage Depot B instead of After.
+- Fixed: Geothermal Core: Various Puddle Spore requirements now require Before Storage Depot B instead of After.
 
 ##### Phazon Mines
 
