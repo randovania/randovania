@@ -229,9 +229,5 @@ class CSCosmeticPatches(BaseCosmeticPatches):
     music_rando: CSMusic = CSMusic.default()
 
     @classmethod
-    def default(cls) -> CSCosmeticPatches:
-        return cls()
-
-    @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY

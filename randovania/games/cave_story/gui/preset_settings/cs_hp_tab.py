@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.gui.generated.preset_cs_hp_ui import Ui_PresetCSHP
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -27,9 +28,10 @@ class PresetCSHP(PresetTab, Ui_PresetCSHP):
     def uses_patches_tab(cls) -> bool:
         return True
 
-    def _on_starting_hp_changed(self):
+    def _on_starting_hp_changed(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field("starting_hp", int(self.starting_hp_spin_box.value()))
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
+        assert isinstance(preset.configuration, CSConfiguration)
         self.starting_hp_spin_box.setValue(preset.configuration.starting_hp)

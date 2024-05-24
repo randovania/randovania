@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypedDict
 
 from randovania.games.cave_story.layout.cs_cosmetic_patches import SONGS, CSCosmeticPatches, CSSong, MusicRandoType
 
@@ -19,8 +20,13 @@ class CaverCue:
     def assign_song(self, song: CSSong) -> dict[str, CSSong]:
         return {event: song for event in self.events}
 
-    def assign_songs(self, songs: dict[str, CSSong]):
+    def assign_songs(self, songs: dict[str, CSSong]) -> dict[str, CSSong]:
         return {event: songs.get(event, self.default_song) for event in self.events}
+
+
+class SongChangeDetails(TypedDict):
+    song_id: str
+    original_id: str
 
 
 class CaverMusic:
@@ -151,17 +157,16 @@ class CaverMusic:
         raise NotImplementedError
 
     @classmethod
-    def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, str]]:
+    def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, SongChangeDetails]]:
         music = cls.get_randomizer(cosmetic.music_rando.randomization_type)
-        mapping = {}
+        mapping: defaultdict[str, dict[str, SongChangeDetails]] = defaultdict(dict)
         for cue, events in music.shuffle(rng, cosmetic).items():
-            if mapping.get(cue.map_name) is None:
-                mapping[cue.map_name] = {}
-            events = {
-                event: {"song_id": song.song_id, "original_id": cue.default_song.song_id}
-                for event, song in events.items()
-            }
-            mapping[cue.map_name].update(events)
+            mapping[cue.map_name].update(
+                {
+                    event: SongChangeDetails({"song_id": song.song_id, "original_id": cue.default_song.song_id})
+                    for event, song in events.items()
+                }
+            )
         return mapping
 
 

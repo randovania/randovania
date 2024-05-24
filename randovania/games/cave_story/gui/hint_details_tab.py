@@ -31,7 +31,7 @@ class CSHintDetailsTab(GameDetailsTab):
 
     def update_content(
         self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+    ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
