@@ -72,8 +72,8 @@ class PrimeBootstrap(MetroidBootstrap):
 
         return dr
 
-    def prime1_additive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
-        dr = 1
+    def prime1_additive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+        dr = 1.0
         if current_resources[db.get_item_by_name("Varia Suit")]:
             dr -= 0.1
         if current_resources[db.get_item_by_name("Gravity Suit")]:
