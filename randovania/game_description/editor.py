@@ -122,11 +122,13 @@ class Editor:
         if isinstance(new_node, DockNode):
             new_lock_node = DockLockNode.create_from_dock(new_node, self.new_node_index(), self.game.resource_database)
             self.add_node(area, new_lock_node)
-            assert old_lock_identifier is not None
-            self.replace_references_to_node_identifier(
-                old_lock_identifier,
-                new_lock_node.identifier,
-            )
+
+            if isinstance(old_node, DockNode):
+                assert old_lock_identifier is not None
+                self.replace_references_to_node_identifier(
+                    old_lock_identifier,
+                    new_lock_node.identifier,
+                )
 
         self.game.region_list.invalidate_node_cache()
 
