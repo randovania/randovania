@@ -57,7 +57,7 @@ def test_prime_format_params(use_enemy_attribute_randomizer):
         "Quality of Life": ["Phazon suit hint: Area only"],
         "Difficulty": [],
         "Game Changes": [
-            "Progressive suit damage reduction",
+            "Damage reduction",
             "Warp to start, Unlocked Vault door, Unlocked Save Station doors, Phazon Elite without Dynamo",
             "53.1% chance of superheated, 28.7% chance of submerged",
             "Allowed backwards: Frigate, Labs, Upper Mines",

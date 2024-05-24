@@ -124,6 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Observatory - Projector activation cutscene skip activating the projector twice if skipped the cutscene late
 - Fixed: Observatory - Fixed incorrect music playing when the projector is active
 - Fixed: Observatory - Panel activation cutscene incorrectly playing on 2nd Pass when the projector is already active
+- Added: New option for suit damage reduction: "Additive", where each suit provides a specific amount of damage reduction
 - Changed: The map tracker uses the same names for elevators as when editing a preset
 - Changed: Updated tournament winners scan
 - Changed: Ventilation Shaft: Cutscene skip no longer waits for load

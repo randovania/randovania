@@ -71,6 +71,21 @@ class PrimeBootstrap(MetroidBootstrap):
 
         return dr
 
+    def prime1_additive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
+        dr = 1
+        if current_resources[db.get_item_by_name("Varia Suit")]:
+            dr -= 0.1
+        if current_resources[db.get_item_by_name("Gravity Suit")]:
+            dr -= 0.1
+        if current_resources[db.get_item_by_name("Phazon Suit")]:
+            dr -= 0.3
+
+        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        if current_resources.has_resource(hard_mode):
+            dr *= 1.53
+
+        return dr
+
     def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
         if current_resources[db.get_item_by_name("Phazon Suit")] > 0:
             dr = 0.5
@@ -107,8 +122,10 @@ class PrimeBootstrap(MetroidBootstrap):
         reductions.extend([DamageReduction(suit, 0) for suit in suits])
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "HeatDamage1")] = reductions
 
-        if configuration.progressive_damage_reduction:
+        if configuration.damage_reduction == "Progressive":
             base_damage_reduction = self.prime1_progressive_damage_reduction
+        elif configuration.damage_reduction == "Additive":
+            base_damage_reduction = self.prime1_additive_damage_reduction
         else:
             base_damage_reduction = self.prime1_absolute_damage_reduction
 

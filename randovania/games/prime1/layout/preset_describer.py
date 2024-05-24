@@ -143,7 +143,7 @@ class PrimePresetDescriber(GamePresetDescriber):
                     },
                 ),
                 {
-                    "Progressive suit damage reduction": configuration.progressive_damage_reduction,
+                    "Damage reduction": configuration.damage_reduction,
                 },
                 {
                     "Warp to start": configuration.warp_to_start,
