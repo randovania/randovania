@@ -123,6 +123,16 @@ class GameDescription:
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
 
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        # Don't pickle _victory_condition_as_set
+        del state["_victory_condition_as_set"]
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        self._victory_condition_as_set = None
+
     def create_node_context(self, resources: ResourceCollection) -> NodeContext:
         return NodeContext(
             None,
@@ -138,9 +148,6 @@ class GameDescription:
         context = self.create_node_context(resources)
         self.region_list.patch_requirements(damage_multiplier, context, self.dock_weakness_database)
         self._dangerous_resources = None
-        self._victory_condition_as_set = self.victory_condition.patch_requirements(damage_multiplier, context).as_set(
-            context
-        )
 
     def get_prefilled_docks(self) -> list[int | None]:
         region_list = self.region_list
@@ -211,9 +218,10 @@ class GameDescription:
             return result
 
     def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
-        if self._victory_condition_as_set is not None:
-            return self._victory_condition_as_set
-        return self.victory_condition.as_set(context)
+        if self._victory_condition_as_set is None:
+            self._victory_condition_as_set = self.victory_condition.as_set(context)
+        return self._victory_condition_as_set
+        # return self.victory_condition.as_set(context)
 
 
 def _resources_for_damage(
