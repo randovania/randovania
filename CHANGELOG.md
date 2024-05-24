@@ -142,6 +142,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Observatory - Restored an unused particle effect for the projector
 - Changed: Observatory - The projector now loads activated instead of activating immediately upon load
 
+### Metroid Prime 2: Echoes
+
+- Fixed: A small typo with "immune" in the energy preset tab
+
 ### Metroid: Samus Returns
 
 - **Major** - Added: Door Lock randomizer has been added, along with new door types.
