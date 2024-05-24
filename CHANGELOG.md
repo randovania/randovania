@@ -69,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Changed: The Morph Launcher leading to Experiment Z-57 will no longer cause the player to get temporarily blocked by the Thermal Doors.
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
 
 #### Logic database
