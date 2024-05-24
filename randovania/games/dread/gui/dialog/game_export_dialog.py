@@ -139,8 +139,6 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.atmosphere_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_radio.toggled.connect(self._on_update_target_platform)
-        self.ryujinx_legacy_radio.toggled.connect(self._on_update_target_platform)
-        self.ryujinx_legacy_radio.setEnabled(not patch_data.get("enable_remote_lua"))
         self._on_update_target_platform()
 
         # Output to SD
@@ -473,7 +471,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             input_path=self.input_file,
             output_path=output_path,
             target_platform=self.target_platform,
-            use_exlaunch=not self.ryujinx_legacy_radio.isChecked(),
+            use_exlaunch=True,
             clean_output_path=clean_output_path,
             post_export=post_export,
         )

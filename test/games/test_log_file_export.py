@@ -90,8 +90,11 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # AM2R
         "am2r/starter_preset.rdvgame",  # starter preset
         "am2r/door_lock.rdvgame",  # starter preset+door lock rando
+        "am2r/door_lock_open.rdvgame",  # starter preset+door lock rando with open transitions
         "am2r/progressive_items.rdvgame",  # Starter preset+progressive items
         "am2r/starting_items.rdvgame",  # Starter preset + random starting items
+        "am2r/transport_pipe_shuffle.rdvgame",  # Starter preset + shuffled transport pipes
+        "am2r/custom_dna_required.rdvgame",  # Has 20/30 dna
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
@@ -105,6 +108,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Samus Returns
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
+        "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]

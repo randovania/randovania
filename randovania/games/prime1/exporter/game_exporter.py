@@ -179,6 +179,8 @@ class PrimeGameExporter(GameExporter):
         export_params.cache_path.mkdir(parents=True, exist_ok=True)
         cache_dir = os.fspath(export_params.cache_path)
 
+        monitoring.set_tag("prime_output_format", output_file.suffix)
+
         import py_randomprime
         from open_prime_rando.dol_patching import all_prime_dol_patches
         from ppc_asm import assembler

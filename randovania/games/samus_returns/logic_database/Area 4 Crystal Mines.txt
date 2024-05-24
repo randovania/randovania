@@ -418,7 +418,7 @@ Extra - polygon: [[-7800.0, -3100.0], [-7800.0, -5200.0], [-4700.0, -5200.0], [-
 Extra - asset_id: collision_camera_005
 > Elevator to Area 4 Central Caves; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Area 3 and Crystal Mines/Elevator to Area 4 Crystal Mines
+  * Elevator to Transport to Area 3 and Crystal Mines/Elevator to Area 4 Crystal Mines; Custom name: Crystal Mines Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea04
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea04
@@ -707,7 +707,10 @@ Extra - asset_id: collision_camera_010
 
 > Door to Tsumuri Tunnel; Heals? False
   * Layers: default
-  * Access Locked to Tsumuri Tunnel/Door to Mines Entrance
+  * Access Locked to Tsumuri Tunnel/Door to Mines Entrance; Excluded from Dock Lock Rando
+  * FIXME: Door is excluded for DLR because it causes issues when trying to enter
+Mines Intersection Terminal without first entering Diggernaut Excavation
+Tunnels.
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
   > Door to Diggernaut Excavation Tunnels
@@ -733,7 +736,10 @@ Extra - polygon: [[-3100.0, -1465.969970703125], [-3100.0, -2224.4599609375], [4
 Extra - asset_id: collision_camera_011
 > Door to Mines Entrance; Heals? False
   * Layers: default
-  * Power Beam Door to Mines Entrance/Door to Tsumuri Tunnel
+  * Power Beam Door to Mines Entrance/Door to Tsumuri Tunnel; Excluded from Dock Lock Rando
+  * FIXME: Door is excluded for DLR because it causes issues when trying to enter
+Mines Intersection Terminal without first entering Diggernaut Excavation
+Tunnels.
   * Extra - actor_name: Door011
   * Extra - actor_type: doorclosedpower
   > Door to Mines Intersection Terminal
@@ -835,7 +841,7 @@ Extra - polygon: [[2500.0, 10200.0], [2500.0, 8500.0], [7600.0, 8500.0], [7600.0
 Extra - asset_id: collision_camera_013
 > Door to Gawron Groove; Heals? False
   * Layers: default
-  * Access Open to Gawron Groove/Door to Green Crystal Dugout
+  * Power Beam Door to Gawron Groove/Door to Green Crystal Dugout
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
   > Dock to Mines Intersection Terminal

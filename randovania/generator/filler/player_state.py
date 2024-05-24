@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.common import elevators
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
@@ -17,7 +18,6 @@ from randovania.generator.filler.pickup_list import (
 )
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
-from randovania.patching.prime import elevators
 from randovania.resolver import debug
 
 if TYPE_CHECKING:
@@ -195,13 +195,9 @@ class PlayerState:
                 other = wl.resolve_dock_node(node, s.patches)
                 teleporters.append(
                     "* {} to {}".format(
-                        elevators.get_elevator_or_area_name(
-                            self.game.game, wl, wl.identifier_for_node(node).area_identifier, True
-                        ),
+                        elevators.get_elevator_or_area_name(self.game, wl, wl.identifier_for_node(node), True),
                         (
-                            elevators.get_elevator_or_area_name(
-                                self.game.game, wl, wl.identifier_for_node(other).area_identifier, True
-                            )
+                            elevators.get_elevator_or_area_name(self.game, wl, wl.identifier_for_node(other), True)
                             if other is not None
                             else "<Not connected>"
                         ),

@@ -74,8 +74,12 @@ def _flat_trick_usage(requirement: Requirement) -> dict[str, TrickUsageState]:
 def get_area_connection_docs(area: Area) -> dict[str, dict[str, dict[str, TrickUsageState]]]:
     paths: dict[str, dict[str, dict[str, TrickUsageState]]] = {}
     for source, connections in area.connections.items():
+        if source.is_derived_node:
+            continue
         paths[source.name] = {}
         for target, requirement in connections.items():
+            if target.is_derived_node:
+                continue
             trick_documentation = _flat_trick_usage(requirement)
             if trick_documentation:
                 paths[source.name][target.name] = trick_documentation

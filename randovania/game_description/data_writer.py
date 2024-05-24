@@ -12,6 +12,7 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -65,6 +66,10 @@ def write_requirement_template(requirement: RequirementTemplate) -> dict:
     return {"type": "template", "data": requirement.template_name}
 
 
+def write_node_requirement(requirement: NodeRequirement) -> dict:
+    return {"type": "node", "data": requirement.node_identifier.as_json}
+
+
 def write_requirement(requirement: Requirement) -> dict:
     if isinstance(requirement, ResourceRequirement):
         return write_resource_requirement(requirement)
@@ -77,6 +82,9 @@ def write_requirement(requirement: Requirement) -> dict:
 
     elif isinstance(requirement, RequirementTemplate):
         return write_requirement_template(requirement)
+
+    elif isinstance(requirement, NodeRequirement):
+        return write_node_requirement(requirement)
 
     else:
         raise ValueError(f"Unknown requirement type: {type(requirement)}")
@@ -280,6 +288,7 @@ def write_node(node: Node) -> dict:
         data["incompatible_dock_weaknesses"] = [weak.name for weak in node.incompatible_dock_weaknesses]
         data["override_default_open_requirement"] = write_optional_requirement(node.override_default_open_requirement)
         data["override_default_lock_requirement"] = write_optional_requirement(node.override_default_lock_requirement)
+        data["ui_custom_name"] = node.ui_custom_name
 
     elif isinstance(node, PickupNode):
         data["node_type"] = "pickup"

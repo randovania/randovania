@@ -7,7 +7,7 @@ from randovania.exporter.hints.hint_formatters import LocationFormatter, Relativ
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
 from randovania.game_description import default_database
-from randovania.game_description.hint import Hint, HintLocationPrecision
+from randovania.game_description.hint import Hint, HintLocationPrecision, PrecisionPair
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
@@ -80,7 +80,7 @@ class MSRHintNamer(HintNamer):
         # patch the name here instead. Fix it there at one point.
         name = resource.long_name
         if resource.short_name.startswith("Metroid DNA "):
-            name = "Metroid DNA"
+            name = "DNA"
         return fmt.format(
             name,
             determiner,
@@ -88,6 +88,7 @@ class MSRHintNamer(HintNamer):
         )
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
+        assert isinstance(hint.precision, PrecisionPair)
         msg = self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(pick_hint, pickup_name=pick_hint.pickup_name),

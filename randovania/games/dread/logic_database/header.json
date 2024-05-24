@@ -1,5 +1,5 @@
 {
-    "schema_version": 24,
+    "schema_version": 25,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -1223,6 +1223,12 @@
             "FloorClip": {
                 "long_name": "Floor Clip",
                 "description": "Many floors can be clippped through with some or all of the following items: Speed Booster, Flash Shift, and Grapple Beam. See https://dreadwiki.hijumpboots.com/en/tricks/clipping",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "SlopeClimb": {
+                "long_name": "Climb Sloped Surfaces",
+                "description": "It is possible to gain height on sloped surfaces with good movement. This may require usage of techniques/items such as free-aim, Flash Shift, Spin Boost, or Phantom Cloak.",
                 "require_documentation_above": 0,
                 "extra": {}
             }
@@ -5944,6 +5950,56 @@
                         },
                         "lock": null
                     },
+                    "Dairon Power Switch 1 Powered Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Dairon Power Switch 2 Powered Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "lock": null
+                    },
                     "Ice Missile Door": {
                         "extra": {
                             "type": "ice_missile"
@@ -6490,6 +6546,12 @@
         "Slide": [
             1,
             2
+        ],
+        "SlopeClimb": [
+            1,
+            2,
+            3,
+            4
         ],
         "DBJ": [
             1,

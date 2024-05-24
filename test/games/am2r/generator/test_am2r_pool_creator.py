@@ -8,36 +8,40 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.exceptions import InvalidConfiguration
 
 
-@pytest.mark.parametrize("dna_count", [0, 1, 30, 46])
-def test_am2r_pool_creator(am2r_game_description, dna_count):
+@pytest.mark.parametrize(("required_dna", "placed_dna"), [(0, 0), (1, 1), (30, 30), (46, 46)])
+def test_am2r_pool_creator(am2r_game_description, required_dna, placed_dna):
     db = am2r_game_description.resource_database
     # Run
-    results = artifact_pool(am2r_game_description, AM2RArtifactConfig(True, True, True, dna_count))
+    results = artifact_pool(am2r_game_description, AM2RArtifactConfig(True, True, True, required_dna, placed_dna))
 
     # Assert
     assert results == PoolResults(
-        [create_am2r_artifact(i, db) for i in range(dna_count)],
+        [create_am2r_artifact(i, db) for i in range(required_dna)],
         {},
-        [create_am2r_artifact(i, db) for i in range(dna_count, 46)],
+        [create_am2r_artifact(i, db) for i in range(required_dna, 46)],
     )
 
 
 @pytest.mark.parametrize(
-    ("metroids", "bosses", "anywhere", "artifacts"),
+    ("metroids", "bosses", "anywhere", "required_dna", "placed_dna"),
     [
-        (False, False, False, 1),
-        (False, True, False, 7),
-        (True, False, False, 47),
-        (True, True, False, 47),
-        (False, False, True, 47),
+        (False, False, False, 1, 1),
+        (False, True, False, 7, 7),
+        (True, False, False, 47, 47),
+        (True, True, False, 47, 47),
+        (False, False, True, 47, 47),
     ],
 )
 def test_am2r_artifact_pool_should_throw_on_invalid_config(
-    am2r_game_description, metroids, bosses, anywhere, artifacts
+    am2r_game_description, metroids, bosses, anywhere, required_dna, placed_dna
 ):
     # Setup
     configuration = AM2RArtifactConfig(
-        prefer_metroids=metroids, prefer_bosses=bosses, prefer_anywhere=anywhere, required_artifacts=artifacts
+        prefer_metroids=metroids,
+        prefer_bosses=bosses,
+        prefer_anywhere=anywhere,
+        required_artifacts=required_dna,
+        placed_artifacts=placed_dna,
     )
 
     # Run

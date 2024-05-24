@@ -4,7 +4,7 @@
 
 Welcome to Randovania, a randomizer platform for a multitude of games.
 
-New here or looking to install? Check [our website](https://randovania.github.io/).
+New here or looking to install? Check [our website](https://randovania.org/).
 
 <!-- Begin SUPPORTED -->
 

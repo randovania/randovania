@@ -2,24 +2,28 @@
 Landing Site
 Extra - map_name: rm_a0h01
 Extra - minimap_data: [{'x': 16, 'y': 3}, {'x': 16, 'y': 4}, {'x': 16, 'y': 5}, {'x': 16, 'y': 6}, {'x': 16, 'y': 7}, {'x': 17, 'y': 3}, {'x': 17, 'y': 4}, {'x': 17, 'y': 5}, {'x': 17, 'y': 6}, {'x': 17, 'y': 7}, {'x': 18, 'y': 3}, {'x': 18, 'y': 4}, {'x': 18, 'y': 5}, {'x': 18, 'y': 6}, {'x': 18, 'y': 7}, {'x': 19, 'y': 3}, {'x': 19, 'y': 4}, {'x': 19, 'y': 5}, {'x': 19, 'y': 6}, {'x': 19, 'y': 7}, {'x': 20, 'y': 3}, {'x': 20, 'y': 4}, {'x': 20, 'y': 5}, {'x': 20, 'y': 6}, {'x': 20, 'y': 7}, {'x': 21, 'y': 3}, {'x': 21, 'y': 4}, {'x': 21, 'y': 5}, {'x': 21, 'y': 6}, {'x': 22, 'y': 3}, {'x': 22, 'y': 4}, {'x': 23, 'y': 3}, {'x': 23, 'y': 4}, {'x': 24, 'y': 3}, {'x': 24, 'y': 4}, {'x': 25, 'y': 3}, {'x': 25, 'y': 4}, {'x': 25, 'y': 5}, {'x': 25, 'y': 6}, {'x': 25, 'y': 7}, {'x': 26, 'y': 3}, {'x': 26, 'y': 4}, {'x': 26, 'y': 5}, {'x': 26, 'y': 6}, {'x': 26, 'y': 7}, {'x': 27, 'y': 3}, {'x': 27, 'y': 4}, {'x': 27, 'y': 5}, {'x': 27, 'y': 6}, {'x': 27, 'y': 7}, {'x': 28, 'y': 3}, {'x': 28, 'y': 4}, {'x': 28, 'y': 5}, {'x': 28, 'y': 6}, {'x': 28, 'y': 7}, {'x': 29, 'y': 3}, {'x': 29, 'y': 4}, {'x': 29, 'y': 5}, {'x': 29, 'y': 6}, {'x': 29, 'y': 7}]
+Extra - light_level: 0
 > Ship; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 0
-  > Horizontal Dock to Hornoad Hallway
+  > Door to Hornoad Hallway
       Trivial
   > Top
       Any of the following:
           Space Jump or Can Use Spider Ball
-          Hi-Jump Boots and Walljump (Intermediate)
           # IBJ
-          Infinite Bomb Jumping (Expert) and Can Use Bombs
-          Charged Bomb Jump (Advanced) and Walljump (Expert) and Can Use Charged Bomb Jump
+          Infinite Bomb Jumping (Expert) and Can IBJ and Can Use Bombs
+          All of the following:
+              Can Walljump
+              Any of the following:
+                  Hi-Jump Boots and Walljump (Intermediate)
+                  Charged Bomb Jump (Advanced) and Walljump (Expert) and Can Use Charged Bomb Jump
   > Event - Victory
       After Collected the Baby Metroid
 
-> Horizontal Dock to Hornoad Hallway; Heals? False
+> Door to Hornoad Hallway; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hornoad Hallway/Horizontal Dock to Landing Site
+  * Open Transition to Hornoad Hallway/Door to Landing Site
   * Extra - instance_id: 100948
   * Extra - facing: left
   * Extra - x: 4480
@@ -41,10 +45,10 @@ Extra - minimap_data: [{'x': 16, 'y': 3}, {'x': 16, 'y': 4}, {'x': 16, 'y': 5}, 
       Any of the following:
           Space Jump or Can Use Spider Ball
           # IBJ
-          Infinite Bomb Jumping (Expert) and Can Use Bombs
+          Infinite Bomb Jumping (Expert) and Can IBJ and Can Use Bombs
           # Shinespark
           Speed Booster and Shinesparking Tricks (Intermediate) and Power Grip Wall
-          Hi-Jump Boots and Walljump (Intermediate)
+          Hi-Jump Boots and Walljump (Intermediate) and Can Walljump
 
 > Top; Heals? False
   * Layers: default
@@ -63,9 +67,10 @@ Extra - minimap_data: [{'x': 16, 'y': 3}, {'x': 16, 'y': 4}, {'x': 16, 'y': 5}, 
 Hornoad Hallway
 Extra - map_name: rm_a0h02
 Extra - minimap_data: [{'x': 30, 'y': 7}, {'x': 31, 'y': 7}, {'x': 32, 'y': 7}, {'x': 33, 'y': 7}, {'x': 33, 'y': 8}, {'x': 34, 'y': 8}]
-> Horizontal Dock to Landing Site; Heals? False
+Extra - light_level: 0
+> Door to Landing Site; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Landing Site/Horizontal Dock to Hornoad Hallway
+  * Open Transition to Landing Site/Door to Hornoad Hallway
   * Extra - instance_id: 101098
   * Extra - facing: right
   * Extra - x: 0
@@ -81,7 +86,7 @@ Extra - minimap_data: [{'x': 30, 'y': 7}, {'x': 31, 'y': 7}, {'x': 32, 'y': 7}, 
 
 > Bottom; Heals? False
   * Layers: default
-  > Horizontal Dock to Landing Site
+  > Door to Landing Site
       Power Grip Wall
   > Horizontal Dock to Tsumuri Tunnel
       Morph Ball
@@ -90,6 +95,7 @@ Extra - minimap_data: [{'x': 30, 'y': 7}, {'x': 31, 'y': 7}, {'x': 32, 'y': 7}, 
 Tsumuri Tunnel
 Extra - map_name: rm_a0h02a
 Extra - minimap_data: [{'x': 35, 'y': 8}, {'x': 35, 'y': 9}, {'x': 35, 'y': 10}, {'x': 35, 'y': 11}]
+Extra - light_level: 0
 > Vertical Dock to Cavern Crossroads; Heals? False
   * Layers: default
   * 4-Tiles Wide Dock to Cavern Crossroads/Vertical Dock to Tsumuri Tunnel
@@ -108,17 +114,18 @@ Extra - minimap_data: [{'x': 35, 'y': 8}, {'x': 35, 'y': 9}, {'x': 35, 'y': 10},
 Cavern Crossroads
 Extra - map_name: rm_a0h03
 Extra - minimap_data: [{'x': 34, 'y': 13}, {'x': 35, 'y': 12}, {'x': 35, 'y': 13}, {'x': 36, 'y': 13}]
+Extra - light_level: 0
 > Vertical Dock to Tsumuri Tunnel; Heals? False
   * Layers: default
   * 4-Tiles Wide Dock to Tsumuri Tunnel/Vertical Dock to Cavern Crossroads
-  > Horizontal Dock to Surface Cave Save Station
+  > Door to Surface Cave Save Station
       Trivial
-  > Horizontal Dock to Rocky Stairs
+  > Door to Rocky Stairs
       Trivial
 
-> Horizontal Dock to Surface Cave Save Station; Heals? False
+> Door to Surface Cave Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Cave Save Station/Horizontal Dock to Cavern Crossroads
+  * Open Transition to Surface Cave Save Station/Door to Cavern Crossroads
   * Extra - instance_id: 101302
   * Extra - facing: left
   * Extra - x: 960
@@ -126,9 +133,9 @@ Extra - minimap_data: [{'x': 34, 'y': 13}, {'x': 35, 'y': 12}, {'x': 35, 'y': 13
   > Vertical Dock to Tsumuri Tunnel
       Trivial
 
-> Horizontal Dock to Rocky Stairs; Heals? False
+> Door to Rocky Stairs; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Rocky Stairs/Horizontal Dock to Cavern Crossroads
+  * Open Transition to Rocky Stairs/Door to Cavern Crossroads
   * Extra - instance_id: 101303
   * Extra - facing: right
   * Extra - x: 0
@@ -141,27 +148,28 @@ Surface Cave Save Station
 Extra - map_name: rm_a0h03a
 Extra - minimap_data: [{'x': 37, 'y': 13}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 1
-  > Horizontal Dock to Twisty Tunnel
+  > Door to Twisty Tunnel
       Trivial
-  > Horizontal Dock to Cavern Crossroads
+  > Door to Cavern Crossroads
       Trivial
 
-> Horizontal Dock to Twisty Tunnel; Heals? False
+> Door to Twisty Tunnel; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Twisty Tunnel/Horizontal Dock to Surface Cave Save Station
-  * Extra - instance_id: 101324
+  * Open Transition to Twisty Tunnel/Door to Surface Cave Save Station
+  * Extra - instance_id: 101323
   * Extra - facing: left
   * Extra - x: 0
   * Extra - y: 144
   > Save Station
       Trivial
 
-> Horizontal Dock to Cavern Crossroads; Heals? False
+> Door to Cavern Crossroads; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Cavern Crossroads/Horizontal Dock to Surface Cave Save Station
+  * Open Transition to Cavern Crossroads/Door to Surface Cave Save Station
   * Extra - instance_id: 101324
   * Extra - facing: right
   * Extra - x: 0
@@ -173,57 +181,60 @@ Extra - unlocked_save_station: True
 Rocky Stairs
 Extra - map_name: rm_a0h03b
 Extra - minimap_data: [{'x': 31, 'y': 12}, {'x': 32, 'y': 12}, {'x': 32, 'y': 13}, {'x': 33, 'y': 13}]
-> Horizontal Dock to Surface Pond Access; Heals? False
+Extra - light_level: 0
+> Door to Surface Pond Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Pond Access/Horizontal Dock to Rocky Stairs
+  * Open Transition to Surface Pond Access/Door to Rocky Stairs
   * Extra - instance_id: 101402
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 96
-  > Horizontal Dock to Cavern Crossroads
+  > Door to Cavern Crossroads
       Trivial
 
-> Horizontal Dock to Cavern Crossroads; Heals? False
+> Door to Cavern Crossroads; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Cavern Crossroads/Horizontal Dock to Rocky Stairs
-  * Extra - instance_id: 101402
+  * Open Transition to Cavern Crossroads/Door to Rocky Stairs
+  * Extra - instance_id: 101403
   * Extra - facing: left
   * Extra - x: 0
   * Extra - y: 96
-  > Horizontal Dock to Surface Pond Access
+  > Door to Surface Pond Access
       Trivial
 
 ----------------
 Surface Pond Access
 Extra - map_name: rm_a0h04
 Extra - minimap_data: [{'x': 30, 'y': 12}, {'x': 30, 'y': 13}, {'x': 30, 'y': 14}, {'x': 30, 'y': 15}]
-> Horizontal Dock to Surface Pond; Heals? False
+Extra - light_level: 0
+> Door to Surface Pond; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Pond/Horizontal Dock to Surface Pond Access
+  * Open Transition to Surface Pond/Door to Surface Pond Access
   * Extra - instance_id: 101422
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 848
-  > Horizontal Dock to Rocky Stairs
+  > Door to Rocky Stairs
       Trivial
 
-> Horizontal Dock to Rocky Stairs; Heals? False
+> Door to Rocky Stairs; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Rocky Stairs/Horizontal Dock to Surface Pond Access
+  * Open Transition to Rocky Stairs/Door to Surface Pond Access
   * Extra - instance_id: 101540
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 96
-  > Horizontal Dock to Surface Pond
+  > Door to Surface Pond
       Trivial
 
 ----------------
 Surface Pond
 Extra - map_name: rm_a0h04b
 Extra - minimap_data: [{'x': 27, 'y': 15}, {'x': 28, 'y': 15}, {'x': 29, 'y': 15}]
-> Horizontal Dock to Surface Pond Access; Heals? False
+Extra - light_level: 0
+> Door to Surface Pond Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Pond Access/Horizontal Dock to Surface Pond
+  * Open Transition to Surface Pond Access/Door to Surface Pond
   * Extra - instance_id: 101610
   * Extra - facing: left
   * Extra - x: 960
@@ -235,7 +246,7 @@ Extra - minimap_data: [{'x': 27, 'y': 15}, {'x': 28, 'y': 15}, {'x': 29, 'y': 15
   * Layers: default
   * Missile Door to Surface Pond Save Station/Door to Surface Pond
   * Extra - instance_id: 101612
-  > Horizontal Dock to Surface Pond Access
+  > Door to Surface Pond Access
       Trivial
 
 ----------------
@@ -243,6 +254,7 @@ Surface Pond Save Station
 Extra - map_name: rm_a0h04c
 Extra - minimap_data: [{'x': 26, 'y': 15}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 2
@@ -268,9 +280,10 @@ Extra - unlocked_save_station: True
 Surface Lava Pond
 Extra - map_name: rm_a0h04d
 Extra - minimap_data: [{'x': 23, 'y': 15}, {'x': 23, 'y': 16}, {'x': 24, 'y': 16}, {'x': 25, 'y': 15}, {'x': 25, 'y': 16}]
-> Horizontal Dock to Surface Alpha Nest; Heals? False
+Extra - light_level: 0
+> Door to Surface Alpha Nest; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Alpha Nest/Horizontal Dock to Surface Lava Pond
+  * Open Transition to Surface Alpha Nest/Door to Surface Lava Pond
   * Extra - instance_id: 101844
   * Extra - facing: right
   * Extra - x: 0
@@ -286,7 +299,7 @@ Extra - minimap_data: [{'x': 23, 'y': 15}, {'x': 23, 'y': 16}, {'x': 24, 'y': 16
 
 > Bottom; Heals? False
   * Layers: default
-  > Horizontal Dock to Surface Alpha Nest
+  > Door to Surface Alpha Nest
       Power Grip Wall
   > Horizontal Dock to Surface Pond Save Station
       Power Grip Wall
@@ -295,9 +308,10 @@ Extra - minimap_data: [{'x': 23, 'y': 15}, {'x': 23, 'y': 16}, {'x': 24, 'y': 16
 Surface Alpha Nest
 Extra - map_name: rm_a0h05
 Extra - minimap_data: [{'x': 21, 'y': 15}, {'x': 22, 'y': 15}]
-> Horizontal Dock to Surface Lava Pond; Heals? False
+Extra - light_level: 0
+> Door to Surface Lava Pond; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Lava Pond/Horizontal Dock to Surface Alpha Nest
+  * Open Transition to Surface Lava Pond/Door to Surface Alpha Nest
   * Extra - instance_id: 101956
   * Extra - facing: left
   * Extra - x: 640
@@ -308,7 +322,7 @@ Extra - minimap_data: [{'x': 21, 'y': 15}, {'x': 22, 'y': 15}]
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Surface - Alpha Metroid
-  > Horizontal Dock to Surface Lava Pond
+  > Door to Surface Lava Pond
       Trivial
   > Pickup (Alpha)
       Trivial
@@ -324,9 +338,10 @@ Extra - minimap_data: [{'x': 21, 'y': 15}, {'x': 22, 'y': 15}]
 Twisty Tunnel
 Extra - map_name: rm_a0h06
 Extra - minimap_data: [{'x': 38, 'y': 13}, {'x': 39, 'y': 13}, {'x': 40, 'y': 13}, {'x': 40, 'y': 14}, {'x': 40, 'y': 15}, {'x': 41, 'y': 13}, {'x': 41, 'y': 14}, {'x': 41, 'y': 15}, {'x': 42, 'y': 15}]
-> Horizontal Dock to Surface Cave Save Station; Heals? False
+Extra - light_level: 0
+> Door to Surface Cave Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Cave Save Station/Horizontal Dock to Twisty Tunnel
+  * Open Transition to Surface Cave Save Station/Door to Twisty Tunnel
   * Extra - instance_id: 102176
   * Extra - facing: right
   * Extra - x: 0
@@ -337,24 +352,25 @@ Extra - minimap_data: [{'x': 38, 'y': 13}, {'x': 39, 'y': 13}, {'x': 40, 'y': 13
 > Horizontal Dock to Grave Grotto; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Grave Grotto/Horizontal Dock to Twisty Tunnel
-  > Horizontal Dock to Surface Cave Save Station
+  > Door to Surface Cave Save Station
       Trivial
 
 ----------------
 Grave Grotto
 Extra - map_name: rm_a0h07
 Extra - minimap_data: [{'x': 38, 'y': 13}, {'x': 39, 'y': 13}, {'x': 40, 'y': 13}, {'x': 40, 'y': 14}, {'x': 40, 'y': 15}, {'x': 41, 'y': 13}, {'x': 41, 'y': 14}, {'x': 41, 'y': 15}, {'x': 42, 'y': 15}, {'x': 43, 'y': 15}, {'x': 44, 'y': 15}, {'x': 44, 'y': 16}, {'x': 45, 'y': 15}, {'x': 45, 'y': 16}, {'x': 45, 'y': 17}, {'x': 45, 'y': 18}, {'x': 45, 'y': 19}, {'x': 45, 'y': 20}, {'x': 45, 'y': 21}, {'x': 46, 'y': 15}, {'x': 46, 'y': 16}, {'x': 46, 'y': 17}, {'x': 46, 'y': 18}, {'x': 46, 'y': 19}, {'x': 46, 'y': 20}, {'x': 46, 'y': 21}]
+Extra - light_level: 0
 > Horizontal Dock to Twisty Tunnel; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Twisty Tunnel/Horizontal Dock to Grave Grotto
-  > Horizontal Dock to Mumbo Manor
+  > Door to Mumbo Manor
       Trivial
   > Middle
       Disabled Grave Grotto Blocks or Can Use Any Bombs
 
-> Horizontal Dock to Mumbo Manor; Heals? False
+> Door to Mumbo Manor; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Mumbo Manor/Horizontal Dock to Grave Grotto
+  * Open Transition to Mumbo Manor/Door to Grave Grotto
   * Extra - instance_id: 102614
   * Extra - facing: left
   * Extra - x: 1280
@@ -365,12 +381,12 @@ Extra - minimap_data: [{'x': 38, 'y': 13}, {'x': 39, 'y': 13}, {'x': 40, 'y': 13
 > Tunnel to Surface Gunzoo Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Surface Gunzoo Room/Tunnel to Grave Grotto
-  > Horizontal Dock to Hydro Station
+  > Door to Hydro Station
       Morph Ball
 
-> Horizontal Dock to Hydro Station; Heals? False
+> Door to Hydro Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hydro Station Entrance/Horizontal Dock to Main Caves
+  * Open Transition to Hydro Station Entrance/Door to Main Caves
   * Extra - instance_id: 102617
   * Extra - facing: right
   * Extra - x: 640
@@ -407,6 +423,7 @@ Extra - minimap_data: [{'x': 38, 'y': 13}, {'x': 39, 'y': 13}, {'x': 40, 'y': 13
 Surface Spider Ball Challenge
 Extra - map_name: rm_a0h07A
 Extra - minimap_data: [{'x': 47, 'y': 16}, {'x': 47, 'y': 17}]
+Extra - light_level: 0
 > Tunnel to Grave Grotto; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Grave Grotto/Tunnel to Surface Spider Ball Challenge
@@ -438,22 +455,26 @@ Extra - minimap_data: [{'x': 47, 'y': 16}, {'x': 47, 'y': 17}]
           Morph Ball
           Any of the following:
               # A way to get up to the item
-              Space Jump or Walljump (Hypermode)
+              Space Jump
               # IBJ https://www.youtube.com/watch?v=oH23Z6N2OSA
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
               # Intended spider ball way
               Can Use Bombs and Can Use Spider Ball
               # Shinespark Up (Stored from previous room) https://www.youtube.com/watch?v=8dNToB3scAQ
               Speed Booster and Shinesparking Tricks (Advanced) and Disabled Entrance Rando
               All of the following:
-                  Movement (Hypermode) and Walljump (Intermediate)
-                  # Frame perfectly jump off of crumble blocks
-                  Damage Boost (Beginner) and Normal Damage ≥ 7
+                  Can Walljump
                   Any of the following:
-                      # Frame perfectly jump off of crumble blocks
-                      Damage Boost (Beginner) and Normal Damage ≥ 7
-                      # Frame perfectly spring ball off of crumble blocks
-                      Can Use Spring Ball
+                      Walljump (Hypermode)
+                      All of the following:
+                          Movement (Hypermode) and Walljump (Intermediate)
+                          # Frame perfectly jump off of crumble blocks
+                          Damage Boost (Beginner) and Normal Damage ≥ 7
+                          Any of the following:
+                              # Frame perfectly jump off of crumble blocks
+                              Damage Boost (Beginner) and Normal Damage ≥ 7
+                              # Frame perfectly spring ball off of crumble blocks
+                              Can Use Spring Ball
   > Pickup (Bottom Missile)
       Can Use Any Bombs
 
@@ -461,18 +482,19 @@ Extra - minimap_data: [{'x': 47, 'y': 16}, {'x': 47, 'y': 17}]
 Mumbo Manor
 Extra - map_name: rm_a0h08
 Extra - minimap_data: [{'x': 47, 'y': 15}, {'x': 48, 'y': 15}, {'x': 49, 'y': 15}, {'x': 50, 'y': 13}, {'x': 50, 'y': 14}, {'x': 50, 'y': 15}]
+Extra - light_level: 0
 > Horizontal Dock to Golden Temple; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Guardian Arena/Horizontal Dock to Main Caves
   * Extra - instance_id: 102820
   * Extra - source_x: 1280
   * Extra - source_y: 160
-  > Horizontal Dock to Grave Grotto
+  > Door to Grave Grotto
       Trivial
 
-> Horizontal Dock to Grave Grotto; Heals? False
+> Door to Grave Grotto; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Grave Grotto/Horizontal Dock to Mumbo Manor
+  * Open Transition to Grave Grotto/Door to Mumbo Manor
   * Extra - instance_id: 102822
   * Extra - facing: right
   * Extra - x: 0
@@ -484,15 +506,16 @@ Extra - minimap_data: [{'x': 47, 'y': 15}, {'x': 48, 'y': 15}, {'x': 49, 'y': 15
 Surface Gunzoo Room
 Extra - map_name: rm_a0h09
 Extra - minimap_data: [{'x': 47, 'y': 21}, {'x': 47, 'y': 22}, {'x': 47, 'y': 23}, {'x': 48, 'y': 21}, {'x': 48, 'y': 22}, {'x': 48, 'y': 23}]
+Extra - light_level: 0
 > Tunnel to Grave Grotto; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Grave Grotto/Tunnel to Surface Gunzoo Room
   > Top rock
       Morph Ball
 
-> Horizontal Dock to Spike Maze; Heals? False
+> Door to Spike Maze; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Spike Maze/Horizontal Dock to Surface Gunzoo Room
+  * Open Transition to Spike Maze/Door to Surface Gunzoo Room
   * Extra - instance_id: 103228
   * Extra - facing: left
   * Extra - x: 640
@@ -503,7 +526,7 @@ Extra - minimap_data: [{'x': 47, 'y': 21}, {'x': 47, 'y': 22}, {'x': 47, 'y': 23
 > Horizontal Dock to Bend Chasm; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bend Chasm/Horizontal Dock to Surface Gunzoo Room
-  > Horizontal Dock to Spike Maze
+  > Door to Spike Maze
       Trivial
 
 > Tunnel to Surface Hi-Jump Challenge; Heals? False
@@ -541,6 +564,7 @@ Extra - minimap_data: [{'x': 47, 'y': 21}, {'x': 47, 'y': 22}, {'x': 47, 'y': 23
 Surface Hi-Jump Challenge
 Extra - map_name: rm_a0h09A
 Extra - minimap_data: [{'x': 49, 'y': 20}, {'x': 49, 'y': 21}, {'x': 50, 'y': 20}, {'x': 50, 'y': 21}]
+Extra - light_level: 0
 > Tunnel to Surface Gunzoo Room; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Surface Gunzoo Room/Tunnel to Surface Hi-Jump Challenge
@@ -558,17 +582,19 @@ Extra - minimap_data: [{'x': 49, 'y': 20}, {'x': 49, 'y': 21}, {'x': 50, 'y': 20
               Movement (Intermediate)
               Any of the following:
                   # IBJ
-                  Infinite Bomb Jumping (Advanced) and Can Use Bombs
+                  Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
                   All of the following:
                       # Glide jump from crumble to crumble
-                      Morph Ball and Morph Glide (Advanced) and Walljump (Beginner)
-                      Power Grip or Walljump (Advanced)
+                      Morph Ball and Morph Glide (Advanced) and Walljump (Beginner) and Can Walljump
+                      Any of the following:
+                          Power Grip
+                          Walljump (Advanced) and Can Walljump
           # IBJ to ceiling + Spider
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs and Can Use Spider Ball
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs and Can Use Spider Ball
           # Diagonal IBJ
-          Diagonal Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Diagonal Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
           # Shinespark Up (Stored from previous room) https://www.youtube.com/watch?v=oMKgePFHxHY
-          Speed Booster and Shinesparking Tricks (Expert) and Walljump (Intermediate) and Disabled Entrance Rando
+          Speed Booster and Shinesparking Tricks (Expert) and Walljump (Intermediate) and Disabled Entrance Rando and Can Walljump
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -588,9 +614,10 @@ Extra - minimap_data: [{'x': 49, 'y': 20}, {'x': 49, 'y': 21}, {'x': 50, 'y': 20
 Spike Maze
 Extra - map_name: rm_a0h10
 Extra - minimap_data: [{'x': 49, 'y': 23}, {'x': 49, 'y': 24}]
-> Horizontal Dock to Eastern Cave Intersection; Heals? False
+Extra - light_level: 0
+> Door to Eastern Cave Intersection; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Eastern Cave Intersection/Horizontal Dock to Spike Maze
+  * Open Transition to Eastern Cave Intersection/Door to Spike Maze
   * Extra - instance_id: 103270
   * Extra - facing: left
   * Extra - x: 320
@@ -598,9 +625,9 @@ Extra - minimap_data: [{'x': 49, 'y': 23}, {'x': 49, 'y': 24}]
   > Middle Pit
       Low Mid-Air Morph Tunnel Climb
 
-> Horizontal Dock to Surface Gunzoo Room; Heals? False
+> Door to Surface Gunzoo Room; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Surface Gunzoo Room/Horizontal Dock to Spike Maze
+  * Open Transition to Surface Gunzoo Room/Door to Spike Maze
   * Extra - instance_id: 103523
   * Extra - facing: right
   * Extra - x: 0
@@ -617,14 +644,14 @@ Extra - minimap_data: [{'x': 49, 'y': 23}, {'x': 49, 'y': 24}]
 
 > Top Pit; Heals? False
   * Layers: default
-  > Horizontal Dock to Surface Gunzoo Room
+  > Door to Surface Gunzoo Room
       Morph Ball and Power Grip Wall
   > Middle Pit
       Morph Ball
 
 > Middle Pit; Heals? False
   * Layers: default
-  > Horizontal Dock to Eastern Cave Intersection
+  > Door to Eastern Cave Intersection
       Morph Ball
   > Pickup (Missile Tank)
       High Mid-Air Morph Tunnel Climb
@@ -639,9 +666,10 @@ Extra - minimap_data: [{'x': 49, 'y': 23}, {'x': 49, 'y': 24}]
 Eastern Cave Intersection
 Extra - map_name: rm_a0h10a
 Extra - minimap_data: [{'x': 50, 'y': 24}, {'x': 50, 'y': 25}, {'x': 50, 'y': 26}, {'x': 51, 'y': 24}, {'x': 51, 'y': 25}, {'x': 51, 'y': 26}]
-> Horizontal Dock to Spike Maze; Heals? False
+Extra - light_level: 0
+> Door to Spike Maze; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Spike Maze/Horizontal Dock to Eastern Cave Intersection
+  * Open Transition to Spike Maze/Door to Eastern Cave Intersection
   * Extra - instance_id: 103737
   * Extra - facing: right
   * Extra - x: 0
@@ -675,7 +703,7 @@ Extra - minimap_data: [{'x': 50, 'y': 24}, {'x': 50, 'y': 25}, {'x': 50, 'y': 26
 
 > Middle; Heals? False
   * Layers: default
-  > Horizontal Dock to Spike Maze
+  > Door to Spike Maze
       Trivial
   > Horizontal Dock to Industrial Complex
       Power Grip Wall
@@ -703,6 +731,7 @@ Extra - minimap_data: [{'x': 50, 'y': 24}, {'x': 50, 'y': 25}, {'x': 50, 'y': 26
 Hidden Mining Facility Route
 Extra - map_name: rm_a0h10b
 Extra - minimap_data: [{'x': 48, 'y': 25}, {'x': 48, 'y': 26}, {'x': 49, 'y': 26}]
+Extra - light_level: 0
 > Horizontal Dock to Eastern Cave Intersection; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Eastern Cave Intersection/Horizontal Dock to Hidden Mining Facility Route
@@ -719,6 +748,7 @@ Extra - minimap_data: [{'x': 48, 'y': 25}, {'x': 48, 'y': 26}, {'x': 49, 'y': 26
 Bend Chasm
 Extra - map_name: rm_a0h11
 Extra - minimap_data: [{'x': 46, 'y': 23}, {'x': 46, 'y': 24}, {'x': 46, 'y': 25}, {'x': 46, 'y': 26}, {'x': 46, 'y': 27}, {'x': 46, 'y': 28}, {'x': 47, 'y': 25}, {'x': 47, 'y': 26}]
+Extra - light_level: 0
 > Horizontal Dock to Surface Gunzoo Room; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Surface Gunzoo Room/Horizontal Dock to Bend Chasm
@@ -730,7 +760,7 @@ Extra - minimap_data: [{'x': 46, 'y': 23}, {'x': 46, 'y': 24}, {'x': 46, 'y': 25
 > Horizontal Dock to Octroll Lava Pool; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Octroll Lava Pool/Horizontal Dock to Bend Chasm
-  > Horizontal Dock to Western Cave Entrance
+  > Door to Western Cave Entrance
       Trivial
   > Septogg
       Trivial
@@ -741,9 +771,9 @@ Extra - minimap_data: [{'x': 46, 'y': 23}, {'x': 46, 'y': 24}, {'x': 46, 'y': 25
   > Septogg
       Morph Ball
 
-> Horizontal Dock to Western Cave Entrance; Heals? False
+> Door to Western Cave Entrance; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Western Cave Entrance/Horizontal Dock to Bend Chasm
+  * Open Transition to Western Cave Entrance/Door to Bend Chasm
   * Extra - instance_id: 104414
   * Extra - facing: right
   * Extra - x: 0
@@ -772,9 +802,10 @@ Extra - minimap_data: [{'x': 46, 'y': 23}, {'x': 46, 'y': 24}, {'x': 46, 'y': 25
 Western Cave Entrance
 Extra - map_name: rm_a0h24
 Extra - minimap_data: [{'x': 44, 'y': 28}, {'x': 44, 'y': 29}, {'x': 44, 'y': 30}, {'x': 45, 'y': 28}, {'x': 45, 'y': 29}, {'x': 45, 'y': 30}]
-> Horizontal Dock to Bend Chasm; Heals? False
+Extra - light_level: 0
+> Door to Bend Chasm; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Bend Chasm/Horizontal Dock to Western Cave Entrance
+  * Open Transition to Bend Chasm/Door to Western Cave Entrance
   * Extra - instance_id: 104675
   * Extra - facing: left
   * Extra - x: 640
@@ -782,9 +813,9 @@ Extra - minimap_data: [{'x': 44, 'y': 28}, {'x': 44, 'y': 29}, {'x': 44, 'y': 30
   > Middle 
       Trivial
 
-> Horizontal Dock to Western Cave Shaft; Heals? False
+> Door to Western Cave Shaft; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Western Cave Shaft/Horizontal Dock to Western Cave Entrance
+  * Open Transition to Western Cave Shaft/Door to Western Cave Entrance
   * Extra - instance_id: 104676
   * Extra - facing: right
   * Extra - x: 0
@@ -799,8 +830,10 @@ Extra - minimap_data: [{'x': 44, 'y': 28}, {'x': 44, 'y': 29}, {'x': 44, 'y': 30
                   Any of the following:
                       All of the following:
                           Mid-Air Morph (Intermediate)
-                          Space Jump or Walljump (Intermediate)
-                      Hi-Jump Boots and Mid-Air Morph (Beginner) and Walljump (Beginner)
+                          Any of the following:
+                              Space Jump
+                              Walljump (Intermediate) and Can Walljump
+                      Hi-Jump Boots and Mid-Air Morph (Beginner) and Walljump (Beginner) and Can Walljump
   > Middle 
       Space Jump Wall
 
@@ -808,23 +841,24 @@ Extra - minimap_data: [{'x': 44, 'y': 28}, {'x': 44, 'y': 29}, {'x': 44, 'y': 30
   * Layers: default
   * Pickup 54; Category? Minor
   * Extra - object_name: oItemM_54
-  > Horizontal Dock to Western Cave Shaft
+  > Door to Western Cave Shaft
       Trivial
 
 > Middle ; Heals? False
   * Layers: default
-  > Horizontal Dock to Bend Chasm
+  > Door to Bend Chasm
       Hijump Wall
-  > Horizontal Dock to Western Cave Shaft
+  > Door to Western Cave Shaft
       Trivial
 
 ----------------
 Western Cave Shaft
 Extra - map_name: rm_a0h25
 Extra - minimap_data: [{'x': 43, 'y': 30}, {'x': 43, 'y': 31}, {'x': 43, 'y': 32}, {'x': 43, 'y': 33}]
-> Horizontal Dock to Western Cave Entrance; Heals? False
+Extra - light_level: 0
+> Door to Western Cave Entrance; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Western Cave Entrance/Horizontal Dock to Western Cave Shaft
+  * Open Transition to Western Cave Entrance/Door to Western Cave Shaft
   * Extra - instance_id: 104963
   * Extra - facing: left
   * Extra - x: 320
@@ -832,9 +866,9 @@ Extra - minimap_data: [{'x': 43, 'y': 30}, {'x': 43, 'y': 31}, {'x': 43, 'y': 32
   > Top
       Trivial
 
-> Horizontal Dock to Western Cave Save Station; Heals? False
+> Door to Western Cave Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Western Cave Save Station/Horizontal Dock to Western Cave Shaft
+  * Open Transition to Western Cave Save Station/Door to Western Cave Shaft
   * Extra - instance_id: 104964
   * Extra - facing: right
   * Extra - x: 0
@@ -850,17 +884,17 @@ Extra - minimap_data: [{'x': 43, 'y': 30}, {'x': 43, 'y': 31}, {'x': 43, 'y': 32
               Can Use Spider Ball
               Mid-Air Morph (Intermediate) or Disabled Entrance Rando or Can Use Bombs or Can Use Spring Ball
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
 
 > Horizontal Dock to Snaky Skorp Cavern; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Snaky Skorp Cavern/Horizontal Dock to Western Cave Shaft
-  > Horizontal Dock to Western Cave Save Station
+  > Door to Western Cave Save Station
       Trivial
 
 > Bottom; Heals? False
   * Layers: default
-  > Horizontal Dock to Western Cave Save Station
+  > Door to Western Cave Save Station
       Trivial
   > Top
       All of the following:
@@ -870,11 +904,11 @@ Extra - minimap_data: [{'x': 43, 'y': 30}, {'x': 43, 'y': 31}, {'x': 43, 'y': 32
 
 > Top; Heals? False
   * Layers: default
-  > Horizontal Dock to Western Cave Entrance
+  > Door to Western Cave Entrance
       Any of the following:
           Space Jump or Enabled Septogg Helpers or Can Use Spider Ball
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
   > Bottom
       # Avoiding Skorps
       Screw Attack or Combat (Beginner) or Normal Damage ≥ 75
@@ -884,15 +918,16 @@ Western Cave Save Station
 Extra - map_name: rm_a0h26
 Extra - minimap_data: [{'x': 42, 'y': 33}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 13
-  > Horizontal Dock to Western Cave Shaft
+  > Door to Western Cave Shaft
       Trivial
 
-> Horizontal Dock to Western Cave Shaft; Heals? False
+> Door to Western Cave Shaft; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Western Cave Shaft/Horizontal Dock to Western Cave Save Station
+  * Open Transition to Western Cave Shaft/Door to Western Cave Save Station
   * Extra - instance_id: 105064
   * Extra - facing: left
   * Extra - x: 320
@@ -904,6 +939,7 @@ Extra - unlocked_save_station: True
 Snaky Skorp Cavern
 Extra - map_name: rm_a0h27
 Extra - minimap_data: [{'x': 44, 'y': 33}, {'x': 44, 'y': 34}, {'x': 44, 'y': 35}, {'x': 44, 'y': 36}, {'x': 45, 'y': 36}, {'x': 45, 'y': 37}]
+Extra - light_level: 0
 > Horizontal Dock to Western Cave Shaft; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Western Cave Shaft/Horizontal Dock to Snaky Skorp Cavern
@@ -931,6 +967,7 @@ Extra - minimap_data: [{'x': 44, 'y': 33}, {'x': 44, 'y': 34}, {'x': 44, 'y': 35
 The Pit
 Extra - map_name: rm_a0h28
 Extra - minimap_data: [{'x': 46, 'y': 37}, {'x': 46, 'y': 38}, {'x': 46, 'y': 39}, {'x': 46, 'y': 40}]
+Extra - light_level: 0
 > Horizontal Dock to Snaky Skorp Cavern; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Snaky Skorp Cavern/Horizontal Dock to The Pit
@@ -945,10 +982,14 @@ Extra - minimap_data: [{'x': 46, 'y': 37}, {'x': 46, 'y': 38}, {'x': 46, 'y': 39
           Enabled Septogg Helpers
           Any of the following:
               # Space Jump Wall with hypermode WJ
-              Space Jump or Walljump (Hypermode) or Can Use Spider Ball
+              Space Jump or Can Use Spider Ball
               # IBJ
-              Infinite Bomb Jumping (Expert) and Can Use Bombs
-              Hi-Jump Boots and Walljump (Advanced)
+              Infinite Bomb Jumping (Expert) and Can IBJ and Can Use Bombs
+              All of the following:
+                  Can Walljump
+                  Any of the following:
+                      Walljump (Hypermode)
+                      Hi-Jump Boots and Walljump (Advanced)
           # Shinespark (TODO: add short charge option)
           Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
 
@@ -956,6 +997,7 @@ Extra - minimap_data: [{'x': 46, 'y': 37}, {'x': 46, 'y': 38}, {'x': 46, 'y': 39
 Fat Crocomire Room
 Extra - map_name: rm_a0h29
 Extra - minimap_data: [{'x': 44, 'y': 40}, {'x': 44, 'y': 41}, {'x': 45, 'y': 40}, {'x': 45, 'y': 41}]
+Extra - light_level: 0
 > Horizontal Dock to The Pit; Heals? False
   * Layers: default
   * 3-Tiles High Dock to The Pit/Horizontal Dock to Fat Crocomire Room
@@ -972,7 +1014,7 @@ Extra - minimap_data: [{'x': 44, 'y': 40}, {'x': 44, 'y': 41}, {'x': 45, 'y': 40
               Space Jump or Can Use Spider Ball
               Hi-Jump Boots and Power Grip
               # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
           # Septogg
           Enabled Septogg Helpers and Power Grip Wall
   > Pickup (Missile Tank)
@@ -989,9 +1031,10 @@ Extra - minimap_data: [{'x': 44, 'y': 40}, {'x': 44, 'y': 41}, {'x': 45, 'y': 40
 Skreek Street
 Extra - map_name: rm_a0h30
 Extra - minimap_data: [{'x': 40, 'y': 41}, {'x': 41, 'y': 41}, {'x': 41, 'y': 42}, {'x': 41, 'y': 43}, {'x': 41, 'y': 44}, {'x': 42, 'y': 41}, {'x': 42, 'y': 42}, {'x': 42, 'y': 43}, {'x': 42, 'y': 44}, {'x': 43, 'y': 41}]
-> Horizontal Dock to Tower East Exterior Access; Heals? False
+Extra - light_level: 0
+> Door to Tower East Exterior Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Tower East Exterior Access/Horizontal Dock to Skreek Street
+  * Open Transition to Tower East Exterior Access/Door to Skreek Street
   * Extra - instance_id: 105774
   * Extra - facing: right
   * Extra - x: 0
@@ -1004,12 +1047,12 @@ Extra - minimap_data: [{'x': 40, 'y': 41}, {'x': 41, 'y': 41}, {'x': 41, 'y': 42
 > Horizontal Dock to Fat Crocomire Room; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Fat Crocomire Room/Horizontal Dock to Skreek Street
-  > Horizontal Dock to Tower East Exterior Access
+  > Door to Tower East Exterior Access
       Trivial
 
-> Horizontal Dock to The Descent; Heals? False
+> Door to The Descent; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to The Descent/Horizontal Dock to Skreek Street
+  * Open Transition to The Descent/Door to Skreek Street
   * Extra - instance_id: 105815
   * Extra - facing: left
   * Extra - x: 960
@@ -1021,9 +1064,9 @@ Extra - minimap_data: [{'x': 40, 'y': 41}, {'x': 41, 'y': 41}, {'x': 41, 'y': 42
 
 > Near hidden wall; Heals? False
   * Layers: default
-  > Horizontal Dock to Tower East Exterior Access
+  > Door to Tower East Exterior Access
       High Mid-Air Morph Tunnel Climb and Tunnel Climb
-  > Horizontal Dock to The Descent
+  > Door to The Descent
       Any of the following:
           Can Use Power Bombs
           Super Missiles ≥ 2 and Knowledge (Advanced) and Low Mid-Air Morph Tunnel Climb
@@ -1032,26 +1075,27 @@ Extra - minimap_data: [{'x': 40, 'y': 41}, {'x': 41, 'y': 41}, {'x': 41, 'y': 42
 Tower East Exterior Access
 Extra - map_name: rm_a0h30a
 Extra - minimap_data: [{'x': 38, 'y': 41}, {'x': 39, 'y': 41}]
-> Horizontal Dock to The Tower; Heals? False
+Extra - light_level: 0
+> Door to The Tower; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Tower Exterior South East/Horizontal Dock to Main Caves
+  * Open Transition to Tower Exterior South East/Door to Main Caves
   * Extra - instance_id: 106332
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 128
-  > Horizontal Dock to Skreek Street
+  > Door to Skreek Street
       After Surface - Rock Entrance To The Tower and Power Grip Wall
   > Event - Rocks
       Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
 
-> Horizontal Dock to Skreek Street; Heals? False
+> Door to Skreek Street; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Skreek Street/Horizontal Dock to Tower East Exterior Access
+  * Open Transition to Skreek Street/Door to Tower East Exterior Access
   * Extra - instance_id: 106333
   * Extra - facing: left
   * Extra - x: 640
   * Extra - y: 160
-  > Horizontal Dock to The Tower
+  > Door to The Tower
       After Surface - Rock Entrance To The Tower
   > Event - Rocks
       Missiles or Speed Booster or Super Missiles or Can Use Any Bombs
@@ -1059,54 +1103,56 @@ Extra - minimap_data: [{'x': 38, 'y': 41}, {'x': 39, 'y': 41}]
 > Event - Rocks; Heals? False
   * Layers: default
   * Event Surface - Rock Entrance To The Tower
-  > Horizontal Dock to The Tower
+  > Door to The Tower
       Trivial
-  > Horizontal Dock to Skreek Street
+  > Door to Skreek Street
       Trivial
 
 ----------------
 The Descent
 Extra - map_name: rm_a0h31
 Extra - minimap_data: [{'x': 43, 'y': 44}, {'x': 43, 'y': 45}, {'x': 43, 'y': 46}, {'x': 43, 'y': 47}]
-> Horizontal Dock to Skreek Street; Heals? False
+Extra - light_level: 0
+> Door to Skreek Street; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Skreek Street/Horizontal Dock to The Descent
+  * Open Transition to Skreek Street/Door to The Descent
   * Extra - instance_id: 106358
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 128
-  > Horizontal Dock to Distribution Center
+  > Door to Distribution Center
       Power Grip Wall
-  > Horizontal Dock to Rite of the Serpent
+  > Door to Rite of the Serpent
       Trivial
 
-> Horizontal Dock to Distribution Center; Heals? False
+> Door to Distribution Center; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Distribution Entranceway/Horizontal Dock to Main Caves
+  * Open Transition to Distribution Entranceway/Door to Main Caves
   * Extra - instance_id: 106386
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 128
-  > Horizontal Dock to Skreek Street
+  > Door to Skreek Street
       Movement (Intermediate) or Power Grip Wall
 
-> Horizontal Dock to Rite of the Serpent; Heals? False
+> Door to Rite of the Serpent; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Rite of the Serpent/Horizontal Dock to The Descent
+  * Open Transition to Rite of the Serpent/Door to The Descent
   * Extra - instance_id: 106387
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 928
-  > Horizontal Dock to Skreek Street
+  > Door to Skreek Street
       Space Jump Wall
 
 ----------------
 Rite of the Serpent
 Extra - map_name: rm_a0h32
 Extra - minimap_data: [{'x': 44, 'y': 47}, {'x': 44, 'y': 48}, {'x': 44, 'y': 49}, {'x': 44, 'y': 50}, {'x': 44, 'y': 51}]
-> Horizontal Dock to The Descent; Heals? False
+Extra - light_level: 0
+> Door to The Descent; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to The Descent/Horizontal Dock to Rite of the Serpent
+  * Open Transition to The Descent/Door to Rite of the Serpent
   * Extra - instance_id: 106901
   * Extra - facing: right
   * Extra - x: 0
@@ -1116,9 +1162,9 @@ Extra - minimap_data: [{'x': 44, 'y': 47}, {'x': 44, 'y': 48}, {'x': 44, 'y': 49
           Destroy Ice Barrier
           Screw Attack or Can Use Any Bombs
 
-> Horizontal Dock to Southern Cave Save Station; Heals? False
+> Door to Southern Cave Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Southern Cave Save Station/Horizontal Dock to Rite of the Serpent
+  * Open Transition to Southern Cave Save Station/Door to Rite of the Serpent
   * Extra - instance_id: 106902
   * Extra - facing: right
   * Extra - x: 0
@@ -1134,7 +1180,7 @@ Extra - minimap_data: [{'x': 44, 'y': 47}, {'x': 44, 'y': 48}, {'x': 44, 'y': 49
 
 > After First Screw; Heals? False
   * Layers: default
-  > Horizontal Dock to The Descent
+  > Door to The Descent
       All of the following:
           Destroy Ice Barrier
           Any of the following:
@@ -1145,35 +1191,40 @@ Extra - minimap_data: [{'x': 44, 'y': 47}, {'x': 44, 'y': 48}, {'x': 44, 'y': 49
 
 > Middle; Heals? False
   * Layers: default
-  > Horizontal Dock to Southern Cave Save Station
+  > Door to Southern Cave Save Station
       Any of the following:
           Screw Attack and Can Use Bombs
           Can Use Power Bombs and Low Mid-Air Morph Tunnel Climb
   > After First Screw
       Any of the following:
-          Space Jump or Walljump (Expert) or Can Use Spider Ball
+          Space Jump or Can Use Spider Ball
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
           All of the following:
-              Walljump (Beginner)
-              Hi-Jump Boots or Movement (Beginner)
+              Can Walljump
+              Any of the following:
+                  Walljump (Expert)
+                  All of the following:
+                      Walljump (Beginner)
+                      Hi-Jump Boots or Movement (Beginner)
 
 ----------------
 Southern Cave Save Station
 Extra - map_name: rm_a0h33
 Extra - minimap_data: [{'x': 43, 'y': 51}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 20
-  > Horizontal Dock to Rite of the Serpent
+  > Door to Rite of the Serpent
       Trivial
   > Horizontal Dock to Halzyn Hallway
       Trivial
 
-> Horizontal Dock to Rite of the Serpent; Heals? False
+> Door to Rite of the Serpent; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Rite of the Serpent/Horizontal Dock to Southern Cave Save Station
+  * Open Transition to Rite of the Serpent/Door to Southern Cave Save Station
   * Extra - instance_id: 107068
   * Extra - facing: left
   * Extra - x: 320
@@ -1191,15 +1242,16 @@ Extra - unlocked_save_station: True
 Halzyn Hallway
 Extra - map_name: rm_a0h34
 Extra - minimap_data: [{'x': 41, 'y': 52}, {'x': 41, 'y': 53}, {'x': 42, 'y': 51}, {'x': 42, 'y': 52}]
+Extra - light_level: 0
 > Horizontal Dock to Southern Cave Save Station; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Southern Cave Save Station/Horizontal Dock to Halzyn Hallway
-  > Horizontal Dock to Drivel Drive
+  > Door to Drivel Drive
       Trivial
 
-> Horizontal Dock to Drivel Drive; Heals? False
+> Door to Drivel Drive; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Drivel Drive/Horizontal Dock to Halzyn Hallway
+  * Open Transition to Drivel Drive/Door to Halzyn Hallway
   * Extra - instance_id: 107261
   * Extra - facing: right
   * Extra - x: 0
@@ -1211,6 +1263,7 @@ Extra - minimap_data: [{'x': 41, 'y': 52}, {'x': 41, 'y': 53}, {'x': 42, 'y': 51
 Drivel Drive
 Extra - map_name: rm_a0h35
 Extra - minimap_data: [{'x': 35, 'y': 53}, {'x': 36, 'y': 53}, {'x': 37, 'y': 53}, {'x': 38, 'y': 53}, {'x': 39, 'y': 53}, {'x': 40, 'y': 53}]
+Extra - light_level: 0
 > Horizontal Dock to The Depths; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hideout Entrance/Horizontal Dock to Main Caves
@@ -1233,9 +1286,9 @@ Extra - minimap_data: [{'x': 35, 'y': 53}, {'x': 36, 'y': 53}, {'x': 37, 'y': 53
                       Gravity Suit
                       Damage Boost (Beginner) and Lava Damage ≥ 10
 
-> Horizontal Dock to Halzyn Hallway; Heals? False
+> Door to Halzyn Hallway; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Halzyn Hallway/Horizontal Dock to Drivel Drive
+  * Open Transition to Halzyn Hallway/Door to Drivel Drive
   * Extra - instance_id: 107611
   * Extra - facing: left
   * Extra - x: 1920
@@ -1247,7 +1300,7 @@ Extra - minimap_data: [{'x': 35, 'y': 53}, {'x': 36, 'y': 53}, {'x': 37, 'y': 53
   * Layers: default
   > Horizontal Dock to The Depths
       Morph Ball
-  > Horizontal Dock to Halzyn Hallway
+  > Door to Halzyn Hallway
       Power Grip Wall
 
 > Pickup (Missile Tank); Heals? False
@@ -1261,6 +1314,7 @@ Extra - minimap_data: [{'x': 35, 'y': 53}, {'x': 36, 'y': 53}, {'x': 37, 'y': 53
 Octroll Lava Pool
 Extra - map_name: rm_a0h12
 Extra - minimap_data: [{'x': 42, 'y': 26}, {'x': 43, 'y': 26}, {'x': 44, 'y': 26}, {'x': 45, 'y': 26}]
+Extra - light_level: 0
 > Horizontal Dock to Bend Chasm; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Bend Chasm/Horizontal Dock to Octroll Lava Pool
@@ -1300,6 +1354,7 @@ Extra - minimap_data: [{'x': 42, 'y': 26}, {'x': 43, 'y': 26}, {'x': 44, 'y': 26
 Research Site Elevator
 Extra - map_name: rm_a0h13
 Extra - minimap_data: [{'x': 41, 'y': 24}, {'x': 41, 'y': 25}, {'x': 41, 'y': 26}]
+Extra - light_level: 0
 > Horizontal Dock to Octroll Lava Pool; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Octroll Lava Pool/Horizontal Dock to Research Site Elevator
@@ -1336,6 +1391,7 @@ Extra - minimap_data: [{'x': 41, 'y': 24}, {'x': 41, 'y': 25}, {'x': 41, 'y': 26
 Research Site
 Extra - map_name: rm_a0h14
 Extra - minimap_data: [{'x': 42, 'y': 24}, {'x': 43, 'y': 24}, {'x': 44, 'y': 24}]
+Extra - light_level: 2
 > Door to Research Site Storage; Heals? False
   * Layers: default
   * Research Site Open Hatch to Research Site Storage/Door to Research Site
@@ -1388,6 +1444,7 @@ Extra - minimap_data: [{'x': 42, 'y': 24}, {'x': 43, 'y': 24}, {'x': 44, 'y': 24
 Research Site Storage
 Extra - map_name: rm_a0h15
 Extra - minimap_data: [{'x': 45, 'y': 24}]
+Extra - light_level: 3
 > Door to Research Site; Heals? False
   * Layers: default
   * Research Site Open Hatch to Research Site/Door to Research Site Storage
@@ -1414,6 +1471,7 @@ Extra - minimap_data: [{'x': 45, 'y': 24}]
 Mining Facility 3-Shape Shaft
 Extra - map_name: rm_a0h16
 Extra - minimap_data: [{'x': 52, 'y': 26}, {'x': 52, 'y': 27}, {'x': 52, 'y': 28}, {'x': 52, 'y': 29}]
+Extra - light_level: 0
 > Horizontal Dock to Eastern Cave Intersection; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Eastern Cave Intersection/Horizontal Dock to Mining Facility 3-Shape Shaft
@@ -1433,6 +1491,7 @@ Extra - minimap_data: [{'x': 52, 'y': 26}, {'x': 52, 'y': 27}, {'x': 52, 'y': 28
 Mining Facility O-Shape Shaft
 Extra - map_name: rm_a0h17
 Extra - minimap_data: [{'x': 51, 'y': 29}, {'x': 51, 'y': 30}, {'x': 51, 'y': 31}, {'x': 51, 'y': 32}]
+Extra - light_level: 0
 > Horizontal Dock to Mining Facility 3-Shape Shaft; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility 3-Shape Shaft/Horizontal Dock to Mining Facility O-Shape Shaft
@@ -1455,12 +1514,13 @@ Extra - minimap_data: [{'x': 51, 'y': 29}, {'x': 51, 'y': 30}, {'x': 51, 'y': 31
                       Hijump Wall
                       Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
               # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
 
 ----------------
 Moto Miners
 Extra - map_name: rm_a0h17a
 Extra - minimap_data: [{'x': 52, 'y': 32}, {'x': 53, 'y': 32}, {'x': 54, 'y': 32}]
+Extra - light_level: 0
 > Horizontal Dock to Mining Facility O-Shape Shaft; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Mining Facility O-Shape Shaft/Horizontal Dock to Moto Miners
@@ -1477,6 +1537,7 @@ Extra - minimap_data: [{'x': 52, 'y': 32}, {'x': 53, 'y': 32}, {'x': 54, 'y': 32
 Destroyed Drill Cavern
 Extra - map_name: rm_a0h17b
 Extra - minimap_data: [{'x': 55, 'y': 32}, {'x': 55, 'y': 33}]
+Extra - light_level: 0
 > Horizontal Dock to Moto Miners; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Moto Miners/Horizontal Dock to Destroyed Drill Cavern
@@ -1493,6 +1554,7 @@ Extra - minimap_data: [{'x': 55, 'y': 32}, {'x': 55, 'y': 33}]
 Moto Mania
 Extra - map_name: rm_a0h17c
 Extra - minimap_data: [{'x': 48, 'y': 34}, {'x': 49, 'y': 33}, {'x': 49, 'y': 34}, {'x': 50, 'y': 33}, {'x': 51, 'y': 33}, {'x': 52, 'y': 33}, {'x': 53, 'y': 33}, {'x': 54, 'y': 33}]
+Extra - light_level: 0
 > Horizontal Dock to Drill Excavation Access; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Drill Excavation Access/Horizontal Dock to Moto Mania
@@ -1509,15 +1571,16 @@ Extra - minimap_data: [{'x': 48, 'y': 34}, {'x': 49, 'y': 33}, {'x': 49, 'y': 34
 Drill Excavation Access
 Extra - map_name: rm_a0h17d
 Extra - minimap_data: [{'x': 47, 'y': 34}, {'x': 47, 'y': 35}, {'x': 48, 'y': 35}]
+Extra - light_level: 0
 > Horizontal Dock to Moto Mania; Heals? False
   * Layers: default
   * 5-Tiles High Dock to Moto Mania/Horizontal Dock to Drill Excavation Access
-  > Horizontal Dock to Drill Excavation
+  > Door to Drill Excavation
       Trivial
 
-> Horizontal Dock to Drill Excavation; Heals? False
+> Door to Drill Excavation; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Drill Excavation/Horizontal Dock to Drill Excavation Access
+  * Open Transition to Drill Excavation/Door to Drill Excavation Access
   * Extra - instance_id: 123858
   * Extra - facing: left
   * Extra - x: 640
@@ -1532,9 +1595,10 @@ Extra - minimap_data: [{'x': 47, 'y': 34}, {'x': 47, 'y': 35}, {'x': 48, 'y': 35
 Drill Excavation
 Extra - map_name: rm_a0h17e
 Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35}, {'x': 52, 'y': 34}, {'x': 52, 'y': 35}]
-> Horizontal Dock to Mining Facility Intersection; Heals? False
+Extra - light_level: 0
+> Door to Mining Facility Intersection; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Mining Facility Intersection/Horizontal Dock to Drill Excavation
+  * Open Transition to Mining Facility Intersection/Door to Drill Excavation
   * Extra - instance_id: 123894
   * Extra - facing: left
   * Extra - x: 1280
@@ -1542,9 +1606,9 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
   > After Drill Sequence
       Trivial
 
-> Horizontal Dock to Drill Excavation Access; Heals? False
+> Door to Drill Excavation Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Drill Excavation Access/Horizontal Dock to Drill Excavation
+  * Open Transition to Drill Excavation Access/Door to Drill Excavation
   * Extra - instance_id: 123933
   * Extra - facing: right
   * Extra - x: 0
@@ -1560,12 +1624,12 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
 
 > After Drill Sequence; Heals? False
   * Layers: default
-  > Horizontal Dock to Mining Facility Intersection
+  > Door to Mining Facility Intersection
       Any of the following:
           Space Jump Wall
           # Shinespark
           Speed Booster and After Surface - Mines Drill Crystal Destroyed and Shinesparking Tricks (Beginner)
-  > Horizontal Dock to Drill Excavation Access
+  > Door to Drill Excavation Access
       After Surface - Mines Drill Crystal Destroyed
   > Event - Drill Crystal from Right
       Super Missiles
@@ -1573,7 +1637,7 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
 > Event - Drill Crystal from Left; Heals? False
   * Layers: default
   * Event Surface - Mines Drill Crystal Destroyed
-  > Horizontal Dock to Drill Excavation Access
+  > Door to Drill Excavation Access
       Any of the following:
           Enabled Skip cutscenes
           Can Use Any Bombs and Tunnel Climb
@@ -1588,9 +1652,10 @@ Extra - minimap_data: [{'x': 49, 'y': 35}, {'x': 50, 'y': 35}, {'x': 51, 'y': 35
 Mining Facility Intersection
 Extra - map_name: rm_a0h18
 Extra - minimap_data: [{'x': 53, 'y': 34}, {'x': 53, 'y': 35}, {'x': 53, 'y': 36}, {'x': 54, 'y': 36}, {'x': 54, 'y': 37}]
-> Horizontal Dock to Drill Excavation; Heals? False
+Extra - light_level: 0
+> Door to Drill Excavation; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Drill Excavation/Horizontal Dock to Mining Facility Intersection
+  * Open Transition to Drill Excavation/Door to Mining Facility Intersection
   * Extra - instance_id: 124160
   * Extra - facing: right
   * Extra - x: 0
@@ -1601,7 +1666,7 @@ Extra - minimap_data: [{'x': 53, 'y': 34}, {'x': 53, 'y': 35}, {'x': 53, 'y': 36
 > Horizontal Dock to Mining Facility Save Station; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Save Station/Horizontal Dock to Mining Facility Intersection
-  > Horizontal Dock to Drill Excavation
+  > Door to Drill Excavation
       Movement (Beginner) or Hijump Wall
   > Horizontal Dock to Mining Facility Alpha Nest Access
       Trivial
@@ -1628,6 +1693,7 @@ Mining Facility Save Station
 Extra - map_name: rm_a0h19
 Extra - minimap_data: [{'x': 54, 'y': 34}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 12
@@ -1644,6 +1710,7 @@ Extra - unlocked_save_station: True
 Mining Facility Alpha Nest Access
 Extra - map_name: rm_a0h20
 Extra - minimap_data: [{'x': 50, 'y': 36}, {'x': 51, 'y': 36}, {'x': 52, 'y': 36}]
+Extra - light_level: 0
 > Horizontal Dock to Mining Facility Intersection; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Intersection/Horizontal Dock to Mining Facility Alpha Nest Access
@@ -1676,6 +1743,7 @@ Extra - minimap_data: [{'x': 50, 'y': 36}, {'x': 51, 'y': 36}, {'x': 52, 'y': 36
 Mining Facility Alpha Nest
 Extra - map_name: rm_a0h21
 Extra - minimap_data: [{'x': 48, 'y': 36}, {'x': 48, 'y': 37}, {'x': 48, 'y': 38}, {'x': 49, 'y': 36}, {'x': 49, 'y': 37}, {'x': 49, 'y': 38}]
+Extra - light_level: 0
 > Horizontal Dock to Mining Facility Alpha Nest Access; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Alpha Nest Access/Horizontal Dock to Mining Facility Alpha Nest
@@ -1695,7 +1763,7 @@ Extra - minimap_data: [{'x': 48, 'y': 36}, {'x': 48, 'y': 37}, {'x': 48, 'y': 38
           # Spider Ball
           Can Use Spider Ball
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
   > Pickup (Alpha)
       Trivial
 
@@ -1710,6 +1778,7 @@ Extra - minimap_data: [{'x': 48, 'y': 36}, {'x': 48, 'y': 37}, {'x': 48, 'y': 38
 Mining Facility Gamma Nest Access
 Extra - map_name: rm_a0h22
 Extra - minimap_data: [{'x': 55, 'y': 37}, {'x': 55, 'y': 38}, {'x': 56, 'y': 37}, {'x': 56, 'y': 38}, {'x': 57, 'y': 37}, {'x': 57, 'y': 38}]
+Extra - light_level: 0
 > Horizontal Dock to Mining Facility Intersection; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Intersection/Horizontal Dock to Mining Facility Gamma Nest Access
@@ -1740,6 +1809,7 @@ Extra - minimap_data: [{'x': 55, 'y': 37}, {'x': 55, 'y': 38}, {'x': 56, 'y': 37
 Mining Facility Gamma Nest
 Extra - map_name: rm_a0h23
 Extra - minimap_data: [{'x': 58, 'y': 37}, {'x': 58, 'y': 38}, {'x': 58, 'y': 39}, {'x': 59, 'y': 38}, {'x': 59, 'y': 39}]
+Extra - light_level: 0
 > Horizontal Dock to Mining Facility Gamma Nest Access; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Mining Facility Gamma Nest Access/Horizontal Dock to Mining Facility Gamma Nest
@@ -1758,7 +1828,7 @@ Extra - minimap_data: [{'x': 58, 'y': 37}, {'x': 58, 'y': 38}, {'x': 58, 'y': 39
           # Spider Method
           Can Use Spider Ball
           # IBJ
-          Infinite Bomb Jumping (Expert) and Can Use Bombs
+          Infinite Bomb Jumping (Expert) and Can IBJ and Can Use Bombs
   > Pickup (Gamma)
       Trivial
 

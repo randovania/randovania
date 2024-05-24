@@ -37,12 +37,6 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
-_EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
-    "For a total of {total} from this source."
-    "\n{from_items} will be provided from other sources."
-    "\n{maximum} is the maximum you can have at once."
-)
-
 
 def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
     separator_line = QtWidgets.QFrame(parent)
@@ -52,6 +46,38 @@ def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
     transparent.setOpacity(0.33)
     separator_line.setGraphicsEffect(transparent)
     return separator_line
+
+
+def _format_expected_counts(
+    ammo: AmmoPickupDefinition,
+    template: str,
+    ammo_provided: dict[str, int],
+    item_for_index: dict[str, ItemResourceInfo],
+    self_counts: list[int],
+) -> str:
+    try:
+        return template.format(
+            total=" and ".join(
+                item_names.add_quantity_to_resource(item_for_index[ammo_index].long_name, self_count, True)
+                for ammo_index, self_count in zip(ammo.items, self_counts)
+            ),
+            from_items=" and ".join(
+                item_names.add_quantity_to_resource(
+                    item_for_index[ammo_index].long_name, ammo_provided[ammo_index] - self_count, True
+                )
+                for ammo_index, self_count in zip(ammo.items, self_counts)
+            ),
+            maximum=" and ".join(
+                item_names.add_quantity_to_resource(
+                    item_for_index[ammo_index].long_name,
+                    min(ammo_provided[ammo_index], item_for_index[ammo_index].max_capacity),
+                    True,
+                )
+                for ammo_index in ammo.items
+            ),
+        )
+    except InvalidConfiguration as invalid_config:
+        return str(invalid_config)
 
 
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
@@ -151,36 +177,15 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 self_counts.append(count * state.pickup_count)
                 self._ammo_item_count_spinboxes[ammo.name][ammo_index].setValue(count)
 
-            try:
+            if widgets.expected_count is not None:
                 if state.pickup_count == 0:
                     widgets.expected_count.setText("No expansions will be created.")
-                    continue
-
-                widgets.expected_count.setText(
-                    _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT.format(
-                        total=" and ".join(
-                            item_names.add_quantity_to_resource(item_for_index[ammo_index].long_name, self_count, True)
-                            for ammo_index, self_count in zip(ammo.items, self_counts)
-                        ),
-                        from_items=" and ".join(
-                            item_names.add_quantity_to_resource(
-                                item_for_index[ammo_index].long_name, ammo_provided[ammo_index] - self_count, True
-                            )
-                            for ammo_index, self_count in zip(ammo.items, self_counts)
-                        ),
-                        maximum=" and ".join(
-                            item_names.add_quantity_to_resource(
-                                item_for_index[ammo_index].long_name,
-                                min(ammo_provided[ammo_index], item_for_index[ammo_index].max_capacity),
-                                True,
-                            )
-                            for ammo_index in ammo.items
-                        ),
+                else:
+                    widgets.expected_count.setText(
+                        _format_expected_counts(
+                            ammo, widgets.expected_template, ammo_provided, item_for_index, self_counts
+                        )
                     )
-                )
-
-            except InvalidConfiguration as invalid_config:
-                widgets.expected_count.setText(str(invalid_config))
 
         # Item pool count
         try:
@@ -358,38 +363,36 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 layout.addWidget(description_label, current_row, 0, 1, -1)
                 current_row += 1
 
-            def add_row(widget_a: QtWidgets.QWidget, widget_b: QtWidgets.QWidget):
-                nonlocal current_row
-                layout.addWidget(widget_a, current_row, 0)
-                layout.addWidget(widget_b, current_row, 1)
-                current_row += 1
+            current_column = 0
+
+            def add_column(widget: QtWidgets.QWidget) -> None:
+                nonlocal current_column
+                layout.addWidget(widget, current_row, current_column)
+                current_column += 1
 
             for ammo_index, ammo_item in enumerate(ammo.items):
                 item = resource_database.get_by_type_and_index(ResourceType.ITEM, ammo_item)
                 minimum_count = -item.max_capacity if ammo.allows_negative else 0
 
-                item_count_label = QtWidgets.QLabel(pickup_box)
-                item_count_label.setText(item.long_name if len(ammo.items) > 1 else "Contains")
-
                 item_count_spinbox = ScrollProtectedSpinBox(pickup_box)
                 item_count_spinbox.setMinimum(minimum_count)
                 item_count_spinbox.setMaximum(item.max_capacity)
+                item_count_spinbox.setSuffix(f" {item.long_name}")
                 item_count_spinbox.valueChanged.connect(
                     partial(self._on_update_ammo_pickup_item_count_spinbox, ammo, ammo_index)
                 )
                 self._ammo_item_count_spinboxes[ammo.name].append(item_count_spinbox)
-                add_row(item_count_label, item_count_spinbox)
+                add_column(item_count_spinbox)
 
             # Pickup Count
-            count_label = QtWidgets.QLabel(pickup_box)
-            count_label.setText("Pickup Count")
-            count_label.setToolTip("How many instances of this expansion should be placed.")
-
             pickup_spinbox = ScrollProtectedSpinBox(pickup_box)
             pickup_spinbox.setMaximum(999)
             pickup_spinbox.valueChanged.connect(partial(self._on_update_ammo_pickup_num_count_spinbox, ammo))
+            pickup_spinbox.setSuffix(" pickups")
+            pickup_spinbox.setToolTip("How many instances of this expansion should be placed.")
 
-            add_row(count_label, pickup_spinbox)
+            add_column(pickup_spinbox)
+            current_row += 1
 
             # FIXME: hardcoded check to hide required mains for Prime 1
             if ammo.temporary:
@@ -398,19 +401,35 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                 require_main_item_check.stateChanged.connect(partial(self._on_update_ammo_require_main_item, ammo))
                 if self.game == RandovaniaGame.METROID_PRIME:
                     require_main_item_check.setVisible(False)
-                layout.addWidget(require_main_item_check, current_row, 0, 1, 2)
+                layout.addWidget(require_main_item_check, current_row, 0, 1, -1)
                 current_row += 1
             else:
                 require_main_item_check = None
 
-            expected_count = QtWidgets.QLabel(pickup_box)
-            expected_count.setWordWrap(True)
-            expected_count.setText("<TODO>")
-            layout.addWidget(expected_count, current_row, 0, 1, 2)
-            current_row += 1
+            template_entries = []
+
+            if ammo.include_expected_counts:
+                template_entries.append("For a total of {total} from this source.")
+
+            if ammo.explain_other_sources:
+                template_entries.append("{from_items} will be provided from other sources.")
+
+            if ammo.mention_limit:
+                template_entries.append("{maximum} is the maximum you can have at once.")
+
+            expected_template = "\n".join(template_entries)
+
+            if expected_template:
+                expected_count = QtWidgets.QLabel(pickup_box)
+                expected_count.setWordWrap(True)
+                expected_count.setText("<TODO>")
+                layout.addWidget(expected_count, current_row, 0, 1, -1)
+                current_row += 1
+            else:
+                expected_count = None
 
             self._ammo_pickup_widgets[ammo] = AmmoPickupWidgets(
-                pickup_spinbox, expected_count, pickup_box, require_main_item_check
+                pickup_spinbox, expected_count, expected_template, pickup_box, require_main_item_check
             )
             category_layout.addWidget(pickup_box)
 

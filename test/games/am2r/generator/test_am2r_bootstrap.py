@@ -19,10 +19,10 @@ _boss_indices = [111, 3, 6, 14, 11, 50]
 @pytest.mark.parametrize(
     ("artifacts", "expected"),
     [
-        (AM2RArtifactConfig(True, True, False, 5), [3, 50, 374, 389, 391]),
-        (AM2RArtifactConfig(True, False, False, 46), range(350, 396)),
-        (AM2RArtifactConfig(False, True, False, 6), _boss_indices),
-        (AM2RArtifactConfig(False, False, False, 0), []),
+        (AM2RArtifactConfig(True, True, False, 5, 5), [3, 50, 374, 389, 391]),
+        (AM2RArtifactConfig(True, False, False, 46, 46), range(350, 396)),
+        (AM2RArtifactConfig(False, True, False, 6, 6), _boss_indices),
+        (AM2RArtifactConfig(False, False, False, 0, 0), []),
     ],
 )
 def test_assign_pool_results_predetermined(am2r_game_description, am2r_configuration, artifacts, expected):
@@ -49,10 +49,10 @@ def test_assign_pool_results_predetermined(am2r_game_description, am2r_configura
 @pytest.mark.parametrize(
     ("artifacts"),
     [
-        (AM2RArtifactConfig(False, False, True, 5)),
-        (AM2RArtifactConfig(True, False, True, 10)),
-        (AM2RArtifactConfig(False, True, True, 15)),
-        (AM2RArtifactConfig(True, True, True, 6)),
+        (AM2RArtifactConfig(False, False, True, 5, 5)),
+        (AM2RArtifactConfig(True, False, True, 10, 10)),
+        (AM2RArtifactConfig(False, True, True, 15, 15)),
+        (AM2RArtifactConfig(True, True, True, 6, 6)),
     ],
 )
 def test_assign_pool_results_prefer_anywhere(am2r_game_description, am2r_configuration, artifacts):
@@ -73,6 +73,6 @@ def test_assign_pool_results_prefer_anywhere(am2r_game_description, am2r_configu
     shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category == METROID_DNA_CATEGORY]
 
     assert pool_results.to_place == initial_starting_place
-    assert len(shuffled_dna) == artifacts.required_artifacts
+    assert len(shuffled_dna) == artifacts.placed_artifacts
     assert result.starting_equipment == pool_results.starting
     assert result.pickup_assignment == {}

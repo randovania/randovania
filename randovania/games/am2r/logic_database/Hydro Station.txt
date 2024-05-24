@@ -2,15 +2,16 @@
 Hydro Station Entrance
 Extra - map_name: rm_a2h01
 Extra - minimap_data: [{'x': 41, 'y': 21}, {'x': 42, 'y': 21}, {'x': 43, 'y': 21}, {'x': 44, 'y': 21}]
+Extra - light_level: 0
 > Horizontal Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 2-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Hydro Station Entrance
-  > Horizontal Dock to Main Caves
+  > Door to Main Caves
       Tunnel Climb
 
-> Horizontal Dock to Main Caves; Heals? False
+> Door to Main Caves; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Grave Grotto/Horizontal Dock to Hydro Station
+  * Open Transition to Grave Grotto/Door to Hydro Station
   * Extra - instance_id: 109738
   * Extra - facing: left
   * Extra - x: 1280
@@ -23,7 +24,7 @@ Extra - minimap_data: [{'x': 41, 'y': 21}, {'x': 42, 'y': 21}, {'x': 43, 'y': 21
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Entrance Alpha
-  > Horizontal Dock to Main Caves
+  > Door to Main Caves
       Trivial
   > Pickup (Alpha)
       Trivial
@@ -39,10 +40,11 @@ Extra - minimap_data: [{'x': 41, 'y': 21}, {'x': 42, 'y': 21}, {'x': 43, 'y': 21
 Hydro Station Exterior
 Extra - map_name: rm_a2h02
 Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20}, {'x': 29, 'y': 21}, {'x': 29, 'y': 22}, {'x': 30, 'y': 18}, {'x': 30, 'y': 19}, {'x': 30, 'y': 20}, {'x': 30, 'y': 21}, {'x': 30, 'y': 22}, {'x': 31, 'y': 18}, {'x': 31, 'y': 19}, {'x': 31, 'y': 20}, {'x': 31, 'y': 21}, {'x': 31, 'y': 22}, {'x': 32, 'y': 16}, {'x': 32, 'y': 17}, {'x': 32, 'y': 18}, {'x': 32, 'y': 19}, {'x': 33, 'y': 16}, {'x': 33, 'y': 17}, {'x': 33, 'y': 18}, {'x': 33, 'y': 19}, {'x': 34, 'y': 16}, {'x': 34, 'y': 17}, {'x': 35, 'y': 16}, {'x': 35, 'y': 17}, {'x': 36, 'y': 16}, {'x': 36, 'y': 17}, {'x': 37, 'y': 16}, {'x': 37, 'y': 17}, {'x': 37, 'y': 18}, {'x': 37, 'y': 19}, {'x': 37, 'y': 20}, {'x': 38, 'y': 16}, {'x': 38, 'y': 17}, {'x': 38, 'y': 18}, {'x': 38, 'y': 19}, {'x': 38, 'y': 20}, {'x': 39, 'y': 19}, {'x': 39, 'y': 20}, {'x': 39, 'y': 21}, {'x': 40, 'y': 19}, {'x': 40, 'y': 20}, {'x': 40, 'y': 21}]
+Extra - light_level: 0
 > Horizontal Dock to Hydro Station Entrance; Heals? False
   * Layers: default
   * 2-Tiles High Dock to Hydro Station Entrance/Horizontal Dock to Hydro Station Exterior
-  > Horizontal Dock to Broken Save Station
+  > Door to Broken Save Station
       Trivial
   > Vertical Dock to Arachnus Save Station
       Any of the following:
@@ -51,9 +53,9 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
   > Pickup (Missile Tank)
       Can Use Spider Ball
 
-> Horizontal Dock to Broken Save Station; Heals? False
+> Door to Broken Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Broken Save Station/Horizontal Dock to Hydro Station Exterior
+  * Open Transition to Broken Save Station/Door to Hydro Station Exterior
   * Extra - instance_id: 110049
   * Extra - facing: right
   * Extra - x: 3200
@@ -61,9 +63,9 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
   > Horizontal Dock to Hydro Station Entrance
       Trivial
 
-> Horizontal Dock to Inner Save Station; Heals? False
+> Door to Inner Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Inner Save Station/Horizontal Dock to Hydro Station Exterior
+  * Open Transition to Inner Save Station/Door to Hydro Station Exterior
   * Extra - instance_id: 110050
   * Extra - facing: left
   * Extra - x: 960
@@ -75,9 +77,9 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
   > Middle Left
       Power Grip or Hijump Wall
 
-> Horizontal Dock to Inner Alpha Nest North; Heals? False
+> Door to Inner Alpha Nest North; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Inner Alpha Nest North/Horizontal Dock to Hydro Station Exterior
+  * Open Transition to Inner Alpha Nest North/Door to Hydro Station Exterior
   * Extra - instance_id: 110051
   * Extra - facing: left
   * Extra - x: 1600
@@ -88,7 +90,7 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
 > Tunnel to Inner Alpha Nest North; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Inner Alpha Nest North/Tunnel to Hydro Station Exterior
-  > Horizontal Dock to Broken Save Station
+  > Door to Broken Save Station
       Trivial
 
 > Vertical Dock to Arachnus Save Station; Heals? False
@@ -100,22 +102,23 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
       Any of the following:
           Space Jump
           # IBJ
-          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
           # Shinespark to the left
           Speed Booster and Shinesparking Tricks (Beginner)
           All of the following:
               # Highjump
               Hi-Jump Boots
               Any of the following:
-                  Power Grip or Walljump (Advanced)
+                  Power Grip
                   Morph Ball and Morph Glide (Beginner)
+                  Walljump (Advanced) and Can Walljump
   > Pickup (Missile Tank)
       Any of the following:
           Space Jump
           # Shinespark
           Speed Booster and Shinesparking Tricks (Beginner)
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
           All of the following:
               # Morph Glide
               Morph Ball
@@ -125,7 +128,9 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
                       Morph Glide (Expert)
                       All of the following:
                           Morph Glide (Intermediate)
-                          Power Grip or Walljump (Intermediate)
+                          Any of the following:
+                              Power Grip
+                              Walljump (Intermediate) and Can Walljump
                   # With HJ
                   Hi-Jump Boots and Morph Glide (Beginner)
 
@@ -133,7 +138,7 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
   * Layers: default
   * Hydro Station Water Turbine to Water Turbine Station/Door to Hydro Station Exterior; Dock Lock Rando incompatible with: Screw Attack Door, Spider Ball Door
   * Extra - instance_id: 110043
-  > Horizontal Dock to Inner Save Station
+  > Door to Inner Save Station
       Trivial
 
 > Horizontal Dock to Exterior Alpha Nest; Heals? False
@@ -153,47 +158,51 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
 > Horizontal Dock to Breeding Grounds Entrance (Bottom); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Entrance/Horizontal Dock to Hydro Station Exterior (Bottom)
-  > Horizontal Dock to Inner Save Station
+  > Door to Inner Save Station
       Trivial
   > Horizontal Dock to Breeding Grounds Entrance (Top)
       Any of the following:
           Space Jump
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
           # Damage boost WJ
-          Hi-Jump Boots and Walljump (Advanced)
+          Hi-Jump Boots and Walljump (Advanced) and Can Walljump
 
 > Middle Left; Heals? False
   * Layers: default
-  > Horizontal Dock to Inner Save Station
+  > Door to Inner Save Station
       Trivial
-  > Horizontal Dock to Inner Alpha Nest North
+  > Door to Inner Alpha Nest North
       Morph Ball
   > Vertical Dock to Arachnus Save Station
       Any of the following:
-          Space Jump or Walljump (Advanced)
+          Space Jump
           All of the following:
               Hi-Jump Boots
-              Power Grip or Walljump (Beginner)
+              Any of the following:
+                  Power Grip
+                  Walljump (Beginner) and Can Walljump
           # Shinespark from room on the right
-          Morph Ball and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+          Morph Ball and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando and Disabled Shuffled Open Transitions
           All of the following:
               # Get up via Spider Ball
               Can Use Spider Ball
               Any of the following:
                   Mid-Air Morph (Beginner) or Can Use Bombs or Can Use Spring Ball
-                  After Metroids Area 2 - Interior Upper Alpha and Disabled Entrance Rando
+                  # From right room
+                  After Metroids Area 2 - Interior Upper Alpha and Disabled Entrance Rando and Disabled Shuffled Open Transitions
           # IBJ
-          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
+          Walljump (Advanced) and Can Walljump
   > Horizontal Dock to Breeding Grounds Entrance (Top)
       # Shinespark from the room on the right
-      Morph Ball and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando
+      Morph Ball and Speed Booster and Shinesparking Tricks (Beginner) and Disabled Entrance Rando and Disabled Shuffled Open Transitions
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
   * Pickup 163; Category? Minor
   * Extra - object_name: oItemM_163
-  > Horizontal Dock to Broken Save Station
+  > Door to Broken Save Station
       Trivial
   > Vertical Dock to Arachnus Save Station
       Can Use Spider Ball
@@ -204,6 +213,7 @@ Extra - minimap_data: [{'x': 29, 'y': 18}, {'x': 29, 'y': 19}, {'x': 29, 'y': 20
 Exterior Alpha Nest
 Extra - map_name: rm_a2h03
 Extra - minimap_data: [{'x': 30, 'y': 17}, {'x': 31, 'y': 17}]
+Extra - light_level: 0
 > Horizontal Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Exterior Alpha Nest
@@ -229,24 +239,25 @@ Extra - minimap_data: [{'x': 30, 'y': 17}, {'x': 31, 'y': 17}]
 Broken Save Station
 Extra - map_name: rm_a2a01
 Extra - minimap_data: [{'x': 38, 'y': 21}]
-> Horizontal Dock to Autrack Corridor; Heals? False
+Extra - light_level: 0
+> Door to Autrack Corridor; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Autrack Corridor/Horizontal Dock to Broken Save Station
+  * Open Transition to Autrack Corridor/Door to Broken Save Station
   * Extra - instance_id: 110172
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 160
-  > Horizontal Dock to Hydro Station Exterior
+  > Door to Hydro Station Exterior
       Trivial
 
-> Horizontal Dock to Hydro Station Exterior; Heals? False
+> Door to Hydro Station Exterior; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Broken Save Station
+  * Open Transition to Hydro Station Exterior/Door to Broken Save Station
   * Extra - instance_id: 110173
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 160
-  > Horizontal Dock to Autrack Corridor
+  > Door to Autrack Corridor
       Trivial
 
 ----------------
@@ -254,17 +265,18 @@ Inner Save Station
 Extra - map_name: rm_a2a01A
 Extra - minimap_data: [{'x': 32, 'y': 21}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 6
-  > Horizontal Dock to Hydro Station Exterior
+  > Door to Hydro Station Exterior
       Trivial
-  > Horizontal Dock to Autrack Corridor
+  > Door to Autrack Corridor
       Trivial
 
-> Horizontal Dock to Hydro Station Exterior; Heals? False
+> Door to Hydro Station Exterior; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Inner Save Station
+  * Open Transition to Hydro Station Exterior/Door to Inner Save Station
   * Extra - instance_id: 110200
   * Extra - facing: right
   * Extra - x: 0
@@ -272,9 +284,9 @@ Extra - unlocked_save_station: True
   > Save Station
       Trivial
 
-> Horizontal Dock to Autrack Corridor; Heals? False
+> Door to Autrack Corridor; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Autrack Corridor/Horizontal Dock to Inner Save Station
+  * Open Transition to Autrack Corridor/Door to Inner Save Station
   * Extra - instance_id: 110201
   * Extra - facing: left
   * Extra - x: 320
@@ -286,30 +298,32 @@ Extra - unlocked_save_station: True
 Autrack Corridor
 Extra - map_name: rm_a2a02
 Extra - minimap_data: [{'x': 33, 'y': 21}, {'x': 34, 'y': 21}, {'x': 35, 'y': 21}, {'x': 36, 'y': 21}, {'x': 37, 'y': 21}]
-> Horizontal Dock to Inner Save Station; Heals? False
+Extra - light_level: 0
+> Door to Inner Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Inner Save Station/Horizontal Dock to Autrack Corridor
+  * Open Transition to Inner Save Station/Door to Autrack Corridor
   * Extra - instance_id: 110263
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 160
-  > Horizontal Dock to Broken Save Station
+  > Door to Broken Save Station
       Morph Ball
 
-> Horizontal Dock to Broken Save Station; Heals? False
+> Door to Broken Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Broken Save Station/Horizontal Dock to Autrack Corridor
+  * Open Transition to Broken Save Station/Door to Autrack Corridor
   * Extra - instance_id: 110264
   * Extra - facing: left
   * Extra - x: 1600
   * Extra - y: 160
-  > Horizontal Dock to Inner Save Station
+  > Door to Inner Save Station
       Morph Ball
 
 ----------------
 Autrack Corridor Right Water Pipe
 Extra - map_name: rm_a2a02A
 Extra - minimap_data: []
+Extra - light_level: 0
 > Vertical Dock to Varia Chamber Access Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Varia Chamber Access Water Pipe/Vertical Dock to Autrack Corridor Right Water Pipe
@@ -321,22 +335,25 @@ Extra - minimap_data: []
   * 1-Tiles Wide Dock to Wave Beam Chamber Access/Vertical Dock to Autrack Corridor Right Water Pipe
   > Vertical Dock to Varia Chamber Access Water Pipe
       Any of the following:
-          Space Jump or Walljump (Advanced) or Can Use Spider Ball
+          Space Jump or Can Use Spider Ball
           Morph Ball and Disabled Entrance Rando
-          Hi-Jump Boots and Walljump (Intermediate)
+          Hi-Jump Boots and Walljump (Intermediate) and Can Walljump
+          Walljump (Advanced) and Can Walljump
 
 ----------------
 Autrack Corridor Left Water Pipe
 Extra - map_name: rm_a2a02B
 Extra - minimap_data: []
+Extra - light_level: 0
 > Vertical Dock to Wave Beam Chamber Access Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Wave Beam Chamber Access Water Pipe/Vertical Dock to Autrack Corridor Left Water Pipe
   > Vertical Dock to Varia Chamber Access
       Any of the following:
-          Space Jump or Walljump (Advanced) or Can Use Spider Ball
+          Space Jump or Can Use Spider Ball
           Morph Ball and After Metroids Area 2 - Interior Lower Alpha and Disabled Entrance Rando
-          Hi-Jump Boots and Walljump (Intermediate)
+          Hi-Jump Boots and Walljump (Intermediate) and Can Walljump
+          Walljump (Advanced) and Can Walljump
 
 > Vertical Dock to Varia Chamber Access; Heals? False
   * Layers: default
@@ -349,6 +366,7 @@ Arachnus Save Station
 Extra - map_name: rm_a2a03
 Extra - minimap_data: [{'x': 35, 'y': 18}, {'x': 36, 'y': 18}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Vertical Dock to Hydro Station Exterior; Heals? False
   * Layers: default
   * 2-Tiles Wide Dock to Hydro Station Exterior/Vertical Dock to Arachnus Save Station
@@ -369,7 +387,9 @@ Extra - unlocked_save_station: True
               Tunnel Climb
               All of the following:
                   Mid-Air Morph (Advanced)
-                  Hi-Jump Boots or Space Jump or Walljump (Advanced)
+                  Any of the following:
+                      Hi-Jump Boots or Space Jump
+                      Walljump (Advanced) and Can Walljump
 
 > Door to Arachnus Arena; Heals? False
   * Layers: default
@@ -386,6 +406,7 @@ Extra - unlocked_save_station: True
 Arachnus Arena
 Extra - map_name: rm_a2a04
 Extra - minimap_data: [{'x': 34, 'y': 18}]
+Extra - light_level: 0
 > Door to Arachnus Save Station; Heals? False
   * Layers: default
   * Normal Door to Arachnus Save Station/Door to Arachnus Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
@@ -397,6 +418,7 @@ Extra - minimap_data: [{'x': 34, 'y': 18}]
               All of the following:
                   Can Use Bombs
                   Hi-Jump Boots or Space Jump or Combat (Beginner)
+                  Long Beam or Combat (Intermediate)
               Morph Ball and Power Bombs ≥ 3
           Any of the following:
               # Energy requirements
@@ -425,9 +447,10 @@ Extra - minimap_data: [{'x': 34, 'y': 18}]
 Inner Alpha Nest North
 Extra - map_name: rm_a2a05
 Extra - minimap_data: [{'x': 34, 'y': 19}, {'x': 35, 'y': 19}, {'x': 36, 'y': 19}]
-> Horizontal Dock to Hydro Station Exterior; Heals? False
+Extra - light_level: 0
+> Door to Hydro Station Exterior; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Inner Alpha Nest North
+  * Open Transition to Hydro Station Exterior/Door to Inner Alpha Nest North
   * Extra - instance_id: 110489
   * Extra - facing: right
   * Extra - x: 0
@@ -446,7 +469,7 @@ Extra - minimap_data: [{'x': 34, 'y': 19}, {'x': 35, 'y': 19}, {'x': 36, 'y': 19
 > Vertical Dock to Varia Chamber Access Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Varia Chamber Access Water Pipe/Vertical Dock to Inner Alpha Nest North
-  > Horizontal Dock to Hydro Station Exterior
+  > Door to Hydro Station Exterior
       All of the following:
           Can Use Any Bombs
           Any of the following:
@@ -464,7 +487,7 @@ Extra - minimap_data: [{'x': 34, 'y': 19}, {'x': 35, 'y': 19}, {'x': 36, 'y': 19
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Interior Upper Alpha
-  > Horizontal Dock to Hydro Station Exterior
+  > Door to Hydro Station Exterior
       Trivial
   > Pickup (Alpha)
       Trivial
@@ -480,6 +503,7 @@ Extra - minimap_data: [{'x': 34, 'y': 19}, {'x': 35, 'y': 19}, {'x': 36, 'y': 19
 Varia Chamber Access
 Extra - map_name: rm_a2a06
 Extra - minimap_data: [{'x': 34, 'y': 20}, {'x': 35, 'y': 20}, {'x': 36, 'y': 20}]
+Extra - light_level: 0
 > Door to Varia Chamber; Heals? False
   * Layers: default
   * Missile Door to Varia Chamber/Door to Varia Chamber Access
@@ -493,10 +517,12 @@ Extra - minimap_data: [{'x': 34, 'y': 20}, {'x': 35, 'y': 20}, {'x': 36, 'y': 20
               # A way to get into the hole
               Can Use Spider Ball
               # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
               All of the following:
                   # From non-morph
-                  Hi-Jump Boots or Space Jump or Walljump (Intermediate)
+                  Any of the following:
+                      Hi-Jump Boots or Space Jump
+                      Walljump (Intermediate) and Can Walljump
                   Power Grip or Mid-Air Morph (Intermediate)
 
 > Vertical Dock to Autrack Corridor Left Water Pipe; Heals? False
@@ -528,6 +554,7 @@ Extra - minimap_data: [{'x': 34, 'y': 20}, {'x': 35, 'y': 20}, {'x': 36, 'y': 20
 Varia Chamber Access Water Pipe
 Extra - map_name: rm_a2a06A
 Extra - minimap_data: []
+Extra - light_level: 0
 > Vertical Dock to Inner Alpha Nest North; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Inner Alpha Nest North/Vertical Dock to Varia Chamber Access Water Pipe
@@ -543,8 +570,10 @@ Extra - minimap_data: []
           Any of the following:
               Disabled Entrance Rando or Can Use Spider Ball
               All of the following:
-                  # To Climb
-                  Space Jump or Walljump (Intermediate)
+                  Any of the following:
+                      # To Climb
+                      Space Jump
+                      Walljump (Intermediate) and Can Walljump
                   # To climb into tunnel
                   Power Grip or Mid-Air Morph (Intermediate)
 
@@ -552,6 +581,7 @@ Extra - minimap_data: []
 Varia Chamber
 Extra - map_name: rm_a2a07
 Extra - minimap_data: [{'x': 32, 'y': 20}, {'x': 33, 'y': 20}]
+Extra - light_level: 0
 > Door to Varia Chamber Access; Heals? False
   * Layers: default
   * Normal Door to Varia Chamber Access/Door to Varia Chamber
@@ -570,6 +600,7 @@ Extra - minimap_data: [{'x': 32, 'y': 20}, {'x': 33, 'y': 20}]
 Water Turbine Station
 Extra - map_name: rm_a2a08
 Extra - minimap_data: [{'x': 32, 'y': 22}, {'x': 32, 'y': 23}]
+Extra - light_level: 0
 > Door to Hydro Station Exterior; Heals? False
   * Layers: default
   * Normal Door to Hydro Station Exterior/Door to Water Turbine Station
@@ -579,9 +610,9 @@ an open transition!
   > Event - Water Lowered
       Trivial
 
-> Horizontal Dock to Inner Alpha Nest South; Heals? False
+> Door to Inner Alpha Nest South; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Inner Alpha Nest South/Horizontal Dock to Water Turbine Station
+  * Open Transition to Inner Alpha Nest South/Door to Water Turbine Station
   * Extra - instance_id: 110796
   * Extra - facing: left
   * Extra - x: 320
@@ -624,7 +655,7 @@ an open transition!
 > Event - Bottom Water Turbine; Heals? False
   * Layers: default
   * Event Area 2 - Hydro Station Bottom Water Turbine Destroyed
-  > Horizontal Dock to Inner Alpha Nest South
+  > Door to Inner Alpha Nest South
       Trivial
   > Horizontal Dock to Water Turbine Station Pipe
       Screw Attack or Disabled Screw Attack Pipe Blocks
@@ -642,21 +673,23 @@ an open transition!
 Inner Alpha Nest South
 Extra - map_name: rm_a2a09
 Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23}]
-> Horizontal Dock to Water Turbine Station; Heals? False
+Extra - light_level: 0
+> Door to Water Turbine Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Water Turbine Station/Horizontal Dock to Inner Alpha Nest South
+  * Open Transition to Water Turbine Station/Door to Inner Alpha Nest South
   * Extra - instance_id: 110869
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 208
   > Vertical Dock to Wave Beam Chamber Access Water Pipe
       Any of the following:
-          Hi-Jump Boots or Space Jump or Walljump (Intermediate) or Can Use Spider Ball
+          Hi-Jump Boots or Space Jump or Can Use Spider Ball
           # Use water pipe
           Morph Ball and After Metroids Area 2 - Interior Lower Alpha
           # Shinespark up
           Gravity Suit and Speed Booster and Shinesparking Tricks (Intermediate)
-  > Horizontal Dock to Inner Hydro Station Pipe
+          Walljump (Intermediate) and Can Walljump
+  > Door to Inner Hydro Station Pipe
       Screw Attack or Disabled Screw Attack Pipe Blocks
   > Event - Alpha
       Defeat dodging Alpha
@@ -670,7 +703,7 @@ Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23
                   Any of the following:
                       Power Grip or Can Use Spring Ball
                       # Shinespark + WJ https://www.youtube.com/watch?v=mQahK4kIL3w
-                      Mid-Air Morph (Advanced) and Walljump (Intermediate)
+                      Mid-Air Morph (Advanced) and Walljump (Intermediate) and Can Walljump
               All of the following:
                   # Hijump Tunnel Climb, but without the Walljump
                   Morph Ball
@@ -682,7 +715,7 @@ Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23
                           Hi-Jump Boots
                           Any of the following:
                               Power Grip
-                              Mid-Air Morph (Advanced) and Walljump (Intermediate)
+                              Mid-Air Morph (Advanced) and Walljump (Intermediate) and Can Walljump
                       All of the following:
                           # Midair morph combo
                           Space Jump
@@ -690,30 +723,30 @@ Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23
                       # CBJ - TODO: record this with a mid air morph + WJ. That should be advanced or expert.
                       Charged Bomb Jump (Intermediate) and Can Use Charged Bomb Jump
           # Glide from waterjet: https://youtu.be/qX1PhEM63N8
-          Morph Ball and Power Grip and Morph Glide (Hypermode) and Walljump (Advanced)
+          Morph Ball and Power Grip and Morph Glide (Hypermode) and Walljump (Advanced) and Can Walljump
           # IBJ https://www.youtube.com/watch?v=-dcePWj-7jI
-          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
 
 > Vertical Dock to Wave Beam Chamber Access Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Wave Beam Chamber Access Water Pipe/Vertical Dock to Inner Alpha Nest South
-  > Horizontal Dock to Water Turbine Station
+  > Door to Water Turbine Station
       Trivial
 
-> Horizontal Dock to Inner Hydro Station Pipe; Heals? False
+> Door to Inner Hydro Station Pipe; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Inner Hydro Station Pipe/Horizontal Dock to Inner Alpha Nest South
+  * Open Transition to Inner Hydro Station Pipe/Door to Inner Alpha Nest South
   * Extra - instance_id: 110877
-  * Extra - facing: right
+  * Extra - facing: left
   * Extra - x: 960
   * Extra - y: 144
-  > Horizontal Dock to Water Turbine Station
+  > Door to Water Turbine Station
       Screw Attack or Disabled Screw Attack Pipe Blocks
 
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Interior Lower Alpha
-  > Horizontal Dock to Water Turbine Station
+  > Door to Water Turbine Station
       Trivial
   > Pickup (Alpha)
       Trivial
@@ -722,7 +755,7 @@ Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23
   * Layers: default
   * Pickup 151; Category? Minor
   * Extra - object_name: oItemM_151
-  > Horizontal Dock to Water Turbine Station
+  > Door to Water Turbine Station
       Morph Ball
 
 > Pickup (Alpha); Heals? False
@@ -736,6 +769,7 @@ Extra - minimap_data: [{'x': 33, 'y': 23}, {'x': 34, 'y': 23}, {'x': 35, 'y': 23
 Wave Beam Chamber
 Extra - map_name: rm_a2a10
 Extra - minimap_data: [{'x': 33, 'y': 22}]
+Extra - light_level: 0
 > Door to Wave Beam Chamber Access; Heals? False
   * Layers: default
   * Normal Door to Wave Beam Chamber Access/Door to Wave Beam Chamber
@@ -754,6 +788,7 @@ Extra - minimap_data: [{'x': 33, 'y': 22}]
 Wave Beam Chamber Access
 Extra - map_name: rm_a2a11
 Extra - minimap_data: [{'x': 34, 'y': 22}, {'x': 35, 'y': 22}, {'x': 36, 'y': 22}, {'x': 37, 'y': 22}]
+Extra - light_level: 0
 > Door to Wave Beam Chamber; Heals? False
   * Layers: default
   * Missile Door to Wave Beam Chamber/Door to Wave Beam Chamber Access
@@ -767,9 +802,9 @@ Extra - minimap_data: [{'x': 34, 'y': 22}, {'x': 35, 'y': 22}, {'x': 36, 'y': 22
   > Waterpipe
       Trivial
 
-> Horizontal Dock to Shootblock Stairway; Heals? False
+> Door to Shootblock Stairway; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Wave Beam Chamber Access
+  * Open Transition to Shootblock Stairway/Door to Wave Beam Chamber Access
   * Extra - instance_id: 111054
   * Extra - facing: left
   * Extra - x: 1280
@@ -780,8 +815,10 @@ Extra - minimap_data: [{'x': 34, 'y': 22}, {'x': 35, 'y': 22}, {'x': 36, 'y': 22
 > Waterpipe; Heals? False
   * Layers: default
   > Vertical Dock to Autrack Corridor Right Water Pipe
-      Hi-Jump Boots or Morph Ball or Space Jump or Walljump (Intermediate)
-  > Horizontal Dock to Shootblock Stairway
+      Any of the following:
+          Hi-Jump Boots or Morph Ball or Space Jump
+          Walljump (Intermediate) and Can Walljump
+  > Door to Shootblock Stairway
       Can Use Any Bombs
   > Left Wallfire
       All of the following:
@@ -800,6 +837,7 @@ Extra - minimap_data: [{'x': 34, 'y': 22}, {'x': 35, 'y': 22}, {'x': 36, 'y': 22
 Wave Beam Chamber Access Water Pipe
 Extra - map_name: rm_a2a11A
 Extra - minimap_data: []
+Extra - light_level: 0
 > Vertical Dock to Autrack Corridor Left Water Pipe; Heals? False
   * Layers: default
   * 1-Tiles Wide Dock to Autrack Corridor Left Water Pipe/Vertical Dock to Wave Beam Chamber Access Water Pipe
@@ -811,17 +849,19 @@ Extra - minimap_data: []
   * 1-Tiles Wide Dock to Inner Alpha Nest South/Vertical Dock to Wave Beam Chamber Access Water Pipe
   > Vertical Dock to Autrack Corridor Left Water Pipe
       Any of the following:
-          Space Jump or Walljump (Advanced) or Can Use Spider Ball
+          Space Jump or Can Use Spider Ball
           Morph Ball and After Metroids Area 2 - Interior Lower Alpha and Disabled Entrance Rando
-          Hi-Jump Boots and Walljump (Intermediate)
+          Hi-Jump Boots and Walljump (Intermediate) and Can Walljump
+          Walljump (Advanced) and Can Walljump
 
 ----------------
 Shootblock Stairway
 Extra - map_name: rm_a2a12
 Extra - minimap_data: [{'x': 38, 'y': 22}, {'x': 38, 'y': 23}, {'x': 38, 'y': 24}]
-> Horizontal Dock to Wave Beam Chamber Access; Heals? False
+Extra - light_level: 0
+> Door to Wave Beam Chamber Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Wave Beam Chamber Access/Horizontal Dock to Shootblock Stairway
+  * Open Transition to Wave Beam Chamber Access/Door to Shootblock Stairway
   * Extra - instance_id: 111183
   * Extra - facing: right
   * Extra - x: 0
@@ -829,9 +869,9 @@ Extra - minimap_data: [{'x': 38, 'y': 22}, {'x': 38, 'y': 23}, {'x': 38, 'y': 24
   > Middle
       Trivial
 
-> Horizontal Dock to Hi-Jump Chamber Access; Heals? False
+> Door to Hi-Jump Chamber Access; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hi-Jump Chamber Access/Horizontal Dock to Shootblock Stairway
+  * Open Transition to Hi-Jump Chamber Access/Door to Shootblock Stairway
   * Extra - instance_id: 111186
   * Extra - facing: left
   * Extra - x: 320
@@ -849,9 +889,9 @@ Extra - minimap_data: [{'x': 38, 'y': 22}, {'x': 38, 'y': 23}, {'x': 38, 'y': 24
   > Middle
       Trivial
 
-> Horizontal Dock to Inner Hydro Station Pipe; Heals? False
+> Door to Inner Hydro Station Pipe; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Inner Hydro Station Pipe/Horizontal Dock to Shootblock Stairway
+  * Open Transition to Inner Hydro Station Pipe/Door to Shootblock Stairway
   * Extra - instance_id: 111194
   * Extra - facing: right
   * Extra - x: 0
@@ -861,24 +901,25 @@ Extra - minimap_data: [{'x': 38, 'y': 22}, {'x': 38, 'y': 23}, {'x': 38, 'y': 24
 
 > Middle; Heals? False
   * Layers: default
-  > Horizontal Dock to Wave Beam Chamber Access
+  > Door to Wave Beam Chamber Access
       Trivial
-  > Horizontal Dock to Hi-Jump Chamber Access
+  > Door to Hi-Jump Chamber Access
       Trivial
   > Horizontal Dock to Autoad Playground
       Trivial
-  > Horizontal Dock to Inner Hydro Station Pipe
+  > Door to Inner Hydro Station Pipe
       Screw Attack or Disabled Screw Attack Pipe Blocks
 
 ----------------
 Hi-Jump Chamber Access
 Extra - map_name: rm_a2a13
 Extra - minimap_data: [{'x': 39, 'y': 23}, {'x': 39, 'y': 24}, {'x': 39, 'y': 25}]
+Extra - light_level: 0
 > Door to Hi-Jump Chamber; Heals? False
   * Layers: default
   * Missile Door to Hi-Jump Chamber/Door to Hi-Jump Chamber Access
   * Extra - instance_id: 111244
-  > Horizontal Dock to Shootblock Stairway
+  > Door to Shootblock Stairway
       Any of the following:
           Enabled Septogg Helpers
           Any of the following:
@@ -889,13 +930,13 @@ Extra - minimap_data: [{'x': 39, 'y': 23}, {'x': 39, 'y': 24}, {'x': 39, 'y': 25
               # CBJ method
               Charged Bomb Jump (Advanced) and Can Use Charged Bomb Jump
               # IBJ method
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
               # WJ method
-              Walljump (Expert)
+              Walljump (Expert) and Can Walljump
 
-> Horizontal Dock to Shootblock Stairway; Heals? False
+> Door to Shootblock Stairway; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Hi-Jump Chamber Access
+  * Open Transition to Shootblock Stairway/Door to Hi-Jump Chamber Access
   * Extra - instance_id: 111242
   * Extra - facing: right
   * Extra - x: 0
@@ -907,6 +948,7 @@ Extra - minimap_data: [{'x': 39, 'y': 23}, {'x': 39, 'y': 24}, {'x': 39, 'y': 25
 Hi-Jump Chamber
 Extra - map_name: rm_a2a14
 Extra - minimap_data: [{'x': 38, 'y': 25}]
+Extra - light_level: 0
 > Door to Hi-Jump Chamber Access; Heals? False
   * Layers: default
   * Normal Door to Hi-Jump Chamber Access/Door to Hi-Jump Chamber
@@ -933,9 +975,10 @@ Extra - minimap_data: [{'x': 38, 'y': 25}]
 Autoad Playground
 Extra - map_name: rm_a2a15
 Extra - minimap_data: [{'x': 35, 'y': 24}, {'x': 36, 'y': 24}, {'x': 37, 'y': 24}]
-> Horizontal Dock to Wallfire Venue; Heals? False
+Extra - light_level: 0
+> Door to Wallfire Venue; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Wallfire Venue/Horizontal Dock to Autoad Playground
+  * Open Transition to Wallfire Venue/Door to Autoad Playground
   * Extra - instance_id: 111532
   * Extra - facing: right
   * Extra - x: 0
@@ -949,16 +992,18 @@ Extra - minimap_data: [{'x': 35, 'y': 24}, {'x': 36, 'y': 24}, {'x': 37, 'y': 24
               # A way to get into hole
               Spider Ball
               # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
               All of the following:
                   # Standing
-                  Hi-Jump Boots or Space Jump or Walljump (Advanced)
+                  Any of the following:
+                      Hi-Jump Boots or Space Jump
+                      Walljump (Advanced) and Can Walljump
                   Power Grip or Mid-Air Morph (Advanced)
 
 > Horizontal Dock to Shootblock Stairway; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Autoad Playground
-  > Horizontal Dock to Wallfire Venue
+  > Door to Wallfire Venue
       Trivial
   > Pickup (Bottom Missile Tank)
       Can Use Any Bombs and Low Mid-Air Morph Tunnel Climb
@@ -967,7 +1012,7 @@ Extra - minimap_data: [{'x': 35, 'y': 24}, {'x': 36, 'y': 24}, {'x': 37, 'y': 24
   * Layers: default
   * Pickup 153; Category? Minor
   * Extra - object_name: oItemM_153
-  > Horizontal Dock to Wallfire Venue
+  > Door to Wallfire Venue
       Can Use Any Bombs and Tunnel Climb
 
 > Pickup (Bottom Missile Tank); Heals? False
@@ -981,33 +1026,35 @@ Extra - minimap_data: [{'x': 35, 'y': 24}, {'x': 36, 'y': 24}, {'x': 37, 'y': 24
 Wallfire Venue
 Extra - map_name: rm_a2a16
 Extra - minimap_data: [{'x': 34, 'y': 24}, {'x': 34, 'y': 25}]
-> Horizontal Dock to Autoad Playground; Heals? False
+Extra - light_level: 0
+> Door to Autoad Playground; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Autoad Playground/Horizontal Dock to Wallfire Venue
+  * Open Transition to Autoad Playground/Door to Wallfire Venue
   * Extra - instance_id: 111580
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 160
-  > Horizontal Dock to Hydro Station Basement
+  > Door to Hydro Station Basement
       Trivial
 
-> Horizontal Dock to Hydro Station Basement; Heals? False
+> Door to Hydro Station Basement; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Hydro Station Basement/Horizontal Dock to Wallfire Venue
+  * Open Transition to Hydro Station Basement/Door to Wallfire Venue
   * Extra - instance_id: 111581
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 400
-  > Horizontal Dock to Autoad Playground
+  > Door to Autoad Playground
       Power Grip Wall
 
 ----------------
 Hydro Station Basement
 Extra - map_name: rm_a2a17
 Extra - minimap_data: [{'x': 35, 'y': 25}, {'x': 36, 'y': 25}, {'x': 37, 'y': 25}]
-> Horizontal Dock to Wallfire Venue; Heals? False
+Extra - light_level: 0
+> Door to Wallfire Venue; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Wallfire Venue/Horizontal Dock to Hydro Station Basement
+  * Open Transition to Wallfire Venue/Door to Hydro Station Basement
   * Extra - instance_id: 111649
   * Extra - facing: right
   * Extra - x: 0
@@ -1026,13 +1073,13 @@ Extra - minimap_data: [{'x': 35, 'y': 25}, {'x': 36, 'y': 25}, {'x': 37, 'y': 25
           Any of the following:
               Spider Ball
               # IBJ
-              Infinite Bomb Jumping (Advanced) and Can Use Bombs
+              Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
               All of the following:
                   # As standing
                   Hi-Jump Boots or Space Jump
                   Power Grip or Mid-Air Morph (Advanced)
               # Hardcore way by walljumping on right side and gliding to the left
-              Power Grip and Morph Glide (Hypermode) and Walljump (Intermediate)
+              Power Grip and Morph Glide (Hypermode) and Walljump (Intermediate) and Can Walljump
 
 > Pickup (Energy Tank); Heals? False
   * Layers: default
@@ -1052,31 +1099,32 @@ Extra - minimap_data: [{'x': 35, 'y': 25}, {'x': 36, 'y': 25}, {'x': 37, 'y': 25
   * Layers: default
   * Pickup 155; Category? Minor
   * Extra - object_name: oItemM_155
-  > Horizontal Dock to Wallfire Venue
+  > Door to Wallfire Venue
       Can Use Any Bombs
 
 ----------------
 Inner Hydro Station Pipe
 Extra - map_name: rm_a2a18
 Extra - minimap_data: [{'x': 36, 'y': 23}, {'x': 37, 'y': 23}]
-> Horizontal Dock to Inner Alpha Nest South; Heals? False; Default Node
+Extra - light_level: 0
+> Door to Inner Alpha Nest South; Heals? False; Default Node
   * Layers: default
-  * 4-Tiles High Dock to Inner Alpha Nest South/Horizontal Dock to Inner Hydro Station Pipe
+  * Open Transition to Inner Alpha Nest South/Door to Inner Hydro Station Pipe
   * Extra - instance_id: 111667
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 144
-  > Horizontal Dock to Shootblock Stairway
+  > Door to Shootblock Stairway
       Trivial
 
-> Horizontal Dock to Shootblock Stairway; Heals? False
+> Door to Shootblock Stairway; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Shootblock Stairway/Horizontal Dock to Inner Hydro Station Pipe
+  * Open Transition to Shootblock Stairway/Door to Inner Hydro Station Pipe
   * Extra - instance_id: 111668
   * Extra - facing: left
   * Extra - x: 640
   * Extra - y: 144
-  > Horizontal Dock to Inner Alpha Nest South
+  > Door to Inner Alpha Nest South
       Trivial
   > Pipe to The Tower
       Any of the following:
@@ -1094,13 +1142,14 @@ Extra - minimap_data: [{'x': 36, 'y': 23}, {'x': 37, 'y': 23}]
   * Extra - instance_id: 111669
   * Extra - dest_x: 200
   * Extra - dest_y: 128
-  > Horizontal Dock to Shootblock Stairway
+  > Door to Shootblock Stairway
       Morph Ball
 
 ----------------
 Water Turbine Station Pipe
 Extra - map_name: rm_a2a19
 Extra - minimap_data: [{'x': 30, 'y': 23}, {'x': 31, 'y': 23}]
+Extra - light_level: 0
 > Horizontal Dock to Water Turbine Station; Heals? False; Default Node
   * Layers: default
   * 3-Tiles High Dock to Water Turbine Station/Horizontal Dock to Water Turbine Station Pipe
@@ -1120,6 +1169,7 @@ Extra - minimap_data: [{'x': 30, 'y': 23}, {'x': 31, 'y': 23}]
 Breeding Grounds Entrance
 Extra - map_name: rm_a2c01
 Extra - minimap_data: [{'x': 28, 'y': 19}, {'x': 28, 'y': 20}, {'x': 28, 'y': 21}, {'x': 28, 'y': 22}]
+Extra - light_level: 0
 > Horizontal Dock to Hydro Station Exterior (Top); Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hydro Station Exterior/Horizontal Dock to Breeding Grounds Entrance (Top)
@@ -1136,7 +1186,7 @@ Extra - minimap_data: [{'x': 28, 'y': 19}, {'x': 28, 'y': 20}, {'x': 28, 'y': 21
           Morph Ball
           Any of the following:
               # IBJ
-              Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+              Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
               # CBJ
               Charged Bomb Jump (Intermediate) and Can Use Charged Bomb Jump
               All of the following:
@@ -1149,9 +1199,9 @@ Extra - minimap_data: [{'x': 28, 'y': 19}, {'x': 28, 'y': 20}, {'x': 28, 'y': 21
                   Damage Boost (Intermediate) and Normal Damage ≥ 7
                   Any of the following:
                       # Power grip spike damage boost
-                      Power Grip and Walljump (Expert)
+                      Power Grip and Walljump (Expert) and Can Walljump
                       # Mir air morph spike damage boost
-                      Mid-Air Morph (Hypermode) and Walljump (Hypermode)
+                      Mid-Air Morph (Hypermode) and Walljump (Hypermode) and Can Walljump
                       # Tsumuri damage boost - not that known that they crawl through spikes
                       Power Grip and Knowledge (Beginner)
   > Door to Speedboosting Challenge
@@ -1166,7 +1216,7 @@ Extra - minimap_data: [{'x': 28, 'y': 19}, {'x': 28, 'y': 20}, {'x': 28, 'y': 21
                       Mid-Air Morph (Beginner) or Can Use Bombs or Can Use Spring Ball
                   All of the following:
                       # Hijump up
-                      Hi-Jump Boots
+                      Hi-Jump Boots and Can Walljump
                       Any of the following:
                           Power Grip and Walljump (Intermediate)
                           Damage Boost (Intermediate) and Walljump (Expert) and Normal Damage ≥ 14
@@ -1180,9 +1230,11 @@ Extra - minimap_data: [{'x': 28, 'y': 19}, {'x': 28, 'y': 20}, {'x': 28, 'y': 21
                   Mid-Air Morph (Intermediate)
                   All of the following:
                       Damage Boost (Intermediate) and Normal Damage ≥ 14
-                      Hi-Jump Boots or Power Grip or Space Jump or Walljump (Intermediate)
+                      Any of the following:
+                          Hi-Jump Boots or Power Grip or Space Jump
+                          Walljump (Intermediate) and Can Walljump
           # IBJ
-          Infinite Bomb Jumping (Advanced) and Can Use Bombs
+          Infinite Bomb Jumping (Advanced) and Can IBJ and Can Use Bombs
 
 > Tunnel to Breeding Grounds Save Station; Heals? False
   * Layers: default
@@ -1219,12 +1271,13 @@ Breeding Grounds Save Station
 Extra - map_name: rm_a2c02
 Extra - minimap_data: [{'x': 27, 'y': 22}]
 Extra - unlocked_save_station: True
+Extra - light_level: 0
 > Save Station; Heals? True; Spawn Point; Default Node
   * Layers: default
   * Extra - save_room: 7
   > Tunnel to Breeding Grounds Entrance
       Low Mid-Air Morph Tunnel Climb
-  > Horizontal Dock to Breeding Grounds Shaft
+  > Door to Breeding Grounds Shaft
       Trivial
 
 > Tunnel to Breeding Grounds Entrance; Heals? False
@@ -1233,9 +1286,9 @@ Extra - unlocked_save_station: True
   > Save Station
       Morph Ball
 
-> Horizontal Dock to Breeding Grounds Shaft; Heals? False
+> Door to Breeding Grounds Shaft; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Shaft/Horizontal Dock to Breeding Grounds Save Station
+  * Open Transition to Breeding Grounds Shaft/Door to Breeding Grounds Save Station
   * Extra - instance_id: 111840
   * Extra - facing: right
   * Extra - x: 0
@@ -1247,9 +1300,10 @@ Extra - unlocked_save_station: True
 Breeding Grounds Shaft
 Extra - map_name: rm_a2c03
 Extra - minimap_data: [{'x': 26, 'y': 22}, {'x': 26, 'y': 23}, {'x': 26, 'y': 24}, {'x': 26, 'y': 25}]
-> Horizontal Dock to Breeding Grounds Save Station; Heals? False
+Extra - light_level: 0
+> Door to Breeding Grounds Save Station; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Save Station/Horizontal Dock to Breeding Grounds Shaft
+  * Open Transition to Breeding Grounds Save Station/Door to Breeding Grounds Shaft
   * Extra - instance_id: 112031
   * Extra - facing: left
   * Extra - x: 320
@@ -1257,33 +1311,34 @@ Extra - minimap_data: [{'x': 26, 'y': 22}, {'x': 26, 'y': 23}, {'x': 26, 'y': 24
   > Middle
       Trivial
 
-> Horizontal Dock to Breeding Grounds Alpha Nest East; Heals? False
+> Door to Breeding Grounds Alpha Nest East; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Alpha Nest East/Horizontal Dock to Breeding Grounds Shaft
+  * Open Transition to Breeding Grounds Alpha Nest East/Door to Breeding Grounds Shaft
   * Extra - instance_id: 112032
   * Extra - facing: left
   * Extra - x: 320
   * Extra - y: 624
-  > Horizontal Dock to Breeding Grounds Lobby
+  > Door to Breeding Grounds Lobby
       Trivial
   > Middle
       Any of the following:
           # Not quite Hijump Wall, because spider has additional requirement
-          Hi-Jump Boots or Space Jump or Walljump (Intermediate)
+          Hi-Jump Boots or Space Jump
           All of the following:
               Can Use Spider Ball
               Spring Ball or Mid-Air Morph (Beginner) or Can Use Any Bombs
           # IBJ
-          Infinite Bomb Jumping (Intermediate) and Can Use Bombs
+          Infinite Bomb Jumping (Intermediate) and Can IBJ and Can Use Bombs
+          Walljump (Intermediate) and Can Walljump
 
-> Horizontal Dock to Breeding Grounds Lobby; Heals? False
+> Door to Breeding Grounds Lobby; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Lobby/Horizontal Dock to Breeding Grounds Shaft
+  * Open Transition to Breeding Grounds Lobby/Door to Breeding Grounds Shaft
   * Extra - instance_id: 112033
   * Extra - facing: right
   * Extra - x: 0
   * Extra - y: 864
-  > Horizontal Dock to Breeding Grounds Alpha Nest East
+  > Door to Breeding Grounds Alpha Nest East
       Hijump Wall
 
 > Horizontal Dock to Breeding Grounds Overgrown Alley; Heals? False
@@ -1303,9 +1358,9 @@ Extra - minimap_data: [{'x': 26, 'y': 22}, {'x': 26, 'y': 23}, {'x': 26, 'y': 24
 
 > Middle; Heals? False
   * Layers: default
-  > Horizontal Dock to Breeding Grounds Save Station
+  > Door to Breeding Grounds Save Station
       Power Grip Wall
-  > Horizontal Dock to Breeding Grounds Alpha Nest East
+  > Door to Breeding Grounds Alpha Nest East
       Trivial
   > Horizontal Dock to Breeding Grounds Overgrown Alley
       All of the following:
@@ -1319,9 +1374,10 @@ Extra - minimap_data: [{'x': 26, 'y': 22}, {'x': 26, 'y': 23}, {'x': 26, 'y': 24
 Breeding Grounds Alpha Nest East
 Extra - map_name: rm_a2c04
 Extra - minimap_data: [{'x': 27, 'y': 24}, {'x': 28, 'y': 24}, {'x': 28, 'y': 25}, {'x': 29, 'y': 24}, {'x': 29, 'y': 25}, {'x': 30, 'y': 24}, {'x': 30, 'y': 25}]
-> Horizontal Dock to Breeding Grounds Shaft; Heals? False
+Extra - light_level: 0
+> Door to Breeding Grounds Shaft; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Shaft/Horizontal Dock to Breeding Grounds Alpha Nest East
+  * Open Transition to Breeding Grounds Shaft/Door to Breeding Grounds Alpha Nest East
   * Extra - instance_id: 112388
   * Extra - facing: right
   * Extra - x: 0
@@ -1339,7 +1395,7 @@ Extra - minimap_data: [{'x': 27, 'y': 24}, {'x': 28, 'y': 24}, {'x': 28, 'y': 25
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Breeding Grounds Upper Right Alpha
-  > Horizontal Dock to Breeding Grounds Shaft
+  > Door to Breeding Grounds Shaft
       Hijump Wall
   > Pickup (Alpha)
       Trivial
@@ -1355,9 +1411,10 @@ Extra - minimap_data: [{'x': 27, 'y': 24}, {'x': 28, 'y': 24}, {'x': 28, 'y': 25
 Breeding Grounds Lobby
 Extra - map_name: rm_a2c05
 Extra - minimap_data: [{'x': 24, 'y': 25}, {'x': 24, 'y': 26}, {'x': 24, 'y': 27}, {'x': 25, 'y': 25}]
-> Horizontal Dock to Breeding Grounds Shaft; Heals? False
+Extra - light_level: 0
+> Door to Breeding Grounds Shaft; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Shaft/Horizontal Dock to Breeding Grounds Lobby
+  * Open Transition to Breeding Grounds Shaft/Door to Breeding Grounds Lobby
   * Extra - instance_id: 112629
   * Extra - facing: left
   * Extra - x: 640
@@ -1371,9 +1428,9 @@ Extra - minimap_data: [{'x': 24, 'y': 25}, {'x': 24, 'y': 26}, {'x': 24, 'y': 27
   > Top
       Power Grip Wall
 
-> Horizontal Dock to Breeding Grounds Alpha Nest West; Heals? False
+> Door to Breeding Grounds Alpha Nest West; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Alpha Nest West/Horizontal Dock to Breeding Grounds Lobby
+  * Open Transition to Breeding Grounds Alpha Nest West/Door to Breeding Grounds Lobby
   * Extra - instance_id: 112631
   * Extra - facing: right
   * Extra - x: 0
@@ -1390,11 +1447,11 @@ Extra - minimap_data: [{'x': 24, 'y': 25}, {'x': 24, 'y': 26}, {'x': 24, 'y': 27
 
 > Top; Heals? False
   * Layers: default
-  > Horizontal Dock to Breeding Grounds Shaft
+  > Door to Breeding Grounds Shaft
       Trivial
   > Horizontal Dock to Breeding Grounds Gamma Nest
       Trivial
-  > Horizontal Dock to Breeding Grounds Alpha Nest West
+  > Door to Breeding Grounds Alpha Nest West
       Trivial
   > Pickup (Energy Tank)
       All of the following:
@@ -1409,9 +1466,10 @@ Extra - minimap_data: [{'x': 24, 'y': 25}, {'x': 24, 'y': 26}, {'x': 24, 'y': 27
 Breeding Grounds Alpha Nest West
 Extra - map_name: rm_a2c06
 Extra - minimap_data: [{'x': 19, 'y': 23}, {'x': 19, 'y': 24}, {'x': 20, 'y': 23}, {'x': 20, 'y': 24}, {'x': 21, 'y': 23}, {'x': 21, 'y': 24}, {'x': 21, 'y': 25}, {'x': 22, 'y': 23}, {'x': 22, 'y': 24}, {'x': 22, 'y': 25}, {'x': 23, 'y': 23}, {'x': 23, 'y': 24}, {'x': 23, 'y': 25}]
-> Horizontal Dock to Breeding Grounds Lobby; Heals? False
+Extra - light_level: 0
+> Door to Breeding Grounds Lobby; Heals? False
   * Layers: default
-  * 4-Tiles High Dock to Breeding Grounds Lobby/Horizontal Dock to Breeding Grounds Alpha Nest West
+  * Open Transition to Breeding Grounds Lobby/Door to Breeding Grounds Alpha Nest West
   * Extra - instance_id: 113031
   * Extra - facing: left
   * Extra - x: 1600
@@ -1437,18 +1495,20 @@ Extra - minimap_data: [{'x': 19, 'y': 23}, {'x': 19, 'y': 24}, {'x': 20, 'y': 23
                   All of the following:
                       # Hijump Method
                       Hi-Jump Boots
-                      Power Grip or Walljump (Advanced)
+                      Any of the following:
+                          Power Grip
+                          Walljump (Advanced) and Can Walljump
                   All of the following:
                       # Spider Method
                       Can Use Spider Ball
                       Mid-Air Morph (Intermediate) or Can Use Bombs or Can Use Spring Ball
                   # WJ Method
-                  Morph Ball and Morph Glide (Intermediate) and Walljump (Advanced)
+                  Morph Ball and Morph Glide (Intermediate) and Walljump (Advanced) and Can Walljump
                   # CBJ method
                   Charged Bomb Jump (Advanced) and Can Use Charged Bomb Jump
                   All of the following:
                       # IBJ method
-                      Can Use Bombs
+                      Can IBJ and Can Use Bombs
                       Diagonal Infinite Bomb Jumping (Advanced) or Infinite Bomb Jumping (Advanced)
 
 > Dock to Breeding Grounds Overgrown Alley; Heals? False
@@ -1459,7 +1519,7 @@ Extra - minimap_data: [{'x': 19, 'y': 23}, {'x': 19, 'y': 24}, {'x': 20, 'y': 23
 > Event - Alpha; Heals? False
   * Layers: default
   * Event Metroids Area 2 - Breeding Grounds Left Alpha
-  > Horizontal Dock to Breeding Grounds Lobby
+  > Door to Breeding Grounds Lobby
       Go Through Vines or Hijump Wall
   > Pickup (Alpha)
       Trivial
@@ -1475,6 +1535,7 @@ Extra - minimap_data: [{'x': 19, 'y': 23}, {'x': 19, 'y': 24}, {'x': 20, 'y': 23
 Breeding Grounds Gamma Nest
 Extra - map_name: rm_a2c07
 Extra - minimap_data: [{'x': 25, 'y': 27}, {'x': 26, 'y': 27}]
+Extra - light_level: 0
 > Horizontal Dock to Breeding Grounds Lobby; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Lobby/Horizontal Dock to Breeding Grounds Gamma Nest
@@ -1508,6 +1569,7 @@ Extra - minimap_data: [{'x': 25, 'y': 27}, {'x': 26, 'y': 27}]
 Breeding Grounds Alpha Nest South
 Extra - map_name: rm_a2c08
 Extra - minimap_data: [{'x': 27, 'y': 26}, {'x': 27, 'y': 27}, {'x': 27, 'y': 28}, {'x': 28, 'y': 26}, {'x': 28, 'y': 27}, {'x': 28, 'y': 28}, {'x': 29, 'y': 26}, {'x': 29, 'y': 27}, {'x': 29, 'y': 28}, {'x': 30, 'y': 26}, {'x': 30, 'y': 27}]
+Extra - light_level: 0
 > Horizontal Dock to Breeding Grounds Gamma Nest; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Gamma Nest/Horizontal Dock to Breeding Grounds Alpha Nest South
@@ -1523,8 +1585,10 @@ Extra - minimap_data: [{'x': 27, 'y': 26}, {'x': 27, 'y': 27}, {'x': 27, 'y': 28
               Hi-Jump Boots and Movement (Intermediate)
               All of the following:
                   # WJ + Glide from left wall
-                  Morph Ball and Morph Glide (Intermediate) and Walljump (Advanced)
-                  Power Grip or Walljump (Expert)
+                  Morph Ball and Morph Glide (Intermediate) and Walljump (Advanced) and Can Walljump
+                  Any of the following:
+                      Power Grip
+                      Walljump (Expert) and Can Walljump
               All of the following:
                   # Spider Method
                   Can Use Spider Ball
@@ -1533,7 +1597,7 @@ Extra - minimap_data: [{'x': 27, 'y': 26}, {'x': 27, 'y': 27}, {'x': 27, 'y': 28
               Charged Bomb Jump (Advanced) and Can Use Charged Bomb Jump
               All of the following:
                   # IBJ method
-                  Can Use Bombs
+                  Can IBJ and Can Use Bombs
                   Diagonal Infinite Bomb Jumping (Advanced) or Infinite Bomb Jumping (Advanced)
 
 > Event - Alpha; Heals? False
@@ -1558,6 +1622,7 @@ Extra - minimap_data: [{'x': 27, 'y': 26}, {'x': 27, 'y': 27}, {'x': 27, 'y': 28
 Breeding Grounds Overgrown Alley
 Extra - map_name: rm_a2c09
 Extra - minimap_data: [{'x': 20, 'y': 22}, {'x': 21, 'y': 22}, {'x': 22, 'y': 22}, {'x': 23, 'y': 22}, {'x': 24, 'y': 22}, {'x': 24, 'y': 23}, {'x': 25, 'y': 23}]
+Extra - light_level: 0
 > Horizontal Dock to Breeding Grounds Shaft; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Breeding Grounds Shaft/Horizontal Dock to Breeding Grounds Overgrown Alley
@@ -1610,6 +1675,7 @@ Extra - minimap_data: [{'x': 20, 'y': 22}, {'x': 21, 'y': 22}, {'x': 22, 'y': 22
 Speedboosting Challenge
 Extra - map_name: rm_a2c10
 Extra - minimap_data: [{'x': 25, 'y': 21}, {'x': 26, 'y': 21}, {'x': 27, 'y': 21}]
+Extra - light_level: 0
 > Door to Breeding Grounds Entrance; Heals? False
   * Layers: default
   * Normal Door to Breeding Grounds Entrance/Door to Speedboosting Challenge

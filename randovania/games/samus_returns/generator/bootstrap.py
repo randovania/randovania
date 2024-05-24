@@ -2,47 +2,43 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
     from random import Random
 
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
-    from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def all_dna_locations(game: GameDescription, config: MSRArtifactConfig) -> list[PickupNode]:
-    locations = []
+def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
+    assert isinstance(config, MSRConfiguration)
+    artifact_config = config.artifacts
     _boss_indices = [37, 99, 139, 171]
     _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
 
-    for node in game.region_list.all_nodes:
-        if isinstance(node, PickupNode):
-            pickup_type = node.extra.get("pickup_type")
-            pickup_index = node.pickup_index.index
-            # Metroid pickups
-            if pickup_type == "metroid":
-                if config.prefer_metroids and config.prefer_stronger_metroids:
-                    locations.append(node)
-                elif config.prefer_metroids and pickup_index not in _stronger_metroid_indices:
-                    locations.append(node)
-                elif config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
-                    locations.append(node)
-            # Boss pickups/locations
-            elif config.prefer_bosses and pickup_index in _boss_indices:
-                locations.append(node)
+    pickup_type = node.extra.get("pickup_type")
+    pickup_index = node.pickup_index.index
+    # Metroid pickups
+    if pickup_type == "metroid":
+        if artifact_config.prefer_metroids and artifact_config.prefer_stronger_metroids:
+            return True
+        elif artifact_config.prefer_metroids and pickup_index not in _stronger_metroid_indices:
+            return True
+        elif artifact_config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
+            return True
+    # Boss pickups/locations
+    elif artifact_config.prefer_bosses and pickup_index in _boss_indices:
+        return True
 
-    return locations
+    return False
 
 
 class MSRBootstrap(MetroidBootstrap):
@@ -105,20 +101,7 @@ class MSRBootstrap(MetroidBootstrap):
         if config.prefer_anywhere:
             return super().assign_pool_results(rng, patches, pool_results)
 
-        locations = all_dna_locations(patches.game, config)
-        rng.shuffle(locations)
-
-        dna_to_assign = [
-            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is METROID_DNA_CATEGORY
-        ]
-
-        if len(dna_to_assign) > len(locations):
-            raise InvalidConfiguration(
-                f"Has {len(dna_to_assign)} DNA in the pool, but only {len(locations)} valid locations."
-            )
-
-        for dna, location in zip(dna_to_assign, locations, strict=False):
-            pool_results.to_place.remove(dna)
-            pool_results.assignment[location.pickup_index] = dna
+        locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
+        self.pre_place_items(rng, locations, pool_results, METROID_DNA_CATEGORY)
 
         return super().assign_pool_results(rng, patches, pool_results)

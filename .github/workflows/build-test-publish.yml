@@ -27,12 +27,12 @@ jobs:
             executable: true
             name: 'Linux Executable'
 
-          - os: 'macos-latest'
+          - os: 'macos-13'
             python: '3.12'
             executable: false
             name: 'macOS'
 
-          - os: 'macos-latest'
+          - os: 'macos-13'
             python: '3.12'
             executable: true
             name: 'macOS Executable'
@@ -62,8 +62,8 @@ jobs:
       # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
       # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
       # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-latest'] }}
-      FLASK_RUN_FROM_CLI: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-latest'] }}
+      EVENTLET_IMPORT_VERSION_ONLY: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-13'] }}
+      FLASK_RUN_FROM_CLI: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-13'] }}
 
     steps:
       - name: Checkout
@@ -224,7 +224,7 @@ jobs:
           Import-PfxCertificate -FilePath certificate/certificate.pfx -CertStoreLocation Cert:\CurrentUser\My -Password (ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText)
 
       - name: Deploy Advanced Installer
-        uses: caphyon/advinst-github-action@v1.1
+        uses: caphyon/advinst-github-action@v2.0
         with:
           advinst-version: '21.1'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}

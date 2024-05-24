@@ -70,6 +70,9 @@ class MSRGameExporter(GameExporter):
         assert isinstance(export_params, MSRGameExportParams)
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
+        monitoring.set_tag("msr_target_platform", export_params.target_platform.value)
+        monitoring.set_tag("msr_target_version", export_params.target_version.value)
+
         from open_samus_returns_rando.version import version as open_samus_returns_rando_version
 
         text_patches = patch_data["text_patches"]
