@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
 - Changed: Dual Gammas: Fighting them with Charge Beam now requires you to be able to climb the platforms in the room.
 - Fixed: Gravity Area Trapdoor: Shinesparking up is now impossible on Door Lock Rando.
+- Fixed: Gravity Area Trapdoor: Now checks for Long Beam to pass the EMP zone.
 - Fixed: Gravity Area Shaft: Shinesparking up is now impossible on Door Lock Rando and also properly accounts for Missiles.
 
 ##### Genetics Laboratory
