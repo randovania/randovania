@@ -152,6 +152,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Central Dynamo: Infinite Speed trick no longer requires Knowledge (Advanced)
 - Changed: Fungal Hall Access now appropriately requires Plasma
+- Added: Mine Security Station: Combat logic for getting Storage Depot A
+- Changed: Mine Security Station: Adjusted combat logic to have stricter requirements
 
 ##### Phendrana Drifts
 
