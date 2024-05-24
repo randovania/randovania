@@ -113,14 +113,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Mine Security Station - Wave Pirates not dropping down if the player didn't skip the cutscene immediately
 - Fixed: Reactor Core - Escape music restarting when leaving the room after Parasite Queen has been killed
 - Fixed: Furnace - Ghost elements re-appearing when re-entering the room from East Furnace Access
-- Fixed: Main Plaza - Graphical issues with the Vault Ledge door
+- Fixed: Main Plaza - Door background texture not rendering on the correct side
+- Fixed: Hive Totem - Skipping the cutscene now behaves more accurately as if the cutscene wasn't skipped
+- Fixed: Ruined Courtyard - Skipping the cutscene now behaves more accurately as if the cutscene wasn't skipped
 - Fixed: Phendrana Shorelines - The item behind the ice can now be collected again with Infinite Speed
 - Fixed: Control Tower - Flying Pirates incorrectly flying away from the player when skipping the cutscene
 - Fixed: Research Core - Combat Visor being forced after grabbing the pickup on Competitive Cutscene mode
 - Fixed: Research Entrance - Soflock if the player kills the pirates before touching the cutscene trigger
 - Fixed: Research Entrance - Fog disappearing after clearing the 1st Pass Pirates and before the 2nd Pass Shadow Pirates
 - Fixed: Energy Core - Underwater sound incorrectly playing when the player was not underwater
-- Fixed: Energy Core - Puzzle music no longer interrupts countdown if the player re-enters the room
+- Fixed: Energy Core - Puzzle music not playing again if the player re-enters the room during the countdown
 - Fixed: Ruined Shrine - Beetle music incorrectly continues playing after leaving towards Main Plaza
 - Fixed: Save Station B - Incorrectly playing save station music instead of Phendrana music if the player leaves too quickly
 - Fixed: Observatory - Projector activation cutscene skip activating the projector twice if the cutscene was skipped late
@@ -134,10 +136,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Ruined Shrine - Adjusted position of the cutscene skip lock-on point
 - Changed: Control Tower - "Doors Unlocked" HUD Memo now shows in Control Tower once the fight is done on Competitive Cutscene mode
 - Changed: Ruined Fountain - Morph Ball can no longer get stuck at the bend on the Spider Track
-- Changed: Ruined Courtyard - Cosmetic improvement to the lower water cutscene
 - Changed: Energy Core - Increased the size of the Load Trigger to Furnace Access
 - Changed: Hive Totem - Adjusted the Hive Totem scan position to match how it is on PAL
-- Changed: Hive Totem - Cosmetic improvements to the intro cutscene
 - Changed: Sun Tower Elevator - Cutscene now shows Samus facing the correct direction
 - Changed: Observatory - Restored an unused particle effect for the projector
 - Changed: Observatory - The projector is now activated on room load, instead of activating immediately after the room loaded
