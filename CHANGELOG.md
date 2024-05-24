@@ -63,13 +63,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Tower Activation Station: The left door is excluded from becoming a Locked Door, to avoid incompletable seeds.
 - Changed: Plasma Beam Chamber Access: The right door is excluded from becoming a Locked Door, to avoid incompletable seeds.
 
-### Discord Bot
-
-- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
-
 ### Metroid Dread
 
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
+- Fixed: In export dialog, the button prompt is now correctly "Select Folder" instead of "Select File".
 
 #### Logic database
 
@@ -161,6 +158,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Area 3 Metroid Caverns
 
 - Added: Caverns Teleporter East - Reaching the pickup now has correct requirements with High Jump Boots, requiring either a Super Jump (Advanced), Unmorph Extend (Intermediate), or Freezing the Moheek (Intermediate).
+
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
 
 ## [8.0.0] - 2024-05-01
 
