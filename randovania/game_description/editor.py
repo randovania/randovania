@@ -156,6 +156,11 @@ class Editor:
         new_area = dataclasses.replace(current_area, name=new_name)
         current_region.areas[current_region.areas.index(current_area)] = new_area
 
+        for node in new_area.nodes:
+            self.replace_node(
+                new_area, node, dataclasses.replace(node, identifier=identifier_replacer(node.identifier))
+            )
+
         self.game.region_list.invalidate_node_cache()
 
     def replace_identifiers(self, replacer: Callable[[NodeIdentifier], NodeIdentifier]) -> None:
