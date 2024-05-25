@@ -92,6 +92,9 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     it's set to be at the original location.
     """
 
+    index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
+    # TODO: docstring
+
     probability_offset: float = dataclasses.field(default=0.0, metadata=EXCLUDE_DEFAULT)
     """During generation, determines how much the weight when placing the pickup will be offset."""
 

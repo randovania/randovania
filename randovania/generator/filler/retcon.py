@@ -32,16 +32,24 @@ if TYPE_CHECKING:
 def _calculate_uncollected_index_weights(
     uncollected_indices: Set[PickupIndex],
     assigned_indices: Set[PickupIndex],
-    considered_counts: Mapping[PickupIndex, int],
+    index_age: Mapping[PickupIndex, float],
     indices_groups: list[set[PickupIndex]],
 ) -> dict[PickupIndex, float]:
+    """
+    Calculates a weight
+    :param uncollected_indices
+    :param assigned_indices
+    :param index_age: the higher the age for an index, the smaller it's weight
+    :param indices_groups: indices separated in distinct groups.
+    In practice, one group for each region respecting preset exclusions
+    """
     result = {}
 
     for indices in indices_groups:
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
         for index in sorted(uncollected_indices & indices):
-            weight_from_considered_count = min(10, considered_counts[index] + 1) ** -2
+            weight_from_considered_count = min(10.0, index_age[index] + 1.0) ** -2
             result[index] = weight_from_collected_indices * weight_from_considered_count
             # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_considered_count}")
 
@@ -169,10 +177,13 @@ def select_weighted_action(rng: Random, weighted_actions: Mapping[Action, float]
         return rng.choice(list(weighted_actions.keys()))
 
 
-def increment_considered_count(locations_weighted: WeightedLocations) -> None:
+def increment_index_age(locations_weighted: WeightedLocations, increment: float) -> None:
+    """
+    Increments the pickup index's age for every already collected index.
+    """
     for player, location, _ in locations_weighted.all_items():
-        was_present = location in player.pickup_index_considered_count
-        player.pickup_index_considered_count[location] += 1
+        was_present = location in player.pickup_index_age
+        player.pickup_index_age[location] += increment
         if not was_present:
             # if it wasn't present, thenwe get to log!
             filler_logging.print_new_pickup_index(player, location)
@@ -351,7 +362,7 @@ def _assign_pickup_somewhere(
         index_owner_state, pickup_index = usable_locations.select_location(rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
 
-        increment_considered_count(all_locations)
+        increment_index_age(all_locations, action.generator_params.index_age_impact)
         all_locations.remove(index_owner_state, pickup_index)
 
         # Place a hint for the new item
@@ -412,7 +423,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
         pickup_index_weights = _calculate_uncollected_index_weights(
             player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
             set(player_state.reach.state.patches.pickup_assignment),
-            player_state.pickup_index_considered_count,
+            player_state.pickup_index_age,
             player_state.indices_groups,
         )
         for pickup_index, weight in pickup_index_weights.items():
