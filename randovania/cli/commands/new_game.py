@@ -113,6 +113,9 @@ def copy_python_code(
             code = code.replace('long_name="Blank Development Game"', f'long_name="{long_name}"')
             code = code.replace("defaults_available_in_game_sessions=randovania.is_dev_version(),", "")
 
+        if file.name == "progressive_items.py":
+            code = code.replace('("Progressive Jump", ("Jump", "Double Jump")),', "")
+
         new_root.joinpath(relative).write_text(code)
 
 
