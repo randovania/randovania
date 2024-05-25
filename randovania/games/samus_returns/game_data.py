@@ -143,6 +143,8 @@ game_data: game.GameData = game.GameData(
         what_can_randomize=[
             "All items, including ones normally locked behind amiibo",
             "Starting locations",
+            "Door locks",
+            "Elevator destinations",
             "A new goal has been added (DNA Hunt)",
         ],
         need_to_play=[
