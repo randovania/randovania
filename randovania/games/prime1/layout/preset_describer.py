@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.prime1.layout.hint_configuration import PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import (
+    DamageReduction,
     LayoutCutsceneMode,
     PrimeConfiguration,
     RoomRandoMode,
@@ -143,9 +144,6 @@ class PrimePresetDescriber(GamePresetDescriber):
                     },
                 ),
                 {
-                    "Progressive suit damage reduction": configuration.progressive_damage_reduction,
-                },
-                {
                     "Warp to start": configuration.warp_to_start,
                     "Final bosses removed": configuration.teleporters.skip_final_bosses,
                     "Unlocked Vault door": configuration.main_plaza_door,
@@ -196,6 +194,8 @@ class PrimePresetDescriber(GamePresetDescriber):
                     listing["Random Boss Sizes"] = False
 
         fill_template_strings_from_tree(template_strings, extra_message_tree)
+        if configuration.damage_reduction != DamageReduction.DEFAULT:
+            template_strings["Game Changes"].append(f"Damage reduction: {configuration.damage_reduction.value}")
 
         backwards = [
             message

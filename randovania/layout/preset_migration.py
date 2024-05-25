@@ -1122,6 +1122,18 @@ def _migrate_v80(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v81(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        progressive_damage_reduction = preset["configuration"].pop("progressive_damage_reduction", False)
+        if progressive_damage_reduction:
+            damage_reduction = "Progressive"
+        else:
+            damage_reduction = "Default"
+        preset["configuration"]["damage_reduction"] = damage_reduction
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1203,6 +1215,7 @@ _MIGRATIONS = [
     _migrate_v78,  # msr elevator rando
     _migrate_v79,
     _migrate_v80,
+    _migrate_v81,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
