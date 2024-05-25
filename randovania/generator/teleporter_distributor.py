@@ -53,10 +53,10 @@ def try_randomize_teleporters(
     rng: Random,
     teleporters: tuple[TeleporterHelper, ...],
 ) -> list[TeleporterHelper]:
-    telepoter_database: list[TeleporterHelper] = list(teleporters)
-    assert len(telepoter_database) % 2 == 0
+    teleporter_database: list[TeleporterHelper] = list(teleporters)
+    assert len(teleporter_database) % 2 == 0
 
-    teleporter_list = copy.copy(telepoter_database)
+    teleporter_list = copy.copy(teleporter_database)
     teleporters_by_region: dict[str, list[TeleporterHelper]] = defaultdict(list)
     for teleporter in teleporter_list:
         teleporters_by_region[teleporter.region_name].append(teleporter)
@@ -76,8 +76,7 @@ def try_randomize_teleporters(
         teleporter_list.remove(source_teleporter)
         teleporter_list.remove(target_teleporter)
 
-    # TODO
-    list3 = copy.copy(telepoter_database)
+    list3 = copy.copy(teleporter_database)
     cteleporter_list3 = [list3[0]]
     while list3:
         cteleporter_list1 = []
@@ -85,9 +84,9 @@ def try_randomize_teleporters(
             index = 0
             while index < len(list3):
                 cteleporter2 = list3[index]
-                if (
-                    cteleporter2.region_name == cteleporter1.region_name
-                    or cteleporter2.area_name == cteleporter1.destination.area
+                if cteleporter2.region_name == cteleporter1.region_name or (
+                    cteleporter2.region_name == cteleporter1.destination.region
+                    and cteleporter2.area_name == cteleporter1.destination.area
                 ):
                     cteleporter_list1.append(cteleporter2)
                     list3.remove(cteleporter2)
@@ -99,7 +98,7 @@ def try_randomize_teleporters(
             # Randomization failed
             return try_randomize_teleporters(rng, teleporters)
 
-    return telepoter_database
+    return teleporter_database
 
 
 def two_way_teleporter_connections(
