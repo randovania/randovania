@@ -338,6 +338,25 @@ class DreadPatchDataFactory(PatchDataFactory):
 
         return cc_name, area.name
 
+    def _build_teleporter_name_dict(self) -> dict[str, dict[str, str]]:
+        cc_dict: dict = {}
+        for node, connection in self.patches.all_dock_connections():
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+            ):
+                src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
+                    node.identifier.area_identifier
+                )
+                src_cc = src_area.extra["asset_id"]
+                dest_name = _get_destination_room_for_teleportal(connection)
+
+                if src_region.extra["scenario_id"] not in cc_dict:
+                    cc_dict[src_region.extra["scenario_id"]] = {}
+                cc_dict[src_region.extra["scenario_id"]][src_cc] = f"Transport to {dest_name}"
+
+        return cc_dict
+
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
         # generate a 2D dictionary of (scenario, collision camera) => room name
         all_dict: dict = {}
@@ -351,22 +370,15 @@ class DreadPatchDataFactory(PatchDataFactory):
             all_dict[scenario] = region_dict
 
         # rename transporters to the correct transporter rooms
-        for node, connection in self.patches.all_dock_connections():
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
-            ):
-                src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
-                    node.identifier.area_identifier
-                )
-                src_cc = src_area.extra["asset_id"]
-                dest_name = _get_destination_room_for_teleportal(connection)
-                all_dict[src_region.extra["scenario_id"]][src_cc] = f"Transport to {dest_name}"
+        teleporter_dict = self._build_teleporter_name_dict()
+        for k, v in teleporter_dict.items():
+            all_dict[k].update(v)
+
         return all_dict
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
-        return {
+        cosmetic_dict: dict = {
             "config": {
                 "AIManager": {
                     "bShowBossLifebar": c.show_boss_lifebar,
@@ -385,7 +397,6 @@ class DreadPatchDataFactory(PatchDataFactory):
                     "enable_death_counter": c.show_death_counter,
                     "enable_room_name_display": c.show_room_names.value,
                 },
-                "camera_names_dict": self._build_area_name_dict(),
             },
             "shield_versions": {
                 "ice_missile": c.alt_ice_missile.value,
@@ -397,6 +408,14 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "closed": c.alt_closed.value,
             },
         }
+
+        if c.show_room_names.value != "NEVER":
+            cosmetic_dict["lua"]["camera_names_dict"] = self._build_area_name_dict()
+        elif not self.configuration.teleporters.is_vanilla:
+            cosmetic_dict["lua"]["custom_init"]["enable_room_name_display"] = "ALWAYS"
+            cosmetic_dict["lua"]["camera_names_dict"] = self._build_teleporter_name_dict()
+
+        return cosmetic_dict
 
     def _door_patches(self):
         wl = self.game.region_list

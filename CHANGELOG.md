@@ -77,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The exporting dialog now links to a guide that explains how to dump the RomFS.
 - Fixed: Typo on the exporting dialog.
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
+- Changed: When transports are randomized, the room names will now always be displayed on the HUD for rooms containing transports, regardless of cosmetic settings.
 
 #### Logic database
 
