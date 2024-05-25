@@ -231,6 +231,7 @@ def test_create_ammo_expansion(requires_main_item: bool, echoes_pickup_database,
             preferred_location_category=LocationCategory.MINOR,
             probability_offset=0.0,
             probability_multiplier=2.0,
+            index_age_impact=0.25,
         ),
     )
 

@@ -63,6 +63,7 @@ def create_standard_pickup(
             preferred_location_category=pickup.preferred_location_category,
             probability_offset=pickup.probability_offset,
             probability_multiplier=pickup.probability_multiplier * state.priority,
+            index_age_impact=pickup.index_age_impact,
         ),
     )
 
@@ -100,6 +101,7 @@ def create_ammo_pickup(
         generator_params=PickupGeneratorParams(
             preferred_location_category=ammo.preferred_location_category,
             probability_multiplier=2,
+            index_age_impact=0.25,
         ),
     )
 

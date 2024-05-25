@@ -40,7 +40,7 @@ class PlayerState:
     game: GameDescription
     pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
-    pickup_index_considered_count: collections.defaultdict[PickupIndex, int]
+    pickup_index_age: collections.defaultdict[PickupIndex, float]
     hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     event_seen_count: dict[ResourceInfo, int]
@@ -65,7 +65,7 @@ class PlayerState:
         self.pickups_left = pickups_left
         self.configuration = configuration
 
-        self.pickup_index_considered_count = collections.defaultdict(int)
+        self.pickup_index_age = collections.defaultdict(float)
         self.hint_seen_count = collections.defaultdict(int)
         self.event_seen_count = collections.defaultdict(int)
         self.hint_initial_pickups = {}
@@ -102,8 +102,8 @@ class PlayerState:
 
     def _log_new_pickup_index(self) -> None:
         for index in self.reach.state.collected_pickup_indices:
-            if index not in self.pickup_index_considered_count:
-                self.pickup_index_considered_count[index] = 0
+            if index not in self.pickup_index_age:
+                self.pickup_index_age[index] = 0.0
                 filler_logging.print_new_pickup_index(self.index, self.game, index)
 
     def _calculate_potential_actions(self) -> None:
