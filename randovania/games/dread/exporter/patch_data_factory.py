@@ -338,7 +338,8 @@ class DreadPatchDataFactory(PatchDataFactory):
 
         return cc_name, area.name
 
-    def _build_teleporter_name_dict(self, cc_dict: dict = {}) -> dict[str, dict[str, str]]:
+    def _build_teleporter_name_dict(self) -> dict[str, dict[str, str]]:
+        cc_dict: dict = {}
         for node, connection in self.patches.all_dock_connections():
             if (
                 isinstance(node, DockNode)
@@ -369,7 +370,11 @@ class DreadPatchDataFactory(PatchDataFactory):
             all_dict[scenario] = region_dict
 
         # rename transporters to the correct transporter rooms
-        return self._build_teleporter_name_dict(all_dict)
+        teleporter_dict = self._build_teleporter_name_dict()
+        for k, v in teleporter_dict.items():
+            all_dict[k].update(v)
+
+        return all_dict
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
