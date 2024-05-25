@@ -189,6 +189,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Common case where a modified input RomFS was considered being unmodified.
 - Fixed: Starting at Area 3 Factory Exterior - Beam Burst Chamber & Tsumuri Station no longer spawns Samus out of bounds.
 - Fixed: The Laser Aim cosmetic options UI no longer exports the wrong colors and has been simplified.
+- Fixed: The item in Area 7 - Omega Arena South Access no longer disappears after defeating the Omega in Area 7 - Omega Arena South.
 
 #### Logic Database
 
