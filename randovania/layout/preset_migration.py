@@ -1113,7 +1113,7 @@ def _migrate_v79(preset: dict) -> dict:
 
 def _migrate_v80(preset: dict) -> dict:
     if preset["game"] == "am2r":
-        items = ["Long Beam", "Infinite Bomb Jump", "Walljump"]
+        items = ["Long Beam", "Infinite Bomb Propulsion", "Walljump Boots"]
         for i in items:
             preset["configuration"]["standard_pickup_configuration"]["pickups_state"][i] = {
                 "num_included_in_starting_pickups": 1
