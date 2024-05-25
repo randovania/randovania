@@ -143,6 +143,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Observatory - Restored an unused particle effect for the projector
 - Changed: Observatory - The projector is now activated on room load, instead of activating immediately after the room loaded
 
+#### Logic Database
+
+##### Magmoor Caverns
+
+- Fixed: Geothermal Core: Various Puddle Spore requirements now require Before Storage Depot B instead of After.
+
+##### Phazon Mines
+
+- Changed: Central Dynamo: Infinite Speed trick no longer requires Knowledge (Advanced)
+- Changed: Fungal Hall Access now appropriately requires Plasma
+- Added: Mine Security Station: Combat logic for getting Storage Depot A
+- Changed: Mine Security Station: Adjusted combat logic to have stricter requirements
+
+##### Phendrana Drifts
+
+- Changed: Temple Entryway: Breaking ice properly requires Plasma/Wave/Power
+
+##### Tallon Overworld
+
+- Changed: Root Cave: NSJ inbounds climb now also connects to Arbor Chamber
+- Changed: Root Cave: NSJ inbounds climb to item no longer needs Standable Terrain and Invisible Objects has been nerfed to Beginner for the item
+- Changed: Root Cave: NSJ inbounds climb now appropriately requires Door Lock Rando and Room Rando to be off
+- Changed: Root Cave: Combat Dash from Arbor Chamber to item no longer requires X-Ray/Invisible Objects
+- Added: Root Cave: NSJ inbounds climb now has comments to explain methodology
+- Added: Root Cave: Advanced Combat Dash to Arbor Chamnber from item that does not need X-Ray/Invisible Objects
+
 ### Metroid Prime 2: Echoes
 
 - Fixed: A small typo with "immune" in the energy preset tab
@@ -246,13 +272,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
 
-##### Phendrana Drifts
-
-- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
-
 ##### Magmoor Caverns
 
 - Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
+
+##### Phendrana Drifts
+
+- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
 
 ### Metroid Prime 2: Echoes
 
