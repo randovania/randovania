@@ -335,10 +335,14 @@ def update_pyuic(enum_value: str) -> None:
 
     pyuic_path = _ROOT_PATH.parent.joinpath("pyuic.json")
     pyuic = json_lib.read_path(pyuic_path)
+
     if not any(it == new_entry for it in pyuic["files"]):
         pyuic["files"].append(
             [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
         )
+
+    pyuic["files"] = [pyuic["files"][0]] + sorted(pyuic["files"][1:])
+
     json_lib.write_path(pyuic_path, pyuic)
 
 
