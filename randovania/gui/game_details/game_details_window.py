@@ -234,7 +234,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.player_index_combo.setVisible(description.world_count > 1)
 
         if description.has_spoiler:
-            if description.world_count == 1:
+            exists_minimal_logic = any(
+                preset.configuration.trick_level.minimal_logic for preset in description.all_presets
+            )
+            if description.world_count == 1 and not exists_minimal_logic:
                 if self.validator_widget is not None:
                     self.validator_widget.stop_validator()
 
