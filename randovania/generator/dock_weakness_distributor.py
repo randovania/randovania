@@ -275,16 +275,18 @@ def _determine_valid_weaknesses(
         exclusions.update(dock.incompatible_dock_weaknesses)
         exclusions.update(target.incompatible_dock_weaknesses)  # two-way
 
-        state_from_target = state.copy()
-        state_from_target.node = target
-        reach_from_target = ResolverReach.calculate_reach(logic, state_from_target)
-
         is_locked_door_not_excluded = dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions)
         is_target_node_reachable = target in reach.nodes
-        is_source_reachable_from_target = dock in reach_from_target.nodes
 
-        if is_locked_door_not_excluded and is_target_node_reachable and is_source_reachable_from_target:
-            weighted_weaknesses[dock_type_params.locked] = 2.0
+        if is_locked_door_not_excluded and is_target_node_reachable:
+            # Small optimization to only calculate the reach back, if the locked door is even a viable option
+            state_from_target = state.copy()
+            state_from_target.node = target
+            reach_from_target = ResolverReach.calculate_reach(logic, state_from_target)
+            is_source_reachable_from_target = dock in reach_from_target.nodes
+
+            if is_source_reachable_from_target:
+                weighted_weaknesses[dock_type_params.locked] = 2.0
 
         exclusions.update(weighted_weaknesses.keys())
 
