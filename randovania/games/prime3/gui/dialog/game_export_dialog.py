@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime3.exporter.game_exporter import CorruptionGameExportParams
 from randovania.games.prime3.exporter.options import CorruptionPerGameOptions
+from randovania.games.prime3.gui.generated.corruption_game_export_dialog_ui import Ui_CorruptionGameExportDialog
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
-from randovania.gui.generated.corruption_game_export_dialog_ui import Ui_CorruptionGameExportDialog
 from randovania.gui.lib import common_qt_lib
 
 if TYPE_CHECKING:

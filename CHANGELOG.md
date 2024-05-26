@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Text in the Customize Preset window's Randomizer Logic > Generation tab is now game-neutral.
 - Fixed: Items placed before standard generation now respect vanilla item placement settings to not assign two items to one location.
 - Fixed: The Spoiler Playthrough tab is now hidden when creating a game with minimal logic, as it's not a reliable source on determining whether a seed is beatable.
+- Fixed: Locked/Disabled Doors will, in addition to checking if you can reach the backside of the door, also check if you can leave from there.
 - Fixed: Games that support randomisation of any type of transport with the "Two-way, between regions" mode now ensure that all regions are reachable.
 
 ### AM2R

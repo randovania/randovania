@@ -228,6 +228,7 @@ runtime-evaluated-base-classes = [
 files = [
     "randovania/bitpacking/",
     "randovania/cli/__init__.py",
+    "randovania/cli/commands/new_game.py",
     "randovania/game_description/",
     "randovania/games/am2r/gui/dialog/cosmetic_patches_dialog.py",
     "randovania/games/blank/",
@@ -270,3 +271,7 @@ module = "test.*"
 disallow_untyped_defs = false
 check_untyped_defs = true
 disable_error_code = "method-assign"
+
+[[tool.mypy.overrides]]
+module = "randovania.games.*.gui.generated.*"
+disallow_untyped_defs = false

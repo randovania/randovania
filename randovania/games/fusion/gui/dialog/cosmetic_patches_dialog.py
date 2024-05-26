@@ -4,9 +4,9 @@ import dataclasses
 import functools
 from typing import TYPE_CHECKING
 
+from randovania.games.fusion.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
 from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
