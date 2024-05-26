@@ -107,6 +107,7 @@ class GameWebInfo:
 class DevelopmentState(Enum):
     STABLE = "stable"
     EXPERIMENTAL = "experimental"
+    DEVELOPMENT = "development"
 
     @property
     def is_stable(self):
@@ -116,7 +117,10 @@ class DevelopmentState(Enum):
         if self.is_stable:
             return True
 
-        return randovania.is_dev_version()
+        if self == DevelopmentState.EXPERIMENTAL:
+            return randovania.is_dev_version()
+
+        return not randovania.is_frozen()
 
 
 @dataclass(frozen=True)

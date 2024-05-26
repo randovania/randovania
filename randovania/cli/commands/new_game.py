@@ -128,6 +128,10 @@ def copy_files_code(
             code = code.replace('short_name="Blank"', f'short_name="{short_name}"')
             code = code.replace('long_name="Blank Development Game"', f'long_name="{long_name}"')
             code = code.replace("defaults_available_in_game_sessions=randovania.is_dev_version(),", "")
+            code = code.replace(
+                "development_state=game.DevelopmentState.EXPERIMENTAL",
+                "development_state=game.DevelopmentState.DEVELOPMENT",
+            )
 
         if file.name == "progressive_items.py":
             code = code.replace('("Progressive Jump", ("Jump", "Double Jump")),', "")
