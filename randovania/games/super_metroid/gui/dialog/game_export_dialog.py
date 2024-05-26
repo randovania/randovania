@@ -7,6 +7,9 @@ from typing import TYPE_CHECKING
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
 from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
+from randovania.games.super_metroid.gui.generated.super_metroid_game_export_dialog_ui import (
+    Ui_SuperMetroidGameExportDialog,
+)
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -15,7 +18,6 @@ from randovania.gui.dialog.game_export_dialog import (
     prompt_for_output_file,
     spoiler_path_for,
 )
-from randovania.gui.generated.super_metroid_game_export_dialog_ui import Ui_SuperMetroidGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
 
 if TYPE_CHECKING:

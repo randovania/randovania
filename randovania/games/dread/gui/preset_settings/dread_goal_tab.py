@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.dread.gui.generated.preset_dread_goal_ui import Ui_PresetDreadGoal
 from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
-from randovania.gui.generated.preset_dread_goal_ui import Ui_PresetDreadGoal
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

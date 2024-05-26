@@ -4,7 +4,7 @@ import copy
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.gui.generated.preset_teleporters_dread_ui import (
+from randovania.games.dread.gui.generated.preset_teleporters_dread_ui import (
     Ui_PresetTeleportersDread,
 )
 from randovania.gui.lib import signal_handling

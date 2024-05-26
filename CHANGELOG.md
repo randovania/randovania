@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Text in the Customize Preset window's Randomizer Logic > Generation tab is now game-neutral.
 - Fixed: Items placed before standard generation now respect vanilla item placement settings to not assign two items to one location.
 - Fixed: The Spoiler Playthrough tab is now hidden when creating a game with minimal logic, as it's not a reliable source on determining whether a seed is beatable.
+- Fixed: Locked/Disabled Doors will, in addition to checking if you can reach the backside of the door, also check if you can leave from there.
+- Fixed: Games that support randomisation of any type of transport with the "Two-way, between regions" mode now ensure that all regions are reachable.
 
 ### AM2R
 
@@ -77,6 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The exporting dialog now links to a guide that explains how to dump the RomFS.
 - Fixed: Typo on the exporting dialog.
 - Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
+- Changed: In the preset energy tab, the explanation of environmental damage being non-logical is now less misleading.
 - Changed: When transports are randomized, the room names will now always be displayed on the HUD for rooms containing transports, regardless of cosmetic settings.
 
 #### Logic database

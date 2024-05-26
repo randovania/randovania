@@ -5,9 +5,9 @@ from typing import TYPE_CHECKING
 
 from randovania.games.fusion.exporter.game_exporter import FusionGameExportParams
 from randovania.games.fusion.exporter.options import FusionPerGameOptions
+from randovania.games.fusion.gui.generated.fusion_game_export_dialog_ui import Ui_FusionGameExportDialog
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for
-from randovania.gui.generated.fusion_game_export_dialog_ui import Ui_FusionGameExportDialog
 
 if TYPE_CHECKING:
     from pathlib import Path

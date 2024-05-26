@@ -11,6 +11,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
+from randovania.games.dread.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -22,7 +23,6 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for_directory,
     update_validation,
 )
-from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.lib.ftp_uploader import FtpUploader
 from randovania.lib.windows_drives import get_windows_drives
