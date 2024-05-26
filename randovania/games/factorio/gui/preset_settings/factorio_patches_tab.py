@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.factorio.gui.generated.preset_factorio_patches_ui import Ui_PresetFactorioPatches
 from randovania.games.factorio.layout import FactorioConfiguration
-from randovania.gui.generated.preset_factorio_patches_ui import Ui_PresetFactorioPatches
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:

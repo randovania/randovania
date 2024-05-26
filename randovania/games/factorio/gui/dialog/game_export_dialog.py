@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.factorio.exporter.game_exporter import FactorioGameExportParams
 from randovania.games.factorio.exporter.options import FactorioPerGameOptions
+from randovania.games.factorio.gui.generated.factorio_game_export_dialog_ui import Ui_FactorioGameExportDialog
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -14,7 +15,6 @@ from randovania.gui.dialog.game_export_dialog import (
     prompt_for_output_directory,
     spoiler_path_for_directory,
 )
-from randovania.gui.generated.factorio_game_export_dialog_ui import Ui_FactorioGameExportDialog
 
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
