@@ -95,9 +95,9 @@ def try_randomize_teleporters(
                 teleporter_to_check = remaining_teleporters[index]
                 # teleporter_to_check is considered reachable if it is in the same region as a reachable_teleporter
                 # or if it is in the region+area of the reachable_teleporter's destination
-                if teleporter_to_check.region_name == reachable_teleporter.region_name or (
-                    teleporter_to_check.region_name == reachable_teleporter.destination.region
-                    and teleporter_to_check.area_name == reachable_teleporter.destination.area
+                if (
+                    teleporter_to_check.region_name == reachable_teleporter.region_name
+                    or teleporter_to_check.area_location == reachable_teleporter.destination.area_identifier
                 ):
                     new_reachable_teleporters.append(teleporter_to_check)
                     remaining_teleporters.remove(teleporter_to_check)
