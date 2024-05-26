@@ -123,13 +123,13 @@ class GameDescription:
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
 
-    def __getstate__(self):
+    def __getstate__(self) -> dict:
         state = self.__dict__.copy()
         # Don't pickle _victory_condition_as_set
         del state["_victory_condition_as_set"]
         return state
 
-    def __setstate__(self, state):
+    def __setstate__(self, state: dict) -> None:
         self.__dict__.update(state)
         self._victory_condition_as_set = None
 
