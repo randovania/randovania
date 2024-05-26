@@ -9,6 +9,10 @@ run the Genetic Algorithm, and retrieve the solution!
 
 Other solution representations will require setting some more attributes.
 
+This library was embedded in Randovania to allow for the following modifications:
+- Receive a Random object instead of using the global random
+- Optimize by not deep copying unmodified elements.
+
 __author__ = 'Ayodeji Remi-Omosowon'
 __email__ = 'remiomosowon@gmail.com'
 __version__ = '0.3.1'
