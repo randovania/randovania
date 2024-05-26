@@ -5,6 +5,7 @@ import re
 import shutil
 import subprocess
 import sys
+import typing
 import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -14,7 +15,7 @@ from frozendict import frozendict
 from randovania.game_description import data_writer, default_database, pretty_print
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock import DockRandoConfig, DockType, DockWeakness, DockWeaknessDatabase
-from randovania.game_description.db.node import GenericNode
+from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
@@ -39,7 +40,8 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
-    from argparse import ArgumentParser
+    import argparse
+    from argparse import ArgumentParser, _SubParsersAction
 
 _ROOT_PATH = Path(__file__).parents[2]
 _GAMES_PATH = _ROOT_PATH.joinpath("games")
@@ -50,7 +52,7 @@ enum_value_re = re.compile(r"^[a-z0-9_]+$")
 short_name_re = re.compile(r"^[A-Z][A-Za-z0-9]+$")
 
 
-def update_game_py(enum_name: str, enum_value: str):
+def update_game_py(enum_name: str, enum_value: str) -> None:
     with _GAMES_PATH.joinpath("game.py").open() as f:
         game_py = list(f)
 
@@ -79,7 +81,7 @@ def copy_files_code(
     enum_value: str,
     short_name: str,
     long_name: str,
-):
+) -> None:
     blank_root = _GAMES_PATH.joinpath(RandovaniaGame.BLANK.value)
     new_root = _GAMES_PATH.joinpath(enum_value)
 
@@ -176,7 +178,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
 
     node_index = 0
 
-    def make_node(node_class: type, name: str, **kwargs):
+    def make_node(node_class: type, name: str, **kwargs: typing.Any) -> Node:
         nonlocal node_index
         node_index += 1
 
@@ -243,7 +245,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
     return game_db
 
 
-def create_pickup_database(game_enum: RandovaniaGame):
+def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
     pickup_categories = {
         "weapon": PickupCategory(
             name="weapon",
@@ -280,8 +282,8 @@ def create_pickup_database(game_enum: RandovaniaGame):
     return pickup_db
 
 
-def load_presets(template: RandovaniaGame):
-    def get(path: str):
+def load_presets(template: RandovaniaGame) -> dict[str, VersionedPreset]:
+    def get(path: str) -> VersionedPreset:
         v = VersionedPreset.from_file_sync(_GAMES_PATH.joinpath(template.value, "presets", path))
         v.get_preset()
         return v
@@ -289,7 +291,7 @@ def load_presets(template: RandovaniaGame):
     return {preset_config["path"]: get(preset_config["path"]) for preset_config in template.data.presets}
 
 
-def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, pickup_db: PickupDatabase):
+def copy_presets(old_presets: dict[str, VersionedPreset], gd: GameDescription, pickup_db: PickupDatabase) -> None:
     new_game = gd.game
     for path, preset in old_presets.items():
         config = preset.get_preset().configuration
@@ -334,19 +336,17 @@ def update_pyuic(enum_value: str) -> None:
     new_entry = [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
 
     pyuic_path = _ROOT_PATH.parent.joinpath("pyuic.json")
-    pyuic = json_lib.read_path(pyuic_path)
+    pyuic = typing.cast(dict[str, list[list[str]]], json_lib.read_path(pyuic_path))
 
     if not any(it == new_entry for it in pyuic["files"]):
-        pyuic["files"].append(
-            [f"randovania/games/{enum_value}/gui/ui_files/*.ui", f"randovania/games/{enum_value}/gui/generated"]
-        )
+        pyuic["files"].append(new_entry)
 
     pyuic["files"] = [pyuic["files"][0]] + sorted(pyuic["files"][1:])
 
     json_lib.write_path(pyuic_path, pyuic)
 
 
-def new_game_command_logic(args):
+def new_game_command_logic(args: argparse.Namespace) -> None:
     enum_name: str = args.enum_name
     enum_value: str = args.enum_value
     short_name: str = args.short_name
@@ -391,7 +391,7 @@ def new_game_command_logic(args):
     )
 
 
-def create_new_database_logic(args):
+def create_new_database_logic(args: argparse.Namespace) -> None:
     new_enum = RandovaniaGame(args.game)
 
     game_db = create_new_database(new_enum, _GAMES_PATH.joinpath(new_enum.value).joinpath("logic_database"))
@@ -400,7 +400,7 @@ def create_new_database_logic(args):
     print(f"{new_enum.long_name} created successfully. New files can be found at {new_enum.data_path}")
 
 
-def add_new_game_command(sub_parsers):
+def add_new_game_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "add-new-game", help="Loads the preset files and saves then again with the latest version"
     )
@@ -427,7 +427,7 @@ def add_new_game_command(sub_parsers):
     parser.set_defaults(func=new_game_command_logic)
 
 
-def add_create_databases(sub_parsers):
+def add_create_databases(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "create-new-database",
         help="Creates initial databases for a recently created game. Automatically ran after add-new-game",
