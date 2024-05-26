@@ -21,13 +21,14 @@ def _options() -> type[PerGameOptions]:
 
 def _gui() -> game.GameGui:
     from randovania.games.blank import gui
+    from randovania.games.blank.pickup_database import progressive_items
 
     return game.GameGui(
         game_tab=gui.BlankGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.BlankCosmeticPatchesDialog,
         export_dialog=gui.BlankGameExportDialog,
-        progressive_item_gui_tuples=(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(),
     )
 

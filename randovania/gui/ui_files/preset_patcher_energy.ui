@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-248</y>
-         <width>460</width>
-         <height>920</height>
+         <y>0</y>
+         <width>455</width>
+         <height>1264</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -121,13 +121,6 @@
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="QCheckBox" name="progressive_damage_reduction_check">
-             <property name="text">
-              <string>Damage reduction depends on how many suits you have, not which</string>
-             </property>
-            </widget>
            </item>
            <item row="0" column="0" colspan="2">
             <widget class="QLabel" name="energy_tank_capacity_description">
@@ -264,7 +257,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much damage per second you take in Dark Aether, per suit.&lt;br/&gt;Light Suit is always imune.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much damage per second you take in Dark Aether, per suit.&lt;br/&gt;Light Suit is always immune.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -286,6 +279,44 @@
               </size>
              </property>
             </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="damage_reduction_box">
+          <property name="title">
+           <string>Damage reduction</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="QLabel" name="damage_reduction_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how damage reduction is applied, according to what suits you have:&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:704;&quot;&gt;Original:&lt;/span&gt; Having Varia Suit reduces damage by 10%, Gravity Suit by 20%, and Phazon Suit by 50%. The highest value suit overrides other suits.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:704;&quot;&gt;Progressive:&lt;/span&gt; Having one suit reduces damage by 10%, two suits by 20%, and having all suits reduces damage by 50%.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:704;&quot;&gt;Additive:&lt;/span&gt; Each suit has a respective damage reduction value, which are added together to determine total damage reduction. Varia and Gravity Suit each add 10% to total damage reduction, and Phazon Suit adds 30%. Phazon and one other suit would reduce damage by 40% total.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QComboBox" name="damage_reduction_combo">
+             <item>
+              <property name="text">
+               <string>Original</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Progressive</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Additive</string>
+              </property>
+             </item>
+            </widget>
            </item>
           </layout>
          </widget>

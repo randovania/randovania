@@ -77,7 +77,10 @@ game_data: game.GameData = game.GameData(
             "Starting locations",
         ],
         need_to_play=[
-            "Windows, Linux, or Wine. The game is included with Randovania",
+            (
+                "The game is included with Randovania. Windows or Wine is needed to play Freeware."
+                "Windows or Linux is needed to play Cave Story Tweaked"
+            ),
         ],
     ),
     hash_words=_hash_words(),

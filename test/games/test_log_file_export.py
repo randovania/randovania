@@ -102,6 +102,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/elevator_rando.rdvgame",  # elevator_rando multi
         "dread/custom_start.rdvgame",  # crazy settings
         "dread/custom_patcher_data.rdvgame",  # custom patcher data
+        "dread/all_settings.rdvgame",  # all settings enabled
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors

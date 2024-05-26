@@ -118,7 +118,7 @@ game_data: game.GameData = game.GameData(
             "Door locks",
         ],
         need_to_play=[
-            "An ISO of any Gamecube release of the game",
+            "An ISO of any GameCube release of the game",
             "A modded Wii, or Dolphin Emulator",
         ],
     ),

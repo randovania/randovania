@@ -133,10 +133,11 @@ game_data: game.GameData = game.GameData(
             "All items",
             "Starting locations",
             "Door locks",
+            "Transport Pipe destinations",
             "A new goal has been added (DNA Hunt)",
         ],
         need_to_play=[
-            "AM2R version 1.5.5",
+            "AM2R version 1.5.5 for either Windows, Linux or macOS",
         ],
     ),
     hash_words=_hash_words(),
