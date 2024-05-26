@@ -85,4 +85,4 @@ def print_new_pickup_index(player: int, game: GameDescription, location: PickupI
     if debug.debug_level() > 1:
         region_list = game.region_list
         node = region_list.node_from_pickup_index(location)
-        print(f"-> New Pickup Index: Player {player}'s {region_list.node_name(node, with_region=True)}")
+        print(f"-> New Pickup Index: Player {player + 1}'s {region_list.node_name(node, with_region=True)}")

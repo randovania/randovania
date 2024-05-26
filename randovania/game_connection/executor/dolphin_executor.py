@@ -4,6 +4,7 @@ import platform
 
 import dolphin_memory_engine
 import pid
+from dolphin_memory_engine._dolphin_memory_engine import DolphinStatus
 
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperation,
@@ -40,12 +41,21 @@ class DolphinExecutor(MemoryOperationExecutor):
             self.dolphin.hook()
 
         if not self.dolphin.is_hooked():
+            status = self.dolphin.get_status()
+            if status == DolphinStatus.notRunning:
+                return "Unable to connect. Dolphin isn't started"
+            if status == DolphinStatus.noEmu:
+                return "Unable to connect. Dolphin is currently not emulating any games"
+
             return "Unable to connect to Dolphin"
 
         try:
             self._pid.create()
         except pid.PidFileError:
-            return "Another Randovania is connected to Dolphin already"
+            return (
+                "Another Randovania is connected to Dolphin already. Make sure you only have one instance of "
+                "Randovania running"
+            )
 
         return None
 

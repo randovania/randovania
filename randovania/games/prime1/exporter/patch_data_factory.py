@@ -968,7 +968,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,
                 "missileStationPbRefill": not self.configuration.legacy_mode,
-                "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
+                "staggeredSuitDamage": self.configuration.damage_reduction.value,
                 "heatDamagePerSec": self.configuration.heat_damage,
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,

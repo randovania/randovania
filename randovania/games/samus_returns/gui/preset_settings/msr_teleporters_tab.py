@@ -91,7 +91,7 @@ class PresetTeleportersMSR(PresetTeleporterTab, Ui_PresetTeleportersMSR, NodeLis
         config_teleporters: TeleporterConfiguration = config.teleporters
 
         descriptions = [
-            "<p>Controls where each teleporter pipe connects to.</p>",
+            "<p>Controls where each elevator connects to.</p>",
             f" {self.teleporter_mode_to_description[config_teleporters.mode]}</p>",
         ]
         self.teleporters_description_label.setText("".join(descriptions))

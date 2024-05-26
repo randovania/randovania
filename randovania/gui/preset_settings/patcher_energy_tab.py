@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
+from randovania.games.prime1.layout.prime_configuration import DamageReduction, IngameDifficulty, PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
@@ -54,11 +54,13 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.heated_damage_spin.setMinimum(config_fields["heat_damage"].metadata["min"])
             self.heated_damage_spin.setMaximum(config_fields["heat_damage"].metadata["max"])
 
-            signal_handling.on_checked(self.progressive_damage_reduction_check, self._persist_progressive_damage)
+            for i, difficulty in enumerate(DamageReduction):
+                self.damage_reduction_combo.setItemData(i, difficulty)
+            signal_handling.on_combo(self.damage_reduction_combo, self._persist_suit_damage)
             self.heated_damage_spin.valueChanged.connect(self._persist_argument("heat_damage"))
 
         else:
-            self.progressive_damage_reduction_check.setVisible(False)
+            self.damage_reduction_box.setVisible(False)
             self.heated_damage_box.setVisible(False)
 
         # In-Game Difficulty
@@ -101,7 +103,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
         elif self.game_enum == RandovaniaGame.METROID_PRIME:
             assert isinstance(config, PrimeConfiguration)
-            self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
+            signal_handling.set_combo_with_value(self.damage_reduction_combo, config.damage_reduction)
             self.heated_damage_spin.setValue(config.heat_damage)
             signal_handling.set_combo_with_value(self.ingame_difficulty_combo, config.ingame_difficulty)
 
@@ -123,9 +125,9 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             safe_zone = dataclasses.replace(configuration.safe_zone, fully_heal=checked)
             editor.set_configuration_field("safe_zone", safe_zone)
 
-    def _persist_progressive_damage(self, checked: bool) -> None:
+    def _persist_suit_damage(self, value: DamageReduction) -> None:
         with self._editor as editor:
-            editor.set_configuration_field("progressive_damage_reduction", checked)
+            editor.set_configuration_field("damage_reduction", value)
 
     def _persist_dangerous_tank(self, checked: bool) -> None:
         with self._editor as editor:

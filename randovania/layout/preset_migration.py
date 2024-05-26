@@ -1113,11 +1113,23 @@ def _migrate_v79(preset: dict) -> dict:
 
 def _migrate_v80(preset: dict) -> dict:
     if preset["game"] == "am2r":
-        items = ["Long Beam", "Infinite Bomb Jump", "Walljump"]
+        items = ["Long Beam", "Infinite Bomb Propulsion", "Walljump Boots"]
         for i in items:
             preset["configuration"]["standard_pickup_configuration"]["pickups_state"][i] = {
                 "num_included_in_starting_pickups": 1
             }
+
+    return preset
+
+
+def _migrate_v81(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        progressive_damage_reduction = preset["configuration"].pop("progressive_damage_reduction", False)
+        if progressive_damage_reduction:
+            damage_reduction = "Progressive"
+        else:
+            damage_reduction = "Default"
+        preset["configuration"]["damage_reduction"] = damage_reduction
 
     return preset
 
@@ -1203,6 +1215,7 @@ _MIGRATIONS = [
     _migrate_v78,  # msr elevator rando
     _migrate_v79,
     _migrate_v80,
+    _migrate_v81,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
