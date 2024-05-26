@@ -348,4 +348,5 @@ class OldGeneratorReach(GeneratorReach):
         return results
 
     def victory_condition_satisfied(self) -> bool:
-        return self.game.victory_condition.satisfied(self._state.node_context(), self._state.energy)
+        context = self._state.node_context()
+        return self.game.victory_condition_as_set(context).satisfied(context, self._state.energy)

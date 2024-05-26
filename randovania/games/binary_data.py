@@ -40,6 +40,7 @@ _EXPECTED_FIELDS = [
     "victory_condition",
     "dock_weakness_database",
     "used_trick_levels",
+    "flatten_to_set_on_patch",
     "regions",
 ]
 
@@ -336,6 +337,7 @@ ConstructGame = Struct(
             victory_condition=ConstructRequirement,
             dock_weakness_database=ConstructDockWeaknessDatabase,
             used_trick_levels=ConstructUsedTrickLevels,
+            flatten_to_set_on_patch=Flag,
             regions=PrefixedArray(VarInt, ConstructRegion),
         ),
         "lzma",

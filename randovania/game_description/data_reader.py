@@ -440,8 +440,8 @@ class RegionReader:
             frozen_lib.wrap(data["extra"]),
         )
 
-    def read_region_list(self, data: list[dict]) -> RegionList:
-        return RegionList(read_array(data, self.read_region))
+    def read_region_list(self, data: list[dict], flatten_to_set_on_patch: bool) -> RegionList:
+        return RegionList(read_array(data, self.read_region), flatten_to_set_on_patch)
 
 
 def read_requirement_templates(data: dict, database: ResourceDatabase) -> dict[str, NamedRequirementTemplate]:
@@ -510,7 +510,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
 
     layers = frozen_lib.wrap(data["layers"])
     region_reader = RegionReader(resource_database, dock_weakness_database)
-    region_list = region_reader.read_region_list(data["regions"])
+    region_list = region_reader.read_region_list(data["regions"], data["flatten_to_set_on_patch"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
     starting_location = NodeIdentifier.from_json(data["starting_location"])

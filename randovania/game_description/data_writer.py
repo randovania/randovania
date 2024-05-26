@@ -445,6 +445,7 @@ def write_game_description(game: GameDescription) -> dict:
         "victory_condition": write_requirement(game.victory_condition),
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "used_trick_levels": write_used_trick_levels(game),
+        "flatten_to_set_on_patch": game.region_list.flatten_to_set_on_patch,
         "regions": write_region_list(game.region_list),
     }
 

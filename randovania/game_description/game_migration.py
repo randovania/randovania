@@ -304,13 +304,13 @@ def _migrate_v23(data: dict) -> dict:
 def _migrate_v24(data: dict) -> dict:
     regions_data = data["regions"]
     migration_dict = migration_data.get_raw_data(RandovaniaGame(data["game"]))
-    elevator_custom_name = migration_dict.get("elevator_custom_names", None)
+    elevator_custom_name: dict[str, str] | None = migration_dict.get("elevator_custom_names", None)
 
     for region in regions_data:
         for area_name, area in region["areas"].items():
             for node_name, node in area["nodes"].items():
                 if node["node_type"] == "dock":
-                    full_qualified_name = f"{region["name"]}/{area_name}/{node_name}"
+                    full_qualified_name = f"{region['name']}/{area_name}/{node_name}"
                     if (
                         elevator_custom_name is not None
                         and elevator_custom_name.get(full_qualified_name, None) is not None
@@ -319,6 +319,11 @@ def _migrate_v24(data: dict) -> dict:
                     else:
                         node["ui_custom_name"] = None
 
+    return data
+
+
+def _migrate_v25(data: dict) -> dict:
+    data["flatten_to_set_on_patch"] = False
     return data
 
 
@@ -347,6 +352,7 @@ _MIGRATIONS = [
     _migrate_v22,
     _migrate_v23,  # add require_documentation_above
     _migrate_v24,
+    _migrate_v25,  # flatten_to_set_on_patch
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

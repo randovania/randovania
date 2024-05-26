@@ -28,7 +28,8 @@ class GeneratorReach:
         raise NotImplementedError
 
     def victory_condition_satisfied(self) -> bool:
-        return self.game.victory_condition.satisfied(self.state.node_context(), self.state.energy)
+        context = self.state.node_context()
+        return self.game.victory_condition_as_set(context).satisfied(context, self.state.energy)
 
     @property
     def iterate_nodes(self) -> Iterator[Node]:

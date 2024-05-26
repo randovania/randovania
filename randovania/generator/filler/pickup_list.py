@@ -162,7 +162,7 @@ def get_pickups_that_solves_unreachable(
     state = reach.state
     possible_sets = [v for v in reach.unreachable_nodes_with_requirements().values() if v.alternatives]
     context = reach.node_context()
-    possible_sets.append(reach.game.victory_condition.as_set(context))
+    possible_sets.append(reach.game.victory_condition_as_set(context))
 
     uncollected_resources = set()
     for node in uncollected_resource_nodes:

@@ -113,7 +113,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     """
     return PickupEntry(
         name="Nothing",
-        progression=((resource_database.get_item_by_name("Nothing"), 1),),
+        progression=(),
         model=PickupModel(
             game=resource_database.game_enum,
             name=model_name,
