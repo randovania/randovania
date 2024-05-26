@@ -21,14 +21,13 @@ New here or looking to install? Check [our website](https://randovania.org/).
 <!-- Begin EXPERIMENTAL -->
 
 ### Experimental Games
- - Metroid Prime 3: Corruption
  - Super Metroid
 
 <!-- End EXPERIMENTAL -->
 
 <!-- Begin WELCOME -->
 
-Randovania can randomize many aspects of its supported games, all while still ensuring they're completable 
+Randovania can randomize many aspects of its supported games, all while still ensuring they're completable
 without using any glitches or exploits. Its features include:
 
 * Randomizing what can be found in each item location. Weapons, keys, and more can end up in
@@ -94,7 +93,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 * Converting Metroid Prime models by [Migs](https://www.twitch.tv/migslive).
 
 ### Metroid Prime 3: Corruption
-* Game patching written by [gollop](https://github.com/gollop).
+* Game patching help by [gollop](https://github.com/gollop).
 * Room data collected by [Dyceron](https://www.twitch.tv/dyceron) and [KirbymastaH](https://www.twitch.tv/kirbymastah).
 
 ### Super Metroid
