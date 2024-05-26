@@ -58,7 +58,7 @@ def _hash_words() -> list[str]:
 game_data: game.GameData = game.GameData(
     short_name="SM",
     long_name="Super Metroid",
-    development_state=game.DevelopmentState.EXPERIMENTAL,
+    development_state=game.DevelopmentState.DEVELOPMENT,
     presets=[{"path": "starter_preset.rdvpreset"}],
     faq=[
         (
