@@ -4,9 +4,9 @@ import dataclasses
 
 from PySide6 import QtGui, QtWidgets
 
+from randovania.games.samus_returns.gui.generated.msr_cosmetic_patches_dialog_ui import Ui_MSRCosmeticPatchesDialog
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRRoomGuiType
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.msr_cosmetic_patches_dialog_ui import Ui_MSRCosmeticPatchesDialog
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.signal_handling import set_combo_with_value
 

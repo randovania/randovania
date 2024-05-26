@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.am2r.gui.generated.preset_am2r_goal_ui import Ui_PresetAM2RGoal
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig, AM2RConfiguration
-from randovania.gui.generated.preset_am2r_goal_ui import Ui_PresetAM2RGoal
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

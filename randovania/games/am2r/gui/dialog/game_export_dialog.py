@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.am2r.exporter.game_exporter import AM2RGameExportParams
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
+from randovania.games.am2r.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -15,7 +16,6 @@ from randovania.gui.dialog.game_export_dialog import (
     prompt_for_output_directory,
     spoiler_path_for_directory,
 )
-from randovania.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
 
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options

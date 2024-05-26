@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.prime2.gui.generated.preset_echoes_hints_ui import Ui_PresetEchoesHints
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode
-from randovania.gui.generated.preset_echoes_hints_ui import Ui_PresetEchoesHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

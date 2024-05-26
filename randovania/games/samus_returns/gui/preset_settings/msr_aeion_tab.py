@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.samus_returns.gui.generated.preset_msr_aeion_ui import Ui_PresetMSRAeion
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
-from randovania.gui.generated.preset_msr_aeion_ui import Ui_PresetMSRAeion
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:

@@ -3,9 +3,9 @@ import dataclasses
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.games.samus_returns.gui.generated.preset_msr_hints_ui import Ui_PresetMSRHints
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
-from randovania.gui.generated.preset_msr_hints_ui import Ui_PresetMSRHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab

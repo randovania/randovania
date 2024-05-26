@@ -5,7 +5,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.gui.generated.preset_teleporters_prime1_ui import (
+from randovania.games.prime1.gui.generated.preset_teleporters_prime1_ui import (
     Ui_PresetTeleportersPrime1,
 )
 from randovania.gui.lib import signal_handling

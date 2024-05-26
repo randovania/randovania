@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from randovania.games.game import RandovaniaGame
-from randovania.gui.generated.games_tab_echoes_widget_ui import Ui_EchoesGameTabWidget
+from randovania.games.prime2.gui.generated.games_tab_echoes_widget_ui import Ui_EchoesGameTabWidget
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 
 

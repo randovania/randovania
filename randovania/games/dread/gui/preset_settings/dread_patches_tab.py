@@ -4,8 +4,8 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.games.dread.gui.generated.preset_dread_patches_ui import Ui_PresetDreadPatches
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration, DreadRavenBeakDamageMode
-from randovania.gui.generated.preset_dread_patches_ui import Ui_PresetDreadPatches
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
