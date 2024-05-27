@@ -433,6 +433,43 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return elevator_dict
 
+    def _add_custom_doors(self) -> list[dict[str, str]]:
+        custom_doors = []
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            if not isinstance(node, DockNode):
+                continue
+            if node.default_dock_weakness.name != "Access Open":
+                continue
+            if any(entry["door_actor"] == self._teleporter_ref_for(node) for entry in custom_doors):
+                continue
+
+            entity_groups = {
+                self.game.region_list.area_by_area_location(node.identifier.area_identifier).extra["asset_id"],
+                self.game.region_list.area_by_area_location(node.default_connection.area_identifier).extra["asset_id"],
+            }
+
+            tile_indices = [
+                node.extra["tile_index"],
+                self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
+            ]
+            tile_indices.sort()
+
+            custom_doors.append(
+                {
+                    "door_actor": self._teleporter_ref_for(node),
+                    "position": {
+                        "x": node.extra.get("location_x_override", node.location.x),
+                        "y": node.extra.get("location_y_override", node.location.y),
+                        "z": node.extra.get("location_z_override", node.location.z),
+                    },
+                    "tile_indices": tile_indices,
+                    "entity_groups": list(entity_groups),
+                }
+            )
+
+        return custom_doors
+
     def _door_patches(self) -> list[dict[str, str]]:
         wl = self.game.region_list
 
@@ -447,6 +484,9 @@ class MSRPatchDataFactory(PatchDataFactory):
 
             if "actor_name" not in node.extra:
                 print(f"Invalid door (no actor): {node}")
+                continue
+
+            if any(entry["actor"] == self._teleporter_ref_for(node) for entry in result):
                 continue
 
             result.append(
@@ -520,6 +560,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "hints": self._encode_hints(self.rng),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
+            "custom_doors": self._add_custom_doors(),
             "door_patches": self._door_patches(),
         }
 
