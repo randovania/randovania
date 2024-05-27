@@ -433,10 +433,11 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return elevator_dict
 
-    def _add_custom_doors(self) -> list[dict[str, str]]:
-        custom_doors = []
+    def _add_custom_doors(self) -> list[dict]:
+        custom_doors: list = []
 
         for node, weakness in self.patches.all_dock_weaknesses():
+            assert node.location is not None
             if not isinstance(node, DockNode):
                 continue
             if node.default_dock_weakness.name != "Access Open":
@@ -484,7 +485,7 @@ class MSRPatchDataFactory(PatchDataFactory):
     def _door_patches(self) -> list[dict[str, str]]:
         wl = self.game.region_list
 
-        result = []
+        result: list = []
         used_actors: dict[str, str] = {}
 
         for node, weakness in self.patches.all_dock_weaknesses():
