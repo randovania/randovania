@@ -1,5 +1,6 @@
 import json
 import math
+import re
 import typing
 from pathlib import Path
 
@@ -169,9 +170,11 @@ def main():
             graph.add_edge(it, tech_name)
 
     for tech_name in networkx.topological_sort(graph):
+        new_tech = re.sub(r"-(\d+)$", lambda m: f"-{chr(ord('a') + int(m.group(1)))}", tech_name)
+
         pickup_nodes[tech_name] = {
             "node_name": f"Pickup ({util.get_localized_name(tech_name)})",
-            "tech_name": f"randovania-{tech_name}",
+            "tech_name": f"randovania-{new_tech}",
             "complexity": complexity_for(techs_raw[tech_name]),
         }
 
