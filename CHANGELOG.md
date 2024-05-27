@@ -69,6 +69,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Tower Activation Station: The left door is excluded from becoming a Locked Door, to avoid incompletable seeds.
 - Changed: Plasma Beam Chamber Access: The right door is excluded from becoming a Locked Door, to avoid incompletable seeds.
 
+### Cave Story
+
+- Added: 60fps can be enabled for Freeware by setting the appropriate value in the `settings.ini` file next to the executable after an export.
+- Changed: When playing a Multiworld, Windows will not show a Firewall prompt anymore to allow the game.
+- Fixed: Cave Story Tweaked now runs on the Steam Deck.
+
 ### Discord Bot
 
 - Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
