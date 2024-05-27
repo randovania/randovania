@@ -444,18 +444,26 @@ class MSRPatchDataFactory(PatchDataFactory):
             if any(entry["door_actor"] == self._teleporter_ref_for(node) for entry in custom_doors):
                 continue
 
+            # Make a set of the entity groups for each room that each door exists in
             entity_groups = {
                 self.game.region_list.area_by_area_location(node.identifier.area_identifier).extra["asset_id"],
                 self.game.region_list.area_by_area_location(node.default_connection.area_identifier).extra["asset_id"],
             }
 
+            # Add additional entity groups if needed, mainly for post-Metroid groups
             if "append_entity_group" in node.extra:
                 entity_groups.add(node.extra["append_entity_group"])
 
+            # Sort the entity_groups for consistency
+            final_entity_groups = list(entity_groups).sort()
+
+            # Make a list of the tile_indices listed in each door node and append them
             tile_indices = [
                 node.extra["tile_index"],
                 self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
             ]
+
+            # tile_indices must be [left, right] order so the patcher can add the minimap tiles
             tile_indices.sort()
 
             custom_doors.append(
@@ -467,7 +475,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                         "z": node.extra.get("location_z_override", node.location.z),
                     },
                     "tile_indices": tile_indices,
-                    "entity_groups": list(entity_groups),
+                    "entity_groups": final_entity_groups,
                 }
             )
 
