@@ -610,7 +610,7 @@ Extra - asset_id: collision_camera018
   * Pickup 40; Category? Major
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_energytank
-  > Door to Fleech Fire Containment
+  > Door to Dam Basement (DLR Right)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -626,7 +626,7 @@ Extra - asset_id: collision_camera018
   * Power Beam Door to Fleech Fire Containment/Door to Dam Basement
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Pickup (Energy Tank)
+  > Door to Dam Basement (DLR Left)
       Trivial
 
 > Tunnel to Gullugg Hideout; Heals? False
@@ -634,6 +634,25 @@ Extra - asset_id: collision_camera018
   * Tunnel to Gullugg Hideout/Tunnel to Dam Basement
   > Pickup (Missile Tank)
       Morph Ball
+
+> Door to Dam Basement (DLR Left); Heals? False
+  * Layers: default
+  * Access Open to Dam Basement/Door to Dam Basement (DLR Right)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 4
+  * Extra - location_x_override: -280.0
+  > Door to Fleech Fire Containment
+      Trivial
+
+> Door to Dam Basement (DLR Right); Heals? False
+  * Layers: default
+  * Access Open to Dam Basement/Door to Dam Basement (DLR Left)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 5
+  > Pickup (Energy Tank)
+      Trivial
 
 ----------------
 Gullugg Hideout

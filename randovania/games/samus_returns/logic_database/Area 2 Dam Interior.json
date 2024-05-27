@@ -4300,7 +4300,7 @@
                     "pickup_index": 40,
                     "location_category": "major",
                     "connections": {
-                        "Door to Fleech Fire Containment": {
+                        "Door to Dam Basement (DLR Right)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4370,7 +4370,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Pickup (Energy Tank)": {
+                        "Door to Dam Basement (DLR Left)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4413,6 +4413,87 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Dam Basement (DLR Left)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -880.0,
+                        "y": -7990.0,
+                        "z": -10.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 4,
+                        "location_x_override": -280.0
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Area 2 Dam Interior",
+                        "area": "Dam Basement",
+                        "node": "Door to Dam Basement (DLR Right)"
+                    },
+                    "default_dock_weakness": "Access Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Fleech Fire Containment": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Dam Basement (DLR Right)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -280.0,
+                        "y": -7990.0,
+                        "z": -10.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 5
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Area 2 Dam Interior",
+                        "area": "Dam Basement",
+                        "node": "Door to Dam Basement (DLR Left)"
+                    },
+                    "default_dock_weakness": "Access Open",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

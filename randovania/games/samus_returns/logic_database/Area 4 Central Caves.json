@@ -4818,7 +4818,7 @@
                     "pickup_index": 85,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Gamma Arena Access South": {
+                        "Door to Gamma Arena Access South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4827,27 +4827,33 @@
                         }
                     }
                 },
-                "Dock to Gamma Arena Access South": {
+                "Door to Gamma Arena Access South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -820.7964340536072,
-                        "y": 2428.9863029873654,
+                        "x": -820.8,
+                        "y": 2400.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_003",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 236,
+                        "y_override": 3300.0,
+                        "append_entity_group": "PostGamma_001"
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 Central Caves",
                         "area": "Gamma Arena Access South",
-                        "node": "Dock to Gamma Arena"
+                        "node": "Door to Gamma Arena"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -4977,7 +4983,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Gamma Arena Access South": {
+                        "Door to Gamma Arena Access South": {
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
@@ -5239,7 +5245,7 @@
                                 ]
                             }
                         },
-                        "Dock to Outward Climb": {
+                        "Door to Outward Climb": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5387,7 +5393,7 @@
                                 ]
                             }
                         },
-                        "Dock to Gamma Arena": {
+                        "Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5442,7 +5448,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Gamma Arena": {
+                        "Door to Gamma Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5453,27 +5459,32 @@
                         }
                     }
                 },
-                "Dock to Outward Climb": {
+                "Door to Outward Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7172.784810126583,
-                        "y": 571.4266877637128,
+                        "x": -7100.0,
+                        "y": 571.43,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 182,
+                        "y_override": 1100.0
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 Central Caves",
                         "area": "Outward Climb",
-                        "node": "Dock to Gamma Arena Access South"
+                        "node": "Door to Gamma Arena Access South"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5630,11 +5641,11 @@
                         }
                     }
                 },
-                "Dock to Gamma Arena": {
+                "Door to Gamma Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -802.68,
+                        "x": -800.0,
                         "y": 2414.36,
                         "z": 0.0
                     },
@@ -5642,15 +5653,21 @@
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_003",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 235,
+                        "y_override": 3300.0,
+                        "append_entity_group": "PostGamma_001"
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 Central Caves",
                         "area": "Gamma Arena",
-                        "node": "Dock to Gamma Arena Access South"
+                        "node": "Door to Gamma Arena Access South"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5714,7 +5731,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 4 (Central Caves) - Gamma Arena Access South Grapple Block",
                     "connections": {
-                        "Dock to Gamma Arena": {
+                        "Door to Gamma Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5763,34 +5780,39 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Dock to Gamma Arena Access South": {
+                "Door to Gamma Arena Access South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7131.9518243003895,
-                        "y": 592.5079702444204,
+                        "x": -7100.0,
+                        "y": 550.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 181,
+                        "y_override": 1100.0
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 Central Caves",
                         "area": "Gamma Arena Access South",
-                        "node": "Dock to Outward Climb"
+                        "node": "Door to Outward Climb"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Gamma Arena Access North": {
+                        "Door to Gamma Arena Access North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5799,34 +5821,39 @@
                         }
                     }
                 },
-                "Dock to Gamma Arena Access North": {
+                "Door to Gamma Arena Access North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7035.246191994333,
-                        "y": 3544.3322706340773,
+                        "x": -7050.0,
+                        "y": 3534.82,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_002",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 248,
+                        "y_override": 4300.0
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 Central Caves",
                         "area": "Gamma Arena Access North",
-                        "node": "Dock to Outward Climb"
+                        "node": "Door to Outward Climb"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Gamma Arena Access South": {
+                        "Door to Gamma Arena Access South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6303,7 +6330,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Dock to Outward Climb": {
+                        "Door to Outward Climb": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6460,27 +6487,32 @@
                         }
                     }
                 },
-                "Dock to Outward Climb": {
+                "Door to Outward Climb": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7060.342746801834,
-                        "y": 3517.575830718481,
+                        "x": -7050.0,
+                        "y": 3517.58,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_002",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 249,
+                        "y_override": 4300.0
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 4 Central Caves",
                         "area": "Outward Climb",
-                        "node": "Dock to Gamma Arena Access North"
+                        "node": "Door to Gamma Arena Access North"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

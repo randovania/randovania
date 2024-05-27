@@ -449,6 +449,9 @@ class MSRPatchDataFactory(PatchDataFactory):
                 self.game.region_list.area_by_area_location(node.default_connection.area_identifier).extra["asset_id"],
             }
 
+            if "append_entity_group" in node.extra:
+                entity_groups.add(node.extra["append_entity_group"])
+
             tile_indices = [
                 node.extra["tile_index"],
                 self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
