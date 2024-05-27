@@ -116,6 +116,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: The artifact totems now break during the Meta-Ridley fight if less artifacts were required than shuffled
 - Fixed: Crashes in several rooms when pressing start to skip cutscene exactly 1 second from the end of cutscene
 - Fixed: Incorrect shield texture for vertical **Power Beam Only** doors
 - Fixed: Elite Research - Stuttering when loading the room
