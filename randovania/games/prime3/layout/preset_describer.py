@@ -24,7 +24,6 @@ class CorruptionPresetDescriber(GamePresetDescriber):
             "Difficulty": [
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
             ],
-            "Gameplay": [],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
