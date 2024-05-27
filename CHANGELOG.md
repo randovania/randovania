@@ -67,6 +67,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
 
+### Cave Story
+
+- Added: 60fps can be enabled for Freeware by setting the appropriate value in the `settings.ini` file next to the executable after an export.
+- Changed: When playing a Multiworld, Windows will not show a Firewall prompt anymore to allow the game.
+- Fixed: Cave Story Tweaked now runs on the Steam Deck.
+
 ### Discord Bot
 
 - Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
