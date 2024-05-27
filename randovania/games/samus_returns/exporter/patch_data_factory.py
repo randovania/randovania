@@ -456,7 +456,8 @@ class MSRPatchDataFactory(PatchDataFactory):
                 entity_groups.add(node.extra["append_entity_group"])
 
             # Sort the entity_groups for consistency
-            final_entity_groups = list(entity_groups).sort()
+            final_entity_groups = list(entity_groups)
+            final_entity_groups.sort()
 
             # Make a list of the tile_indices listed in each door node and append them
             tile_indices = [
