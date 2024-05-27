@@ -75,10 +75,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Morph Launcher leading to Experiment Z-57 will no longer cause Thermal Doors to temporarily be closed.
 - Changed: The exporting dialog now links to a guide that explains how to dump the RomFS.
-- Fixed: Typo on the exporting dialog.
-- Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
 - Changed: In the preset energy tab, the explanation of environmental damage being non-logical is now less misleading.
 - Changed: When transports are randomized, the room names will now always be displayed on the HUD for rooms containing transports, regardless of cosmetic settings.
+- Fixed: Typo on the exporting dialog.
+- Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
 
 #### Logic database
 
@@ -86,12 +86,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Artaria
 
+- Added: Wall Jump (Beginner) is now an option for reaching the bottom part of the slope in EMMI Zone Spinner.
+- Added: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with Phantom Cloak and Climb Sloped Surfaces (Advanced).
 - Changed: Climbing the slope in EMMI Zone Spinner with Spin Boost has been reclassified from Movement to Climb Sloped Surfaces.
 - Changed: Using Speed Booster to climb the slope in EMMI Zone Spinner has been reclassified to Speed Booster Conservation.
-- Added: Wall Jump (Beginner) is now an option for reaching the bottom part of the slope in EMMI Zone Spinner.
 - Changed: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with no items has been reclassified from Movement (Advanced) to Climb Sloped Surfaces (Expert).
-- Added: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with Phantom Cloak and Climb Sloped Surfaces (Advanced).
-- In Waterfall: Getting from Right of Rotatable to Tower Middle  with Spin Boost now requires Climb Sloped Surfaces (Beginner).
+- Changed: In Waterfall: Getting from Right of Rotatable to Tower Middle  with Spin Boost now requires Climb Sloped Surfaces (Beginner).
 
 #### Burenia
 
