@@ -66,8 +66,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### The Tower
 
 - Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
-- Changed: Tower Activation Station: The left door is excluded from becoming a Locked Door, to avoid incompletable seeds.
-- Changed: Plasma Beam Chamber Access: The right door is excluded from becoming a Locked Door, to avoid incompletable seeds.
 
 ### Discord Bot
 
