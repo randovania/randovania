@@ -7,6 +7,7 @@ from pathlib import Path
 import networkx
 
 from tools.factorio import util
+from tools.factorio.util import and_req, tech_req, template_req
 
 _custom_tech = [
     # custom tech
@@ -23,7 +24,6 @@ _custom_tech = [
     "stack-inserter-capacity-bonus",
     "research-productivity",
 ]
-
 _upgrade_techs_templates = {
     "refined-flammables-{}": 6,
     "energy-weapons-damage-{}": 6,
@@ -41,6 +41,29 @@ _bonus_upgrade_tech = [
     for template, max_tier in _upgrade_techs_templates.items()
     for i in range(_base_upgrade_tiers, max_tier)
 ]
+
+
+_k_tier_requirements = [
+    [],  # 1
+    [],
+    [template_req("craft-transport-belt")],
+    [
+        template_req("craft-assembling-machine-1"),
+        template_req("craft-inserter"),
+        template_req("has-electricity"),
+    ],  # TODO: electric lab, drills
+    [
+        template_req("craft-fast-transport-belt"),
+        template_req("craft-fast-inserter"),
+        tech_req("railway"),
+    ],  # TODO: fast smelting
+    [tech_req("construction-robotics"), template_req("craft-assembling-machine-2")],
+    [template_req("craft-stack-inserter")],
+    [tech_req("research-speed-6"), template_req("craft-assembling-machine-3")],
+    [tech_req("logistic-system")],
+    [tech_req("productivity-module-3")],
+]
+
 
 trivial_req = {"type": "and", "data": {"comment": None, "items": []}}
 areas = {
@@ -90,14 +113,11 @@ def make_dock(target_area: str, target_node: str, connections=None):
     }
 
 
-for tier in range(10):
+for tier, req in enumerate(_k_tier_requirements):
     areas["Tech Tree"]["nodes"][f"Connection to Tier {tier + 1}"] = make_dock(
         f"Tier {tier + 1}", "Connection to Tech Tree", {"Spawn Point": trivial_req}
     )
-    areas["Tech Tree"]["nodes"]["Spawn Point"]["connections"][f"Connection to Tier {tier + 1}"] = {
-        "type": "template",
-        "data": f"tech-tier-{tier + 1}",
-    }
+    areas["Tech Tree"]["nodes"]["Spawn Point"]["connections"][f"Connection to Tier {tier + 1}"] = and_req(req)
     areas[f"Tier {tier + 1}"] = {
         "default_node": None,
         "extra": {},
@@ -254,7 +274,10 @@ def main():
         requirement = requirement_for_tech(tech_name)
         requirement["data"]["items"].extend(
             [
-                {"type": "node", "data": {"region": "Tech", "area": f"Tier {it['node_name']}", "node": it["node_name"]}}
+                {
+                    "type": "node",
+                    "data": {"region": "Tech", "area": f"Tier {it['complexity']}", "node": it["node_name"]},
+                }
                 for it in previous_nodes
             ]
         )

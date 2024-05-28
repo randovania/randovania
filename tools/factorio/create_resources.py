@@ -7,38 +7,7 @@ from pathlib import Path
 from randovania.games.factorio.data_importer import data_parser
 from randovania.lib import json_lib
 from tools.factorio import util
-
-
-def template_req(name: str) -> dict:
-    return {
-        "type": "template",
-        "data": name,
-    }
-
-
-def tech_req(tech_name: str) -> dict:
-    return {
-        "type": "resource",
-        "data": {
-            "type": "items",
-            "name": tech_name,
-            "amount": 1,
-            "negate": False,
-        },
-    }
-
-
-def and_req(entries: list, comment: str | None = None) -> dict:
-    if len(entries) == 1:
-        return entries[0]
-    return {"type": "and", "data": {"comment": comment, "items": entries}}
-
-
-def or_req(entries: list, comment: str | None = None) -> dict:
-    if len(entries) == 1:
-        return entries[0]
-    return {"type": "or", "data": {"comment": comment, "items": entries}}
-
+from tools.factorio.util import and_req, or_req, tech_req, template_req
 
 _k_items_for_crafting_category = {
     "crafting": [],
@@ -117,27 +86,6 @@ _k_miner_for_resource = {
     "crude-oil": template_req("use-pumpjack"),
 }
 
-_k_tier_requirements = [
-    [],  # 1
-    [],
-    [template_req("craft-transport-belt")],
-    [
-        template_req("craft-assembling-machine-1"),
-        template_req("craft-inserter"),
-        template_req("has-electricity"),
-    ],  # TODO: electric lab, drills
-    [
-        template_req("craft-fast-transport-belt"),
-        template_req("craft-fast-inserter"),
-        tech_req("railway"),
-    ],  # TODO: fast smelting
-    [tech_req("construction-robotics"), template_req("craft-assembling-machine-2")],
-    [template_req("craft-stack-inserter")],
-    [tech_req("research-speed-6"), template_req("craft-assembling-machine-3")],
-    [tech_req("logistic-system")],
-    [tech_req("productivity-module-3")],
-]
-
 
 def requirement_for_recipe(recipes_raw: dict, recipe: str, unlocking_techs: list[str]) -> dict:
     entries = []
@@ -206,12 +154,6 @@ def update_templates(header: dict, recipes_raw: dict, techs_for_recipe: dict[str
             ]
         ),
     }
-
-    for tier_level, tier_req in enumerate(_k_tier_requirements):
-        header["resource_database"]["requirement_template"][f"tech-tier-{tier_level + 1}"] = {
-            "display_name": f"Tech Tier {tier_level + 1}",
-            "requirement": and_req(tier_req),
-        }
 
     for entity in _k_burner_entities:
         header["resource_database"]["requirement_template"][f"use-{entity}"] = {
