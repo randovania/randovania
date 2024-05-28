@@ -142,7 +142,7 @@ _k_tier_requirements = [
 def requirement_for_recipe(recipes_raw: dict, recipe: str, unlocking_techs: list[str]) -> dict:
     entries = []
 
-    if len(unlocking_techs) > 2:
+    if len(unlocking_techs) > 1:
         entries.append(or_req([tech_req(tech) for tech in unlocking_techs]))
     elif unlocking_techs:
         entries.append(tech_req(unlocking_techs[0]))
