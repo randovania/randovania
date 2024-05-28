@@ -85,7 +85,23 @@ def make_dock(target_area: str, target_node: str, connections=None):
         "incompatible_dock_weaknesses": [],
         "override_default_open_requirement": None,
         "override_default_lock_requirement": None,
+        "ui_custom_name": None,
         "connections": connections or {},
+    }
+
+
+for tier in range(10):
+    areas["Tech Tree"]["nodes"][f"Connection to Tier {tier + 1}"] = make_dock(
+        f"Tier {tier + 1}", "Connection to Tech Tree", {"Spawn Point": trivial_req}
+    )
+    areas["Tech Tree"]["nodes"]["Spawn Point"]["connections"][f"Connection to Tier {tier + 1}"] = {
+        "type": "template",
+        "data": f"tech-tier-{tier + 1}",
+    }
+    areas[f"Tier {tier + 1}"] = {
+        "default_node": None,
+        "extra": {},
+        "nodes": {"Connection to Tech Tree": make_dock("Tech Tree", f"Connection to Tier {tier + 1}")},
     }
 
 
@@ -187,8 +203,6 @@ def main():
         # print(f"{n:40} {cost_complexity:10d} -- {code:>6} x{tech['unit']['count']:<6} @ {tech['unit']['time']}s")
 
         items = [{"type": "template", "data": f"craft-{pack.lower()}"} for pack in pack_for_tech[n]]
-        complexity = pickup_nodes[n]["complexity"]
-        items.append({"type": "template", "data": f"tech-tier-{complexity}"})
 
         return {
             "type": "and",
@@ -211,9 +225,6 @@ def main():
     #
     # pprint.pp(dict(count_per_tier.items()), width=10)
 
-    the_area = areas["Tech Tree"]
-    nodes: dict[str, dict[str, typing.Any]] = the_area["nodes"]
-
     for tech_name in networkx.topological_sort(graph):
         node_details = pickup_nodes[tech_name]
         if tech_name in existing_ids:
@@ -228,33 +239,36 @@ def main():
         node["extra"]["ingredients"] = pack_for_tech[tech_name]
         if tech_name in _bonus_upgrade_tech:
             node["layers"] = ["full_tree"]
-        nodes[node_details["node_name"]] = node
+        areas[f"Tier {node_details['complexity']}"]["nodes"][node_details["node_name"]] = node
 
     for tech_name in networkx.topological_sort(graph):
         node_name = pickup_nodes[tech_name]["node_name"]
+        nodes = areas[f"Tier {pickup_nodes[tech_name]['complexity']}"]["nodes"]
         node = nodes[node_name]
 
         if "prerequisites" in techs_raw[tech_name]:
-            previous_nodes = [pickup_nodes[it]["node_name"] for it in techs_raw[tech_name]["prerequisites"]]
+            previous_nodes = [pickup_nodes[it] for it in techs_raw[tech_name]["prerequisites"]]
         else:
-            previous_nodes = ["Spawn Point"]
+            previous_nodes = []
 
         requirement = requirement_for_tech(tech_name)
-        if len(previous_nodes) > 1:
-            requirement["data"]["items"].extend(
-                [{"type": "node", "data": {"region": "Tech", "area": "Tech Tree", "node": it}} for it in previous_nodes]
-            )
+        requirement["data"]["items"].extend(
+            [
+                {"type": "node", "data": {"region": "Tech", "area": f"Tier {it['node_name']}", "node": it["node_name"]}}
+                for it in previous_nodes
+            ]
+        )
 
-        for previous_node in previous_nodes:
-            node["connections"][previous_node] = trivial_req
-            nodes[previous_node]["connections"][node_name] = requirement
+        node["connections"]["Connection to Tech Tree"] = trivial_req
+        nodes["Connection to Tech Tree"]["connections"][node_name] = requirement
 
-    node_order = list(nodes)
-    for node in nodes.values():
-        node["connections"] = {
-            target: node["connections"][target]
-            for target in sorted(node["connections"], key=lambda n: node_order.index(n))
-        }
+    for area in areas.values():
+        node_order = list(area["nodes"])
+        for node in area["nodes"].values():
+            node["connections"] = {
+                target: node["connections"][target]
+                for target in sorted(node["connections"], key=lambda n: node_order.index(n))
+            }
 
     with region_path.open("w") as f:
         json.dump(

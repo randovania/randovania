@@ -6,8 +6,8 @@ from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.exporter.pickup_exporter import GenericAcquiredMemo
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.node_requirement import NodeRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
 from randovania.games.factorio.generator.complexity import item_is_fluid
@@ -53,8 +53,13 @@ class FactorioPatchDataFactory(PatchDataFactory):
             area = rl.nodes_to_area(node)
 
             prerequisites = []
-            for other_node, req in area.connections[node].items():
-                if req == Requirement.trivial() and isinstance(other_node, PickupNode):
+
+            con_req = area.connections[area.node_with_name("Connection to Tech Tree")][node]
+            assert isinstance(con_req, RequirementAnd)
+
+            for req in con_req.items:
+                if isinstance(req, NodeRequirement):
+                    other_node = rl.node_by_identifier(req.node_identifier)
                     prerequisites.append(other_node.extra["tech_name"])
 
             technologies.append(
