@@ -454,7 +454,8 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "fluid-wagon"
+                        "fluid-wagon",
+                        "pump"
                     ]
                 }
             },
@@ -826,12 +827,10 @@
                 }
             },
             "fluid-handling": {
-                "long_name": "Fluid handling",
+                "long_name": "Barrel handling",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "storage-tank",
-                        "pump",
                         "empty-barrel",
                         "fill-water-barrel",
                         "empty-water-barrel",
@@ -1185,6 +1184,16 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": []
+                }
+            },
+            "fluid-storage": {
+                "long_name": "Fluid storage",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "storage-tank",
+                        "pump"
+                    ]
                 }
             }
         },
@@ -2026,12 +2035,29 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "oil-cracking",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "oil-cracking",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "oil-processing",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -3468,15 +3494,15 @@
                             },
                             {
                                 "type": "template",
+                                "data": "craft-iron-plate"
+                            },
+                            {
+                                "type": "template",
                                 "data": "craft-steel-plate"
                             },
                             {
                                 "type": "template",
                                 "data": "craft-pipe"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-storage-tank"
                             }
                         ]
                     }
@@ -4692,12 +4718,29 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "coal-liquefaction",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "coal-liquefaction",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "oil-processing",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -4732,12 +4775,29 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "construction-robotics",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "construction-robotics",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "logistic-robotics",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -5554,12 +5614,29 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "fluid-handling",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "fluid-storage",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "fluid-wagon",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -5876,12 +5953,29 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "construction-robotics",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "construction-robotics",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "logistic-robotics",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -6814,12 +6908,29 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "or",
                                 "data": {
-                                    "type": "items",
-                                    "name": "construction-robotics",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "construction-robotics",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "logistic-robotics",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -6849,7 +6960,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "fluid-handling",
+                                    "name": "fluid-storage",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -9576,12 +9687,29 @@
             "has-pump": {
                 "display_name": "Unlocked Pump",
                 "requirement": {
-                    "type": "resource",
+                    "type": "or",
                     "data": {
-                        "type": "items",
-                        "name": "fluid-handling",
-                        "amount": 1,
-                        "negate": false
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "fluid-storage",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "fluid-wagon",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
                     }
                 }
             },
@@ -10093,7 +10221,7 @@
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "fluid-handling",
+                        "name": "fluid-storage",
                         "amount": 1,
                         "negate": false
                     }

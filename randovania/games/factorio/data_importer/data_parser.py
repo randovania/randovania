@@ -1,4 +1,8 @@
 import collections
+import typing
+
+from randovania.games.game import RandovaniaGame
+from randovania.lib import json_lib
 
 
 def remove_expensive(recipes_raw: dict) -> None:
@@ -18,6 +22,9 @@ def get_recipes_for(recipes_raw: dict) -> dict[str, set[str]]:
 
     for recipe_name, recipe_data in recipes_raw.items():
         if recipe_data.get("subgroup") == "empty-barrel":
+            continue
+
+        if recipe_data.get("category") == "hand-crafting":
             continue
 
         results = []
@@ -49,7 +56,11 @@ def get_recipes_for(recipes_raw: dict) -> dict[str, set[str]]:
 
 def get_recipes_unlock_by_tech(techs_raw: dict[str, dict]) -> dict[str, list[str]]:
     return {
-        tech_name: [effect["recipe"] for effect in data.get("effects", []) if effect["type"] == "unlock-recipe"]
+        tech_name: [
+            effect["recipe"]
+            for effect in data.get("effects", [])
+            if effect["type"] == "unlock-recipe" and not effect["recipe"].endswith("-handcraft")
+        ]
         for tech_name, data in techs_raw.items()
     }
 
@@ -83,3 +94,15 @@ def count_for_result(recipe: dict, target_result: str) -> int:
             return recipe.get("result_count", 1)
 
     return 0
+
+
+def load_recipes_raw() -> dict[str, dict[str, typing.Any]]:
+    assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
+
+    return json_lib.read_path(assets_folder.joinpath("recipes-raw.json"))
+
+
+def load_techs_raw() -> dict[str, dict[str, typing.Any]]:
+    assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
+
+    return json_lib.read_path(assets_folder.joinpath("techs-raw.json"))

@@ -7,6 +7,7 @@ from pathlib import Path
 import networkx
 
 from tools.factorio import util
+from tools.factorio.util import and_req, tech_req, template_req
 
 _custom_tech = [
     # custom tech
@@ -23,7 +24,6 @@ _custom_tech = [
     "stack-inserter-capacity-bonus",
     "research-productivity",
 ]
-
 _upgrade_techs_templates = {
     "refined-flammables-{}": 6,
     "energy-weapons-damage-{}": 6,
@@ -41,6 +41,29 @@ _bonus_upgrade_tech = [
     for template, max_tier in _upgrade_techs_templates.items()
     for i in range(_base_upgrade_tiers, max_tier)
 ]
+
+
+_k_tier_requirements = [
+    [],  # 1
+    [],
+    [template_req("craft-transport-belt")],
+    [
+        template_req("craft-assembling-machine-1"),
+        template_req("craft-inserter"),
+        template_req("has-electricity"),
+    ],  # TODO: electric lab, drills
+    [
+        template_req("craft-fast-transport-belt"),
+        template_req("craft-fast-inserter"),
+        tech_req("railway"),
+    ],  # TODO: fast smelting
+    [tech_req("construction-robotics"), template_req("craft-assembling-machine-2")],
+    [template_req("craft-stack-inserter")],
+    [tech_req("research-speed-6"), template_req("craft-assembling-machine-3")],
+    [tech_req("logistic-system")],
+    [tech_req("productivity-module-3")],
+]
+
 
 trivial_req = {"type": "and", "data": {"comment": None, "items": []}}
 areas = {
@@ -85,7 +108,20 @@ def make_dock(target_area: str, target_node: str, connections=None):
         "incompatible_dock_weaknesses": [],
         "override_default_open_requirement": None,
         "override_default_lock_requirement": None,
+        "ui_custom_name": None,
         "connections": connections or {},
+    }
+
+
+for tier, req in enumerate(_k_tier_requirements):
+    areas["Tech Tree"]["nodes"][f"Connection to Tier {tier + 1}"] = make_dock(
+        f"Tier {tier + 1}", "Connection to Tech Tree", {"Spawn Point": trivial_req}
+    )
+    areas["Tech Tree"]["nodes"]["Spawn Point"]["connections"][f"Connection to Tier {tier + 1}"] = and_req(req)
+    areas[f"Tier {tier + 1}"] = {
+        "default_node": None,
+        "extra": {},
+        "nodes": {"Connection to Tech Tree": make_dock("Tech Tree", f"Connection to Tier {tier + 1}")},
     }
 
 
@@ -111,14 +147,18 @@ def complexity_for(tech: dict) -> int:
 def _load_existing_ids(region_path: Path) -> dict[str, int]:
     try:
         with region_path.open() as f:
-            return {
-                node: node_data["pickup_index"]
-                for node, node_data in json.load(f)["areas"]["Tech Tree"]["nodes"].items()
-                if node_data["node_type"] == "pickup"
-            }
-
+            all_areas = json.load(f)["areas"]
     except FileNotFoundError:
         return {}
+
+    result = {}
+
+    for area in all_areas.values():
+        for node_data in area["nodes"].values():
+            if node_data["node_type"] == "pickup":
+                result[node_data["extra"]["original_tech"]] = node_data["pickup_index"]
+
+    return result
 
 
 def make_gen_id(existing_ids: dict[str, int]) -> typing.Callable[[], int]:
@@ -183,8 +223,6 @@ def main():
         # print(f"{n:40} {cost_complexity:10d} -- {code:>6} x{tech['unit']['count']:<6} @ {tech['unit']['time']}s")
 
         items = [{"type": "template", "data": f"craft-{pack.lower()}"} for pack in pack_for_tech[n]]
-        complexity = pickup_nodes[n]["complexity"]
-        items.append({"type": "template", "data": f"tech-tier-{complexity}"})
 
         return {
             "type": "and",
@@ -207,13 +245,10 @@ def main():
     #
     # pprint.pp(dict(count_per_tier.items()), width=10)
 
-    the_area = areas["Tech Tree"]
-    nodes: dict[str, dict[str, typing.Any]] = the_area["nodes"]
-
     for tech_name in networkx.topological_sort(graph):
         node_details = pickup_nodes[tech_name]
-        if node_details["node_name"] in existing_ids:
-            new_id = existing_ids[node_details["node_name"]]
+        if tech_name in existing_ids:
+            new_id = existing_ids[tech_name]
         else:
             new_id = gen_id()
         node = make_pickup(new_id, is_major=True)
@@ -224,33 +259,39 @@ def main():
         node["extra"]["ingredients"] = pack_for_tech[tech_name]
         if tech_name in _bonus_upgrade_tech:
             node["layers"] = ["full_tree"]
-        nodes[node_details["node_name"]] = node
+        areas[f"Tier {node_details['complexity']}"]["nodes"][node_details["node_name"]] = node
 
     for tech_name in networkx.topological_sort(graph):
         node_name = pickup_nodes[tech_name]["node_name"]
+        nodes = areas[f"Tier {pickup_nodes[tech_name]['complexity']}"]["nodes"]
         node = nodes[node_name]
 
         if "prerequisites" in techs_raw[tech_name]:
-            previous_nodes = [pickup_nodes[it]["node_name"] for it in techs_raw[tech_name]["prerequisites"]]
+            previous_nodes = [pickup_nodes[it] for it in techs_raw[tech_name]["prerequisites"]]
         else:
-            previous_nodes = ["Spawn Point"]
+            previous_nodes = []
 
         requirement = requirement_for_tech(tech_name)
-        if len(previous_nodes) > 1:
-            requirement["data"]["items"].extend(
-                [{"type": "node", "data": {"region": "Tech", "area": "Tech Tree", "node": it}} for it in previous_nodes]
-            )
+        requirement["data"]["items"].extend(
+            [
+                {
+                    "type": "node",
+                    "data": {"region": "Tech", "area": f"Tier {it['complexity']}", "node": it["node_name"]},
+                }
+                for it in previous_nodes
+            ]
+        )
 
-        for previous_node in previous_nodes:
-            node["connections"][previous_node] = trivial_req
-            nodes[previous_node]["connections"][node_name] = requirement
+        node["connections"]["Connection to Tech Tree"] = trivial_req
+        nodes["Connection to Tech Tree"]["connections"][node_name] = requirement
 
-    node_order = list(nodes)
-    for node in nodes.values():
-        node["connections"] = {
-            target: node["connections"][target]
-            for target in sorted(node["connections"], key=lambda n: node_order.index(n))
-        }
+    for area in areas.values():
+        node_order = list(area["nodes"])
+        for node in area["nodes"].values():
+            node["connections"] = {
+                target: node["connections"][target]
+                for target in sorted(node["connections"], key=lambda n: node_order.index(n))
+            }
 
     with region_path.open("w") as f:
         json.dump(

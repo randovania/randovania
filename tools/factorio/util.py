@@ -41,3 +41,34 @@ def read_locales(factorio_path: Path) -> None:
             factorio_path.joinpath("mods/randovania-layout/locale/en/strings.cfg"),
         ]
     )
+
+
+def template_req(name: str) -> dict:
+    return {
+        "type": "template",
+        "data": name,
+    }
+
+
+def tech_req(tech_name: str) -> dict:
+    return {
+        "type": "resource",
+        "data": {
+            "type": "items",
+            "name": tech_name,
+            "amount": 1,
+            "negate": False,
+        },
+    }
+
+
+def and_req(entries: list, comment: str | None = None) -> dict:
+    if len(entries) == 1:
+        return entries[0]
+    return {"type": "and", "data": {"comment": comment, "items": entries}}
+
+
+def or_req(entries: list, comment: str | None = None) -> dict:
+    if len(entries) == 1:
+        return entries[0]
+    return {"type": "or", "data": {"comment": comment, "items": entries}}
