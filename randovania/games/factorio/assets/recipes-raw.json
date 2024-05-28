@@ -6,11 +6,11 @@
         "ingredients": [
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "electronic-circuit",
-                5
+                2
             ]
         ],
         "energy_required": 15,
@@ -23,15 +23,15 @@
         "ingredients": [
             [
                 "speed-module",
-                4
+                2
             ],
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "processing-unit",
-                5
+                2
             ]
         ],
         "energy_required": 30,
@@ -44,15 +44,15 @@
         "ingredients": [
             [
                 "speed-module-2",
-                5
+                2
             ],
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "processing-unit",
-                5
+                2
             ]
         ],
         "energy_required": 60,
@@ -65,11 +65,11 @@
         "ingredients": [
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "electronic-circuit",
-                5
+                2
             ]
         ],
         "energy_required": 15,
@@ -82,15 +82,15 @@
         "ingredients": [
             [
                 "productivity-module",
-                4
+                2
             ],
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "processing-unit",
-                5
+                2
             ]
         ],
         "energy_required": 30,
@@ -103,15 +103,15 @@
         "ingredients": [
             [
                 "productivity-module-2",
-                5
+                2
             ],
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "processing-unit",
-                5
+                2
             ]
         ],
         "energy_required": 60,
@@ -124,11 +124,11 @@
         "ingredients": [
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "electronic-circuit",
-                5
+                2
             ]
         ],
         "energy_required": 15,
@@ -141,15 +141,15 @@
         "ingredients": [
             [
                 "effectivity-module",
-                4
+                2
             ],
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "processing-unit",
-                5
+                2
             ]
         ],
         "energy_required": 30,
@@ -162,15 +162,15 @@
         "ingredients": [
             [
                 "effectivity-module-2",
-                5
+                2
             ],
             [
                 "advanced-circuit",
-                5
+                2
             ],
             [
                 "processing-unit",
-                5
+                2
             ]
         ],
         "energy_required": 60,
@@ -3051,16 +3051,16 @@
                 10
             ],
             [
+                "iron-plate",
+                20
+            ],
+            [
                 "steel-plate",
-                16
+                21
             ],
             [
                 "pipe",
                 8
-            ],
-            [
-                "storage-tank",
-                1
             ]
         ],
         "result": "fluid-wagon"
@@ -4372,6 +4372,120 @@
             ]
         ],
         "result": "steam-turbine"
+    },
+    "construction-robot-handcraft": {
+        "type": "recipe",
+        "name": "construction-robot-handcraft",
+        "localised_name": "Construction Robot (Handcraft)",
+        "enabled": false,
+        "energy_required": 30,
+        "ingredients": [
+            [
+                "iron-gear-wheel",
+                1
+            ],
+            [
+                "pipe",
+                2
+            ],
+            [
+                "iron-plate",
+                2
+            ],
+            [
+                "steel-plate",
+                2
+            ],
+            [
+                "coal",
+                20
+            ],
+            [
+                "electronic-circuit",
+                7
+            ]
+        ],
+        "result": "construction-robot",
+        "order": "a[robot]-b[construction-robot]",
+        "icons": [
+            {
+                "icon": "__base__/graphics/icons/construction-robot.png",
+                "icon_size": 64,
+                "icon_mipmaps": 4
+            },
+            {
+                "icon": "__core__/graphics/icons/mip/slot-item-in-hand.png",
+                "icon_size": 64,
+                "scale": 0.25,
+                "shift": [
+                    8,
+                    8
+                ]
+            }
+        ],
+        "category": "hand-crafting",
+        "allow_decomposition": false,
+        "allow_as_intermediate": false,
+        "always_show_made_in": true
+    },
+    "logistic-robot-handcraft": {
+        "type": "recipe",
+        "name": "logistic-robot-handcraft",
+        "localised_name": "Logistic Robot (Handcraft)",
+        "enabled": false,
+        "energy_required": 30,
+        "ingredients": [
+            [
+                "iron-gear-wheel",
+                1
+            ],
+            [
+                "pipe",
+                2
+            ],
+            [
+                "iron-plate",
+                2
+            ],
+            [
+                "steel-plate",
+                2
+            ],
+            [
+                "coal",
+                20
+            ],
+            [
+                "electronic-circuit",
+                5
+            ],
+            [
+                "advanced-circuit",
+                2
+            ]
+        ],
+        "result": "logistic-robot",
+        "order": "a[robot]-b[logistic-robot]",
+        "icons": [
+            {
+                "icon": "__base__/graphics/icons/logistic-robot.png",
+                "icon_size": 64,
+                "icon_mipmaps": 4
+            },
+            {
+                "icon": "__core__/graphics/icons/mip/slot-item-in-hand.png",
+                "icon_size": 64,
+                "scale": 0.25,
+                "shift": [
+                    8,
+                    8
+                ]
+            }
+        ],
+        "category": "hand-crafting",
+        "allow_decomposition": false,
+        "allow_as_intermediate": false,
+        "always_show_made_in": true
     },
     "burner-lab": {
         "type": "recipe",
