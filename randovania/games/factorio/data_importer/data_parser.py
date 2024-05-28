@@ -1,4 +1,8 @@
 import collections
+import typing
+
+from randovania.games.game import RandovaniaGame
+from randovania.lib import json_lib
 
 
 def remove_expensive(recipes_raw: dict) -> None:
@@ -83,3 +87,15 @@ def count_for_result(recipe: dict, target_result: str) -> int:
             return recipe.get("result_count", 1)
 
     return 0
+
+
+def load_recipes_raw() -> dict[str, dict[str, typing.Any]]:
+    assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
+
+    return json_lib.read_path(assets_folder.joinpath("recipes-raw.json"))
+
+
+def load_techs_raw() -> dict[str, dict[str, typing.Any]]:
+    assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
+
+    return json_lib.read_path(assets_folder.joinpath("techs-raw.json"))

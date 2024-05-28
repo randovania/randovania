@@ -20,18 +20,14 @@ if TYPE_CHECKING:
 class RecipeIngredient(typing.TypedDict):
     name: str
     amount: int
-    type: str
 
 
 class CustomRecipe(typing.TypedDict):
-    recipe_name: str
-    category: str
-    result_amount: int
-    ingredients: list[RecipeIngredient]
+    ingredients: dict[str, int]
 
 
 class FactorioGameSpecific(typing.TypedDict):
-    recipes: list[CustomRecipe]
+    recipes: dict[str, CustomRecipe]
 
 
 class FactorioBasePatchesFactory(BasePatchesFactory):
@@ -42,7 +38,7 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
 
         assets_folder = configuration.game.data_path.joinpath("assets")
 
-        recipes_raw = json_lib.read_path(assets_folder.joinpath("recipes-raw.json"))
+        recipes_raw = data_parser.load_recipes_raw()
         techs_raw = json_lib.read_path(assets_folder.joinpath("techs-raw.json"))
         item_complexity = complexity_calculator(recipes_raw, techs_raw)
 
@@ -59,13 +55,6 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
             if complexity.categories.issubset({"miner", "smelting", "crafting", "advanced-crafting"})
         ]
 
-        def recipe_ingredient(item_name: str, amount: int) -> RecipeIngredient:
-            the_type = "item"
-            if item_complexity[item_name].is_fluid:
-                the_type = "fluid"
-                amount *= 10
-            return {"name": item_name, "amount": amount, "type": the_type}
-
         to_change = {
             "automation-science-pack": (simple_items, 1),
             "logistic-science-pack": (simple_items, 1),
@@ -75,29 +64,18 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
             "utility-science-pack": (all_items, 1),
             "rocket-part": (all_items, 0),
         }
-        custom_recipes = []
+        custom_recipes = {}
 
         for target_item, (items, max_fluid) in to_change.items():
             ingredients = recipes.make_random_recipe(
                 rng, items, item_complexity[target_item], item_complexity, max_fluid=max_fluid
             )
-            if target_item == "rocket-part":
-                category = "rocket-building"
-            elif any(item_complexity[item].is_fluid for item, _ in ingredients):
-                category = "crafting-with-fluid"
-            else:
-                category = "crafting"
-
-            count = data_parser.count_for_result(recipes_raw[target_item], target_item)
-
-            custom_recipes.append(
-                {
-                    "recipe_name": target_item,
-                    "category": category,
-                    "result_amount": count,
-                    "ingredients": [recipe_ingredient(item_name, amount) for item_name, amount in ingredients],
+            custom_recipes[target_item] = {
+                "ingredients": {
+                    item_name: amount * 10 if item_complexity[item_name].is_fluid else amount
+                    for item_name, amount in ingredients
                 }
-            )
+            }
 
         return {
             "recipes": custom_recipes,

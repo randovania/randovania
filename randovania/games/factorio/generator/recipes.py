@@ -2,9 +2,8 @@ import math
 import random
 import time
 
-from randovania.games.factorio.generator.complexity import Complexity, complexity_calculator, fitness_for
-from randovania.games.game import RandovaniaGame
-from randovania.lib import json_lib, pyeasyga
+from randovania.games.factorio.generator.complexity import Complexity, fitness_for, item_is_fluid
+from randovania.lib import pyeasyga
 
 
 def make_random_recipe(
@@ -101,36 +100,28 @@ def make_random_recipe(
     return result[1]
 
 
-def recipe_shuffler():
-    assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
+def determine_recipe_category(recipe_name: str, base_category: str, ingredients: dict[str, int]) -> str:
+    """Adjust the building necessary for a recipe as needed, based on number of fluid inputs."""
+    category = base_category
+    num_fluids = sum(1 for item in ingredients if item_is_fluid(item))
 
-    recipes_raw = json_lib.read_path(assets_folder.joinpath("recipes-raw.json"))
-    techs_raw = json_lib.read_path(assets_folder.joinpath("techs-raw.json"))
+    match num_fluids:
+        case 0:
+            pass
+        case 1:
+            if base_category not in {"chemistry", "oil-processing"}:
+                category = "crafting-with-fluid"
+        case 2:
+            if base_category != "oil-processing":
+                category = "chemistry"
+        case 3:
+            category = "oil-processing"
+        case _:
+            raise ValueError("Unable to create recipe with more than 3 fluids")
 
-    item_complexity = complexity_calculator(recipes_raw, techs_raw)
+    if recipe_name == "rocket-part":
+        category = "rocket-building"
+        if num_fluids > 0:
+            raise ValueError("Rocket Silo must have no fluid inputs")
 
-    # All categories
-    # ['advanced-crafting', 'boiler', 'centrifuging', 'chemistry', 'crafting',
-    #  'crafting-with-fluid', 'hand', 'miner', 'oil-processing', 'pump',
-    #  'pumpjack', 'rocket-building', 'smelting']
-
-    all_items = list(item_complexity.keys())
-
-    simple_items = [
-        item_name
-        for item_name, complexity in item_complexity.items()
-        if complexity.categories.issubset({"miner", "smelting", "crafting", "advanced-crafting"})
-    ]
-
-    rng = random.Random()
-    make_random_recipe(rng, simple_items, "automation-science-pack", item_complexity)
-    make_random_recipe(rng, simple_items, "logistic-science-pack", item_complexity)
-    make_random_recipe(rng, all_items, "military-science-pack", item_complexity)
-    make_random_recipe(rng, all_items, "chemical-science-pack", item_complexity)
-    make_random_recipe(rng, all_items, "production-science-pack", item_complexity)
-    make_random_recipe(rng, all_items, "utility-science-pack", item_complexity)
-    make_random_recipe(rng, all_items, "rocket-part", item_complexity, max_fluid=0)
-
-
-if __name__ == "__main__":
-    recipe_shuffler()
+    return category

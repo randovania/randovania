@@ -117,3 +117,7 @@ def complexity_calculator(recipes_raw: dict[str, dict], techs_raw: dict[str, dic
         complexity_for_item(it)
 
     return item_complexity
+
+
+def item_is_fluid(item_name: str) -> bool:
+    return item_name in _k_fluids
