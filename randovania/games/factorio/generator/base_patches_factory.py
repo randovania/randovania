@@ -3,6 +3,7 @@ from __future__ import annotations
 import typing
 from typing import TYPE_CHECKING
 
+from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
 from randovania.games.factorio.generator.complexity import complexity_calculator
 from randovania.games.factorio.layout import FactorioConfiguration
@@ -87,11 +88,13 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
             else:
                 category = "crafting"
 
+            count = data_parser.count_for_result(recipes_raw[target_item], target_item)
+
             custom_recipes.append(
                 {
                     "recipe_name": target_item,
                     "category": category,
-                    "result_amount": 1,
+                    "result_amount": count,
                     "ingredients": [recipe_ingredient(item_name, amount) for item_name, amount in ingredients],
                 }
             )
