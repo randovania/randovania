@@ -483,6 +483,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if isinstance(node, DockNode):
             msg = f'{node.default_dock_weakness.name} to <a href="node://{node.default_connection.as_string}">{node.default_connection.node}</a>'
+            if node.override_default_open_requirement is not None:
+                msg += f"\n<br />Open Override: {node.override_default_open_requirement}"
+            if node.override_default_lock_requirement is not None:
+                msg += f"\n<br />Lock Override: {node.override_default_lock_requirement}"
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
