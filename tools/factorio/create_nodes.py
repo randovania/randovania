@@ -111,14 +111,18 @@ def complexity_for(tech: dict) -> int:
 def _load_existing_ids(region_path: Path) -> dict[str, int]:
     try:
         with region_path.open() as f:
-            return {
-                node: node_data["pickup_index"]
-                for node, node_data in json.load(f)["areas"]["Tech Tree"]["nodes"].items()
-                if node_data["node_type"] == "pickup"
-            }
-
+            all_areas = json.load(f)["areas"]
     except FileNotFoundError:
         return {}
+
+    result = {}
+
+    for area in all_areas.values():
+        for node_data in area["nodes"].values():
+            if node_data["node_type"] == "pickup":
+                result[node_data["extra"]["original_tech"]] = node_data["pickup_index"]
+
+    return result
 
 
 def make_gen_id(existing_ids: dict[str, int]) -> typing.Callable[[], int]:
@@ -212,8 +216,8 @@ def main():
 
     for tech_name in networkx.topological_sort(graph):
         node_details = pickup_nodes[tech_name]
-        if node_details["node_name"] in existing_ids:
-            new_id = existing_ids[node_details["node_name"]]
+        if tech_name in existing_ids:
+            new_id = existing_ids[tech_name]
         else:
             new_id = gen_id()
         node = make_pickup(new_id, is_major=True)
