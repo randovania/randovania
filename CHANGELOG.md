@@ -186,6 +186,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime 2: Echoes
 
 - Fixed: A small typo with "immune" in the energy preset tab
+- Fixed: Seeker Locks without Seeker now properly show all usages when asked for.
 
 ### Metroid: Samus Returns
 

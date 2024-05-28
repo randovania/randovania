@@ -193,6 +193,13 @@ class GameDescription:
             for _, _, requirement in area.all_connections:
                 process(requirement)
 
+            for node in area.nodes:
+                if isinstance(node, DockNode):
+                    if node.override_default_open_requirement is not None:
+                        process(node.override_default_open_requirement)
+                    if node.override_default_lock_requirement is not None:
+                        process(node.override_default_lock_requirement)
+
         self._used_trick_levels = dict(result)
         return result
 

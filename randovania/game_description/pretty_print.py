@@ -185,6 +185,21 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
         for extra_name, extra_field in node.extra.items():
             print_function(f"  * Extra - {extra_name}: {extra_field}")
 
+        if isinstance(node, DockNode):
+            for label, req in (
+                ("open", node.override_default_open_requirement),
+                ("lock", node.override_default_lock_requirement),
+            ):
+                if req is not None:
+                    print_function(f"  * Override default {label} requirement:")
+                    pretty_print_requirement(
+                        req.simplify(keep_comments=True),
+                        game.resource_database,
+                        prefix="    ",
+                        print_function=print_function,
+                    )
+                    print_function("")
+
         for target_node, requirement in game.region_list.area_connections_from(node):
             if target_node.is_derived_node:
                 continue
