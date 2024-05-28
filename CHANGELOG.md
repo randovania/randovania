@@ -176,11 +176,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Tallon Overworld
 
-- Changed: Root Cave: NSJ inbounds climb now also connects to Arbor Chamber
-- Changed: Root Cave: NSJ inbounds climb to item no longer needs Standable Terrain and Invisible Objects has been nerfed to Beginner for the item
-- Changed: Root Cave: NSJ inbounds climb now appropriately requires Door Lock Rando to be off
+- Changed: Root Cave: NSJ climb connects to a skybox which connects to the item and Arbor Chamber
+- Changed: Root Cave: NSJ climb to item no longer needs Standable Terrain and Invisible Objects has been nerfed to Beginner for the item
+- Changed: Root Cave: NSJ climb now appropriately requires Door Lock Rando to be off
 - Changed: Root Cave: Combat Dash from Arbor Chamber to item no longer requires X-Ray/Invisible Objects
-- Added: Root Cave: NSJ inbounds climb now has comments to explain methodology
+- Added: Root Cave: NSJ climb now has comments to explain methodology
 - Added: Root Cave: Advanced Combat Dash to Arbor Chamber from item that does not need X-Ray/Invisible Objects
 
 ### Metroid Prime 2: Echoes
