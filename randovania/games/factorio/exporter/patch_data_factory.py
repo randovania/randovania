@@ -69,6 +69,8 @@ class FactorioPatchDataFactory(PatchDataFactory):
             )
 
         return {
+            "configuration_identifier": self.description.shareable_hash,
+            "layout_uuid": str(self.players_config.get_own_uuid()),
             "technologies": technologies,
             "recipes": self.patches.game_specific["recipes"],
             "starting_tech": [
