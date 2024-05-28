@@ -455,10 +455,6 @@ class MSRPatchDataFactory(PatchDataFactory):
             if "append_entity_group" in node.extra:
                 entity_groups.add(node.extra["append_entity_group"])
 
-            # Sort the entity_groups for consistency
-            final_entity_groups = list(entity_groups)
-            final_entity_groups.sort()
-
             # Make a list of the tile_indices listed in each door node and append them
             tile_indices = [
                 node.extra["tile_index"],
@@ -477,7 +473,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                         "z": node.extra.get("location_z_override", node.location.z),
                     },
                     "tile_indices": tile_indices,
-                    "entity_groups": final_entity_groups,
+                    "entity_groups": sorted(entity_groups),
                 }
             )
 
