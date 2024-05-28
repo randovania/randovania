@@ -461,9 +461,6 @@ class MSRPatchDataFactory(PatchDataFactory):
                 self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
             ]
 
-            # tile_indices must be [left, right] order so the patcher can add the minimap tiles
-            tile_indices.sort()
-
             custom_doors.append(
                 {
                     "door_actor": self._teleporter_ref_for(node),
@@ -472,7 +469,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                         "y": node.extra.get("location_y_override", node.location.y),
                         "z": node.extra.get("location_z_override", node.location.z),
                     },
-                    "tile_indices": tile_indices,
+                    "tile_indices": sorted(tile_indices),  # [left, right]
                     "entity_groups": sorted(entity_groups),
                 }
             )
