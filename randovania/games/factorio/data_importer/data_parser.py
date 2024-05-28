@@ -24,6 +24,9 @@ def get_recipes_for(recipes_raw: dict) -> dict[str, set[str]]:
         if recipe_data.get("subgroup") == "empty-barrel":
             continue
 
+        if recipe_data.get("category") == "hand-crafting":
+            continue
+
         results = []
         if "result" in recipe_data:
             results.append(recipe_data["result"])
@@ -53,7 +56,11 @@ def get_recipes_for(recipes_raw: dict) -> dict[str, set[str]]:
 
 def get_recipes_unlock_by_tech(techs_raw: dict[str, dict]) -> dict[str, list[str]]:
     return {
-        tech_name: [effect["recipe"] for effect in data.get("effects", []) if effect["type"] == "unlock-recipe"]
+        tech_name: [
+            effect["recipe"]
+            for effect in data.get("effects", [])
+            if effect["type"] == "unlock-recipe" and not effect["recipe"].endswith("-handcraft")
+        ]
         for tech_name, data in techs_raw.items()
     }
 
