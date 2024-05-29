@@ -17,9 +17,6 @@ _custom_tech = [
     "solid-fuel",
     "light-armor",
     "big-electric-pole",
-    "inserter",
-    "steam-power",
-    "automation-science-pack",
     "regular-inserter-capacity-bonus",
     "stack-inserter-capacity-bonus",
     "research-productivity",
@@ -141,6 +138,8 @@ def make_pickup(index: int, *, is_major: bool = False, connections=None) -> dict
 def complexity_for(tech: dict) -> int:
     pack_count = len(tech["unit"]["ingredients"])
     raw_cost = math.floor(tech["unit"]["count"] * tech["unit"]["time"] * math.sqrt(pack_count))
+    if raw_cost < 1:
+        return 1
     return math.floor(math.log(raw_cost)) - 3
 
 
