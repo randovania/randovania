@@ -5,6 +5,7 @@ import math
 
 from randovania.games.factorio.data_importer import data_parser
 
+BASIC_RESOURCES = {"water", "steam", "crude-oil", "iron-ore", "copper-ore", "coal", "stone"}
 _k_fluids = {"water", "steam", "crude-oil", "heavy-oil", "light-oil", "petroleum-gas", "lubricant", "sulfuric-acid"}
 _COMPLEXITY_PER_INGREDIENT = 2
 
