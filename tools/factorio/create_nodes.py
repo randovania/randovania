@@ -39,7 +39,6 @@ _bonus_upgrade_tech = [
     for i in range(_base_upgrade_tiers, max_tier)
 ]
 
-
 _k_tier_requirements = [
     [],  # 1
     [],
@@ -60,7 +59,6 @@ _k_tier_requirements = [
     [tech_req("logistic-system")],
     [tech_req("productivity-module-3")],
 ]
-
 
 trivial_req = {"type": "and", "data": {"comment": None, "items": []}}
 areas = {
@@ -121,7 +119,6 @@ for tier, req in enumerate(_k_tier_requirements):
         "nodes": {"Connection to Tech Tree": make_dock("Tech Tree", f"Connection to Tier {tier + 1}")},
     }
 
-
 current_pickup_index = -1
 
 
@@ -141,23 +138,6 @@ def complexity_for(tech: dict) -> int:
     if raw_cost < 1:
         return 1
     return math.floor(math.log(raw_cost)) - 3
-
-
-def _load_existing_ids(region_path: Path) -> dict[str, int]:
-    try:
-        with region_path.open() as f:
-            all_areas = json.load(f)["areas"]
-    except FileNotFoundError:
-        return {}
-
-    result = {}
-
-    for area in all_areas.values():
-        for node_data in area["nodes"].values():
-            if node_data["node_type"] == "pickup":
-                result[node_data["extra"]["original_tech"]] = node_data["pickup_index"]
-
-    return result
 
 
 def make_gen_id(existing_ids: dict[str, int]) -> typing.Callable[[], int]:
@@ -187,7 +167,7 @@ def main():
 
     techs_raw = {key: value for key, value in raw_dump["technology"].items() if not key.startswith("randovania-")}
 
-    existing_ids = _load_existing_ids(region_path)
+    existing_ids = util.load_existing_pickup_ids(region_path)
     gen_id = make_gen_id(existing_ids)
 
     graph = networkx.DiGraph()
