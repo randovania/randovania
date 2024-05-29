@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING
 from randovania.game_description.resources.pickup_index import PickupIndex
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
@@ -24,3 +26,8 @@ class PoolResults:
         self.to_place.extend(extension.to_place)
         self.assignment.update(extension.assignment)
         self.starting.extend(extension.starting)
+
+    def all_pickups(self) -> Iterator[PickupEntry]:
+        yield from self.to_place
+        yield from self.assignment.values()
+        yield from self.starting
