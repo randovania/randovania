@@ -3341,16 +3341,63 @@
             "icon": "__base__/graphics/technology/plastics.png",
             "icon_size": 256,
             "cost": {
-                "count": 10,
+                "count": 50,
                 "time": 15,
                 "ingredients": [
-                    "automation-science-pack"
+                    "automation-science-pack",
+                    "logistic-science-pack"
                 ]
             },
-            "prerequisites": [],
+            "prerequisites": [
+                "randovania-fluid-handling"
+            ],
             "unlocks": [
                 "plastics"
             ]
+        },
+        {
+            "tech_name": "randovania-automation-science-pack",
+            "locale_name": "Automation Science Pack",
+            "description": "",
+            "icon": "__base__/graphics/technology/automation-science-pack.png",
+            "icon_size": 256,
+            "cost": {
+                "count": 10,
+                "time": 10,
+                "ingredients": []
+            },
+            "prerequisites": [],
+            "unlocks": [
+                "automation-science-pack"
+            ]
+        },
+        {
+            "tech_name": "randovania-steam-power",
+            "locale_name": "Nothing",
+            "description": "",
+            "icon": "__randovania-layout__/graphics/icons/nothing.png",
+            "icon_size": 256,
+            "cost": {
+                "count": 50,
+                "time": 20,
+                "ingredients": []
+            },
+            "prerequisites": [],
+            "unlocks": []
+        },
+        {
+            "tech_name": "randovania-inserter",
+            "locale_name": "Nothing",
+            "description": "",
+            "icon": "__randovania-layout__/graphics/icons/nothing.png",
+            "icon_size": 256,
+            "cost": {
+                "count": 20,
+                "time": 10,
+                "ingredients": []
+            },
+            "prerequisites": [],
+            "unlocks": []
         }
     ],
     "recipes": [
@@ -3503,7 +3550,6 @@
         }
     ],
     "starting_tech": [
-        "automation-science-pack"
     ],
     "_randovania_meta": {
         "layout_was_user_modified": true
