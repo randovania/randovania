@@ -5166,8 +5166,11 @@
                     1
                 ]
             ],
-            "time": 15
+            "time": 10
         },
+        "prerequisites": [
+            "automation"
+        ],
         "hidden": true
     },
     "longer-handed-inserter": {
@@ -5191,8 +5194,11 @@
                     1
                 ]
             ],
-            "time": 15
+            "time": 10
         },
+        "prerequisites": [
+            "automation"
+        ],
         "hidden": true
     },
     "oil-cracking": {
@@ -5217,15 +5223,26 @@
         "type": "technology",
         "order": "d-b",
         "unit": {
-            "count": 10,
+            "count": 75,
             "ingredients": [
                 [
                     "automation-science-pack",
                     1
+                ],
+                [
+                    "logistic-science-pack",
+                    1
+                ],
+                [
+                    "chemical-science-pack",
+                    1
                 ]
             ],
-            "time": 15
+            "time": 30
         },
+        "prerequisites": [
+            "advanced-oil-processing"
+        ],
         "hidden": true
     },
     "solid-fuel": {
@@ -5250,15 +5267,22 @@
         "type": "technology",
         "order": "d-b",
         "unit": {
-            "count": 10,
+            "count": 100,
             "ingredients": [
                 [
                     "automation-science-pack",
                     1
+                ],
+                [
+                    "logistic-science-pack",
+                    1
                 ]
             ],
-            "time": 15
+            "time": 30
         },
+        "prerequisites": [
+            "oil-processing"
+        ],
         "hidden": true
     },
     "light-armor": {
@@ -5275,15 +5299,18 @@
         "type": "technology",
         "order": "d-b",
         "unit": {
-            "count": 10,
+            "count": 30,
             "ingredients": [
                 [
                     "automation-science-pack",
                     1
                 ]
             ],
-            "time": 15
+            "time": 30
         },
+        "prerequisites": [
+            "heavy-armor"
+        ],
         "hidden": true
     },
     "big-electric-pole": {
@@ -5300,19 +5327,31 @@
         "type": "technology",
         "order": "d-b",
         "unit": {
-            "count": 10,
+            "count": 120,
             "ingredients": [
                 [
                     "automation-science-pack",
                     1
+                ],
+                [
+                    "logistic-science-pack",
+                    1
                 ]
             ],
-            "time": 15
+            "time": 30
         },
+        "prerequisites": [
+            "electric-energy-distribution-1"
+        ],
         "hidden": true
     },
     "inserter": {
         "name": "inserter",
+        "unit": {
+            "count": 20,
+            "ingredients": {},
+            "time": 10
+        },
         "effects": [
             {
                 "recipe": "inserter",
@@ -5324,20 +5363,15 @@
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
-        "unit": {
-            "count": 10,
-            "ingredients": [
-                [
-                    "automation-science-pack",
-                    1
-                ]
-            ],
-            "time": 15
-        },
         "hidden": true
     },
     "steam-power": {
         "name": "steam-power",
+        "unit": {
+            "count": 50,
+            "ingredients": {},
+            "time": 20
+        },
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -5357,20 +5391,15 @@
         "icon_size": 64,
         "type": "technology",
         "order": "d-b",
-        "unit": {
-            "count": 10,
-            "ingredients": [
-                [
-                    "automation-science-pack",
-                    1
-                ]
-            ],
-            "time": 15
-        },
         "hidden": true
     },
     "automation-science-pack": {
         "name": "automation-science-pack",
+        "unit": {
+            "count": 10,
+            "ingredients": {},
+            "time": 10
+        },
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -5382,16 +5411,6 @@
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
-        "unit": {
-            "count": 10,
-            "ingredients": [
-                [
-                    "automation-science-pack",
-                    1
-                ]
-            ],
-            "time": 15
-        },
         "hidden": true
     },
     "regular-inserter-capacity-bonus": {
@@ -5410,15 +5429,22 @@
         "type": "technology",
         "order": "d-b",
         "unit": {
-            "count": 10,
+            "count": 250,
             "ingredients": [
                 [
                     "automation-science-pack",
                     1
+                ],
+                [
+                    "logistic-science-pack",
+                    1
                 ]
             ],
-            "time": 15
+            "time": 30
         },
+        "prerequisites": [
+            "inserter-capacity-bonus-2"
+        ],
         "hidden": true
     },
     "research-productivity": {
@@ -5452,15 +5478,22 @@
         "type": "technology",
         "order": "d-b",
         "unit": {
-            "count": 10,
+            "count": 100,
             "ingredients": [
                 [
                     "automation-science-pack",
                     1
+                ],
+                [
+                    "logistic-science-pack",
+                    1
                 ]
             ],
-            "time": 15
+            "time": 30
         },
+        "prerequisites": [
+            "research-speed-1"
+        ],
         "hidden": true
     },
     "fluid-storage": {
@@ -5481,15 +5514,22 @@
         "type": "technology",
         "order": "d-b",
         "unit": {
-            "count": 10,
+            "count": 50,
             "ingredients": [
                 [
                     "automation-science-pack",
+                    1
+                ],
+                [
+                    "logistic-science-pack",
                     1
                 ]
             ],
             "time": 15
         },
+        "prerequisites": [
+            "fluid-handling"
+        ],
         "hidden": true
     }
 }
