@@ -35,7 +35,7 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
     hide_from_gui: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
     must_be_starting: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
-    original_location: PickupIndex | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    original_locations: tuple[PickupIndex, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
     probability_offset: float = dataclasses.field(default=0.0, metadata=EXCLUDE_DEFAULT)
     probability_multiplier: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
