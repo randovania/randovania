@@ -13,6 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
 
+### Metroid Dread
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
+### Metroid Prime 2: Echoes
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
 ## [8.1.1] - 2024-06-08
 
 ### Metroid Prime
@@ -204,7 +212,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Fixed: A small typo with "immune" in the energy preset tab
+- Fixed: A small typo with "immune" in the energy preset tab.
 - Fixed: Seeker Locks without Seeker now properly show all usages when asked for.
 
 ### Metroid: Samus Returns
