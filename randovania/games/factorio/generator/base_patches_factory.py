@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
-from randovania.games.factorio.generator.complexity import BASIC_RESOURCES, complexity_calculator
+from randovania.games.factorio.generator.item_cost import BASIC_RESOURCES, cost_calculator
 from randovania.games.factorio.layout import FactorioConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory
 from randovania.generator.pickup_pool import pool_creator
@@ -39,7 +39,7 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
 
         recipes_raw = data_parser.load_recipes_raw()
         techs_raw = data_parser.load_techs_raw()
-        item_complexity = complexity_calculator(recipes_raw, techs_raw)
+        item_cost = cost_calculator(recipes_raw, techs_raw)
 
         # Get all tech that are present in the preset
         collection = ResourceCollection.with_database(game.resource_database)
@@ -60,7 +60,7 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
         simple_items = [
             item_name
             for item_name in all_items
-            if item_complexity[item_name].categories.issubset({"miner", "smelting", "crafting", "advanced-crafting"})
+            if item_cost[item_name].categories.issubset({"miner", "smelting", "crafting", "advanced-crafting"})
         ]
 
         to_change = {
@@ -75,12 +75,10 @@ class FactorioBasePatchesFactory(BasePatchesFactory):
         custom_recipes = {}
 
         for target_item, (items, max_fluid) in to_change.items():
-            ingredients = recipes.make_random_recipe(
-                rng, items, item_complexity[target_item], item_complexity, max_fluid=max_fluid
-            )
+            ingredients = recipes.make_random_recipe(rng, items, target_item, item_cost, max_fluid=max_fluid)
             custom_recipes[target_item] = {
                 "ingredients": {
-                    item_name: amount * 10 if item_complexity[item_name].is_fluid else amount
+                    item_name: amount * 10 if item_cost[item_name].is_fluid else amount
                     for item_name, amount in ingredients
                 }
             }
