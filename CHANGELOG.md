@@ -156,6 +156,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Sun Tower Elevator - Cutscene now shows Samus facing the correct direction
 - Changed: Observatory - Restored an unused particle effect for the projector
 - Changed: Observatory - The projector is now activated on room load, instead of activating immediately after the room loaded
+- Changed: Research Entrance - 2nd Pass Shadow Pirates can longer 1st Pass fight music if they die too slowly
+- Changed: Omega Research - Slight improvement as to how ambient music resumes
+- Changed: Geothermal Core - The previously invisible ledge connected to Plasma Processing is now always visible
 
 #### Logic Database
 
