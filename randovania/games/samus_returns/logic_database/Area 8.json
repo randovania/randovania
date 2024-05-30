@@ -3713,7 +3713,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Nest Nodule": {
+                        "Door to Nest Nodule (Middle)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3848,27 +3848,31 @@
                         }
                     }
                 },
-                "Dock to Nest Nodule": {
+                "Door to Nest Nodule (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1055.2721690872595,
-                        "y": -5733.7111819577285,
+                        "x": 1050.0,
+                        "y": -5900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 83
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
                         "area": "Nest Nodule",
-                        "node": "Dock to Nest Network"
+                        "node": "Door to Nest Network (Middle)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -5693,7 +5697,7 @@
                     "pickup_index": 162,
                     "location_category": "minor",
                     "connections": {
-                        "Dock to Nest Network": {
+                        "Door to Nest Network (Middle)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6009,27 +6013,31 @@
                         }
                     }
                 },
-                "Dock to Nest Network": {
+                "Door to Nest Network (Middle)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1030.469949226591,
-                        "y": -5736.409257291298,
+                        "x": 1050.0,
+                        "y": -5900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 84
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 8",
                         "area": "Nest Network",
-                        "node": "Dock to Nest Nodule"
+                        "node": "Door to Nest Nodule (Middle)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,

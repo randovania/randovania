@@ -465,6 +465,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 {
                     "door_actor": self._teleporter_ref_for(node),
                     "position": {
+                        # FIXME: location_override only exists because DB maps are not 1:1, so fix maps
                         "x": node.extra.get("location_x_override", node.location.x),
                         "y": node.extra.get("location_y_override", node.location.y),
                         "z": node.extra.get("location_z_override", node.location.z),
