@@ -304,10 +304,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         w = self.current_region
         if not isinstance(w.extra, dict):
             object.__setattr__(w, "extra", dict(w.extra))
-        w.extra["map_min_x"] = self.spin_min_x.value()
-        w.extra["map_min_y"] = self.spin_min_y.value()
-        w.extra["map_max_x"] = self.spin_max_x.value()
-        w.extra["map_max_y"] = self.spin_max_y.value()
+
+        temp_extra = dict(w.extra)
+        temp_extra |= {
+            "map_min_x": self.spin_min_x.value(),
+            "map_min_y": self.spin_min_y.value(),
+            "map_max_x": self.spin_max_x.value(),
+            "map_max_y": self.spin_max_y.value(),
+        }
+        new_region = dataclasses.replace(w, extra=temp_extra)
+        self.region_selector_box.setItemData(self.region_selector_box.currentIndex(), new_region)
+
         self.area_view_canvas.select_region(w)
 
     def on_select_area(self, select_node: Node | None = None):
