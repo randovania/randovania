@@ -196,7 +196,7 @@ def _print_header(player_states: list[PlayerState]) -> None:
             "*" * 100,
             "\n".join(
                 "Player {}: {}".format(
-                    player_state.index,
+                    player_state.index + 1,
                     pprint.pformat(
                         {
                             item.name: player_state.pickups_left.count(item)
@@ -212,7 +212,7 @@ def _print_header(player_states: list[PlayerState]) -> None:
         "Static assignments:\n{}".format(
             "\n".join(
                 "Player {}: {}".format(
-                    player_state.index,
+                    player_state.index + 1,
                     pprint.pformat(
                         {
                             _name_for_index(player_state, index): target.pickup.name
@@ -220,6 +220,14 @@ def _print_header(player_states: list[PlayerState]) -> None:
                         }
                     ),
                 )
+                for player_state in player_states
+            )
+        )
+    )
+    debug.debug_print(
+        "Game specific:\n{}".format(
+            "\n".join(
+                f"Player {player_state.index + 1}: {pprint.pformat(player_state.reach.state.patches.game_specific)}"
                 for player_state in player_states
             )
         )
