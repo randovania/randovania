@@ -134,7 +134,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Phendrana Shorelines - The item behind the ice can now be collected again with Infinite Speed
 - Fixed: Control Tower - Flying Pirates incorrectly flying away from the player when skipping the cutscene
 - Fixed: Research Core - Combat Visor being forced after grabbing the pickup on Competitive Cutscene mode
-- Fixed: Research Entrance - Soflock if the player kills the pirates before touching the cutscene trigger
+- Fixed: Research Entrance - Softlock if the player kills the pirates before touching the cutscene trigger
 - Fixed: Research Entrance - Fog disappearing after clearing the 1st Pass Pirates and before the 2nd Pass Shadow Pirates
 - Fixed: Energy Core - Underwater sound incorrectly playing when the player was not underwater
 - Fixed: Energy Core - Puzzle music not playing again if the player re-enters the room during the countdown
