@@ -31,6 +31,7 @@ class PlayerPool:
     configuration: BaseConfiguration
     patches: GamePatches
     pickups: list[PickupEntry]
+    name: str
 
 
 @dataclasses.dataclass(frozen=True)

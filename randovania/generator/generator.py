@@ -75,6 +75,7 @@ async def create_player_pool(
     configuration: BaseConfiguration,
     player_index: int,
     num_players: int,
+    world_name: str,
     status_update: Callable[[str], None],
 ) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
@@ -83,7 +84,7 @@ async def create_player_pool(
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
     for i in range(10):
-        status_update(f"Attempt {i + 1} for initial state for world {player_index + 1}")
+        status_update(f"Attempt {i + 1} for initial state for world '{world_name}'")
         patches = game_generator.base_patches_factory.create_base_patches(
             configuration, rng, game, num_players > 1, player_index=player_index, rng_required=True
         )
@@ -111,6 +112,7 @@ async def create_player_pool(
             configuration=configuration,
             patches=patches,
             pickups=pool_results.to_place,
+            name=world_name,
         )
 
     raise InvalidConfiguration(
@@ -123,30 +125,44 @@ async def _create_pools_and_fill(
     rng: Random,
     presets: list[Preset],
     status_update: Callable[[str], None],
+    world_names: list[str],
 ) -> FillerResults:
     """
     Runs the rng-dependant parts of the generation, with retries
     :param rng:
     :param presets:
     :param status_update:
+    :param world_names: Name for each world. Used for error and status messages.
     :return:
     """
     player_pools: list[PlayerPool] = []
 
     for player_index, player_preset in enumerate(presets):
-        status_update(f"Creating item pool for player {player_index + 1}")
-        player_pools.append(
-            await create_player_pool(
-                rng,
-                player_preset.configuration,
-                player_index,
-                len(presets),
-                status_update,
+        status_update(f"Creating item pool for {world_names[player_index]}")
+        try:
+            player_pools.append(
+                await create_player_pool(
+                    rng,
+                    player_preset.configuration,
+                    player_index,
+                    len(presets),
+                    world_names[player_index],
+                    status_update,
+                )
             )
-        )
+        except InvalidConfiguration as config:
+            if len(presets) > 1:
+                config.world_name = world_names[player_index]
+                raise config
+            raise
 
     for player_pool in player_pools:
-        _validate_pickup_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
+        try:
+            _validate_pickup_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
+        except InvalidConfiguration as config:
+            if len(presets) > 1:
+                config.world_name = player_pool.name
+            raise
 
     return await run_filler(rng, player_pools, status_update)
 
@@ -226,10 +242,12 @@ async def _create_description(
     generator_params: GeneratorParameters,
     status_update: Callable[[str], None],
     attempts: int,
+    world_names: list[str],
 ) -> LayoutDescription:
     """
     :param generator_params:
     :param status_update:
+    :param world_names: Name for each world. Used for error and status messages.
     :return:
     """
     rng = generator_params.create_rng()
@@ -244,7 +262,7 @@ async def _create_description(
         reraise=True,
     )
 
-    filler_results: FillerResults = await retrying(_create_pools_and_fill, rng, presets, status_update)
+    filler_results: FillerResults = await retrying(_create_pools_and_fill, rng, presets, status_update, world_names)
 
     filler_results = _distribute_remaining_items(rng, filler_results, presets)
     filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
@@ -262,6 +280,7 @@ async def generate_and_validate_description(
     validate_after_generation: bool,
     timeout: int | None = 600,
     attempts: int = DEFAULT_ATTEMPTS,
+    world_names: list[str] | None = None,
 ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.
@@ -270,6 +289,7 @@ async def generate_and_validate_description(
     :param validate_after_generation:
     :param timeout: Abort generation after this many seconds.
     :param attempts: Attempt this many generations.
+    :param world_names: Name for each world. Used for error and status messages.
     :return:
     """
     actual_status_update: Callable[[str], None]
@@ -281,11 +301,15 @@ async def generate_and_validate_description(
     else:
         actual_status_update = status_update
 
+    if world_names is None:
+        world_names = [f"World {i + 1}" for i in range(generator_params.world_count)]
+
     try:
         result = await _create_description(
             generator_params=generator_params,
             status_update=actual_status_update,
             attempts=attempts,
+            world_names=world_names,
         )
     except UnableToGenerate as e:
         raise GenerationFailure(

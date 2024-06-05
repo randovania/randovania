@@ -687,7 +687,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         def generate_layout(progress_update: ProgressUpdateCallable):
             return generator_frontend.generate_layout(
-                progress_update=progress_update, parameters=permalink.parameters, options=self._options, retries=retries
+                progress_update=progress_update,
+                parameters=permalink.parameters,
+                options=self._options,
+                retries=retries,
+                world_names=self._get_world_names(),
             )
 
         async with self.game_session_api.prepare_to_upload_layout(self._get_world_order()) as uploader:

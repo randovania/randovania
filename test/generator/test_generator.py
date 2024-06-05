@@ -43,16 +43,17 @@ async def test_create_patches(
     status_update: MagicMock | Callable[[str], None] = MagicMock()
     player_pools = [MagicMock() for _ in range(num_players)]
     presets: list = [MagicMock() for _ in range(num_players)]
+    world_names = [f"Test {i + 1}" for i in range(num_players)]
 
     mock_create_player_pool.side_effect = player_pools
 
     # Run
-    result = await generator._create_description(generator_parameters, status_update, 0)
+    result = await generator._create_description(generator_parameters, status_update, 0, world_names)
 
     # Assert
     generator_parameters.create_rng.assert_called_once_with()
     mock_create_player_pool.assert_has_calls(
-        [call(rng, presets[i].configuration, i, num_players, status_update) for i in range(num_players)]
+        [call(rng, presets[i].configuration, i, num_players, world_names[i], status_update) for i in range(num_players)]
     )
     mock_validate_item_pool_size.assert_has_calls(
         [call(player_pools[i].pickups, player_pools[i].game, player_pools[i].configuration) for i in range(num_players)]
