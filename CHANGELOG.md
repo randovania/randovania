@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.1.0] - 2024-06-??
+## [8.2.0] - 2024-07-??
+
+- Nothing yet! Add changes here.
+
+## [8.1.0] - 2024-06-04
 
 - Changed: In Item Pool tab, improved the presentation for configuring ammo.
 - Changed: Error messages have been made more detailed if Randovania is unable to connect to Dolphin.
