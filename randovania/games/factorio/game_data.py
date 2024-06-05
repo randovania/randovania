@@ -24,7 +24,7 @@ def _gui() -> game.GameGui:
     return game.GameGui(
         game_tab=gui.FactorioGameTabWidget,
         tab_provider=gui.preset_tabs,
-        cosmetic_dialog=gui.FactorioCosmeticPatchesDialog,
+        cosmetic_dialog=None,
         export_dialog=gui.FactorioGameExportDialog,
         progressive_item_gui_tuples=(),
         spoiler_visualizer=(),

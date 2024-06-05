@@ -225,7 +225,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         else:
             self.export_iso_button.setToolTip("")
 
-        self.customize_user_preferences_button.setVisible(description.world_count == 1)
+        has_user_preferences = False
+        if description.world_count == 1:
+            has_user_preferences = description.get_preset(0).game.gui.cosmetic_dialog is not None
+        self.customize_user_preferences_button.setVisible(has_user_preferences)
 
         self.player_index_combo.clear()
         for i in range(description.world_count):
