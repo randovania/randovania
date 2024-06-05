@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.2.0] - 2024-07-??
 
-- Nothing yet! Add changes here.
+- Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
 
 ## [8.1.0] - 2024-06-04
 
