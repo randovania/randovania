@@ -112,7 +112,6 @@ async def create_player_pool(
             configuration=configuration,
             patches=patches,
             pickups=pool_results.to_place,
-            name=world_name,
         )
 
     raise InvalidConfiguration(
@@ -140,31 +139,23 @@ async def _create_pools_and_fill(
     for player_index, player_preset in enumerate(presets):
         status_update(f"Creating item pool for {world_names[player_index]}")
         try:
-            player_pools.append(
-                await create_player_pool(
-                    rng,
-                    player_preset.configuration,
-                    player_index,
-                    len(presets),
-                    world_names[player_index],
-                    status_update,
-                )
+            new_pool = await create_player_pool(
+                rng,
+                player_preset.configuration,
+                player_index,
+                len(presets),
+                world_names[player_index],
+                status_update,
             )
+            _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
+            player_pools.append(new_pool)
         except InvalidConfiguration as config:
             if len(presets) > 1:
                 config.world_name = world_names[player_index]
                 raise config
             raise
 
-    for player_pool in player_pools:
-        try:
-            _validate_pickup_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
-        except InvalidConfiguration as config:
-            if len(presets) > 1:
-                config.world_name = player_pool.name
-            raise
-
-    return await run_filler(rng, player_pools, status_update)
+    return await run_filler(rng, player_pools, world_names, status_update)
 
 
 def _distribute_remaining_items(rng: Random, filler_results: FillerResults, presets: list[Preset]) -> FillerResults:
