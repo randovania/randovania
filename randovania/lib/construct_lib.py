@@ -5,9 +5,9 @@ import typing
 from typing import Any
 
 import construct
-from construct import CString, Flag, If, PrefixedArray, Rebuild, Struct, VarInt
+from construct import CString, Flag, If, PascalString, PrefixedArray, Rebuild, Struct, VarInt
 
-String = CString("utf-8")
+String = PascalString(VarInt, "utf-8")
 
 
 def convert_to_raw_python(value: Any) -> Any:
@@ -72,3 +72,7 @@ class JsonEncodedValueAdapter(construct.Adapter):
 
 
 JsonEncodedValue = JsonEncodedValueAdapter(String)
+CompressedJsonValue = construct.Prefixed(construct.VarInt, construct.Compressed(JsonEncodedValue, "zlib"))
+NullTerminatedCompressedJsonValue = construct.Prefixed(
+    construct.VarInt, construct.Compressed(JsonEncodedValueAdapter(CString("utf-8")), "zlib")
+)
