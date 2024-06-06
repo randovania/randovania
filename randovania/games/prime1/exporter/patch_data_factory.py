@@ -813,7 +813,7 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             starting_memo = None
 
-        if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
+        if self.cosmetic_patches.open_map:
             map_default_state = "Always"
         else:
             map_default_state = "MapStationOrVisit"
