@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.2.0] - 2024-07-??
 
 ### Metroid Prime
-- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisisted Elevators do not reveal their destination.)
+- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
 
 ## [8.1.0] - 2024-06-04
 
