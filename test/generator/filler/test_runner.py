@@ -49,7 +49,7 @@ async def test_run_filler(
     ]
 
     player_pools = [
-        await create_player_pool(rng, default_echoes_configuration, 0, 1, MagicMock()),
+        await create_player_pool(rng, default_echoes_configuration, 0, 1, "World 1", MagicMock()),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
@@ -68,7 +68,7 @@ async def test_run_filler(
     )
 
     # Run
-    filler_result = await runner.run_filler(rng, player_pools, status_update)
+    filler_result = await runner.run_filler(rng, player_pools, ["World 1"], status_update)
 
     assert filler_result.action_log == action_log
     assert len(filler_result.player_results) == 1

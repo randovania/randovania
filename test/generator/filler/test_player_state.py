@@ -38,6 +38,7 @@ def state_for_blank(
 
     return player_state.PlayerState(
         index=0,
+        name="World",
         game=game,
         initial_state=game.game.generator.bootstrap.calculate_starting_state(
             game,
@@ -93,6 +94,7 @@ def test_filter_usable_locations(
 
     second_state = player_state.PlayerState(
         index=0,
+        name="World",
         game=state_for_blank.game,
         initial_state=state_for_blank.game.game.generator.bootstrap.calculate_starting_state(
             state_for_blank.game,
