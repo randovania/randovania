@@ -159,15 +159,18 @@ class LayoutDescription:
         return cls.from_json_dict(json_lib.read_path(path))
 
     @classmethod
-    def from_bytes(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> typing.Self:
+    def bytes_to_dict(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> dict:
         decoded = BinaryLayoutDescription.parse(data)
         if presets is not None:
             decoded["data"]["info"]["presets"] = [preset.as_json for preset in presets]
+        return decoded["data"]
 
-        return cls.from_json_dict(decoded["data"])
+    @classmethod
+    def from_bytes(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> typing.Self:
+        return cls.from_json_dict(cls.bytes_to_dict(data, presets=presets))
 
     @property
-    def permalink(self):
+    def permalink(self) -> Permalink:
         return Permalink(
             parameters=self.generator_parameters,
             seed_hash=self.shareable_hash_bytes,
