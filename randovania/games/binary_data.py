@@ -27,7 +27,7 @@ from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, Option
 if TYPE_CHECKING:
     from pathlib import Path
 
-current_format_version = 10
+current_format_version = 11
 
 _EXPECTED_FIELDS = [
     "schema_version",
