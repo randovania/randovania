@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 
+### Metroid Prime
+
+- Fixed: Arboretum - Gate not staying open on room reload if the gate cutscene was skipped
+- FixedL Sunchamber - Artifact unveil cutscene black bars not going away
+
 ## [8.1.0] - 2024-06-04
 
 - Changed: In Item Pool tab, improved the presentation for configuring ammo.
