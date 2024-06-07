@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.2.0] - 2024-07-??
 
 - Nothing yet! Add changes here.
+- Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 
 ## [8.1.0] - 2024-06-04
 

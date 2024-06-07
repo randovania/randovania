@@ -154,4 +154,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b"\x00\x00\x00\x00\x00\x00\x01Foo\x00Foo\x00\x02\x00\x00\x00\x00"
+    assert encoded == b"\x00\x00\x00\x00\x00\x00\x01\x03Foo\x03Foo\x02\x00\x00\x00\x00"
