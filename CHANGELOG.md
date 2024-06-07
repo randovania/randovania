@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Arboretum - Gate not staying open on room reload if the gate cutscene was skipped
-- FixedL Sunchamber - Artifact unveil cutscene black bars not going away
+- Fixed: Sunchamber - Artifact unveil cutscene black bars not going away
 
 ## [8.1.0] - 2024-06-04
 
