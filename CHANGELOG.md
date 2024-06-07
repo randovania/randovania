@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.1.0] - 2024-06-??
+## [8.1.1] - 2024-06-08
+
+### Metroid Prime
+
+- Fixed: Arboretum - Gate not staying open on room reload if the gate cutscene was skipped
+- Fixed: Sunchamber - Artifact unveil cutscene black bars not going away
+
+## [8.1.0] - 2024-06-04
 
 - Changed: In Item Pool tab, improved the presentation for configuring ammo.
 - Changed: Error messages have been made more detailed if Randovania is unable to connect to Dolphin.
