@@ -205,10 +205,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.rename_session_action = QtGui.QAction("Change title", self.advanced_options_menu)
         self.change_password_action = QtGui.QAction("Change password", self.advanced_options_menu)
         self.duplicate_session_action = QtGui.QAction("Duplicate session", self.advanced_options_menu)
+        self.export_all_presets_action = QtGui.QAction("Export all presets", self.advanced_options_menu)
 
         self.advanced_options_menu.addAction(self.rename_session_action)
         self.advanced_options_menu.addAction(self.change_password_action)
         self.advanced_options_menu.addAction(self.duplicate_session_action)
+        self.advanced_options_menu.addAction(self.export_all_presets_action)
         self.advanced_options_tool.setMenu(self.advanced_options_menu)
 
         # Generate Game Menu
@@ -252,6 +254,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
         self.duplicate_session_action.triggered.connect(self.duplicate_session)
+        self.export_all_presets_action.triggered.connect(self.export_all_presets)
         self.copy_permalink_button.clicked.connect(self.copy_permalink)
         self.view_game_details_button.clicked.connect(self.view_game_details)
         self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
@@ -577,6 +580,31 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         )
         if new_name is not None:
             await self.game_session_api.duplicate_session(new_name)
+
+    def export_all_presets(self):
+        path = common_qt_lib.prompt_user_for_preset_folder(self)
+
+        if path is None:
+            return
+
+        world_owners = {world_uid: user for user in self._session.users.values() for world_uid in user.worlds.keys()}
+        world_count = len(self._session.worlds)
+        extension = VersionedPreset.file_extension()
+
+        for i, world in enumerate(self._session.worlds):
+            world_num = i + 1
+            owner_name = world_owners[world.id].name if world.id in world_owners else "Unclaimed"
+            preset = world.preset
+            filename = (
+                string_lib.sanitize_for_path(f"World{world_num}-{preset.game.short_name}-{owner_name}-{world.name}")
+                + f".{extension}"
+            )
+            filepath = path / filename
+            preset.save_to_file(filepath)
+
+            self.update_progress(f"Completed: {world_num} of {world_count} presets", world_num * 100 / world_count)
+
+        self.update_progress(f"Successfully exported {world_count} presets", 100)
 
     async def clear_generated_game(self):
         if self._last_actions.actions:
