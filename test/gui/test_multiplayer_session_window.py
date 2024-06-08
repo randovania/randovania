@@ -427,6 +427,7 @@ async def test_generate_game(
         ),
         options=window._options,
         retries=3,
+        world_names=["W1", "W2"],
     )
     window.game_session_api.prepare_to_upload_layout.assert_called_once_with(
         [session.worlds[0].id, session.worlds[1].id]

@@ -4,9 +4,9 @@ import dataclasses
 import functools
 from typing import TYPE_CHECKING
 
+from randovania.games.super_metroid.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCosmeticPatchesDialog
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import MusicMode, SuperMetroidCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCosmeticPatchesDialog
 
 if TYPE_CHECKING:
     from PySide6 import QtWidgets

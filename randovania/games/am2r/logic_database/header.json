@@ -1,5 +1,5 @@
 {
-    "schema_version": 25,
+    "schema_version": 26,
     "game": "am2r",
     "resource_database": {
         "items": {
@@ -411,6 +411,21 @@
             "Power Bomb Drop": {
                 "long_name": "Power Bomb Drop",
                 "max_capacity": 9999,
+                "extra": {}
+            },
+            "Long Beam": {
+                "long_name": "Long Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Infinite Bomb Propulsion": {
+                "long_name": "Infinite Bomb Propulsion",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Walljump Boots": {
+                "long_name": "Walljump Boots",
+                "max_capacity": 1,
                 "extra": {}
             }
         },
@@ -926,6 +941,10 @@
             "DoorLockRando": {
                 "long_name": "Door Lock Rando",
                 "extra": {}
+            },
+            "ShuffledOpenHatches": {
+                "long_name": "Shuffled Open Transitions",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -1126,12 +1145,24 @@
                                 }
                             },
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "tricks",
-                                    "name": "Walljump",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": "WJ Beginner",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Walljump",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -1151,6 +1182,10 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can IBJ"
                                         }
                                     ]
                                 }
@@ -1217,6 +1252,10 @@
                                                 "amount": 2,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can IBJ"
                                         }
                                     ]
                                 }
@@ -1235,12 +1274,24 @@
                                 "data": "Can Use Spider Ball"
                             },
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "tricks",
-                                    "name": "Walljump",
-                                    "amount": 2,
-                                    "negate": false
+                                    "comment": "WJ Intermediate",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Walljump",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -1278,7 +1329,7 @@
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "HJ with either Power Grip or a small WJ",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -1304,12 +1355,24 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "Walljump",
-                                                            "amount": 1,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Walljump",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Can Walljump"
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -1328,12 +1391,24 @@
                                 }
                             },
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "tricks",
-                                    "name": "Walljump",
-                                    "amount": 2,
-                                    "negate": false
+                                    "comment": "WJ",
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Walljump",
+                                                "amount": 2,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -1357,6 +1432,10 @@
                                                 "amount": 2,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can IBJ"
                                         }
                                     ]
                                 }
@@ -1394,12 +1473,24 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "Walljump",
-                                                            "amount": 1,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "Can Walljump"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "Walljump",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -1433,12 +1524,24 @@
                                 "data": "Can Use Spider Ball"
                             },
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "tricks",
-                                    "name": "Walljump",
-                                    "amount": 3,
-                                    "negate": false
+                                    "comment": "WJ",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Walljump",
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -1458,6 +1561,10 @@
                                                 "amount": 3,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can IBJ"
                                         }
                                     ]
                                 }
@@ -1465,7 +1572,7 @@
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "HJ + WJ",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -1484,6 +1591,10 @@
                                                 "amount": 2,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
                                         }
                                     ]
                                 }
@@ -1509,18 +1620,30 @@
                                 }
                             },
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "tricks",
-                                    "name": "Walljump",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": "WJ",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Walljump",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
+                                        }
+                                    ]
                                 }
                             },
                             {
                                 "type": "and",
                                 "data": {
-                                    "comment": null,
+                                    "comment": "Gravity",
                                     "items": [
                                         {
                                             "type": "resource",
@@ -1555,6 +1678,10 @@
                                                 "amount": 2,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can IBJ"
                                         }
                                     ]
                                 }
@@ -1829,6 +1956,10 @@
                                                             "amount": 1,
                                                             "negate": false
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can IBJ"
                                                     }
                                                 ]
                                             }
@@ -1876,6 +2007,10 @@
                                                             "amount": 2,
                                                             "negate": false
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can Walljump"
                                                     }
                                                 ]
                                             }
@@ -1971,12 +2106,24 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Walljump",
-                                                                        "amount": 2,
-                                                                        "negate": false
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Walljump",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Can Walljump"
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 },
                                                                 {
@@ -2027,6 +2174,10 @@
                                                             "amount": 1,
                                                             "negate": false
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can IBJ"
                                                     }
                                                 ]
                                             }
@@ -2101,6 +2252,10 @@
                                                             "amount": 2,
                                                             "negate": false
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can IBJ"
                                                     }
                                                 ]
                                             }
@@ -2177,12 +2332,24 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Walljump",
-                                                                        "amount": 2,
-                                                                        "negate": false
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Walljump",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Can Walljump"
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 },
                                                                 {
@@ -2261,6 +2428,10 @@
                                                             "amount": 3,
                                                             "negate": false
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Can IBJ"
                                                     }
                                                 ]
                                             }
@@ -2311,12 +2482,24 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Walljump",
-                                                                        "amount": 3,
-                                                                        "negate": false
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Walljump",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Can Walljump"
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 }
                                                             ]
@@ -2365,7 +2548,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Charge-Only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2377,12 +2560,46 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "or",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "MissileLessMetroids",
-                                                            "amount": 1,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "MissileLessMetroids",
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Long Beam",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "MissileLessMetroids",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -2454,7 +2671,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Charge-Only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2466,12 +2683,46 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "or",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "MissileLessMetroids",
-                                                            "amount": 2,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "MissileLessMetroids",
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Long Beam",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "MissileLessMetroids",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -2543,7 +2794,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Charge-Only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2555,12 +2806,46 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "or",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "MissileLessMetroids",
-                                                            "amount": 4,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "MissileLessMetroids",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Long Beam",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "MissileLessMetroids",
+                                                                                    "amount": 4,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -2632,7 +2917,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": "Not sure yet if this is even possible to do",
+                                                "comment": "Charge-Only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2657,6 +2942,15 @@
                                                         "data": {
                                                             "type": "items",
                                                             "name": "Morph Ball",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Long Beam",
                                                             "amount": 1,
                                                             "negate": false
                                                         }
@@ -2808,7 +3102,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Charge-Only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -2820,12 +3114,46 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "or",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "MissileLessMetroids",
-                                                            "amount": 3,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "MissileLessMetroids",
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Long Beam",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "MissileLessMetroids",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -2916,7 +3244,7 @@
                                                                 {
                                                                     "type": "and",
                                                                     "data": {
-                                                                        "comment": null,
+                                                                        "comment": "With Gravity",
                                                                         "items": [
                                                                             {
                                                                                 "type": "resource",
@@ -2928,28 +3256,100 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "type": "resource",
+                                                                                "type": "or",
                                                                                 "data": {
-                                                                                    "type": "tricks",
-                                                                                    "name": "MissileLessMetroids",
-                                                                                    "amount": 3,
-                                                                                    "negate": false
+                                                                                    "comment": null,
+                                                                                    "items": [
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "tricks",
+                                                                                                "name": "MissileLessMetroids",
+                                                                                                "amount": 4,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "and",
+                                                                                            "data": {
+                                                                                                "comment": null,
+                                                                                                "items": [
+                                                                                                    {
+                                                                                                        "type": "resource",
+                                                                                                        "data": {
+                                                                                                            "type": "items",
+                                                                                                            "name": "Long Beam",
+                                                                                                            "amount": 1,
+                                                                                                            "negate": false
+                                                                                                        }
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "type": "resource",
+                                                                                                        "data": {
+                                                                                                            "type": "tricks",
+                                                                                                            "name": "MissileLessMetroids",
+                                                                                                            "amount": 3,
+                                                                                                            "negate": false
+                                                                                                        }
+                                                                                                    }
+                                                                                                ]
+                                                                                            }
+                                                                                        }
+                                                                                    ]
                                                                                 }
                                                                             }
                                                                         ]
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "or",
                                                                     "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "MissileLessMetroids",
-                                                                        "amount": 4,
-                                                                        "negate": false
+                                                                        "comment": "Without Gravity",
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "MissileLessMetroids",
+                                                                                    "amount": 5,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "and",
+                                                                                "data": {
+                                                                                    "comment": null,
+                                                                                    "items": [
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "items",
+                                                                                                "name": "Long Beam",
+                                                                                                "amount": 1,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "tricks",
+                                                                                                "name": "MissileLessMetroids",
+                                                                                                "amount": 4,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 }
                                                             ]
                                                         }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Underwater Power Grip Wall"
                                                     }
                                                 ]
                                             }
@@ -3149,7 +3549,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Charge-Only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -3161,12 +3561,46 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "or",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "MissileLessMetroids",
-                                                            "amount": 3,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "MissileLessMetroids",
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Long Beam",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "MissileLessMetroids",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -3279,12 +3713,24 @@
                                                                     }
                                                                 },
                                                                 {
-                                                                    "type": "resource",
+                                                                    "type": "and",
                                                                     "data": {
-                                                                        "type": "tricks",
-                                                                        "name": "Walljump",
-                                                                        "amount": 3,
-                                                                        "negate": false
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Can Walljump"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Walljump",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
                                                                     }
                                                                 }
                                                             ]
@@ -3350,7 +3796,7 @@
                                         {
                                             "type": "and",
                                             "data": {
-                                                "comment": null,
+                                                "comment": "Charge-Only",
                                                 "items": [
                                                     {
                                                         "type": "resource",
@@ -3362,12 +3808,46 @@
                                                         }
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "or",
                                                         "data": {
-                                                            "type": "tricks",
-                                                            "name": "MissileLessMetroids",
-                                                            "amount": 3,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "tricks",
+                                                                        "name": "MissileLessMetroids",
+                                                                        "amount": 4,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Long Beam",
+                                                                                    "amount": 1,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "MissileLessMetroids",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -3536,12 +4016,24 @@
                                                                                 }
                                                                             },
                                                                             {
-                                                                                "type": "resource",
+                                                                                "type": "and",
                                                                                 "data": {
-                                                                                    "type": "tricks",
-                                                                                    "name": "Walljump",
-                                                                                    "amount": 3,
-                                                                                    "negate": false
+                                                                                    "comment": null,
+                                                                                    "items": [
+                                                                                        {
+                                                                                            "type": "resource",
+                                                                                            "data": {
+                                                                                                "type": "tricks",
+                                                                                                "name": "Walljump",
+                                                                                                "amount": 3,
+                                                                                                "negate": false
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "template",
+                                                                                            "data": "Can Walljump"
+                                                                                        }
+                                                                                    ]
                                                                                 }
                                                                             },
                                                                             {
@@ -3710,6 +4202,10 @@
                                         {
                                             "type": "template",
                                             "data": "Can Use Bombs"
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
                                         }
                                     ]
                                 }
@@ -3731,6 +4227,10 @@
                                                 "amount": 5,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
                                         }
                                     ]
                                 }
@@ -3757,6 +4257,10 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Walljump"
                                         }
                                     ]
                                 }
@@ -4389,6 +4893,50 @@
                         ]
                     }
                 }
+            },
+            "Can Walljump": {
+                "display_name": "Can Walljump",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Walljump Boots",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can IBJ": {
+                "display_name": "Can IBJ",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "TODO: remove \"can use bombs\" from all places where this template is used to avoid redudancy",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Infinite Bomb Propulsion",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Use Bombs"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],
@@ -4691,7 +5239,9 @@
                         "lock": null
                     },
                     "Normal Door (Forced)": {
-                        "extra": {},
+                        "extra": {
+                            "door_name": "Normal Door"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -4902,8 +5452,10 @@
                         },
                         "lock": null
                     },
-                    "Metroid Queen-Locked Door": {
-                        "extra": {},
+                    "Queen Metroid-Locked Door": {
+                        "extra": {
+                            "door_name": "Queen-Locked Door"
+                        },
                         "requirement": {
                             "type": "resource",
                             "data": {
@@ -5216,11 +5768,11 @@
                         "Ice Beam Door",
                         "Industrial Complex EMP Door",
                         "Locked Door",
-                        "Metroid Queen-Locked Door",
                         "Missile Door",
                         "Normal Door",
                         "Plasma Beam Door",
                         "Power Bomb Door",
+                        "Queen Metroid-Locked Door",
                         "Research Site Open Hatch",
                         "Screw Attack Door",
                         "Serris-Locked Door",
@@ -5445,7 +5997,7 @@
         },
         "dock_rando": {
             "force_change_two_way": false,
-            "resolver_attempts": 125,
+            "resolver_attempts": 300,
             "to_shuffle_proportion": 1.0
         }
     },
@@ -5541,6 +6093,7 @@
             5
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "Main Caves.json",
         "Golden Temple.json",

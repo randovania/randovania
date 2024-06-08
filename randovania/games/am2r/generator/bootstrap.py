@@ -3,38 +3,32 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.am2r.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.am2r.layout import AM2RConfiguration
-from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
 
 if TYPE_CHECKING:
     from random import Random
 
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def all_dna_locations(game: GameDescription, config: AM2RArtifactConfig):
-    locations = []
-
-    for node in game.region_list.all_nodes:
-        if isinstance(node, PickupNode):
-            # Metroid pickups
-            name = node.extra["object_name"]
-            if config.prefer_metroids and name.startswith("oItemDNA_"):
-                locations.append(node)
-            # Pickups guarded by bosses
-            elif config.prefer_bosses and name in _boss_items:
-                locations.append(node)
-
-    return locations
+def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
+    assert isinstance(config, AM2RConfiguration)
+    artifact_config = config.artifacts
+    name = node.extra["object_name"]
+    _boss_items = ["oItemM_111", "oItemJumpBall", "oItemSpaceJump", "oItemPBeam", "oItemIBeam", "oItemETank_50"]
+    return (
+        artifact_config.prefer_metroids
+        and name.startswith("oItemDNA_")
+        or artifact_config.prefer_bosses
+        and name in _boss_items
+    )
 
 
 class AM2RBootstrap(MetroidBootstrap):
@@ -62,6 +56,15 @@ class AM2RBootstrap(MetroidBootstrap):
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("DoorLockRando")
 
+            door_db = configuration.dock_rando.weakness_database
+            door_type = door_db.find_type("door")
+            open_transition_door = door_db.get_by_weakness("door", "Open Transition")
+            are_transitions_shuffled = (
+                open_transition_door in configuration.dock_rando.types_state[door_type].can_change_from
+            )
+            if are_transitions_shuffled:
+                enabled_resources.add("ShuffledOpenHatches")
+
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
@@ -80,23 +83,7 @@ class AM2RBootstrap(MetroidBootstrap):
         if config.prefer_anywhere:
             return super().assign_pool_results(rng, patches, pool_results)
 
-        locations = all_dna_locations(patches.game, config)
-        rng.shuffle(locations)
-
-        dna_to_assign = [
-            pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is METROID_DNA_CATEGORY
-        ]
-
-        if len(dna_to_assign) > len(locations):
-            raise InvalidConfiguration(
-                f"Has {len(dna_to_assign)} DNA in the pool, but only {len(locations)} valid locations."
-            )
-
-        for dna, location in zip(dna_to_assign, locations, strict=False):
-            pool_results.to_place.remove(dna)
-            pool_results.assignment[location.pickup_index] = dna
+        locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_dna_node)
+        self.pre_place_items(rng, locations, pool_results, METROID_DNA_CATEGORY)
 
         return super().assign_pool_results(rng, patches, pool_results)
-
-
-_boss_items = ["oItemM_111", "oItemJumpBall", "oItemSpaceJump", "oItemPBeam", "oItemIBeam", "oItemETank_50"]

@@ -70,22 +70,6 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="2">
-    <widget class="QLabel" name="provided_ammo_label">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this item is collected, it also gives this amount of the given ammos.&lt;/p&gt;&lt;p&gt;This is included in the calculation of how much each pickup of this ammo gives.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Provided Ammo (XXXX and YYYY)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="0">
     <widget class="QCheckBox" name="vanilla_check">
      <property name="text">
@@ -119,8 +103,13 @@
    <item row="1" column="4">
     <widget class="ScrollProtectedComboBox" name="state_case_combo"/>
    </item>
-   <item row="1" column="3">
-    <widget class="ScrollProtectedSpinBox" name="provided_ammo_spinbox"/>
+   <item row="1" column="2" colspan="2">
+    <widget class="ScrollProtectedSpinBox" name="provided_ammo_spinbox">
+        
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this item is collected, it also gives this amount of the given ammos.&lt;/p&gt;&lt;p&gt;This is included in the calculation of how much each pickup of this ammo gives.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

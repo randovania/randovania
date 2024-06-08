@@ -487,12 +487,38 @@
                 "Pickup (Missile)": {
                     "node_type": "pickup",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 24.57,
+                        "y": 37.14,
+                        "z": -25.25
+                    },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "MissileExpansion",
+                            "connections": [],
+                            "removals": [
+                                65678
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "instances": {
+                                "pickup": 65689,
+                                "hud_memo": 65681,
+                                "streamed_audio": 65676,
+                                "sound": 65686,
+                                "audio_fade": 65683
+                            }
+                        }
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 20,
                     "location_category": "minor",
@@ -723,12 +749,49 @@
                 "Pickup (Energy Transfer Module)": {
                     "node_type": "pickup",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 0.97,
+                        "y": -43.56,
+                        "z": -15.4
+                    },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "EnergyTransferModule",
+                            "connections": [
+                                {
+                                    "target": 268566936,
+                                    "message": "ACTV"
+                                },
+                                {
+                                    "target": 268566936,
+                                    "message": "ZERO"
+                                }
+                            ],
+                            "removals": [
+                                131365,
+                                268566702,
+                                268566946
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "instances": {
+                                "pickup": 131367,
+                                "hud_memo": 131360,
+                                "streamed_audio": 131379,
+                                "sound": 131343,
+                                "audio_fade": 131359
+                            }
+                        }
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 21,
                     "location_category": "major",
@@ -1598,12 +1661,38 @@
                 "Pickup (Missile)": {
                     "node_type": "pickup",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 86.51,
+                        "y": -53.35,
+                        "z": -12.29
+                    },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "MissileExpansion",
+                            "connections": [],
+                            "removals": [
+                                327910
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "instances": {
+                                "pickup": 327887,
+                                "hud_memo": 327911,
+                                "streamed_audio": 327906,
+                                "sound": 327891,
+                                "audio_fade": 327904
+                            }
+                        }
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 22,
                     "location_category": "minor",
@@ -1787,12 +1876,39 @@
                 "Pickup (Violet Translator)": {
                     "node_type": "pickup",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": -5.16,
+                        "y": -53.49,
+                        "z": 12.8
+                    },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "location_data": {
+                            "type": "custom",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "VioletTranslator",
+                            "connections": [],
+                            "removals": [
+                                459696,
+                                459075,
+                                134677499
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 1.0
+                            },
+                            "collision_size": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 2.0
+                            },
+                            "layer": "Default"
+                        }
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 23,
                     "location_category": "major",
@@ -1809,12 +1925,64 @@
                 "Pickup (Light Suit)": {
                     "node_type": "pickup",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 1.34,
+                        "y": -42.9,
+                        "z": 15.28
+                    },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "location_data": {
+                            "type": "standard",
+                            "exclude_memo_from_removal": false,
+                            "original_model": "LightSuit",
+                            "connections": [
+                                {
+                                    "target": 459647,
+                                    "message": "INCR"
+                                },
+                                {
+                                    "target": 537330382,
+                                    "message": "ACTV"
+                                },
+                                {
+                                    "target": 537330382,
+                                    "message": "ZERO"
+                                },
+                                {
+                                    "target": 458813,
+                                    "message": "STRT"
+                                },
+                                {
+                                    "target": 459538,
+                                    "message": "ULCK"
+                                },
+                                {
+                                    "target": 459661,
+                                    "message": "ACTV"
+                                }
+                            ],
+                            "removals": [
+                                537330383,
+                                537330343
+                            ],
+                            "collision_offset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "instances": {
+                                "pickup": 537330375,
+                                "hud_memo": 537330376,
+                                "streamed_audio": 537330381,
+                                "sound": 537330373,
+                                "audio_fade": 537330384
+                            }
+                        }
+                    },
                     "valid_starting_location": false,
                     "pickup_index": 24,
                     "location_category": "major",

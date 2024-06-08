@@ -6,6 +6,8 @@ from contextlib import contextmanager
 from ftplib import FTP
 from typing import TYPE_CHECKING
 
+from randovania import monitoring
+
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
     from pathlib import Path
@@ -70,6 +72,7 @@ class FtpUploader:
         if not self.remote_path.startswith("/"):
             raise ValueError("remote_path must start with /")
 
+    @monitoring.trace_function
     def __call__(self, progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         all_files = list(self.local_path.rglob("*"))
 

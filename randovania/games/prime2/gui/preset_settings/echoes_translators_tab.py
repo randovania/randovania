@@ -10,9 +10,9 @@ from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
+from randovania.games.prime2.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
-from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.lib.enum_lib import iterate_enum

@@ -5,11 +5,17 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.generator.base_patches_factory import BasePatchesFactory
+from randovania.generator.teleporter_distributor import (
+    get_dock_connections_assignment_for_teleporter,
+    get_teleporter_connections,
+)
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
     from random import Random
 
     from randovania.game_description.db.dock import DockWeakness
+    from randovania.game_description.db.node import Node
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -54,3 +60,13 @@ class AM2RBasePatchesFactory(BasePatchesFactory):
                                 dock_weakness.append((get_node(node.default_connection, DockNode), blue_door))
 
         return parent.assign_dock_weakness(dock_weakness)
+
+    def dock_connections_assignment(
+        self, configuration: BaseConfiguration, game: GameDescription, rng: Random
+    ) -> Iterable[tuple[DockNode, Node]]:
+        assert isinstance(configuration, AM2RConfiguration)
+        teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
+        dock_assignment = get_dock_connections_assignment_for_teleporter(
+            configuration.teleporters, game, teleporter_connection
+        )
+        yield from dock_assignment

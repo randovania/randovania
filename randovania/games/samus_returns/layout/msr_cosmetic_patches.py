@@ -37,7 +37,6 @@ enum_lib.add_long_name(
 @dataclasses.dataclass(frozen=True)
 class MSRCosmeticPatches(BaseCosmeticPatches):
     use_laser_color: bool = False
-    use_grapple_laser_color: bool = False
     use_energy_tank_color: bool = False
     use_aeion_bar_color: bool = False
     use_ammo_hud_color: bool = False

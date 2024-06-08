@@ -7,8 +7,8 @@ from PySide6 import QtWidgets
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime3.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLayoutEditor
 from randovania.games.prime3.patcher.gollop_corruption_patcher import layout_string_for_items
-from randovania.gui.generated.corruption_layout_editor_ui import Ui_CorruptionLayoutEditor
 
 if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_database import PickupDatabase

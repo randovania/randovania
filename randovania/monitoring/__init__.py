@@ -10,6 +10,7 @@ from pathlib import Path
 import sentry_sdk
 import sentry_sdk.integrations.logging
 import sentry_sdk.scrubber
+import sentry_sdk.types
 
 import randovania
 
@@ -65,10 +66,15 @@ def _filter_user_home(data: typing.Any) -> typing.Any | None:
     return _filter_data(data, filter_home)
 
 
-def before_breadcrumb(crumb: dict[str, typing.Any], hint: dict[str, typing.Any]) -> dict[str, typing.Any] | None:
+def before_breadcrumb(crumb: dict[str, typing.Any], hint: sentry_sdk.types.Hint) -> dict[str, typing.Any] | None:
     # Crumb is a dictionary, so this function will always return None and modify crumb in-place instead.
     _filter_user_home(crumb)
     return crumb
+
+
+def before_send(event: sentry_sdk.types.Event, hint: sentry_sdk.types.Hint) -> sentry_sdk.types.Event | None:
+    _filter_user_home(event)
+    return event
 
 
 def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude_server_name: bool = False) -> None:
@@ -120,6 +126,7 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         auto_session_tracking=include_flask,
         event_scrubber=HomeEventScrubber(),
         before_breadcrumb=before_breadcrumb,
+        before_send=before_send,
     )
     sentry_sdk.set_context(
         "os",

@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.cave_story.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
 from randovania.games.cave_story.layout.cs_configuration import CSObjective
-from randovania.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

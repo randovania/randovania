@@ -1,5 +1,5 @@
 {
-    "schema_version": 25,
+    "schema_version": 26,
     "game": "samus_returns",
     "resource_database": {
         "items": {
@@ -5180,6 +5180,19 @@
                             }
                         }
                     },
+                    "Permanently Locked Door": {
+                        "extra": {
+                            "type": "locked"
+                        },
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
                     "Power Beam Door": {
                         "extra": {
                             "type": "power_beam"
@@ -5551,11 +5564,97 @@
                                 "data": "Lay Power Bomb"
                             }
                         }
+                    },
+                    "Ice Beam Door": {
+                        "extra": {
+                            "type": "ice_beam"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Ice",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Grapple Beam Door": {
+                        "extra": {
+                            "type": "grapple_beam"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Grapple",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Bomb Door": {
+                        "extra": {
+                            "type": "bomb"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Lay Bomb"
+                            }
+                        }
+                    },
+                    "Beam Burst Door": {
+                        "extra": {
+                            "type": "beam_burst"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Beam Burst"
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
                     "unlocked": "Power Beam Door",
-                    "locked": "Access Closed",
+                    "locked": "Permanently Locked Door",
                     "change_from": [
                         "Charge Beam Door",
                         "Missile Door",
@@ -5567,8 +5666,13 @@
                         "Wave Beam Door"
                     ],
                     "change_to": [
+                        "Beam Burst Door",
+                        "Bomb Door",
                         "Charge Beam Door",
+                        "Grapple Beam Door",
+                        "Ice Beam Door",
                         "Missile Door",
+                        "Permanently Locked Door",
                         "Plasma Beam Door",
                         "Power Beam Door",
                         "Power Bomb Door",
@@ -5674,7 +5778,7 @@
         },
         "dock_rando": {
             "force_change_two_way": true,
-            "resolver_attempts": 125,
+            "resolver_attempts": 300,
             "to_shuffle_proportion": 1.0
         }
     },
@@ -5823,6 +5927,7 @@
             3
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "Surface East.json",
         "Area 1.json",

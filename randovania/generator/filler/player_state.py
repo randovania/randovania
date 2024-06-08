@@ -51,12 +51,14 @@ class PlayerState:
     def __init__(
         self,
         index: int,
+        name: str,
         game: GameDescription,
         initial_state: State,
         pickups_left: list[PickupEntry],
         configuration: FillerConfiguration,
     ):
         self.index = index
+        self.name = name
         self.game = game
 
         self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
@@ -75,10 +77,10 @@ class PlayerState:
         self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
 
     def __repr__(self) -> str:
-        return f"Player {self.index + 1}"
+        return f"PlayerState {self.name}"
 
     def update_for_new_state(self) -> None:
-        debug.debug_print(f"\n>>> Updating state of {self}")
+        debug.debug_print(f"\n>>> Updating state of {self.name}")
 
         self.advance_scan_asset_seen_count()
         self._advance_event_seen_count()
@@ -104,7 +106,7 @@ class PlayerState:
         for index in self.reach.state.collected_pickup_indices:
             if index not in self.pickup_index_considered_count:
                 self.pickup_index_considered_count[index] = 0
-                filler_logging.print_new_pickup_index(self.index, self.game, index)
+                filler_logging.print_new_pickup_index(self, index)
 
     def _calculate_potential_actions(self) -> None:
         uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
@@ -115,7 +117,7 @@ class PlayerState:
         pickups = get_pickups_that_solves_unreachable(
             usable_pickups, self.reach, uncollected_resource_nodes, self.configuration.single_set_for_pickups_that_solve
         )
-        filler_logging.print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
+        filler_logging.print_retcon_loop_start(self, usable_pickups)
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
 
@@ -138,7 +140,8 @@ class PlayerState:
         return result
 
     def victory_condition_satisfied(self) -> bool:
-        return self.game.victory_condition.satisfied(self.reach.state.node_context(), self.reach.state.energy)
+        context = self.reach.state.node_context()
+        return self.game.victory_condition_as_set(context).satisfied(context, self.reach.state.energy)
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget) -> None:
         self.num_assigned_pickups += 1

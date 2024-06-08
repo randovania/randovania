@@ -20,7 +20,7 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
     if has_artifacts and artifacts.prefer_anywhere:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}": True,
             },
             {
                 "Place anywhere": artifacts.prefer_anywhere,
@@ -29,7 +29,7 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
     elif has_artifacts:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}": True,
             },
             {
                 "Prefers Metroids": artifacts.prefer_metroids,
@@ -70,6 +70,11 @@ class AM2RPresetDescriber(GamePresetDescriber):
                     },
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
+                {
+                    f"Transport Pipes: {configuration.teleporters.description('transporters')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
                 {
                     "Enable Septoggs": configuration.septogg_helpers,
                     "Add new Nest Pipes": configuration.nest_pipes,

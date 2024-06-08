@@ -106,8 +106,12 @@ jobs:
         run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
         if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
 
+      - name: build ui files for test game too
+        run: python setup.py build_ui
+        if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
+
       - name: run pytest (no resolver)
-        run: $PREFIX python -m pytest --cov randovania --cov-report=xml --skip-resolver-tests -n auto --durations=100
+        run: $PREFIX python -m pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
         shell: bash
         env:
           QT_QPA_PLATFORM: "${{ matrix.os == 'ubuntu-latest' && 'xcb' || '' }}"
@@ -115,7 +119,7 @@ jobs:
         if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
 
       - name: run pytest (resolver)
-        run: python -m pytest --cov randovania --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
+        run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
         if: ${{ matrix.name == 'Resolver' }}
 
       - name: create executable
@@ -150,7 +154,7 @@ jobs:
         with:
           action: codecov/codecov-action@v4
           with: |
-            fail_ci_if_error: true
+            fail_ci_if_error: false
             files: ./coverage.xml
             token: ${{ secrets.CODECOV_TOKEN }}
           attempt_limit: 5
@@ -224,7 +228,7 @@ jobs:
           Import-PfxCertificate -FilePath certificate/certificate.pfx -CertStoreLocation Cert:\CurrentUser\My -Password (ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText)
 
       - name: Deploy Advanced Installer
-        uses: caphyon/advinst-github-action@v1.1
+        uses: caphyon/advinst-github-action@v2.0
         with:
           advinst-version: '21.1'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}
@@ -444,7 +448,7 @@ jobs:
       -
         name: Login to DockerHub
         if: ${{ fromJSON(steps.decide_push.outputs.should) }}
-        uses: docker/login-action@v3.1.0
+        uses: docker/login-action@v3.2.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}

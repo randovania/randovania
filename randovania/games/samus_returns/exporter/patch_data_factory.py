@@ -7,6 +7,7 @@ from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -15,6 +16,7 @@ from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -397,8 +399,6 @@ class MSRPatchDataFactory(PatchDataFactory):
         if self.cosmetic_patches.use_laser_color:
             cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
             cosmetic_patches["laser_unlocked_color"] = [x / 255 for x in c.laser_unlocked_color]
-
-        if self.cosmetic_patches.use_grapple_laser_color:
             cosmetic_patches["grapple_laser_locked_color"] = [x / 255 for x in c.grapple_laser_locked_color]
             cosmetic_patches["grapple_laser_unlocked_color"] = [x / 255 for x in c.grapple_laser_unlocked_color]
 
@@ -415,6 +415,23 @@ class MSRPatchDataFactory(PatchDataFactory):
         cosmetic_patches["camera_names_dict"] = self._build_area_name_dict()
 
         return cosmetic_patches
+
+    def _build_elevator_dict(self) -> dict[str, dict[str, dict[str, str]]]:
+        # generate a 2D dictionary of source (scenario, actor) => target (scenario, actor)
+        elevator_dict: dict = {}
+        for node, connection in self.patches.all_dock_connections():
+            if not isinstance(node, DockNode):
+                continue
+            if node.dock_type not in self.game.dock_weakness_database.all_teleporter_dock_types:
+                continue
+
+            scenario = self._level_name_for(node)
+            actor_name = node.extra["actor_name"]
+            if elevator_dict.get(scenario, None) is None:
+                elevator_dict[scenario] = {}
+            elevator_dict[scenario][actor_name] = self._start_point_ref_for(connection)
+
+        return elevator_dict
 
     def _door_patches(self) -> list[dict[str, str]]:
         wl = self.game.region_list
@@ -477,6 +494,9 @@ class MSRPatchDataFactory(PatchDataFactory):
             "pickups": [
                 data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
+            "elevators": self._build_elevator_dict()
+            if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA
+            else {},
             "energy_per_tank": energy_per_tank,
             "reserves_per_tank": {
                 "life_tank_size": self.configuration.life_tank_size,

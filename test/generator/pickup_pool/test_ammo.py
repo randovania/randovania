@@ -9,14 +9,21 @@ from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfigura
 
 def test_add_ammo(echoes_resource_database, mocker):
     # Setup
+    pickup1 = MagicMock()
+    pickup2 = MagicMock()
+
     mock_create_ammo_pickup: MagicMock = mocker.patch(
-        "randovania.generator.pickup_pool.ammo_pickup.create_ammo_pickup", autospec=True
+        "randovania.generator.pickup_pool.ammo_pickup.create_ammo_pickup",
+        autospec=True,
+        side_effect=[pickup1, pickup2],
     )
 
     ammo1 = MagicMock()
     ammo2 = MagicMock()
     state1 = MagicMock()
+    state1.pickup_count = 1
     state2 = MagicMock()
+    state2.pickup_count = 2
 
     ammo_configuration = AmmoPickupConfiguration(
         {
@@ -26,12 +33,12 @@ def test_add_ammo(echoes_resource_database, mocker):
     )
 
     # Run
-    results = list(
-        randovania.generator.pickup_pool.ammo_pickup.add_ammo_pickups(echoes_resource_database, ammo_configuration)
+    results = randovania.generator.pickup_pool.ammo_pickup.add_ammo_pickups(
+        echoes_resource_database, ammo_configuration
     )
 
     # Assert
-    assert results == [mock_create_ammo_pickup.return_value, mock_create_ammo_pickup.return_value]
+    assert results == [pickup1, pickup2, pickup2]
     mock_create_ammo_pickup.assert_has_calls(
         [
             call(ammo1, state1.ammo_count, state1.requires_main_item, echoes_resource_database),

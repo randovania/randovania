@@ -225,7 +225,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         else:
             self.export_iso_button.setToolTip("")
 
-        self.customize_user_preferences_button.setVisible(description.world_count == 1)
+        has_user_preferences = False
+        if description.world_count == 1:
+            has_user_preferences = description.get_preset(0).game.gui.cosmetic_dialog is not None
+        self.customize_user_preferences_button.setVisible(has_user_preferences)
 
         self.player_index_combo.clear()
         for i in range(description.world_count):
@@ -234,7 +237,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.player_index_combo.setVisible(description.world_count > 1)
 
         if description.has_spoiler:
-            if description.world_count == 1:
+            exists_minimal_logic = any(
+                preset.configuration.trick_level.minimal_logic for preset in description.all_presets
+            )
+            if description.world_count == 1 and not exists_minimal_logic:
                 if self.validator_widget is not None:
                     self.validator_widget.stop_validator()
 

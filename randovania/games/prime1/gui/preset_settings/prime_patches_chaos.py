@@ -4,8 +4,8 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.games.prime1.gui.generated.preset_prime_chaos_ui import Ui_PresetPrimeChaos
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
-from randovania.gui.generated.preset_prime_chaos_ui import Ui_PresetPrimeChaos
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

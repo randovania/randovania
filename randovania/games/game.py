@@ -65,7 +65,7 @@ class GameGui:
     tab_provider: Callable[[PresetEditor, WindowManager], Iterable[type[PresetTab]]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
-    cosmetic_dialog: type[BaseCosmeticPatchesDialog]
+    cosmetic_dialog: type[BaseCosmeticPatchesDialog] | None
     """Dialog box for editing the game's cosmetic settings."""
 
     export_dialog: type[GameExportDialog]
@@ -107,6 +107,7 @@ class GameWebInfo:
 class DevelopmentState(Enum):
     STABLE = "stable"
     EXPERIMENTAL = "experimental"
+    DEVELOPMENT = "development"
 
     @property
     def is_stable(self):
@@ -116,7 +117,10 @@ class DevelopmentState(Enum):
         if self.is_stable:
             return True
 
-        return randovania.is_dev_version()
+        if self == DevelopmentState.EXPERIMENTAL:
+            return randovania.is_dev_version()
+
+        return not randovania.is_frozen()
 
 
 @dataclass(frozen=True)
@@ -185,6 +189,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     CAVE_STORY = "cave_story"
     AM2R = "am2r"
     FUSION = "fusion"
+    FACTORIO = "factorio"
 
     @property
     def data(self) -> GameData:
@@ -208,6 +213,8 @@ class RandovaniaGame(BitPackEnum, Enum):
             import randovania.games.am2r.game_data as game_module
         elif self == RandovaniaGame.FUSION:
             import randovania.games.fusion.game_data as game_module
+        elif self == RandovaniaGame.FACTORIO:
+            import randovania.games.factorio.game_data as game_module
         else:
             raise ValueError(f"Missing import for game: {self.value}")
         return game_module.game_data

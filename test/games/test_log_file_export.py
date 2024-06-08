@@ -93,6 +93,10 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "am2r/door_lock_open.rdvgame",  # starter preset+door lock rando with open transitions
         "am2r/progressive_items.rdvgame",  # Starter preset+progressive items
         "am2r/starting_items.rdvgame",  # Starter preset + random starting items
+        "am2r/transport_pipe_shuffle.rdvgame",  # Starter preset + shuffled transport pipes
+        "am2r/custom_dna_required.rdvgame",  # Has 20/30 dna
+        # Factorio
+        "factorio/starter_preset.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
@@ -100,6 +104,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/elevator_rando.rdvgame",  # elevator_rando multi
         "dread/custom_start.rdvgame",  # crazy settings
         "dread/custom_patcher_data.rdvgame",  # custom patcher data
+        "dread/all_settings.rdvgame",  # all settings enabled
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors

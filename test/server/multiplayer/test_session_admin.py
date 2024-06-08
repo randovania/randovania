@@ -598,7 +598,7 @@ def test_admin_session_change_layout_description(
     sa = MagicMock()
     sa.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
-    layout_description.as_json.return_value = {"info": {"presets": []}}
+    layout_description.as_binary.return_value = b"OUR_ENCODED_LAYOUT"
     layout_description.world_count = 2
     layout_description.all_presets = [new_preset, new_preset]
     layout_description.shareable_word_hash = "Hash Words"
@@ -616,9 +616,10 @@ def test_admin_session_change_layout_description(
     mock_emit_session_update.assert_called_once_with(session)
     mock_audit.assert_called_once_with(sa, session, "Set game to Hash Words")
     mock_verify_no_layout_description.assert_called_once_with(session)
+    layout_description.as_binary.assert_called_once_with(force_spoiler=True, include_presets=False)
 
     session_mod = database.MultiplayerSession.get_by_id(1)
-    assert session_mod.layout_description_json == b"x\x9c\xabV\xca\xccK\xcbW\xb2\xaa\xae\xad\x05\x00\x17\xa7\x04\x1b"
+    assert session_mod.layout_description_json == b"OUR_ENCODED_LAYOUT"
     assert session_mod.generation_in_progress is None
     assert session_mod.game_details_json == '{"seed_hash": "ASDF", "word_hash": "Hash Words", "spoiler": true}'
 

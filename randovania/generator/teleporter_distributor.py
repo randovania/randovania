@@ -53,53 +53,65 @@ def try_randomize_teleporters(
     rng: Random,
     teleporters: tuple[TeleporterHelper, ...],
 ) -> list[TeleporterHelper]:
-    telepoter_database: list[TeleporterHelper] = list(teleporters)
-    assert len(telepoter_database) % 2 == 0
+    teleporter_database: list[TeleporterHelper] = list(teleporters)
+    assert len(teleporter_database) % 2 == 0
 
-    teleporter_list = copy.copy(telepoter_database)
+    teleporter_list = copy.copy(teleporter_database)
+    # sort all teleporters into a dict from region -> list of all teleporters in the region
     teleporters_by_region: dict[str, list[TeleporterHelper]] = defaultdict(list)
     for teleporter in teleporter_list:
         teleporters_by_region[teleporter.region_name].append(teleporter)
 
     while teleporter_list:
+        # pick source_teleporters list with the most remaining teleporters
         source_teleporters: list[TeleporterHelper] = max(teleporters_by_region.values(), key=len)
+        # create target_teleporters list => all (remaining) teleporters which
+        # are not in the region from source_teleporters
         target_teleporters: list[TeleporterHelper] = [
             teleporter for teleporter in teleporter_list if teleporter not in source_teleporters
         ]
+        # pick the first teleporter as source and a random target
         source_teleporter = source_teleporters[0]
         target_teleporter = rng.choice(target_teleporters)
 
         source_teleporter.connect_to(target_teleporter)
 
+        # remove both connected teleporters from the list, eventually repeat until all teleporters are shuffled
         teleporters_by_region[source_teleporter.region_name].remove(source_teleporter)
         teleporters_by_region[target_teleporter.region_name].remove(target_teleporter)
         teleporter_list.remove(source_teleporter)
         teleporter_list.remove(target_teleporter)
 
-    # TODO
-    list3 = copy.copy(telepoter_database)
-    cteleporter_list3 = [list3[0]]
-    while list3:
-        cteleporter_list1 = []
-        for cteleporter1 in cteleporter_list3:
+    # check if all teleporters are reachable, which means this list must be empty at the end
+    remaining_teleporters = copy.copy(teleporter_database)
+    # start with a random reachable teleporter
+    reachable_teleporters = [remaining_teleporters[0]]
+    while remaining_teleporters:
+        new_reachable_teleporters = []
+        for reachable_teleporter in reachable_teleporters:
             index = 0
-            while index < len(list3):
-                cteleporter2 = list3[index]
+            # check all remaining teleporters
+            while index < len(remaining_teleporters):
+                teleporter_to_check = remaining_teleporters[index]
+                # teleporter_to_check is considered reachable if it is in the same region as a reachable_teleporter
+                # or if it is in the region+area of the reachable_teleporter's destination
                 if (
-                    cteleporter2.region_name == cteleporter1.region_name
-                    or cteleporter2.area_name == cteleporter1.destination.area
+                    teleporter_to_check.region_name == reachable_teleporter.region_name
+                    or teleporter_to_check.area_location == reachable_teleporter.destination.area_identifier
                 ):
-                    cteleporter_list1.append(cteleporter2)
-                    list3.remove(cteleporter2)
+                    new_reachable_teleporters.append(teleporter_to_check)
+                    remaining_teleporters.remove(teleporter_to_check)
                 else:
                     index += 1
-        if cteleporter_list1:
-            cteleporter_list3 = cteleporter_list1
+        # next iteration should start with the new_reachable teleporters
+        if new_reachable_teleporters:
+            reachable_teleporters = new_reachable_teleporters
+        # if new_reachable_teleporters is empty, it means that not all teleporters are reachable: shuffle again!
         else:
             # Randomization failed
             return try_randomize_teleporters(rng, teleporters)
 
-    return telepoter_database
+    return teleporter_database
 
 
 def two_way_teleporter_connections(

@@ -27,6 +27,7 @@ def generate_layout(
     parameters: GeneratorParameters,
     progress_update: ProgressUpdateCallable,
     retries: int | None = None,
+    world_names: list[str] | None = None,
 ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the configured permalink
@@ -34,6 +35,7 @@ def generate_layout(
     :param parameters:
     :param progress_update:
     :param retries:
+    :param world_names:
     :return:
     """
     with monitoring.start_transaction(op="task", name="generate_layout") as span:
@@ -55,6 +57,7 @@ def generate_layout(
         extra_args = {
             "generator_params": parameters,
             "validate_after_generation": options.advanced_validate_seed_after,
+            "world_names": world_names,
         }
         if not options.advanced_timeout_during_generation:
             extra_args["timeout"] = None

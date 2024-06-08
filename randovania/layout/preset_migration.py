@@ -1088,6 +1088,52 @@ def _migrate_v76(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v77(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["teleporters"] = {"mode": "vanilla", "excluded_teleporters": [], "excluded_targets": []}
+
+    return preset
+
+
+def _migrate_v78(preset: dict) -> dict:
+    if preset["game"] == "samus_returns":
+        preset["configuration"]["teleporters"] = {"mode": "vanilla", "excluded_teleporters": [], "excluded_targets": []}
+
+    return preset
+
+
+def _migrate_v79(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["artifacts"]["placed_artifacts"] = preset["configuration"]["artifacts"][
+            "required_artifacts"
+        ]
+
+    return preset
+
+
+def _migrate_v80(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        items = ["Long Beam", "Infinite Bomb Propulsion", "Walljump Boots"]
+        for i in items:
+            preset["configuration"]["standard_pickup_configuration"]["pickups_state"][i] = {
+                "num_included_in_starting_pickups": 1
+            }
+
+    return preset
+
+
+def _migrate_v81(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        progressive_damage_reduction = preset["configuration"].pop("progressive_damage_reduction", False)
+        if progressive_damage_reduction:
+            damage_reduction = "Progressive"
+        else:
+            damage_reduction = "Default"
+        preset["configuration"]["damage_reduction"] = damage_reduction
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1165,6 +1211,11 @@ _MIGRATIONS = [
     _migrate_v74,
     _migrate_v75,
     _migrate_v76,  # msr door lock rando
+    _migrate_v77,
+    _migrate_v78,  # msr elevator rando
+    _migrate_v79,
+    _migrate_v80,
+    _migrate_v81,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

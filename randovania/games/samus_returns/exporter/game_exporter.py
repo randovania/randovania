@@ -74,7 +74,7 @@ class MSRGameExporter(GameExporter):
         monitoring.set_tag("msr_target_platform", export_params.target_platform.value)
         monitoring.set_tag("msr_target_version", export_params.target_version.value)
 
-        from open_samus_returns_rando.version import version as open_samus_returns_rando_version  # type: ignore
+        from open_samus_returns_rando.version import version as open_samus_returns_rando_version
 
         text_patches = patch_data["text_patches"]
         text_patches["GUI_SAMUS_DATA_TITLE"] = text_patches["GUI_SAMUS_DATA_TITLE"].replace(
@@ -97,7 +97,7 @@ class MSRGameExporter(GameExporter):
             progress_update(f"Finished deleting {export_params.output_path}", -1)
 
         with monitoring.trace_block("open_samus_returns_rando.patch_with_status_update"):
-            import open_samus_returns_rando  # type: ignore
+            import open_samus_returns_rando
 
             open_samus_returns_rando.patch_with_status_update(
                 export_params.input_path,

@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import randovania
+from randovania.games.prime2.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.gui.generated.preset_echoes_patches_ui import Ui_PresetEchoesPatches
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 

@@ -20,7 +20,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
         export_dialog=gui.AM2RGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(),
+        spoiler_visualizer=(gui.AM2RTeleporterDetailsTab,),
     )
 
 
@@ -133,10 +133,11 @@ game_data: game.GameData = game.GameData(
             "All items",
             "Starting locations",
             "Door locks",
+            "Transport Pipe destinations",
             "A new goal has been added (DNA Hunt)",
         ],
         need_to_play=[
-            "AM2R version 1.5.5",
+            "AM2R version 1.5.5 for either Windows, Linux or macOS",
         ],
     ),
     hash_words=_hash_words(),

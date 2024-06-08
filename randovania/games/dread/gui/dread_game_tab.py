@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from randovania.games.dread.gui.generated.games_tab_dread_widget_ui import Ui_DreadGameTabWidget
 from randovania.games.game import RandovaniaGame
-from randovania.gui.generated.games_tab_dread_widget_ui import Ui_DreadGameTabWidget
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 
 

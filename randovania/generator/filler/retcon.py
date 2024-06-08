@@ -18,9 +18,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Set
     from random import Random
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -181,7 +179,7 @@ def increment_considered_count(locations_weighted: WeightedLocations) -> None:
         player.pickup_index_considered_count[location] += 1
         if not was_present:
             # if it wasn't present, thenwe get to log!
-            filler_logging.print_new_pickup_index(player.index, player.game, location)
+            filler_logging.print_new_pickup_index(player, location)
 
 
 def _print_header(player_states: list[PlayerState]) -> None:
@@ -195,8 +193,8 @@ def _print_header(player_states: list[PlayerState]) -> None:
         "{}\nRetcon filler started with standard pickups:\n{}".format(
             "*" * 100,
             "\n".join(
-                "Player {}: {}".format(
-                    player_state.index,
+                "{}: {}".format(
+                    player_state.name,
                     pprint.pformat(
                         {
                             item.name: player_state.pickups_left.count(item)
@@ -211,8 +209,8 @@ def _print_header(player_states: list[PlayerState]) -> None:
     debug.debug_print(
         "Static assignments:\n{}".format(
             "\n".join(
-                "Player {}: {}".format(
-                    player_state.index,
+                "{}: {}".format(
+                    player_state.name,
                     pprint.pformat(
                         {
                             _name_for_index(player_state, index): target.pickup.name
@@ -220,6 +218,14 @@ def _print_header(player_states: list[PlayerState]) -> None:
                         }
                     ),
                 )
+                for player_state in player_states
+            )
+        )
+    )
+    debug.debug_print(
+        "Game specific:\n{}".format(
+            "\n".join(
+                f"{player_state.name}: {pprint.pformat(player_state.reach.state.patches.game_specific)}"
                 for player_state in player_states
             )
         )
@@ -298,11 +304,11 @@ def retcon_playthrough_filler(
     return all_patches, tuple(actions_log)
 
 
-def debug_print_weighted_locations(all_locations_weighted: WeightedLocations) -> None:
+def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, player_states: list[PlayerState]) -> None:
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
         node_name = owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index))
-        print(f"[Player {owner.index}] {node_name} - {weight}")
+        print(f"[{player_states[owner.index].name}] {node_name} - {weight}")
 
 
 def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations) -> bool:
@@ -341,7 +347,7 @@ def _assign_pickup_somewhere(
 
     if not should_be_starting_pickup(current_player, usable_locations):
         if debug.debug_level() > 2:
-            debug_print_weighted_locations(all_locations)
+            debug_print_weighted_locations(all_locations, player_states)
 
         index_owner_state, pickup_index = usable_locations.select_location(rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
@@ -371,14 +377,12 @@ def _assign_pickup_somewhere(
             debug.debug_print(f"ERROR! Assigned {action.name} to {pickup_index}, but location wasn't collected!")
 
         spoiler_entry = pickup_placement_spoiler_entry(
-            current_player.index,
+            current_player,
             action,
-            index_owner_state.game,
             pickup_index,
             hint_location,
-            index_owner_state.index,
+            index_owner_state,
             len(player_states) > 1,
-            index_owner_state.reach.node_context(),
         )
 
     else:
@@ -388,7 +392,7 @@ def _assign_pickup_somewhere(
 
         spoiler_entry = f"{action.name} as starting item"
         if len(player_states) > 1:
-            spoiler_entry += f" for Player {current_player.index + 1}"
+            spoiler_entry += f" for {current_player.name}"
         current_player.reach.advance_to(current_player.reach.state.assign_pickup_to_starting_items(action))
 
     return spoiler_entry
@@ -404,7 +408,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
         delta = total_assigned_pickups - player_state.num_assigned_pickups
         player_weight = 1 + delta
 
-        # print(f"** Player {player_state.index} -- {player_weight}")
+        # print(f"** {player_state.name} -- {player_weight}")
 
         pickup_index_weights = _calculate_uncollected_index_weights(
             player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
@@ -417,7 +421,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
 
     # for (player_state, pickup_index), weight in all_weights.items():
     #     wl = player_state.game.region_list
-    #     print(f"> {player_state.index} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
+    #     print(f"> {player_state.name} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
     # print("============================================")
 
     return WeightedLocations(all_weights)
@@ -474,16 +478,14 @@ def _calculate_weights_for(
 
 
 def pickup_placement_spoiler_entry(
-    owner_index: int,
+    location_owner: PlayerState,
     action: PickupEntry,
-    game: GameDescription,
     pickup_index: PickupIndex,
     hint_identifier: NodeIdentifier | None,
-    player_index: int,
+    index_owner: PlayerState,
     add_indices: bool,
-    node_context: NodeContext,
 ) -> str:
-    region_list = game.region_list
+    region_list = index_owner.game.region_list
     if hint_identifier is not None:
         hint_string = " with hint at {}".format(
             region_list.node_name(
@@ -495,9 +497,9 @@ def pickup_placement_spoiler_entry(
 
     pickup_node = region_list.node_from_pickup_index(pickup_index)
     return "{}{} at {}{}{}".format(
-        f"Player {owner_index + 1}'s " if add_indices else "",
+        f"{location_owner.name}'s " if add_indices else "",
         action.name,
-        f"player {player_index + 1}'s " if add_indices else "",
+        f"{index_owner.name}'s " if add_indices else "",
         region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
         hint_string,
     )

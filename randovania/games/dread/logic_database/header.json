@@ -1,5 +1,5 @@
 {
-    "schema_version": 25,
+    "schema_version": 26,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -1223,6 +1223,12 @@
             "FloorClip": {
                 "long_name": "Floor Clip",
                 "description": "Many floors can be clippped through with some or all of the following items: Speed Booster, Flash Shift, and Grapple Beam. See https://dreadwiki.hijumpboots.com/en/tricks/clipping",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "SlopeClimb": {
+                "long_name": "Climb Sloped Surfaces",
+                "description": "It is possible to gain height on sloped surfaces with good movement. This may require usage of techniques/items such as free-aim, Flash Shift, Spin Boost, or Phantom Cloak.",
                 "require_documentation_above": 0,
                 "extra": {}
             }
@@ -6541,6 +6547,12 @@
             1,
             2
         ],
+        "SlopeClimb": [
+            1,
+            2,
+            3,
+            4
+        ],
         "DBJ": [
             1,
             2,
@@ -6607,6 +6619,7 @@
             4
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "Artaria.json",
         "Cataris.json",

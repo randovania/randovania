@@ -27,7 +27,7 @@ from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, Option
 if TYPE_CHECKING:
     from pathlib import Path
 
-current_format_version = 10
+current_format_version = 11
 
 _EXPECTED_FIELDS = [
     "schema_version",
@@ -40,6 +40,7 @@ _EXPECTED_FIELDS = [
     "victory_condition",
     "dock_weakness_database",
     "used_trick_levels",
+    "flatten_to_set_on_patch",
     "regions",
 ]
 
@@ -120,10 +121,11 @@ ConstructResourceRequirement = Struct(
 requirement_type_map = {
     "resource": ConstructResourceRequirement,
     "template": String,
+    "node": ConstructNodeIdentifier,
 }
 
 ConstructRequirement = Struct(
-    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3),
+    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3, node=4),
     data=Switch(lambda this: this.type, requirement_type_map),
 )
 ConstructRequirementArray = Struct(
@@ -335,6 +337,7 @@ ConstructGame = Struct(
             victory_condition=ConstructRequirement,
             dock_weakness_database=ConstructDockWeaknessDatabase,
             used_trick_levels=ConstructUsedTrickLevels,
+            flatten_to_set_on_patch=Flag,
             regions=PrefixedArray(VarInt, ConstructRegion),
         ),
         "lzma",

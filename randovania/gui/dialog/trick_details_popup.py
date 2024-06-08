@@ -57,6 +57,14 @@ def _area_uses_resource(
             if _uses_trick(dock.default_dock_weakness.lock.requirement):
                 return True
 
+        if dock.override_default_open_requirement is not None:
+            if _uses_trick(dock.override_default_open_requirement):
+                return True
+
+        if dock.override_default_lock_requirement is not None:
+            if _uses_trick(dock.override_default_lock_requirement):
+                return True
+
         return False
 
     for node in area.nodes:

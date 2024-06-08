@@ -31,6 +31,9 @@ async def post_report(report: dict[RandovaniaGame, TrickDocumentation], webhook_
 
     for game, report in report.items():
         total = report.skipped + report.undocumented + report.documented
+        if total == 0:
+            embed.add_field(name=game.long_name, inline=False, value="No tricks")
+            continue
         percent = int(((report.documented + report.skipped) / total) * 100)
         embed.add_field(
             name=game.long_name,

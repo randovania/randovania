@@ -1,5 +1,5 @@
 {
-    "schema_version": 25,
+    "schema_version": 26,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -770,6 +770,10 @@
             "hard_mode": {
                 "long_name": "Hard Mode",
                 "extra": {}
+            },
+            "room_rando": {
+                "long_name": "Room Rando",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -780,15 +784,6 @@
                     "data": {
                         "comment": null,
                         "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Power",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
                             {
                                 "type": "resource",
                                 "data": {
@@ -818,7 +813,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "Can Use Arm Cannon"
+                                "data": "Shoot Power Beam"
                             }
                         ]
                     }
@@ -2300,6 +2295,7 @@
             2
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "Impact Crater.json",
         "Phendrana Drifts.json",

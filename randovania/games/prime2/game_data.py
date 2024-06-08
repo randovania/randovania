@@ -126,7 +126,7 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "Translator gate requirements",
         ],
         need_to_play=[
-            "An ISO of any NTSC-U or PAL Gamecube release of the game",
+            "An ISO of any NTSC-U or PAL GameCube release of the game",
             "A modded Wii, or Dolphin Emulator",
         ],
     ),

@@ -76,7 +76,7 @@ class BasePatchesFactory:
         pool_items, maximum_size = pool_creator.get_total_pickup_count(per_category_pool)
         if pool_items > maximum_size:
             raise InvalidConfiguration(
-                f"{pool_items} items in the pool, but only {maximum_size} are allowed at maximum!"
+                f"{pool_items} items in the pool, but only {maximum_size} are allowed at maximum"
             )
 
     def dock_connections_assignment(
