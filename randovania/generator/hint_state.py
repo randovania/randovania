@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.generator.filler.filler_configuration import FillerConfiguration
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 
 class HintState:
@@ -53,10 +53,10 @@ class HintState:
 
     def advance_hint_seen_count(self, state: State) -> None:
         """Increases hint seen count each time a hint is collected, and sets initial_pickups the first time"""
-        for hint_identifier in state.collected_hints:
+        for hint_identifier in state.collected_hints(self.game):
             self.hint_seen_count[hint_identifier] += 1
             if self.hint_seen_count[hint_identifier] == 1:
-                self.hint_initial_pickups[hint_identifier] = frozenset(state.collected_pickup_indices)
+                self.hint_initial_pickups[hint_identifier] = frozenset(state.collected_pickup_indices(self.game))
 
     def assign_available_locations(self, pickup_index: PickupIndex, locations: Iterable[PickupIndex]) -> None:
         """

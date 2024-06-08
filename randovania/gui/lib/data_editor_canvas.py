@@ -18,7 +18,7 @@ from randovania.game_description.requirements.base import Requirement
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region import Region
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 _color_for_node: dict[type[Node], QtCore.Qt.GlobalColor] = {
     GenericNode: QtCore.Qt.GlobalColor.red,

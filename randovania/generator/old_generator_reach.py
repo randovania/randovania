@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.filler.filler_configuration import FillerConfiguration
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 
 def _extra_requirement_for_node(game: GameDescription, context: NodeContext, node: Node) -> Requirement | None:
