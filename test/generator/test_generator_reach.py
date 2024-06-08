@@ -27,12 +27,12 @@ from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.pickup_pool import pool_creator
 from randovania.generator.reach_lib import advance_reach_with_possible_unsafe_resources
+from randovania.graph.state import State, StateGameData, add_pickup_to_state
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.resolver.state import State, StateGameData, add_pickup_to_state
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
@@ -202,7 +202,7 @@ def test_database_collectable(
     #             if isinstance(node, ResourceNode) else "",
     #             game.region_list.node_name(node, with_region=True)))
 
-    collected_indices = set(reach.state.collected_pickup_indices)
+    collected_indices = set(reach.state.collected_pickup_indices(reach.world_graph))
     collected_events = {
         resource
         for resource, quantity in reach.state.resources.as_resource_gain()

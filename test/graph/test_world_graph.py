@@ -5,7 +5,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import game_description
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.node import GenericNode, NodeContext, NodeIndex
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -17,6 +16,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.graph import world_graph
 
 
 @pytest.mark.parametrize(
@@ -66,10 +66,12 @@ def test_calculate_dangerous_resources(danger_a: list[str], danger_b: list[str],
     area_b = Area("area_b", [n3, n4], {n3: {}, n4: {n3: set_b}}, {})
     region = Region("W", [area_a, area_b], {})
     rl = RegionList([region])
+    nodes = []
 
     # Run
-    context = NodeContext(typing.cast(GamePatches, None), ResourceCollection(), db, rl)
-    result = game_description._calculate_dangerous_resources_in_areas(context)
+    node_provider = world_graph.WorldGraphNodeProvider(rl, {})
+    context = NodeContext(typing.cast(GamePatches, None), ResourceCollection(), db, node_provider)
+    result = world_graph._dangerous_resources(nodes, context)
 
     # Assert
     assert set(result) == {resources[it] for it in expected_result}

@@ -18,7 +18,7 @@ from randovania.game_description.requirements.base import Requirement
 if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.games.game import RandovaniaGame
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 _color_for_node: dict[type[Node], int] = {
     GenericNode: QtGui.Qt.red,

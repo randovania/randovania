@@ -7,9 +7,10 @@ from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.graph import world_graph
+from randovania.graph.state import State, StateGameData
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
-from randovania.resolver.state import State, StateGameData
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -21,6 +22,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.graph.world_graph import WorldGraph
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
@@ -99,48 +101,25 @@ class Bootstrap:
     def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
         return EnergyConfig(99, 100)
 
-    def calculate_starting_state(
+    def calculate_initial_resources(
         self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
-    ) -> State:
-        starting_node = game.region_list.node_by_identifier(patches.starting_location)
-
-        initial_resources = patches.starting_resources()
-
-        starting_energy, energy_per_tank = self.energy_config(configuration)
-
-        if starting_node.is_resource_node:
-            assert isinstance(starting_node, ResourceNode)
-            initial_resources.add_resource_gain(
-                starting_node.resource_gain_on_collect(
-                    NodeContext(
-                        patches,
-                        initial_resources,
-                        game.resource_database,
-                        game.region_list,
-                    )
-                ),
-            )
+    ) -> ResourceCollection:
+        """Determines what should be the ResourceCollection for a starting State"""
+        resources = patches.starting_resources()
 
         initial_game_state = game.initial_states.get("Default")
         if initial_game_state is not None:
-            initial_resources.add_resource_gain(initial_game_state)
+            resources.add_resource_gain(initial_game_state)
 
-        starting_state = State(
-            initial_resources,
-            (),
-            None,
-            starting_node,
-            patches,
-            None,
-            StateGameData(game.resource_database, game.region_list, energy_per_tank, starting_energy),
-        )
+        if configuration.trick_level.minimal_logic:
+            self._add_minimal_logic_initial_resources(resources, game, configuration.standard_pickup_configuration)
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
-        keys_to_remove = [resource for resource, quantity in initial_resources.as_resource_gain() if quantity == 0]
+        keys_to_remove = [resource for resource, quantity in resources.as_resource_gain() if quantity == 0]
         for resource in keys_to_remove:
-            initial_resources.remove_resource(resource)
+            resources.remove_resource(resource)
 
-        return starting_state
+        return resources
 
     def version_resources_for_game(
         self, configuration: BaseConfiguration, resource_database: ResourceDatabase
@@ -180,12 +159,28 @@ class Bootstrap:
         """
         return db
 
+    def calculate_static_resources(
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+    ) -> ResourceCollection:
+        """
+        A ResourceCollection with all resources that have a value that never changes during generation/solver.
+        These are the resources of type Trick, Version, Misc and some Events that are already set.
+        """
+        static_resources = ResourceCollection.with_database(resource_database)
+        static_resources.add_resource_gain(
+            self.trick_resources_for_configuration(configuration.trick_level, resource_database)
+        )
+        static_resources.add_resource_gain(self.event_resources_for_configuration(configuration, resource_database))
+        static_resources.add_resource_gain(self.version_resources_for_game(configuration, resource_database))
+        static_resources.add_resource_gain(self.misc_resources_for_configuration(configuration, resource_database))
+        return static_resources
+
     def logic_bootstrap(
         self,
         configuration: BaseConfiguration,
         game: GameDescription,
         patches: GamePatches,
-    ) -> tuple[GameDescription, State]:
+    ) -> tuple[WorldGraph, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:
@@ -197,30 +192,50 @@ class Bootstrap:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
         game.region_list.ensure_has_node_cache()
-        starting_state = self.calculate_starting_state(game, patches, configuration)
+        # starting_state = self.calculate_starting_state(game, patches, configuration)
 
-        if configuration.trick_level.minimal_logic:
-            self._add_minimal_logic_initial_resources(
-                starting_state.resources, game, configuration.standard_pickup_configuration
+        starting_node = game.region_list.node_by_identifier(patches.starting_location)
+        initial_resources = self.calculate_initial_resources(game, patches, configuration)
+
+        if starting_node.is_resource_node:
+            assert isinstance(starting_node, ResourceNode)
+            initial_resources.add_resource_gain(
+                starting_node.resource_gain_on_collect(
+                    NodeContext(
+                        patches,
+                        initial_resources,
+                        game.resource_database,
+                        game.region_list,
+                    )
+                ),
             )
 
-        static_resources = ResourceCollection.with_database(game.resource_database)
-        static_resources.add_resource_gain(
-            self.trick_resources_for_configuration(configuration.trick_level, game.resource_database)
-        )
-        static_resources.add_resource_gain(
-            self.event_resources_for_configuration(configuration, game.resource_database)
-        )
-        static_resources.add_resource_gain(self.version_resources_for_game(configuration, game.resource_database))
-        static_resources.add_resource_gain(self.misc_resources_for_configuration(configuration, game.resource_database))
-
+        static_resources = self.calculate_static_resources(configuration, game.resource_database)
         for resource, quantity in static_resources.as_resource_gain():
-            starting_state.resources.set_resource(resource, quantity)
+            initial_resources.set_resource(resource, quantity)
 
         self.apply_game_specific_patches(configuration, game, patches)
-        game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
-        return game, starting_state
+        starting_energy, energy_per_tank = self.energy_config(configuration)
+
+        game_data = StateGameData(game.resource_database, game.region_list, energy_per_tank, starting_energy)
+        graph = world_graph.create_graph(
+            game_data=game_data,
+            patches=patches,
+            resources=initial_resources,
+            damage_multiplier=configuration.damage_strictness.value,
+            victory_condition=game.victory_condition,
+        )
+        starting_state = State(
+            initial_resources,
+            (),
+            None,
+            graph.node_provider.original_to_node[starting_node.node_index],
+            patches,
+            None,
+            game_data,
+        )
+        return graph, starting_state
 
     def apply_game_specific_patches(
         self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
