@@ -60,7 +60,7 @@ def test_change_incompatible_dock_list(skip_qtbot, echoes_game_description):
     skip_qtbot.addWidget(dialog)
     model = dialog.dock_incompatible_model
 
-    m = model.index(0)
+    m = model.node_index(0)
     assert model.data(m, Qt.ItemDataRole.WhatsThisRole) is None
     assert model.data(m, Qt.ItemDataRole.DisplayRole) == "New..."
     assert model.data(m, Qt.ItemDataRole.EditRole) == ""

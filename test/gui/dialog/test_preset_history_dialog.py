@@ -60,7 +60,7 @@ async def test_select_item(skip_qtbot, default_preset, tmp_path, mocker: pytest_
     assert not dialog.accept_button.isEnabled()
 
     # Select the first row
-    dialog.version_widget.setCurrentIndex(dialog.version_widget.model().index(0))
+    dialog.version_widget.setCurrentIndex(dialog.version_widget.model().node_index(0))
     assert dialog.selected_preset() is None
     assert not dialog.accept_button.isEnabled()
     if broken_original:
@@ -72,7 +72,7 @@ async def test_select_item(skip_qtbot, default_preset, tmp_path, mocker: pytest_
         assert dialog.label.text() == "# Starter Preset\n\nBasic preset.\n\n\n\n## Header\n\nThing\n\nOther"
 
     # Select the second row
-    dialog.version_widget.setCurrentIndex(dialog.version_widget.model().index(1))
+    dialog.version_widget.setCurrentIndex(dialog.version_widget.model().node_index(1))
     assert dialog.selected_preset() == old_preset
     assert dialog.accept_button.isEnabled()
     if broken_original:

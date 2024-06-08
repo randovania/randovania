@@ -50,7 +50,7 @@ async def run_filler(
             PlayerState(
                 index=index,
                 name=world_names[index],
-                game=new_game,
+                graph=new_game,
                 initial_state=state,
                 pickups_left=standard_pickups,
                 configuration=FillerConfiguration.from_configuration(config),
@@ -72,7 +72,7 @@ async def run_filler(
         player_pool = player_pools[player_state.index]
 
         results[player_state.index] = FillerPlayerResult(
-            game=player_state.game,
+            graph=player_state.world_graph,
             patches=patches,
             unassigned_pickups=player_state.pickups_left,
             pool=player_pool,

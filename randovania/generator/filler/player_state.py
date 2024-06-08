@@ -4,9 +4,7 @@ import collections
 import re
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.common import elevators
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
@@ -23,16 +21,15 @@ from randovania.resolver import debug
 
 if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.db.resource_node import ResourceNode
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph
 
 
 class GeneratorHintState(HintState):
@@ -60,7 +57,7 @@ class GeneratorHintState(HintState):
 
 class PlayerState:
     index: int
-    game: GameDescription
+    world_graph: WorldGraph
     pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
     pickup_index_ages: collections.defaultdict[PickupIndex, float]
@@ -74,17 +71,17 @@ class PlayerState:
         self,
         index: int,
         name: str,
-        game: GameDescription,
+        graph: WorldGraph,
         initial_state: State,
         pickups_left: list[PickupEntry],
         configuration: FillerConfiguration,
     ):
         self.index = index
         self.name = name
-        self.game = game
+        self.world_graph = graph
 
         self.reach = reach_lib.advance_reach_with_possible_unsafe_resources(
-            reach_lib.reach_with_all_safe_resources(game, initial_state, configuration)
+            reach_lib.reach_with_all_safe_resources(graph, initial_state, configuration)
         )
         self.pickups_left = pickups_left
         self.configuration = configuration
@@ -94,9 +91,9 @@ class PlayerState:
         self.num_starting_pickups_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
-        self.indices_groups, self.all_indices = build_available_indices(game.region_list, configuration)
+        self.indices_groups, self.all_indices = build_available_indices(graph, configuration)
 
-        self.hint_state = GeneratorHintState(configuration, game)
+        self.hint_state = GeneratorHintState(configuration, graph)
 
     def __repr__(self) -> str:
         return f"PlayerState {self.name}"
@@ -114,10 +111,10 @@ class PlayerState:
             if resource.resource_type == ResourceType.EVENT and quantity > 0:
                 self.event_seen_count[resource] += 1
 
-        filler_logging.print_new_resources(self.game, self.reach, self.event_seen_count, "Events")
+        filler_logging.print_new_resources(self.world_graph, self.event_seen_count, "Events")
 
     def _log_new_pickup_index(self) -> None:
-        for index in self.reach.state.collected_pickup_indices:
+        for index in self.reach.state.collected_pickup_indices(self.world_graph):
             if index not in self.pickup_index_ages:
                 self.pickup_index_ages[index] = 0.0
                 filler_logging.print_new_pickup_index(self, index)
@@ -155,7 +152,7 @@ class PlayerState:
 
     def victory_condition_satisfied(self) -> bool:
         context = self.reach.state.node_context()
-        return self.game.victory_condition_as_set(context).satisfied(
+        return self.world_graph.victory_condition_as_set(context).satisfied(
             context, self.reach.state.health_for_damage_requirements
         )
 
@@ -189,12 +186,12 @@ class PlayerState:
             if resource.resource_type == ResourceType.ITEM
         }
 
-        wl = self.reach.game.region_list
         s = self.reach.state
         ctx = s.node_context()
 
         paths_to_be_opened = set()
-        for node, requirement in self.reach.unreachable_nodes_with_requirements().items():
+        for node_index, requirement in self.reach.unreachable_nodes_with_requirements().items():
+            node = self.world_graph.nodes[node_index]
             for alternative in requirement.alternatives:
                 if any(
                     r.negate
@@ -208,7 +205,7 @@ class PlayerState:
 
                 paths_to_be_opened.add(
                     "* {}: {}".format(
-                        wl.node_name(node, with_region=True),
+                        node.identifier,
                         " and ".join(
                             sorted(
                                 r.pretty_text
@@ -220,24 +217,27 @@ class PlayerState:
                 )
 
         teleporters = []
-        teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
-        for node in wl.iterate_nodes_of_type(DockNode):
-            if node.dock_type in teleporter_dock_types and self.reach.is_reachable_node(node):
-                other = wl.resolve_dock_node(node, s.patches)
-                teleporters.append(
-                    "* {} to {}".format(
-                        elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True),
-                        (
-                            elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True)
-                            if other is not None
-                            else "<Not connected>"
-                        ),
-                    )
-                )
+        # FIXME
+        # teleporter_dock_types = self.reach.game.dock_weakness_database.all_teleporter_dock_types
+        # for node in self.reach.world_graph.nodes:
+        #     if (
+        #         isinstance(node.original_node, DockNode)
+        #         and node.original_node.dock_type in teleporter_dock_types
+        #         and self.reach.is_reachable_node(node)
+        #     ):
+        #         other = wl.resolve_dock_node(node, s.patches)
+        #         teleporters.append(
+        #             "* {} to {}".format(
+        #                 elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True),
+        #                 (
+        #                     elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True)
+        #                     if other is not None
+        #                     else "<Not connected>"
+        #                 ),
+        #             )
+        #         )
 
-        accessible_nodes = [
-            wl.node_name(n, with_region=True) for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)
-        ]
+        accessible_nodes = [str(n.identifier) for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)]
 
         return (
             "At {} after {} actions and {} pickups, with {} collected locations, {} safe nodes.\n\n"
@@ -247,7 +247,7 @@ class PlayerState:
             "Accessible teleporters:\n{}\n\n"
             "Reachable nodes:\n{}"
         ).format(
-            self.game.region_list.node_name(self.reach.state.node, with_region=True, distinguish_dark_aether=True),
+            self.reach.state.node.identifier,
             self.num_actions,
             self.num_assigned_pickups,
             len(state.pickup_indices),
@@ -289,13 +289,21 @@ class PlayerState:
 
 
 def build_available_indices(
-    region_list: RegionList,
+    graph: WorldGraph,
     configuration: FillerConfiguration,
 ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """
-    indices_groups = [set(region.pickup_indices) - configuration.indices_to_exclude for region in region_list.regions]
-    all_indices = set().union(*indices_groups)
 
-    return indices_groups, all_indices
+    all_indices = set()
+    group_mapping: dict[int, set[PickupIndex]] = collections.defaultdict(set)
+
+    for node in graph.nodes:
+        if node.pickup_index is None or node.pickup_index in configuration.indices_to_exclude:
+            continue
+
+        all_indices.add(node.pickup_index)
+        group_mapping[id(node.original_region)].add(node.pickup_index)
+
+    return list(group_mapping.values()), all_indices
