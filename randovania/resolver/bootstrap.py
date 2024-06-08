@@ -6,21 +6,15 @@ from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources.location_category import LocationCategory
-from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
-from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
-from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
+from randovania.graph import world_graph
+from randovania.graph.state import State
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.lib import random_lib
-from randovania.resolver.state import State
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Generator, Iterable
+    from collections.abc import Callable
     from random import Random
 
     from randovania.game.game_enum import RandovaniaGame
@@ -28,80 +22,83 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
+    from randovania.graph.world_graph import WorldGraph
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.resolver.damage_state import DamageState
 
+#
+# def enabled_standard_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+#     for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
+#         if len(pickup.ammo) != len(state.included_ammo):
+#             raise InvalidConfiguration(
+#                 f"Item {pickup.name} uses {pickup.ammo} as ammo, "
+#                 f"but there's only {len(state.included_ammo)} values in included_ammo"
+#             )
+#
+#         ammo, locked_ammo = find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
+#
+#         if state.include_copy_in_original_location:
+#             if not pickup.original_locations:
+#                 raise InvalidConfiguration(
+#                     f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
+#                 )
+#             for _ in pickup.original_locations:
+#                 yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+#
+#         for _ in range(state.num_shuffled_pickups):
+#             yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+#
+#         for _ in range(state.num_included_in_starting_pickups):
+#             yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
+#
+#
+# def enabled_ammo_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+#     for ammo, state in configuration.ammo_pickup_configuration.pickups_state.items():
+#         pickup = create_ammo_pickup(ammo, state.ammo_count, state.requires_main_item,
+#                                     game.get_resource_database_view())
+#         for _ in range(state.pickup_count):
+#             yield pickup
+#
+#
+# def enabled_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
+#     yield from enabled_standard_pickups(game, configuration)
+#     yield from enabled_ammo_pickups(game, configuration)
 
-def enabled_standard_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
-    for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
-        if len(pickup.ammo) != len(state.included_ammo):
-            raise InvalidConfiguration(
-                f"Item {pickup.name} uses {pickup.ammo} as ammo, "
-                f"but there's only {len(state.included_ammo)} values in included_ammo"
-            )
-
-        ammo, locked_ammo = find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
-
-        if state.include_copy_in_original_location:
-            if not pickup.original_locations:
-                raise InvalidConfiguration(
-                    f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
-                )
-            for _ in pickup.original_locations:
-                yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
-
-        for _ in range(state.num_shuffled_pickups):
-            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
-
-        for _ in range(state.num_included_in_starting_pickups):
-            yield create_standard_pickup(pickup, state, game.get_resource_database_view(), ammo, locked_ammo)
-
-
-def enabled_ammo_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
-    for ammo, state in configuration.ammo_pickup_configuration.pickups_state.items():
-        pickup = create_ammo_pickup(ammo, state.ammo_count, state.requires_main_item, game.get_resource_database_view())
-        for _ in range(state.pickup_count):
-            yield pickup
-
-
-def enabled_pickups(game: GameDescription, configuration: BaseConfiguration) -> Generator[PickupEntry]:
-    yield from enabled_standard_pickups(game, configuration)
-    yield from enabled_ammo_pickups(game, configuration)
-
-
-def victory_condition_for_pickup_placement(
-    pickups: Iterable[PickupEntry], game: GameDescription, placement_config: LogicalPickupPlacementConfiguration
-) -> Requirement:
-    """
-    Creates a Requirement with the game's victory condition adjusted to a specified pickup set.
-    :param pickups:
-    :param game:
-    :param placement_config: The configuration for adjusting the victory condition.
-    :return:
-    """
-    if placement_config is LogicalPickupPlacementConfiguration.MINIMAL:
-        return game.victory_condition
-
-    add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
-    resources = ResourceCollection.with_database(game.resource_database)
-
-    for pickup in pickups:
-        if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
-            resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
-
-    # Create a requirement with the victory condition and the pickups
-    return RequirementAnd(
-        [
-            game.victory_condition,
-            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
-        ]
-    ).simplify()
+#
+# def victory_condition_for_pickup_placement(
+#     pickups: Iterable[PickupEntry], game: GameDescription, placement_config: LogicalPickupPlacementConfiguration
+# ) -> Requirement:
+#     """
+#     Creates a Requirement with the game's victory condition adjusted to a specified pickup set.
+#     :param pickups:
+#     :param game:
+#     :param placement_config: The configuration for adjusting the victory condition.
+#     :return:
+#     """
+#     if placement_config is LogicalPickupPlacementConfiguration.MINIMAL:
+#         return game.victory_condition
+#
+#     add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
+#     resources = ResourceCollection.with_database(game.resource_database)
+#
+#     for pickup in pickups:
+#         if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
+#             resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
+#
+#     # Create a requirement with the victory condition and the pickups
+#     return RequirementAnd(
+#         [
+#             game.victory_condition,
+#             *(ResourceRequirement.create(resource[0], resource[1], False)
+#               for resource in resources.as_resource_gain()),
+#         ]
+#     ).simplify()
 
 
 class EnergyConfig(NamedTuple):
@@ -183,45 +180,21 @@ class Bootstrap[Configuration: BaseConfiguration]:
         """
         raise NotImplementedError
 
-    def calculate_starting_state(
+    def calculate_initial_resources(
         self, game: GameDescription, patches: GamePatches, configuration: Configuration
-    ) -> State:
-        starting_node = game.region_list.node_by_identifier(patches.starting_location)
+    ) -> ResourceCollection:
+        """Determines what should be the ResourceCollection for a starting State"""
+        resources = patches.starting_resources()
 
-        initial_resources = patches.starting_resources()
-
-        if starting_node.is_resource_node:
-            assert isinstance(starting_node, ResourceNode)
-            initial_resources.add_resource_gain(
-                starting_node.resource_gain_on_collect(
-                    NodeContext(
-                        patches,
-                        initial_resources,
-                        game.resource_database,
-                        game.region_list,
-                    )
-                ),
-            )
-
-        starting_state = State(
-            initial_resources,
-            (),
-            self.create_damage_state(game, configuration).apply_collected_resource_difference(
-                initial_resources, ResourceCollection()
-            ),
-            starting_node,
-            patches,
-            None,
-            game.resource_database,
-            game.region_list,
-        )
+        if configuration.trick_level.minimal_logic:
+            self._add_minimal_logic_initial_resources(resources, game, configuration.standard_pickup_configuration)
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
-        keys_to_remove = [resource for resource, quantity in initial_resources.as_resource_gain() if quantity == 0]
+        keys_to_remove = [resource for resource, quantity in resources.as_resource_gain() if quantity == 0]
         for resource in keys_to_remove:
-            initial_resources.remove_resource(resource)
+            resources.remove_resource(resource)
 
-        return starting_state
+        return resources
 
     def version_resources_for_game(
         self, configuration: Configuration, resource_database: ResourceDatabaseView
@@ -261,12 +234,29 @@ class Bootstrap[Configuration: BaseConfiguration]:
         """
         return db
 
+    def calculate_static_resources(
+        self, configuration: BaseConfiguration, view: GameDatabaseView
+    ) -> ResourceCollection:
+        """
+        A ResourceCollection with all resources that have a value that never changes during generation/solver.
+        These are the resources of type Trick, Version, Misc and some Events that are already set.
+        """
+        resource_database = view.get_resource_database_view()
+        static_resources = view.create_resource_collection()
+        static_resources.add_resource_gain(
+            self.trick_resources_for_configuration(configuration.trick_level, resource_database)
+        )
+        static_resources.add_resource_gain(self.event_resources_for_configuration(configuration, resource_database))
+        static_resources.add_resource_gain(self.version_resources_for_game(configuration, resource_database))
+        static_resources.add_resource_gain(self.misc_resources_for_configuration(configuration, resource_database))
+        return static_resources
+
     def logic_bootstrap(
         self,
         configuration: Configuration,
         game: GameDescription,
         patches: GamePatches,
-    ) -> tuple[GameDescription, State]:
+    ) -> tuple[WorldGraph, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:
@@ -278,35 +268,50 @@ class Bootstrap[Configuration: BaseConfiguration]:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
         game.region_list.ensure_has_node_cache()
-        starting_state = self.calculate_starting_state(game, patches, configuration)
+        # starting_state = self.calculate_starting_state(game, patches, configuration)
 
-        if configuration.trick_level.minimal_logic:
-            self._add_minimal_logic_initial_resources(
-                starting_state.resources, game, configuration.standard_pickup_configuration
+        starting_node = game.region_list.node_by_identifier(patches.starting_location)
+        initial_resources = self.calculate_initial_resources(game, patches, configuration)
+
+        if starting_node.is_resource_node:
+            assert isinstance(starting_node, ResourceNode)
+            initial_resources.add_resource_gain(
+                starting_node.resource_gain_on_collect(
+                    NodeContext(
+                        patches,
+                        initial_resources,
+                        game.resource_database,
+                        game.region_list,
+                    )
+                ),
             )
 
-        static_resources = game.create_resource_collection()
-        static_resources.add_resource_gain(
-            self.trick_resources_for_configuration(configuration.trick_level, game.resource_database)
-        )
-        static_resources.add_resource_gain(
-            self.event_resources_for_configuration(configuration, game.resource_database)
-        )
-        static_resources.add_resource_gain(self.version_resources_for_game(configuration, game.resource_database))
-        static_resources.add_resource_gain(self.misc_resources_for_configuration(configuration, game.resource_database))
-
+        static_resources = self.calculate_static_resources(configuration, game)
         for resource, quantity in static_resources.as_resource_gain():
-            starting_state.resources.set_resource(resource, quantity)
+            initial_resources.set_resource(resource, quantity)
 
         self.apply_game_specific_patches(configuration, game, patches)
-        game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
         # All majors/pickups required
-        game.victory_condition = victory_condition_for_pickup_placement(
-            enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
-        )
+        # game.victory_condition = victory_condition_for_pickup_placement(
+        #    enabled_pickups(game, configuration), game, configuration.logical_pickup_placement
+        # )
 
-        return game, starting_state
+        graph = world_graph.create_graph(
+            patches=patches,
+            resources=initial_resources,
+            damage_multiplier=configuration.damage_strictness.value,
+            victory_condition=game.get_victory_condition(),
+        )
+        starting_state = State(
+            initial_resources,
+            (),
+            self.create_damage_state(game, configuration),
+            graph.node_provider.original_to_node[starting_node.node_index],
+            patches,
+            None,
+        )
+        return graph, starting_state
 
     def apply_game_specific_patches(
         self, configuration: Configuration, game: GameDescription, patches: GamePatches

@@ -25,6 +25,7 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import pool_creator
+from randovania.graph.state import State, add_pickup_to_state
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib import signal_handling
@@ -36,7 +37,6 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State, add_pickup_to_state
 
 if typing.TYPE_CHECKING:
     from pathlib import Path
@@ -47,6 +47,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.preset import Preset
 
@@ -82,11 +83,11 @@ def _load_previous_state(
 class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     # Tracker state
     _collected_pickups: dict[PickupEntry, int]
-    _actions: list[Node]
+    _actions: list[WorldGraphNode]
 
     # Tracker configuration
     logic: Logic
-    game_description: GameDescription
+    world_graph: WorldGraph
     game_configuration: BaseConfiguration
     persistence_path: Path
     _initial_state: State
@@ -154,13 +155,13 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         patches = self.fill_game_specific(game, patches)
 
-        self.game_description, self._initial_state = bootstrap.logic_bootstrap(
+        self.world_graph, self._initial_state = bootstrap.logic_bootstrap(
             self.preset.configuration,
             game,
             patches,
         )
-        self.logic = Logic(self.game_description, self.preset.configuration)
-        self.map_canvas.select_game(self.game_description.game)
+        self.logic = Logic(self.world_graph)
+        self.map_canvas.select_game(self.game_configuration.game)
 
         self._initial_state.resources.add_self_as_requirement_to_resources = True
 
@@ -171,7 +172,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         self.configuration_label.setText(
             "Trick Level: {}; Starts with:\n{}".format(
-                self.preset.configuration.trick_level.pretty_description(self.game_description),
+                self.preset.configuration.trick_level.pretty_description(game),
                 ", ".join(resource.short_name for resource, _ in patches.starting_resources().as_resource_gain()),
             )
         )
@@ -182,7 +183,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.setup_translator_gates()
 
         # Map
-        for region in sorted(self.game_description.region_list.regions, key=lambda x: x.name):
+        for region in sorted(game.region_list.regions, key=lambda x: x.name):
             self.map_region_combo.addItem(region.name, userData=region)
 
         self.on_map_region_combo(0)
@@ -199,7 +200,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.tab_graph_map_layout.addWidget(self.matplot_widget)
         self.map_tab_widget.currentChanged.connect(self._on_tab_changed)
 
-        for region in self.game_description.region_list.regions:
+        for region in game.region_list.regions:
             self.graph_map_region_combo.addItem(region.name, region)
         self.graph_map_region_combo.currentIndexChanged.connect(self.on_graph_map_region_combo)
 
@@ -328,19 +329,18 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     def _collected_nodes(self) -> set[ResourceNode]:
         return self._starting_nodes | {action for action in self._actions if action.is_resource_node}
 
-    def _pretty_node_name(self, node: Node) -> str:
-        region_list = self.game_description.region_list
-        return f"{region_list.area_name(region_list.nodes_to_area(node))} / {node.name}"
+    def _pretty_node_name(self, node: WorldGraphNode) -> str:
+        return node.name
 
     def _refresh_for_new_action(self):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
         self.current_location_label.setText(f"Current location: {self._pretty_node_name(self._actions[-1])}")
         self.update_locations_tree_for_reachable_nodes()
 
-    def _add_new_action(self, node: Node):
+    def _add_new_action(self, node: WorldGraphNode):
         self._add_new_actions([node])
 
-    def _add_new_actions(self, nodes: typing.Iterable[Node]):
+    def _add_new_actions(self, nodes: typing.Iterable[WorldGraphNode]):
         for node in nodes:
             self.actions_list.addItem(self._pretty_node_name(node))
             self._actions.append(node)
@@ -398,7 +398,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     # Graph Map
 
-    def update_matplot_widget(self, nodes_in_reach: set[Node]):
+    def update_matplot_widget(self, nodes_in_reach: set[WorldGraphNode]):
         self.matplot_widget.update_for(
             self.graph_map_region_combo.currentData(),
             self.state_for_current_configuration(),

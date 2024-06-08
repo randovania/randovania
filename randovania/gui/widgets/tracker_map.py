@@ -15,10 +15,10 @@ from randovania.game_description.db.dock_node import DockNode
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
 
-    from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
@@ -62,7 +62,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         return networkx.drawing.spring_layout(g)
 
-    def update_for(self, region: Region, state: State, nodes_in_reach: set[Node]):
+    def update_for(self, region: Region, state: State, nodes_in_reach: set[WorldGraphNode]):
         g = networkx.DiGraph()
 
         for area in region.areas:
@@ -71,15 +71,15 @@ class MatplotlibWidget(QtWidgets.QWidget):
         context = state.node_context()
         for area in region.areas:
             nearby_areas = set()
-            for node in area.nodes:
-                if node not in nodes_in_reach:
+
+            for node in nodes_in_reach:
+                if node.original_area != area:
                     continue
 
-                for other_node, requirement in node.connections_from(context):
-                    if requirement.satisfied(context, state.health_for_damage_requirements):
-                        other_area = self.region_list.nodes_to_area(other_node)
-                        if other_area in region.areas:
-                            nearby_areas.add(other_area)
+                for con in node.connections:
+                    if con.requirement.satisfied(context, state.health_for_damage_requirements):
+                        if con.target.original_area in region.areas:
+                            nearby_areas.add(con.target.original_area)
 
             for other_area in nearby_areas:
                 g.add_edge(area, other_area)
