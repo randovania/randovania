@@ -14,7 +14,7 @@ function RL.GetReceivedPickupsAndSend(reset)
 end
 function RL.GivePendingPickup()
     if Scenario.IsUserInteractionEnabled(true) and not Game.IsCutscenePlaying() then
-        Scenario.ShowAsyncPopup(RL.PendingPickup.msg, 7.0)
+        Scenario.QueueAsyncPopup(RL.PendingPickup.msg, 7.0)
         Game.AddSF(7.5, "RL.GetReceivedPickupsAndSend", "b", true)
         RL.ConfirmPickup()
     else
