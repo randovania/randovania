@@ -5,9 +5,6 @@ import functools
 import typing
 from typing import TYPE_CHECKING, NamedTuple
 
-from randovania.game_description.db.node import Node, NodeContext
-from randovania.game_description.db.resource_node import ResourceNode
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -17,19 +14,20 @@ from randovania.generator.generator_reach import GeneratorReach
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from randovania.game_description.game_description import GameDescription
-    from randovania.resolver.state import State
+    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.requirements.base import Requirement
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
-def _extra_requirement_for_node(game: GameDescription, context: NodeContext, node: Node) -> Requirement | None:
+def _extra_requirement_for_node(graph: WorldGraph, context: NodeContext, node: WorldGraphNode) -> Requirement | None:
     extra_requirement = None
 
-    if node.is_resource_node:
-        assert isinstance(node, ResourceNode)
+    if node.is_resource_node():
         dangerous_extra = [
             ResourceRequirement.simple(resource)
             for resource, quantity in node.resource_gain_on_collect(context)
-            if resource in game.dangerous_resources
+            if resource in graph.dangerous_resources
         ]
         if dangerous_extra:
             extra_requirement = RequirementAnd(dangerous_extra)
@@ -38,8 +36,8 @@ def _extra_requirement_for_node(game: GameDescription, context: NodeContext, nod
 
 
 class GraphPath(NamedTuple):
-    previous_node: Node | None
-    node: Node
+    previous_node: WorldGraphNode | None
+    node: WorldGraphNode
     requirement: RequirementSet
 
     def is_in_graph(self, digraph: graph_module.BaseGraph) -> bool:
@@ -62,7 +60,7 @@ class _SafeNodes(typing.NamedTuple):
 class OldGeneratorReach(GeneratorReach):
     _digraph: graph_module.BaseGraph
     _state: State
-    _game: GameDescription
+    _world_graph: WorldGraph
     _reachable_paths: dict[int, list[int]] | None
     _reachable_costs: dict[int, int] | None
     _node_reachable_cache: dict[int, bool]
@@ -72,7 +70,7 @@ class OldGeneratorReach(GeneratorReach):
     _is_node_safe_cache: dict[int, bool]
 
     def __deepcopy__(self, memodict: dict) -> OldGeneratorReach:
-        reach = OldGeneratorReach(self._game, self._state, self._digraph.copy())
+        reach = OldGeneratorReach(self._world_graph, self._state, self._digraph.copy())
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
         reach._uncollectable_nodes = copy.copy(self._uncollectable_nodes)
         reach._reachable_paths = self._reachable_paths
@@ -83,9 +81,9 @@ class OldGeneratorReach(GeneratorReach):
         reach._is_node_safe_cache = copy.copy(self._is_node_safe_cache)
         return reach
 
-    def __init__(self, game: GameDescription, state: State, graph: graph_module.BaseGraph):
-        self._game = game
-        self.all_nodes = game.region_list.all_nodes
+    def __init__(self, world_graph: WorldGraph, state: State, graph: graph_module.BaseGraph):
+        self._world_graph = world_graph
+        self.all_nodes = world_graph.nodes
         self._state = state
         self._digraph = graph
         self._unreachable_paths = {}
@@ -97,26 +95,18 @@ class OldGeneratorReach(GeneratorReach):
     @classmethod
     def reach_from_state(
         cls,
-        game: GameDescription,
+        graph: WorldGraph,
         initial_state: State,
     ) -> GeneratorReach:
-        reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
-        game.region_list.ensure_has_node_cache()
+        reach = cls(graph, initial_state, graph_module.RandovaniaGraph.new())
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 
-    def _potential_nodes_from(self, node: Node) -> Iterator[tuple[Node, RequirementSet]]:
+    def _potential_nodes_from(self, node: WorldGraphNode) -> Iterator[tuple[WorldGraphNode, RequirementSet]]:
         context = self._state.node_context()
-        extra_requirement = _extra_requirement_for_node(self._game, context, node)
-        requirement_to_leave = node.requirement_to_leave(context)
+        extra_requirement = _extra_requirement_for_node(self._world_graph, context, node)
 
-        for target_node, requirement in self._game.region_list.potential_nodes_from(node, context):
-            if target_node is None:
-                continue
-
-            if requirement_to_leave != Requirement.trivial():
-                requirement = RequirementAnd([requirement, requirement_to_leave])
-
+        for target_node, requirement, _ in node.connections:
             if extra_requirement is not None:
                 requirement = RequirementAnd([requirement, extra_requirement])
 
@@ -157,9 +147,8 @@ class OldGeneratorReach(GeneratorReach):
 
         for node_index in sorted(resource_nodes_to_check):
             node = self.all_nodes[node_index]
-            assert isinstance(node, ResourceNode)
 
-            requirement = node.requirement_to_collect()
+            requirement = node.requirement_to_collect
             if not requirement.satisfied(context, self._state.energy):
                 self._uncollectable_nodes[node_index] = requirement.patch_requirements(1.0, context).as_set(context)
 
@@ -168,7 +157,7 @@ class OldGeneratorReach(GeneratorReach):
 
     def _can_advance(
         self,
-        node: Node,
+        node: WorldGraphNode,
     ) -> bool:
         """
         Calculates if we can advance past a given node
@@ -176,11 +165,11 @@ class OldGeneratorReach(GeneratorReach):
         :return:
         """
         # We can't advance past a resource node if we haven't collected it
-        if node.is_resource_node:
-            assert isinstance(node, ResourceNode)
-            return node.is_collected(self.node_context())
-        else:
-            return True
+        if node.is_resource_node():
+            for resource, _ in node.resource_gain:
+                if not self._state.resources.has_resource(resource):
+                    return False
+        return True
 
     def _calculate_safe_nodes(self) -> None:
         if self._safe_nodes is not None:
@@ -197,15 +186,14 @@ class OldGeneratorReach(GeneratorReach):
         if self._reachable_paths is not None:
             return
 
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = self._world_graph.nodes
         context = self.node_context()
 
         @functools.cache
         def _is_collected(target: int) -> int:
-            node: Node = all_nodes[target]
-            if node.is_resource_node:
-                assert isinstance(node, ResourceNode)
-                if node.is_collected(context):
+            node: WorldGraphNode = all_nodes[target]
+            if node.require_collected_to_leave:
+                if node.has_all_resources(context):
                     return 0
                 else:
                     return 1
@@ -220,7 +208,7 @@ class OldGeneratorReach(GeneratorReach):
             weight=weight,
         )
 
-    def is_reachable_node(self, node: Node) -> bool:
+    def is_reachable_node(self, node: WorldGraphNode) -> bool:
         index = node.node_index
 
         cached_value = self._node_reachable_cache.get(index)
@@ -243,14 +231,14 @@ class OldGeneratorReach(GeneratorReach):
             return False
 
     @property
-    def connected_nodes(self) -> Iterator[Node]:
+    def connected_nodes(self) -> Iterator[WorldGraphNode]:
         """
         An iterator of all nodes there's an path from the reach's starting point. Similar to is_reachable_node
         :return:
         """
         self._calculate_reachable_paths()
         assert self._reachable_paths is not None
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = self._world_graph.nodes
         for index in self._reachable_paths.keys():
             yield all_nodes[index]
 
@@ -259,28 +247,25 @@ class OldGeneratorReach(GeneratorReach):
         return self._state
 
     @property
-    def game(self) -> GameDescription:
-        return self._game
+    def world_graph(self) -> WorldGraph:
+        return self._world_graph
 
     @property
-    def nodes(self) -> Iterator[Node]:
-        for i, node in enumerate(typing.cast(tuple[Node, ...], self.all_nodes)):
+    def nodes(self) -> Iterator[WorldGraphNode]:
+        for i, node in enumerate(self._world_graph.nodes):
             if i in self._digraph:
-                # entries in all_nodes can be None, but never for an index that's in _digraph
-                # We'd do `assert node is not None`, but we're skipping that here for speed
-                yield node  # type: ignore
+                yield node
 
     @property
-    def safe_nodes(self) -> Iterator[Node]:
+    def safe_nodes(self) -> Iterator[WorldGraphNode]:
         self._calculate_safe_nodes()
         assert self._safe_nodes is not None
 
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = self._world_graph.nodes
         for i in self._safe_nodes.as_list:
-            # safe disclaimer as `nodes`
-            yield all_nodes[i]  # type: ignore
+            yield all_nodes[i]
 
-    def is_safe_node(self, node: Node) -> bool:
+    def is_safe_node(self, node: WorldGraphNode) -> bool:
         node_index = node.node_index
         is_safe = self._is_node_safe_cache.get(node_index)
         if is_safe is not None:
@@ -311,7 +296,7 @@ class OldGeneratorReach(GeneratorReach):
 
         self._state = new_state
 
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+        all_nodes = self._world_graph.nodes
         paths_to_check: list[GraphPath] = []
 
         edges_to_remove = []
@@ -332,7 +317,7 @@ class OldGeneratorReach(GeneratorReach):
 
         self._expand_graph(paths_to_check)
 
-    def act_on(self, node: ResourceNode) -> None:
+    def act_on(self, node: WorldGraphNode) -> None:
         new_dangerous_resources = {
             resource
             for resource, quantity in node.resource_gain_on_collect(self._state.node_context())
@@ -352,9 +337,9 @@ class OldGeneratorReach(GeneratorReach):
 
         self.advance_to(new_state)
 
-    def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
-        results: dict[Node, RequirementSet] = {}
-        all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
+    def unreachable_nodes_with_requirements(self) -> dict[int, RequirementSet]:
+        results: dict[int, RequirementSet] = {}
+        all_nodes = self._world_graph.nodes
         context = self._state.node_context()
 
         to_check = [
@@ -368,10 +353,10 @@ class OldGeneratorReach(GeneratorReach):
 
         for node, requirement in to_check:
             requirements = requirement.patch_requirements(context)
-            if node in results:
-                results[node] = results[node].expand_alternatives(requirements)
+            if node.node_index in results:
+                results[node.node_index] = results[node.node_index].expand_alternatives(requirements)
             else:
-                results[node] = requirement
+                results[node.node_index] = requirement
 
         return results
 

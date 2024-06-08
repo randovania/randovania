@@ -9,7 +9,6 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description import node_search
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
     Hint,
@@ -35,6 +34,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.pre_fill_params import PreFillParams
+    from randovania.graph.world_graph import WorldGraph
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Hint | None]
 
@@ -152,7 +152,7 @@ class HintDistributor(ABC):
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
         full_hints_patches = self.fill_unassigned_hints(
             patches,
-            player_state.game.region_list,
+            player_state.world_graph,
             rng,
             player_state.hint_initial_pickups,
         )
@@ -177,7 +177,7 @@ class HintDistributor(ABC):
     def fill_unassigned_hints(
         self,
         patches: GamePatches,
-        region_list: RegionList,
+        graph: WorldGraph,
         rng: Random,
         hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
     ) -> GamePatches:
@@ -187,7 +187,7 @@ class HintDistributor(ABC):
 
         # Get all Hint's NodeIdentifiers from the RegionList
         potential_hint_locations: set[NodeIdentifier] = {
-            node.identifier for node in region_list.iterate_nodes() if isinstance(node, HintNode)
+            node.identifier for node in graph.nodes if isinstance(node.original_node, HintNode)
         }
         for hint in potential_hint_locations:
             if hint not in hint_initial_pickups:
@@ -215,10 +215,10 @@ class HintDistributor(ABC):
         if debug.debug_level() > 1:
             print("> Num pickups per asset:")
             for asset, pickups in hint_initial_pickups.items():
-                print(f"* {asset}: {len(pickups)} pickups")
+                print(f"* {asset.as_string}: {len(pickups)} pickups")
             print("> Done.")
 
-        all_pickup_indices = [node.pickup_index for node in region_list.iterate_nodes() if isinstance(node, PickupNode)]
+        all_pickup_indices = [node.pickup_index for node in graph.nodes if node.pickup_index is not None]
         rng.shuffle(all_pickup_indices)
 
         # If there isn't enough indices, use unhinted non-majors placed by generator
@@ -270,10 +270,7 @@ class HintDistributor(ABC):
             del pickup_indices_weight[new_index]
 
             new_hints[hint] = Hint(HintType.LOCATION, None, new_index)
-            debug.debug_print(
-                f"Added hint at {hint} for item at "
-                f"{region_list.node_name(region_list.node_from_pickup_index(new_index))}"
-            )
+            debug.debug_print(f"Added hint at {hint} for item at " f"{graph.node_by_pickup_index[new_index].name}")
 
         return dataclasses.replace(patches, hints=new_hints)
 

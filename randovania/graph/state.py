@@ -4,8 +4,7 @@ import dataclasses
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.hint_node import HintNode
-from randovania.game_description.db.node import Node, NodeContext
-from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.node import NodeContext
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -15,12 +14,12 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
 def _energy_tank_difference(
@@ -41,12 +40,12 @@ class StateGameData:
 
 class State:
     resources: ResourceCollection
-    collected_resource_nodes: tuple[ResourceNode, ...]
+    collected_resource_nodes: tuple[WorldGraphNode, ...]
     energy: int
-    node: Node
+    node: WorldGraphNode
     patches: GamePatches
     previous_state: Self | None
-    path_from_previous_state: tuple[Node, ...]
+    path_from_previous_state: tuple[WorldGraphNode, ...]
     game_data: StateGameData
 
     @property
@@ -60,9 +59,9 @@ class State:
     def __init__(
         self,
         resources: ResourceCollection,
-        collected_resource_nodes: tuple[ResourceNode, ...],
+        collected_resource_nodes: tuple[WorldGraphNode, ...],
         energy: int | None,
-        node: Node,
+        node: WorldGraphNode,
         patches: GamePatches,
         previous: Self | None,
         game_data: StateGameData,
@@ -91,21 +90,19 @@ class State:
             self.game_data,
         )
 
-    @property
-    def collected_pickup_indices(self) -> Iterator[PickupIndex]:
-        context = self.node_context()
+    def collected_pickup_indices(self, graph: WorldGraph) -> Iterator[PickupIndex]:
         for resource, count in self.resources.as_resource_gain():
             if count > 0 and isinstance(resource, NodeResourceInfo):
-                node = resource.to_node(context)
-                if isinstance(node, PickupNode):
+                node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
+                node = graph.nodes[node_index]
+                if node.pickup_index is not None:
                     yield node.pickup_index
 
-    @property
-    def collected_hints(self) -> Iterator[NodeIdentifier]:
-        context = self.node_context()
+    def collected_hints(self, graph: WorldGraph) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():
             if isinstance(resource, NodeResourceInfo) and count > 0:
-                if isinstance(resource.to_node(context), HintNode):
+                node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
+                if isinstance(graph.nodes[node_index].original_node, HintNode):
                     yield resource.node_identifier
 
     @property
@@ -145,19 +142,19 @@ class State:
     def maximum_energy(self) -> int:
         return self._energy_for(self.resources)
 
-    def collect_resource_node(self, node: ResourceNode, new_energy: int) -> Self:
+    def collect_resource_node(self, node: WorldGraphNode, new_energy: int) -> Self:
         """
         Creates a new State that has the given ResourceNode collected.
         :param node:
         :param new_energy: How much energy you should have when collecting this resource
         :return:
         """
-
-        if not node.should_collect(self.node_context()):
+        context = self.node_context()
+        if not (node.should_collect(context) and node.requirement_to_collect.satisfied(context, new_energy)):
             raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
         new_resources = self.resources.duplicate()
-        new_resources.add_resource_gain(node.resource_gain_on_collect(self.node_context()))
+        new_resources.add_resource_gain(node.resource_gain_on_collect(context))
 
         energy = new_energy
         if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
@@ -173,7 +170,9 @@ class State:
             self.game_data,
         )
 
-    def act_on_node(self, node: ResourceNode, path: tuple[Node, ...] = (), new_energy: int | None = None) -> Self:
+    def act_on_node(
+        self, node: WorldGraphNode, path: tuple[WorldGraphNode, ...] = (), new_energy: int | None = None
+    ) -> Self:
         if new_energy is None:
             new_energy = self.energy
         new_state = self.collect_resource_node(node, new_energy)

@@ -2,30 +2,28 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, NamedTuple, TypeVar
 
-from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
-
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Iterable, Iterator
 
     from randovania.game_description.assignment import PickupAssignment
-    from randovania.game_description.db.node import Node, NodeContext, NodeIndex
+    from randovania.game_description.db.node import NodeIndex
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
+    from randovania.graph.world_graph import WorldGraphNode
 
 
-def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
+def filter_pickup_nodes(nodes: Iterable[WorldGraphNode]) -> Iterator[WorldGraphNode]:
     for node in nodes:
-        if isinstance(node, PickupNode):
+        if node.pickup_index is not None:
             yield node
 
 
 def filter_unassigned_pickup_nodes(
-    nodes: Iterator[Node],
+    nodes: Iterable[WorldGraphNode],
     pickup_assignment: PickupAssignment,
-) -> Iterator[PickupNode]:
+) -> Iterator[WorldGraphNode]:
     for node in filter_pickup_nodes(nodes):
         if node.pickup_index not in pickup_assignment:
             yield node
@@ -54,8 +52,10 @@ class UncollectedState(NamedTuple):
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> UncollectedState:
         return UncollectedState(
-            _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
-            _filter_not_in_dict(reach.state.collected_hints, reach.state.patches.hints),
+            _filter_not_in_dict(
+                reach.state.collected_pickup_indices(reach.world_graph), reach.state.patches.pickup_assignment
+            ),
+            _filter_not_in_dict(reach.state.collected_hints(reach.world_graph), reach.state.patches.hints),
             set(reach.state.collected_events),
             {node.node_index for node in reach.nodes if reach.is_reachable_node(node)},
         )
@@ -71,10 +71,10 @@ class UncollectedState(NamedTuple):
 
 def find_node_with_resource(
     resource: ResourceInfo,
-    context: NodeContext,
-    haystack: Iterator[Node],
-) -> ResourceNode:
+    haystack: list[WorldGraphNode],
+) -> WorldGraphNode:
     for node in haystack:
-        if isinstance(node, ResourceNode) and node.resource(context) == resource:
-            return node
+        for node_resource, _ in node.resource_gain:
+            if node_resource == resource:
+                return node
     raise ValueError(f"Could not find a node with resource {resource}")

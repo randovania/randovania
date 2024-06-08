@@ -30,8 +30,8 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import FillerResults
+    from randovania.graph.state import State
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.state import State
 
 
 def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePatches:
@@ -158,7 +158,7 @@ class DockRandoLogic(Logic):
 
     @classmethod
     def from_logic(cls, logic: Logic, dock: DockNode) -> Self:
-        return cls(logic.game, logic.configuration, dock)
+        return cls(logic.game, dock)
 
     def victory_condition(self, state: State) -> Requirement:
         return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context()))

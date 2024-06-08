@@ -17,9 +17,9 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.generator import generator, reach_lib
 from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.graph.state import State, StateGameData
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.resolver.state import State, StateGameData
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode

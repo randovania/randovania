@@ -51,7 +51,7 @@ async def run_filler(
             PlayerState(
                 index=index,
                 name=world_names[index],
-                game=new_game,
+                graph=new_game,
                 initial_state=state,
                 pickups_left=standard_pickups,
                 configuration=FillerConfiguration(
@@ -85,7 +85,7 @@ async def run_filler(
 
         hint_distributor = player_pool.game_generator.hint_distributor
         results[player_state.index] = FillerPlayerResult(
-            game=player_state.game,
+            graph=player_state.world_graph,
             patches=await hint_distributor.assign_post_filler_hints(patches, rng, player_pool, player_state),
             unassigned_pickups=player_state.pickups_left,
         )

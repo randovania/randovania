@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
-from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
@@ -21,8 +20,9 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(
@@ -76,33 +76,26 @@ def _simplify_additional_requirement_set(
     )
 
 
-def _is_action_dangerous(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
+def _is_action_dangerous(state: State, action: WorldGraphNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
     return any(resource in dangerous_resources for resource, _ in action.resource_gain_on_collect(state.node_context()))
 
 
-def _is_dangerous_event(state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
+def _is_dangerous_event(state: State, action: WorldGraphNode, dangerous_resources: frozenset[ResourceInfo]) -> bool:
     return any(
         (resource in dangerous_resources and resource.resource_type == ResourceType.EVENT)
         for resource, _ in action.resource_gain_on_collect(state.node_context())
     )
 
 
-def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
-    if isinstance(action, EventPickupNode):
-        pickup_node = action.pickup_node
-    else:
-        pickup_node = action
+def _is_major_or_key_pickup_node(action: WorldGraphNode) -> bool:
+    if action.pickup_entry is not None:
+        return action.pickup_entry.pickup_category.hinted_as_major or action.pickup_entry.pickup_category.is_key
 
-    if isinstance(pickup_node, PickupNode):
-        target = state.patches.pickup_assignment.get(pickup_node.pickup_index)
-        return target is not None and (
-            target.pickup.pickup_category.hinted_as_major or target.pickup.pickup_category.is_key
-        )
     return False
 
 
 def _should_check_if_action_is_safe(
-    state: State, action: ResourceNode, dangerous_resources: frozenset[ResourceInfo]
+    state: State, action: WorldGraphNode, dangerous_resources: frozenset[ResourceInfo]
 ) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
@@ -112,7 +105,7 @@ def _should_check_if_action_is_safe(
     :return:
     """
     return not _is_action_dangerous(state, action, dangerous_resources) and (
-        isinstance(action, EventNode | EventPickupNode) or _is_major_or_key_pickup_node(action, state)
+        isinstance(action, EventNode | EventPickupNode) or _is_major_or_key_pickup_node(action)
     )
 
 
@@ -154,7 +147,7 @@ async def _inner_advance_depth(
     rest_of_actions = []
 
     for action, energy in reach.possible_actions(state):
-        if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
+        if _should_check_if_action_is_safe(state, action, logic.dangerous_resources):
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
@@ -185,11 +178,11 @@ async def _inner_advance_depth(
                 continue
 
         action_tuple = (action, energy)
-        if _is_dangerous_event(state, action, logic.game.dangerous_resources):
+        if _is_dangerous_event(state, action, logic.dangerous_resources):
             dangerous_actions.append(action_tuple)
-        elif _is_major_or_key_pickup_node(action, state):
+        elif _is_major_or_key_pickup_node(action):
             major_pickup_actions.append(action_tuple)
-        elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
+        elif isinstance(action.original_node, DockLockNode | EventNode | EventPickupNode):
             lock_actions.append(action_tuple)
         else:
             rest_of_actions.append(action_tuple)
@@ -204,7 +197,7 @@ async def _inner_advance_depth(
     for action, energy in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
         if not action_additional_requirements.satisfied(context, energy):
-            logic.log_skip_action_missing_requirement(action, logic.game)
+            logic.log_skip_action_missing_requirement(action)
             continue
         new_result = await _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy),
@@ -270,8 +263,8 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> tu
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    new_game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
-    logic = Logic(new_game, configuration)
+    graph, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
+    logic = Logic(graph)
     starting_state.resources.add_self_as_requirement_to_resources = True
 
     return starting_state, logic

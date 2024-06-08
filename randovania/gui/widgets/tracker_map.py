@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
