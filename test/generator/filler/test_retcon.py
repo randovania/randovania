@@ -17,8 +17,8 @@ def test_calculate_weights_for_output(capsys, blank_pickup):
     # Setup
     reach = MagicMock(spec=GeneratorReach)
     reach.victory_condition_satisfied.return_value = False
-    reach.state.collected_pickup_indices = []
-    reach.state.collected_hints = []
+    reach.state.collected_pickup_indices.return_value = []
+    reach.state.collected_hints.return_value = []
     reach.state.collected_events = []
     reach.nodes = []
     reach.iterate_nodes = []

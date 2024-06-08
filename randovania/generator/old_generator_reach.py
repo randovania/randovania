@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.filler.filler_configuration import FillerConfiguration
-    from randovania.resolver.state import State
+    from randovania.graph.state import GraphOrClassicNode, State
 
 
 def _extra_requirement_for_node(game: GameDescription, context: NodeContext, node: Node) -> Requirement | None:
@@ -108,7 +108,7 @@ class OldGeneratorReach(GeneratorReach):
     ) -> Self:
         reach = cls(game, initial_state, graph_module.RandovaniaGraph.new(), filler_config)
         game.region_list.ensure_has_node_cache()
-        reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
+        reach._expand_graph([GraphPath(None, initial_state.database_node, RequirementSet.trivial())])
         return reach
 
     def _potential_nodes_from(self, node: Node) -> Iterator[tuple[Node, RequirementSet]]:
@@ -283,7 +283,7 @@ class OldGeneratorReach(GeneratorReach):
         for i in self._safe_nodes.as_list:
             yield all_nodes[i]
 
-    def is_safe_node(self, node: Node) -> bool:
+    def is_safe_node(self, node: GraphOrClassicNode) -> bool:
         node_index = node.node_index
         is_safe = self._is_node_safe_cache.get(node_index)
         if is_safe is not None:

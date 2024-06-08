@@ -18,7 +18,7 @@ from randovania.game_description.requirements.base import Requirement
 if TYPE_CHECKING:
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region import Region
-    from randovania.resolver.state import State
+    from randovania.graph.state import State
 
 _color_for_node: dict[type[Node], QtCore.Qt.GlobalColor] = {
     GenericNode: QtCore.Qt.GlobalColor.red,
@@ -220,7 +220,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def set_state(self, state: State | None) -> None:
         self.state = state
-        self.highlighted_node = state.node if state is not None else None
+        self.highlighted_node = state.database_node if state is not None else None
         self.update()
 
     def set_visible_nodes(self, visible_nodes: set[Node] | None) -> None:

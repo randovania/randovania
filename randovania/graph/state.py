@@ -9,13 +9,15 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.db.node_provider import NodeProvider
     from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -24,15 +26,18 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.hint_state import ResolverHintState
 
+    GraphOrClassicNode = WorldGraphNode | Node
+    NodeSequence = tuple[GraphOrClassicNode, ...]
+
 
 class State:
     resources: ResourceCollection
-    collected_resource_nodes: tuple[ResourceNode, ...]
+    collected_resource_nodes: NodeSequence
     damage_state: DamageState
-    node: Node
+    node: GraphOrClassicNode
     patches: GamePatches
     previous_state: Self | None
-    path_from_previous_state: tuple[Node, ...]
+    path_from_previous_state: NodeSequence
 
     hint_state: ResolverHintState | None
 
@@ -40,20 +45,16 @@ class State:
     def resource_database(self) -> ResourceDatabase:
         return self._resource_database
 
-    @property
-    def region_list(self) -> RegionList:
-        return self._region_list
-
     def __init__(
         self,
         resources: ResourceCollection,
-        collected_resource_nodes: tuple[ResourceNode, ...],
+        collected_resource_nodes: NodeSequence,
         damage_state: DamageState,
-        node: Node,
+        node: GraphOrClassicNode,
         patches: GamePatches,
         previous: Self | None,
         resource_database: ResourceDatabase,
-        region_list: RegionList,
+        node_provider: NodeProvider,
         hint_state: ResolverHintState | None = None,
     ):
         self.resources = resources
@@ -63,7 +64,7 @@ class State:
         self.path_from_previous_state = ()
         self.previous_state = previous
         self._resource_database = resource_database
-        self._region_list = region_list
+        self._node_provider = node_provider
         self.hint_state = hint_state
 
         # We place this last because we need resource_database set
@@ -78,26 +79,34 @@ class State:
             self.patches,
             self.previous_state,
             self._resource_database,
-            self._region_list,
+            self._node_provider,
             copy.copy(self.hint_state),
         )
 
-    @property
-    def collected_pickup_indices(self) -> Iterator[PickupIndex]:
-        context = self.node_context()
+    def collected_pickup_indices(self, graph: WorldGraph | GameDescription) -> Iterator[PickupIndex]:
         for resource, count in self.resources.as_resource_gain():
             if count > 0 and isinstance(resource, NodeResourceInfo):
-                node = resource.to_node(context)
-                if isinstance(node, PickupNode):
-                    yield node.pickup_index
+                if isinstance(graph, WorldGraph):
+                    node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
+                    node = graph.nodes[node_index]
+                    if node.pickup_index is not None:
+                        yield node.pickup_index
+                else:
+                    node = graph.node_by_identifier(resource.node_identifier)
+                    if isinstance(node, PickupNode) and node.pickup_index is not None:
+                        yield node.pickup_index
 
-    @property
-    def collected_hints(self) -> Iterator[NodeIdentifier]:
-        context = self.node_context()
+    def collected_hints(self, graph: WorldGraph | GameDescription) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.as_resource_gain():
             if isinstance(resource, NodeResourceInfo) and count > 0:
-                if isinstance(resource.to_node(context), HintNode):
-                    yield resource.node_identifier
+                if isinstance(graph, WorldGraph):
+                    node_index = resource.resource_index - self.resource_database.first_unused_resource_index()
+                    if isinstance(graph.nodes[node_index].original_node, HintNode):
+                        yield resource.node_identifier
+                else:
+                    node = graph.node_by_identifier(resource.node_identifier)
+                    if isinstance(node, HintNode):
+                        yield resource.node_identifier
 
     @property
     def collected_events(self) -> Iterator[ResourceInfo]:
@@ -117,7 +126,7 @@ class State:
     def _advance_to(
         self,
         new_resources: ResourceCollection,
-        new_collected_resource_nodes: tuple[ResourceNode, ...],
+        new_collected_resource_nodes: NodeSequence,
         damage_state: DamageState,
         patches: GamePatches,
     ) -> Self:
@@ -129,23 +138,26 @@ class State:
             patches,
             self,
             self._resource_database,
-            self._region_list,
+            self._node_provider,
             copy.copy(self.hint_state),
         )
 
-    def collect_resource_node(self, node: ResourceNode, damage_state: DamageState) -> Self:
+    def collect_resource_node(self, node: ResourceNode | WorldGraphNode, damage_state: DamageState) -> Self:
         """
         Creates a new State that has the given ResourceNode collected.
         :param node:
         :param damage_state: The state you should have when collecting this resource. Will add new resources to it.
         :return:
         """
-
-        if not node.should_collect(self.node_context()):
-            raise ValueError(f"Trying to collect an uncollectable node'{node}'")
+        context = self.node_context()
+        # if not (
+        #     node.should_collect(context)
+        #     and node.requirement_to_collect.satisfied(context, damage_state.health_for_damage_requirements())
+        # ):
+        #     raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
         new_resources = self.resources.duplicate()
-        new_resources.add_resource_gain(node.resource_gain_on_collect(self.node_context()))
+        new_resources.add_resource_gain(node.resource_gain_on_collect(context))
 
         return self._advance_to(
             new_resources,
@@ -155,7 +167,7 @@ class State:
         )
 
     def act_on_node(
-        self, node: ResourceNode, path: tuple[Node, ...] = (), new_damage_state: DamageState | None = None
+        self, node: GraphOrClassicNode, path: NodeSequence = (), new_damage_state: DamageState | None = None
     ) -> Self:
         if new_damage_state is None:
             new_damage_state = self.damage_state
@@ -199,8 +211,15 @@ class State:
             self.patches,
             self.resources,
             self.resource_database,
-            self.region_list,
+            self._node_provider,
         )
+
+    @property
+    def database_node(self) -> Node:
+        if isinstance(self.node, WorldGraphNode):
+            return self.node.original_node
+        else:
+            return self.node
 
 
 def add_pickup_to_state(state: State, pickup: PickupEntry) -> None:

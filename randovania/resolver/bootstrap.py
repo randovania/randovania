@@ -13,11 +13,11 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool.pickup_creator import create_ammo_pickup, create_standard_pickup
 from randovania.generator.pickup_pool.standard_pickup import find_ammo_for
+from randovania.graph.state import State
 from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.lib import random_lib
-from randovania.resolver.state import State
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Generator, Iterable
@@ -214,6 +214,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
             None,
             game.resource_database,
             game.region_list,
+            hint_state=None,
         )
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on

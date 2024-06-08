@@ -1,0 +1,20 @@
+from __future__ import annotations
+
+from randovania.graph import world_graph
+
+
+def test_create_graph(
+    blank_game_description,
+    blank_game_patches,
+) -> None:
+    starting_resources = blank_game_description.create_resource_collection()
+    graph = world_graph.create_graph(
+        blank_game_description,
+        blank_game_patches,
+        starting_resources,
+        damage_multiplier=1.0,
+        victory_condition=blank_game_description.victory_condition,
+    )
+
+    assert len(graph.nodes) == 38
+    assert graph.dangerous_resources == set()

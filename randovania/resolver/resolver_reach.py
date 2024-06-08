@@ -9,6 +9,7 @@ from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import PositiveResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.graph.world_graph import WorldGraphNode
 
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
@@ -16,14 +17,14 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.graph.state import GraphOrClassicNode, State
     from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
-    from randovania.resolver.state import State
 
 
 def _build_satisfiable_requirements(
     logic: Logic,
-    all_nodes: tuple[Node | None, ...],
+    all_nodes: list[WorldGraphNode],
     context: NodeContext,
     requirements_by_node: dict[int, list[Requirement]],
 ) -> SatisfiableRequirements:
@@ -44,6 +45,19 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
         ResourceType.EVENT,
         ResourceType.NODE_IDENTIFIER,
     )
+
+
+def _combine_leave(
+    it: Iterator[tuple[Node, Requirement]], requirement_to_leave: Requirement
+) -> Iterator[tuple[Node, Requirement, Requirement]]:
+    for a, requirement in it:
+        requirement_including_leaving = requirement
+        if requirement_to_leave != Requirement.trivial():
+            requirement_including_leaving = RequirementAnd([requirement, requirement_to_leave])
+            if _is_requirement_viable_as_additional(requirement_to_leave):
+                requirement = RequirementAnd([requirement, requirement_to_leave])
+
+        yield a, requirement_including_leaving, requirement
 
 
 def _combine_damage_requirements(
@@ -74,8 +88,8 @@ class ResolverReach:
     _logic: Logic
 
     @property
-    def nodes(self) -> Iterator[Node]:
-        all_nodes = self._logic.game.region_list.all_nodes
+    def nodes(self) -> Iterator[GraphOrClassicNode]:
+        all_nodes = self._logic.all_nodes
         for index in self._node_indices:
             yield all_nodes[index]
 
@@ -86,8 +100,8 @@ class ResolverReach:
     def satisfiable_requirements_for_additionals(self) -> SatisfiableRequirements:
         return self._satisfiable_requirements_for_additionals
 
-    def path_to_node(self, node: Node) -> tuple[Node, ...]:
-        all_nodes = self._logic.game.region_list.all_nodes
+    def path_to_node(self, node: GraphOrClassicNode) -> tuple[GraphOrClassicNode, ...]:
+        all_nodes = self._logic.all_nodes
         return tuple(all_nodes[part] for part in self._path_to_node[node.node_index])
 
     def __init__(
@@ -106,7 +120,7 @@ class ResolverReach:
     @classmethod
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
         # all_nodes is only accessed via indices that guarantee a non-None result
-        all_nodes = typing.cast("tuple[Node, ...]", logic.game.region_list.all_nodes)
+        all_nodes = logic.all_nodes
         checked_nodes: dict[int, DamageState] = {}
         context = initial_state.node_context()
 
@@ -134,9 +148,15 @@ class ResolverReach:
             if node_index != initial_state.node.node_index:
                 reach_nodes[node_index] = game_state
 
-            requirement_to_leave = node.requirement_to_leave(context)
+            if logic.graph:
+                assert isinstance(node, WorldGraphNode)
+                node_connections = node.connections
+            else:
+                node_connections = _combine_leave(
+                    logic.game.region_list.potential_nodes_from(node, context), node.requirement_to_leave(context)
+                )
 
-            for target_node, requirement in logic.game.region_list.potential_nodes_from(node, context):
+            for target_node, requirement, requirement_without_leaving in node_connections:
                 target_node_index = target_node.node_index
 
                 # a >= b -> !(b > a)
@@ -145,28 +165,24 @@ class ResolverReach:
                 ):
                     continue
 
-                requirement_including_leaving = requirement
-                if requirement_to_leave != Requirement.trivial():
-                    requirement_including_leaving = RequirementAnd([requirement, requirement_to_leave])
-                    if _is_requirement_viable_as_additional(requirement_to_leave):
-                        requirement = RequirementAnd([requirement, requirement_to_leave])
+                satisfied = True
+                if logic.graph and node.require_collected_to_leave:
+                    satisfied = node.has_all_resources(context)
 
                 damage_health = game_state.health_for_damage_requirements()
                 # Check if the normal requirements to reach that node is satisfied
-                satisfied = requirement_including_leaving.satisfied(context, damage_health)
+                satisfied = satisfied and requirement.satisfied(context, damage_health)
                 if satisfied:
                     # If it is, check if we additional requirements figured out by backtracking is satisfied
                     satisfied = logic.get_additional_requirements(node).satisfied(context, damage_health)
 
                 if satisfied:
-                    nodes_to_check[target_node_index] = game_state.apply_damage(
-                        requirement_including_leaving.damage(context)
-                    )
+                    nodes_to_check[target_node_index] = game_state.apply_damage(requirement.damage(context))
                     path_to_node[target_node_index] = list(path_to_node[node_index])
                     path_to_node[target_node_index].append(node_index)
                     satisfied_requirement_on_node[target_node_index] = _combine_damage_requirements(
                         node.heal,
-                        requirement_including_leaving,
+                        requirement,
                         satisfied_requirement_on_node[node.node_index],
                         context,
                     )
@@ -174,9 +190,9 @@ class ResolverReach:
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
                     # Note we ignore the 'additional requirements' here because it'll be added on the end.
-                    if not requirement.satisfied(context, damage_health):
+                    if not requirement_without_leaving.satisfied(context, damage_health):
                         full_requirement_for_target = RequirementAnd(
-                            [requirement, satisfied_requirement_on_node[node.node_index]]
+                            [requirement_without_leaving, satisfied_requirement_on_node[node.node_index]]
                         ).simplify()
                         requirements_excluding_leaving_by_node[target_node_index].append(full_requirement_for_target)
 
@@ -193,7 +209,7 @@ class ResolverReach:
 
         return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements_for_additionals, logic)
 
-    def possible_actions(self, state: State) -> Iterator[tuple[ResourceNode, DamageState]]:
+    def possible_actions(self, state: State) -> Iterator[tuple[WorldGraphNode, DamageState]]:
         ctx = state.node_context()
         for node in self.collectable_resource_nodes(ctx):
             additional_requirements = self._logic.get_additional_requirements(node)
@@ -204,14 +220,25 @@ class ResolverReach:
                 self._satisfiable_requirements_for_additionals = self._satisfiable_requirements_for_additionals.union(
                     additional_requirements.alternatives
                 )
-                self._logic.log_skip_action_missing_requirement(node, state.patches, self._logic.game)
+                self._logic.log_skip_action_missing_requirement(node, state.patches)
 
-    def collectable_resource_nodes(self, context: NodeContext) -> Iterator[ResourceNode]:
-        for node in self.nodes:
-            if not node.is_resource_node:
-                continue
-            node = typing.cast("ResourceNode", node)
-            if node.should_collect(context) and node.requirement_to_collect().satisfied(
-                context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
-            ):
-                yield node
+    def collectable_resource_nodes(self, context: NodeContext) -> Iterator[WorldGraphNode | ResourceNode]:
+        if self._logic.graph:
+            for node in self.nodes:
+                if (
+                    node.is_resource_node()
+                    and node.should_collect(context)
+                    and node.requirement_to_collect.satisfied(
+                        context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
+                    )
+                ):
+                    yield node
+        else:
+            for node in self.nodes:
+                if not node.is_resource_node:
+                    continue
+                node = typing.cast("ResourceNode", node)
+                if node.should_collect(context) and node.requirement_to_collect().satisfied(
+                    context, self._game_state_at_node[node.node_index].health_for_damage_requirements()
+                ):
+                    yield node

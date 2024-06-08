@@ -161,7 +161,9 @@ class RegionList(NodeProvider):
             for target_node, requirements in area.connections[node].items():
                 yield target_node, requirements
 
-    def potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
+    def potential_nodes_from(
+        self, node: Node, context: NodeContext, *, include_to_leave: bool = False
+    ) -> Iterator[tuple[Node, Requirement]]:
         """
         Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
         :param node:

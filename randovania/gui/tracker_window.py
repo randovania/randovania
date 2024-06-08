@@ -25,6 +25,8 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.pickup_pool import pool_creator
+from randovania.graph.state import State, add_pickup_to_state
+from randovania.graph.world_graph import WorldGraphNode
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib import signal_handling
@@ -36,7 +38,6 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
-from randovania.resolver.state import State, add_pickup_to_state
 
 if typing.TYPE_CHECKING:
     from pathlib import Path
@@ -214,7 +215,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 return
 
             VersionedPreset.with_preset(self.preset).save_to_file(_persisted_preset_path(self.persistence_path))
-            self._add_new_action(self._initial_state.node)
+            self._add_new_action(self._initial_state.database_node)
 
     def apply_previous_state(self, previous_state: dict | None) -> bool:
         if previous_state is None:
@@ -284,8 +285,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         region_list = self.game_description.region_list
         state = self.state_for_current_configuration()
-        self.focus_on_region(region_list.nodes_to_region(state.node))
-        self.focus_on_area(region_list.nodes_to_area(state.node))
+        self.focus_on_region(region_list.nodes_to_region(state.database_node))
+        self.focus_on_area(region_list.nodes_to_area(state.database_node))
 
         return True
 
@@ -409,13 +410,16 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         nodes_in_reach = self.current_nodes_in_reach(self.state_for_current_configuration())
         self.update_matplot_widget(nodes_in_reach)
 
-    def current_nodes_in_reach(self, state: State | None):
-        if state is None:
-            nodes_in_reach = set()
-        else:
+    def current_nodes_in_reach(self, state: State | None) -> set[Node]:
+        nodes_in_reach = set()
+        if state is not None:
             reach = ResolverReach.calculate_reach(self.logic, state)
-            nodes_in_reach = set(reach.nodes)
-            nodes_in_reach.add(state.node)
+            temp = set(reach.nodes)
+            temp.add(state.node)
+
+            for node in temp:
+                nodes_in_reach.add(node.original_node if isinstance(node, WorldGraphNode) else node)
+
         return nodes_in_reach
 
     def _on_tab_changed(self):
