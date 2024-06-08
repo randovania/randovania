@@ -494,7 +494,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             ("Receiver: ", self.history_filter_receiver_combo),
         ]:
             combo.addItems([""] * (len(new_world_names) + 1 - combo.count()))
-            for i, world_name in enumerate(new_world_names):
+            for i, world_name in enumerate(sorted(new_world_names)):
                 combo.setItemText(i + 1, prefix + world_name)
                 combo.setItemData(i + 1, world_name)
 
