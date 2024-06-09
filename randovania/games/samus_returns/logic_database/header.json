@@ -5650,6 +5650,30 @@
                                 "data": "Shoot Beam Burst"
                             }
                         }
+                    },
+                    "Lightning Armor Door": {
+                        "extra": {
+                            "type": "lightning_armor"
+                        },
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Armor",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
@@ -5672,6 +5696,7 @@
                         "Charge Beam Door",
                         "Grapple Beam Door",
                         "Ice Beam Door",
+                        "Lightning Armor Door",
                         "Missile Door",
                         "Permanently Locked Door",
                         "Plasma Beam Door",
