@@ -11,6 +11,13 @@ if TYPE_CHECKING:
 ActionStep = ResourceNode | PickupEntry
 
 
+def format_action(action: ActionStep) -> str:
+    if isinstance(action, ResourceNode):
+        return f"{type(action).__name__[0]}: {action.identifier}"
+    else:
+        return f"{type(action).__name__[0]}: {action.name}"
+
+
 class Action:
     steps: tuple[ActionStep, ...]
 
@@ -22,7 +29,7 @@ class Action:
 
     @property
     def name(self) -> str:
-        return "[{}]".format(", ".join(f"{type(a).__name__[0]}: {a.name}" for a in self.steps))
+        return "[{}]".format(", ".join(format_action(a) for a in self.steps))
 
     @property
     def num_pickups(self) -> int:
