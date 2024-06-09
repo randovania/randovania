@@ -594,9 +594,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         for i, world in enumerate(self._session.worlds):
             world_num = i + 1
             owner_name = world_owners[world.id].name if world.id in world_owners else "Unclaimed"
+            owner_name = owner_name.replace("-", "_")
+            world_name = world.name.replace("-", "_")
             preset = world.preset
             filename = (
-                string_lib.sanitize_for_path(f"World{world_num}-{preset.game.short_name}-{owner_name}-{world.name}")
+                string_lib.sanitize_for_path(f"World{world_num}-{preset.game.short_name}-{owner_name}-{world_name}")
                 + f".{extension}"
             )
             filepath = path / filename

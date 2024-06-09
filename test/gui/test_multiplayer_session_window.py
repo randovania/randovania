@@ -378,9 +378,9 @@ def test_export_all_presets(
         return_value=fake_export_path if accept else None,
     )
 
-    world_names = [world.name for world in sample_session.worlds]
+    world_names = [world.name.replace("-", "_") for world in sample_session.worlds]
     games = [world.preset.game.short_name for world in sample_session.worlds]
-    owner_names = [sample_session.users_list[0].name, "Unclaimed", "Unclaimed"]
+    owner_names = [sample_session.users_list[0].name.replace("-", "_"), "Unclaimed", "Unclaimed"]
     extension = VersionedPreset.file_extension()
     export_filenames = [
         string_lib.sanitize_for_path(f"World{i + 1}-{game}-{owner_name}-{world_name}") + f".{extension}"
