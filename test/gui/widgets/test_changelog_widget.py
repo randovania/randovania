@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, cast
 
+import pytest
 from PySide6 import QtWidgets
 
 from randovania.gui.widgets.changelog_widget import ChangeLogWidget
@@ -26,7 +27,8 @@ CUSTOM_LOGS_KEYS = list(CUSTOM_LOGS.keys())
 EXPECTED_VERSIONS_COUNT = len(CUSTOM_LOGS_KEYS)
 
 
-async def test_create(skip_qtbot: QtBot, mocker):
+@pytest.mark.filterwarnings("ignore:Failed to disconnect .* from signal:RuntimeWarning")
+async def test_create(skip_qtbot: QtBot) -> None:
     # Setup
     widget = ChangeLogWidget(CUSTOM_LOGS)
     skip_qtbot.addWidget(widget)

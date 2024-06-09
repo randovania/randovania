@@ -21,6 +21,7 @@ if TYPE_CHECKING:
 async def run_filler(
     rng: Random,
     player_pools: list[PlayerPool],
+    world_names: list[str],
     status_update: Callable[[str], None],
 ) -> FillerResults:
     """
@@ -28,8 +29,9 @@ async def run_filler(
     Returns a GamePatches with progression items and hints assigned, along with all items in the pool
     that weren't assigned.
 
-    :param player_pools:
     :param rng:
+    :param player_pools:
+    :param world_names:
     :param status_update:
     :return:
     """
@@ -39,7 +41,7 @@ async def run_filler(
     for index, pool in enumerate(player_pools):
         config = pool.configuration
 
-        status_update(f"Creating state for player {index + 1}")
+        status_update(f"Creating state for {world_names[index]}")
         standard_pickups = list(pool.pickups)
         rng.shuffle(standard_pickups)
 
@@ -48,6 +50,7 @@ async def run_filler(
         player_states.append(
             PlayerState(
                 index=index,
+                name=world_names[index],
                 game=new_game,
                 initial_state=state,
                 pickups_left=standard_pickups,
@@ -71,7 +74,7 @@ async def run_filler(
     except UnableToGenerate as e:
         message = "{}\n\n{}".format(
             str(e),
-            "\n\n".join(f"#### Player {player.index + 1}\n{player.current_state_report()}" for player in player_states),
+            "\n\n".join(f"#### {player.name}\n{player.current_state_report()}" for player in player_states),
         )
         debug.debug_print(message)
         raise UnableToGenerate(message) from e

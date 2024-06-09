@@ -18,7 +18,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib, obfuscator
-from randovania.lib.construct_lib import JsonEncodedValue
+from randovania.lib.construct_lib import CompressedJsonValue, NullTerminatedCompressedJsonValue
 
 if typing.TYPE_CHECKING:
     from pathlib import Path
@@ -68,8 +68,15 @@ def _info_hash(data: dict) -> str:
 
 BinaryLayoutDescription = construct.Struct(
     magic=construct.Const(b"RDVG"),
-    version=construct.Const(1, construct.VarInt),
-    data=construct.Prefixed(construct.VarInt, construct.Compressed(JsonEncodedValue, "zlib")),
+    version=construct.Rebuild(construct.VarInt, 2),
+    data=construct.Switch(
+        construct.this.version,
+        {
+            1: NullTerminatedCompressedJsonValue,
+            2: CompressedJsonValue,
+        },
+        construct.Error,
+    ),
 )
 
 
@@ -152,15 +159,18 @@ class LayoutDescription:
         return cls.from_json_dict(json_lib.read_path(path))
 
     @classmethod
-    def from_bytes(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> typing.Self:
+    def bytes_to_dict(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> dict:
         decoded = BinaryLayoutDescription.parse(data)
         if presets is not None:
             decoded["data"]["info"]["presets"] = [preset.as_json for preset in presets]
+        return decoded["data"]
 
-        return cls.from_json_dict(decoded["data"])
+    @classmethod
+    def from_bytes(cls, data: bytes, *, presets: list[VersionedPreset] | None = None) -> typing.Self:
+        return cls.from_json_dict(cls.bytes_to_dict(data, presets=presets))
 
     @property
-    def permalink(self):
+    def permalink(self) -> Permalink:
         return Permalink(
             parameters=self.generator_parameters,
             seed_hash=self.shareable_hash_bytes,

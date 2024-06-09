@@ -494,7 +494,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             ("Receiver: ", self.history_filter_receiver_combo),
         ]:
             combo.addItems([""] * (len(new_world_names) + 1 - combo.count()))
-            for i, world_name in enumerate(new_world_names):
+            for i, world_name in enumerate(sorted(new_world_names)):
                 combo.setItemText(i + 1, prefix + world_name)
                 combo.setItemData(i + 1, world_name)
 
@@ -687,7 +687,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         def generate_layout(progress_update: ProgressUpdateCallable):
             return generator_frontend.generate_layout(
-                progress_update=progress_update, parameters=permalink.parameters, options=self._options, retries=retries
+                progress_update=progress_update,
+                parameters=permalink.parameters,
+                options=self._options,
+                retries=retries,
+                world_names=self._get_world_names(),
             )
 
         async with self.game_session_api.prepare_to_upload_layout(self._get_world_order()) as uploader:

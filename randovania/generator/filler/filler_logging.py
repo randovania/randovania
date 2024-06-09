@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.generator.filler.player_state import PlayerState
     from randovania.generator.generator_reach import GeneratorReach
 
 
@@ -23,12 +24,11 @@ def debug_print_collect_event(event: ResourceNode, game: GameDescription) -> Non
 
 
 def print_retcon_loop_start(
-    game: GameDescription,
+    player: PlayerState,
     pickups_left: Iterable[PickupEntry],
-    reach: GeneratorReach,
-    player_index: int,
 ) -> None:
     if debug.debug_level() > 0:
+        reach = player.reach
         current_uncollected = UncollectedState.from_reach(reach)
         if debug.debug_level() > 1:
             extra = f", pickups_left:\n{sorted({pickup.name for pickup in pickups_left})}"
@@ -37,8 +37,8 @@ def print_retcon_loop_start(
 
         print("\n===============================")
         print(
-            f"\n>>> Player {player_index}: "
-            f"From {game.region_list.node_name(reach.state.node, with_region=True)}, "
+            f"\n>>> {player.name}: "
+            f"From {player.game.region_list.node_name(reach.state.node, with_region=True)}, "
             f"{sum(1 for n in reach.nodes if reach.is_reachable_node(n))} reachable nodes, "
             f"{sum(1 for n in reach.nodes if reach.is_safe_node(n))} safe nodes, "
             f"{len(current_uncollected.indices)} open pickup indices, "
@@ -50,7 +50,7 @@ def print_retcon_loop_start(
             for node in reach.nodes:
                 print(
                     f"[{reach.is_reachable_node(node)!s:>5}, {reach.is_safe_node(node)!s:>5}] "
-                    f"{game.region_list.node_name(node)}"
+                    f"{player.game.region_list.node_name(node)}"
                 )
 
 
@@ -81,8 +81,8 @@ def print_new_node_identifiers(
                 print(f"-> New {label}: {region_list.node_name(node, with_region=True)}")
 
 
-def print_new_pickup_index(player: int, game: GameDescription, location: PickupIndex) -> None:
+def print_new_pickup_index(player: PlayerState, location: PickupIndex) -> None:
     if debug.debug_level() > 1:
-        region_list = game.region_list
+        region_list = player.game.region_list
         node = region_list.node_from_pickup_index(location)
-        print(f"-> New Pickup Index: Player {player + 1}'s {region_list.node_name(node, with_region=True)}")
+        print(f"-> New Pickup Index: {player.name}'s {region_list.node_name(node, with_region=True)}")

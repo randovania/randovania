@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.2.0] - 2024-07-??
+
+- Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
+- Added: When generating for a multiworld, all mentions of a world now use the world's name.
+- Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
+- Changed: The Receiver/Provider world selector in the History tab is now sorted.
+
 ## [8.1.1] - 2024-06-08
 
 ### Metroid Prime
@@ -141,7 +148,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Phendrana Shorelines - The item behind the ice can now be collected again with Infinite Speed
 - Fixed: Control Tower - Flying Pirates incorrectly flying away from the player when skipping the cutscene
 - Fixed: Research Core - Combat Visor being forced after grabbing the pickup on Competitive Cutscene mode
-- Fixed: Research Entrance - Soflock if the player kills the pirates before touching the cutscene trigger
+- Fixed: Research Entrance - Softlock if the player kills the pirates before touching the cutscene trigger
 - Fixed: Research Entrance - Fog disappearing after clearing the 1st Pass Pirates and before the 2nd Pass Shadow Pirates
 - Fixed: Energy Core - Underwater sound incorrectly playing when the player was not underwater
 - Fixed: Energy Core - Puzzle music not playing again if the player re-enters the room during the countdown

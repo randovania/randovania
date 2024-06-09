@@ -76,11 +76,10 @@ def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
     ):
         return True
 
-    return (
-        area.has_start_node()
-        and node in area.get_start_nodes()
-        and not any(node.name == "Save Station" for node in area.nodes)
-    )
+    if any(node.name == "Save Station" for node in area.nodes):
+        return False
+
+    return node.valid_starting_location and not node.is_derived_node
 
 
 class TeleporterTargetList(location_list.LocationList):

@@ -65,7 +65,7 @@ class GameGui:
     tab_provider: Callable[[PresetEditor, WindowManager], Iterable[type[PresetTab]]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
-    cosmetic_dialog: type[BaseCosmeticPatchesDialog]
+    cosmetic_dialog: type[BaseCosmeticPatchesDialog] | None
     """Dialog box for editing the game's cosmetic settings."""
 
     export_dialog: type[GameExportDialog]

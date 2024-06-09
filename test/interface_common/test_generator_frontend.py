@@ -26,6 +26,7 @@ def test_generate_layout(mocker: pytest_mock.MockerFixture, another_process, spo
     parameters = MagicMock()
     parameters.spoiler = spoiler
     progress_update = MagicMock()
+    world_names = MagicMock()
 
     mock_debug_level = mocker.patch("randovania.resolver.debug.debug_level")
     mock_generate_another_process = mocker.patch(
@@ -54,6 +55,7 @@ def test_generate_layout(mocker: pytest_mock.MockerFixture, another_process, spo
     extra_args = {
         "generator_params": parameters,
         "validate_after_generation": options.advanced_validate_seed_after,
+        "world_names": world_names,
     }
 
     if not timeout:
@@ -63,7 +65,7 @@ def test_generate_layout(mocker: pytest_mock.MockerFixture, another_process, spo
         extra_args["attempts"] = retries
 
     # Run
-    generator_frontend.generate_layout(options, parameters, progress_update, retries=retries)
+    generator_frontend.generate_layout(options, parameters, progress_update, retries=retries, world_names=world_names)
 
     # Assert
     mock_debug_level.assert_called_once_with()
