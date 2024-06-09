@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
 
+## [8.1.1] - 2024-06-08
+
 ### Metroid Prime
 
 - Fixed: Arboretum - Gate not staying open on room reload if the gate cutscene was skipped
