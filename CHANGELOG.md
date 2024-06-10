@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
 - Added: "Export all presets" option under multiworld session Advanced Options.
+- Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
 
