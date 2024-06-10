@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from enum import Enum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -102,11 +101,23 @@ class RelativeDataArea(JsonDataclass, RelativeData):  # type: ignore[misc]
 
 
 @dataclass(frozen=True)
-class PrecisionPair(JsonDataclass, DataclassPostInitTypeCheck):
+class PrecisionPair(JsonDataclass):
     location: HintLocationPrecision
     item: HintItemPrecision
     include_owner: bool
     relative: RelativeData | None = None
+
+    @classmethod
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+        # re-implemented for an version without expensive reflection
+        relative = json_dict.get("relative")
+
+        return cls(
+            location=HintLocationPrecision(json_dict["location"]),
+            item=HintItemPrecision(json_dict["item"]),
+            include_owner=json_dict["include_owner"],
+            relative=RelativeData.from_json(relative) if relative is not None else None,
+        )
 
 
 @dataclass(frozen=True)
@@ -126,3 +137,17 @@ class Hint(JsonDataclass):
         elif self.hint_type is HintType.RED_TEMPLE_KEY_SET:
             if self.dark_temple is None:
                 raise ValueError("Dark Temple Hint, but no dark_temple set.")
+
+    @classmethod
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+        # re-implemented for an version without expensive reflection
+        precision = json_dict.get("precision")
+        target = json_dict.get("target")
+        dark_temple = json_dict.get("dark_temple")
+
+        return cls(
+            hint_type=HintType(json_dict["hint_type"]),
+            precision=PrecisionPair.from_json(precision) if precision is not None else None,
+            target=PickupIndex(target) if target is not None else None,
+            dark_temple=HintDarkTemple(dark_temple) if dark_temple is not None else None,
+        )
