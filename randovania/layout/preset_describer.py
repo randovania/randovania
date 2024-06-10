@@ -52,7 +52,9 @@ class GamePresetDescriber:
                 continue
 
             starting_count = pickup_state.num_included_in_starting_pickups
-            shuffled_count = pickup_state.num_shuffled_pickups + int(pickup_state.include_copy_in_original_location)
+            shuffled_count = pickup_state.num_shuffled_pickups + pickup_state.include_copy_in_original_location * len(
+                standard_pickup.original_locations
+            )
 
             # Get the case we should have
             expected_state = StandardPickupState.from_case(

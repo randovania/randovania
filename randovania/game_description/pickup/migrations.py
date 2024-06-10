@@ -95,6 +95,14 @@ def _migrate_v7(data: dict) -> dict:
     return data
 
 
+def _migrate_v8(data: dict) -> dict:
+    for pickup in data["standard_pickups"].values():
+        if "original_location" in pickup:
+            pickup["original_locations"] = [pickup.pop("original_location")]
+
+    return data
+
+
 _MIGRATIONS = [
     None,
     _migrate_v2,
@@ -103,6 +111,7 @@ _MIGRATIONS = [
     _migrate_v5,
     _migrate_v6,
     _migrate_v7,
+    _migrate_v8,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
