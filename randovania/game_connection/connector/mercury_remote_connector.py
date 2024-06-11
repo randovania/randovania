@@ -72,7 +72,7 @@ class MercuryConnector(RemoteConnector):
         self.last_inventory = Inventory.empty()
         self.in_cooldown = True
         self.received_pickups: int | None = None
-        self.inventory_index = None
+        self.inventory_index: int | None = None
         self.current_region: Region | None = None
 
     def new_player_location_received(self, state_or_region: str) -> None:

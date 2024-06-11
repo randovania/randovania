@@ -53,6 +53,7 @@ async def test_new_player_location(connector: MSRRemoteConnector):
 
     assert connector.current_region is None
     connector.new_player_location_received("s050_area5")
+    assert connector.current_region is not None
     assert connector.current_region.name == "Area 4 Crystal Mines"
     location_changed.assert_called_once_with(PlayerLocationEvent(connector.current_region, None))
     assert await connector.current_game_status() == (True, connector.current_region)
@@ -128,23 +129,23 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
     await connector.receive_remote_pickups()
     assert connector.in_cooldown is False
 
-    # FIXME: No module named 'open_samus_returns_rando.multiworld_integration'
-    # try: AttributeError: module 'open_samus_returns_rando' has no attribute 'multiworld_integration'
-    # mocker.patch("open_samus_returns_rando.multiworld_integration.get_lua_for_item", return_value="Hallo")
-    # try:   AttributeError: <module 'open_samus_returns_rando' from 'BLABLA....open_samus_returns_rando\\__init__.py'>
-    #           does not have the attribute 'multiworld_integration'
-    # mocker.patch("open_samus_returns_rando.multiworld_integration", return_value="Hallo")
-
-    # connector.received_pickups = 0
-    # connector.inventory_index = 2
-    # await connector.receive_remote_pickups()
-    # assert connector.in_cooldown is True
-    # execute_string = (
-    #     "RL.ReceivePickup('Received Spider Magnet from Dummy 1.',"
-    #     "RandomizerPowerup,'{\\n{\\n{\\nitem_id = "
-    #     '"ITEM_MAGNET_GLOVE",\\nquantity = 1,\\n},\\n},\\n}\',0,2)'
-    # )
-    # connector.executor.run_lua_code.assert_called_once_with(execute_string)
+    connector.received_pickups = 0
+    connector.inventory_index = 2
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is True
+    execute_string = (
+        "RL.ReceivePickup('Received Ice Beam from Dummy 1.','\\\n    "
+        'Game.ImportLibrary("actors/items/randomizerpowerup/scripts/randomizerpowerup.lc", false)\\\n    '
+        "MultiworldPickup = MultiworldPickup or {}\\\n    "
+        "function MultiworldPickup.main()\\\n    "
+        "end\\\n\\\n    "
+        "function MultiworldPickup.OnPickedUp(progression, actorOrName)\\\n        "
+        "RandomizerPowerup.OnPickedUp(progression, actorOrName)\\\n    "
+        "end\\\n    \\\n"
+        'MultiworldPickup.OnPickedUp({\\\n{\\\n{\\\nitem_id = "ITEM_WEAPON_ICE_BEAM",\\\nquantity = 1,\\\n},\\\n},\\\n}'
+        ", nil)',0,2)"
+    )
+    connector.executor.run_lua_code.assert_called_once_with(execute_string)
 
 
 async def test_new_collected_locations_received_wrong_answer(connector: MSRRemoteConnector):

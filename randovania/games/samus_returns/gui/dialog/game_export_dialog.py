@@ -131,7 +131,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         # Input exheader
         self.input_exheader_edit.textChanged.connect(self._on_input_exheader_change)
         self.input_exheader_button.clicked.connect(self._on_input_exheader_button)
-        if not randovania.is_dev_version() or randovania.is_frozen():
+        if not randovania.is_dev_version():
             self.input_exheader_button.hide()
             self.input_exheader_edit.hide()
             self.input_exheader_label.hide()
