@@ -260,8 +260,9 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
         pickup_name = data["pickup_name"]
         if pickup_name in result:
             result[pickup_name]["progression"].append(tech_name)
-            result[pickup_name].pop("original_location", None)
-            # TODO: handle original_location
+            if tech_name in existing_pickup_ids:
+                if "original_locations" in result[pickup_name]:
+                    result[pickup_name]["original_locations"].append(existing_pickup_ids[tech_name])
         else:
             tech = techs_raw[tech_name]
             if "icons" in tech:
@@ -279,7 +280,7 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
                 "expected_case_for_describer": "shuffled",
             }
             if tech_name in existing_pickup_ids:
-                result[pickup_name]["original_location"] = existing_pickup_ids[tech_name]
+                result[pickup_name]["original_locations"] = [existing_pickup_ids[tech_name]]
 
             if pickup_name in _custom_shuffled_count:
                 if _custom_shuffled_count[pickup_name] == 0:
@@ -288,7 +289,6 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
                     result[pickup_name]["custom_count_for_shuffled_case"] = _custom_shuffled_count[pickup_name]
 
     result["Rocket Silo"]["expected_case_for_describer"] = "vanilla"
-    result["Rocket Silo"]["original_location"] = 136
     result["Rocket Silo"]["hide_from_gui"] = True
 
     return result
