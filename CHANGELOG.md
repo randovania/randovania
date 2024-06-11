@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
 
+### Metroid: Samus Returns
+
+- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
+
 ## [8.1.1] - 2024-06-08
 
 ### Metroid Prime
