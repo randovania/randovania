@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import randovania
 from randovania.games import game
 from randovania.games.samus_returns import layout
 from randovania.games.samus_returns.layout.preset_describer import MSRPresetDescriber
@@ -164,6 +163,6 @@ game_data: game.GameData = game.GameData(
     generator=_generator,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
-    defaults_available_in_game_sessions=randovania.is_dev_version(),
+    defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
 )

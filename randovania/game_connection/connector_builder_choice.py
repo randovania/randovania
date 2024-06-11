@@ -26,10 +26,6 @@ class ConnectorBuilderChoice(Enum):
             if randovania.is_frozen() or not randovania.is_dev_version():
                 return False
 
-        if self is ConnectorBuilderChoice.MSR:
-            if not randovania.is_dev_version():
-                return False
-
         if self is ConnectorBuilderChoice.DOLPHIN:
             match platform.system():
                 case "Darwin":

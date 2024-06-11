@@ -4,7 +4,6 @@ import dataclasses
 
 from PySide6 import QtGui, QtWidgets
 
-import randovania
 from randovania.games.samus_returns.gui.generated.msr_cosmetic_patches_dialog_ui import Ui_MSRCosmeticPatchesDialog
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRRoomGuiType
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
@@ -26,8 +25,6 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         self.connect_signals()
         self.on_new_cosmetic_patches(current)
         self._update_color_squares()
-        if not randovania.is_dev_version():
-            self.enable_remote_lua.hide()
 
     def connect_signals(self) -> None:
         super().connect_signals()

@@ -10,7 +10,6 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtGui, QtWidgets
 
-import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
@@ -131,10 +130,6 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         # Input exheader
         self.input_exheader_edit.textChanged.connect(self._on_input_exheader_change)
         self.input_exheader_button.clicked.connect(self._on_input_exheader_button)
-        if not randovania.is_dev_version():
-            self.input_exheader_button.hide()
-            self.input_exheader_edit.hide()
-            self.input_exheader_label.hide()
 
         # Target Platform
         if per_game.target_platform == MSRModPlatform.LUMA:
