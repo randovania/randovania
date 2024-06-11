@@ -101,7 +101,7 @@ class MSRGameExporter(GameExporter):
 
             open_samus_returns_rando.patch_with_status_update(
                 export_params.input_path,
-                export_params.input_exheader,  # type: ignore
+                export_params.input_exheader if patch_data.get("enable_remote_lua", False) else None,  # type: ignore
                 export_params.output_path,
                 patch_data,
                 lambda progress, msg: patcher_update(msg, progress),
