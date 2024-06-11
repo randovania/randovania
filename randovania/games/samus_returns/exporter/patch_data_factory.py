@@ -433,10 +433,54 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return elevator_dict
 
+    def _add_custom_doors(self) -> list[dict]:
+        custom_doors: list = []
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            assert node.location is not None
+            if not isinstance(node, DockNode):
+                continue
+            if node.default_dock_weakness.name != "Access Open":
+                continue
+            if any(entry["door_actor"] == self._teleporter_ref_for(node) for entry in custom_doors):
+                continue
+
+            # Make a set of the entity groups for each room that each door exists in
+            entity_groups = {
+                self.game.region_list.area_by_area_location(node.identifier.area_identifier).extra["asset_id"],
+                self.game.region_list.area_by_area_location(node.default_connection.area_identifier).extra["asset_id"],
+            }
+
+            # Add additional entity groups if needed, mainly for post-Metroid groups
+            if "append_entity_group" in node.extra:
+                entity_groups.add(node.extra["append_entity_group"])
+
+            # Make a list of the tile_indices listed in each door node and append them
+            tile_indices = [
+                node.extra["tile_index"],
+                self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
+            ]
+
+            custom_doors.append(
+                {
+                    "door_actor": self._teleporter_ref_for(node),
+                    "position": {
+                        # FIXME: location_override only exists because DB maps are not 1:1, so fix maps
+                        "x": node.extra.get("location_x_override", node.location.x),
+                        "y": node.extra.get("location_y_override", node.location.y),
+                        "z": node.extra.get("location_z_override", node.location.z),
+                    },
+                    "tile_indices": sorted(tile_indices),  # [left, right]
+                    "entity_groups": sorted(entity_groups),
+                }
+            )
+
+        return custom_doors
+
     def _door_patches(self) -> list[dict[str, str]]:
         wl = self.game.region_list
 
-        result = []
+        result: list = []
         used_actors: dict[str, str] = {}
 
         for node, weakness in self.patches.all_dock_weaknesses():
@@ -447,6 +491,9 @@ class MSRPatchDataFactory(PatchDataFactory):
 
             if "actor_name" not in node.extra:
                 print(f"Invalid door (no actor): {node}")
+                continue
+
+            if any(entry["actor"] == self._teleporter_ref_for(node) for entry in result):
                 continue
 
             result.append(
@@ -520,6 +567,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "hints": self._encode_hints(self.rng),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
+            "custom_doors": self._add_custom_doors(),
             "door_patches": self._door_patches(),
             "layout_uuid": str(self.players_config.get_own_uuid()),
             "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,

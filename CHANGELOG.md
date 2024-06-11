@@ -9,8 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
+- Added: "Export all presets" option under multiworld session Advanced Options.
+- Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
+
+### Metroid Dread
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
+### Metroid Prime 2: Echoes
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
+### Metroid: Samus Returns
+
+- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
+
+## [8.1.1] - 2024-06-08
 
 ### Metroid Prime
 
@@ -201,7 +217,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Fixed: A small typo with "immune" in the energy preset tab
+- Fixed: A small typo with "immune" in the energy preset tab.
 - Fixed: Seeker Locks without Seeker now properly show all usages when asked for.
 
 ### Metroid: Samus Returns

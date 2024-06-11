@@ -63,7 +63,7 @@ def standard_pickup_state(request, echoes_pickup_database, generic_pickup_catego
         progression=(request.param.get("progression", "Power"),),
         ammo=request.param.get("ammo_index", ()),
         must_be_starting=True,
-        original_location=None,
+        original_locations=(),
         probability_offset=0.0,
         preferred_location_category=LocationCategory.MAJOR,
     )

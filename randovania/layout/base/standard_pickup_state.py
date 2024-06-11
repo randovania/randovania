@@ -79,7 +79,7 @@ class StandardPickupState:
                 if self.num_included_in_starting_pickups > db.get_item(progression).max_capacity:
                     raise ValueError(f"More starting copies than the item's maximum. ({pickup.name})")
 
-        if self.include_copy_in_original_location and pickup.original_location is None:
+        if self.include_copy_in_original_location and not pickup.original_locations:
             raise ValueError(f"No vanilla location defined. ({pickup.name})")
 
         if not (PRIORITY_LIMITS["min"] <= self.priority <= PRIORITY_LIMITS["max"]):
@@ -140,7 +140,7 @@ class StandardPickupState:
         main_item = db.get_item(main_index)
 
         # original location
-        if pickup.original_location is not None:
+        if pickup.original_locations:
             yield from bitpacking.encode_bool(self.include_copy_in_original_location)
 
         # num shuffled
@@ -188,7 +188,7 @@ class StandardPickupState:
 
         # original location
         original = False
-        if pickup.original_location is not None:
+        if pickup.original_locations:
             original = bitpacking.decode_bool(decoder)
 
         # num shuffled
