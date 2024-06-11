@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import randovania
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -570,7 +571,8 @@ class MSRPatchDataFactory(PatchDataFactory):
             "custom_doors": self._add_custom_doors(),
             "door_patches": self._door_patches(),
             "layout_uuid": str(self.players_config.get_own_uuid()),
-            "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
+            "enable_remote_lua": randovania.is_dev_version()
+            and (self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld),
         }
 
 

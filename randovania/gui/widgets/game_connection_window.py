@@ -262,7 +262,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             args["ip"] = "localhost"
 
         if choice == ConnectorBuilderChoice.MSR:
-            # TODO: Add a nice GUI that allows one to have a user provided ip.
+            # TODO: Add a GUI for the IP whenever we support Luma
             args["ip"] = "localhost"
 
         if choice == ConnectorBuilderChoice.DEBUG:

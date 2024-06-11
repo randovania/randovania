@@ -37,5 +37,5 @@ class MSRRemoteConnector(MercuryConnector):
 
     async def display_arbitrary_message(self, message: str) -> None:
         escaped_message = message.replace("\\", "\\\\").replace("'", "\\'")
-        execute_string = f"Game.AddSF(0, 'Scenario.ShowAsyncPopup', 'si', '{escaped_message}', 10.0)"
+        execute_string = f"Game.AddSF(0, 'Scenario.QueueAsyncPopup', 'si', '{escaped_message}', 10.0)"
         await self.executor.run_lua_code(execute_string)
