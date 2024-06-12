@@ -25,10 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
-- Changed: The popup when collecting an item has been removed, and has been replaced with an asynchronous message that does not interrupt gameplay.
+- Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
 - Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
 - Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
-- Changed: Area 4 Crystal Mines - Tsumuri Tunnel - The collision of the right wall has been extended past the door, allowing for the upper door in Mines Entrance to be shuffled in Door Lock Rando.
+- Changed: Area 4 Crystal Mines - Tsumuri Tunnel - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
 - Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened. 
 
@@ -238,7 +238,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Starting at Area 3 Factory Exterior - Beam Burst Chamber & Tsumuri Station no longer spawns Samus out of bounds.
 - Fixed: The Laser Aim cosmetic options UI no longer exports the wrong colors and has been simplified.
 - Fixed: The item in Area 7 - Omega Arena South Access no longer disappears after defeating the Omega in Area 7 - Omega Arena South.
-- Fixed: Case where PBs would not be disabled when fighting Diggernaut.
+- Fixed: Case where Power Bombs would not be disabled when fighting Diggernaut.
 
 #### Logic Database
 
