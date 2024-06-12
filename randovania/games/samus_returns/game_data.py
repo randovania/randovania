@@ -69,6 +69,7 @@ game_data: game.GameData = game.GameData(
     development_state=game.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
+        {"path": "multiworld-starter-preset.rdvpreset"},
     ],
     faq=[
         (
