@@ -17,14 +17,13 @@ def msr_remote_connector():
     executor_mock = MagicMock(MSRExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
     executor_mock.signals = MagicMock(MSRExecutorToConnectorSignals)
-    executor_mock.version = "1.0.0"
     connector = MSRRemoteConnector(executor_mock)
     return connector
 
 
 async def test_general_class_content(connector: MSRRemoteConnector):
     assert connector.game_enum == RandovaniaGame.METROID_SAMUS_RETURNS
-    assert connector.description() == f"{RandovaniaGame.METROID_SAMUS_RETURNS.long_name}: 1.0.0"
+    assert connector.description() == RandovaniaGame.METROID_SAMUS_RETURNS.long_name
 
     emit_listener = MagicMock()
     connector.Finished.connect(emit_listener)

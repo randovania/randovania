@@ -126,7 +126,6 @@ class MSRExecutor:
         self.logger = logging.getLogger(type(self).__name__)
         self.signals = MSRExecutorToConnectorSignals()
         self._ip = ip
-        self.version = "Unknown version"
 
     @property
     def ip(self) -> str:

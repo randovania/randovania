@@ -17,6 +17,9 @@ class DreadRemoteConnector(MercuryConnector):
     def __init__(self, executor: DreadExecutor):
         super().__init__(executor, self._game_enum)
 
+    def description(self) -> str:
+        return f"{self.game_enum.long_name}: {self.executor.version}"
+
     def get_resources_for_details(
         self, pickup: PickupEntry, conditional_resources: list[ConditionalResources], other_player: bool
     ) -> list:

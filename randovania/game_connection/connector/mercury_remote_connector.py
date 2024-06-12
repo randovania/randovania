@@ -49,9 +49,6 @@ class MercuryConnector(RemoteConnector):
     def game_enum(self) -> RandovaniaGame:
         return self._game_enum
 
-    def description(self) -> str:
-        return f"{self.game_enum.long_name}: {self.executor.version}"
-
     async def current_game_status(self) -> tuple[bool, Region | None]:
         return (self.in_cooldown, self.current_region)
 

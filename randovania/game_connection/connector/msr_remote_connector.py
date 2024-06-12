@@ -17,6 +17,9 @@ class MSRRemoteConnector(MercuryConnector):
     def __init__(self, executor: MSRExecutor):
         super().__init__(executor, self._game_enum)
 
+    def description(self) -> str:
+        return self.game_enum.long_name
+
     def get_resources_for_details(
         self, pickup: PickupEntry, conditional_resources: list[ConditionalResources], other_player: bool
     ) -> list:
