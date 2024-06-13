@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Fixed: The transport in Ghavoran - Flipper now shows the destination on the minimap icon.
 
 ### Metroid Prime 2: Echoes
 
