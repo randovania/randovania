@@ -10,6 +10,42 @@ from construct import CString, Flag, If, PascalString, PrefixedArray, Rebuild, S
 String = PascalString(VarInt, "utf-8")
 
 
+def varint_emitbuild(code: construct.CodeGen) -> str:
+    code.append("""
+    def _varint_build(obj: int, io, this):
+        x = obj
+        B = bytearray()
+        while x > 0b01111111:
+            B.append(0b10000000 | (x & 0b01111111))
+            x >>= 7
+        B.append(x)
+        io.write(bytes(B))
+        return obj
+    """)
+    return "_varint_build(obj, io, this)"
+
+
+def zigzag_emitbuild(code: construct.CodeGen) -> str:
+    varint_emitbuild(code)
+    code.append("""
+    def _zigzag_build(obj: int, io, this):
+        if obj >= 0:
+            x = 2*obj
+        else:
+            x = 2*abs(obj)-1
+        _varint_build(x, io, this)
+        return obj
+    """)
+    return "_zigzag_build(obj, io, this)"
+
+
+def add_compile_support_to_construct() -> None:
+    """Modify construct types to have support for compiling"""
+
+    construct.VarInt._emitbuild = varint_emitbuild
+    construct.ZigZag._emitbuild = zigzag_emitbuild
+
+
 def convert_to_raw_python(value: Any) -> Any:
     if isinstance(value, list):
         return [convert_to_raw_python(item) for item in value]
@@ -76,3 +112,4 @@ CompressedJsonValue = construct.Prefixed(construct.VarInt, construct.Compressed(
 NullTerminatedCompressedJsonValue = construct.Prefixed(
     construct.VarInt, construct.Compressed(JsonEncodedValueAdapter(CString("utf-8")), "zlib")
 )
+add_compile_support_to_construct()
