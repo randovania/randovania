@@ -7,10 +7,21 @@ from typing import Any
 import construct
 from construct import CString, Flag, If, PascalString, PrefixedArray, Rebuild, Struct, VarInt
 
+if typing.TYPE_CHECKING:
+    from randovania.lib.construct_stub import CodeGen
+
 String = PascalString(VarInt, "utf-8")
 
 
-def varint_emitbuild(code: construct.CodeGen) -> str:
+def add_emit_build(con: construct.Construct, emit: typing.Callable[[CodeGen], str]) -> None:
+    con._emitbuild = emit  # type: ignore[attr-defined]
+
+
+def compile_build_struct(con: construct.Construct, code: CodeGen) -> str:
+    return con._compilebuild(code)  # type: ignore[attr-defined]
+
+
+def varint_emitbuild(code: CodeGen) -> str:
     code.append("""
     def _varint_build(obj: int, io, this):
         x = obj
@@ -25,7 +36,7 @@ def varint_emitbuild(code: construct.CodeGen) -> str:
     return "_varint_build(obj, io, this)"
 
 
-def zigzag_emitbuild(code: construct.CodeGen) -> str:
+def zigzag_emitbuild(code: CodeGen) -> str:
     varint_emitbuild(code)
     code.append("""
     def _zigzag_build(obj: int, io, this):
@@ -42,8 +53,8 @@ def zigzag_emitbuild(code: construct.CodeGen) -> str:
 def add_compile_support_to_construct() -> None:
     """Modify construct types to have support for compiling"""
 
-    construct.VarInt._emitbuild = varint_emitbuild
-    construct.ZigZag._emitbuild = zigzag_emitbuild
+    add_emit_build(construct.VarInt, varint_emitbuild)
+    add_emit_build(construct.ZigZag, zigzag_emitbuild)
 
 
 def convert_to_raw_python(value: Any) -> Any:
