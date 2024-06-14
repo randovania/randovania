@@ -1,12 +1,15 @@
 from __future__ import annotations
 
-import asyncio
+import _xxsubinterpreters as subinterpreters
 import functools
 import math
+import os
+import threading
 import time
 import typing
-from concurrent.futures import CancelledError, Future, ProcessPoolExecutor
+from concurrent.futures import CancelledError, Future, ThreadPoolExecutor
 from pathlib import Path
+from textwrap import dedent
 
 from randovania.cli import cli_lib
 from randovania.interface_common import sleep_inhibitor
@@ -32,29 +35,66 @@ def get_generator_params(base_params: GeneratorParameters, seed_number: int) -> 
 
 
 def batch_distribute_helper(
-    base_params: GeneratorParameters,
     seed_number: int,
     timeout: int,
     validate: bool,
     output_dir: Path,
+    thread_data: threading.local,
 ) -> float:
-    from randovania.generator import generator
+    from randovania.layout.layout_description import LayoutDescription
 
-    permalink = get_generator_params(base_params, seed_number)
+    final_path = output_dir.joinpath(f"{seed_number}.{LayoutDescription.file_extension()}")
+
+    sub_id: int = thread_data.sub_id
+
+    # solver is broken
+    validate = False
 
     start_time = time.perf_counter()
-    description = asyncio.run(
-        generator.generate_and_validate_description(
-            generator_params=permalink,
-            status_update=None,
-            validate_after_generation=validate,
-            timeout=timeout,
-            attempts=0,
-        )
+    subinterpreters.run_string(
+        sub_id,
+        dedent("""
+        import traceback
+        from pathlib import Path
+
+        description = None
+        try:
+            from randovania.generator import generator
+            from randovania.layout.permalink import GeneratorParameters
+
+            generator_task = generator.generate_and_validate_description(
+                generator_params=GeneratorParameters(
+                    seed_number=seed_number,
+                    spoiler=True,
+                    development=base_params.development,
+                    presets=base_params.presets,
+                ),
+                status_update=None,
+                validate_after_generation=validate,
+                timeout=timeout,
+                attempts=0,
+            )
+            while True:
+                try:
+                    description = generator_task.send(None)
+                except StopIteration as e:
+                    description = e.value
+                    break
+            if description is not None:
+                description.save_to_file(Path(final_path))
+        except Exception as e:
+            traceback.print_exception(e)
+            raise
+        """),
+        {
+            "seed_number": seed_number,
+            "validate": int(validate),
+            "timeout": timeout,
+            "final_path": os.fspath(final_path),
+        },
     )
     delta_time = time.perf_counter() - start_time
 
-    description.save_to_file(output_dir.joinpath(f"{seed_number}.{description.file_extension()}"))
     return delta_time
 
 
@@ -115,23 +155,50 @@ def batch_distribute_command_logic(args: Namespace) -> None:
             for f in all_futures:
                 f.cancel()
 
+    sub_interpreters = []
+    thread_data = threading.local()
+    base_as_bytes = base_params.as_bytes
+
+    def initializer(data: threading.local):
+        sub = subinterpreters.create()
+        sub_interpreters.append(sub)
+
+        subinterpreters.run_string(
+            sub,
+            dedent("""
+            from randovania.layout.permalink import GeneratorParameters
+            base_params = GeneratorParameters.from_bytes(base_as_bytes)
+            """),
+            {
+                "base_as_bytes": base_as_bytes,
+            },
+        )
+
+        data.sub_id = sub
+
     try:
         with sleep_inhibitor.get_inhibitor():
-            with ProcessPoolExecutor(max_workers=args.process_count) as pool:
+            with ThreadPoolExecutor(
+                max_workers=args.process_count, initializer=initializer, initargs=(thread_data,)
+            ) as pool:
                 for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
                     result = pool.submit(
                         batch_distribute_helper,
-                        base_params,
                         seed_number,
                         timeout,
                         validate,
                         output_dir,
+                        thread_data,
                     )
                     result.add_done_callback(functools.partial(with_result, seed_number))
                     all_futures.append(result)
 
     except KeyboardInterrupt:
         pass
+    finally:
+        # TODO: this is hanging for some reason?
+        for sub_id in sub_interpreters:
+            subinterpreters.destroy(sub_id)
 
     print("Generation Failed: " + str(failure_count) + " " + str(failure_seeds))
     print("Impossible for Solver: " + str(impossible_count) + " " + str(impossible_seeds))
