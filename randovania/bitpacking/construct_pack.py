@@ -16,23 +16,25 @@ from randovania.lib import construct_lib, type_lib
 if typing.TYPE_CHECKING:
     from _typeshed import DataclassInstance
 
+    from randovania.lib.construct_stub import CodeGen
+
 BinStr = construct.PascalString(construct.VarInt, "utf-8")
 
 
-def _bin_str_emitbuild(code: construct.CodeGen) -> str:
+def _bin_str_emitbuild(code: CodeGen) -> str:
     fname = f"build_str_{code.allocateId()}"
     code.append(f"""
         def {fname}(obj: str, io, this):
             encoded = obj.encode("utf-8")
             obj = len(encoded)
-            {construct.VarInt._compilebuild(code)}
+            {construct_lib.compile_build_struct(construct.VarInt, code)}
             io.write(encoded)
             return obj
         """)
     return f"{fname}(obj, io, this)"
 
 
-BinStr._emitbuild = _bin_str_emitbuild
+construct_lib.add_emit_build(BinStr, _bin_str_emitbuild)
 
 
 T = typing.TypeVar("T")
@@ -76,7 +78,7 @@ class ConstructTypedStruct(construct.Adapter, typing.Generic[T]):
     def _encode(self, obj: T, context: construct.Container, path: str) -> construct.Container:
         return construct.Container((field_name, getattr(obj, field_name)) for field_name in self.field_types.keys())
 
-    def _emitbuild(self, code: construct.CodeGen) -> str:
+    def _emitbuild(self, code: CodeGen) -> str:
         fname = f"build_typed_struct_{code.allocateId()}"
         block = f"""
             def {fname}(obj, io, this):
@@ -86,7 +88,7 @@ class ConstructTypedStruct(construct.Adapter, typing.Generic[T]):
             block += f"                    ({repr(field_name)}, obj.{field_name}),\n"
         block += f"""
                 ])
-                return {self.subcon._compilebuild(code)}
+                return {construct_lib.compile_build_struct(self.subcon, code)}
         """
         code.append(block)
         return f"{fname}(obj, io, this)"
@@ -118,11 +120,11 @@ class UUIDAdapter(construct.Adapter):
     def _encode(self, obj: uuid.UUID, context: construct.Container, path: str) -> bytes:
         return obj.bytes
 
-    def _emitparse(self, code: construct.CodeGen) -> str:
+    def _emitparse(self, code: CodeGen) -> str:
         code.append("import uuid")
         return "uuid.UUID(bytes=io.read(16))"
 
-    def _emitbuild(self, code: construct.CodeGen) -> str:
+    def _emitbuild(self, code: CodeGen) -> str:
         return "(io.write(obj.bytes), obj)[1]"
 
 
@@ -139,7 +141,7 @@ class DatetimeAdapter(construct.Adapter):
 
         return int(obj.timestamp() * 10000000)
 
-    def _emitbuild(self, code: construct.CodeGen) -> str:
+    def _emitbuild(self, code: CodeGen) -> str:
         construct_lib.zigzag_emitbuild(code)
         return "_zigzag_build(int(obj.timestamp() * 10000000), io, this)"
 
