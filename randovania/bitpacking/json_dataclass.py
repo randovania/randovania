@@ -25,7 +25,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
 
     type_origin = typing.get_origin(type_) or type_
 
-    if issubclass(type_, Enum):
+    if inspect.isclass(type_) and issubclass(type_, Enum):
         return type_(arg)
 
     elif type_lib.is_named_tuple(type_):
