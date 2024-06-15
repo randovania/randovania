@@ -215,3 +215,16 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
         if self.mode == DockRandoMode.DOCKS:
             danger.append(f"{self.mode.long_name}: {self.mode.description}")
         return danger
+
+    def dangerous_settings(self) -> list[str]:
+        result = []
+
+        weakness_database = self.weakness_database
+
+        if self.mode == DockRandoMode.WEAKNESSES:
+            for dock_type, state in self.types_state.items():
+                locked = weakness_database.dock_rando_params[dock_type].locked
+                if locked in state.can_change_to:
+                    result.append(f"{locked.name} is unsafe as a target in Door Lock Types")
+
+        return result
