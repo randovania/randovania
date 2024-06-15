@@ -8,10 +8,10 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, _SubParsersAction
 
 
-def refresh_presets_command_logic(args):
+def refresh_presets_command_logic(args: ArgumentParser) -> None:
     for game in enum_lib.iterate_enum(RandovaniaGame):
         logging.info(f"Refreshing presets for {game.long_name}")
         base_path = game.data_path.joinpath("presets")
@@ -23,7 +23,7 @@ def refresh_presets_command_logic(args):
             preset.save_to_file(preset_path)
 
 
-def add_refresh_presets_command(sub_parsers):
+def add_refresh_presets_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "refresh-presets", help="Loads the preset files and saves then again with the latest version"
     )

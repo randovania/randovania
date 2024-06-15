@@ -10,25 +10,25 @@ from randovania.cli.commands import permalink as permalink_command
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, Namespace, _SubParsersAction
 
     from randovania.layout.permalink import Permalink
 
 
-def common_generate_logic(args, permalink: Permalink):
+def common_generate_logic(args: Namespace, permalink: Permalink) -> None:
     from randovania.generator import generator
     from randovania.layout.layout_description import LayoutDescription, shareable_hash
 
-    def status_update(s):
+    def status_update(s: str | None) -> None:
         if args.status_update:
             print(s)
 
     if permalink.parameters.spoiler:
         debug.set_level(args.debug)
 
-    extra_args = {}
+    attempts = generator.DEFAULT_ATTEMPTS
     if args.no_retry:
-        extra_args["attempts"] = 0
+        attempts = 0
 
     shareable_hashes = []
     total_times = []
@@ -42,7 +42,7 @@ def common_generate_logic(args, permalink: Permalink):
                 status_update=status_update,
                 validate_after_generation=args.validate,
                 timeout=None,
-                **extra_args,
+                attempts=attempts,
             )
         )
         after = time.perf_counter()
@@ -59,14 +59,14 @@ def common_generate_logic(args, permalink: Permalink):
         print(f"!WARNING! Expected {shareable_hash(permalink.seed_hash)}.")
 
 
-def generate_from_permalink_logic(args):
+def generate_from_permalink_logic(args: Namespace) -> None:
     from randovania.layout.permalink import Permalink
 
     permalink = Permalink.from_str(args.permalink)
     common_generate_logic(args, permalink)
 
 
-def generate_from_preset_logic(args):
+def generate_from_preset_logic(args: Namespace) -> None:
     if args.seed_number is None:
         args.seed_number = 0
 
@@ -75,7 +75,7 @@ def generate_from_preset_logic(args):
     common_generate_logic(args, permalink)
 
 
-def common_generate_arguments(parser: ArgumentParser):
+def common_generate_arguments(parser: ArgumentParser) -> None:
     cli_lib.add_debug_argument(parser)
     cli_lib.add_validate_argument(parser)
     parser.add_argument("--repeat", default=1, type=int, help="Generate multiple times. Used for benchmarking.")
@@ -84,7 +84,7 @@ def common_generate_arguments(parser: ArgumentParser):
     parser.add_argument("output_file", type=Path, help="Where to place the seed log.")
 
 
-def add_generate_commands(sub_parsers):
+def add_generate_commands(sub_parsers: _SubParsersAction) -> None:
     parser_permalink: ArgumentParser = sub_parsers.add_parser(
         "generate-from-permalink", help="Generate a layout from a permalink."
     )

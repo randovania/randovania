@@ -40,8 +40,7 @@ from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 
 if TYPE_CHECKING:
-    import argparse
-    from argparse import ArgumentParser, _SubParsersAction
+    from argparse import ArgumentParser, Namespace, _SubParsersAction
 
 _ROOT_PATH = Path(__file__).parents[2]
 _GAMES_PATH = _ROOT_PATH.joinpath("games")
@@ -353,7 +352,7 @@ def update_pyuic(enum_value: str) -> None:
     json_lib.write_path(pyuic_path, pyuic)
 
 
-def new_game_command_logic(args: argparse.Namespace) -> None:
+def new_game_command_logic(args: Namespace) -> None:
     enum_name: str = args.enum_name
     enum_value: str = args.enum_value
     short_name: str = args.short_name
@@ -398,7 +397,7 @@ def new_game_command_logic(args: argparse.Namespace) -> None:
     )
 
 
-def create_new_database_logic(args: argparse.Namespace) -> None:
+def create_new_database_logic(args: Namespace) -> None:
     new_enum = RandovaniaGame(args.game)
 
     game_db = create_new_database(new_enum, _GAMES_PATH.joinpath(new_enum.value).joinpath("logic_database"))

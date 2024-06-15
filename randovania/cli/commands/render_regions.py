@@ -2,13 +2,17 @@ from __future__ import annotations
 
 import argparse
 from argparse import ArgumentParser
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from argparse import Namespace
 
 
-def render_region_graph_logic(args):
+def render_region_graph_logic(args: Namespace) -> None:
     import hashlib
     import re
 
-    import graphviz
+    import graphviz  # type: ignore
 
     from randovania.game_description import default_database
     from randovania.game_description.db.dock_node import DockNode
@@ -41,14 +45,14 @@ def render_region_graph_logic(args):
         "Dark Portal": "#3b3647",
     }
 
-    def _weakness_name(s: str):
+    def _weakness_name(s: str) -> str:
         return re.sub(r"\([^)]*\)", "", s).replace(" Blast Shield", "").strip()
 
     def _hash_to_color(s: str) -> str:
         h = hashlib.blake2b(s.encode("utf-8"), digest_size=3).digest()
         return "#{:06x}".format(int.from_bytes(h, "big"))
 
-    def _add_connection(dot: graphviz.Digraph, dock_node: DockNode):
+    def _add_connection(dot: graphviz.Digraph, dock_node: DockNode) -> None:
         the_region = gd.region_list.nodes_to_region(dock_node)
         source_area = gd.region_list.nodes_to_area(dock_node)
         target_node = gd.region_list.node_by_identifier(dock_node.default_connection)
@@ -77,7 +81,7 @@ def render_region_graph_logic(args):
         )
         added_edges.add(dock_node.identifier)
 
-    def _add_teleporter(dot: graphviz.Digraph, teleporter_node: DockNode):
+    def _add_teleporter(dot: graphviz.Digraph, teleporter_node: DockNode) -> None:
         source_region = gd.region_list.nodes_to_region(teleporter_node)
         source_area = gd.region_list.nodes_to_area(teleporter_node)
         target_node = gd.region_list.node_by_identifier(teleporter_node.default_connection)
@@ -94,7 +98,7 @@ def render_region_graph_logic(args):
             fontcolor=color,
         )
 
-    def _cross_region_dock(node: DockNode):
+    def _cross_region_dock(node: DockNode) -> bool:
         return node.default_connection.region != node.identifier.region
 
     per_game_colors = {
@@ -152,9 +156,9 @@ def render_region_graph_logic(args):
 
             for node in area.nodes:
                 if args.include_pickups and isinstance(node, PickupNode):
-                    this_dot.node(
-                        str(node.pickup_index), re.search(r"Pickup [^(]*\(([^)]+)\)", node.name).group(1), shape="house"
-                    )
+                    re_result = re.search(r"Pickup [^(]*\(([^)]+)\)", node.name)
+                    assert re_result is not None
+                    this_dot.node(str(node.pickup_index), re_result.group(1), shape="house")
                     this_dot.edge(f"{region.name}-{area.name}", str(node.pickup_index))
 
     for region in regions:
@@ -173,7 +177,7 @@ def render_region_graph_logic(args):
             this_dot.render(format="png", view=True, cleanup=True)
 
 
-def render_regions_graph(sub_parsers):
+def render_regions_graph(sub_parsers: argparse._SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "render-region-graph",
         help="Renders an image with all area connections",

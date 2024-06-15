@@ -8,7 +8,7 @@ import sys
 logging.basicConfig(level=logging.WARNING)
 
 
-def main():
+def main() -> None:
     multiprocessing.freeze_support()
 
     import randovania
