@@ -270,7 +270,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
     def fill_for_hint(self, node: HintNode) -> None:
         signal_handling.set_combo_with_value(self.hint_kind_combo, node.kind)
-        self.set_hint_requirement_to_collect(node.requirement_to_collect)
+        self.set_hint_requirement_to_collect(node.lock_requirement)
 
     def set_hint_requirement_to_collect(self, requirement: Requirement) -> None:
         self._hint_requirement_to_collect = requirement

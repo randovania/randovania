@@ -432,7 +432,12 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                         is_collected = resource_node.is_collected(context)
                         is_visible = is_visible and not (self._hide_collected_resources and is_collected)
 
-                        node_item.setDisabled(not resource_node.can_collect(context))
+                        node_item.setDisabled(
+                            not (
+                                resource_node.should_collect(context)
+                                and resource_node.requirement_to_collect().satisfied(context, state.energy)
+                            )
+                        )
                         node_item.setCheckState(
                             0, QtCore.Qt.CheckState.Checked if is_collected else QtCore.Qt.CheckState.Unchecked
                         )
