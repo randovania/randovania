@@ -8,7 +8,7 @@ from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description import default_database
 from randovania.games.dread.layout.dread_teleporters import DreadTeleporterConfiguration
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.base_configuration import MetroidConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib import enum_lib
 
@@ -49,7 +49,7 @@ enum_lib.add_long_name(
 
 
 @dataclasses.dataclass(frozen=True)
-class DreadConfiguration(BaseConfiguration):
+class DreadConfiguration(MetroidConfiguration):
     teleporters: DreadTeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     immediate_energy_parts: bool

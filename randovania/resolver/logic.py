@@ -42,24 +42,24 @@ class Logic:
     def get_additional_requirements(self, node: Node) -> RequirementSet:
         return self.additional_requirements[node.node_index]
 
-    def set_additional_requirements(self, node: Node, req: RequirementSet):
+    def set_additional_requirements(self, node: Node, req: RequirementSet) -> None:
         self.additional_requirements[node.node_index] = req
 
     def victory_condition(self, state: State) -> Requirement:
         return self.game.victory_condition
 
-    def _indent(self, offset=0):
+    def _indent(self, offset: int = 0) -> str:
         return " " * (self._current_indent - offset)
 
     def get_attempts(self) -> int:
         return self._attempts
 
-    def resolver_start(self):
+    def resolver_start(self) -> None:
         self._attempts = 0
         self._current_indent = 0
         self._last_printed_additional = {}
 
-    def start_new_attempt(self, state: State, max_attempts: int | None):
+    def start_new_attempt(self, state: State, max_attempts: int | None) -> None:
         if max_attempts is not None and self._attempts >= max_attempts:
             raise ResolverTimeoutError(f"Timed out after {max_attempts} attempts")
 
@@ -85,15 +85,19 @@ class Logic:
                 f"{self._indent(1)}> {n(state.node, region_list=region_list)}{energy_string(state)} for {resources}"
             )
 
-    def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, int]]):
+    def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, int]]) -> None:
         if debug.debug_level() > 1:
             debug.print_function(f"{self._indent()}# Satisfiable Actions")
             for action, _ in actions:
                 debug.print_function(f"{self._indent(-1)}= {n(action, region_list=state.region_list)}")
 
     def log_rollback(
-        self, state: State, has_action, possible_action: bool, additional_requirements: RequirementSet | None = None
-    ):
+        self,
+        state: State,
+        has_action: bool,
+        possible_action: bool,
+        additional_requirements: RequirementSet | None = None,
+    ) -> None:
         if debug.debug_level() > 0:
             show_reqs = debug.debug_level() > 1 and additional_requirements is not None
             debug.print_function(
@@ -106,10 +110,11 @@ class Logic:
                 )
             )
             if show_reqs:
+                assert additional_requirements is not None
                 self.print_requirement_set(additional_requirements, -1)
         self._current_indent -= 1
 
-    def log_skip_action_missing_requirement(self, node: Node, game: GameDescription):
+    def log_skip_action_missing_requirement(self, node: Node, game: GameDescription) -> None:
         if debug.debug_level() > 1:
             requirement_set = self.get_additional_requirements(node)
             if node in self._last_printed_additional and self._last_printed_additional[node] == requirement_set:
@@ -121,5 +126,5 @@ class Logic:
                 self.print_requirement_set(requirement_set, -1)
                 self._last_printed_additional[node] = requirement_set
 
-    def print_requirement_set(self, requirement_set: RequirementSet, indent: int = 0):
+    def print_requirement_set(self, requirement_set: RequirementSet, indent: int = 0) -> None:
         requirement_set.pretty_print(self._indent(indent), print_function=debug.print_function)

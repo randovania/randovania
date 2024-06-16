@@ -12,7 +12,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration
 from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
-from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.base_configuration import MetroidConfiguration
 
 
 class LayoutSkyTempleKeyMode(BitPackEnum, Enum):
@@ -49,7 +49,7 @@ class LayoutSafeZone(BitPackDataclass, JsonDataclass):
 
 
 @dataclasses.dataclass(frozen=True)
-class EchoesConfiguration(BaseConfiguration):
+class EchoesConfiguration(MetroidConfiguration):
     teleporters: PrimeTrilogyTeleporterConfiguration
     sky_temple_keys: LayoutSkyTempleKeyMode
     translator_configuration: TranslatorConfiguration
