@@ -376,6 +376,7 @@ jobs:
           setup_method: nothing
           target: --config-file=pyproject.toml
           fail_on_error: true
+          install_types: false
 
   mypy-modified:
     runs-on: 'ubuntu-latest'
@@ -412,6 +413,7 @@ jobs:
           setup_method: nothing
           level: warning
           fail_on_error: false
+          install_types: false
 
   docker:
     runs-on: ubuntu-latest

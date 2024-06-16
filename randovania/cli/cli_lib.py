@@ -3,10 +3,11 @@ from __future__ import annotations
 import argparse
 import enum
 import statistics
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, Namespace
+    from collections.abc import Sequence
 
 
 class EnumAction(argparse.Action):
@@ -16,9 +17,9 @@ class EnumAction(argparse.Action):
 
     # Taken from https://stackoverflow.com/a/60750535
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         # Pop off the type value
-        enum_type = kwargs.pop("type", None)
+        enum_type: type | None = kwargs.pop("type", None)
 
         # Ensure an Enum subclass is provided
         if enum_type is None:
@@ -33,7 +34,13 @@ class EnumAction(argparse.Action):
 
         self._enum = enum_type
 
-    def __call__(self, parser, namespace, values, option_string=None):
+    def __call__(
+        self,
+        parser: ArgumentParser,
+        namespace: Namespace,
+        values: str | Sequence[Any] | None,
+        option_string: str | None = None,
+    ) -> None:
         # Convert value back into an Enum
         value = self._enum(values)
         setattr(namespace, self.dest, value)

@@ -8,6 +8,7 @@ import pytest
 
 import randovania.cli.commands.generate
 from randovania.games.game import RandovaniaGame
+from randovania.generator import generator
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.versioned_preset import VersionedPreset
 
@@ -57,9 +58,9 @@ def test_generate_logic(
         args.race = False
         args.development = False
 
-    extra_args = {}
+    attempts = generator.DEFAULT_ATTEMPTS
     if no_retry:
-        extra_args["attempts"] = 0
+        attempts = 0
 
     if preset_name is None and not add_preset_file:
         generator_params: GeneratorParameters = mock_from_str.return_value.parameters
@@ -93,7 +94,7 @@ def test_generate_logic(
                 status_update=ANY,
                 validate_after_generation=args.validate,
                 timeout=None,
-                **extra_args,
+                attempts=attempts,
             )
         ]
         * repeat

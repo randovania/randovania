@@ -30,11 +30,7 @@ def test_list_paths_with_resource_logic(
     resource_c = SimpleResourceInfo(2, "Long Name C", "C", ResourceType.ITEM)
     resources = [resource_a, resource_b, resource_c]
 
-    game.resource_database = [
-        [resource_a],
-        [resource_b],
-        [resource_c],
-    ]
+    game.resource_database = MagicMock(item=[resource_a], event=[resource_b], trick=[resource_c])
 
     resource = resources[expected_resource]
     args.resource = resource.long_name
