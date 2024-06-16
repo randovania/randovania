@@ -13,7 +13,7 @@ if NOT exist .git\ (
     exit
 )
 
-py -3.12 tools\test_py_version.py
+py -3.12 tools\check_py_version.py
 if NOT ["%errorlevel%"]==["0"] pause
 if NOT ["%errorlevel%"]==["0"] exit /b 0
 

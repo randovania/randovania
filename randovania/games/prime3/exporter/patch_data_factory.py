@@ -47,12 +47,14 @@ class CorruptionPatchDataFactory(PatchDataFactory):
             hypermode_original = 1
 
         starting_items_text = gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)
+        starting_location_text = gollop_corruption_patcher.starting_location_for(
+            game, starting_location.area_identifier
+        )
         commands = "\n".join(
             [
                 f'set seed="{layout_string}"',
                 f'set "starting_items={starting_items_text}"',
-                f'set "starting_location={
-                gollop_corruption_patcher.starting_location_for(game, starting_location.area_identifier)}"',
+                f'set "starting_location={starting_location_text}"',
                 f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
                 f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
             ]

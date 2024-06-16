@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
@@ -31,9 +30,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
     from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-    from randovania.layout.layout_description import LayoutDescription
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "Nothing"): ["itemsphere"],
@@ -110,18 +106,6 @@ def get_resources_for_details(
 class MSRPatchDataFactory(PatchDataFactory):
     cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
-
-    def __init__(
-        self,
-        description: LayoutDescription,
-        players_config: PlayersConfiguration,
-        cosmetic_patches: BaseCosmeticPatches,
-    ) -> None:
-        super().__init__(description, players_config, cosmetic_patches)
-        self.memo_data = MSRAcquiredMemo.with_expansion_text()
-
-        tank = self.configuration.energy_per_tank
-        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
@@ -512,25 +496,25 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return result
 
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
+        self.memo_data = MSRAcquiredMemo.with_expansion_text()
+
+        tank = self.configuration.energy_per_tank
+        memo_data = MSRAcquiredMemo.with_expansion_text()
+        memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
+        return memo_data
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
+
     def create_game_specific_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()
 
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
 
         energy_per_tank = self.configuration.energy_per_tank
 

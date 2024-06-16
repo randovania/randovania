@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
 - Added: "Export all presets" option under multiworld session Advanced Options.
 - Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
+- Added: Warn when generating a game with Door Lock Randomizer in Types Mode and Permanently Locked doors are set as a valid option.
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
 
@@ -26,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Multiworld and automatic item tracker support for Citra.
 - Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
+- Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
+- Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
+- Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
+- Changed: Area 4 Crystal Mines - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
+- Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
+- Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened. 
 
 ## [8.1.1] - 2024-06-08
 
@@ -233,6 +240,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Starting at Area 3 Factory Exterior - Beam Burst Chamber & Tsumuri Station no longer spawns Samus out of bounds.
 - Fixed: The Laser Aim cosmetic options UI no longer exports the wrong colors and has been simplified.
 - Fixed: The item in Area 7 - Omega Arena South Access no longer disappears after defeating the Omega in Area 7 - Omega Arena South.
+- Fixed: Case where Power Bombs would not be disabled when fighting Diggernaut.
 
 #### Logic Database
 

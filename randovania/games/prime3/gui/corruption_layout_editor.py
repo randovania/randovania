@@ -14,8 +14,8 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_database import PickupDatabase
 
 
-def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox):
-    items = []
+def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox) -> None:
+    items: list[str] = []
     items.extend(item.name for item in pickup_database.standard_pickups.values())
     items.extend(item.name for item in pickup_database.ammo_pickups.values())
     items.extend(f"Energy Cell {i}" for i in range(1, 10))
@@ -25,7 +25,7 @@ def _fill_combo(pickup_database: PickupDatabase, combo: QtWidgets.QComboBox):
 
 
 class CorruptionLayoutEditor(QtWidgets.QWidget, Ui_CorruptionLayoutEditor):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.setupUi(self)
 
@@ -40,7 +40,7 @@ class CorruptionLayoutEditor(QtWidgets.QWidget, Ui_CorruptionLayoutEditor):
             10717625015048596485,
             14806081023590793725,
         ]
-        nodes_to_merge = []
+        nodes_to_merge: list[PickupNode] = []
 
         region_count = 0
         for i, region in enumerate(region_list.regions):
@@ -99,6 +99,6 @@ class CorruptionLayoutEditor(QtWidgets.QWidget, Ui_CorruptionLayoutEditor):
         # region_count += 1
         self.update_layout_string()
 
-    def update_layout_string(self):
+    def update_layout_string(self) -> None:
         item_names = [combo.currentData() for combo in self._index_to_combo.values()]
         self.layout_edit.setText(layout_string_for_items(item_names))

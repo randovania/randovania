@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-import argparse
 import logging
 import sys
 import typing
+from argparse import ArgumentParser
 from pathlib import Path
 
 import randovania
 
 if typing.TYPE_CHECKING:
-    from argparse import _SubParsersAction
+    from argparse import Namespace, _SubParsersAction
 
 
 def create_subparsers(root_parser: _SubParsersAction) -> None:
@@ -25,12 +25,12 @@ def create_subparsers(root_parser: _SubParsersAction) -> None:
         server.create_subparsers(root_parser)
 
 
-def _print_version(args: argparse.Namespace) -> None:
+def _print_version(args: Namespace) -> None:
     print(f"Randovania {randovania.VERSION} from {Path(randovania.__file__).parent}")
 
 
-def create_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="randovania")
+def create_parser() -> ArgumentParser:
+    parser = ArgumentParser(prog="randovania")
 
     create_subparsers(parser.add_subparsers(dest="game"))
     parser.add_argument("--version", action="store_const", const=_print_version, dest="func")
@@ -41,7 +41,7 @@ def create_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _run_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> int:
+def _run_args(parser: ArgumentParser, args: Namespace) -> int:
     if args.configuration is not None:
         randovania.CONFIGURATION_FILE_PATH = args.configuration.absolute()
 
