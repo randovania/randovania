@@ -22,12 +22,12 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
 
 
-class DreadLuaException(Exception):
+class MSRLuaException(Exception):
     pass
 
 
 @dataclasses.dataclass()
-class DreadSocketHolder(CommonSocketHolder):
+class MSRSocketHolder(CommonSocketHolder):
     buffer_size: int
     request_number: int
 
@@ -36,7 +36,6 @@ class PacketType(IntEnum):
     PACKET_HANDSHAKE = b"1"
     PACKET_LOG_MESSAGE = b"2"
     PACKET_REMOTE_LUA_EXEC = b"3"
-    PACKET_KEEP_ALIVE = b"4"
     PACKET_NEW_INVENTORY = b"5"
     PACKET_COLLECTED_INDICES = b"6"
     PACKET_RECEIVED_PICKUPS = b"7"
@@ -52,7 +51,7 @@ class ClientInterests(IntEnum):
 # FIXME: This is a copy of ODR's implementation just that the first param is a path instead of a name
 # for a file within ODR's template folder
 def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: bool = False) -> str:
-    from open_dread_rando.misc_patches.lua_util import lua_convert  # type: ignore
+    from open_samus_returns_rando.misc_patches.lua_util import lua_convert  # type: ignore
 
     code = file.read_text()
     for key, content in replacement.items():
@@ -70,9 +69,9 @@ def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: 
     return code
 
 
-# This is stupid but DreadExecutor defines a "connect" method which makes a lot of trouble if it would
+# This is stupid but MSRExecutor defines a "connect" method which makes a lot of trouble if it would
 # inherit QObject
-class DreadExecutorToConnectorSignals(QObject):
+class MSRExecutorToConnectorSignals(QObject):
     new_inventory = Signal(str)
     new_collected_locations = Signal(bytes)
     new_received_pickups = Signal(str)
@@ -103,7 +102,7 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
                 if "actor_name" in node.extra:
                     key = node.extra["actor_name"]
                 else:
-                    key = node.extra["callback_function"]
+                    key = node.extra["spawngroup"]
                 entries.append(f"{key}={node.pickup_index.index + 1}")
 
         if not entries:
@@ -114,22 +113,19 @@ def get_bootstrapper_for(game: GameDescription) -> list[str]:
         code = replace_lua_template(locations_lua, replacements)
         all_code.append(code)
 
-    all_code.append("RL.Bootstrap=true")
-
     return all_code
 
 
-class DreadExecutor:
-    _port = 6969
-    _socket: DreadSocketHolder | None = None
+class MSRExecutor:
+    _port = 42069
+    _socket: MSRSocketHolder | None = None
     _socket_error: Exception | None = None
     code = ""
 
     def __init__(self, ip: str):
         self.logger = logging.getLogger(type(self).__name__)
-        self.signals = DreadExecutorToConnectorSignals()
+        self.signals = MSRExecutorToConnectorSignals()
         self._ip = ip
-        self.version = "Unknown version"
 
     @property
     def ip(self) -> str:
@@ -147,10 +143,10 @@ class DreadExecutor:
             self._socket_error = None
             self.logger.debug("Connecting to %s:%d.", self._ip, self._port)
             reader, writer = await asyncio.open_connection(self._ip, self._port)
-            self._socket = DreadSocketHolder(reader, writer, 1, 4096, 0)
+            self._socket = MSRSocketHolder(reader, writer, 1, 256, 0)
             self._socket.request_number = 0
 
-            # Send interests
+            # Send handhshake
             self.logger.debug("Connection open, set interests.")
             interests = ClientInterests.MULTIWORLD  # | ClientInterests.LOGGING
             writer.write(self._build_packet(PacketType.PACKET_HANDSHAKE, interests.to_bytes(1, "little")))
@@ -159,23 +155,16 @@ class DreadExecutor:
 
             # Send API details request
             self.logger.debug("Requesting API details.")
-            await self.run_lua_code(
-                "return string.format('%d,%d,%s,%s,%s', RL.Version, RL.BufferSize,"
-                "tostring(RL.Bootstrap), Init.sLayoutUUID, GameVersion)"
-            )
+            await self.run_lua_code("return string.format('%d,%d,%s', RL.Version, RL.BufferSize, Init.sLayoutUUID)")
             await asyncio.wait_for(writer.drain(), timeout=30)
 
             self.logger.debug("Waiting for API details response.")
             response = typing.cast(bytes, await self._read_response())
-            (api_version, buffer_size, bootstrap, self.layout_uuid_str, self.version) = response.decode("ascii").split(
-                ","
-            )
+            (api_version, buffer_size, self.layout_uuid_str) = response.decode("ascii").split(",")
             self.logger.debug(
-                "Remote replied with API level %s, buffer_size %s, bootstrap %s and layout_uuid %s, "
-                "connection successful.",
+                "Remote replied with API level %s, buffer_size %s and layout_uuid %s, " "connection successful.",
                 api_version,
                 buffer_size,
-                bootstrap,
                 self.layout_uuid_str,
             )
             self._socket.api_version = int(api_version)
@@ -190,7 +179,6 @@ class DreadExecutor:
             await self._read_response()
 
             loop = asyncio.get_event_loop()
-            loop.create_task(self._send_keep_alive())
             loop.create_task(self.read_loop())
             self.logger.info("Connected")
 
@@ -203,7 +191,7 @@ class DreadExecutor:
             struct.error,
             UnicodeError,
             RuntimeError,
-            DreadLuaException,
+            MSRLuaException,
             ValueError,
         ) as e:
             # UnicodeError is for some invalid ip addresses
@@ -248,34 +236,32 @@ class DreadExecutor:
                 # ouch! Whatever happend, just disconnect!
                 response = await asyncio.wait_for(self._socket.reader.read(9), timeout=15)
                 recv_packet_type = response[0]
-                dread_received_bytes = struct.unpack("<l", response[1:4] + b"\x00")[0]
-                dread_should_bytes = struct.unpack("<l", response[5:8] + b"\x00")[0]
+                msr_received_bytes = struct.unpack("<l", response[1:4] + b"\x00")[0]
+                msr_should_bytes = struct.unpack("<l", response[5:8] + b"\x00")[0]
                 self.logger.warning(
-                    "Dread received a malformed packet. Type %d, received bytes %d, should receive bytes %d",
+                    "MSR received a malformed packet. Type %d, received bytes %d, should receive bytes %d",
                     recv_packet_type,
-                    dread_received_bytes,
-                    dread_should_bytes,
+                    msr_received_bytes,
+                    msr_should_bytes,
                 )
-                raise DreadLuaException
+                raise MSRLuaException
             case PacketType.PACKET_HANDSHAKE:
                 await self._check_header()
                 self._socket.request_number = (self._socket.request_number + 1) % 256
             case PacketType.PACKET_REMOTE_LUA_EXEC:
                 await self._check_header()
                 self._socket.request_number = (self._socket.request_number + 1) % 256
-                response = await asyncio.wait_for(self._socket.reader.read(4), timeout=15)
+                response = await asyncio.wait_for(self._socket.reader.read(5), timeout=15)
                 is_success = bool(response[0])
-
-                length_data = response[1:4] + b"\x00"
+                length_data = response[1:5]
                 length = struct.unpack("<l", length_data)[0]
-
                 data: bytes = await asyncio.wait_for(self._socket.reader.read(length), timeout=15)
-
                 if is_success:
                     response = data
                 else:
                     self.logger.debug("Running lua code throw an error. Try again.")
-                    raise DreadLuaException
+                    self.logger.debug(data)
+                    raise MSRLuaException
             case _:
                 response = await asyncio.wait_for(self._socket.reader.read(4), timeout=15)
                 length_data = response[0:4]
@@ -296,36 +282,25 @@ class DreadExecutor:
     async def _check_header(self) -> None:
         if self._socket is None:
             return None
-        received_number: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
+        received_number = await asyncio.wait_for(self._socket.reader.read(1), None)
         if received_number[0] != self._socket.request_number:
             num_as_string = received_number.decode("ascii")
-            raise DreadLuaException(f"Expected response {self._socket.request_number}, got {num_as_string}")
-
-    async def _send_keep_alive(self) -> None:
-        if self._socket is None:
-            return None
-        while self.is_connected():
-            try:
-                await asyncio.sleep(2)
-                self._socket.writer.write(self._build_packet(PacketType.PACKET_KEEP_ALIVE, None))
-                await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
-            except (TimeoutError, OSError, AttributeError) as e:
-                self.logger.warning(
-                    "Unable to send keep-alive packet to %s:%d: %s (%s)", self._ip, self._port, e, type(e)
-                )
-                self.disconnect()
+            raise MSRLuaException(f"Expected response {self._socket.request_number}, got {num_as_string}")
 
     async def run_lua_code(self, current: str) -> None:
         if self._socket is None:
             return
         self.code = current
+        if len(current) >= self._socket.buffer_size:
+            self.logger.debug("The following lua code is too big for the buffer!")
+            self.logger.debug(current)
+            return
         self._socket.writer.write(self._build_packet(PacketType.PACKET_REMOTE_LUA_EXEC, current.encode("utf-8")))
         await asyncio.wait_for(self._socket.writer.drain(), timeout=30)
 
     async def bootstrap(self) -> None:
-        assert self._socket is not None, "Bootstrap code should only be send when connected to Dread."
-
-        game = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
+        assert self._socket is not None, "Bootstrap code should only be send when connected to Samus Returns."
+        game = default_database.game_description_for(RandovaniaGame.METROID_SAMUS_RETURNS)
         all_code = get_bootstrapper_for(game)
 
         current = ""
@@ -352,7 +327,7 @@ class DreadExecutor:
         while self.is_connected():
             try:
                 await self._read_response()
-            except (TimeoutError, OSError, AttributeError, DreadLuaException) as e:
+            except (TimeoutError, OSError, AttributeError, MSRLuaException) as e:
                 self.logger.warning(
                     f"Connection lost. Unable to send packet to {self._ip}:{self._port}: {e} ({type(e)})"
                 )
