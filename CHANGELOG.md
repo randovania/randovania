@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
 - Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
 - Changed: Area 4 Crystal Mines - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
+- Fixed: When exporting a new seed, any leftover data from previous seeds will be deleted.
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
 - Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
 - Fixed: Crash when defeating the Larva Metroids in reverse.
