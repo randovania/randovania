@@ -9,9 +9,8 @@ import typing
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
-from PySide6.QtCore import QObject, Signal
-
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
+from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
@@ -70,16 +69,6 @@ def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: 
     return code
 
 
-# This is stupid but DreadExecutor defines a "connect" method which makes a lot of trouble if it would
-# inherit QObject
-class DreadExecutorToConnectorSignals(QObject):
-    new_inventory = Signal(str)
-    new_collected_locations = Signal(bytes)
-    new_received_pickups = Signal(str)
-    new_player_location = Signal(str)
-    connection_lost = Signal()
-
-
 def get_bootstrapper_for(game: GameDescription) -> list[str]:
     all_code = []
     bootstrap_path = game.game.data_path.joinpath("assets", "lua")
@@ -127,7 +116,7 @@ class DreadExecutor:
 
     def __init__(self, ip: str):
         self.logger = logging.getLogger(type(self).__name__)
-        self.signals = DreadExecutorToConnectorSignals()
+        self.signals = ExecutorToConnectorSignals()
         self._ip = ip
         self.version = "Unknown version"
 

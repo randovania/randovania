@@ -6,7 +6,8 @@ import pytest
 
 from randovania.game_connection.connector.msr_remote_connector import MSRRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
-from randovania.game_connection.executor.msr_executor import MSRExecutor, MSRExecutorToConnectorSignals
+from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
+from randovania.game_connection.executor.msr_executor import MSRExecutor
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
@@ -16,7 +17,7 @@ from randovania.games.game import RandovaniaGame
 def msr_remote_connector():
     executor_mock = MagicMock(MSRExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(MSRExecutorToConnectorSignals)
+    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
     connector = MSRRemoteConnector(executor_mock)
     return connector
 

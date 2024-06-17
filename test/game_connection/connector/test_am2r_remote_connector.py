@@ -6,7 +6,8 @@ import pytest
 
 from randovania.game_connection.connector.am2r_remote_connector import AM2RRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
-from randovania.game_connection.executor.am2r_executor import AM2RExecutor, AM2RExecutorToConnectorSignals
+from randovania.game_connection.executor.am2r_executor import AM2RExecutor
+from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -17,7 +18,7 @@ from randovania.games.game import RandovaniaGame
 def am2r_remote_connector():
     executor_mock = MagicMock(AM2RExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(AM2RExecutorToConnectorSignals)
+    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
     connector = AM2RRemoteConnector(executor_mock)
     return connector
 
