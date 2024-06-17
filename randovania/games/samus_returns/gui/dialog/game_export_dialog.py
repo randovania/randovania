@@ -101,7 +101,7 @@ def exheader_validation(path: Path | None) -> bool:
     if is_file_validator(path):
         return True
     assert path is not None
-    with Path.open(path, "rb") as exheader:
+    with path.open("rb") as exheader:
         if b"MATADORA" not in exheader.read(8):
             return True
         else:
