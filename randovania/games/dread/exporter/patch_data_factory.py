@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
@@ -512,6 +513,14 @@ class DreadPatchDataFactory(PatchDataFactory):
                 or node.dock_type.extra.get("is_teleportal", False)
             )
         ]
+
+        # special-case the Ghavoran Flipper train to update the map correctly
+        flipper_list = [t for t in teleporters if t["teleporter"]["actor"] == "wagontrain_quarantine_with_cutscene_000"]
+        if flipper_list:
+            other_train = deepcopy(flipper_list[0])
+            other_train["teleporter"]["actor"] = "wagontrain_quarantine_000"
+            teleporters.append(other_train)
+
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
