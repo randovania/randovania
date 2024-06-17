@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import platform
-import typing
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -101,8 +100,8 @@ def romfs_validation(line: QtWidgets.QLineEdit) -> bool:
 def exheader_validation(path: Path | None) -> bool:
     if is_file_validator(path):
         return True
-    path_typed = typing.cast(Path, path)  # this is always true because is_file_validator is true for None
-    with Path.open(path_typed, "rb") as exheader:
+    assert path is not None
+    with Path.open(path, "rb") as exheader:
         if b"MATADORA" not in exheader.read(8):
             return True
         else:
@@ -145,6 +144,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             self.input_exheader_button.hide()
             self.input_exheader_edit.hide()
             self.input_exheader_label.hide()
+            self.input_exheader_warning_label.hide()
 
         self.luma_radio.toggled.connect(self._on_update_target_platform)
         self.citra_radio.toggled.connect(self._on_update_target_platform)
