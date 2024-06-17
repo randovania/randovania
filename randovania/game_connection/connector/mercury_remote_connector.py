@@ -54,8 +54,6 @@ class MercuryConnector(RemoteConnector):
 
     def connection_lost(self) -> None:
         self.logger.info("Finishing connector")
-        # TODO: Finished signal is never used. Remove it everywhere?
-        self.Finished.emit()
 
     async def force_finish(self) -> None:
         self.executor.disconnect()

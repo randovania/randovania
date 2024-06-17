@@ -27,11 +27,7 @@ async def test_general_class_content(connector: DreadRemoteConnector):
     assert connector.game_enum == RandovaniaGame.METROID_DREAD
     assert connector.description() == f"{RandovaniaGame.METROID_DREAD.long_name}: 2.1.0"
 
-    emit_listener = MagicMock()
-    connector.Finished.connect(emit_listener)
-
     connector.connection_lost()
-    emit_listener.assert_called_once_with()
 
     await connector.force_finish()
     connector.executor.disconnect.assert_called_once()
