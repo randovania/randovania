@@ -84,6 +84,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Cross Game Multis
         "multi-cs+dread+prime1+prime2.rdvgame",
         "multi-am2r+cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2+msr.rdvgame",
         "prime1_and_2_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
         "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
