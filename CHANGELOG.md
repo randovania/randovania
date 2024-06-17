@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
 
+### Metroid Prime
+
+- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
+
 ### Metroid Prime 2: Echoes
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
