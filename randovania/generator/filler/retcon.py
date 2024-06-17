@@ -29,7 +29,7 @@ if TYPE_CHECKING:
 _DANGEROUS_ACTION_MULTIPLIER = 0.75
 _EVENTS_WEIGHT_MULTIPLIER = 0.5
 _INDICES_WEIGHT_MULTIPLIER = 1
-_LOGBOOKS_WEIGHT_MULTIPLIER = 1
+_HINTS_WEIGHT_MULTIPLIER = 1
 _ADDITIONAL_NODES_WEIGHT_MULTIPLIER = 0.01
 _VICTORY_WEIGHT = 1000
 
@@ -438,19 +438,19 @@ def _calculate_hint_location_for_action(
 ) -> NodeIdentifier | None:
     """
     Calculates where a hint for the given action should be placed.
-    :return: A LogbookAsset to use, or None if no hint should be placed.
+    :return: A hint's NodeIdentifier to use, or None if no hint should be placed.
     """
     if index_owner_state.should_have_hint(action, current_uncollected, all_locations):
         potential_hint_locations = [
             identifier
-            for identifier in current_uncollected.logbooks
+            for identifier in current_uncollected.hints
             if pickup_index not in hint_initial_pickups[identifier]
         ]
         if potential_hint_locations:
             return rng.choice(sorted(potential_hint_locations))
         else:
             debug.debug_print(
-                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.logbooks)}"
+                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.hints)}"
             )
     else:
         debug.debug_print(f">> Pickup {action.name} was decided to not have a hint.")
@@ -472,7 +472,7 @@ def _calculate_weights_for(
         (
             _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
             _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
-            _LOGBOOKS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.logbooks)),
+            _HINTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.hints)),
         )
     )
 

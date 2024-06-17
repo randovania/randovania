@@ -191,5 +191,7 @@ class ResolverReach:
             if not node.is_resource_node:
                 continue
             node = typing.cast(ResourceNode, node)
-            if node.can_collect(context):
+            if node.should_collect(context) and node.requirement_to_collect().satisfied(
+                context, self._energy_at_node[node.node_index]
+            ):
                 yield node

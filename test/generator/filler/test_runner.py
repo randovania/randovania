@@ -84,7 +84,7 @@ async def test_run_filler(
 def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
     # Setup
     rng = Random(5000)
-    expected_logbooks = sum(
+    expected_hints = sum(
         1 for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)
     )
     hint_distributor = echoes_game_description.game.generator.hint_distributor
@@ -98,7 +98,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_
     )
 
     # Assert
-    assert len(result.hints) == expected_logbooks
+    assert len(result.hints) == expected_hints
 
 
 def test_add_hints_precision(empty_patches):

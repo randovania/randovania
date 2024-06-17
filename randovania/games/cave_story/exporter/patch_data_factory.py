@@ -93,22 +93,22 @@ class CSPatchDataFactory(PatchDataFactory):
 
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
         hints = {}
-        for logbook_node in game_description.region_list.iterate_nodes():
-            if not isinstance(logbook_node, HintNode):
+        for hint_node in game_description.region_list.iterate_nodes():
+            if not isinstance(hint_node, HintNode):
                 continue
 
-            mapname = logbook_node.extra.get(
-                "event_map", game_description.region_list.nodes_to_area(logbook_node).extra["map_name"]
+            mapname = hint_node.extra.get(
+                "event_map", game_description.region_list.nodes_to_area(hint_node).extra["map_name"]
             )
-            event = logbook_node.extra["event"]
+            event = hint_node.extra["event"]
 
             if hints.get(mapname) is None:
                 hints[mapname] = {}
 
             hints[mapname][event] = {
-                "text": hints_for_identifier[game_description.region_list.identifier_for_node(logbook_node)],
-                "facepic": logbook_node.extra.get("facepic", "0000"),
-                "ending": "<NOD" + logbook_node.extra.get("ending", "<END"),
+                "text": hints_for_identifier[game_description.region_list.identifier_for_node(hint_node)],
+                "facepic": hint_node.extra.get("facepic", "0000"),
+                "ending": "<NOD" + hint_node.extra.get("ending", "<END"),
             }
 
         mapnames = pickups.keys() | music.keys() | entrances.keys()

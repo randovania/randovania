@@ -51,7 +51,7 @@ class HintDistributor(ABC):
     def num_joke_hints(self) -> int:
         return 0
 
-    def get_generic_logbook_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
+    def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
         return [
             prefill.game.region_list.identifier_for_node(node)
             for node in prefill.game.region_list.iterate_nodes()
@@ -134,7 +134,7 @@ class HintDistributor(ABC):
         self, patches: GamePatches, prefill: PreFillParams, rng_required: bool = True
     ) -> GamePatches:
         patches = await self.assign_specific_location_hints(patches, prefill)
-        hint_identifiers = self.get_generic_logbook_nodes(prefill)
+        hint_identifiers = self.get_generic_hint_nodes(prefill)
         if rng_required or prefill.rng is not None:
             prefill.rng.shuffle(hint_identifiers)
             patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
@@ -185,13 +185,13 @@ class HintDistributor(ABC):
 
         debug.debug_print(f"fill_unassigned_hints: hint_initial_pickups has {len(hint_initial_pickups)} elements")
 
-        # Get all LogbookAssets from the RegionList
+        # Get all Hint's NodeIdentifiers from the RegionList
         potential_hint_locations: set[NodeIdentifier] = {
             region_list.identifier_for_node(node) for node in region_list.iterate_nodes() if isinstance(node, HintNode)
         }
-        for logbook in potential_hint_locations:
-            if logbook not in hint_initial_pickups:
-                hint_initial_pickups[logbook] = frozenset()
+        for hint in potential_hint_locations:
+            if hint not in hint_initial_pickups:
+                hint_initial_pickups[hint] = frozenset()
 
         # But remove these that already have hints
         potential_hint_locations -= patches.hints.keys()
@@ -247,22 +247,20 @@ class HintDistributor(ABC):
         ordered_possible_indices = sorted(possible_indices)
         ordered_potential_hint_locations = sorted(potential_hint_locations)
 
-        num_logbooks: dict[PickupIndex, int] = {
+        num_hints: dict[PickupIndex, int] = {
             index: sum(1 for indices in hint_initial_pickups.values() if index in indices)
             for index in ordered_possible_indices
         }
-        max_seen = max(num_logbooks.values()) if num_logbooks else 0
+        max_seen = max(num_hints.values()) if num_hints else 0
         pickup_indices_weight: dict[PickupIndex, int] = {
-            index: max_seen - num_logbook for index, num_logbook in num_logbooks.items()
+            index: max_seen - num_hint for index, num_hint in num_hints.items()
         }
         # Ensure all indices are present with at least weight 0
         for index in ordered_possible_indices:
             if index not in pickup_indices_weight:
                 pickup_indices_weight[index] = 0
 
-        for logbook in sorted(
-            ordered_potential_hint_locations, key=lambda r: len(hint_initial_pickups[r]), reverse=True
-        ):
+        for hint in sorted(ordered_potential_hint_locations, key=lambda r: len(hint_initial_pickups[r]), reverse=True):
             try:
                 new_index = random_lib.select_element_with_weight(pickup_indices_weight, rng)
             except StopIteration:
@@ -271,9 +269,9 @@ class HintDistributor(ABC):
 
             del pickup_indices_weight[new_index]
 
-            new_hints[logbook] = Hint(HintType.LOCATION, None, new_index)
+            new_hints[hint] = Hint(HintType.LOCATION, None, new_index)
             debug.debug_print(
-                f"Added hint at {logbook} for item at "
+                f"Added hint at {hint} for item at "
                 f"{region_list.node_name(region_list.node_from_pickup_index(new_index))}"
             )
 

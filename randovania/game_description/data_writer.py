@@ -309,7 +309,7 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "hint"
         data.update(common_fields)
         data["kind"] = node.kind.value
-        data["requirement_to_collect"] = write_requirement(node.requirement_to_collect)
+        data["requirement_to_collect"] = write_requirement(node.lock_requirement)
 
     elif isinstance(node, TeleporterNetworkNode):
         data["node_type"] = "teleporter_network"
