@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Fixed: The transport in Ghavoran - Flipper now shows the destination on the minimap icon.
 
+#### Logic Database
+
+##### Hanubia
+
+- Changed: The Door to Orange EMMI Introduction is excluded from Door Lock Rando. 
+
 ### Metroid Prime 2: Echoes
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
