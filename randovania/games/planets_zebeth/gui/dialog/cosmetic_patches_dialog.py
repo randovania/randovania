@@ -2,7 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import PlanetsZebethCosmeticPatches
+from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import (
+    PlanetsZebethCosmeticPatches,
+    PlanetsZebethRoomGuiType,
+)
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.planets_zebeth_cosmetic_patches_dialog_ui import Ui_PlanetsZebethCosmeticPatchesDialog
 
@@ -21,6 +24,8 @@ class PlanetsZebethCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PlanetsZe
 
         assert isinstance(current, PlanetsZebethCosmeticPatches)
         self._cosmetic_patches = current
+        for room_gui_type in PlanetsZebethRoomGuiType:
+            self.room_name_dropdown.addItem(room_gui_type.long_name, room_gui_type)
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
