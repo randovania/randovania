@@ -60,7 +60,6 @@ class DebugRemoteConnector(RemoteConnector):
 
     async def force_finish(self):
         self._finished = True
-        self.Finished.emit()
 
     def is_disconnected(self) -> bool:
         return self._finished

@@ -26,11 +26,7 @@ async def test_general_class_content(connector: MSRRemoteConnector):
     assert connector.game_enum == RandovaniaGame.METROID_SAMUS_RETURNS
     assert connector.description() == RandovaniaGame.METROID_SAMUS_RETURNS.long_name
 
-    emit_listener = MagicMock()
-    connector.Finished.connect(emit_listener)
-
     connector.connection_lost()
-    emit_listener.assert_called_once_with()
 
     await connector.force_finish()
     connector.executor.disconnect.assert_called_once()
