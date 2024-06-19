@@ -139,7 +139,7 @@ def weighted_potential_actions(
 
         potential_reach = reach_lib.advance_to_with_reach_copy(player_state.reach, state)
         potential_reaches[action] = potential_reach
-        base_weight = _calculate_weights_for(potential_reach, current_uncollected)
+        base_weight = _calculate_weights_for(potential_reach, current_uncollected, action)
         actions_weights[action] = base_weight * multiplier + offset
         update_for_option()
 
@@ -460,6 +460,7 @@ def _calculate_hint_location_for_action(
 def _calculate_weights_for(
     potential_reach: GeneratorReach,
     current_uncollected: UncollectedState,
+    action: Action,
 ) -> float:
     """
     Calculate a weight to be used for this action, based on what's collected in the reach.
@@ -468,6 +469,16 @@ def _calculate_weights_for(
         return _VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
+    if debug.debug_level() > 2:
+        nodes = list(potential_reach.all_nodes)
+
+        print(f">>> {action}")
+        print(f"indices: {potential_uncollected.indices}")
+        print(f"hints: {[hint.as_string for hint in potential_uncollected.hints]}")
+        print(f"events: {[event.long_name for event in potential_uncollected.events]}")
+        print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
+        print()
+
     return sum(
         (
             _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
