@@ -96,3 +96,8 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def should_hide_generation_log(self):
         """Certain settings makes the generation log full of nonsense. It should be hidden in these cases."""
         return self.dock_rando.mode == DockRandoMode.DOCKS
+
+
+@dataclasses.dataclass(frozen=True)
+class MetroidConfiguration(BaseConfiguration):
+    energy_per_tank: int

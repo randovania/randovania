@@ -89,7 +89,7 @@ def _is_dangerous_event(state: State, action: ResourceNode, dangerous_resources:
 
 def _is_major_or_key_pickup_node(action: ResourceNode, state: State) -> bool:
     if isinstance(action, EventPickupNode):
-        pickup_node = action.pickup_node
+        pickup_node: ResourceNode = action.pickup_node
     else:
         pickup_node = action
 
@@ -234,7 +234,7 @@ async def _inner_advance_depth(
         additional_requirements = old_additional_requirements.alternatives
 
     if has_action:
-        additional = set()
+        additional = frozenset()
         for resource_node in reach.collectable_resource_nodes(context):
             additional |= logic.get_additional_requirements(resource_node).alternatives
 
@@ -260,7 +260,7 @@ async def advance_depth(
     return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
-def _quiet_print(s):
+def _quiet_print(s: str) -> None:
     pass
 
 

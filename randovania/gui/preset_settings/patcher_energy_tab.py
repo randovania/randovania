@@ -3,15 +3,13 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
-from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import DamageReduction, IngameDifficulty, PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
+from randovania.layout.base.base_configuration import MetroidConfiguration
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -85,11 +83,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         config = preset.configuration
         assert isinstance(
             config,
-            PrimeConfiguration
-            | EchoesConfiguration
-            | CorruptionConfiguration
-            | AM2RConfiguration
-            | FusionConfiguration,
+            MetroidConfiguration,
         )
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 

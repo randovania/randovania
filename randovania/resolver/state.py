@@ -80,7 +80,7 @@ class State:
             energy = self.maximum_energy
         self.energy = min(energy, self.maximum_energy)
 
-    def copy(self) -> Self:
+    def copy(self) -> State:
         return State(
             self.resources.duplicate(),
             self.collected_resource_nodes,
@@ -114,7 +114,7 @@ class State:
             if resource.resource_type == ResourceType.EVENT and count > 0:
                 yield resource
 
-    def take_damage(self, damage: int) -> Self:
+    def take_damage(self, damage: int) -> State:
         return State(
             self.resources,
             self.collected_resource_nodes,
@@ -125,7 +125,7 @@ class State:
             self.game_data,
         )
 
-    def heal(self) -> Self:
+    def heal(self) -> State:
         return State(
             self.resources,
             self.collected_resource_nodes,
@@ -145,7 +145,7 @@ class State:
     def maximum_energy(self) -> int:
         return self._energy_for(self.resources)
 
-    def collect_resource_node(self, node: ResourceNode, new_energy: int) -> Self:
+    def collect_resource_node(self, node: ResourceNode, new_energy: int) -> State:
         """
         Creates a new State that has the given ResourceNode collected.
         :param node:
@@ -173,7 +173,7 @@ class State:
             self.game_data,
         )
 
-    def act_on_node(self, node: ResourceNode, path: tuple[Node, ...] = (), new_energy: int | None = None) -> Self:
+    def act_on_node(self, node: ResourceNode, path: tuple[Node, ...] = (), new_energy: int | None = None) -> State:
         if new_energy is None:
             new_energy = self.energy
         new_state = self.collect_resource_node(node, new_energy)
@@ -181,10 +181,10 @@ class State:
         new_state.path_from_previous_state = path
         return new_state
 
-    def assign_pickup_resources(self, pickup: PickupEntry) -> Self:
+    def assign_pickup_resources(self, pickup: PickupEntry) -> State:
         return self.assign_pickups_resources([pickup])
 
-    def assign_pickups_resources(self, pickups: Iterable[PickupEntry]) -> Self:
+    def assign_pickups_resources(self, pickups: Iterable[PickupEntry]) -> State:
         new_resources = self.resources.duplicate()
         for pickup in pickups:
             new_resources.add_resource_gain(pickup.resource_gain(new_resources, force_lock=True))
@@ -203,7 +203,7 @@ class State:
             self.game_data,
         )
 
-    def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> Self:
+    def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> State:
         pickup_resources = ResourceCollection.from_resource_gain(
             self.resource_database, pickup.resource_gain(self.resources, force_lock=True)
         )
@@ -233,7 +233,7 @@ class State:
         )
 
 
-def add_pickup_to_state(state: State, pickup: PickupEntry):
+def add_pickup_to_state(state: State, pickup: PickupEntry) -> None:
     """
     Modifies inplace the given state, adding the resources of the given pickup
     :param state:

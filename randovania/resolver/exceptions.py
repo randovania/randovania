@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from randovania.layout.generator_parameters import GeneratorParameters
@@ -16,10 +16,10 @@ class GenerationFailure(Exception):
         self.generator_params = generator_params
         self.source = source
 
-    def __reduce__(self):
+    def __reduce__(self) -> str | tuple[Any, ...]:
         return GenerationFailure, (super().__str__(), self.generator_params, self.source)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, GenerationFailure):
             return False
 
@@ -34,10 +34,10 @@ class ImpossibleForSolver(GenerationFailure):
         super().__init__(reason, generator_params, None)
         self.layout = layout
 
-    def __reduce__(self):
+    def __reduce__(self) -> str | tuple[Any, ...]:
         return ImpossibleForSolver, (super().__str__(), self.generator_params, self.layout)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, ImpossibleForSolver):
             return False
 

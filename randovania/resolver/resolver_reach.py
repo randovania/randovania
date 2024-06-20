@@ -4,6 +4,7 @@ import itertools
 import math
 import typing
 from collections import defaultdict
+from typing import cast
 
 from randovania.game_description.db.node import Node
 from randovania.game_description.db.resource_node import ResourceNode
@@ -28,10 +29,10 @@ def _build_satisfiable_requirements(
     context: NodeContext,
     requirements_by_node: dict[int, list[Requirement]],
 ) -> SatisfiableRequirements:
-    def _for_node(node_index: int, reqs: list[Requirement]) -> frozenset[RequirementList]:
-        additional = logic.get_additional_requirements(all_nodes[node_index]).alternatives
+    def _for_node(node_index: int, reqs: list[Requirement]) -> Iterator[RequirementList]:
+        additional = logic.get_additional_requirements(cast(Node, all_nodes[node_index])).alternatives
 
-        set_param = set()
+        set_param: set[RequirementList] = set()
         for req in set(reqs):
             set_param.update(fast_as_set.fast_as_alternatives(req, context))
 
@@ -59,7 +60,7 @@ class ResolverReach:
     def nodes(self) -> Iterator[Node]:
         all_nodes = self._logic.game.region_list.all_nodes
         for index in self._node_indices:
-            yield all_nodes[index]
+            yield cast(Node, all_nodes[index])
 
     @property
     def satisfiable_requirements(self) -> SatisfiableRequirements:
@@ -71,7 +72,7 @@ class ResolverReach:
 
     def path_to_node(self, node: Node) -> tuple[Node, ...]:
         all_nodes = self._logic.game.region_list.all_nodes
-        return tuple(all_nodes[part] for part in self._path_to_node[node.node_index])
+        return tuple(cast(Node, all_nodes[part]) for part in self._path_to_node[node.node_index])
 
     def __init__(
         self,

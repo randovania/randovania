@@ -7,6 +7,7 @@ from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.layout.base.base_configuration import MetroidConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.resolver.state import State, StateGameData
@@ -36,14 +37,14 @@ class Bootstrap:
         self,
         configuration: TrickLevelConfiguration,
         resource_database: ResourceDatabase,
-    ) -> ResourceGain:
+    ) -> ResourceGain | dict:
         """
         :param configuration:
         :param resource_database:
         :return:
         """
 
-        static_resources = {}
+        static_resources: dict = {}
 
         for trick in resource_database.trick:
             if configuration.minimal_logic:
@@ -272,4 +273,5 @@ class Bootstrap:
 
 class MetroidBootstrap(Bootstrap):
     def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
+        assert isinstance(configuration, MetroidConfiguration)
         return EnergyConfig(configuration.energy_per_tank - 1, configuration.energy_per_tank)
