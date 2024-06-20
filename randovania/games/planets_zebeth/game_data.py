@@ -72,9 +72,7 @@ game_data: game.GameData = game.GameData(
     faq=[
         (
             "Which versions of Metroid Planets are supported?",
-            "Only version 1.27g is supported. "
-            "Later versions are embedding code in the executable "
-            "which prevents modifying the code.",
+            "Only version 1.27g is supported. " "Any other versions will fail to export. ",
         )
     ],
     hash_words=_hash_words(),
