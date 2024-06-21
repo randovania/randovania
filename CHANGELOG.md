@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- 10 Videos added to the logic database.
+
 #### Logic Database
 
 ##### Distribution Center
