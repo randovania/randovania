@@ -40,6 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+10 videos added
+
 #### Logic Database
 
 ##### The Depths
