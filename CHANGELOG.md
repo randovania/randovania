@@ -51,6 +51,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Moving Magnet Walls (Tall) now uses the correct lava button event for the magnet surfaces.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Fixed: Overgrown Cavern now has the correct node marked as player spawn
+
 ### Metroid Prime 2: Echoes
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
