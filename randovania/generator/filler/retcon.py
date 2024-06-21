@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import math
 import pprint
+import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.node import Node
 from randovania.game_description.hint import Hint, HintType
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -470,7 +472,7 @@ def _calculate_weights_for(
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
     if debug.debug_level() > 2:
-        nodes = list(potential_reach.all_nodes)
+        nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
 
         print(f">>> {action}")
         print(f"indices: {potential_uncollected.indices}")
