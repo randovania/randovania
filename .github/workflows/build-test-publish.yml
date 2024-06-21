@@ -527,6 +527,7 @@ jobs:
       - name: Download the executables
         uses: actions/download-artifact@v4.0.0
         with:
+          pattern: 'Randovania * Executable'
           path: packages/
 
       - name: Install Python packages
