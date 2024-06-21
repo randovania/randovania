@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
-- 10 Videos added to the logic database.
+- Added: 10 Videos added to the logic database.
+- Fixed: Dread's Wide Beam will now show as a Wide Beam sprite instead of a Spazer Beam sprite.
 
 #### Logic Database
 
@@ -67,7 +68,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
 - Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
 - Fixed: Crash when defeating the Larva Metroids in reverse.
-
 
 ## [8.1.1] - 2024-06-08
 
