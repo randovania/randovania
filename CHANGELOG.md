@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Bubble Lair Shinespark Cave: Expert Walljump and Intermediate Morph Glide option to climb the room as well as a video demonstration.
 
+- Dread's Wide Beam will now show as a Wide Beam sprite instead of a Spazer Beam sprite.
 
 ## [8.1.1] - 2024-06-08
 
