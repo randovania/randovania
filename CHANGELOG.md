@@ -15,6 +15,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
 
+### AM2R
+
+- 10 Videos added to the logic database.
+
+#### Logic Database
+
+##### Distribution Center
+
+- Added: Facility Storage Spiked Path: It is now possible to cross the rooms with Wall Jumps and Intermediate Zips.
+- Fixed: Pipe Hub Access: Solving the EMP Puzzle is not possible to do with Power Bombs anymore.
+
+##### Hydro Station
+
+- Changed: Breeding Grounds Entrance: The Walljump that's used to get to Breeding Grounds Save Station with a Damage Boost is now Intermediate instead of Expert.
+
+##### Industrial Complex
+
+- Fixed: Spiky Shaft: It is now not trivial anymore to go between the top left door and the top right door.
+
+##### The Depths
+
+- Added: Bubble Lair Shinespark Cave: Expert Walljump and Intermediate Morph Glide option to climb the room as well as a video demonstration.
+- Changed: Hideout Omega Nest: Getting past the Omega is now Movement Intermediate with Space Jump, and Movement Advanced with Spider Ball.
+
 ### Metroid Dread
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
@@ -22,9 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Cataris
+
+- Fixed: Moving Magnet Walls (Tall) now uses the correct lava button event for the magnet surfaces.
+
 ##### Hanubia
 
-- Changed: The Door to Orange EMMI Introduction is excluded from Door Lock Rando. 
+- Changed: The Door to Orange EMMI Introduction is excluded from Door Lock Rando.
 
 ### Metroid Prime 2: Echoes
 
@@ -43,6 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
 - Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
 - Fixed: Crash when defeating the Larva Metroids in reverse.
+
 
 ## [8.1.1] - 2024-06-08
 

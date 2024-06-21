@@ -1,0 +1,115 @@
+====================
+Templates
+
+* Can Use Bombs:
+      # Able to lay normal bombs
+      Bombs and Morph Ball
+
+* Get rid of Larva Metroid:
+      Any of the following:
+          # Intended
+          Ice Beam and Missiles ≥ 5 and Can Use Bombs
+          # TODO: change this to movement - freeze and go on
+          Ice Beam and Combat (Beginner)
+          # TODO: change this to movement
+          Combat (Advanced)
+
+====================
+Dock Weaknesses
+
+> Door
+  * Normal Door
+      Open:
+          Trivial
+      No lock
+
+
+  * Missile Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Missiles ≥ 5
+
+
+  * 10 Missiles Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Missiles ≥ 10
+
+
+  * Wave Beam Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Wave Beam
+
+
+  * Ice Beam Door
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Ice Beam
+
+
+  * Bomb Door
+      Open:
+          Can Use Bombs
+      No lock
+
+
+  * Screw Attack Door
+      Open:
+          Screw Attack
+      No lock
+
+
+  * Locked Door
+      Open:
+          Impossible
+      Lock type: FRONT_BLAST_BACK_IMPOSSIBLE
+          Trivial
+
+  > Dock Rando:
+      Unlocked: Normal Door
+      Locked: Locked Door
+      Change from:
+          10 Missiles Door
+          Missile Door
+          Normal Door
+      Change to:
+          10 Missiles Door
+          Bomb Door
+          Ice Beam Door
+          Locked Door
+          Missile Door
+          Normal Door
+          Screw Attack Door
+          Wave Beam Door
+
+
+> Dock
+  * Open Passage
+      Open:
+          Trivial
+      No lock
+
+
+  * Not Determined
+      Open:
+          Impossible
+      No lock
+
+  > Dock Rando: Disabled
+
+
+> Teleporter
+* Extra - is_teleporter: True
+* Extra - ignore_for_hints: True
+  * Teleporter
+      Open:
+          Trivial
+      No lock
+
+  > Dock Rando: Disabled
+

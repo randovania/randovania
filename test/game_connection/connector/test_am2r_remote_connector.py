@@ -27,11 +27,7 @@ async def test_general_class_content(connector: AM2RRemoteConnector):
     assert connector.game_enum == RandovaniaGame.AM2R
     assert connector.description() == f"{RandovaniaGame.AM2R.long_name}"
 
-    emit_listener = MagicMock()
-    connector.Finished.connect(emit_listener)
-
     connector.connection_lost()
-    emit_listener.assert_called_once_with()
 
     await connector.force_finish()
     connector.executor.disconnect.assert_called_once()

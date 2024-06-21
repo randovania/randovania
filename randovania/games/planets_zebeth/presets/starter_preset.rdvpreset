@@ -1,0 +1,114 @@
+{
+    "schema_version": 66,
+    "base_preset_uuid": null,
+    "name": "Starter Preset",
+    "uuid": "4f335b5e-d858-4adc-8794-eb301e81cd14",
+    "description": "Basic preset.",
+    "game": "planets_zebeth",
+    "configuration": {
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {}
+        },
+        "starting_location": [
+            {
+                "region": "Brinstar",
+                "area": "Maru Mari Hall",
+                "node": "Starting Point"
+            }
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "standard_pickup_configuration": {
+            "pickups_state": {
+                "Bombs": {
+                    "num_shuffled_pickups": 1
+                },
+                "Screw Attack": {
+                    "num_shuffled_pickups": 1
+                },
+                "Varia Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Hi-Jump Boots": {
+                    "num_shuffled_pickups": 1
+                },
+                "Ice Beam": {
+                    "num_shuffled_pickups": 2
+                },
+                "Wave Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Long Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Morph Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        5
+                    ]
+                },
+                "Energy Tank": {
+                    "num_shuffled_pickups": 8
+                }
+            },
+            "default_pickups": {},
+            "minimum_random_starting_pickups": 0,
+            "maximum_random_starting_pickups": 0
+        },
+        "ammo_pickup_configuration": {
+            "pickups_state": {
+                "Missile Tank": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 20,
+                    "requires_main_item": true
+                },
+                "Big Missile Tank": {
+                    "ammo_count": [
+                        75
+                    ],
+                    "pickup_count": 2,
+                    "requires_main_item": true
+                }
+            }
+        },
+        "damage_strictness": 1.5,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm",
+        "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
+        "minimum_available_locations_for_hint_placement": 0,
+        "minimum_location_weight_for_hint_placement": 0.0,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "door": {
+                    "can_change_from": [
+                        "Normal Door",
+                        "Missile Door"
+                    ],
+                    "can_change_to": [
+                        "Normal Door",
+                        "Missile Door"
+                    ]
+                }
+            }
+        },
+        "single_set_for_pickups_that_solve": false,
+        "staggered_multi_pickup_placement": false,
+        "check_if_beatable_after_base_patches": false,
+        "energy_per_tank": 100,
+        "include_extra_pickups": false,
+        "artifacts": {
+            "vanilla_tourian_keys": true,
+            "required_artifacts": 2
+        }
+    }
+}
