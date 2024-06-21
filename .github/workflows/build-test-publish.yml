@@ -525,9 +525,9 @@ jobs:
           python-version: "3.12"
 
       - name: Download the executables
-        uses: actions/download-artifact@v4.0.0
+        uses: actions/download-artifact@v4.1.0
         with:
-          pattern: 'Randovania * Executable'
+          pattern: 'Randovania * *'
           path: packages/
 
       - name: Install Python packages
