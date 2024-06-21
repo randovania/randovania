@@ -44,6 +44,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Fixed: The transport in Ghavoran - Flipper now shows the destination on the minimap icon.
 
+#### Logic database
+
+##### Cataris
+
+- Fixed: Moving Magnet Walls (Tall) now uses the correct lava button event for the magnet surfaces.
+
 ### Metroid Prime 2: Echoes
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
