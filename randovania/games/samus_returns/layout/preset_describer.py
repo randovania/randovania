@@ -46,6 +46,24 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
+def format_environmental_damage(configuration: MSRConfiguration):
+    def format_dmg(value: int | None):
+        if value is None:
+            return "Unmodified"
+        elif value == 0:
+            return "Removed"
+        else:
+            return f"Constant {value} dmg/s"
+
+    return [
+        {f"{name}: {format_dmg(dmg)}": True}
+        for name, dmg in [
+            ("Heat", configuration.constant_heat_damage),
+            ("Lava", configuration.constant_lava_damage),
+        ]
+    ]
+
+
 _MSR_HINT_TEXT = {
     ItemHintMode.DISABLED: None,
     ItemHintMode.HIDE_AREA: "Area only",
@@ -130,6 +148,7 @@ class MSRPresetDescriber(GamePresetDescriber):
             "Hints": [
                 {f"DNA Hints: {dna_hint}": dna_hint is not None},
             ],
+            "Environmental Damage": format_environmental_damage(configuration),
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 
