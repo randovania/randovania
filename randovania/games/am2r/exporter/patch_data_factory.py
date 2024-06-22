@@ -184,7 +184,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             for area in region.areas:
                 light_level = None
                 if rng.random() < (self.configuration.darkness_chance / 1000.0):
-                    light_level = rng.randint(self.configuration.darkness_min, self.configuration.darkness_max)
+                    light_level = str(rng.randint(self.configuration.darkness_min, self.configuration.darkness_max))
 
                 liquid_info = {}
                 # 0 - water, 1 - lava
@@ -207,7 +207,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
                     "display_name": area.name,
                     "region_name": region.name,
                     "minimap_data": area.extra["minimap_data"],
-                    "light_level": str(light_level),
+                    "light_level": light_level,
                     "liquid_info": liquid_info,
                 }
 
