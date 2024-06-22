@@ -5,11 +5,11 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.planets_zebeth.gui.generated.preset_planets_zebeth_goal_ui import Ui_PresetPlanetsZebethGoal
 from randovania.games.planets_zebeth.layout.planets_zebeth_configuration import (
     PlanetsZebethArtifactConfig,
     PlanetsZebethConfiguration,
 )
-from randovania.gui.generated.preset_planets_zebeth_goal_ui import Ui_PresetPlanetsZebethGoal
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
