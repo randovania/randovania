@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Added: Chaos Options to randomly make a room dark, submerged in water or submerged in lava.
 - Added: 10 Videos added to the logic database.
 - Fixed: Dread's Wide Beam will now show as a Wide Beam sprite instead of a Spazer Beam sprite.
 

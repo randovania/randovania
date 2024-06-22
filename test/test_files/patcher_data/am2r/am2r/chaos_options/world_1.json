@@ -13,6 +13,9 @@
         "Missile Launcher": 1,
         "Missiles": 30,
         "Locked Missiles": 0,
+        "Long Beam": 1,
+        "Infinite Bomb Propulsion": 1,
+        "Walljump Boots": 1,
         "Metroid DNA 11": 1,
         "Metroid DNA 12": 1,
         "Metroid DNA 13": 1,
@@ -56,50 +59,50 @@
     "pickups": {
         "oItemBomb": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissileDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemSpiderBall": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSuperMissile",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemJumpBall": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemHijump": {
             "sprite_details": {
-                "name": "sItemPlasmaBeam",
+                "name": "sItemPBombLauncher",
                 "speed": 0.2
             },
-            "item_effect": "Plasma Beam",
-            "quantity": 1,
+            "item_effect": "Power Bomb Launcher",
+            "quantity": 2,
             "text": {
-                "header": "Plasma Beam acquired",
-                "description": "Beams can pierce enemies"
+                "header": "Got Power Bomb Launcher",
+                "description": "Power Bombs can now be used. Power Bomb capacity increased by 2"
             }
         },
         "oItemVaria": {
@@ -116,14 +119,14 @@
         },
         "oItemSpaceJump": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemSpeedBooster": {
@@ -152,6 +155,18 @@
         },
         "oItemGravity": {
             "sprite_details": {
+                "name": "sItemProgressiveSuit",
+                "speed": 0.2
+            },
+            "item_effect": "Progressive Suit",
+            "quantity": 1,
+            "text": {
+                "header": "Progressive Suit acquired",
+                "description": "Reduces Damage taken by 50%"
+            }
+        },
+        "oItemCBeam": {
+            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -162,40 +177,28 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemCBeam": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
         "oItemIBeam": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemPlasmaBeam",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Plasma Beam",
+            "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Plasma Beam acquired",
+                "description": "Beams can pierce enemies"
             }
         },
         "oItemWBeam": {
             "sprite_details": {
-                "name": "sItemHijump",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Hi-Jump Boots",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Hi-Jump Boots acquired",
-                "description": "Maximum Jump height increased"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemSBeam": {
@@ -212,42 +215,18 @@
         },
         "oItemPBeam": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemETank_50": {
             "sprite_details": {
-                "name": "sItemGravitySuit",
-                "speed": 0.2
-            },
-            "item_effect": "Gravity Suit",
-            "quantity": 1,
-            "text": {
-                "header": "Gravity Suit acquired",
-                "description": "Liquid friction eliminated - Improved Defense"
-            }
-        },
-        "oItemSM_51": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemM_52": {
-            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -258,52 +237,76 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemM_53": {
+        "oItemSM_51": {
             "sprite_details": {
-                "name": "sItemPowerBomb",
+                "name": "sItemBomb",
                 "speed": 0.2
             },
-            "item_effect": "Power Bomb Tank",
+            "item_effect": "Bombs",
+            "quantity": 1,
+            "text": {
+                "header": "Bombs acquired",
+                "description": "Press | in Morph Ball to deploy"
+            }
+        },
+        "oItemM_52": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Tank",
             "quantity": 2,
             "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
+            }
+        },
+        "oItemM_53": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
             }
         },
         "oItemM_54": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
             }
         },
         "oItemM_55": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemM_56": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemM_57": {
@@ -320,18 +323,6 @@
         },
         "oItemPB_58": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemPB_59": {
-            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -340,6 +331,18 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemPB_59": {
+            "sprite_details": {
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
+            "text": {
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemM_60": {
@@ -356,122 +359,122 @@
         },
         "oItemM_100": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemBigHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemM_101": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemM_102": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemPBombDrop",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
+            "item_effect": "Power Bomb Drop",
             "quantity": 1,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
             }
         },
         "oItemETank_103": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemM_104": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemIceBeam",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Ice Beam",
+            "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Ice Beam acquired",
+                "description": "Instantly freeze enemies. Extra damage"
             }
         },
         "oItemM_105": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemJumpBall",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Spring Ball",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Spring Ball acquired",
+                "description": "Press | in Morph Ball mode"
             }
         },
         "oItemM_106": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_107": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemPBombDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
             }
         },
         "oItemETank_108": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemM_109": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemSM_110": {
@@ -500,42 +503,6 @@
         },
         "oItemPB_112": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemM_150": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_151": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemM_152": {
-            "sprite_details": {
                 "name": "sItemEnergyTank",
                 "speed": 0.2
             },
@@ -546,19 +513,43 @@
                 "description": "Suit Energy increased by 100 units"
             }
         },
-        "oItemM_153": {
+        "oItemM_150": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
-        "oItemM_154": {
+        "oItemM_151": {
+            "sprite_details": {
+                "name": "sItemScrewAttack",
+                "speed": 0.2
+            },
+            "item_effect": "Screw Attack",
+            "quantity": 1,
+            "text": {
+                "header": "Screw Attack acquired",
+                "description": "Jump into enemies to inflict massive damage"
+            }
+        },
+        "oItemM_152": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
+            }
+        },
+        "oItemM_153": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -568,6 +559,18 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemM_154": {
+            "sprite_details": {
+                "name": "sItemProgressiveJump",
+                "speed": 0.2
+            },
+            "item_effect": "Progressive Jump",
+            "quantity": 1,
+            "text": {
+                "header": "Progressive Jump acquired",
+                "description": "Maximum Jump height increased"
             }
         },
         "oItemM_155": {
@@ -596,18 +599,6 @@
         },
         "oItemETank_157": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemETank_158": {
-            "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
             },
@@ -616,6 +607,18 @@
             "text": {
                 "header": "Nothing acquired",
                 "description": "A useless item"
+            }
+        },
+        "oItemETank_158": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_159": {
@@ -632,38 +635,38 @@
         },
         "oItemPB_160": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_161": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemSM_162": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
             }
         },
         "oItemM_163": {
@@ -692,50 +695,50 @@
         },
         "oItemETank_201": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemPBombDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
             }
         },
         "oItemM_202": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSpiderBall",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Spider Ball",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Spider Ball acquired",
+                "description": "Press or hold | in Morph Ball mode to climb walls"
             }
         },
         "oItemM_203": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemSuperMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemM_204": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSmallHealthDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
+            "item_effect": "Small Health Drop",
             "quantity": 5,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
             }
         },
         "oItemM_205": {
@@ -752,26 +755,26 @@
         },
         "oItemSM_206": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemChargeBeam",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Charge Beam",
+            "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Charge Beam acquired",
+                "description": "Hold | to charge your beam"
             }
         },
         "oItemSM_207": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSuperMissile",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemM_208": {
@@ -788,65 +791,17 @@
         },
         "oItemSM_209": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_210": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemM_211": {
-            "sprite_details": {
-                "name": "sItemEnergyTank",
-                "speed": 0.2
-            },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
-            "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
-            }
-        },
-        "oItemPB_212": {
-            "sprite_details": {
-                "name": "sItemJumpBall",
-                "speed": 0.2
-            },
-            "item_effect": "Spring Ball",
-            "quantity": 1,
-            "text": {
-                "header": "Spring Ball acquired",
-                "description": "Press | in Morph Ball mode"
-            }
-        },
-        "oItemPB_213": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemM_214": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -858,7 +813,7 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemSM_215": {
+        "oItemM_211": {
             "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
@@ -870,16 +825,64 @@
                 "description": "A useless item"
             }
         },
-        "oItemM_250": {
+        "oItemPB_212": {
             "sprite_details": {
-                "name": "sItemPBombLauncher",
+                "name": "sItemEnergyTank",
                 "speed": 0.2
             },
-            "item_effect": "Power Bomb Launcher",
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
+            }
+        },
+        "oItemPB_213": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Tank",
             "quantity": 2,
             "text": {
-                "header": "Got Power Bomb Launcher",
-                "description": "Power Bombs can now be used. Power Bomb capacity increased by 2"
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
+            }
+        },
+        "oItemM_214": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemSM_215": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
+            }
+        },
+        "oItemM_250": {
+            "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemETank_251": {
@@ -896,14 +899,14 @@
         },
         "oItemM_252": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemPB_253": {
@@ -920,50 +923,50 @@
         },
         "oItemETank_254": {
             "sprite_details": {
-                "name": "sItemWaveBeam",
+                "name": "sItemSpazerBeam",
                 "speed": 0.2
             },
-            "item_effect": "Wave Beam",
+            "item_effect": "Spazer Beam",
             "quantity": 1,
             "text": {
-                "header": "Wave Beam acquired",
-                "description": "Beams can now go through solid objects"
+                "header": "Spazer Beam acquired",
+                "description": "Beams now have a wider range"
             }
         },
         "oItemM_255": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissileDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemSM_256": {
             "sprite_details": {
-                "name": "sItemSMissileLauncher",
+                "name": "sItemEnergyTank",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Launcher",
-            "quantity": 5,
+            "item_effect": "Energy Tank",
+            "quantity": 1,
             "text": {
-                "header": "Got SuperMissile Launcher",
-                "description": "Super Missiles can now be fired. Super Missile capacity increased by 5"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemM_257": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemPB_258": {
@@ -980,18 +983,6 @@
         },
         "oItemM_259": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemSM_300": {
-            "sprite_details": {
                 "name": "sItemNothing",
                 "speed": 0.3333
             },
@@ -1002,19 +993,7 @@
                 "description": "A useless item"
             }
         },
-        "oItemPB_301": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemPB_302": {
+        "oItemSM_300": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1024,6 +1003,30 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemPB_301": {
+            "sprite_details": {
+                "name": "sItemProgressiveSuit",
+                "speed": 0.2
+            },
+            "item_effect": "Progressive Suit",
+            "quantity": 1,
+            "text": {
+                "header": "Progressive Suit acquired",
+                "description": "Reduces Damage taken by 50%"
+            }
+        },
+        "oItemPB_302": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemM_303": {
@@ -1040,6 +1043,30 @@
         },
         "oItemM_304": {
             "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemSM_305": {
+            "sprite_details": {
+                "name": "sItemMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Drop",
+            "quantity": 2,
+            "text": {
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
+            }
+        },
+        "oItemETank_306": {
+            "sprite_details": {
                 "name": "sItemSuperMissile",
                 "speed": 0.2
             },
@@ -1048,30 +1075,6 @@
             "text": {
                 "header": "Got Super Missile Tank",
                 "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemSM_305": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemETank_306": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
             }
         },
         "oItemM_307": {
@@ -1088,125 +1091,29 @@
         },
         "oItemM_308": {
             "sprite_details": {
-                "name": "sItemScrewAttack",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Screw Attack",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Screw Attack acquired",
-                "description": "Jump into enemies to inflict massive damage"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemM_309": {
             "sprite_details": {
-                "name": "sItemSpazerBeam",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Spazer Beam",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Spazer Beam acquired",
-                "description": "Beams now have a wider range"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemDNA_350": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 5",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_351": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemDNA_352": {
-            "sprite_details": {
-                "name": "sItemEnergyTank",
-                "speed": 0.2
-            },
-            "item_effect": "Energy Tank",
-            "quantity": 1,
-            "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
-            }
-        },
-        "oItemDNA_353": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 9",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_354": {
-            "sprite_details": {
-                "name": "sItemSuperMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
-            }
-        },
-        "oItemDNA_355": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_356": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_357": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_358": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
@@ -1218,55 +1125,67 @@
                 "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_359": {
+        "oItemDNA_351": {
             "sprite_details": {
-                "name": "sItemEnergyTank",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Energy Tank",
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_352": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 4",
             "quantity": 1,
             "text": {
-                "header": "Got Energy Tank",
-                "description": "Suit Energy increased by 100 units"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_360": {
+        "oItemDNA_353": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemDNA",
+                "speed": 0.28
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Metroid DNA 2",
+            "quantity": 1,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
-        "oItemDNA_361": {
+        "oItemDNA_354": {
             "sprite_details": {
-                "name": "sItemSpiderBall",
+                "name": "sItemPowerBomb",
                 "speed": 0.2
             },
-            "item_effect": "Spider Ball",
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_355": {
+            "sprite_details": {
+                "name": "sItemProgressiveJump",
+                "speed": 0.2
+            },
+            "item_effect": "Progressive Jump",
             "quantity": 1,
             "text": {
-                "header": "Spider Ball acquired",
-                "description": "Press or hold | in Morph Ball mode to climb walls"
+                "header": "Progressive Jump acquired",
+                "description": "Maximum Jump height increased"
             }
         },
-        "oItemDNA_362": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_363": {
+        "oItemDNA_356": {
             "sprite_details": {
                 "name": "sItemDNA",
                 "speed": 0.28
@@ -1276,6 +1195,90 @@
             "text": {
                 "header": "Metroid DNA acquired",
                 "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_357": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
+            }
+        },
+        "oItemDNA_358": {
+            "sprite_details": {
+                "name": "sItemPBombDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Power Bomb Drop",
+                "description": "Power Bombs refilled by 1"
+            }
+        },
+        "oItemDNA_359": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
+            }
+        },
+        "oItemDNA_360": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_361": {
+            "sprite_details": {
+                "name": "sItemWaveBeam",
+                "speed": 0.2
+            },
+            "item_effect": "Wave Beam",
+            "quantity": 1,
+            "text": {
+                "header": "Wave Beam acquired",
+                "description": "Beams can now go through solid objects"
+            }
+        },
+        "oItemDNA_362": {
+            "sprite_details": {
+                "name": "sItemSMissileDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
+            "text": {
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
+            }
+        },
+        "oItemDNA_363": {
+            "sprite_details": {
+                "name": "sItemNothing",
+                "speed": 0.3333
+            },
+            "item_effect": "Nothing",
+            "quantity": 0,
+            "text": {
+                "header": "Nothing acquired",
+                "description": "A useless item"
             }
         },
         "oItemDNA_364": {
@@ -1292,173 +1295,29 @@
         },
         "oItemDNA_365": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
+                "name": "sItemDNA",
+                "speed": 0.28
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Metroid DNA 3",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
         "oItemDNA_366": {
             "sprite_details": {
-                "name": "sItemIceBeam",
+                "name": "sItemMissile",
                 "speed": 0.2
             },
-            "item_effect": "Ice Beam",
-            "quantity": 1,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Ice Beam acquired",
-                "description": "Instantly freeze enemies. Extra damage"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemDNA_367": {
-            "sprite_details": {
-                "name": "sItemSpaceJump",
-                "speed": 0.2
-            },
-            "item_effect": "Space Jump",
-            "quantity": 1,
-            "text": {
-                "header": "Space Jump acquired",
-                "description": "Jump continuously in the air"
-            }
-        },
-        "oItemDNA_368": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_369": {
-            "sprite_details": {
-                "name": "sItemBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Bombs",
-            "quantity": 1,
-            "text": {
-                "header": "Bombs acquired",
-                "description": "Press | in Morph Ball to deploy"
-            }
-        },
-        "oItemDNA_370": {
-            "sprite_details": {
-                "name": "sItemVariaSuit",
-                "speed": 0.2
-            },
-            "item_effect": "Varia Suit",
-            "quantity": 1,
-            "text": {
-                "header": "Varia Suit acquired",
-                "description": "Reduces Damage taken by 50%"
-            }
-        },
-        "oItemDNA_371": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_372": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 4",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_373": {
-            "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
-            },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
-            "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_374": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 1",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_375": {
-            "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
-            },
-            "item_effect": "Nothing",
-            "quantity": 0,
-            "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
-            }
-        },
-        "oItemDNA_376": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 6",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_377": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_378": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
-            }
-        },
-        "oItemDNA_379": {
             "sprite_details": {
                 "name": "sItemEnergyTank",
                 "speed": 0.2
@@ -1470,7 +1329,31 @@
                 "description": "Suit Energy increased by 100 units"
             }
         },
-        "oItemDNA_380": {
+        "oItemDNA_368": {
+            "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
+            }
+        },
+        "oItemDNA_369": {
+            "sprite_details": {
+                "name": "sItemPowerBomb",
+                "speed": 0.2
+            },
+            "item_effect": "Power Bomb Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Power Bomb Tank",
+                "description": "Power Bomb capacity increased by 2"
+            }
+        },
+        "oItemDNA_370": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1480,57 +1363,153 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_371": {
+            "sprite_details": {
+                "name": "sItemSMissileLauncher",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Launcher",
+            "quantity": 2,
+            "text": {
+                "header": "Got SuperMissile Launcher",
+                "description": "Super Missiles can now be fired. Super Missile capacity increased by 2"
+            }
+        },
+        "oItemDNA_372": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 6",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_373": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 1",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
+            }
+        },
+        "oItemDNA_374": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_375": {
+            "sprite_details": {
+                "name": "sItemSmallHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Small Health Drop",
+            "quantity": 5,
+            "text": {
+                "header": "Got Small Health Drop",
+                "description": "Health refilled by 5"
+            }
+        },
+        "oItemDNA_376": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_377": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_378": {
+            "sprite_details": {
+                "name": "sItemMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Missile Tank",
+            "quantity": 5,
+            "text": {
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_379": {
+            "sprite_details": {
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
+            },
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
+            "text": {
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
+            }
+        },
+        "oItemDNA_380": {
+            "sprite_details": {
+                "name": "sItemDNA",
+                "speed": 0.28
+            },
+            "item_effect": "Metroid DNA 9",
+            "quantity": 1,
+            "text": {
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
         "oItemDNA_381": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         },
         "oItemDNA_382": {
             "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
+                "name": "sItemBigHealthDrop",
+                "speed": 0.2
             },
-            "item_effect": "Metroid DNA 3",
-            "quantity": 1,
+            "item_effect": "Big Health Drop",
+            "quantity": 20,
             "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
+                "header": "Got Big Health Drop",
+                "description": "Health refilled by 20"
             }
         },
         "oItemDNA_383": {
-            "sprite_details": {
-                "name": "sItemDNA",
-                "speed": 0.28
-            },
-            "item_effect": "Metroid DNA 2",
-            "quantity": 1,
-            "text": {
-                "header": "Metroid DNA acquired",
-                "description": "Collect all DNA in order to reach the Queen"
-            }
-        },
-        "oItemDNA_384": {
-            "sprite_details": {
-                "name": "sItemChargeBeam",
-                "speed": 0.2
-            },
-            "item_effect": "Charge Beam",
-            "quantity": 1,
-            "text": {
-                "header": "Charge Beam acquired",
-                "description": "Hold | to charge your beam"
-            }
-        },
-        "oItemDNA_385": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1542,7 +1521,19 @@
                 "description": "Missile capacity increased by 5"
             }
         },
-        "oItemDNA_386": {
+        "oItemDNA_384": {
+            "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
+            }
+        },
+        "oItemDNA_385": {
             "sprite_details": {
                 "name": "sItemSpeedBooster",
                 "speed": 0.5
@@ -1554,7 +1545,7 @@
                 "description": "Run continuously to begin Speed Boosting"
             }
         },
-        "oItemDNA_387": {
+        "oItemDNA_386": {
             "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
@@ -1564,46 +1555,70 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
+            }
+        },
+        "oItemDNA_387": {
+            "sprite_details": {
+                "name": "sItemSuperMissile",
+                "speed": 0.2
+            },
+            "item_effect": "Super Missile Tank",
+            "quantity": 2,
+            "text": {
+                "header": "Got Super Missile Tank",
+                "description": "Super Missile capacity increased by 2"
             }
         },
         "oItemDNA_388": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissileDrop",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Drop",
+            "quantity": 2,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Drop",
+                "description": "Missiles refilled by 2"
             }
         },
         "oItemDNA_389": {
             "sprite_details": {
-                "name": "sItemMissile",
-                "speed": 0.2
+                "name": "sItemDNA",
+                "speed": 0.28
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Metroid DNA 5",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Metroid DNA acquired",
+                "description": "Collect all DNA in order to reach the Queen"
             }
         },
         "oItemDNA_390": {
             "sprite_details": {
-                "name": "sItemMissile",
+                "name": "sItemSMissileDrop",
                 "speed": 0.2
             },
-            "item_effect": "Missile Tank",
-            "quantity": 5,
+            "item_effect": "Super Missile Drop",
+            "quantity": 1,
             "text": {
-                "header": "Got Missile Tank",
-                "description": "Missile capacity increased by 5"
+                "header": "Got Super Missile Drop",
+                "description": "Super Missiles refilled by 1"
             }
         },
         "oItemDNA_391": {
             "sprite_details": {
+                "name": "sItemEnergyTank",
+                "speed": 0.2
+            },
+            "item_effect": "Energy Tank",
+            "quantity": 1,
+            "text": {
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
+            }
+        },
+        "oItemDNA_392": {
+            "sprite_details": {
                 "name": "sItemMissile",
                 "speed": 0.2
             },
@@ -1612,18 +1627,6 @@
             "text": {
                 "header": "Got Missile Tank",
                 "description": "Missile capacity increased by 5"
-            }
-        },
-        "oItemDNA_392": {
-            "sprite_details": {
-                "name": "sItemPowerBomb",
-                "speed": 0.2
-            },
-            "item_effect": "Power Bomb Tank",
-            "quantity": 2,
-            "text": {
-                "header": "Got Power Bomb Tank",
-                "description": "Power Bomb capacity increased by 2"
             }
         },
         "oItemDNA_393": {
@@ -1640,26 +1643,26 @@
         },
         "oItemDNA_394": {
             "sprite_details": {
-                "name": "sItemSuperMissile",
+                "name": "sItemEnergyTank",
                 "speed": 0.2
             },
-            "item_effect": "Super Missile Tank",
-            "quantity": 2,
+            "item_effect": "Energy Tank",
+            "quantity": 1,
             "text": {
-                "header": "Got Super Missile Tank",
-                "description": "Super Missile capacity increased by 2"
+                "header": "Got Energy Tank",
+                "description": "Suit Energy increased by 100 units"
             }
         },
         "oItemDNA_395": {
             "sprite_details": {
-                "name": "sItemNothing",
-                "speed": 0.3333
+                "name": "sItemMissile",
+                "speed": 0.2
             },
-            "item_effect": "Nothing",
-            "quantity": 0,
+            "item_effect": "Missile Tank",
+            "quantity": 5,
             "text": {
-                "header": "Nothing acquired",
-                "description": "A useless item"
+                "header": "Got Missile Tank",
+                "description": "Missile capacity increased by 5"
             }
         }
     },
@@ -1910,7 +1913,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h02": {
             "display_name": "Hornoad Hallway",
@@ -1941,8 +1948,12 @@
                     "y": 8
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h02a": {
             "display_name": "Tsumuri Tunnel",
@@ -1966,7 +1977,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h03": {
             "display_name": "Cavern Crossroads",
@@ -1990,7 +2005,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h03a": {
             "display_name": "Surface Cave Save Station",
@@ -2001,8 +2020,12 @@
                     "y": 13
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h03b": {
             "display_name": "Rocky Stairs",
@@ -2025,8 +2048,12 @@
                     "y": 13
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h04": {
             "display_name": "Surface Pond Access",
@@ -2050,7 +2077,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h04b": {
             "display_name": "Surface Pond",
@@ -2069,8 +2100,12 @@
                     "y": 15
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h04c": {
             "display_name": "Surface Pond Save Station",
@@ -2081,8 +2116,12 @@
                     "y": 15
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h04d": {
             "display_name": "Surface Lava Pond",
@@ -2109,7 +2148,7 @@
                     "y": 16
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a0h05": {
@@ -2125,8 +2164,12 @@
                     "y": 15
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h06": {
             "display_name": "Twisty Tunnel",
@@ -2169,8 +2212,12 @@
                     "y": 15
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h07": {
             "display_name": "Grave Grotto",
@@ -2281,8 +2328,12 @@
                     "y": 21
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h07A": {
             "display_name": "Surface Spider Ball Challenge",
@@ -2297,8 +2348,12 @@
                     "y": 17
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h08": {
             "display_name": "Mumbo Manor",
@@ -2330,7 +2385,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h09": {
             "display_name": "Surface Gunzoo Room",
@@ -2362,7 +2421,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h09A": {
             "display_name": "Surface Hi-Jump Challenge",
@@ -2386,7 +2449,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h10": {
             "display_name": "Spike Maze",
@@ -2433,8 +2500,12 @@
                     "y": 26
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h10b": {
             "display_name": "Hidden Mining Facility Route",
@@ -2453,7 +2524,7 @@
                     "y": 26
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a0h11": {
@@ -2494,7 +2565,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h24": {
             "display_name": "Western Cave Entrance",
@@ -2525,8 +2600,12 @@
                     "y": 30
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h25": {
             "display_name": "Western Cave Shaft",
@@ -2549,8 +2628,12 @@
                     "y": 33
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h26": {
             "display_name": "Western Cave Save Station",
@@ -2561,7 +2644,7 @@
                     "y": 33
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a0h27": {
@@ -2642,7 +2725,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h30": {
             "display_name": "Skreek Street",
@@ -2689,8 +2776,12 @@
                     "y": 41
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h30a": {
             "display_name": "Tower East Exterior Access",
@@ -2706,7 +2797,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h31": {
             "display_name": "The Descent",
@@ -2730,7 +2825,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h32": {
             "display_name": "Rite of the Serpent",
@@ -2758,7 +2857,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h33": {
             "display_name": "Southern Cave Save Station",
@@ -2770,7 +2873,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h34": {
             "display_name": "Halzyn Hallway",
@@ -2793,8 +2900,12 @@
                     "y": 52
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h35": {
             "display_name": "Drivel Drive",
@@ -2826,7 +2937,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h12": {
             "display_name": "Octroll Lava Pool",
@@ -2850,7 +2965,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h13": {
             "display_name": "Research Site Elevator",
@@ -2870,7 +2989,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h14": {
             "display_name": "Research Site",
@@ -2890,7 +3013,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h15": {
             "display_name": "Research Site Storage",
@@ -2902,7 +3029,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h16": {
             "display_name": "Mining Facility 3-Shape Shaft",
@@ -2925,8 +3056,12 @@
                     "y": 29
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h17": {
             "display_name": "Mining Facility O-Shape Shaft",
@@ -2950,7 +3085,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h17a": {
             "display_name": "Moto Miners",
@@ -2970,7 +3109,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h17b": {
             "display_name": "Destroyed Drill Cavern",
@@ -2985,7 +3128,7 @@
                     "y": 33
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a0h17c": {
@@ -3026,7 +3169,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h17d": {
             "display_name": "Drill Excavation Access",
@@ -3045,8 +3192,12 @@
                     "y": 35
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h17e": {
             "display_name": "Drill Excavation",
@@ -3074,7 +3225,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h18": {
             "display_name": "Mining Facility Intersection",
@@ -3102,7 +3257,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h19": {
             "display_name": "Mining Facility Save Station",
@@ -3114,7 +3273,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h20": {
             "display_name": "Mining Facility Alpha Nest Access",
@@ -3133,7 +3296,7 @@
                     "y": 36
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a0h21": {
@@ -3165,8 +3328,12 @@
                     "y": 38
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h22": {
             "display_name": "Mining Facility Gamma Nest Access",
@@ -3198,7 +3365,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a0h23": {
             "display_name": "Mining Facility Gamma Nest",
@@ -3225,7 +3396,7 @@
                     "y": 39
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a1h01": {
@@ -3238,7 +3409,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1h02": {
             "display_name": "Breeding Grounds Save Station",
@@ -3249,7 +3424,7 @@
                     "y": 14
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a1h03": {
@@ -3301,8 +3476,12 @@
                     "y": 11
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1h05": {
             "display_name": "Golden Temple Exterior",
@@ -3485,7 +3664,7 @@
                     "y": 9
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a1h07": {
@@ -3501,8 +3680,12 @@
                     "y": 11
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1h08": {
             "display_name": "Spider Ball Chamber",
@@ -3517,8 +3700,12 @@
                     "y": 13
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1h09": {
             "display_name": "Guardian Storage",
@@ -3533,8 +3720,12 @@
                     "y": 12
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1h10": {
             "display_name": "Storage Cavern",
@@ -3546,7 +3737,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a01": {
             "display_name": "Inner Temple Save Station",
@@ -3558,7 +3753,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a02": {
             "display_name": "Inner Temple West Hall",
@@ -3578,7 +3777,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a03": {
             "display_name": "Bomb Chamber Access",
@@ -3593,8 +3796,12 @@
                     "y": 13
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a04": {
             "display_name": "Bomb Chamber",
@@ -3605,8 +3812,12 @@
                     "y": 13
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a05": {
             "display_name": "3-Orb Hallway",
@@ -3626,7 +3837,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a06": {
             "display_name": "Inner Temple East Hall",
@@ -3653,7 +3868,7 @@
                     "y": 14
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a1a07": {
@@ -3674,7 +3889,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a08": {
             "display_name": "Armory",
@@ -3709,7 +3928,7 @@
                     "y": 14
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a1a10": {
@@ -3721,7 +3940,7 @@
                     "y": 14
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a1a11": {
@@ -3741,8 +3960,12 @@
                     "y": 13
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1a12": {
             "display_name": "Parkour Course",
@@ -3798,7 +4021,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1b01": {
             "display_name": "Breeding Grounds Entrance",
@@ -3822,7 +4049,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1b02": {
             "display_name": "Breeding Grounds Hub",
@@ -3841,8 +4072,12 @@
                     "y": 16
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1b03": {
             "display_name": "Breeding Grounds Alpha Nest North East",
@@ -3869,8 +4104,12 @@
                     "y": 15
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1b04": {
             "display_name": "Breeding Grounds Alpha Nest South West",
@@ -3894,7 +4133,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a1b05": {
             "display_name": "Breeding Grounds Alpha Nest South East",
@@ -3909,8 +4152,12 @@
                     "y": 16
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2h01": {
             "display_name": "Hydro Station Entrance",
@@ -4137,8 +4384,12 @@
                     "y": 17
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a01": {
             "display_name": "Broken Save Station",
@@ -4149,8 +4400,12 @@
                     "y": 21
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a01A": {
             "display_name": "Inner Save Station",
@@ -4162,7 +4417,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a02": {
             "display_name": "Autrack Corridor",
@@ -4189,22 +4448,34 @@
                     "y": 21
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a02A": {
             "display_name": "Autrack Corridor Right Water Pipe",
             "region_name": "Hydro Station",
             "minimap_data": [],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a02B": {
             "display_name": "Autrack Corridor Left Water Pipe",
             "region_name": "Hydro Station",
             "minimap_data": [],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a03": {
             "display_name": "Arachnus Save Station",
@@ -4219,8 +4490,12 @@
                     "y": 18
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a04": {
             "display_name": "Arachnus Arena",
@@ -4232,7 +4507,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a05": {
             "display_name": "Inner Alpha Nest North",
@@ -4271,15 +4550,23 @@
                     "y": 20
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a06A": {
             "display_name": "Varia Chamber Access Water Pipe",
             "region_name": "Hydro Station",
             "minimap_data": [],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a07": {
             "display_name": "Varia Chamber",
@@ -4295,7 +4582,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a08": {
             "display_name": "Water Turbine Station",
@@ -4311,7 +4602,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a09": {
             "display_name": "Inner Alpha Nest South",
@@ -4330,7 +4625,7 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a2a10": {
@@ -4343,7 +4638,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a11": {
             "display_name": "Wave Beam Chamber Access",
@@ -4366,15 +4665,23 @@
                     "y": 22
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a11A": {
             "display_name": "Wave Beam Chamber Access Water Pipe",
             "region_name": "Hydro Station",
             "minimap_data": [],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a12": {
             "display_name": "Shootblock Stairway",
@@ -4393,8 +4700,12 @@
                     "y": 24
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a13": {
             "display_name": "Hi-Jump Chamber Access",
@@ -4414,7 +4725,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a14": {
             "display_name": "Hi-Jump Chamber",
@@ -4426,7 +4741,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a15": {
             "display_name": "Autoad Playground",
@@ -4446,7 +4765,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a16": {
             "display_name": "Wallfire Venue",
@@ -4462,7 +4785,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a17": {
             "display_name": "Hydro Station Basement",
@@ -4481,8 +4808,12 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a18": {
             "display_name": "Inner Hydro Station Pipe",
@@ -4497,8 +4828,12 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2a19": {
             "display_name": "Water Turbine Station Pipe",
@@ -4513,8 +4848,12 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2c01": {
             "display_name": "Breeding Grounds Entrance",
@@ -4538,7 +4877,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2c02": {
             "display_name": "Breeding Grounds Save Station",
@@ -4550,7 +4893,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2c03": {
             "display_name": "Breeding Grounds Shaft",
@@ -4573,8 +4920,12 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2c04": {
             "display_name": "Breeding Grounds Alpha Nest East",
@@ -4609,7 +4960,7 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a2c05": {
@@ -4693,7 +5044,7 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a2c07": {
@@ -4709,8 +5060,12 @@
                     "y": 27
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2c08": {
             "display_name": "Breeding Grounds Alpha Nest South",
@@ -4761,7 +5116,7 @@
                     "y": 27
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a2c09": {
@@ -4797,8 +5152,12 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a2c10": {
             "display_name": "Speedboosting Challenge",
@@ -4818,7 +5177,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3h01": {
             "display_name": "Eastern Cave Save Station",
@@ -4857,7 +5220,7 @@
                     "y": 26
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a3h03": {
@@ -4882,7 +5245,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3h04": {
             "display_name": "Industrial Complex Exterior",
@@ -5062,7 +5429,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3h05": {
             "display_name": "Senjoo Settlement",
@@ -5097,7 +5468,7 @@
                     "y": 24
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a3h06": {
@@ -5114,7 +5485,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3h07": {
             "display_name": "Exterior Puzzle Cavern",
@@ -5130,7 +5505,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3h08": {
             "display_name": "EMP Sentry Cavern",
@@ -5150,7 +5529,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3h09": {
             "display_name": "Sentry Cavern Vault",
@@ -5161,8 +5544,12 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a01": {
             "display_name": "Torizo Arena",
@@ -5185,7 +5572,7 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a3a02": {
@@ -5201,8 +5588,12 @@
                     "y": 21
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a03": {
             "display_name": "Upper Factory Intersection",
@@ -5221,7 +5612,7 @@
                     "y": 24
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a3a04": {
@@ -5265,7 +5656,7 @@
                     "y": 24
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a3a06": {
@@ -5277,8 +5668,12 @@
                     "y": 22
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a07": {
             "display_name": "Upper Factory Gamma Nest",
@@ -5297,8 +5692,12 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a08": {
             "display_name": "Upper Factory Autoad Fork",
@@ -5309,8 +5708,12 @@
                     "y": 26
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a09": {
             "display_name": "Speed Booster Chamber Access",
@@ -5333,8 +5736,12 @@
                     "y": 26
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a10": {
             "display_name": "Speed Booster Chamber",
@@ -5345,7 +5752,7 @@
                     "y": 26
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a3a11": {
@@ -5369,7 +5776,7 @@
                     "y": 26
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a3a12": {
@@ -5390,7 +5797,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a13": {
             "display_name": "Spiky Shaft",
@@ -5429,7 +5840,7 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a3a15": {
@@ -5449,8 +5860,12 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a16": {
             "display_name": "Lower Factory Entrance",
@@ -5474,7 +5889,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a17": {
             "display_name": "Lower Factory Save Station",
@@ -5485,7 +5904,7 @@
                     "y": 28
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a3a18": {
@@ -5498,7 +5917,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a19": {
             "display_name": "Lower Factory Hub",
@@ -5537,8 +5960,12 @@
                     "y": 28
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a20": {
             "display_name": "Lower Factory Intersection",
@@ -5561,7 +5988,7 @@
                     "y": 29
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a3a21": {
@@ -5586,7 +6013,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a22": {
             "display_name": "Skippy Room",
@@ -5617,8 +6048,12 @@
                     "y": 30
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a23": {
             "display_name": "Super Missile Chamber Access",
@@ -5633,7 +6068,7 @@
                     "y": 32
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a3a23a": {
@@ -5650,7 +6085,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3a24": {
             "display_name": "Lower Factory Lava Lake Access",
@@ -5729,7 +6168,7 @@
                     "y": 31
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a3a27": {
@@ -5765,8 +6204,12 @@
                     "y": 24
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3b02": {
             "display_name": "Breeding Grounds Crossroads",
@@ -5797,8 +6240,12 @@
                     "y": 30
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3b03": {
             "display_name": "Breeding Grounds Gamma Nest West",
@@ -5817,8 +6264,12 @@
                     "y": 27
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3b04": {
             "display_name": "Breeding Grounds Gamma Nest Center",
@@ -5833,7 +6284,7 @@
                     "y": 28
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a3b05": {
@@ -5857,7 +6308,7 @@
                     "y": 29
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a3b06": {
@@ -5874,7 +6325,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3b07": {
             "display_name": "Breeding Grounds Gamma Nest North",
@@ -5885,7 +6340,7 @@
                     "y": 25
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a3b08": {
@@ -5917,8 +6372,12 @@
                     "y": 31
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3b09": {
             "display_name": "Breeding Grounds Fly Stadium Access",
@@ -5937,8 +6396,12 @@
                     "y": 30
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3b10": {
             "display_name": "Breeding Grounds Fly Stadium",
@@ -5978,7 +6441,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a3b11": {
             "display_name": "Breeding Grounds Maze",
@@ -6025,8 +6492,12 @@
                     "y": 33
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h01": {
             "display_name": "Tower Exterior South East",
@@ -6098,7 +6569,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h02": {
             "display_name": "Tower Exterior North East",
@@ -6126,7 +6601,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h03": {
             "display_name": "Tower Exterior North",
@@ -6194,7 +6673,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h04": {
             "display_name": "Tower Exterior West",
@@ -6318,7 +6801,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h06": {
             "display_name": "Exterior Zeta Nest East",
@@ -6333,8 +6820,12 @@
                     "y": 37
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h07": {
             "display_name": "Gamma Nest South East",
@@ -6370,7 +6861,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h09": {
             "display_name": "Gamma Nest North East",
@@ -6385,8 +6880,12 @@
                     "y": 28
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h10": {
             "display_name": "Gamma Nest West Access",
@@ -6457,7 +6956,7 @@
                     "y": 42
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a4h13": {
@@ -6477,7 +6976,7 @@
                     "y": 42
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a4h14": {
@@ -6489,8 +6988,12 @@
                     "y": 32
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4h15": {
             "display_name": "Southern Cave Pipe Access",
@@ -6505,7 +7008,7 @@
                     "y": 43
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a4h16": {
@@ -6541,8 +7044,12 @@
                     "y": 41
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4a02": {
             "display_name": "Inner Save Station",
@@ -6569,8 +7076,12 @@
                     "y": 40
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4a04": {
             "display_name": "Tower Activation Station",
@@ -6586,7 +7097,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4a05": {
             "display_name": "Tester Arena",
@@ -6630,7 +7145,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4a07": {
             "display_name": "Gunzoo Shaft",
@@ -6670,7 +7189,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4a09": {
             "display_name": "Plasma Beam Chamber Access",
@@ -6685,8 +7208,12 @@
                     "y": 33
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4a10": {
             "display_name": "Plasma Beam Chamber",
@@ -6717,7 +7244,7 @@
                     "y": 32
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a4a12": {
@@ -6758,7 +7285,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4a14": {
             "display_name": "Inner Tower Pipe",
@@ -6774,7 +7305,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4b01": {
             "display_name": "Power Plant Entrance",
@@ -6789,8 +7324,12 @@
                     "y": 42
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4b02a": {
             "display_name": "Power Plant Destroyed Shaft",
@@ -6817,8 +7356,12 @@
                     "y": 46
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a4b02b": {
             "display_name": "Power Plant Hidden Storage",
@@ -6833,7 +7376,7 @@
                     "y": 46
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a5h01": {
@@ -6889,8 +7432,12 @@
                     "y": 45
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5h03": {
             "display_name": "Distribution Center Exterior West Access",
@@ -6921,7 +7468,7 @@
                     "y": 49
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a5h04": {
@@ -7061,8 +7608,12 @@
                     "y": 42
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5h05": {
             "display_name": "Distribution Center Exterior East",
@@ -7149,8 +7700,12 @@
                     "y": 50
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c01": {
             "display_name": "Blade Bot Patrol Room",
@@ -7169,8 +7724,12 @@
                     "y": 47
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c02": {
             "display_name": "Robomine Prison",
@@ -7205,8 +7764,12 @@
                     "y": 47
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c04": {
             "display_name": "Energy Distribution Tower West",
@@ -7225,7 +7788,7 @@
                     "y": 47
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a5c05": {
@@ -7250,7 +7813,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c06": {
             "display_name": "Energy Distribution Activation Shaft",
@@ -7265,8 +7832,12 @@
                     "y": 45
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c07": {
             "display_name": "Energy Distribution Activation",
@@ -7297,8 +7868,12 @@
                     "y": 44
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c08": {
             "display_name": "Energy Distribution Emergency Exit",
@@ -7325,7 +7900,7 @@
                     "y": 43
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a5c09": {
@@ -7345,8 +7920,12 @@
                     "y": 45
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c10": {
             "display_name": "Energy Distribution Robot Home",
@@ -7361,7 +7940,7 @@
                     "y": 45
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a5c11": {
@@ -7381,7 +7960,7 @@
                     "y": 47
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a5c12": {
@@ -7402,7 +7981,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c13": {
             "display_name": "Distribution Facility Tower West",
@@ -7433,8 +8016,12 @@
                     "y": 47
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c14": {
             "display_name": "Pipe Hub",
@@ -7470,7 +8057,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c15": {
             "display_name": "Pipe Hub Access",
@@ -7485,8 +8076,12 @@
                     "y": 42
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c16": {
             "display_name": "Distribution Facility Connecting Path",
@@ -7501,8 +8096,12 @@
                     "y": 43
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c17": {
             "display_name": "Distribution Facility Tower East",
@@ -7530,7 +8129,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c18": {
             "display_name": "Alpha Squad Nest",
@@ -7553,8 +8156,12 @@
                     "y": 46
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c19": {
             "display_name": "Distribution Facility Save Station",
@@ -7565,8 +8172,12 @@
                     "y": 43
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c20": {
             "display_name": "Distribution Facility Intersection",
@@ -7581,7 +8192,7 @@
                     "y": 44
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a5c21": {
@@ -7617,8 +8228,12 @@
                     "y": 47
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c22": {
             "display_name": "Bullet Hell Room",
@@ -7646,7 +8261,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c23": {
             "display_name": "Screw Attack Chamber Access",
@@ -7666,7 +8285,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c24": {
             "display_name": "Screw Attack Chamber",
@@ -7677,8 +8300,12 @@
                     "y": 45
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c25": {
             "display_name": "Meboid Blockade Interior",
@@ -7705,7 +8332,7 @@
                     "y": 44
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a5c26": {
@@ -7729,8 +8356,12 @@
                     "y": 49
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c27": {
             "display_name": "Waterblob Habitat",
@@ -7753,7 +8384,7 @@
                     "y": 48
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a5c28": {
@@ -7765,8 +8396,12 @@
                     "y": 48
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c29": {
             "display_name": "Facility Storage Intersection East",
@@ -7782,7 +8417,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c30": {
             "display_name": "Dual Gamma Nest",
@@ -7805,8 +8444,12 @@
                     "y": 49
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5c31": {
             "display_name": "Ice Beam Chamber Access",
@@ -7833,7 +8476,7 @@
                     "y": 46
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a5c33": {
@@ -7849,7 +8492,7 @@
                     "y": 44
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a5b01": {
@@ -7866,7 +8509,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b02": {
             "display_name": "Serris Arena Access",
@@ -7885,8 +8532,12 @@
                     "y": 51
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b03a": {
             "display_name": "Serris Arena",
@@ -7909,7 +8560,7 @@
                     "y": 50
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a5b03": {
@@ -7922,7 +8573,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b04": {
             "display_name": "Facility Storage Clogged Pipe South",
@@ -7942,7 +8597,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b05": {
             "display_name": "Spiky Spider Trial",
@@ -7957,7 +8616,7 @@
                     "y": 51
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a5b06": {
@@ -7970,7 +8629,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b07": {
             "display_name": "Facility Storage Tower East",
@@ -8006,7 +8669,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b09": {
             "display_name": "Facility Storage Spiked Path",
@@ -8054,7 +8721,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b15": {
             "display_name": "Spiky Space Jump Trial Entrance",
@@ -8077,7 +8748,7 @@
                     "y": 53
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a5b16": {
@@ -8118,7 +8789,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b17": {
             "display_name": "Spiky Space Jump Trial Reward Room",
@@ -8133,7 +8808,7 @@
                     "y": 53
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a5b20": {
@@ -8162,7 +8837,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b21": {
             "display_name": "Facility Storage Tower West",
@@ -8181,8 +8860,12 @@
                     "y": 52
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5b22": {
             "display_name": "Facility Storage Tower Route South",
@@ -8213,8 +8896,12 @@
                     "y": 53
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5a01": {
             "display_name": "Gravity Area West Pipe",
@@ -8226,7 +8913,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5a02": {
             "display_name": "Gravity Area Moto Room",
@@ -8241,7 +8932,7 @@
                     "y": 38
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a5a03": {
@@ -8257,8 +8948,12 @@
                     "y": 39
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5a04": {
             "display_name": "Gravity Area Corridor",
@@ -8278,7 +8973,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5a05": {
             "display_name": "Gravity Area Shaft",
@@ -8298,7 +8997,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5a06": {
             "display_name": "Gravity Chamber Access",
@@ -8313,8 +9016,12 @@
                     "y": 40
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5a07": {
             "display_name": "Gravity Chamber",
@@ -8326,7 +9033,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a5a08": {
             "display_name": "Gravity Area Barricade",
@@ -8397,8 +9108,12 @@
                     "y": 53
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a03": {
             "display_name": "Skreek and Ramulken Pool",
@@ -8425,8 +9140,12 @@
                     "y": 54
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a04": {
             "display_name": "Rocky Boulder",
@@ -8470,7 +9189,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a06": {
             "display_name": "Hideout Hub",
@@ -8501,8 +9224,12 @@
                     "y": 55
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a07": {
             "display_name": "Hideout Hub Access West",
@@ -8522,7 +9249,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a08": {
             "display_name": "Hideout Alpha Nest Access West",
@@ -8541,8 +9272,12 @@
                     "y": 52
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a09": {
             "display_name": "Hideout Alpha Nest",
@@ -8582,7 +9317,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a09A": {
             "display_name": "Hideout Omega Nest Access",
@@ -8613,8 +9352,12 @@
                     "y": 47
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a09B": {
             "display_name": "Hideout Omega Nest",
@@ -8634,7 +9377,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a09C": {
             "display_name": "Hideout Storage",
@@ -8650,7 +9397,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a10": {
             "display_name": "Hideout Alpha Nest Access East",
@@ -8677,8 +9428,12 @@
                     "y": 53
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a11": {
             "display_name": "Hideout Hub Access East",
@@ -8693,8 +9448,12 @@
                     "y": 53
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a12": {
             "display_name": "Ridley Room",
@@ -8718,7 +9477,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a13": {
             "display_name": "Skorp Lava Pool",
@@ -8757,8 +9520,12 @@
                     "y": 57
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a14": {
             "display_name": "Skorp Lava Pool Access",
@@ -8773,8 +9540,12 @@
                     "y": 56
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a15": {
             "display_name": "Omega Nest Entrance Save Station",
@@ -8809,8 +9580,12 @@
                     "y": 55
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6a17": {
             "display_name": "Glowfly Maze Access",
@@ -8849,7 +9624,7 @@
                     "y": 49
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a6a18": {
@@ -8877,8 +9652,12 @@
                     "y": 46
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b01": {
             "display_name": "Bubble Lair Shinespark Cave Access",
@@ -8898,7 +9677,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b02": {
             "display_name": "Bubble Lair Shinespark Cave",
@@ -8934,7 +9717,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b03": {
             "display_name": "Bubble Lair Shinespark Cave East",
@@ -9022,7 +9809,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b06": {
             "display_name": "Bubble Lair Save Station",
@@ -9033,8 +9824,12 @@
                     "y": 39
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b07": {
             "display_name": "Bubble Lair Omega Nest North West Access",
@@ -9074,7 +9869,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b08": {
             "display_name": "Bubble Lair Omega Nest North West",
@@ -9089,8 +9888,12 @@
                     "y": 29
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b09": {
             "display_name": "Bubble Lair Omega Nest East Access",
@@ -9113,8 +9916,12 @@
                     "y": 31
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b10": {
             "display_name": "Bubble Lair Omega Nest East",
@@ -9129,7 +9936,7 @@
                     "y": 31
                 }
             ],
-            "light_level": null,
+            "light_level": "0",
             "liquid_info": {}
         },
         "rm_a6b11": {
@@ -9158,7 +9965,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b12": {
             "display_name": "Bubble Lair Omega Nest South West",
@@ -9173,7 +9984,7 @@
                     "y": 34
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a6b13": {
@@ -9218,7 +10029,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b14": {
             "display_name": "Bubble Lair Halzyn Housing",
@@ -9273,8 +10088,12 @@
                     "y": 42
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b15": {
             "display_name": "Bubble Lair Skorp Snag",
@@ -9298,7 +10117,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b16": {
             "display_name": "Bubble Lair Exit Save Station",
@@ -9310,7 +10133,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a6b17": {
             "display_name": "Waterfalls Entryway",
@@ -9350,7 +10177,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7a01": {
             "display_name": "Waterfall Passage Far Bottom",
@@ -9381,7 +10212,7 @@
                     "y": 37
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a7a02": {
@@ -9397,7 +10228,7 @@
                     "y": 37
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a7a03": {
@@ -9426,7 +10257,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7a04": {
             "display_name": "Waterfall Ravine South East",
@@ -9441,8 +10276,12 @@
                     "y": 36
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7a05": {
             "display_name": "Waterfall Passage Middle",
@@ -9465,8 +10304,12 @@
                     "y": 35
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7a06": {
             "display_name": "Waterfall Ravine North West",
@@ -9481,8 +10324,12 @@
                     "y": 35
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7a07": {
             "display_name": "Waterfall Passage Top",
@@ -9505,8 +10352,12 @@
                     "y": 34
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7a07a": {
             "display_name": "Waterfall Ravine North East",
@@ -9529,7 +10380,7 @@
                     "y": 34
                 }
             ],
-            "light_level": null,
+            "light_level": "3",
             "liquid_info": {}
         },
         "rm_a7a08": {
@@ -9713,8 +10564,12 @@
                     "y": 31
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b01A": {
             "display_name": "Laboratory Save Station Access",
@@ -9725,8 +10580,12 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b02A": {
             "display_name": "Laboratory Save Station",
@@ -9738,7 +10597,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b03A": {
             "display_name": "Laboratory Entrance",
@@ -9754,7 +10617,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b03B": {
             "display_name": "Laboratory Pipe",
@@ -9769,8 +10636,12 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b04A": {
             "display_name": "Destroyed Chozo Memorial",
@@ -9785,8 +10656,12 @@
                     "y": 22
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b04": {
             "display_name": "Hatchling Room Underside",
@@ -9805,8 +10680,12 @@
                     "y": 22
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b05": {
             "display_name": "Laboratory Foyer",
@@ -9825,8 +10704,12 @@
                     "y": 21
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b06": {
             "display_name": "Laboratory Small Shaft East",
@@ -9842,7 +10725,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b06A": {
             "display_name": "Laboratory Corridor",
@@ -9858,7 +10745,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b07": {
             "display_name": "Laboratory Long Shaft",
@@ -9881,8 +10772,12 @@
                     "y": 20
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b08": {
             "display_name": "Laboratory Spiked Hall",
@@ -9909,8 +10804,12 @@
                     "y": 17
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b08A": {
             "display_name": "Laboratory Arena",
@@ -9933,8 +10832,12 @@
                     "y": 18
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "0",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b09": {
             "display_name": "Laboratory Small Shaft West",
@@ -9949,8 +10852,12 @@
                     "y": 19
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b10": {
             "display_name": "Queen Arena Access",
@@ -9973,8 +10880,12 @@
                     "y": 19
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "3",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7b11": {
             "display_name": "Queen Arena",
@@ -9993,8 +10904,12 @@
                     "y": 20
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "2",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7c01": {
             "display_name": "Hatchling Room",
@@ -10013,7 +10928,7 @@
                     "y": 20
                 }
             ],
-            "light_level": null,
+            "light_level": "2",
             "liquid_info": {}
         },
         "rm_a7c02": {
@@ -10050,7 +10965,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7c03": {
             "display_name": "Crystal Corridor West",
@@ -10125,8 +11044,12 @@
                     "y": 11
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a7c05": {
             "display_name": "Crystal Climb East",
@@ -10209,8 +11132,12 @@
                     "y": 23
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8h01": {
             "display_name": "GFS Thoth Exterior",
@@ -10577,8 +11504,12 @@
                     "y": 4
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8h02": {
             "display_name": "Hornoad Dorm",
@@ -10590,7 +11521,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a01": {
             "display_name": "Thoth East Entrance",
@@ -10605,8 +11540,12 @@
                     "y": 7
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a02": {
             "display_name": "Thoth East Lift",
@@ -10637,7 +11576,7 @@
                     "y": 7
                 }
             ],
-            "light_level": null,
+            "light_level": "4",
             "liquid_info": {}
         },
         "rm_a8a06": {
@@ -10649,7 +11588,7 @@
                     "y": 7
                 }
             ],
-            "light_level": null,
+            "light_level": "1",
             "liquid_info": {}
         },
         "rm_a8a07": {
@@ -10666,7 +11605,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a08": {
             "display_name": "Thoth Research",
@@ -10682,7 +11625,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a10": {
             "display_name": "Thoth Storage",
@@ -10701,8 +11648,12 @@
                     "y": 7
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "1",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a11": {
             "display_name": "Genesis Arena",
@@ -10721,8 +11672,12 @@
                     "y": 5
                 }
             ],
-            "light_level": null,
-            "liquid_info": {}
+            "light_level": "4",
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a12": {
             "display_name": "Thoth Save Station Access",
@@ -10738,7 +11693,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a13": {
             "display_name": "Thoth West Lift",
@@ -10754,7 +11713,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 0,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         },
         "rm_a8a14": {
             "display_name": "Thoth Save Station",
@@ -10766,7 +11729,11 @@
                 }
             ],
             "light_level": null,
-            "liquid_info": {}
+            "liquid_info": {
+                "liquid_type": 1,
+                "liquid_level": -100,
+                "should_be_at_very_front": true
+            }
         }
     },
     "game_patches": {
@@ -10781,8 +11748,8 @@
         "supers_on_missile_doors": true,
         "nest_pipes": true,
         "softlock_prevention_blocks": true,
-        "a3_entrance_blocks": false,
-        "screw_blocks": false,
+        "a3_entrance_blocks": true,
+        "screw_blocks": true,
         "sabre_designed_skippy": false,
         "locked_missile_text": {
             "header": "Got Locked Missile Tank",
@@ -10802,16 +11769,87 @@
         "require_pb_launcher": true
     },
     "pipes": {},
-    "door_locks": {},
+    "door_locks": {
+        "146900": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146934": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146935": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146959": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "146956": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147000": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147001": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147042": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147043": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147081": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147287": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147404": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147405": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        },
+        "147656": {
+            "lock": "Normal Door",
+            "is_dock": false,
+            "facing_direction": "invalid"
+        }
+    },
     "hints": {
-        "septogg_a0": "{yellow}Metroid DNA{white} is located in {aqua}Hydro Station - Inner Alpha Nest South{white}.",
-        "septogg_a1": "{lime}*Judging by the architecture on SR-388, the Chozo's favourite transportation device seem to be TUUUUUUUUUBES!*{white}",
-        "septogg_a2": "{yellow}Metroid DNA{white} is located in {aqua}Main Caves - Research Site{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}Industrial Complex - Breeding Grounds Alpha Nest{white}.",
-        "septogg_a3": "{yellow}Metroid DNA{white} is located in {aqua}The Depths - Hideout Alpha Nest{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}Industrial Complex - Lower Factory Gamma Nest{white}.",
-        "septogg_a4": "{yellow}Metroid DNA{white} is located in {aqua}Main Caves - Mining Facility Gamma Nest{white}.",
-        "septogg_a5": "{yellow}Metroid DNA{white} is located in {aqua}Main Caves - Surface Alpha Nest{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}Golden Temple - Breeding Grounds Alpha Nest South West{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}Industrial Complex - Exterior Gamma Nest{white}.",
-        "septogg_a6": "{yellow}Metroid DNA{white} is located in {aqua}The Tower - Gamma Nest South East{white}.",
-        "chozo_labs": "{yellow}Ice Beam{white} is located in {aqua}Main Caves{white}."
+        "septogg_a0": "{yellow}Metroid DNA{white} is located in {aqua}Golden Temple - Breeding Grounds Alpha Nest South West{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}Golden Temple - Breeding Grounds Alpha Nest North East{white}.",
+        "septogg_a1": "{lime}*Hear the words of O-Lir, last Sentin- wait, wrong game.*{white}",
+        "septogg_a2": "{yellow}Metroid DNA{white} is located in {aqua}The Tower - Exterior Zeta Nest East{white}.",
+        "septogg_a3": "{yellow}Metroid DNA{white} is located in {aqua}Main Caves - Surface Alpha Nest{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}Industrial Complex - Breeding Grounds Gamma Nest South{white}.",
+        "septogg_a4": "{yellow}Metroid DNA{white} is located in {aqua}Main Caves - Research Site{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}The Depths - Hideout Alpha Nest{white}.",
+        "septogg_a5": "{yellow}Metroid DNA{white} is located in {aqua}Hydro Station - Breeding Grounds Gamma Nest{white}.",
+        "septogg_a6": "{yellow}Metroid DNA{white} is located in {aqua}Main Caves - Research Site{white}.#-#{yellow}Metroid DNA{white} is located in {aqua}Hydro Station - Exterior Alpha Nest{white}.",
+        "chozo_labs": "{yellow}Ice Beam{white} is located in {aqua}Golden Temple{white}."
     },
     "cosmetics": {
         "show_unexplored_map": true,
@@ -10822,5 +11860,5 @@
         "room_names_on_hud": "WITH_FADE",
         "music_shuffle": {}
     },
-    "credits_spoiler": "*Major Item Locations;;*Bombs;/Distribution Center - Alpha Squad Nest;;*Spider Ball;/Hydro Station - Breeding Grounds Alpha Nest West;;*Spring Ball;/Industrial Complex - Exterior Puzzle Cavern;;*Screw Attack;/Distribution Center - Gravity Area Corridor;;*Varia Suit;/Distribution Center - Alpha Squad Nest;;*Space Jump;/Distribution Center - Alpha Squad Nest;;*Speed Booster;/Distribution Center - Dual Gamma Nest;;*Hi-Jump Boots;/Hydro Station - Wave Beam Chamber;;*Gravity Suit;/GFS Thoth - Genesis Arena;;*Charge Beam;/The Tower - Gamma Nest North East;;*Ice Beam;/Main Caves - Mining Facility Alpha Nest;;*Wave Beam;/The Tower - Power Plant Hidden Storage;;*Spazer Beam;/Distribution Center - Distribution Center Exterior West;;*Plasma Beam;/Hydro Station - Hi-Jump Chamber;;*Super Missile Launcher;/The Tower - Tester Arena Access North;;*Power Bomb Launcher;/The Tower - Tower Exterior South East;;*Metroid DNA 1;/Industrial Complex - Exterior Gamma Nest;;*Metroid DNA 10;/Main Caves - Research Site;;*Metroid DNA 2;/The Tower - Gamma Nest South East;;*Metroid DNA 3;/Main Caves - Mining Facility Gamma Nest;;*Metroid DNA 4;/The Depths - Hideout Alpha Nest;;*Metroid DNA 5;/Main Caves - Surface Alpha Nest;;*Metroid DNA 6;/Industrial Complex - Lower Factory Gamma Nest;;*Metroid DNA 7;/Hydro Station - Inner Alpha Nest South;;*Metroid DNA 8;/Industrial Complex - Breeding Grounds Alpha Nest;;*Metroid DNA 9;/Golden Temple - Breeding Grounds Alpha Nest South West;;"
+    "credits_spoiler": "*Major Item Locations;;*Bombs;/The Depths - Hideout Storage;;*Spider Ball;/Industrial Complex - Industrial Complex Exterior;;*Spring Ball;/Golden Temple - Armory;;*Screw Attack;/Hydro Station - Inner Alpha Nest South;;*Speed Booster;/The Tower - Gamma Nest West;;*Progressive Jump;/Hydro Station - Autoad Playground;/Hydro Station - Hydro Station Entrance;;*Progressive Suit;/Distribution Center - Gravity Chamber;/Distribution Center - Meboid Blockade Interior;;*Charge Beam;/Industrial Complex - Super Missile Chamber;;*Ice Beam;/Golden Temple - Armory;;*Wave Beam;/Hydro Station - Breeding Grounds Alpha Nest West;;*Spazer Beam;/The Tower - Power Plant Hidden Storage;;*Plasma Beam;/Distribution Center - Ice Beam Chamber;;*Super Missile Launcher;/Distribution Center - Alpha Squad Nest;;*Power Bomb Launcher;/Hydro Station - Hi-Jump Chamber;;*Metroid DNA 1;/Hydro Station - Breeding Grounds Gamma Nest;;*Metroid DNA 10;/Main Caves - Research Site;;*Metroid DNA 2;/Golden Temple - Breeding Grounds Alpha Nest South West;;*Metroid DNA 3;/Main Caves - Research Site;;*Metroid DNA 4;/Golden Temple - Breeding Grounds Alpha Nest North East;;*Metroid DNA 5;/The Tower - Exterior Zeta Nest East;;*Metroid DNA 6;/The Depths - Hideout Alpha Nest;;*Metroid DNA 7;/Main Caves - Surface Alpha Nest;;*Metroid DNA 8;/Hydro Station - Exterior Alpha Nest;;*Metroid DNA 9;/Industrial Complex - Breeding Grounds Gamma Nest South;;"
 }

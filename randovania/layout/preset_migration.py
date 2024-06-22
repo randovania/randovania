@@ -1135,6 +1135,18 @@ def _migrate_v81(preset: dict) -> dict:
 
 
 def _migrate_v82(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        config = preset["configuration"]
+        config["darkness_chance"] = 0
+        config["darkness_min"] = 0
+        config["darkness_max"] = 4
+        config["submerged_water_chance"] = 0
+        config["submerged_lava_chance"] = 0
+
+    return preset
+
+
+def _migrate_v83(preset: dict) -> dict:
     if preset["game"] == "samus_returns":
         config = preset["configuration"]
         config["constant_heat_damage"] = config["constant_lava_damage"] = 20
@@ -1225,6 +1237,7 @@ _MIGRATIONS = [
     _migrate_v80,
     _migrate_v81,
     _migrate_v82,
+    _migrate_v83,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
