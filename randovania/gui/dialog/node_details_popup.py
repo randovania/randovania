@@ -466,7 +466,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 extra,
                 valid_starting_location,
                 self.dock_type_combo.currentData(),
-                self.game.region_list.identifier_for_node(connection_node),
+                connection_node.identifier,
                 self.dock_weakness_combo.currentData(),
                 None,
                 None,

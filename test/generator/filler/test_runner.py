@@ -43,9 +43,7 @@ async def test_run_filler(
     status_update = MagicMock()
 
     hint_identifiers = [
-        echoes_game_description.region_list.identifier_for_node(node)
-        for node in echoes_game_description.region_list.iterate_nodes()
-        if isinstance(node, HintNode)
+        node.identifier for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)
     ]
 
     player_pools = [

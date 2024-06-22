@@ -198,9 +198,9 @@ class PlayerState:
                 other = wl.resolve_dock_node(node, s.patches)
                 teleporters.append(
                     "* {} to {}".format(
-                        elevators.get_elevator_or_area_name(self.game, wl, wl.identifier_for_node(node), True),
+                        elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True),
                         (
-                            elevators.get_elevator_or_area_name(self.game, wl, wl.identifier_for_node(other), True)
+                            elevators.get_elevator_or_area_name(self.game, wl, node.identifier, True)
                             if other is not None
                             else "<Not connected>"
                         ),
