@@ -69,9 +69,6 @@ class AM2RConfiguration(BaseConfiguration):
         if self.darkness_min > self.darkness_max:
             result.append("The minimum darkness value cannot be higher than the maximum darkness value.")
 
-        if self.darkness_max < self.darkness_min:
-            result.append("The maximum darkness value cannot be lower than the minimum darkness value.")
-
         if (1000 - self.submerged_water_chance - self.submerged_lava_chance) < 0:
             result.append(
                 "The probability of a room being submerged in water "
