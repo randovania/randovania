@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 class PresetMSREnergy(PresetTab, Ui_PresetMSREnergy):
-    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
@@ -46,7 +46,7 @@ class PresetMSREnergy(PresetTab, Ui_PresetMSREnergy):
     def uses_patches_tab(cls) -> bool:
         return True
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, MSRConfiguration)
 
@@ -58,6 +58,8 @@ class PresetMSREnergy(PresetTab, Ui_PresetMSREnergy):
             if constant_enabled:
                 spin.setValue(config_value)
 
-    def _persist_constant_environment_damage_enabled(self, field_name: str, spin: QtWidgets.QSpinBox, checked: bool):
+    def _persist_constant_environment_damage_enabled(
+        self, field_name: str, spin: QtWidgets.QSpinBox, checked: bool
+    ) -> None:
         with self._editor as editor:
             editor.set_configuration_field(field_name, spin.value() if checked else None)

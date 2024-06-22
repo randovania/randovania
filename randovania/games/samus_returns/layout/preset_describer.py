@@ -46,8 +46,8 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
-def format_environmental_damage(configuration: MSRConfiguration):
-    def format_dmg(value: int | None):
+def format_environmental_damage(configuration: MSRConfiguration) -> list:
+    def format_dmg(value: int | None) -> str:
         if value is None:
             return "Unmodified"
         elif value == 0:
