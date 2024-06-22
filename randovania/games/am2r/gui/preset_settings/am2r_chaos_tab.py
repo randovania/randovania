@@ -24,6 +24,8 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
         self.submerged_water_slider.valueChanged.connect(self._on_slider_changed)
         self.submerged_lava_slider.valueChanged.connect(self._on_slider_changed)
 
+        self._change_sliders()
+
     def _on_darkness_spin_changed(self) -> None:
         self.darkness_min_spin.setMaximum(self.darkness_max_spin.value())
         self.darkness_max_spin.setMinimum(self.darkness_min_spin.value())
@@ -31,7 +33,11 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
             editor.set_configuration_field("darkness_min", self.darkness_min_spin.value())
             editor.set_configuration_field("darkness_max", self.darkness_max_spin.value())
 
-    def _on_slider_changed(self) -> None:
+    def _on_slider_changed(self):
+        self._change_sliders()
+        self._update_editor()
+
+    def _change_sliders(self) -> None:
         self.submerged_water_slider.setMaximum(1000 - (self.submerged_lava_slider.value()))
         self.submerged_water_slider.setEnabled(self.submerged_water_slider.maximum() > 0)
         self.submerged_lava_slider.setMaximum(1000 - (self.submerged_water_slider.value()))
@@ -40,7 +46,6 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
         self.darkness_slider_label.setText(f"{self.darkness_slider.value() / 10.0:.1f}%")
         self.submerged_water_slider_label.setText(f"{self.submerged_water_slider.value() / 10.0:.1f}%")
         self.submerged_lava_slider_label.setText(f"{self.submerged_lava_slider.value() / 10.0:.1f}%")
-        self._update_editor()
 
     @classmethod
     def tab_title(cls) -> str:
