@@ -127,7 +127,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
         if other_node is not None:
             if isinstance(other_node, DockNode):
-                if other_node.default_connection != region_list.identifier_for_node(node):
+                if other_node.default_connection != node.identifier:
                     yield (
                         f"{node.name} connects to '{node.default_connection}', but that dock connects "
                         f"to '{other_node.default_connection}' instead."

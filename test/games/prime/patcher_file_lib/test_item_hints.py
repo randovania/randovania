@@ -112,7 +112,7 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
     patches = dataclasses.replace(
         echoes_game_patches,
         hints={
-            region_list.identifier_for_node(hint_node): Hint(
+            hint_node.identifier: Hint(
                 HintType.LOCATION,
                 PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
                 pickup_index,
@@ -138,9 +138,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
     asset_id = 1000
     hint_node, _, region_list = _create_region_list(asset_id, PickupIndex(50))
 
-    patches = dataclasses.replace(
-        empty_patches, hints={region_list.identifier_for_node(hint_node): Hint(HintType.JOKE, None)}
-    )
+    patches = dataclasses.replace(empty_patches, hints={hint_node.identifier: Hint(HintType.JOKE, None)})
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
 
@@ -315,7 +313,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            region_list.identifier_for_node(hint_node): Hint(
+            hint_node.identifier: Hint(
                 HintType.LOCATION,
                 PrecisionPair(location[0], location_precision, include_owner=owner),
                 pickup_index,
@@ -371,7 +369,7 @@ def test_create_hints_guardians(
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            region_list.identifier_for_node(hint_node): Hint(
+            hint_node.identifier: Hint(
                 HintType.LOCATION,
                 PrecisionPair(HintLocationPrecision.GUARDIAN, item[0], include_owner=False),
                 pickup_index,
@@ -411,7 +409,7 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            region_list.identifier_for_node(hint_node): Hint(
+            hint_node.identifier: Hint(
                 HintType.LOCATION,
                 PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0], include_owner=False),
                 pickup_index,

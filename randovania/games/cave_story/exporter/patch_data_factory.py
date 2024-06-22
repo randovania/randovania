@@ -106,7 +106,7 @@ class CSPatchDataFactory(PatchDataFactory):
                 hints[mapname] = {}
 
             hints[mapname][event] = {
-                "text": hints_for_identifier[game_description.region_list.identifier_for_node(hint_node)],
+                "text": hints_for_identifier[hint_node.identifier],
                 "facepic": hint_node.extra.get("facepic", "0000"),
                 "ending": "<NOD" + hint_node.extra.get("ending", "<END"),
             }

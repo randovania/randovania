@@ -210,7 +210,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[logbook_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,
