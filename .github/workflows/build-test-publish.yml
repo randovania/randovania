@@ -628,6 +628,8 @@ jobs:
     name: Update the website
     if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     needs: release
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
