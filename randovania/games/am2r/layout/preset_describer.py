@@ -54,6 +54,17 @@ _AM2R_HINT_TEXT = {
 class AM2RPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, AM2RConfiguration)
+
+        def describe_probability(probability: int, attribute: str) -> str | None:
+            if probability == 0:
+                return None
+
+            return f"{probability / 10:.1f}% chance of a room being {attribute}"
+
+        darkness_probability = describe_probability(configuration.darkness_chance, "dark")
+        submerged_water_probability = describe_probability(configuration.submerged_water_chance, "submerged in water")
+        submerged_lava_probability = describe_probability(configuration.submerged_lava_chance, "submerged in lava")
+
         template_strings = super().format_params(configuration)
 
         dna_hint = _AM2R_HINT_TEXT[configuration.hints.artifacts]
@@ -89,6 +100,11 @@ class AM2RPresetDescriber(GamePresetDescriber):
                     "Skip item cutscenes": configuration.skip_item_cutscenes,
                     "Enable Fusion Mode": configuration.fusion_mode,
                     "Open Missile Doors with Supers": configuration.supers_on_missile_doors,
+                },
+                {
+                    darkness_probability: darkness_probability is not None,
+                    submerged_water_probability: submerged_water_probability is not None,
+                    submerged_lava_probability: submerged_lava_probability is not None,
                 },
             ],
             "Goal": describe_artifacts(configuration.artifacts),
