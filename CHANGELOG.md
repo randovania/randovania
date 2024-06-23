@@ -79,6 +79,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
 - Fixed: Crash when defeating the Larva Metroids in reverse.
 
+### Logic Database
+
+#### Area 5 Tower Exterior
+
+- Fixed: Incorrect logic to pick up `Missile Tank (Top)` from the top of the room.
+
 ## [8.1.1] - 2024-06-08
 
 ### Metroid Prime
