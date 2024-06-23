@@ -340,3 +340,48 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
         clean_output_path=False,
         post_export=None,
     )
+
+
+def test_export_button_without_remote(skip_qtbot, tmp_path, mocker):
+    # Setup
+    options = MagicMock()
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
+        input_exheader=None,
+    )
+    window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+
+    # force that input_file_edit is valid to only test input_exheader behaviour
+    window.input_file_edit.has_error = False
+    window.update_accept_validation()
+
+    # export button is enabled because no "enable_remote_lua"
+    assert window.accept_button.isEnabled()
+
+
+def test_export_button_with_remote(skip_qtbot, tmp_path, mocker):
+    # Setup
+    exheader_path = tmp_path.joinpath("exheader.bin")
+    exheader_path.write_bytes(b"MATADORA")
+    exheader_wrong_file_path = tmp_path.joinpath("wrong_exheader.bin")
+    exheader_wrong_file_path.write_bytes(b"FOO")
+
+    options = MagicMock()
+    options.options_for_game.return_value = MSRPerGameOptions(
+        cosmetic_patches=MSRCosmeticPatches.default(),
+        input_exheader=None,
+    )
+    window = MSRGameExportDialog(options, {"enable_remote_lua": True}, "MyHash", True, [])
+
+    # force that input_file_edit is valid to only test input_exheader behaviour
+    window.input_file_edit.has_error = False
+    window.update_accept_validation()
+
+    # export button is disabled because no valid input_exheader
+    assert not window.accept_button.isEnabled()
+
+    window.input_exheader_edit.setText(str(exheader_path))
+    assert window.accept_button.isEnabled()
+
+    window.input_exheader_edit.setText(str(exheader_wrong_file_path))
+    assert not window.accept_button.isEnabled()
