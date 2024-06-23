@@ -83,7 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Area 5 Tower Exterior
 
-- Fixed: Incorrect logic to pick up `Missile Tank (Top)` from the top of the room.
+- Fixed: Picking up `Missile Tank (Top)` from the top of the room now requires Bombs.
 
 ## [8.1.1] - 2024-06-08
 
