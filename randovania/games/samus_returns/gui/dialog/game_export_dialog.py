@@ -121,6 +121,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         self._validate_input_file()
         self._validate_custom_path()
+        self._validate_input_exheader()
 
         # Input
         self.input_file_edit.textChanged.connect(self._on_input_file_change)
@@ -141,6 +142,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             self.citra_radio.setChecked(True)
             self.luma_radio.setDisabled(True)
         else:
+            self.input_exheader_edit.has_error = False
             self.input_exheader_button.hide()
             self.input_exheader_edit.hide()
             self.input_exheader_label.hide()
@@ -460,7 +462,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             hasattr(tab, "is_valid")
             and tab.is_valid()
             and not self.input_file_edit.has_error
-            and (self.input_exheader is None or not self.input_exheader_edit.has_error)
+            and not self.input_exheader_edit.has_error
         )
 
     def get_game_export_params(self) -> GameExportParams:
