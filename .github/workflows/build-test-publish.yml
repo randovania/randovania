@@ -621,3 +621,41 @@ jobs:
           env: ${{ steps.deployment.outputs.env }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           override: false
+
+
+  update-website:
+    runs-on: ubuntu-latest
+    name: Update the website
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    needs: release
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: randovania/randovania.github.io
+          path: ./website
+        
+      - name: Find line
+        id: line
+        run: |
+          echo "LINE_TO_REPLACE=$(grep "^randovania_version=[[:digit:]]\.[[:digit:]]\.[[:digit:]]$" ./website/ci.sh)" >> $GITHUB_OUTPUT
+
+      - name: Find new version
+        id: new_version
+        env: 
+          TAG_NAME: ${{ github.ref }}
+        run: |
+          # Tag is of format vX.Y.Z, cut the v off.
+          echo "NEW_VERSION=$(${TAG_NAME:1})" >> $GITHUB_OUTPUT
+
+      - name: Replace version, commit and push
+        run: |
+          sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./website/ci.sh
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./website/ci.sh
+          git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
+          git push
