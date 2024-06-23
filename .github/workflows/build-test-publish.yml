@@ -654,6 +654,6 @@ jobs:
           sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./website/ci.sh
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add ci.sh
+          git add ./website/ci.sh
           git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           git push
