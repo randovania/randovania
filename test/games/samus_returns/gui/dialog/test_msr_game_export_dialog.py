@@ -344,6 +344,12 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
 
 def test_export_button_without_remote(skip_qtbot, tmp_path, mocker):
     # Setup
+    mocker.patch("platform.system", return_value="Windows")
+    citra_path = tmp_path.joinpath("citra_mod")
+    mocker.patch(
+        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
+    )
+
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
@@ -361,6 +367,12 @@ def test_export_button_without_remote(skip_qtbot, tmp_path, mocker):
 
 def test_export_button_with_remote(skip_qtbot, tmp_path, mocker):
     # Setup
+    mocker.patch("platform.system", return_value="Windows")
+    citra_path = tmp_path.joinpath("citra_mod")
+    mocker.patch(
+        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
+    )
+
     exheader_path = tmp_path.joinpath("exheader.bin")
     exheader_path.write_bytes(b"MATADORA")
     exheader_wrong_file_path = tmp_path.joinpath("wrong_exheader.bin")
