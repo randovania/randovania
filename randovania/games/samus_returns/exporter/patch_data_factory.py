@@ -210,7 +210,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[logbook_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,
@@ -553,6 +553,10 @@ class MSRPatchDataFactory(PatchDataFactory):
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),
             "door_patches": self._door_patches(),
+            "constant_environment_damage": {
+                "heat": self.configuration.constant_heat_damage,
+                "lava": self.configuration.constant_lava_damage,
+            },
             "layout_uuid": str(self.players_config.get_own_uuid()),
             "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
         }

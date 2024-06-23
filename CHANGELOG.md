@@ -17,7 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
-- 10 Videos added to the logic database.
+- Added: Chaos Options to randomly make a room dark, submerged in water or submerged in lava.
+- Added: 10 Videos added to the logic database.
+- Fixed: Dread's Wide Beam will now show as a Wide Beam sprite instead of a Spazer Beam sprite.
 
 #### Logic Database
 
@@ -54,6 +56,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The Door to Orange EMMI Introduction is excluded from Door Lock Rando.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Fixed: Overgrown Cavern now has the correct node marked as player spawn
+
 ### Metroid Prime 2: Echoes
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
@@ -62,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Major** - Added: Multiworld and automatic item tracker support for Citra.
 - Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
+- Added: Option to configure if heated rooms or lava deals constant instead of scaled damage.
 - Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
 - Changed: Item icons on the map will now show the icon of the pickup instead of the open circles. Powerups and Nothings currently share the same icon. Hidden Pickups will still show up as open circles.
 - Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
@@ -71,7 +82,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
 - Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
 - Fixed: Crash when defeating the Larva Metroids in reverse.
-
 
 ## [8.1.1] - 2024-06-08
 

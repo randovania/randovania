@@ -456,7 +456,6 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.persist_current_state()
 
     def persist_current_state(self):
-        region_list = self.game_description.region_list
         json_lib.write_path(
             self.persistence_path.joinpath("state.json"),
             {
@@ -473,7 +472,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     gate.as_string: combo.currentData().value if combo.currentIndex() > 0 else None
                     for gate, combo in self._translator_gate_to_combo.items()
                 },
-                "starting_location": region_list.identifier_for_node(self._initial_state.node).as_json,
+                "starting_location": self._initial_state.node.identifier.as_json,
             },
         )
 
@@ -543,7 +542,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         for region_name in sorted(nodes_by_region.keys()):
             nodes = nodes_by_region[region_name]
-            nodes_locations = [region_list.identifier_for_node(node) for node in nodes]
+            nodes_locations = [node.identifier for node in nodes]
             nodes_names = [
                 elevators.get_elevator_or_area_name(self.game_description, region_list, location, False)
                 for location in nodes_locations
@@ -574,7 +573,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
                 combo.setMinimumContentsLength(11)
                 combo.currentIndexChanged.connect(self.update_locations_tree_for_reachable_nodes)
-                self._teleporter_id_to_combo[region_list.identifier_for_node(node)] = combo
+                self._teleporter_id_to_combo[node.identifier] = combo
                 layout.addWidget(combo, i, 1)
 
     def update_translator_gates(self) -> None:
@@ -616,7 +615,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         assert isinstance(configuration, EchoesConfiguration)
 
         gates = {
-            f"{area.name} ({node.name})": region_list.identifier_for_node(node)
+            f"{area.name} ({node.name})": node.identifier
             for region, area, node in region_list.all_regions_areas_nodes
             if isinstance(node, ConfigurableNode)
         }

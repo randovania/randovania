@@ -53,7 +53,7 @@ class HintDistributor(ABC):
 
     def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
         return [
-            prefill.game.region_list.identifier_for_node(node)
+            node.identifier
             for node in prefill.game.region_list.iterate_nodes()
             if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
         ]
@@ -74,7 +74,7 @@ class HintDistributor(ABC):
         wl = prefill.game.region_list
         for node in wl.iterate_nodes():
             if isinstance(node, HintNode) and node.kind == HintNodeKind.SPECIFIC_PICKUP:
-                identifier = wl.identifier_for_node(node)
+                identifier = node.identifier
                 patches = patches.assign_hint(
                     identifier,
                     Hint(
@@ -187,7 +187,7 @@ class HintDistributor(ABC):
 
         # Get all Hint's NodeIdentifiers from the RegionList
         potential_hint_locations: set[NodeIdentifier] = {
-            region_list.identifier_for_node(node) for node in region_list.iterate_nodes() if isinstance(node, HintNode)
+            node.identifier for node in region_list.iterate_nodes() if isinstance(node, HintNode)
         }
         for hint in potential_hint_locations:
             if hint not in hint_initial_pickups:

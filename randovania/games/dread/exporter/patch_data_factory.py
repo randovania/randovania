@@ -261,7 +261,7 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "accesspoint_actor": self._teleporter_ref_for(hint_node),
                 "hint_id": hint_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(hint_node)],
+                    self.patches.hints[hint_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,

@@ -667,15 +667,15 @@ class PrimePatchDataFactory(PatchDataFactory):
                     if not is_teleporter:
                         continue
 
-                    identifier = db.region_list.identifier_for_node(node)
+                    identifier = node.identifier.area_identifier
                     target = _name_for_location(
                         db.region_list, self.patches.get_dock_connection_for(node).identifier.area_identifier
                     )
 
                     source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[
                         (
-                            identifier.area_identifier.region,
-                            identifier.area_identifier.area,
+                            identifier.region,
+                            identifier.area,
                         )
                     ]
                     level_data[region.name]["transports"][source_name] = target
