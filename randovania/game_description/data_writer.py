@@ -31,7 +31,6 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.array_base import RequirementArrayBase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
     from randovania.game_description.resources.resource_type import ResourceType
@@ -309,7 +308,7 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "hint"
         data.update(common_fields)
         data["kind"] = node.kind.value
-        data["requirement_to_collect"] = write_requirement(node.requirement_to_collect)
+        data["requirement_to_collect"] = write_requirement(node.lock_requirement)
 
     elif isinstance(node, TeleporterNetworkNode):
         data["node_type"] = "teleporter_network"
@@ -378,23 +377,11 @@ def write_region(region: Region) -> dict:
 
 def write_region_list(region_list: RegionList) -> list:
     errors = []
-    known_indices: dict[PickupIndex, str] = {}
 
     regions = []
     for region in region_list.regions:
         try:
             regions.append(write_region(region))
-
-            for node in region.all_nodes:
-                if isinstance(node, PickupNode):
-                    name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
-                    if node.pickup_index in known_indices:
-                        errors.append(
-                            f"{name} has {node.pickup_index}, "
-                            f"but it was already used in {known_indices[node.pickup_index]}"
-                        )
-                    else:
-                        known_indices[node.pickup_index] = name
 
         except ValueError as e:
             errors.append(str(e))

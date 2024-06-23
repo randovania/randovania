@@ -64,7 +64,6 @@ class CSRemoteConnector(RemoteConnector):
         self.reset()
         self._timer.stop()
         self.executor.disconnect()
-        self.Finished.emit()
 
     async def force_finish(self) -> None:
         if self.executor.is_connected():

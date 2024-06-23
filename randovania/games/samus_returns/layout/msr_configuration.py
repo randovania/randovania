@@ -41,6 +41,8 @@ class MSRConfiguration(BaseConfiguration):
     allow_highly_dangerous_logic: bool
     artifacts: MSRArtifactConfig
     hints: HintConfiguration
+    constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
+    constant_lava_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

@@ -179,6 +179,13 @@ def _msr_cosmetic_laser_color(options: dict) -> dict:
     return options
 
 
+def _msr_exheader_path(options: dict) -> dict:
+    if "game_samus_returns" in options:
+        options["game_samus_returns"]["input_exheader"] = None
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -211,6 +218,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added Dread's "Access Permanently Closed" alt-shield
     _dread_linux_ryujinx_path,  # added Dread Ryujinx export to Unix systems
     _msr_cosmetic_laser_color,  # remove the Grapple Laser color checkbox for MSR Cosmetics
+    _msr_exheader_path,  # adds empty exheader path for MSR
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

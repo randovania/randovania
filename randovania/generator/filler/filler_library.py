@@ -47,7 +47,7 @@ def _filter_not_in_dict(
 
 class UncollectedState(NamedTuple):
     indices: set[PickupIndex]
-    logbooks: set[NodeIdentifier]
+    hints: set[NodeIdentifier]
     events: set[ResourceInfo]
     nodes: set[NodeIndex]
 
@@ -63,7 +63,7 @@ class UncollectedState(NamedTuple):
     def __sub__(self, other: UncollectedState) -> UncollectedState:
         return UncollectedState(
             self.indices - other.indices,
-            self.logbooks - other.logbooks,
+            self.hints - other.hints,
             self.events - other.events,
             self.nodes - other.nodes,
         )

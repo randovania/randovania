@@ -4,13 +4,13 @@ import dataclasses
 import typing
 
 from randovania.game_description.db.resource_node import ResourceNode
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.db.node import Node, NodeContext
-    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.resource_info import ResourceGain
 
 
@@ -43,10 +43,14 @@ class TeleporterNetworkNode(ResourceNode):
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return RequirementAnd([self.is_unlocked, ResourceRequirement.simple(self.resource(context))])
 
+    def requirement_to_collect(self) -> Requirement:
+        # Since we can re-collect if already collected, via the weird case of starting in a teleporter network node
+        return Requirement.trivial()
+
     def resource(self, context: NodeContext) -> NodeResourceInfo:
         return NodeResourceInfo.from_node(self, context)
 
-    def can_collect(self, context: NodeContext) -> bool:
+    def should_collect(self, context: NodeContext) -> bool:
         resources = context.current_resources
         req = self.requirement_to_activate
 

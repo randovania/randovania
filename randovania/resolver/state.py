@@ -153,7 +153,7 @@ class State:
         :return:
         """
 
-        if not node.can_collect(self.node_context()):
+        if not node.should_collect(self.node_context()):
             raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
         new_resources = self.resources.duplicate()

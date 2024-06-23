@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
+import pytest
+
 from randovania.bitpacking import construct_pack
 from randovania.network_common.remote_inventory import RemoteInventory
 from randovania.server import database
@@ -39,3 +41,29 @@ def test_admin_session(server_app, solo_two_world_session):
     entry2 = "<td>The Name</td><td>World 2</td><td>Disconnected</td><td>Missing</td>"
     assert entry1 in result
     assert entry2 in result
+
+
+def test_delete_session_get(server_app, solo_two_world_session) -> None:
+    # Setup
+    web_api.setup_app(server_app)
+
+    # Run
+    with server_app.app.test_request_context("/session/1/delete", method="GET"):
+        result = web_api.delete_session(MagicMock(), 1)
+
+    assert result == '<form method="POST"><input type="submit" value="Confirm delete"></form>'
+    assert database.MultiplayerSession.get_by_id(1) == solo_two_world_session
+
+
+def test_delete_session_post(server_app, solo_two_world_session) -> None:
+    # Setup
+    web_api.setup_app(server_app)
+
+    # Run
+    with server_app.app.test_request_context("/session/1/delete", method="POST"):
+        result = web_api.delete_session(MagicMock(), 1)
+
+    assert result == "Session deleted."
+
+    with pytest.raises(database.MultiplayerSession.DoesNotExist):
+        database.MultiplayerSession.get_by_id(1)

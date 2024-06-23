@@ -232,6 +232,11 @@ def fusion_game_patches(default_fusion_configuration, fusion_game_description) -
 
 
 @pytest.fixture(scope="session")
+def planets_zebeth_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.METROID_PLANETS_ZEBETH)
+
+
+@pytest.fixture(scope="session")
 def randomizer_data() -> dict:
     return decode_randomizer_data()
 
@@ -310,6 +315,35 @@ def dread_spider_pickup(default_generator_params) -> PickupEntry:
                     short_name="Magnet",
                     max_capacity=1,
                     extra=frozendict({"item_id": "ITEM_MAGNET_GLOVE"}),
+                ),
+                1,
+            ),
+        ),
+        generator_params=default_generator_params,
+        resource_lock=None,
+        unlocks_resource=False,
+    )
+
+
+@pytest.fixture()
+def msr_ice_beam_pickup(default_generator_params) -> PickupEntry:
+    msr_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_SAMUS_RETURNS)
+    return PickupEntry(
+        name="Ice Beam",
+        model=PickupModel(
+            game=RandovaniaGame.METROID_SAMUS_RETURNS,
+            name="powerup_icebeam",
+        ),
+        pickup_category=msr_pickup_database.pickup_categories["misc"],
+        broad_category=msr_pickup_database.pickup_categories["misc"],
+        progression=(
+            (
+                ItemResourceInfo(
+                    resource_index=24,
+                    long_name="Ice Beam",
+                    short_name="Ice",
+                    max_capacity=1,
+                    extra=frozendict({"item_id": "ITEM_WEAPON_ICE_BEAM"}),
                 ),
                 1,
             ),

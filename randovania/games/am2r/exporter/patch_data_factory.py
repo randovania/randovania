@@ -177,15 +177,41 @@ class AM2RPatchDataFactory(PatchDataFactory):
         return pickup_map_dict
 
     def _create_room_dict(self) -> dict:
-        return {
-            area.extra["map_name"]: {
-                "display_name": area.name,
-                "region_name": region.name,
-                "minimap_data": area.extra["minimap_data"],
-            }
-            for region in self.game.region_list.regions
-            for area in region.areas
-        }
+        rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
+
+        return_dict = {}
+        for region in self.game.region_list.regions:
+            for area in region.areas:
+                light_level = None
+                if rng.random() < (self.configuration.darkness_chance / 1000.0):
+                    light_level = str(rng.randint(self.configuration.darkness_min, self.configuration.darkness_max))
+
+                liquid_info = {}
+                # 0 - water, 1 - lava
+                liquid_type = rng.choices(
+                    [0, 1, None],
+                    weights=[
+                        self.configuration.submerged_water_chance,
+                        self.configuration.submerged_lava_chance,
+                        1000 - self.configuration.submerged_water_chance - self.configuration.submerged_lava_chance,
+                    ],
+                )[0]
+                if liquid_type is not None:
+                    liquid_info = {
+                        "liquid_type": liquid_type,
+                        "liquid_level": -100,
+                        "should_be_at_very_front": True,
+                    }
+
+                return_dict[area.extra["map_name"]] = {
+                    "display_name": area.name,
+                    "region_name": region.name,
+                    "minimap_data": area.extra["minimap_data"],
+                    "light_level": light_level,
+                    "liquid_info": liquid_info,
+                }
+
+        return return_dict
 
     def _create_starting_popup(self, patches: GamePatches) -> dict | None:
         extra_items = item_names.additional_starting_equipment(patches.configuration, patches.game, patches)

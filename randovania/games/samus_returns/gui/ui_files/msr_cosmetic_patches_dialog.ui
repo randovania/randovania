@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>524</width>
-    <height>439</height>
+    <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,10 +46,17 @@
         <x>0</x>
         <y>0</y>
         <width>504</width>
-        <height>392</height>
+        <height>414</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QCheckBox" name="enable_remote_lua">
+         <property name="text">
+          <string>Enable automatic item tracker for solo seeds (incompatible with Luma3DS)</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QGroupBox" name="game_changes_box">
          <property name="title">
@@ -240,6 +247,61 @@
           <string> HUD Changes</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="0" colspan="2">
+           <layout class="QHBoxLayout" name="energy_tank_color_layout">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <item>
+             <widget class="QCheckBox" name="custom_energy_tank_color_check">
+              <property name="text">
+               <string>Use a custom Energy Tank color</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="custom_energy_tank_color_button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Set Color...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="custom_energy_tank_color_square">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>22</width>
+                <height>22</height>
+               </size>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
           <item row="2" column="0" colspan="2">
            <layout class="QHBoxLayout" name="aeion_bar_color_layout">
             <property name="spacing">
@@ -295,13 +357,6 @@
             </item>
            </layout>
           </item>
-          <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Color choices may appear differently in-game than what is selected.</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="1">
            <widget class="QComboBox" name="room_names_dropdown">
             <property name="editable">
@@ -312,6 +367,13 @@
             </property>
             <property name="placeholderText">
              <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Color choices may appear differently in-game than what is selected.</string>
             </property>
            </widget>
           </item>
@@ -327,61 +389,6 @@
              <string>Show Room Names On HUD</string>
             </property>
            </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <layout class="QHBoxLayout" name="energy_tank_color_layout">
-            <property name="spacing">
-             <number>6</number>
-            </property>
-            <item>
-             <widget class="QCheckBox" name="custom_energy_tank_color_check">
-              <property name="text">
-               <string>Use a custom Energy Tank color</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="custom_energy_tank_color_button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Set Color...</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QFrame" name="custom_energy_tank_color_square">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>22</width>
-                <height>22</height>
-               </size>
-              </property>
-              <property name="autoFillBackground">
-               <bool>false</bool>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <property name="lineWidth">
-               <number>1</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </item>
           <item row="3" column="0" colspan="2">
            <layout class="QHBoxLayout" name="ammo_hud_color_layout">

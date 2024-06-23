@@ -344,7 +344,6 @@ class PrimeRemoteConnector(RemoteConnector):
             if self.is_disconnected():
                 self.logger.info("Finishing connector")
                 self._timer.stop()
-                self.Finished.emit()
 
     async def update_current_inventory(self):
         new_inventory = await self.get_inventory()

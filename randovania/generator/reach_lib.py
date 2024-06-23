@@ -34,7 +34,9 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 def _filter_collectable(resource_nodes: Iterator[ResourceNodeT], reach: GeneratorReach) -> Iterator[ResourceNodeT]:
     context = reach.node_context()
     for resource_node in resource_nodes:
-        if resource_node.can_collect(context):
+        if resource_node.should_collect(context) and resource_node.requirement_to_collect().satisfied(
+            context, reach.state.energy
+        ):
             yield resource_node
 
 
@@ -85,7 +87,8 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
             break
 
         for action in actions:
-            if action.can_collect(reach.node_context()):
+            # requirement_to_collect was checked in `_get_safe_resources`, so we're assuming it's already satisfied
+            if action.should_collect(reach.node_context()):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 

@@ -113,6 +113,9 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
         )
         if session.has_layout_description()
         else "<p>No rdvgame attached</p>",
+        "<p><a href='{link}'>Delete session</a></p>".format(
+            link=flask.url_for("delete_session", session_id=session_id)
+        ),
         table,
     ]
 
@@ -131,7 +134,17 @@ def download_session_spoiler(user: User, session_id: int) -> ResponseReturnValue
     return response
 
 
+def delete_session(user: User, session_id: int) -> ResponseReturnValue:
+    if flask.request.method == "GET":
+        return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
+
+    session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    session.delete_instance(recursive=True)
+    return "Session deleted."
+
+
 def setup_app(sa: ServerApp):
     sa.route_with_user("/sessions", need_admin=True)(admin_sessions)
     sa.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
     sa.route_with_user("/session/<session_id>/rdvgame", need_admin=True)(download_session_spoiler)
+    sa.route_with_user("/session/<session_id>/delete", methods=["GET", "POST"], need_admin=True)(delete_session)
