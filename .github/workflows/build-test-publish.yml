@@ -162,7 +162,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ matrix.executable && (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: Randovania ${{ matrix.name }}
           if-no-files-found: error
@@ -173,7 +173,7 @@ jobs:
 
       - name: Upload wheel
         if: ${{ matrix.name == 'Linux' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: Python Package
           if-no-files-found: error
@@ -271,7 +271,7 @@ jobs:
           $project.Build();
 
       - name: Upload installer
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: Randovania Windows Installer
           if-no-files-found: error
@@ -484,7 +484,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v5.4.0
+        uses: docker/build-push-action@v6.0.2
         with:
           context: .
           file: ./Dockerfile.server
@@ -525,8 +525,9 @@ jobs:
           python-version: "3.12"
 
       - name: Download the executables
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.0
         with:
+          pattern: 'Randovania * *'
           path: packages/
 
       - name: Install Python packages
@@ -620,3 +621,41 @@ jobs:
           env: ${{ steps.deployment.outputs.env }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           override: false
+
+
+  update-website:
+    runs-on: ubuntu-latest
+    name: Update the website
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    needs: release
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: randovania/randovania.github.io
+          path: ./website
+        
+      - name: Find line
+        id: line
+        run: |
+          echo "LINE_TO_REPLACE=$(grep "^randovania_version=[[:digit:]]\.[[:digit:]]\.[[:digit:]]$" ./website/ci.sh)" >> $GITHUB_OUTPUT
+
+      - name: Find new version
+        id: new_version
+        env: 
+          TAG_NAME: ${{ github.ref }}
+        run: |
+          # Tag is of format vX.Y.Z, cut the v off.
+          echo "NEW_VERSION=$(${TAG_NAME:1})" >> $GITHUB_OUTPUT
+
+      - name: Replace version, commit and push
+        run: |
+          sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./website/ci.sh
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./website/ci.sh
+          git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
+          git push

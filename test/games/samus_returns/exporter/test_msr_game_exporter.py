@@ -36,6 +36,7 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     export_params = MSRGameExportParams(
         spoiler_output=None,
         input_path=tmp_path.joinpath("input_path"),
+        input_exheader=None,
         output_path=tmp_path.joinpath("output", "path"),
         target_platform=MSRModPlatform.LUMA,
         target_version=MSRGameVersion.PAL,

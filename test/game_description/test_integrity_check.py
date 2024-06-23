@@ -295,6 +295,7 @@ def test_invalid_db():
                                     "Pickup (Not A Pickup)": trivial_req,
                                     "Bad Pickup": trivial_req,
                                     "Door to Nowhere": trivial_req,
+                                    "Pickup (Duplicate Id)": trivial_req,
                                 },
                             },
                             "Door to World (2)": {
@@ -368,6 +369,18 @@ def test_invalid_db():
                                 "major_location": False,
                                 "connections": {"Door to World (1)": trivial_req},
                             },
+                            "Pickup (Duplicate Id)": {
+                                "node_type": "pickup",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": ["default"],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "pickup_index": 5,
+                                "major_location": False,
+                                "connections": {"Door to World (1)": trivial_req},
+                            },
                         },
                     }
                 },
@@ -405,4 +418,5 @@ def test_invalid_db():
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 1/Door to Area 2 (Dock)']",
         "Checking A: Loop detected: ['A', 'B', 'A']",
         "Checking B: Loop detected: ['B', 'A', 'B']",
+        "Lava World/Hot/Pickup (Duplicate Id) has PickupIndex 5, but it was already used in Lava World/Hot/Bad Pickup",
     ]

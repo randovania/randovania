@@ -53,7 +53,7 @@ class TeleporterList(location_list.LocationList):
         teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
         region_list = game_description.region_list
         nodes = [
-            region_list.identifier_for_node(node)
+            node.identifier
             for node in region_list.all_nodes
             if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
         ]

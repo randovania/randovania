@@ -365,12 +365,12 @@ class RegionReader:
                 )
 
             elif node_type == "hint":
-                requirement_to_collect = read_requirement(data["requirement_to_collect"], self.resource_database)
+                lock_requirement = read_requirement(data["requirement_to_collect"], self.resource_database)
 
                 return HintNode(
                     **generic_args,
                     kind=HintNodeKind(data["kind"]),
-                    requirement_to_collect=requirement_to_collect,
+                    lock_requirement=lock_requirement,
                 )
 
             elif node_type == "teleporter_network":

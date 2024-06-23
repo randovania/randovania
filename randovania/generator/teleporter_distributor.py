@@ -163,7 +163,7 @@ def create_teleporter_database(
     :return:
     """
     all_helpers = [
-        TeleporterHelper(region_list.identifier_for_node(node), node.default_connection)
+        TeleporterHelper(node.identifier, node.default_connection)
         for region, area, node in region_list.all_regions_areas_nodes
         if isinstance(node, DockNode) and node.dock_type in allowed_dock_types
     ]

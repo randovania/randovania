@@ -84,6 +84,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Cross Game Multis
         "multi-cs+dread+prime1+prime2.rdvgame",
         "multi-am2r+cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2+msr.rdvgame",
         "prime1_and_2_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
         "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
@@ -95,6 +96,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "am2r/starting_items.rdvgame",  # Starter preset + random starting items
         "am2r/transport_pipe_shuffle.rdvgame",  # Starter preset + shuffled transport pipes
         "am2r/custom_dna_required.rdvgame",  # Has 20/30 dna
+        "am2r/chaos_options.rdvgame",  # Has Chaos Options
         # Factorio
         "factorio/starter_preset.rdvgame",
         # Dread

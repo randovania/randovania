@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
@@ -257,17 +258,17 @@ class DreadPatchDataFactory(PatchDataFactory):
 
         return [
             {
-                "accesspoint_actor": self._teleporter_ref_for(logbook_node),
-                "hint_id": logbook_node.extra["hint_id"],
+                "accesspoint_actor": self._teleporter_ref_for(hint_node),
+                "hint_id": hint_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[hint_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,
                 ),
             }
-            for logbook_node in self.game.region_list.iterate_nodes()
-            if isinstance(logbook_node, HintNode)
+            for hint_node in self.game.region_list.iterate_nodes()
+            if isinstance(hint_node, HintNode)
         ]
 
     def _static_text_changes(self) -> dict[str, str]:
@@ -512,6 +513,14 @@ class DreadPatchDataFactory(PatchDataFactory):
                 or node.dock_type.extra.get("is_teleportal", False)
             )
         ]
+
+        # special-case the Ghavoran Flipper train to update the map correctly
+        flipper_list = [t for t in teleporters if t["teleporter"]["actor"] == "wagontrain_quarantine_with_cutscene_000"]
+        if flipper_list:
+            other_train = deepcopy(flipper_list[0])
+            other_train["teleporter"]["actor"] = "wagontrain_quarantine_000"
+            teleporters.append(other_train)
+
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,

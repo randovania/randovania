@@ -67,12 +67,14 @@ class OldGeneratorReach(GeneratorReach):
     _reachable_costs: dict[int, int] | None
     _node_reachable_cache: dict[int, bool]
     _unreachable_paths: dict[tuple[int, int], RequirementSet]
+    _uncollectable_nodes: dict[int, RequirementSet]
     _safe_nodes: _SafeNodes | None
     _is_node_safe_cache: dict[int, bool]
 
     def __deepcopy__(self, memodict: dict) -> OldGeneratorReach:
         reach = OldGeneratorReach(self._game, self._state, self._digraph.copy())
         reach._unreachable_paths = copy.copy(self._unreachable_paths)
+        reach._uncollectable_nodes = copy.copy(self._uncollectable_nodes)
         reach._reachable_paths = self._reachable_paths
         reach._reachable_costs = self._reachable_costs
         reach._safe_nodes = self._safe_nodes
@@ -87,6 +89,7 @@ class OldGeneratorReach(GeneratorReach):
         self._state = state
         self._digraph = graph
         self._unreachable_paths = {}
+        self._uncollectable_nodes = {}
         self._reachable_paths = None
         self._node_reachable_cache = {}
         self._is_node_safe_cache = {}
@@ -125,6 +128,10 @@ class OldGeneratorReach(GeneratorReach):
     def _expand_graph(self, paths_to_check: list[GraphPath]) -> None:
         # print("!! _expand_graph", len(paths_to_check))
         self._reachable_paths = None
+        resource_nodes_to_check = set()
+
+        context = self._state.node_context()
+
         while paths_to_check:
             path = paths_to_check.pop(0)
 
@@ -135,15 +142,26 @@ class OldGeneratorReach(GeneratorReach):
             # print(">>> will check starting at", self.game.region_list.node_name(path.node))
             path.add_to_graph(self._digraph)
 
-            for target_node, requirement in self._potential_nodes_from(path.node):
-                if requirement.satisfied(self._state.node_context(), self._state.energy):
+            if path.node.is_resource_node:
+                resource_nodes_to_check.add(path.node.node_index)
+
+            for target_node, requirement_set in self._potential_nodes_from(path.node):
+                if requirement_set.satisfied(context, self._state.energy):
                     # print("* Queue path to", self.game.region_list.node_name(target_node))
-                    paths_to_check.append(GraphPath(path.node, target_node, requirement))
+                    paths_to_check.append(GraphPath(path.node, target_node, requirement_set))
                 else:
                     # print("* Unreachable", self.game.region_list.node_name(target_node), ", missing:",
                     #       requirement.as_str)
-                    self._unreachable_paths[path.node.node_index, target_node.node_index] = requirement
+                    self._unreachable_paths[path.node.node_index, target_node.node_index] = requirement_set
             # print("> done")
+
+        for node_index in sorted(resource_nodes_to_check):
+            node = self.all_nodes[node_index]
+            assert isinstance(node, ResourceNode)
+
+            requirement = node.requirement_to_collect()
+            if not requirement.satisfied(context, self._state.energy):
+                self._uncollectable_nodes[node_index] = requirement.patch_requirements(1.0, context).as_set(context)
 
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
@@ -308,6 +326,10 @@ class OldGeneratorReach(GeneratorReach):
         for edge in edges_to_remove:
             del self._unreachable_paths[edge]
 
+        for node_index, requirement in list(self._uncollectable_nodes.items()):
+            if requirement.satisfied(self._state.node_context(), self._state.energy):
+                del self._uncollectable_nodes[node_index]
+
         self._expand_graph(paths_to_check)
 
     def act_on(self, node: ResourceNode) -> None:
@@ -335,16 +357,22 @@ class OldGeneratorReach(GeneratorReach):
         all_nodes = typing.cast(tuple[Node, ...], self.all_nodes)
         context = self._state.node_context()
 
+        to_check = [
+            (all_nodes[node_index], requirement) for node_index, requirement in self._uncollectable_nodes.items()
+        ]
+
         for (_, node_index), requirement in self._unreachable_paths.items():
             node = all_nodes[node_index]
-            if self.is_reachable_node(node):
-                continue
+            if not self.is_reachable_node(node):
+                to_check.append((node, requirement))
 
+        for node, requirement in to_check:
             requirements = requirement.patch_requirements(context)
             if node in results:
                 results[node] = results[node].expand_alternatives(requirements)
             else:
                 results[node] = requirement
+
         return results
 
     def victory_condition_satisfied(self) -> bool:

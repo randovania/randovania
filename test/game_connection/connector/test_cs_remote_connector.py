@@ -32,10 +32,7 @@ async def test_general_class_content(connector: CSRemoteConnector):
     assert connector.game_enum == RandovaniaGame.CAVE_STORY
     assert connector.description() == f"{RandovaniaGame.CAVE_STORY.long_name}: Freeware"
 
-    finished = MagicMock()
-    connector.Finished.connect(finished)
     await connector._disconnect()
-    finished.assert_called_once()
     connector.executor.disconnect.assert_called_once()
 
     connector.executor.is_connected = MagicMock()

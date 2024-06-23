@@ -1,0 +1,657 @@
+{
+    "schema_version": 26,
+    "game": "planets_zebeth",
+    "resource_database": {
+        "items": {
+            "Bombs": {
+                "long_name": "Bombs",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Screw Attack": {
+                "long_name": "Screw Attack",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Varia Suit": {
+                "long_name": "Varia Suit",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Hi-Jump": {
+                "long_name": "Hi-Jump Boots",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Ice Beam": {
+                "long_name": "Ice Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Wave Beam": {
+                "long_name": "Wave Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Long Beam": {
+                "long_name": "Long Beam",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Morph Ball": {
+                "long_name": "Morph Ball",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Missiles": {
+                "long_name": "Missiles",
+                "max_capacity": 999,
+                "extra": {}
+            },
+            "Energy Tank": {
+                "long_name": "Energy Tank",
+                "max_capacity": 8,
+                "extra": {}
+            },
+            "Missile Launcher": {
+                "long_name": "Missile Launcher",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Nothing": {
+                "long_name": "Nothing",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Locked Missiles": {
+                "long_name": "Locked Missiles",
+                "max_capacity": 999,
+                "extra": {}
+            },
+            "Tourian Key": {
+                "long_name": "Tourian Key",
+                "max_capacity": 9,
+                "extra": {}
+            }
+        },
+        "events": {
+            "KraidDead": {
+                "long_name": "Kraid Boss Killed",
+                "extra": {}
+            },
+            "RidleyDead": {
+                "long_name": "Ridley Boss Killed",
+                "extra": {}
+            },
+            "MotherBrainDead": {
+                "long_name": "Mother Brain Boss Killed",
+                "extra": {}
+            },
+            "MBGate1Destroyed": {
+                "long_name": "MB Gate 1 Destroyed",
+                "extra": {}
+            },
+            "MBGate2Destroyed": {
+                "long_name": "MB Gate 2 Destroyed",
+                "extra": {}
+            },
+            "MBGate3Destroyed": {
+                "long_name": "MB Gate 3 Destroyed",
+                "extra": {}
+            },
+            "MBGate4Destroyed": {
+                "long_name": "MB Gate 4 Destroyed",
+                "extra": {}
+            },
+            "MBGate5Destroyed": {
+                "long_name": "MB Gate 5 Destroyed",
+                "extra": {}
+            },
+            "Credits": {
+                "long_name": "Credits",
+                "extra": {}
+            }
+        },
+        "tricks": {
+            "Combat": {
+                "long_name": "Combat",
+                "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Knowledge": {
+                "long_name": "Knowledge",
+                "description": "If this trick is enabled, the player may be expected to know certain hidden passageways or other lesser known facts.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Movement": {
+                "long_name": "Movement",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "Damage Boost": {
+                "long_name": "Damage Boost",
+                "description": "If this trick is enabled, the player may be expected to take damage from enemies to traverse rooms.",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "IBJ": {
+                "long_name": "IBJ",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "DIBJ": {
+                "long_name": "DIBJ",
+                "description": "",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "IceAbuse": {
+                "long_name": "Stand On Frozen Enemies",
+                "description": "If this trick is enabled, the player may be expected to freeze enemies with the Ice Beam and use them to traverse a room or collect items.",
+                "require_documentation_above": 0,
+                "extra": {}
+            }
+        },
+        "damage": {
+            "Damage": {
+                "long_name": "Normal Damage",
+                "extra": {}
+            },
+            "Lava": {
+                "long_name": "Lava Damage",
+                "extra": {}
+            },
+            "Acid": {
+                "long_name": "Acid Damage",
+                "extra": {}
+            }
+        },
+        "versions": {
+            "127g": {
+                "long_name": "1.27g",
+                "extra": {}
+            }
+        },
+        "misc": {
+            "SoftlockPrevention": {
+                "long_name": "Softlock Prevention",
+                "extra": {}
+            },
+            "EntranceRando": {
+                "long_name": "Entrance Rando",
+                "extra": {}
+            },
+            "ElevatorRando": {
+                "long_name": "Elevator Rando",
+                "extra": {}
+            },
+            "DoorLockRando": {
+                "long_name": "Door Lock Rando",
+                "extra": {}
+            }
+        },
+        "requirement_template": {
+            "Can Use Bombs": {
+                "display_name": "Can Use Bombs",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": "Able to lay normal bombs",
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Morph Ball",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Bombs",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Get rid of Larva Metroid": {
+                "display_name": "Get rid of Larva Metroid",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "Intended",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Ice Beam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Can Use Bombs"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "TODO: change this to movement - freeze and go on",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Ice Beam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "and",
+                                "data": {
+                                    "comment": "TODO: change this to movement",
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "tricks",
+                                                "name": "Combat",
+                                                "amount": 3,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "damage_reductions": [],
+        "energy_tank_item_index": "Energy Tank"
+    },
+    "layers": [
+        "default"
+    ],
+    "starting_location": {
+        "region": "Brinstar",
+        "area": "Maru Mari Hall",
+        "node": "Starting Point"
+    },
+    "initial_states": {
+        "Default": []
+    },
+    "minimal_logic": {
+        "items_to_exclude": [
+            {
+                "name": "Morph Ball",
+                "when_shuffled": null
+            },
+            {
+                "name": "Tourian Key",
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "name": "Missiles",
+                "value": 80
+            },
+            {
+                "name": "Energy Tank",
+                "value": 8
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "name": "Credits",
+                "reason": "victory condition"
+            }
+        ],
+        "description": "Items checked for: Morph Ball, Tourian Keys."
+    },
+    "victory_condition": {
+        "type": "and",
+        "data": {
+            "comment": null,
+            "items": [
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "events",
+                        "name": "Credits",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            ]
+        }
+    },
+    "dock_weakness_database": {
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Missile Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "10 Missiles Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 10,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Wave Beam Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Wave Beam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Ice Beam Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Ice Beam",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Bomb Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Can Use Bombs"
+                        },
+                        "lock": null
+                    },
+                    "Screw Attack Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Screw Attack",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-impossible",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": []
+                                }
+                            }
+                        }
+                    }
+                },
+                "dock_rando": {
+                    "unlocked": "Normal Door",
+                    "locked": "Locked Door",
+                    "change_from": [
+                        "10 Missiles Door",
+                        "Missile Door",
+                        "Normal Door"
+                    ],
+                    "change_to": [
+                        "10 Missiles Door",
+                        "Bomb Door",
+                        "Ice Beam Door",
+                        "Locked Door",
+                        "Missile Door",
+                        "Normal Door",
+                        "Screw Attack Door",
+                        "Wave Beam Door"
+                    ]
+                }
+            },
+            "other": {
+                "name": "Dock",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Not Determined": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {
+                    "is_teleporter": true,
+                    "ignore_for_hints": true
+                },
+                "items": {
+                    "Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": null
+            }
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        },
+        "dock_rando": {
+            "force_change_two_way": false,
+            "resolver_attempts": 125,
+            "to_shuffle_proportion": 1.0
+        }
+    },
+    "used_trick_levels": {
+        "IceAbuse": [
+            1,
+            2
+        ],
+        "Knowledge": [
+            1,
+            3
+        ],
+        "Damage Boost": [
+            2
+        ],
+        "Combat": [
+            1,
+            3
+        ]
+    },
+    "flatten_to_set_on_patch": false,
+    "regions": [
+        "Brinstar.json",
+        "Kraid.json",
+        "Norfair.json",
+        "Ridley.json",
+        "Tourian.json"
+    ]
+}

@@ -48,10 +48,14 @@ class DockLockNode(ResourceNode):
     def __repr__(self) -> str:
         return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
+    def requirement_to_collect(self) -> Requirement:
+        # The requirement is all in the connection from DockNode to this
+        return Requirement.trivial()
+
     def resource(self, context: NodeContext) -> ResourceInfo:
         return self._resource
 
-    def can_collect(self, context: NodeContext) -> bool:
+    def should_collect(self, context: NodeContext) -> bool:
         dock = self.dock
 
         patches: GamePatches = context.patches  # type: ignore
@@ -68,7 +72,7 @@ class DockLockNode(ResourceNode):
         return False
 
     def is_collected(self, context: NodeContext) -> bool:
-        return not self.can_collect(context)
+        return not self.should_collect(context)
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         dock = self.dock

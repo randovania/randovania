@@ -72,4 +72,8 @@ def test_msr_format_params(artifacts):
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
         "Hints": ["DNA Hints: Area and room"],
+        "Environmental Damage": [
+            "Heat: Constant 20 dmg/s",
+            "Lava: Constant 20 dmg/s",
+        ],
     }
