@@ -570,13 +570,6 @@ jobs:
           prerelease: true
           body: "Release executable"
 
-      - name: 
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
-        uses: actions/checkout@v3
-        with: 
-          
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Publish 📦 to TestPyPI
         if: ${{ startsWith(github.ref, 'refs/heads/stable') }}
         run: |
@@ -650,8 +643,11 @@ jobs:
 
       - name: Find new version
         id: new_version
+        env: 
+          TAG_NAME: ${{ github.ref }}
         run: |
-          echo "NEW_VERSION=$(curl 'https://api.github.com/repos/randovania/randovania/tags' | jq -r '.[0].name')" >> $GITHUB_OUTPUT
+          # Tag is of format vX.Y.Z, cut the v off.
+          echo "NEW_VERSION=$(${TAG_NAME:1})" >> $GITHUB_OUTPUT
 
       - name: Replace version, commit and push
         run: |
