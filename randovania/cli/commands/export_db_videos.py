@@ -122,7 +122,7 @@ HTML_FOOTER = """
 """
 
 
-def get_date():
+def get_date() -> str:
     return str(datetime.datetime.now()).split(".")[0].split(" ")[0]
 
 
@@ -300,31 +300,33 @@ def generate_region_html(name: str, areas: dict[str, AreaVideos]) -> str:
 
     html = header + toc + body + HTML_FOOTER
 
-    from htmlmin import minify
+    from htmlmin import minify  # type: ignore
 
     return minify(html, remove_comments=True, remove_all_empty_space=True)
 
 
-def filename_friendly_game_name(game: RandovaniaGame):
+def filename_friendly_game_name(game: RandovaniaGame) -> str:
     return "".join(x for x in game.long_name if x.isalnum() or x in [" "])
 
 
-def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
-    def add_entry(arr: list, key: str, value: Any):
+def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool) -> None:
+    def add_entry(arr: list, key: str, value: Any) -> None:
         arr.append({"key": key, "value": value})
 
     regions = collect_game_info(game)
 
-    output = []
+    yaml_list_type = list[dict[str, list[Any] | str]]
+
+    output_as_list: yaml_list_type = []
     for region, areas in sorted(regions.items()):
-        sorted_region = []
-        add_entry(output, region, sorted_region)
+        sorted_region: yaml_list_type = []
+        add_entry(output_as_list, region, sorted_region)
         for area, nodes in sorted(areas.items()):
-            sorted_area = []
+            sorted_area: yaml_list_type = []
             add_entry(sorted_region, area, sorted_area)
             all_area_vids = set()
             for node, connections in sorted(nodes.items()):
-                sorted_node = []
+                sorted_node: yaml_list_type = []
 
                 for connection, videos in sorted(connections.items()):
                     sorted_vids = []
@@ -349,7 +351,7 @@ def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
                 if sorted_node:
                     add_entry(sorted_area, node, sorted_node)
 
-    output = {"regions": output}
+    output = {"regions": output_as_list}
 
     tr = lambda s: s
     fmt = "yml"
@@ -364,7 +366,7 @@ def export_as_yaml(game: RandovaniaGame, out_dir: Path, as_frontmatter: bool):
         yaml.dump(output, out_file, transform=tr)
 
 
-def export_videos(game: RandovaniaGame, out_dir: Path):
+def export_videos(game: RandovaniaGame, out_dir: Path) -> None:
     regions = collect_game_info(game)
     if not regions:
         return  # no youtube videos in this game's database

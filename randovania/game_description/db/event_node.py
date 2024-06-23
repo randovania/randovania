@@ -25,11 +25,11 @@ class EventNode(ResourceNode):
         else:
             return Requirement.trivial()
 
+    def requirement_to_collect(self) -> Requirement:
+        return Requirement.trivial()
+
     def resource(self, context: NodeContext) -> ResourceInfo:
         return self.event
-
-    def can_collect(self, context: NodeContext) -> bool:
-        return not self.is_collected(context)
 
     def is_collected(self, context: NodeContext) -> bool:
         return context.has_resource(self.event)

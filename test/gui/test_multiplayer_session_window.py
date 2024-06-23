@@ -19,6 +19,7 @@ from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib import string_lib
 from randovania.lib.container_lib import zip2
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
@@ -363,6 +364,42 @@ async def test_change_password_title_or_duplicate(window: MultiplayerSessionWind
         api_method.assert_not_awaited()
 
 
+@pytest.mark.parametrize("accept", [False, True])
+def test_export_all_presets(
+    window: MultiplayerSessionWindow, mocker: MockerFixture, sample_session: MultiplayerSessionEntry, accept, tmp_path
+):
+    # Setup
+    window._session = sample_session
+    fake_export_path = tmp_path.joinpath("exported_presets")
+    fake_export_path.mkdir(parents=True, exist_ok=True)
+
+    prompt_user_for_preset_folder = mocker.patch(
+        "randovania.gui.lib.common_qt_lib.prompt_user_for_preset_folder",
+        return_value=fake_export_path if accept else None,
+    )
+
+    world_names = [world.name.replace("-", "_") for world in sample_session.worlds]
+    games = [world.preset.game.short_name for world in sample_session.worlds]
+    owner_names = [sample_session.users_list[0].name.replace("-", "_"), "Unclaimed", "Unclaimed"]
+    extension = VersionedPreset.file_extension()
+    export_filenames = [
+        string_lib.sanitize_for_path(f"World{i + 1}-{game}-{owner_name}-{world_name}") + f".{extension}"
+        for i, game, owner_name, world_name in zip(range(len(world_names)), games, owner_names, world_names)
+    ]
+
+    # Run
+    window.export_all_presets()
+
+    # Assert
+    prompt_user_for_preset_folder.assert_called()
+
+    if accept:
+        for filename in export_filenames:
+            assert fake_export_path.joinpath(filename).is_file()
+    else:
+        assert len(list(fake_export_path.iterdir())) == 0
+
+
 @pytest.fixture()
 def prepare_to_upload_layout():
     result = MagicMock(spec=contextlib.AbstractAsyncContextManager)
@@ -427,6 +464,7 @@ async def test_generate_game(
         ),
         options=window._options,
         retries=3,
+        world_names=["W1", "W2"],
     )
     window.game_session_api.prepare_to_upload_layout.assert_called_once_with(
         [session.worlds[0].id, session.worlds[1].id]

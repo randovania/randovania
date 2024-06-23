@@ -6,7 +6,6 @@ import randovania
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
@@ -28,6 +27,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import Region, RegionList
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -466,7 +466,7 @@ def _serialize_dock_modifications(
                 assert len(candidates) % 2 == 0
 
                 if max_index < -0.00001:
-                    raise Exception("Failed to find pairings for %s" % str(candidates))
+                    raise Exception(f"Failed to find pairings for {str(candidates)}")
 
                 (src_name, src_dock) = next_candidate(max_index)
 
@@ -618,6 +618,10 @@ class PrimePatchDataFactory(PatchDataFactory):
             "swapBeamControls": cosmetic_patches.user_preferences.swap_beam_controls,
         }
 
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
+
     def create_game_specific_data(self) -> dict:
         # Setup
         db = self.game
@@ -636,22 +640,7 @@ class PrimePatchDataFactory(PatchDataFactory):
             )
 
         scan_visor = self.game.resource_database.get_item_by_name("Scan Visor")
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(db.resource_database), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            db.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(
-                pickup_exporter.GenericAcquiredMemo(), self.players_config, self.game_enum()
-            ),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
         elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
@@ -678,15 +667,15 @@ class PrimePatchDataFactory(PatchDataFactory):
                     if not is_teleporter:
                         continue
 
-                    identifier = db.region_list.identifier_for_node(node)
+                    identifier = node.identifier.area_identifier
                     target = _name_for_location(
                         db.region_list, self.patches.get_dock_connection_for(node).identifier.area_identifier
                     )
 
                     source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[
                         (
-                            identifier.area_identifier.region,
-                            identifier.area_identifier.area,
+                            identifier.region,
+                            identifier.area,
                         )
                     ]
                     level_data[region.name]["transports"][source_name] = target
@@ -813,7 +802,7 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             starting_memo = None
 
-        if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
+        if self.cosmetic_patches.open_map:
             map_default_state = "Always"
         else:
             map_default_state = "MapStationOrVisit"
@@ -968,7 +957,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,
                 "missileStationPbRefill": not self.configuration.legacy_mode,
-                "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
+                "staggeredSuitDamage": self.configuration.damage_reduction.value,
                 "heatDamagePerSec": self.configuration.heat_damage,
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,

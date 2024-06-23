@@ -18,10 +18,6 @@ if TYPE_CHECKING:
 
 class NodeProvider:
     # Identifier for
-
-    def identifier_for_node(self, node: Node) -> NodeIdentifier:
-        return node.identifier
-
     def identifier_for_area(self, area: Area) -> AreaIdentifier:
         region = self.region_with_area(area)
         return AreaIdentifier(region=region.name, area=area.name)
@@ -98,4 +94,7 @@ class NodeProvider:
         return weakness.lock.requirement
 
     def nodes_in_network(self, network_name: str) -> list[TeleporterNetworkNode]:
+        raise NotImplementedError
+
+    def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
         raise NotImplementedError

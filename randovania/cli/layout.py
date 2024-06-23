@@ -11,12 +11,12 @@ from randovania.cli.commands.permalink import add_permalink_command
 from randovania.cli.commands.validate import add_validate_command
 
 if TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, Namespace, _SubParsersAction
 
 __all__ = ["create_subparsers"]
 
 
-def create_subparsers(root_sub_parsers):
+def create_subparsers(root_sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = root_sub_parsers.add_parser(
         "layout", help="Actions regarding generating layouts and permalinks"
     )
@@ -29,7 +29,7 @@ def create_subparsers(root_sub_parsers):
     add_permalink_command(sub_parsers)
     add_describe_command(sub_parsers)
 
-    def check_command(args):
+    def check_command(args: Namespace) -> None:
         if args.command is None:
             parser.print_help()
             raise SystemExit(1)

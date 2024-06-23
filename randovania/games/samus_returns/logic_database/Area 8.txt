@@ -66,10 +66,13 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Super Missile Tank)
       Any of the following:
-          # Spider Boost
           Spider Boost (Beginner) and Can Spider Boost
-          # Phase Drift
-          Morph Ball and Phase Drift
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Phase Drift
+                  # Melee Clip on the ledge above the Ammo Station: https://youtu.be/duncqz0RrAQ
+                  Space Jump and Melee Clip (Beginner) and Out of Bounds Movement (Advanced)
   > Elevator to Surface West
       Baby Metroid
   > Above Left Pickup
@@ -77,7 +80,7 @@ Extra - asset_id: collision_camera_007
 
 > Elevator to Surface West; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Area 8/Elevator to Area 8
+  * Elevator to Transport to Area 8/Elevator to Area 8; Custom name: Metroid Queen Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromAreaSurfaceB
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromAreaSurfaceB
@@ -496,7 +499,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_type: doorpowerpower
   > Door to Nest Nodule (Bottom)
       Trivial
-  > Dock to Nest Nodule
+  > Door to Nest Nodule (Middle)
       Screw Attack
   > Above Screw Attack Blocks
       # Deal with the enemies
@@ -517,9 +520,12 @@ Extra - asset_id: collision_camera_010
   > Above Screw Attack Blocks
       Trivial
 
-> Dock to Nest Nodule; Heals? False
+> Door to Nest Nodule (Middle); Heals? False
   * Layers: default
-  * Open Passage to Nest Nodule/Dock to Nest Network
+  * Access Open to Nest Nodule/Door to Nest Network (Middle)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 83
   > Door to Nest Nodule (Bottom)
       Screw Attack
 
@@ -745,7 +751,7 @@ Extra - asset_id: collision_camera_012
   * Pickup 162; Category? Minor
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
-  > Dock to Nest Network
+  > Door to Nest Network (Middle)
       Morph Ball
 
 > Door to Nest Network (Bottom); Heals? False
@@ -784,9 +790,12 @@ Extra - asset_id: collision_camera_012
       # Deal with the enemies
       Lightning Armor or Defeat Weak Enemies
 
-> Dock to Nest Network; Heals? False
+> Door to Nest Network (Middle); Heals? False
   * Layers: default
-  * Open Passage to Nest Network/Dock to Nest Nodule
+  * Access Open to Nest Network/Door to Nest Nodule (Middle)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 84
   > Pickup (Missile Tank)
       Morph Ball
   > Door to Nest Network (Bottom)
@@ -1126,7 +1135,7 @@ Extra - polygon: [[-2100.0, -16700.0], [-2100.0, -18400.0], [2000.0, -18400.0], 
 Extra - asset_id: collision_camera_021
 > Elevator to Area 7; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Area 8/Elevator to Area 8
+  * Elevator to Transport to Area 8/Elevator to Area 8; Custom name: Metroid Nest Entrance Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea09
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea09

@@ -1,0 +1,187 @@
+----------------
+Tourian Entrance
+Extra - map_name: Tourian/x40_y75
+> Teleporter to Brinstar; Heals? True
+  * Layers: default
+  * Teleporter to Tourian Prelude/Teleporter to Tourian; Excluded from Dock Lock Rando
+  * Extra - object_id: 100022
+  > Door to Testing Chamber
+      Get rid of Larva Metroid
+
+> Door to Testing Chamber; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Testing Chamber/Door to Tourian Entrance
+  > Teleporter to Brinstar
+      Get rid of Larva Metroid
+
+----------------
+Testing Chamber
+Extra - map_name: Tourian/x96_y97
+> Door to Tourian Entrance; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Tourian Entrance/Door to Testing Chamber
+  > Door to Rinka Tower
+      Get rid of Larva Metroid
+
+> Door to Rinka Tower; Heals? False
+  * Layers: default
+  * Missile Door to Rinka Tower/Door to Testing Chamber
+  > Door to Tourian Entrance
+      Get rid of Larva Metroid
+
+----------------
+Rinka Tower
+Extra - map_name: Tourian/x152_y127
+> Door to Testing Chamber; Heals? False
+  * Layers: default
+  * Missile Door to Testing Chamber/Door to Rinka Tower
+  > Door to Pipe Hall
+      Get rid of Larva Metroid
+
+> Door to Pipe Hall; Heals? False
+  * Layers: default
+  * Missile Door to Pipe Hall/Door to Rinka Tower
+  > Door to Testing Chamber
+      Get rid of Larva Metroid
+
+----------------
+Pipe Hall
+Extra - map_name: Tourian/x104_y157
+> Door to Rinka Tower; Heals? False
+  * Layers: default
+  * Missile Door to Rinka Tower/Door to Pipe Hall
+  > Door to Command Center
+      Get rid of Larva Metroid
+
+> Door to Command Center; Heals? False
+  * Layers: default
+  * Normal Door to Command Center/Door to Pipe Hall
+  > Door to Rinka Tower
+      Get rid of Larva Metroid
+
+----------------
+Command Center
+Extra - map_name: Tourian/x40_y157
+> Door to Pipe Hall; Heals? False
+  * Layers: default
+  * Normal Door to Pipe Hall/Door to Command Center
+  > Gate 1
+      Trivial
+
+> Event - Gate 1; Heals? False
+  * Layers: default
+  * Event MB Gate 1 Destroyed
+  > Gate 1
+      Trivial
+
+> Event - Gate 2; Heals? False
+  * Layers: default
+  * Event MB Gate 2 Destroyed
+  > Gate 2
+      Trivial
+
+> Event - Gate 3; Heals? False
+  * Layers: default
+  * Event MB Gate 3 Destroyed
+  > Gate 3
+      Trivial
+
+> Event - Gate 4; Heals? False
+  * Layers: default
+  * Event MB Gate 4 Destroyed
+  > Gate 4
+      Trivial
+
+> Event - Gate 5; Heals? False
+  * Layers: default
+  * Event MB Gate 5 Destroyed
+  > Gate 5
+      Trivial
+
+> Event - Mother Brain; Heals? False
+  * Layers: default
+  * Event Mother Brain Boss Killed
+  > Mother Brain
+      Trivial
+
+> Dock to Escape Route; Heals? False
+  * Layers: default
+  * Open Passage to Escape Route/Door to Command Center
+  > Mother Brain
+      After Mother Brain Boss Killed
+
+> Gate 1; Heals? False
+  * Layers: default
+  > Door to Pipe Hall
+      Trivial
+  > Event - Gate 1
+      Missiles ≥ 10
+  > Gate 2
+      After MB Gate 1 Destroyed
+
+> Gate 5; Heals? False
+  * Layers: default
+  > Event - Gate 5
+      Missiles ≥ 10
+  > Mother Brain
+      After MB Gate 5 Destroyed
+  > Gate 4
+      Trivial
+
+> Mother Brain; Heals? False
+  * Layers: default
+  > Event - Mother Brain
+      Missiles ≥ 33
+  > Dock to Escape Route
+      After Mother Brain Boss Killed
+  > Gate 5
+      Trivial
+
+> Gate 2; Heals? False
+  * Layers: default
+  > Event - Gate 2
+      Missiles ≥ 10
+  > Gate 1
+      Trivial
+  > Gate 3
+      After MB Gate 2 Destroyed
+
+> Gate 3; Heals? False
+  * Layers: default
+  > Event - Gate 3
+      Missiles ≥ 10
+  > Gate 2
+      Trivial
+  > Gate 4
+      After MB Gate 3 Destroyed
+
+> Gate 4; Heals? False
+  * Layers: default
+  > Event - Gate 4
+      Missiles ≥ 10
+  > Gate 5
+      After MB Gate 4 Destroyed
+  > Gate 3
+      Trivial
+
+----------------
+Escape Route
+Extra - map_name: Tourian/x8_y97
+> Door to Command Center; Heals? False
+  * Layers: default
+  * Normal Door to Command Center/Dock to Escape Route
+  > Teleporter to Escape Route
+      Trivial
+
+> Teleporter to Escape Route; Heals? False
+  * Layers: default
+  * Teleporter to Escape Route/Event - End Game
+  > Door to Command Center
+      Trivial
+
+> Event - End Game; Heals? False
+  * Layers: default
+  * Event Credits
+  > Teleporter to Escape Route
+      Trivial
+

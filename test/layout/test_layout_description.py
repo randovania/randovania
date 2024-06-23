@@ -19,7 +19,7 @@ def test_pickle_trick_level(value: LayoutTrickLevel):
 
 @pytest.fixture()
 def multiworld_rdvgame(test_files_dir):
-    return test_files_dir.read_json("log_files", "multiworld.rdvgame")
+    return test_files_dir.read_json("log_files", "multi-oldechoes.rdvgame")
 
 
 def test_load_multiworld(multiworld_rdvgame):

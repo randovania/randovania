@@ -18,6 +18,7 @@ from randovania.game_description import (
     integrity_check,
     pretty_print,
 )
+from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.node import GenericNode, Node, NodeContext, NodeLocation
@@ -181,7 +182,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.update_game(self.original_game_description)
 
-        self.resource_editor = ResourceDatabaseEditor(self, self.resource_database)
+        self.resource_editor = ResourceDatabaseEditor(self, self.resource_database, self.region_list)
         self.resource_editor.setFeatures(
             self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable
         )
@@ -452,6 +453,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 return
             self.replace_node_with(area, node_edit_popup.node, new_node)
 
+            if isinstance(new_node, DockNode) and not hasattr(new_node, "lock_node"):
+                lock_node = DockLockNode.create_from_dock(
+                    new_node, self.editor.new_node_index(), self.resource_database
+                )
+                self.editor.add_node(area, lock_node)
+
     def update_selected_node(self):
         node = self.current_node
         self.node_info_group.setEnabled(node is not None)
@@ -476,6 +483,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if isinstance(node, DockNode):
             msg = f'{node.default_dock_weakness.name} to <a href="node://{node.default_connection.as_string}">{node.default_connection.node}</a>'
+            if node.override_default_open_requirement is not None:
+                msg += f"\n<br />Open Override: {node.override_default_open_requirement}"
+            if node.override_default_lock_requirement is not None:
+                msg += f"\n<br />Lock Override: {node.override_default_lock_requirement}"
 
         self.node_name_label.setText(node.name)
         self.node_details_label.setText(msg)
@@ -593,7 +604,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         assert target_node is not None
 
         requirement = self.current_area.connections[from_node].get(target_node, Requirement.impossible())
-        editor = ConnectionsEditor(self, self.resource_database, requirement)
+        editor = ConnectionsEditor(self, self.resource_database, self.region_list, requirement)
         if await self._execute_edit_dialog(editor):
             self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
             self.update_connections()
@@ -753,6 +764,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             override_default_open_requirement=None,
             override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
+            ui_custom_name=None,
         )
 
         new_node_other_area = DockNode(
@@ -771,10 +783,25 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             override_default_open_requirement=None,
             override_default_lock_requirement=None,
             incompatible_dock_weaknesses=(),
+            ui_custom_name=None,
         )
 
         self.editor.add_node(current_area, new_node_this_area)
         self.editor.add_node(target_area, new_node_other_area)
+
+        new_node_this_lock = DockLockNode.create_from_dock(
+            new_node_this_area,
+            self.editor.new_node_index(),
+            self.resource_database,
+        )
+        new_node_other_lock = DockLockNode.create_from_dock(
+            new_node_other_area,
+            self.editor.new_node_index(),
+            self.resource_database,
+        )
+        self.editor.add_node(current_area, new_node_this_lock)
+        self.editor.add_node(target_area, new_node_other_lock)
+
         if source_count == 1:
             self.editor.rename_node(
                 current_area,

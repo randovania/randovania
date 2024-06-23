@@ -15,13 +15,13 @@ colorama==0.4.6
     #   -c tools/requirements\../../requirements.txt
     #   build
     #   click
-packaging==24.0
+packaging==24.1
     # via
     #   -c tools/requirements\../../requirements.txt
     #   build
 pip-tools==7.4.1
     # via -r tools/requirements/requirements-lint.in
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
@@ -29,7 +29,9 @@ wheel==0.43.0
     # via pip-tools
 
 # The following packages are considered to be unsafe in a requirements file:
-pip==24.0
+pip==24.1
     # via pip-tools
-setuptools==69.2.0
-    # via pip-tools
+setuptools==70.1.0
+    # via
+    #   -c tools/requirements\../../requirements.txt
+    #   pip-tools

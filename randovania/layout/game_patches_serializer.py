@@ -5,7 +5,6 @@ import dataclasses
 import re
 import typing
 
-from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
@@ -100,14 +99,11 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             }
             for dock, weakness in patches.all_dock_weaknesses()
         },
-        "configurable_nodes": {
-            identifier.as_string: data_writer.write_requirement(requirement)
-            for identifier, requirement in patches.configurable_nodes.items()
-        },
         "locations": dict(
             _pickup_assignment_to_item_locations(region_list, patches.pickup_assignment, num_players).items()
         ),
         "hints": {identifier.as_string: hint.as_json for identifier, hint in patches.hints.items()},
+        "game_specific": patches.game_specific,
     }
 
     if patches.custom_patcher_data:
@@ -169,6 +165,8 @@ def decode_single(
     else:
         custom_patcher_data = []
 
+    game_specific = game_modifications["game_specific"]
+
     # Starting Location
     starting_location = NodeIdentifier.from_string(game_modifications["starting_location"])
 
@@ -222,12 +220,6 @@ def decode_single(
         for source_name, weakness_data in game_modifications["dock_weakness"].items()
     ]
 
-    # Configurable Nodes
-    configurable_nodes = {
-        NodeIdentifier.from_string(identifier): data_reader.read_requirement(requirement, game.resource_database)
-        for identifier, requirement in game_modifications["configurable_nodes"].items()
-    }
-
     # Pickups
     target_name_re = re.compile(r"(.*) for Player (\d+)")
 
@@ -272,11 +264,11 @@ def decode_single(
     return dataclasses.replace(
         patches,
         pickup_assignment=pickup_assignment,  # PickupAssignment
-        configurable_nodes=configurable_nodes,
         starting_equipment=starting_equipment,
         starting_location=starting_location,  # NodeIdentifier
         hints=hints,
         custom_patcher_data=custom_patcher_data,
+        game_specific=game_specific,
     )
 
 

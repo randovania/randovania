@@ -127,6 +127,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Area 2 Chozo Seal Elevator North",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -166,6 +167,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Area 2 Chozo Seal Elevator South",
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -583,6 +585,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -621,6 +624,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -835,6 +839,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Transport to Areas 1 and 3 (Bottom)": {
                             "type": "resource",
@@ -875,6 +880,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Transport to Areas 1 and 3 (Top)": {
                             "type": "resource",
@@ -1014,6 +1020,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -1204,13 +1211,11 @@
                     "pickup_index": 50,
                     "location_category": "minor",
                     "connections": {
-                        "Right of Paraby Swarm": {
-                            "type": "resource",
+                        "Next to Pickup": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1236,21 +1241,17 @@
                     "location_category": "major",
                     "connections": {
                         "Left Spawnpoint": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Right Spawnpoint": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1284,6 +1285,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Lightning Armor Chamber Elevator",
                     "connections": {
                         "Door to Transport Access (Top)": {
                             "type": "and",
@@ -1322,6 +1324,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Right Spawnpoint": {
                             "type": "and",
@@ -1360,6 +1363,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Elevator to Area 2 Dam Exterior": {
                             "type": "and",
@@ -1396,33 +1400,7 @@
                                 "negate": false
                             }
                         },
-                        "Right of Paraby Swarm": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Right Spawnpoint": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7400.0,
-                        "y": -2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "start_point_actor_name": "ST_DEBUG_Bestowal"
-                    },
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Lightning Armor)": {
+                        "Event - Unlock Door": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1431,58 +1409,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to Transport Access (Bottom)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock Door": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8099.305059169248,
-                        "y": -342.47875466603136,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "event_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
-                    "connections": {
-                        "Right of Paraby Swarm": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Right of Paraby Swarm": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7095.254546898578,
-                        "y": -1432.1459772853627,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "valid_starting_location": false,
-                    "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Next to Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1528,7 +1455,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "Damage",
+                                                                    "name": "Hazard",
                                                                     "amount": 250,
                                                                     "negate": false
                                                                 }
@@ -1541,7 +1468,85 @@
                                     }
                                 ]
                             }
+                        }
+                    }
+                },
+                "Right Spawnpoint": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7400.0,
+                        "y": -2300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_Bestowal"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Lightning Armor)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Clip into the statue: https://youtu.be/nlu3akHbJew",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "OoB",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
+                        "Door to Transport Access (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock Door": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8099.305059169248,
+                        "y": -342.47875466603136,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door",
+                    "connections": {
                         "Right Spawnpoint": {
                             "type": "resource",
                             "data": {
@@ -1550,8 +1555,94 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        }
+                    }
+                },
+                "Next to Pickup": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6416.4,
+                        "y": 165.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
-                        "Event - Unlock Door": {
+                        "Elevator to Area 2 Dam Exterior": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Freeze the Moheek below the Crumble Block and Melee Clip right: https://youtu.be/3VLe-42BmeE",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MeleeClip",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "FrozenEnemy",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Right Spawnpoint": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1622,6 +1713,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Fleech Swarm Floodway": {
                             "type": "or",
@@ -1896,8 +1988,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Alpha+ Arena": {
+                        "Door to Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1906,31 +1999,37 @@
                         }
                     }
                 },
-                "Dock to Alpha+ Arena": {
+                "Door to Alpha+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10467.516826071555,
-                        "y": -1246.8473255402055,
+                        "x": 10450.0,
+                        "y": -1350.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 91,
+                        "append_entity_group": "PostAlpha_002"
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 Dam Entryway",
                         "area": "Alpha+ Arena",
-                        "node": "Dock to Transport Access"
+                        "node": "Door to Transport Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Lightning Armor & Transport to Dam Exterior East (Top)": {
                             "type": "or",
@@ -2049,6 +2148,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
                             "type": "and",
@@ -2181,7 +2281,7 @@
                                 ]
                             }
                         },
-                        "Dock to Alpha+ Arena": {
+                        "Door to Alpha+ Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2411,6 +2511,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -2529,6 +2630,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -2539,31 +2641,37 @@
                         }
                     }
                 },
-                "Dock to Transport Access": {
+                "Door to Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10435.44,
-                        "y": -1296.36,
+                        "x": 10450.0,
+                        "y": -1350.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 92,
+                        "append_entity_group": "PostAlpha_002"
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 Dam Entryway",
                         "area": "Transport Access",
-                        "node": "Dock to Alpha+ Arena"
+                        "node": "Door to Alpha+ Arena"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -2644,7 +2752,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Transport Access": {
+                        "Door to Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2688,7 +2796,7 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Transport Access": {
+                        "Door to Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,

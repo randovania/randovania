@@ -82,15 +82,23 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
 
     layout_names = [
         # Cross Game Multis
-        "all_game_multi.rdvgame",
+        "multi-cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2+msr.rdvgame",
         "prime1_and_2_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
         "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
         # AM2R
         "am2r/starter_preset.rdvgame",  # starter preset
         "am2r/door_lock.rdvgame",  # starter preset+door lock rando
+        "am2r/door_lock_open.rdvgame",  # starter preset+door lock rando with open transitions
         "am2r/progressive_items.rdvgame",  # Starter preset+progressive items
         "am2r/starting_items.rdvgame",  # Starter preset + random starting items
+        "am2r/transport_pipe_shuffle.rdvgame",  # Starter preset + shuffled transport pipes
+        "am2r/custom_dna_required.rdvgame",  # Has 20/30 dna
+        "am2r/chaos_options.rdvgame",  # Has Chaos Options
+        # Factorio
+        "factorio/starter_preset.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
@@ -98,12 +106,15 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/elevator_rando.rdvgame",  # elevator_rando multi
         "dread/custom_start.rdvgame",  # crazy settings
         "dread/custom_patcher_data.rdvgame",  # custom patcher data
+        "dread/all_settings.rdvgame",  # all settings enabled
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
         # Samus Returns
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
+        "samus_returns/door_lock.rdvgame",  # starter preset + door lock
+        "samus_returns/door_lock_access_open.rdvgame",  # door lock + access open doors
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]

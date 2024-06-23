@@ -4,9 +4,9 @@ import dataclasses
 
 from PySide6 import QtGui, QtWidgets
 
+from randovania.games.samus_returns.gui.generated.msr_cosmetic_patches_dialog_ui import Ui_MSRCosmeticPatchesDialog
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRRoomGuiType
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.msr_cosmetic_patches_dialog_ui import Ui_MSRCosmeticPatchesDialog
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
@@ -30,10 +30,10 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
         super().connect_signals()
 
         self._persist_check_field(self.custom_laser_color_check, "use_laser_color")
-        self._persist_check_field(self.custom_grapple_laser_color_check, "use_grapple_laser_color")
         self._persist_check_field(self.custom_energy_tank_color_check, "use_energy_tank_color")
         self._persist_check_field(self.custom_aeion_bar_color_check, "use_aeion_bar_color")
         self._persist_check_field(self.custom_ammo_hud_color_check, "use_ammo_hud_color")
+        self._persist_check_field(self.enable_remote_lua, "enable_remote_lua")
         self.custom_laser_locked_color_button.clicked.connect(
             lambda: self._open_color_picker(self._cosmetic_patches.laser_locked_color, "laser_locked")
         )
@@ -62,10 +62,10 @@ class MSRCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_MSRCosmeticPatchesD
 
     def on_new_cosmetic_patches(self, patches: MSRCosmeticPatches) -> None:
         self.custom_laser_color_check.setChecked(patches.use_laser_color)
-        self.custom_grapple_laser_color_check.setChecked(patches.use_grapple_laser_color)
         self.custom_energy_tank_color_check.setChecked(patches.use_energy_tank_color)
         self.custom_aeion_bar_color_check.setChecked(patches.use_aeion_bar_color)
         self.custom_ammo_hud_color_check.setChecked(patches.use_ammo_hud_color)
+        self.enable_remote_lua.setChecked(patches.enable_remote_lua)
 
         box_mapping = [
             (self.custom_laser_locked_color_square, patches.laser_locked_color),

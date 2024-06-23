@@ -43,7 +43,7 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
         progression=("DarkVisor", "MorphBall", "Bombs"),
         ammo=("EnergyTank", "DarkAmmo"),
         must_be_starting=False,
-        original_location=None,
+        original_locations=(),
         probability_offset=5.0,
         preferred_location_category=LocationCategory.MAJOR,
     )

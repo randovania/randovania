@@ -50,6 +50,7 @@ class DockNode(Node):
     incompatible_dock_weaknesses: tuple[DockWeakness, ...]
     lock_node: Node = dataclasses.field(init=False, hash=False, compare=False)
     cache_default_connection: int | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
+    ui_custom_name: str | None
 
     def __repr__(self) -> str:
         return f"DockNode({self.name!r} -> {self.default_connection})"

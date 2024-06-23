@@ -13,7 +13,7 @@ Extra - aabb: [260.33414, 81.07292, 16.824417, 304.50952, 121.239456, 67.27582]
 
 > Teleporter to Tallon Overworld; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Phazon Mines East/Teleporter to Phazon Mines
+  * Teleporter to Transport to Phazon Mines East/Teleporter to Phazon Mines; Custom name: Main Quarry Elevator
   * Extra - scan_asset_id: 2685334598
   * Extra - teleporter_instance_id: 28
   > Door to Quarry Access
@@ -402,24 +402,95 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
       All of the following:
           After Mine Security Station Unlock Doors
           Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 125
-              Shoot Ice Beam and Shoot Wave Beam
+              # Avoid Pirates
+              Combat (Expert) or Normal Damage ≥ 199
+              All of the following:
+                  # Fight Pirates
+                  Shoot Ice Beam and Shoot Wave Beam
+                  Any of the following:
+                      Combat (Advanced) or Normal Damage ≥ 149
+                      All of the following:
+                          Charge Beam
+                          Any of the following:
+                              Combat (Intermediate) or Normal Damage ≥ 99
+                              Combat (Beginner) and Normal Damage ≥ 49
   > Door to Security Access B
       All of the following:
           After Mine Security Station Unlock Doors
           Any of the following:
-              Combat (Intermediate) or Normal Damage ≥ 125
-              Shoot Ice Beam and Shoot Wave Beam
+              # Avoid Pirates
+              Combat (Expert) or Normal Damage ≥ 199
+              All of the following:
+                  # Fight Pirates
+                  Shoot Ice Beam and Shoot Wave Beam
+                  Any of the following:
+                      Combat (Advanced) or Normal Damage ≥ 149
+                      All of the following:
+                          Charge Beam
+                          Any of the following:
+                              Combat (Intermediate) or Normal Damage ≥ 99
+                              Combat (Beginner) and Normal Damage ≥ 49
   > Door to Storage Depot A
       After Mine Security Station Barrier
   > Event - Mine Security Station Barrier Opened
-      Morph Ball and Power Bomb and Scan Visor
+      Any of the following:
+          All of the following:
+              # Avoid Wave Pirates
+              Before Mine Security Station Unlock Doors
+              Any of the following:
+                  Any of the following:
+                      # Avoid All Pirates
+                      Combat (Hypermode) or Normal Damage ≥ 299
+                      All of the following:
+                          # Fight Shadow Pirates
+                          Shoot Any Beam
+                          Any of the following:
+                              Combat (Advanced) or Normal Damage ≥ 199
+                              All of the following:
+                                  Combat (Intermediate)
+                                  Any of the following:
+                                      Normal Damage ≥ 99
+                                      Charge Beam and Normal Damage ≥ 49
+                  All of the following:
+                      # Fight Wave Pirates
+                      Shoot Wave Beam
+                      Any of the following:
+                          Combat (Advanced) or Normal Damage ≥ 249
+                          All of the following:
+                              Charge Beam
+                              Any of the following:
+                                  Combat (Intermediate) or Normal Damage ≥ 149
+                                  All of the following:
+                                      # Fight Shadow Pirates
+                                      Combat (Beginner)
+                                      Normal Damage ≥ 99 or Shoot Ice Beam or Shoot Plasma Beam
+          All of the following:
+              After Mine Security Station Unlock Doors
+              Any of the following:
+                  # Avoid Pirates
+                  Combat (Expert) or Normal Damage ≥ 249
+                  All of the following:
+                      # Fight Pirates
+                      Shoot Ice Beam and Shoot Super Missile
+                      Any of the following:
+                          Combat (Advanced) or Normal Damage ≥ 149
+                          All of the following:
+                              Charge Beam
+                              Any of the following:
+                                  Combat (Intermediate) or Normal Damage ≥ 99
+                                  Combat (Beginner) and Normal Damage ≥ 49
   > Event - Mine Security Station Doors Unlocked
       All of the following:
           Before Mine Security Station Unlock Doors and Shoot Wave Beam
           Any of the following:
-              Charge Beam or Combat (Advanced)
-              Combat (Intermediate) and Normal Damage ≥ 125
+              Combat (Advanced) or Normal Damage ≥ 249
+              All of the following:
+                  Charge Beam
+                  Any of the following:
+                      Combat (Intermediate) or Normal Damage ≥ 149
+                      All of the following:
+                          Combat (Beginner)
+                          Normal Damage ≥ 99 or Shoot Ice Beam or Shoot Plasma Beam
 
 ----------------
 Research Access
@@ -1182,7 +1253,7 @@ Extra - aabb: [-143.05084, 192.08687, -49.47048, -104.58562, 236.35016, 27.73855
 
 > Teleporter to Magmoor Caverns; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Teleporter to Transport to Phazon Mines West/Teleporter to Phazon Mines
+  * Teleporter to Transport to Phazon Mines West/Teleporter to Phazon Mines; Custom name: Phazon Processing Elevator
   * Extra - scan_asset_id: 495694188
   * Extra - teleporter_instance_id: 1638417
   > Door to Transport Access
@@ -1248,7 +1319,7 @@ Extra - aabb: [-209.90451, -63.744553, -141.35068, -99.78124, 74.70173, -75.9777
                   Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
                   Any of the following:
                       # https://youtu.be/xJxxT3yuXZ8 1-Cycle Strats
-                      Plasma Beam
+                      Shoot Plasma Beam
                       All of the following:
                           # https://youtu.be/lX3IAoDGC30
                           Shoot Super Missile
@@ -1279,11 +1350,6 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Ice Door to Quarantine Access A/Door to Central Dynamo
   * Extra - dock_index: 1
   * Extra - nonstandard: False
-  > Pickup (Main Power Bombs)
-      All of the following:
-          # Achieving the Infinite Speed without going up to hit the fight trigger: https://youtu.be/LRmJn2BAYwc
-          Boost Ball and Morph Ball and Infinite Speed (Intermediate) and Normal Damage ≥ 280
-          Morph Ball Bomb or Power Bomb
   > Room Bottom
       Morph Ball and Power Bomb
 
@@ -1299,12 +1365,7 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Layers: default
   * Event Invisible Drone
   > Pickup (Main Power Bombs)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Morph Ball Bomb
-              # Destroying the drone requires Samus being able to take 400 more damage during item acquisition. The video shows how to avoid destroying it. https://youtu.be/LRmJn2BAYwc
-              Boost Ball and Power Bomb and Infinite Speed (Intermediate) and Normal Damage ≥ 680
+      Morph Ball Bomb and Morph Ball
 
 > Pickup (Main Power Bombs); Heals? False
   * Layers: default
@@ -1322,10 +1383,13 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
       Combat (Beginner) or Normal Damage ≥ 100
   > Pickup (Main Power Bombs)
       All of the following:
-          # Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/rDCTXaNmypI
-          Morph Ball and Infinite Speed (Intermediate) and Knowledge (Advanced) and Normal Damage ≥ 280
-          # Power Bomb crates and Boost after
-          Boost Ball or Power Bomb
+          Boost Ball and Morph Ball and Infinite Speed (Intermediate)
+          # Power Bomb or Bomb crates and Boost after
+          Morph Ball Bomb or Power Bomb
+          Any of the following:
+              Normal Damage ≥ 680
+              # Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/rDCTXaNmypI
+              Knowledge (Advanced) and Normal Damage ≥ 280
   > Room Bottom
       Trivial
 
@@ -2022,8 +2086,8 @@ Extra - aabb: [90.076614, 160.53384, -176.2045, 166.0206, 330.8736, -124.46773]
               Space Jump Boots and Combat (Beginner) and Normal Damage ≥ 299
               Combat (Advanced) and Normal Damage ≥ 299
               Space Jump Boots and Combat (Intermediate)
-              Plasma Beam and Combat (Beginner)
-              Plasma Beam and Normal Damage ≥ 299
+              Combat (Beginner) and Shoot Plasma Beam
+              Normal Damage ≥ 299 and Shoot Plasma Beam
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room

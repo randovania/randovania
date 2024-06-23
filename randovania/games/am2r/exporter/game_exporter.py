@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import randovania
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.patching.patchers.exceptions import UnableToExportError
 
@@ -59,6 +60,9 @@ class AM2RGameExporter(GameExporter):
             dotnet_ran_fine = dotnet_process.returncode == 0
         except FileNotFoundError:
             dotnet_ran_fine = False
+
+        monitoring.set_tag("am2r_dotnet_ran_fine", dotnet_ran_fine)
+
         if not dotnet_ran_fine:
             raise UnableToExportError(
                 "You do not have .NET installed!\n"
@@ -92,6 +96,7 @@ class AM2RGameExporter(GameExporter):
             future.result()
 
 
+@monitoring.trace_function
 def _run_patcher(patch_data: dict, export_params: AM2RGameExportParams, output_pipe: Connection) -> None:
     # Delay this, so that we only load CLR/dotnet when exporting
     import am2r_yams

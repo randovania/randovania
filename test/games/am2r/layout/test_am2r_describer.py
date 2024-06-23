@@ -15,16 +15,16 @@ from randovania.interface_common.preset_manager import PresetManager
 @pytest.mark.parametrize(
     ("artifacts"),
     [
-        AM2RArtifactConfig(True, True, False, 5),
-        AM2RArtifactConfig(True, False, False, 46),
-        AM2RArtifactConfig(False, True, False, 6),
-        AM2RArtifactConfig(False, False, False, 0),
-        AM2RArtifactConfig(False, False, True, 2),
-        AM2RArtifactConfig(False, True, True, 10),
-        AM2RArtifactConfig(True, False, True, 30),
+        AM2RArtifactConfig(True, True, False, 5, 5),
+        AM2RArtifactConfig(True, False, False, 46, 46),
+        AM2RArtifactConfig(False, True, False, 3, 6),
+        AM2RArtifactConfig(False, False, False, 0, 0),
+        AM2RArtifactConfig(False, False, True, 2, 5),
+        AM2RArtifactConfig(False, True, True, 10, 10),
+        AM2RArtifactConfig(True, False, True, 30, 40),
     ],
 )
-def test_am2r_format_params(artifacts):
+def test_am2r_format_params(artifacts) -> None:
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.AM2R).get_preset()
     assert isinstance(preset.configuration, AM2RConfiguration)
@@ -57,9 +57,16 @@ def test_am2r_format_params(artifacts):
         ],
         "Gameplay": ["Starts at Main Caves - Landing Site"],
         "Goal": (
-            [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
+            [f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}", dna_where]
+            if artifacts.required_artifacts
+            else [dna_where]
         ),
         "Hints": ["DNA Hint: Area and room", "Ice Beam Hint: Area only"],
-        "Item Pool": [f"Size: {118+artifacts.required_artifacts} of 134", "Vanilla starting items"],
+        "Item Pool": [
+            f"Size: {118+artifacts.placed_artifacts} of 134",
+            "Vanilla starting items",
+            "Excludes Varia Suit, Space Jump, Hi-Jump Boots, Gravity Suit",
+            "Shuffles 2x Progressive Jump, 2x Progressive Suit",
+        ],
         "Logic Settings": ["All tricks disabled"],
     }

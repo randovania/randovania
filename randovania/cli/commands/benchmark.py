@@ -1,4 +1,3 @@
-import argparse
 import asyncio
 import base64
 import collections
@@ -8,6 +7,7 @@ import math
 import statistics
 import time
 import typing
+from argparse import Namespace
 from asyncio import CancelledError
 from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
@@ -143,7 +143,7 @@ def compare_reports(
     print_report("Difference", difference_report)
 
 
-def run_logic(args: argparse.Namespace) -> None:
+def run_logic(args: Namespace) -> None:
     base_seed = 1000
     process_count = 6
     preset_manager = PresetManager(None)
@@ -189,7 +189,7 @@ def run_logic(args: argparse.Namespace) -> None:
     print_report("Results", game_report)
 
 
-def repeat_logic(args: argparse.Namespace) -> None:
+def repeat_logic(args: Namespace) -> None:
     input_file: Path = args.input_file
 
     reference = read_file(input_file)
@@ -221,7 +221,7 @@ def _extract_generator_params_bytes(link: str) -> bytes:
     return data.generator_params
 
 
-def compare_logic(args: argparse.Namespace) -> None:
+def compare_logic(args: Namespace) -> None:
     reference_data = read_file(args.reference_file)
     new_data = read_file(args.new_file)
 

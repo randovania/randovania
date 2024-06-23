@@ -27,6 +27,7 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_description import GameDescription, IndexWithReason, MinimalLogicData
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -88,7 +89,12 @@ class ResourceReader:
 
     def read_trick_resource_info(self, name: str, data: dict) -> TrickResourceInfo:
         return TrickResourceInfo(
-            self.make_index(), data["long_name"], name, data["description"], frozen_lib.wrap(data["extra"])
+            self.make_index(),
+            data["long_name"],
+            name,
+            data["description"],
+            data["require_documentation_above"],
+            frozen_lib.wrap(data["extra"]),
         )
 
     def read_resource_info_array(self, data: dict[str, dict], resource_type: ResourceType) -> list[SimpleResourceInfo]:
@@ -145,6 +151,10 @@ def read_requirement_template(data: dict, resource_database: ResourceDatabase) -
     return RequirementTemplate(data["data"])
 
 
+def read_node_requirement(data: dict, resource_database: ResourceDatabase) -> NodeRequirement:
+    return NodeRequirement(NodeIdentifier.from_json(data["data"]))
+
+
 def read_requirement(data: dict, resource_database: ResourceDatabase) -> Requirement:
     req_type = data["type"]
     if req_type == "resource":
@@ -158,6 +168,9 @@ def read_requirement(data: dict, resource_database: ResourceDatabase) -> Require
 
     elif req_type == "template":
         return read_requirement_template(data, resource_database)
+
+    elif req_type == "node":
+        return read_node_requirement(data, resource_database)
 
     else:
         raise ValueError(f"Unknown requirement type: {req_type}")
@@ -333,6 +346,7 @@ class RegionReader:
                             for name in data["incompatible_dock_weaknesses"]
                         ]
                     ),
+                    ui_custom_name=data["ui_custom_name"],
                 )
 
             elif node_type == "pickup":
@@ -351,12 +365,12 @@ class RegionReader:
                 )
 
             elif node_type == "hint":
-                requirement_to_collect = read_requirement(data["requirement_to_collect"], self.resource_database)
+                lock_requirement = read_requirement(data["requirement_to_collect"], self.resource_database)
 
                 return HintNode(
                     **generic_args,
                     kind=HintNodeKind(data["kind"]),
-                    requirement_to_collect=requirement_to_collect,
+                    lock_requirement=lock_requirement,
                 )
 
             elif node_type == "teleporter_network":
@@ -426,8 +440,8 @@ class RegionReader:
             frozen_lib.wrap(data["extra"]),
         )
 
-    def read_region_list(self, data: list[dict]) -> RegionList:
-        return RegionList(read_array(data, self.read_region))
+    def read_region_list(self, data: list[dict], flatten_to_set_on_patch: bool) -> RegionList:
+        return RegionList(read_array(data, self.read_region), flatten_to_set_on_patch)
 
 
 def read_requirement_templates(data: dict, database: ResourceDatabase) -> dict[str, NamedRequirementTemplate]:
@@ -496,7 +510,7 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
 
     layers = frozen_lib.wrap(data["layers"])
     region_reader = RegionReader(resource_database, dock_weakness_database)
-    region_list = region_reader.read_region_list(data["regions"])
+    region_list = region_reader.read_region_list(data["regions"], data["flatten_to_set_on_patch"])
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
     starting_location = NodeIdentifier.from_json(data["starting_location"])

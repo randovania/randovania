@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MSRGameExportDialog</class>
+ <widget class="QDialog" name="MSRGameExportDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>501</width>
+    <height>618</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Game Patching</string>
+  </property>
+  <layout class="QGridLayout" name="root_layout">
+   <item row="4" column="0">
+    <widget class="QLineEdit" name="input_exheader_edit">
+     <property name="placeholderText">
+      <string>Path to vanilla exheader.bin</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QLabel" name="input_exheader_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Input exheader.bin (Required for automatic item tracker and multiworld)&lt;br/&gt;If you're unsure how to extract your ExHeader, you can &lt;a href=&quot;https://randovania.org/guides/export-exheader&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;consult this guide&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="17" column="0">
+    <widget class="QCheckBox" name="auto_save_spoiler_check">
+     <property name="text">
+      <string>Include a spoiler log on same directory</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="0" rowspan="2" colspan="3">
+    <widget class="QTabWidget" name="output_tab_widget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_sd_card">
+      <attribute name="title">
+       <string>SD Card</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="sd_label">
+         <property name="text">
+          <string>Select the drive letter for your SD Card</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="sd_driver_layout">
+         <item>
+          <widget class="QComboBox" name="sd_combo">
+           <item>
+            <property name="text">
+             <string>D:</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="sd_non_removable">
+           <property name="text">
+            <string>Show non-removable</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sd_refresh_button">
+           <property name="text">
+            <string>Refresh</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_ftp">
+      <attribute name="title">
+       <string>Upload via FTP</string>
+      </attribute>
+      <layout class="QGridLayout" name="tab_ftp_layout">
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="ftp_description_label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your 3DS, via FTP, to a path compatible with Luma3DS.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your 3DS, you need to run ftpd. You can download it &lt;a href=&quot;https://github.com/mtheall/ftpd/releases/latest&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;here&lt;/span&gt;&lt;/a&gt; or download it directly to your SD card with &lt;a href=&quot;https://github.com/Universal-Team/Universal-Updater/releases/latest&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Universal Updater&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="ftp_anonymous_check">
+         <property name="text">
+          <string>Anonymous</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="ftp_username_edit">
+         <property name="placeholderText">
+          <string>Username</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QLineEdit" name="ftp_password_edit">
+         <property name="placeholderText">
+          <string>Password</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="ftp_ip_label">
+         <property name="text">
+          <string>3DS IP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="ftp_ip_edit">
+         <property name="inputMask">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="placeholderText">
+          <string>IP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="ftp_port_edit">
+         <property name="text">
+          <string>21</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="placeholderText">
+          <string>Port</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="ftp_test_button">
+         <property name="text">
+          <string>Test connection</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_citra">
+      <attribute name="title">
+       <string>Citra</string>
+      </attribute>
+      <widget class="QLabel" name="citra_label">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>473</width>
+         <height>171</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The game will be exported directly to Citra's mod folder for Metroid: Samus Returns.&lt;/p&gt;&lt;p&gt;Path to be used:&lt;br/&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;{mod_path}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Please make sure Citra is closed before exporting a game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_custom_path">
+      <attribute name="title">
+       <string>Custom Path</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="custom_path_edit">
+         <property name="placeholderText">
+          <string>Path where to place randomized game</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="custom_path_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Select Folder</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="custom_path_label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saves the mod to a path or your choosing, leaving the responsibility of placing the files in the correct location to you.&lt;/p&gt;&lt;p&gt;This path and input path are not allowed to contain the other.&lt;/p&gt;&lt;p&gt;It's recommended to use one of the other options.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="11" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="version_layout">
+     <item>
+      <widget class="QLabel" name="version_label">
+       <property name="text">
+        <string>Version</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="ntsc_radio">
+       <property name="text">
+        <string>NTSC</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">version_btn_group</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="pal_radio">
+       <property name="text">
+        <string>PAL</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">version_btn_group</string>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="18" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="12" column="0" colspan="3">
+    <widget class="QLabel" name="console_reminder_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ensure that Game Patching is enabled in Luma3DS first before launching the game.&lt;br/&gt;This can be done by holding SELECT when turning on your 3DS.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="target_platform_layout">
+     <property name="spacing">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="target_platform_label">
+       <property name="text">
+        <string>Target Platform</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="luma_radio">
+       <property name="text">
+        <string>Luma3DS</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">platform_btn_group</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="citra_radio">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>Citra</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">platform_btn_group</string>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="input_file_button">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Select Folder</string>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="2">
+    <widget class="QPushButton" name="cancel_button">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLineEdit" name="input_file_edit">
+     <property name="placeholderText">
+      <string>Path to vanilla extracted RomFS</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="input_exheader_button">
+     <property name="text">
+      <string>Select File</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="input_file_label">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to create the randomized game, an extracted RomFS of Metroid: Samus Returns for the Nintendo 3DS is necessary.&lt;br/&gt;If you're unsure how to extract your RomFS, you can &lt;a href=&quot;https://randovania.org/guides/export-romfs-3ds&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;consult this guide&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;Input Path (An extracted unmodified Samus Returns RomFS)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="3">
+    <widget class="QLabel" name="input_exheader_warning_label">
+     <property name="text">
+      <string>Exporting to Luma3DS is disabled since the automatic item tracker is incompatible.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="version_btn_group"/>
+  <buttongroup name="platform_btn_group"/>
+ </buttongroups>
+</ui>

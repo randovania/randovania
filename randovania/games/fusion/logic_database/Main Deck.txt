@@ -11,9 +11,10 @@ Extra - room_id: [0, 63]
   > Event - Omega Metroid
       All of the following:
           After Navigation Controls Activated
-          # Weapon Requirements
+          # Weapon Requirements - TODO: more beams
           Wide Beam or Combat (Intermediate)
           Any of the following:
+              # Energy requirements
               Combat (Hypermode) or Normal Damage ≥ 1000
               Combat (Beginner) and Normal Damage ≥ 800
               Combat (Intermediate) and Normal Damage ≥ 600
@@ -44,6 +45,7 @@ Extra - room_id: [0, 63]
 > Event - L0; Heals? False
   * Layers: default
   * Event Level 0 Locks Released
+  * TODO: revise how this node gets into play
   > Ship
       Trivial
 
@@ -114,6 +116,8 @@ Extra - room_id: [7]
   * Extra - blocky: 14
   > Door to Docking Bay Shaft
       Trivial
+  > Other to Spitter Speedway
+      Trivial
 
 > Door to Docking Bay Shaft; Heals? False
   * Layers: default
@@ -125,8 +129,10 @@ Extra - room_id: [7]
       Trivial
   > Other to Spitter Speedway
       Any of the following:
-          Can Use Power Bombs
-          Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Skip collecting the item. Break PB blocks first, then reload the room: https://www.youtube.com/watch?v=2WbnkPhd7tk
+          Disabled Entrance Rando and Can Bounce in Ball and Can Use Power Bombs
+          # Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE
+          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
 
 > Door to Central Hub; Heals? False
   * Layers: default
@@ -139,10 +145,14 @@ Extra - room_id: [7]
   * Layers: default
   * Open Passage to Spitter Speedway/Other to Station Entrance
   * Extra - door_idx: (108,)
+  > Pickup (Hidden Missile Tank)
+      Can Use Power Bombs
   > Door to Docking Bay Shaft
       Any of the following:
-          Can Use Power Bombs
-          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Skip collecting the item. Break PB blocks first, then reload the room.
+          Disabled Entrance Rando and Can Bounce in Ball and Can Use Power Bombs
+          # Speedboost from Spitter Speedway
+          Speed Booster and Disabled Entrance Rando
 
 ----------------
 Main Deck Recharge Room
@@ -279,16 +289,18 @@ Extra - room_id: [13, 74, 85]
   * Open Passage to Operations Maintenance Shaft/Other to Operations Deck
   * Extra - door_idx: (22, 175)
   > Door to Operations Deck Navigation Room
-      Missiles
+      After Main Deck Operations Deck Missile Shield
 
 > Door to Operations Deck Navigation Room; Heals? False
   * Layers: default
   * L0 Hatch to Operations Deck Navigation Room/Door to Operations Deck
   * Extra - door_idx: (27, 172)
   > Other to Operations Maintenance Shaft
-      Missiles
+      After Main Deck Operations Deck Missile Shield
   > Door to Elevator to Crew Quarters
       Trivial
+  > Event - Missile Shield
+      Missiles
 
 > Door to Operations Deck Recharge Room; Heals? False
   * Layers: default
@@ -310,11 +322,15 @@ Extra - room_id: [13, 74, 85]
           All Infants Collected
           Any of the following:
               Can Climb High Jump Wall
+              # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY
               Level 0 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Single Wall Jump
+              Wall Jump (Beginner) and Can Single Walljump
 
 > Door to Operations Room; Heals? False
   * Layers: default
   * L0 Hatch to Operations Room/Door to Operations Deck
+  * This door is currently an event door and thus always Level-0
   * Extra - door_idx: (193, 146)
   > Before Operations Room
       Trivial
@@ -334,7 +350,7 @@ Extra - room_id: [13, 74, 85]
   > Event - SA-X
       All of the following:
           All of the following:
-              # SA-X Requirements
+              # SA-X Requirements - TODO: revise these. iirc plasma isnt needed anymore.
               Charge Beam and Plasma Beam
               Wide Beam or Combat (Advanced)
           Any of the following:
@@ -354,6 +370,12 @@ Extra - room_id: [13, 74, 85]
               # Dodging Requirements
               Screw Attack or Combat (Advanced)
               Combat (Intermediate) or Can Freeze Enemies
+
+> Event - Missile Shield; Heals? False
+  * Layers: default
+  * Event Main Deck Operations Deck Missile Shield
+  > Door to Operations Deck Navigation Room
+      Trivial
 
 ----------------
 Maintenance Corridor
@@ -389,8 +411,9 @@ Extra - room_id: [15]
           All of the following:
               Can Freeze Enemies
               Any of the following:
+                  # Intended method
                   Hi-Jump
-                  # https://discord.com/channels/119665192110915584/1205560315652349962/1210970374741823499
+                  # HJ-Less: https://www.youtube.com/watch?v=AUkhZE_5CbE
                   Movement (Intermediate) and Wall Jump (Intermediate)
 
 > Door to Habitation Deck (Lower); Heals? False
@@ -462,8 +485,14 @@ Extra - room_id: [17, 77]
       Speed Booster
   > Door to Restricted Corridor
       All of the following:
-          # You can diagonally spark into the corner and WJ/SJ to item then go back down, the reqs have to be here though
-          Speed Booster and Knowledge (Expert) and Shinespark Tricks (Intermediate)
+          # You can get into the cage and get the item without shinesparking all the way up. The reqs have to be here though
+          Speed Booster
+          Any of the following:
+              # Shinespark into the corner
+              Shinespark Tricks (Intermediate)
+              # Jump mid-speedboost: https://www.youtube.com/watch?v=u3xzqtz6Gro
+              Movement (Intermediate)
+          # Get to the item while in the cage
           Space Jump or Wall Jump (Intermediate)
 
 > Door to Restricted Navigation Room; Heals? False
@@ -477,7 +506,7 @@ Extra - room_id: [17, 77]
   * Extra - door_idx: (34, 183)
   > Pickup (Power Bomb Tank)
       All of the following:
-          # Check the connection from item to restricted corridor for way to only go halfway up
+          # Check the connection from item to restricted corridor for way to only go halfway up. Can be revised after remote activation nodes
           Speed Booster
           # This can safely not have Door Lock Rando check
           Disabled Entrance Rando
@@ -514,11 +543,13 @@ Extra - room_id: [18]
       Any of the following:
           Can Kill PB Geron
           All of the following:
-              # https://www.youtube.com/watch?v=EiFFpvNaT_A
-              Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Shinespark and recharge in Hornoad Hallway
+              Level 0 Locks and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
-                  Shinespark Tricks (Hypermode)
-                  Shinespark Tricks (Expert) and Can Climb High Jump Wall
+                  # HJ-less: https://www.youtube.com/watch?v=cjf9wNjAbEY
+                  Shinespark Tricks (Hypermode) and Wall Jump (Advanced)
+                  # With HJ: https://www.youtube.com/watch?v=lDKp1H8k7oM
+                  Hi-Jump and Shinespark Tricks (Expert) and Wall Jump (Intermediate)
 
 > Door to Hornoad Hallway; Heals? False
   * Layers: default
@@ -553,7 +584,7 @@ Extra - room_id: [18]
 > Event - Central Hub PB Geron; Heals? False
   * Layers: default
   * Event Main Deck Power Bomb Geron Destroyed
-  > Door to Habitation Storage
+  > Door to Station Entrance
       Trivial
 
 ----------------
@@ -666,7 +697,8 @@ Extra - room_id: [23]
   > Door to Main Elevator Access
       Any of the following:
           Morph Ball
-          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Shinespark from the Navigation Station: https://www.youtube.com/watch?v=QcD2-t9UDrg
+          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
   > Door to Quarantine Bay
       Trivial
 
@@ -677,7 +709,8 @@ Extra - room_id: [23]
   > Door to Western Hub
       Any of the following:
           Morph Ball
-          Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Speedboost from other room
+          Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Quarantine Bay; Heals? False
   * Layers: default
@@ -959,7 +992,12 @@ Extra - room_id: [35]
   * Open Passage to Operations Deck/Other to Operations Maintenance Shaft
   * Extra - door_idx: (79,)
   > Other to Crew Quarters East
-      Can Kill Missile Geron
+      After Main Deck Operations Deck Maintenance Shaft Upper Missile Geron
+  > Event - Upper Maintainance Geron
+      Any of the following:
+          Can Kill Missile Geron
+          # Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y
+          Level 0 Locks and Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Other to Operations Maintenance Storage; Heals? False
   * Layers: default
@@ -973,14 +1011,33 @@ Extra - room_id: [35]
   * L0 Hatch to Crew Quarters West/Door to Operations Maintenance Shaft
   * Extra - door_idx: (81,)
   > Door to Crew Quarters East
-      Can Kill Missile Geron
+      After Main Deck Operations Deck Maintenance Shaft Lower Missile Geron
+  > Event - Lower Maintainance Geron
+      Any of the following:
+          Can Kill Missile Geron
+          # Shinespark from Main Deck Entrance: https://www.youtube.com/watch?v=dWJXG-nGo6A
+          Level 0 Locks and Speed Booster and Knowledge (Beginner) and Shinespark Tricks (Hypermode) and Wall Jump (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Crew Quarters East; Heals? False
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Operations Maintenance Shaft
   * Extra - door_idx: (82,)
   > Door to Crew Quarters West
+      After Main Deck Operations Deck Maintenance Shaft Lower Missile Geron
+  > Event - Lower Maintainance Geron
       Can Kill Missile Geron
+
+> Event - Lower Maintainance Geron; Heals? False
+  * Layers: default
+  * Event Main Deck Operations Deck Maintenance Shaft Lower Missile Geron
+  > Door to Crew Quarters West
+      Trivial
+
+> Event - Upper Maintainance Geron; Heals? False
+  * Layers: default
+  * Event Main Deck Operations Deck Maintenance Shaft Upper Missile Geron
+  > Other to Operations Deck
+      Trivial
 
 ----------------
 Crew Quarters Save Room
@@ -1060,11 +1117,15 @@ Extra - room_id: [38]
   > Other to Maintenance Corridor
       Morph Ball
   > Event - Arachnus
-      # Core-X Requirements
-      Missiles
+      All of the following:
+          # FIXME: add health requirements once these dont prevent missile start
+          # Core-X Requirements
+          Missiles
 
 > Beside Door; Heals? False
   * Layers: default
+  * FIXME: The connections to return back here technically arent trivial, but are
+currently assumed until a few generator issues have been figured out.
   > Pickup (Energy Tank)
       Trivial
   > Door to Crew Quarters East
@@ -1211,7 +1272,12 @@ Extra - room_id: [47]
   * Extra - door_idx: (107,)
   > Pickup (Hidden Power Bomb Tank)
       All of the following:
-          Can Bounce in Ball and Can Use Power Bombs
+          Can Bounce in Ball
+          All of the following:
+              # Destroy Blocks
+              Can Use Power Bombs
+              # PBs only requires two because one doesn't destroy all of them.
+              Power Bombs ≥ 2 or Can Use Bombs
           Wall Jump (Beginner) or Can Climb High Jump Wall
 
 ----------------
@@ -1265,6 +1331,21 @@ Extra - room_id: [49, 59]
   * Layers: default
   * Open Hatch to Silo Checkpoint/Door to Central Reactor Core
   * Extra - door_idx: (124, 137)
+  > Other to Silo Tunnel
+      All of the following:
+          # Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw
+          Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando
+          Any of the following:
+              # Open the gate. Without Charge, the shot must be precisely timed. With Charge, just let go of beam while in the transition.
+              Charge Beam or Movement (Advanced)
+              Wide Beam and Movement (Intermediate)
+          # Get high enough to spark
+          Hi-Jump or Wall Jump (Intermediate)
+          Any of the following:
+              # Get into tunnel
+              After Boss Nettori Defeated or Mid-Air Morph (Advanced) or Can Bounce in Ball
+              # Jump, then shoot vine below so you can grab the ledge
+              Movement (Intermediate)
   > Door to Silo Save Room
       Trivial
 
@@ -1282,10 +1363,8 @@ Extra - room_id: [49, 59]
   > Door to Silo Entry
       Any of the following:
           Space Jump
-          All of the following:
-              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
-              # Needed to break the vines
-              Wave Beam or Wide Beam
+          # Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
   > Door to Scaffolding Access
       Wall Jump (Beginner) or Can Climb High Jump Wall
   > Door to Silo Checkpoint
@@ -1314,7 +1393,10 @@ Extra - room_id: [50]
   * Open Hatch to Central Reactor Core/Door to Scaffolding Access
   * Extra - door_idx: (114,)
   > Beside Pickup
-      Space Jump or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+      Any of the following:
+          Can Kill Tough Beam-Resistant Enemy
+          # Dodge Pirates: https://www.youtube.com/watch?v=QAffTKp5seU
+          Space Jump or Combat (Intermediate)
 
 > Other to Silo Scaffolding; Heals? False
   * Layers: default
@@ -1323,6 +1405,7 @@ Extra - room_id: [50]
   > Pickup (Energy Tank)
       Trivial
   > Beside Pickup
+      # Jump over the item
       Movement (Intermediate)
 
 > Beside Pickup; Heals? False
@@ -1330,8 +1413,12 @@ Extra - room_id: [50]
   > Pickup (Energy Tank)
       Trivial
   > Door to Central Reactor Core
-      Space Jump or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+      Any of the following:
+          Can Kill Tough Beam-Resistant Enemy
+          # Dodge Pirates: https://www.youtube.com/watch?v=u8_gclW4-gQ
+          Space Jump and Combat (Intermediate)
   > Other to Silo Scaffolding
+      # Jump over the item
       Movement (Intermediate)
 
 ----------------
@@ -1354,13 +1441,20 @@ Extra - room_id: [51]
   * Extra - door_idx: (116,)
   > Beside Pickup
       Any of the following:
-          Screw Attack or Combat (Advanced)
-          All of the following:
-              Can Kill Tough Beam-Resistant Enemy
-              # Expected dmg trickless
-              Combat (Intermediate) or Normal Damage ≥ 128
+          # Get past pirates
+          Any of the following:
+              # Kill them
+              Screw Attack
+              All of the following:
+                  # Via normal methods. Expects you to take damage or avoid their shots.
+                  Can Kill Tough Beam-Resistant Enemy
+                  Combat (Intermediate) or Normal Damage ≥ 128
+              # With Power Bombs
+              Power Bombs ≥ 4 and Combat (Beginner) and Can Use Power Bombs
+          # Damage Boost through them
           Damage Boosts (Intermediate) and Normal Damage ≥ 195
-          Power Bombs ≥ 4 and Combat (Beginner) and Can Use Power Bombs
+          # Damageless: https://www.youtube.com/watch?v=zmSH3fDcCVI
+          Combat (Advanced)
 
 > Door to Yakuza Arena; Heals? False
   * Layers: default
@@ -1370,13 +1464,25 @@ Extra - room_id: [51]
 > Beside Pickup; Heals? False
   * Layers: default
   > Pickup (Missile Tank)
+      # Requirements to deal with the pirates are in the connection from above
       Morph Ball
   > Other to Scaffolding Access
       All of the following:
+          # Get up
           Wall Jump (Advanced) or Can Climb High Jump Wall
           Any of the following:
-              Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+              # Get past pirates
+              Any of the following:
+                  # Kill them
+                  Screw Attack
+                  # Via normal methods. Taking/avoiding damage is accounted in connection to down here
+                  Can Kill Tough Beam-Resistant Enemy
+                  # With Power Bombs
+                  Power Bombs ≥ 4 and Combat (Beginner) and Can Use Power Bombs
+              # Damage Boost through them
               Damage Boosts (Intermediate) and Normal Damage ≥ 195
+              # Damageless: https://youtu.be/zmSH3fDcCVI?t=31
+              Combat (Advanced)
   > Door to Yakuza Arena
       All of the following:
           Morph Ball and Can Kill Eye Door
@@ -1385,8 +1491,13 @@ Extra - room_id: [51]
               Wave Beam or Can Use Any Bombs
               Diffusion Missile Data and Missiles
           Any of the following:
-              Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+              # Get past pirates
+              # Kill them
+              Screw Attack or Can Kill Tough Beam-Resistant Enemy
+              # Damage Boost through them
               Damage Boosts (Intermediate) and Normal Damage ≥ 95
+              # Pirates don't exist if coming from above was done damageless: https://www.youtube.com/watch?v=2Pfo7v_Qngg
+              Combat (Advanced)
 
 ----------------
 Silo Checkpoint
@@ -1498,7 +1609,7 @@ Extra - room_id: [57]
       Any of the following:
           Can Use Any Bombs
           All of the following:
-              # Don't fall down the crumble block
+              # Don't fall down the crumble block: https://www.youtube.com/watch?v=7T5fVhUYQ4g
               Movement (Beginner)
               Wall Jump (Beginner) or Can Climb High Jump Wall
 
@@ -1507,7 +1618,7 @@ Extra - room_id: [57]
   * L2 Hatch to Central Hub/Door to Habitation Storage
   * Extra - door_idx: (131,)
   > Pickup (Power Bomb Tank)
-      Can Use Bombs or Can Use Springball
+      Can Bounce in Ball
 
 ----------------
 Silo Save Room
@@ -1579,7 +1690,12 @@ Extra - room_id: [62]
   * L4 Hatch to Restricted Save Room/Door to Restricted Entrance
   * Extra - door_idx: (144,)
   > Other to Checkpoint to Restricted Zone
-      Screw Attack and Space Jump
+      All of the following:
+          Screw Attack
+          Any of the following:
+              Space Jump
+              # SWJ
+              Wall Jump (Beginner) and Can Single Walljump
 
 ----------------
 Restricted Save Room
@@ -1732,7 +1848,7 @@ Extra - room_id: [69]
 
 > Save the Animals; Heals? False
   * Layers: default
-  * Causes issues with door lock rando.
+  * TODO: Causes issues with door lock rando.
 
 Generation gets stuck after giving SJ and speed and trying to reach this event.
   > Other to Habitation Ventilation (Upper)
@@ -1907,6 +2023,7 @@ Extra - room_id: [82]
 > Door to Operations Deck; Heals? False
   * Layers: default
   * L0 Hatch to Operations Deck/Door to Operations Room
+  * This door is currently an event door and thus always Level-0
   * Extra - door_idx: (194,)
   > Event - Flight Controls
       Trivial
@@ -1982,7 +2099,7 @@ Extra - room_id: [86]
           All of the following:
               # Weapon Requirements
               Any of the following:
-                  # Yakuza
+                  # Yakuza - TODO: what about plasma?
                   All of the following:
                       Charge Beam
                       Wide Beam or Combat (Beginner)

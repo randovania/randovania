@@ -7,7 +7,8 @@ import pytest
 from randovania.game_connection.builder.am2r_connector_builder import AM2RConnectorBuilder
 from randovania.game_connection.connector.am2r_remote_connector import AM2RRemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.game_connection.executor.am2r_executor import AM2RExecutor, AM2RExecutorToConnectorSignals
+from randovania.game_connection.executor.am2r_executor import AM2RExecutor
+from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 
 
 async def test_general_class_content():
@@ -20,7 +21,7 @@ async def test_general_class_content():
 @pytest.mark.parametrize("depth", [0, 1])
 async def test_create(depth: int):
     def __init__(self, ip):
-        self.signals = AM2RExecutorToConnectorSignals()
+        self.signals = ExecutorToConnectorSignals()
         self._ip = ip
         self.connect = AsyncMock(return_value=(None if depth == 0 else True))
         self.layout_uuid_str = "00000000-0000-1111-0000-000000000000"

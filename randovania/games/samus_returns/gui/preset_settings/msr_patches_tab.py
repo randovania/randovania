@@ -4,8 +4,8 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.games.samus_returns.gui.generated.preset_msr_patches_ui import Ui_PresetMSRPatches
 from randovania.games.samus_returns.layout import MSRConfiguration
-from randovania.gui.generated.preset_msr_patches_ui import Ui_PresetMSRPatches
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -52,7 +52,7 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
 
         signal_handling.on_checked(check, persist)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = typing.cast(MSRConfiguration, preset.configuration)
 
         for f in _FIELDS:

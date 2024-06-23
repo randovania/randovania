@@ -265,7 +265,7 @@ Extra - asset_id: collision_camera_006
 
 > Elevator to Area 3 Factory Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Area 4/Elevator to Area 4 Central Caves
+  * Elevator to Transport to Area 4/Elevator to Area 4 Central Caves; Custom name: Area 4 Chozo Seal Elevator West
   * Extra - actor_name: LE_Platform_Elevator_FromArea03
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03
@@ -285,7 +285,7 @@ Extra - asset_id: collision_camera_006
 
 > Elevator to Area 4 Crystal Mines; Heals? False
   * Layers: default
-  * Elevator to Transport to Central Caves/Elevator to Area 4 Central Caves
+  * Elevator to Transport to Central Caves/Elevator to Area 4 Central Caves; Custom name: Area 4 Chozo Seal Elevator East
   * Extra - actor_name: LE_Platform_Elevator_FromArea05
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea05
@@ -556,7 +556,7 @@ Transit Tunnel
 Extra - total_boundings: {'x1': 6500.0, 'x2': 9050.0, 'y1': -6400.0, 'y2': -3000.0}
 Extra - polygon: [[6500.0, -3000.0], [6500.0, -6400.0], [9050.0, -6400.0], [9050.0, -4500.0], [8100.0, -4500.0], [8100.0, -3000.0]]
 Extra - asset_id: collision_camera_010
-> Door to Caves Intersection Terminal; Heals? False; Spawn Point; Default Node
+> Door to Caves Intersection Terminal; Heals? False; Default Node
   * Layers: default
   * Charge Beam Door to Caves Intersection Terminal/Door to Transit Tunnel
   * Extra - actor_name: Door007
@@ -696,12 +696,17 @@ Extra - asset_id: collision_camera_013
   * Pickup 85; Category? Minor
   * Extra - actor_name: HP_ChozoHologram_002
   * Extra - actor_type: item_missiletank
-  > Dock to Gamma Arena Access South
+  > Door to Gamma Arena Access South
       Trivial
 
-> Dock to Gamma Arena Access South; Heals? False
+> Door to Gamma Arena Access South; Heals? False
   * Layers: default
-  * Open Passage to Gamma Arena Access South/Dock to Gamma Arena
+  * Access Open to Gamma Arena Access South/Door to Gamma Arena
+  * Extra - actor_name: RandoDoor_003
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 235
+  * Extra - location_y_override: 3100.0
+  * Extra - append_entity_group: PostGamma_001
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball and Shoot Any Missile
@@ -722,7 +727,7 @@ Extra - asset_id: collision_camera_013
   * Extra - start_point_actor_name: ST_Gamma_001A_Checkpoint
   > Door to Gamma Arena Access North
       Trivial
-  > Dock to Gamma Arena Access South
+  > Door to Gamma Arena Access South
       Lay Any Bomb
   > Event - Gamma Metroid
       Defeat Gamma Metroid
@@ -767,7 +772,7 @@ Extra - asset_id: collision_camera_014
                       Lightning Armor
                       # Damage Boost
                       Hazard Runs (Beginner) and Hazard Damage ≥ 120
-  > Dock to Outward Climb
+  > Door to Outward Climb
       Any of the following:
           Lightning Armor
           # Spider Boost
@@ -782,18 +787,22 @@ Extra - asset_id: collision_camera_014
               Any of the following:
                   Mid-Air Morph (Beginner)
                   Diagonal Bomb Jump (Intermediate) and Lay Bomb
-  > Dock to Gamma Arena
+  > Door to Gamma Arena
       Morph Ball and After Area 4 (Central Caves) - Gamma Arena Access South Grapple Block
 
 > Tunnel to Hostile Hangout; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Hostile Hangout/Tunnel to Gamma Arena Access South
-  > Dock to Gamma Arena
+  > Door to Gamma Arena
       Morph Ball
 
-> Dock to Outward Climb; Heals? False
+> Door to Outward Climb; Heals? False
   * Layers: default
-  * Open Passage to Outward Climb/Dock to Gamma Arena Access South
+  * Access Open to Outward Climb/Door to Gamma Arena Access South
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 182
+  * Extra - location_y_override: 1100.0
   > Door to Lava Pond
       Any of the following:
           Lightning Armor
@@ -810,9 +819,14 @@ Extra - asset_id: collision_camera_014
                   Mid-Air Morph (Beginner)
                   Diagonal Bomb Jump (Intermediate) and Lay Bomb
 
-> Dock to Gamma Arena; Heals? False
+> Door to Gamma Arena; Heals? False
   * Layers: default
-  * Open Passage to Gamma Arena/Dock to Gamma Arena Access South
+  * Access Open to Gamma Arena/Door to Gamma Arena Access South
+  * Extra - actor_name: RandoDoor_003
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 234
+  * Extra - location_y_override: 3100.0
+  * Extra - append_entity_group: PostGamma_001
   > Door to Lava Pond
       Morph Ball and After Area 4 (Central Caves) - Gamma Arena Access South Grapple Block
   > Tunnel to Hostile Hangout
@@ -823,7 +837,7 @@ Extra - asset_id: collision_camera_014
 > Event - Grapple Block; Heals? False
   * Layers: default
   * Event Area 4 (Central Caves) - Gamma Arena Access South Grapple Block
-  > Dock to Gamma Arena
+  > Door to Gamma Arena
       Trivial
 
 ----------------
@@ -831,16 +845,24 @@ Outward Climb
 Extra - total_boundings: {'x1': -9000.0, 'x2': -7000.0, 'y1': 100.0, 'y2': 4000.0}
 Extra - polygon: [[-9000.0, 4000.0], [-9000.0, 100.0], [-7100.0, 100.0], [-7100.0, 2100.0], [-7000.0, 2100.0], [-7000.0, 4000.0]]
 Extra - asset_id: collision_camera_015
-> Dock to Gamma Arena Access South; Heals? False
+> Door to Gamma Arena Access South; Heals? False
   * Layers: default
-  * Open Passage to Gamma Arena Access South/Dock to Outward Climb
-  > Dock to Gamma Arena Access North
+  * Access Open to Gamma Arena Access South/Door to Outward Climb
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 181
+  * Extra - location_y_override: 1100.0
+  > Door to Gamma Arena Access North
       Trivial
 
-> Dock to Gamma Arena Access North; Heals? False
+> Door to Gamma Arena Access North; Heals? False
   * Layers: default
-  * Open Passage to Gamma Arena Access North/Dock to Outward Climb
-  > Dock to Gamma Arena Access South
+  * Access Open to Gamma Arena Access North/Door to Outward Climb
+  * Extra - actor_name: RandoDoor_002
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 248
+  * Extra - location_y_override: 4300.0
+  > Door to Gamma Arena Access South
       Trivial
 
 ----------------
@@ -916,7 +938,7 @@ Extra - asset_id: collision_camera_018
   * Power Beam Door to Gamma Arena/Door to Gamma Arena Access North
   * Extra - actor_name: Door011
   * Extra - actor_type: doorpowerpower
-  > Dock to Outward Climb
+  > Door to Outward Climb
       Any of the following:
           Lightning Armor
           # Spider Boost
@@ -934,9 +956,13 @@ Extra - asset_id: collision_camera_018
   > Start Point
       Trivial
 
-> Dock to Outward Climb; Heals? False
+> Door to Outward Climb; Heals? False
   * Layers: default
-  * Open Passage to Outward Climb/Dock to Gamma Arena Access North
+  * Access Open to Outward Climb/Door to Gamma Arena Access North
+  * Extra - actor_name: RandoDoor_002
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 249
+  * Extra - location_y_override: 4300.0
   > Door to Gamma Arena
       Any of the following:
           Lightning Armor
@@ -1056,7 +1082,7 @@ Extra - polygon: [[11600.0, -6600.0], [10100.0, -6600.0], [10100.0, -8800.0], [1
 Extra - asset_id: collision_camera_023
 > Elevator to Area 5 Tower Lobby; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Areas 4 and 6/Elevator to Area 4 Central Caves
+  * Elevator to Transport to Areas 4 and 6/Elevator to Area 4 Central Caves; Custom name: Central Caves Elevator South
   * Extra - actor_name: LE_Platform_Elevator_FromArea06
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06

@@ -30,6 +30,12 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     SKIPPABLE_COMPETITIVE = "SkippableCompetitive"
 
 
+class DamageReduction(BitPackEnum, Enum):
+    DEFAULT = "Default"
+    PROGRESSIVE = "Progressive"
+    ADDITIVE = "Additive"
+
+
 class IngameDifficulty(BitPackEnum, Enum):
     randomprime_value: str
     description: str | None
@@ -86,7 +92,7 @@ class PrimeConfiguration(BaseConfiguration):
     artifact_minimum_progression: int = dataclasses.field(metadata={"min": 0, "max": 99})
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     warp_to_start: bool
-    progressive_damage_reduction: bool
+    damage_reduction: DamageReduction
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
     large_samus: bool

@@ -29,4 +29,4 @@ def test_preset_editor_tabs_for(skip_qtbot, game_enum: RandovaniaGame, preset_ma
         skip_qtbot.addWidget(tab)
 
     # Assert
-    assert len(tabs) >= 3
+    assert len(tabs) >= 2

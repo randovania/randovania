@@ -4,6 +4,7 @@ import dataclasses
 
 from PySide6 import QtGui, QtWidgets
 
+from randovania.games.cave_story.gui.generated.cs_cosmetic_patches_dialog_ui import Ui_CSCosmeticPatchesDialog
 from randovania.games.cave_story.layout.cs_cosmetic_patches import (
     CSCosmeticPatches,
     CSSong,
@@ -12,7 +13,6 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import (
     SongGame,
 )
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.cs_cosmetic_patches_dialog_ui import Ui_CSCosmeticPatchesDialog
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.signal_handling import set_combo_with_value
 

@@ -2,6 +2,7 @@ import argparse
 import dataclasses
 import enum
 import typing
+from argparse import Namespace
 from pathlib import Path
 
 from randovania.cli.cli_lib import EnumAction
@@ -61,7 +62,7 @@ def get_export_params_from_cli(game: RandovaniaGame, args: list[str]) -> GameExp
     return params_type(**arguments)
 
 
-def export_game_logic(args: argparse.Namespace) -> None:
+def export_game_logic(args: Namespace) -> None:
     game = RandovaniaGame(args.game)
 
     def print_status_report(message: str, percent: float) -> None:

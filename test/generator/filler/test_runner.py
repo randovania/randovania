@@ -43,13 +43,11 @@ async def test_run_filler(
     status_update = MagicMock()
 
     hint_identifiers = [
-        echoes_game_description.region_list.identifier_for_node(node)
-        for node in echoes_game_description.region_list.iterate_nodes()
-        if isinstance(node, HintNode)
+        node.identifier for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)
     ]
 
     player_pools = [
-        await create_player_pool(rng, default_echoes_configuration, 0, 1, MagicMock()),
+        await create_player_pool(rng, default_echoes_configuration, 0, 1, "World 1", MagicMock()),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
@@ -68,7 +66,7 @@ async def test_run_filler(
     )
 
     # Run
-    filler_result = await runner.run_filler(rng, player_pools, status_update)
+    filler_result = await runner.run_filler(rng, player_pools, ["World 1"], status_update)
 
     assert filler_result.action_log == action_log
     assert len(filler_result.player_results) == 1
@@ -84,7 +82,7 @@ async def test_run_filler(
 def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
     # Setup
     rng = Random(5000)
-    expected_logbooks = sum(
+    expected_hints = sum(
         1 for node in echoes_game_description.region_list.iterate_nodes() if isinstance(node, HintNode)
     )
     hint_distributor = echoes_game_description.game.generator.hint_distributor
@@ -98,7 +96,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_
     )
 
     # Assert
-    assert len(result.hints) == expected_logbooks
+    assert len(result.hints) == expected_hints
 
 
 def test_add_hints_precision(empty_patches):

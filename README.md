@@ -4,7 +4,7 @@
 
 Welcome to Randovania, a randomizer platform for a multitude of games.
 
-New here or looking to install? Check [our website](https://randovania.github.io/).
+New here or looking to install? Check [our website](https://randovania.org/).
 
 <!-- Begin SUPPORTED -->
 
@@ -20,15 +20,11 @@ New here or looking to install? Check [our website](https://randovania.github.io
 
 <!-- Begin EXPERIMENTAL -->
 
-### Experimental Games
- - Metroid Prime 3: Corruption
- - Super Metroid
-
 <!-- End EXPERIMENTAL -->
 
 <!-- Begin WELCOME -->
 
-Randovania can randomize many aspects of its supported games, all while still ensuring they're completable 
+Randovania can randomize many aspects of its supported games, all while still ensuring they're completable
 without using any glitches or exploits. Its features include:
 
 * Randomizing what can be found in each item location. Weapons, keys, and more can end up in
@@ -92,16 +88,6 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 * [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z) created by Claris. For more information, see the
 [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
 * Converting Metroid Prime models by [Migs](https://www.twitch.tv/migslive).
-
-### Metroid Prime 3: Corruption
-* Game patching written by [gollop](https://github.com/gollop).
-* Room data collected by [Dyceron](https://www.twitch.tv/dyceron) and [KirbymastaH](https://www.twitch.tv/kirbymastah).
-
-### Super Metroid
-* Game Patching and Logic Database by [SolventMercury](https://github.com/SolventMercury).
-* Custom Item PLMs patch by [Kazuto](https://github.com/Kazuto88).
-* Skip Intro Saves patch by [PHOSPHOTiDYL](https://metroidconstruction.com/resource.php?id=265).
-* Other individual patches by [Total](https://github.com/tewtal), Foosda, Leodox, and others.
 
 ### Cave Story
 * Patcher and logic written by [duncathan_salt](https://twitter.com/duncathan_salt).
@@ -240,7 +226,15 @@ the `prepare_virtual_env` scripts.
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
-_*If using Visual Studio Code, make sure to set `"qtForPython.uic.liveExecution.enabled": false` when using the QT extension._
+## Visual Studio Code
+
+Clone this repository and open the folder in Visual Studio Code. It suggests several useful plugins for developing which you should download and install.
+
+If your Python is setup properly, you can use the `Create venv with all exporters` task by pressing CTRL+SHIFT+P, type in `Task`, select `Tasks: Run task` and then select the task. It will create the venv with all the dependencies installed for you.
+
+There is also a task defined to run all tests. To run individual tests you can utilise the `Testing` section of Visual Studio Code. You can simply run or debug a test there.
+
+To start Randovania you can press CTRL+F5. If you only press F5, Randovania will start with a debugger. Be aware that starting with a debugger makes the application much slower.
 
 # Documentation
 

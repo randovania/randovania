@@ -27,12 +27,12 @@ jobs:
             executable: true
             name: 'Linux Executable'
 
-          - os: 'macos-latest'
+          - os: 'macos-13'
             python: '3.12'
             executable: false
             name: 'macOS'
 
-          - os: 'macos-latest'
+          - os: 'macos-13'
             python: '3.12'
             executable: true
             name: 'macOS Executable'
@@ -62,8 +62,8 @@ jobs:
       # pytest-async causes an error. Settings EVENTLET_IMPORT_VERSION_ONLY allows us to avoid that error, but this
       # instead causes the flask_socketio to fail importing. Setting FLASK_RUN_FROM_CLI causes it to default to the
       # threading async method instead, avoiding the issue
-      EVENTLET_IMPORT_VERSION_ONLY: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-latest'] }}
-      FLASK_RUN_FROM_CLI: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-latest'] }}
+      EVENTLET_IMPORT_VERSION_ONLY: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-13'] }}
+      FLASK_RUN_FROM_CLI: ${{ fromJSON('[0, 1]')[matrix.os == 'macos-13'] }}
 
     steps:
       - name: Checkout
@@ -106,8 +106,12 @@ jobs:
         run: coverage run -m randovania development add-new-game --enum-name TEST_GAME --enum-value test_game --short-name TG --long-name "Test Game"
         if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
 
+      - name: build ui files for test game too
+        run: python setup.py build_ui
+        if: ${{ !matrix.executable && !startsWith(github.ref, 'refs/heads/stable') && !startsWith(github.ref, 'refs/tags/v') }}
+
       - name: run pytest (no resolver)
-        run: $PREFIX python -m pytest --cov randovania --cov-report=xml --skip-resolver-tests -n auto --durations=100
+        run: $PREFIX python -m pytest --cov randovania --cov-append --cov-report=xml --skip-resolver-tests -n auto --durations=100
         shell: bash
         env:
           QT_QPA_PLATFORM: "${{ matrix.os == 'ubuntu-latest' && 'xcb' || '' }}"
@@ -115,7 +119,7 @@ jobs:
         if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
 
       - name: run pytest (resolver)
-        run: python -m pytest --cov randovania --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
+        run: python -m pytest --cov randovania --cov-append --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py test/generator/test_generator_reach.py
         if: ${{ matrix.name == 'Resolver' }}
 
       - name: create executable
@@ -145,15 +149,20 @@ jobs:
 #        if: matrix.executable
 
       - name: codecov
-        uses: codecov/codecov-action@v3
         if: ${{ !matrix.executable }}
+        uses: Wandalen/wretry.action@master
         with:
-          fail_ci_if_error: false  # Ideally this would be true, but codecov's action keep getting errors with GH api and it doesn't do retries
-          files: ./coverage.xml
+          action: codecov/codecov-action@v4
+          with: |
+            fail_ci_if_error: false
+            files: ./coverage.xml
+            token: ${{ secrets.CODECOV_TOKEN }}
+          attempt_limit: 5
+          attempt_delay: 10000
 
       - name: Upload artifacts
         if: ${{ matrix.executable && (startsWith(github.ref, 'refs/heads/') || startsWith(github.ref, 'refs/tags/v')) && github.event_name != 'merge_group' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: Randovania ${{ matrix.name }}
           if-no-files-found: error
@@ -164,7 +173,7 @@ jobs:
 
       - name: Upload wheel
         if: ${{ matrix.name == 'Linux' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: Python Package
           if-no-files-found: error
@@ -219,7 +228,7 @@ jobs:
           Import-PfxCertificate -FilePath certificate/certificate.pfx -CertStoreLocation Cert:\CurrentUser\My -Password (ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText)
 
       - name: Deploy Advanced Installer
-        uses: caphyon/advinst-github-action@v1.1
+        uses: caphyon/advinst-github-action@v2.0
         with:
           advinst-version: '21.1'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}
@@ -262,7 +271,7 @@ jobs:
           $project.Build();
 
       - name: Upload installer
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.0.0
         with:
           name: Randovania Windows Installer
           if-no-files-found: error
@@ -332,7 +341,44 @@ jobs:
           python tools/update_requirements.py --quiet
           git diff --exit-code
 
-  mypy:
+  mypy-required:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Workaround for worktree config
+        run: git config --unset-all extensions.worktreeConfig || true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade -r requirements-setuptools.txt
+          python -m pip install -r requirements.txt -e ".[gui,exporters,server,test,typing]"
+
+      - name: build ui files
+        run: python setup.py build_ui
+
+      - name: Mypy on required files
+        uses: tsuyoshicho/action-mypy@v4
+        with:
+          github_token: ${{ secrets.github_token }}
+          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
+          reporter: github-check
+          setup_method: nothing
+          target: --config-file=pyproject.toml
+          fail_on_error: true
+          install_types: false
+
+  mypy-modified:
     runs-on: 'ubuntu-latest'
 
     steps:
@@ -365,18 +411,9 @@ jobs:
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
           reporter: github-check
           setup_method: nothing
+          level: warning
           fail_on_error: false
-
-      - name: Mypy on required files
-        uses: tsuyoshicho/action-mypy@v4
-        with:
-          github_token: ${{ secrets.github_token }}
-          # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
-          reporter: github-check
-          setup_method: nothing
-          target: --config-file=pyproject.toml
-          fail_on_error: true
-
+          install_types: false
 
   docker:
     runs-on: ubuntu-latest
@@ -439,7 +476,7 @@ jobs:
       -
         name: Login to DockerHub
         if: ${{ fromJSON(steps.decide_push.outputs.should) }}
-        uses: docker/login-action@v3.1.0
+        uses: docker/login-action@v3.2.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -447,7 +484,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v5.3.0
+        uses: docker/build-push-action@v6.0.2
         with:
           context: .
           file: ./Dockerfile.server
@@ -488,8 +525,9 @@ jobs:
           python-version: "3.12"
 
       - name: Download the executables
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4.1.0
         with:
+          pattern: 'Randovania * *'
           path: packages/
 
       - name: Install Python packages
@@ -583,3 +621,41 @@ jobs:
           env: ${{ steps.deployment.outputs.env }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           override: false
+
+
+  update-website:
+    runs-on: ubuntu-latest
+    name: Update the website
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    needs: release
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: randovania/randovania.github.io
+          path: ./website
+        
+      - name: Find line
+        id: line
+        run: |
+          echo "LINE_TO_REPLACE=$(grep "^randovania_version=[[:digit:]]\.[[:digit:]]\.[[:digit:]]$" ./website/ci.sh)" >> $GITHUB_OUTPUT
+
+      - name: Find new version
+        id: new_version
+        env: 
+          TAG_NAME: ${{ github.ref }}
+        run: |
+          # Tag is of format vX.Y.Z, cut the v off.
+          echo "NEW_VERSION=$(${TAG_NAME:1})" >> $GITHUB_OUTPUT
+
+      - name: Replace version, commit and push
+        run: |
+          sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./website/ci.sh
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./website/ci.sh
+          git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
+          git push

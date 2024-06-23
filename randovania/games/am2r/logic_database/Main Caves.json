@@ -249,7 +249,12 @@
                         "x": 29,
                         "y": 7
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Ship": {
@@ -269,7 +274,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Horizontal Dock to Hornoad Hallway": {
+                        "Door to Hornoad Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -305,12 +310,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -330,12 +347,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -347,15 +376,6 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "template",
                                                     "data": "Can Use Charged Bomb Jump"
                                                 },
@@ -366,6 +386,39 @@
                                                         "name": "ChargedBombJump",
                                                         "amount": 3,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -393,7 +446,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Hornoad Hallway": {
+                "Door to Hornoad Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -412,17 +465,18 @@
                         "y": 1056
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Hornoad Hallway",
-                        "node": "Horizontal Dock to Landing Site"
+                        "node": "Door to Landing Site"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Ship": {
                             "type": "and",
@@ -458,6 +512,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Crystal Blocks": {
                             "type": "or",
@@ -538,12 +593,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -594,12 +661,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -697,10 +776,15 @@
                         "x": 34,
                         "y": 8
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Landing Site": {
+                "Door to Landing Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -719,17 +803,18 @@
                         "y": 96
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Landing Site",
-                        "node": "Horizontal Dock to Hornoad Hallway"
+                        "node": "Door to Hornoad Hallway"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
                             "type": "and",
@@ -765,6 +850,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
                             "type": "and",
@@ -800,7 +886,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Landing Site": {
+                        "Door to Landing Site": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -854,7 +940,12 @@
                         "x": 35,
                         "y": 11
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Vertical Dock to Cavern Crossroads": {
@@ -882,6 +973,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Hornoad Hallway": {
                             "type": "or",
@@ -895,7 +987,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Shinespark from below room: https://www.youtube.com/watch?v=uFXTtaebs48",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -957,6 +1049,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Vertical Dock to Cavern Crossroads": {
                             "type": "and",
@@ -990,7 +1083,12 @@
                         "x": 36,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Vertical Dock to Tsumuri Tunnel": {
@@ -1018,15 +1116,16 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Surface Cave Save Station": {
+                        "Door to Surface Cave Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Rocky Stairs": {
+                        "Door to Rocky Stairs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1035,7 +1134,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Surface Cave Save Station": {
+                "Door to Surface Cave Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1054,17 +1153,18 @@
                         "y": 384
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Cave Save Station",
-                        "node": "Horizontal Dock to Cavern Crossroads"
+                        "node": "Door to Cavern Crossroads"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Vertical Dock to Tsumuri Tunnel": {
                             "type": "and",
@@ -1075,7 +1175,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Rocky Stairs": {
+                "Door to Rocky Stairs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1094,17 +1194,18 @@
                         "y": 400
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Rocky Stairs",
-                        "node": "Horizontal Dock to Cavern Crossroads"
+                        "node": "Door to Cavern Crossroads"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Vertical Dock to Tsumuri Tunnel": {
                             "type": "and",
@@ -1127,7 +1228,12 @@
                         "y": 13
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -1147,14 +1253,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Horizontal Dock to Twisty Tunnel": {
+                        "Door to Twisty Tunnel": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Cavern Crossroads": {
+                        "Door to Cavern Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1163,7 +1269,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Twisty Tunnel": {
+                "Door to Twisty Tunnel": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1176,23 +1282,24 @@
                         "default"
                     ],
                     "extra": {
-                        "instance_id": 101324,
+                        "instance_id": 101323,
                         "facing": "left",
                         "x": 0,
                         "y": 144
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Twisty Tunnel",
-                        "node": "Horizontal Dock to Surface Cave Save Station"
+                        "node": "Door to Surface Cave Save Station"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -1203,7 +1310,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Cavern Crossroads": {
+                "Door to Cavern Crossroads": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1222,17 +1329,18 @@
                         "y": 144
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Cavern Crossroads",
-                        "node": "Horizontal Dock to Surface Cave Save Station"
+                        "node": "Door to Surface Cave Save Station"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -1266,10 +1374,15 @@
                         "x": 33,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Surface Pond Access": {
+                "Door to Surface Pond Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1288,19 +1401,20 @@
                         "y": 96
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Pond Access",
-                        "node": "Horizontal Dock to Rocky Stairs"
+                        "node": "Door to Rocky Stairs"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Cavern Crossroads": {
+                        "Door to Cavern Crossroads": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1309,7 +1423,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Cavern Crossroads": {
+                "Door to Cavern Crossroads": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1322,25 +1436,26 @@
                         "default"
                     ],
                     "extra": {
-                        "instance_id": 101402,
+                        "instance_id": 101403,
                         "facing": "left",
                         "x": 0,
                         "y": 96
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Cavern Crossroads",
-                        "node": "Horizontal Dock to Rocky Stairs"
+                        "node": "Door to Rocky Stairs"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Surface Pond Access": {
+                        "Door to Surface Pond Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1372,10 +1487,16 @@
                         "x": 30,
                         "y": 15
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 896,
+                    "should_move_horizontally": true
+                }
             },
             "nodes": {
-                "Horizontal Dock to Surface Pond": {
+                "Door to Surface Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1394,19 +1515,20 @@
                         "y": 848
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Pond",
-                        "node": "Horizontal Dock to Surface Pond Access"
+                        "node": "Door to Surface Pond Access"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Rocky Stairs": {
+                        "Door to Rocky Stairs": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1415,7 +1537,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Rocky Stairs": {
+                "Door to Rocky Stairs": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1434,19 +1556,20 @@
                         "y": 96
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Rocky Stairs",
-                        "node": "Horizontal Dock to Surface Pond Access"
+                        "node": "Door to Surface Pond Access"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Surface Pond": {
+                        "Door to Surface Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1474,10 +1597,16 @@
                         "x": 29,
                         "y": 15
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 200,
+                    "should_move_horizontally": true
+                }
             },
             "nodes": {
-                "Horizontal Dock to Surface Pond Access": {
+                "Door to Surface Pond Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1496,17 +1625,18 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Pond Access",
-                        "node": "Horizontal Dock to Surface Pond"
+                        "node": "Door to Surface Pond"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Surface Pond Save Station": {
                             "type": "and",
@@ -1544,8 +1674,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Surface Pond Access": {
+                        "Door to Surface Pond Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1566,7 +1697,12 @@
                         "y": 15
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -1629,6 +1765,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -1664,6 +1801,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -1701,10 +1839,15 @@
                         "x": 25,
                         "y": 16
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Surface Alpha Nest": {
+                "Door to Surface Alpha Nest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1723,17 +1866,18 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Alpha Nest",
-                        "node": "Horizontal Dock to Surface Lava Pond"
+                        "node": "Door to Surface Lava Pond"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
                             "type": "and",
@@ -1769,6 +1913,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
                             "type": "and",
@@ -1794,7 +1939,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Surface Alpha Nest": {
+                        "Door to Surface Alpha Nest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1835,10 +1980,15 @@
                         "x": 22,
                         "y": 15
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Surface Lava Pond": {
+                "Door to Surface Lava Pond": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1857,17 +2007,18 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Lava Pond",
-                        "node": "Horizontal Dock to Surface Alpha Nest"
+                        "node": "Door to Surface Alpha Nest"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha": {
                             "type": "template",
@@ -1891,7 +2042,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha1",
                     "connections": {
-                        "Horizontal Dock to Surface Lava Pond": {
+                        "Door to Surface Lava Pond": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1978,10 +2129,15 @@
                         "x": 42,
                         "y": 15
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Surface Cave Save Station": {
+                "Door to Surface Cave Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2000,17 +2156,18 @@
                         "y": 176
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Cave Save Station",
-                        "node": "Horizontal Dock to Twisty Tunnel"
+                        "node": "Door to Twisty Tunnel"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Grave Grotto": {
                             "type": "and",
@@ -2046,8 +2203,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Surface Cave Save Station": {
+                        "Door to Surface Cave Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2167,7 +2325,12 @@
                         "x": 46,
                         "y": 21
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Twisty Tunnel": {
@@ -2195,8 +2358,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Mumbo Manor": {
+                        "Door to Mumbo Manor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2226,7 +2390,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Mumbo Manor": {
+                "Door to Mumbo Manor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2245,17 +2409,18 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Mumbo Manor",
-                        "node": "Horizontal Dock to Grave Grotto"
+                        "node": "Door to Grave Grotto"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Twisty Tunnel": {
                             "type": "and",
@@ -2291,8 +2456,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Hydro Station": {
+                        "Door to Hydro Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2311,7 +2477,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Hydro Station": {
+                "Door to Hydro Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2330,17 +2496,18 @@
                         "y": 1600
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Hydro Station",
                         "area": "Hydro Station Entrance",
-                        "node": "Horizontal Dock to Main Caves"
+                        "node": "Door to Main Caves"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Surface Gunzoo Room": {
                             "type": "or",
@@ -2381,6 +2548,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Surface Gunzoo Room": {
                             "type": "template",
@@ -2413,6 +2581,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -2551,7 +2720,12 @@
                         "x": 47,
                         "y": 17
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Tunnel to Grave Grotto": {
@@ -2579,6 +2753,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
                             "type": "and",
@@ -2752,12 +2927,24 @@
                                                                 "data": "Can Use Bombs"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -2821,15 +3008,6 @@
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 5,
-                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -2934,6 +3112,39 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Walljump on the crumble sides: https://www.youtube.com/watch?v=nbg7n5g1X8c",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -2989,7 +3200,12 @@
                         "x": 50,
                         "y": 15
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Golden Temple": {
@@ -3021,8 +3237,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Grave Grotto": {
+                        "Door to Grave Grotto": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3031,7 +3248,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Grave Grotto": {
+                "Door to Grave Grotto": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3050,17 +3267,18 @@
                         "y": 608
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Grave Grotto",
-                        "node": "Horizontal Dock to Mumbo Manor"
+                        "node": "Door to Mumbo Manor"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Golden Temple": {
                             "type": "and",
@@ -3102,7 +3320,12 @@
                         "x": 48,
                         "y": 23
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Tunnel to Grave Grotto": {
@@ -3130,6 +3353,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Top rock": {
                             "type": "and",
@@ -3150,7 +3374,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Spike Maze": {
+                "Door to Spike Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3169,17 +3393,18 @@
                         "y": 608
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Spike Maze",
-                        "node": "Horizontal Dock to Surface Gunzoo Room"
+                        "node": "Door to Surface Gunzoo Room"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Bend Chasm": {
                             "type": "and",
@@ -3215,8 +3440,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Spike Maze": {
+                        "Door to Spike Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3250,6 +3476,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Top rock": {
                             "type": "and",
@@ -3290,6 +3517,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Top rock": {
                             "type": "and",
@@ -3325,6 +3553,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Top rock": {
                             "type": "or",
@@ -3444,7 +3673,12 @@
                         "x": 50,
                         "y": 21
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Tunnel to Surface Gunzoo Room": {
@@ -3472,6 +3706,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Near Spikes": {
                             "type": "and",
@@ -3549,12 +3784,24 @@
                                                                             "data": "Can Use Bombs"
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "IBJ",
-                                                                                "amount": 3,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can IBJ"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -3565,15 +3812,6 @@
                                                                 "data": {
                                                                     "comment": "Glide jump from crumble to crumble",
                                                                     "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
@@ -3615,12 +3853,57 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Walljump",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Walljump"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Walljump"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -3654,17 +3937,41 @@
                                                     "data": "Can Use Spider Ball"
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "template",
                                                     "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -3686,6 +3993,10 @@
                                                         "amount": 3,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can IBJ"
                                                 }
                                             ]
                                         }
@@ -3723,12 +4034,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3887,10 +4210,15 @@
                         "x": 49,
                         "y": 24
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Eastern Cave Intersection": {
+                "Door to Eastern Cave Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3909,17 +4237,18 @@
                         "y": 416
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Eastern Cave Intersection",
-                        "node": "Horizontal Dock to Spike Maze"
+                        "node": "Door to Spike Maze"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle Pit": {
                             "type": "and",
@@ -3935,7 +4264,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Surface Gunzoo Room": {
+                "Door to Surface Gunzoo Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3954,17 +4283,18 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Surface Gunzoo Room",
-                        "node": "Horizontal Dock to Spike Maze"
+                        "node": "Door to Spike Maze"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Top Pit": {
                             "type": "and",
@@ -4038,7 +4368,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Surface Gunzoo Room": {
+                        "Door to Surface Gunzoo Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4093,7 +4423,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Eastern Cave Intersection": {
+                        "Door to Eastern Cave Intersection": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4210,10 +4540,15 @@
                         "x": 51,
                         "y": 26
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Spike Maze": {
+                "Door to Spike Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4232,17 +4567,18 @@
                         "y": 176
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Spike Maze",
-                        "node": "Horizontal Dock to Eastern Cave Intersection"
+                        "node": "Door to Eastern Cave Intersection"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4282,6 +4618,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Bottom": {
                             "type": "or",
@@ -4348,6 +4685,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4383,6 +4721,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 },
                 "Middle": {
@@ -4400,7 +4739,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Spike Maze": {
+                        "Door to Spike Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4552,7 +4891,12 @@
                         "x": 49,
                         "y": 26
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Eastern Cave Intersection": {
@@ -4580,6 +4924,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Bend Chasm": {
                             "type": "and",
@@ -4615,6 +4960,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Eastern Cave Intersection": {
                             "type": "and",
@@ -4664,7 +5010,12 @@
                         "x": 47,
                         "y": 26
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Surface Gunzoo Room": {
@@ -4692,6 +5043,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Surface Gunzoo Room": {
                             "type": "and",
@@ -4758,8 +5110,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Western Cave Entrance": {
+                        "Door to Western Cave Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4800,6 +5153,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Septogg": {
                             "type": "and",
@@ -4820,7 +5174,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Western Cave Entrance": {
+                "Door to Western Cave Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4839,17 +5193,18 @@
                         "y": 1392
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Western Cave Entrance",
-                        "node": "Horizontal Dock to Bend Chasm"
+                        "node": "Door to Bend Chasm"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Octroll Lava Pool": {
                             "type": "and",
@@ -4890,6 +5245,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Surface Gunzoo Room": {
                             "type": "and",
@@ -5010,10 +5366,15 @@
                         "x": 45,
                         "y": 30
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Bend Chasm": {
+                "Door to Bend Chasm": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5032,17 +5393,18 @@
                         "y": 192
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Bend Chasm",
-                        "node": "Horizontal Dock to Western Cave Entrance"
+                        "node": "Door to Western Cave Entrance"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle ": {
                             "type": "and",
@@ -5053,7 +5415,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Western Cave Shaft": {
+                "Door to Western Cave Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5072,17 +5434,18 @@
                         "y": 640
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Western Cave Shaft",
-                        "node": "Horizontal Dock to Western Cave Entrance"
+                        "node": "Door to Western Cave Entrance"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -5153,19 +5516,43 @@
                                                                                                 {
                                                                                                     "type": "resource",
                                                                                                     "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Walljump",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
                                                                                                         "type": "items",
                                                                                                         "name": "Space Jump",
                                                                                                         "amount": 1,
                                                                                                         "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "template",
+                                                                                                                "data": "Can Walljump"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "and",
+                                                                                                                "data": {
+                                                                                                                    "comment": null,
+                                                                                                                    "items": [
+                                                                                                                        {
+                                                                                                                            "type": "template",
+                                                                                                                            "data": "Can Walljump"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "tricks",
+                                                                                                                                "name": "Walljump",
+                                                                                                                                "amount": 2,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -5201,18 +5588,42 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "Walljump",
+                                                                                            "name": "MidAirMorph",
                                                                                             "amount": 1,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "MidAirMorph",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Walljump"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "template",
+                                                                                                                "data": "Can Walljump"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Walljump",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -5263,7 +5674,7 @@
                     "pickup_index": 54,
                     "location_category": "minor",
                     "connections": {
-                        "Horizontal Dock to Western Cave Shaft": {
+                        "Door to Western Cave Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5287,7 +5698,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Bend Chasm": {
+                        "Door to Bend Chasm": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5299,7 +5710,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to Western Cave Shaft": {
+                        "Door to Western Cave Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5331,10 +5742,15 @@
                         "x": 43,
                         "y": 33
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Western Cave Entrance": {
+                "Door to Western Cave Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5353,17 +5769,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Western Cave Entrance",
-                        "node": "Horizontal Dock to Western Cave Shaft"
+                        "node": "Door to Western Cave Shaft"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Top": {
                             "type": "and",
@@ -5374,7 +5791,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Western Cave Save Station": {
+                "Door to Western Cave Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5393,17 +5810,18 @@
                         "y": 864
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Western Cave Save Station",
-                        "node": "Horizontal Dock to Western Cave Shaft"
+                        "node": "Door to Western Cave Shaft"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Snaky Skorp Cavern": {
                             "type": "and",
@@ -5503,12 +5921,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5544,8 +5974,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Western Cave Save Station": {
+                        "Door to Western Cave Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5569,7 +6000,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Western Cave Save Station": {
+                        "Door to Western Cave Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5649,7 +6080,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Western Cave Entrance": {
+                        "Door to Western Cave Entrance": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5686,12 +6117,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5749,7 +6192,12 @@
                         "y": 33
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -5769,7 +6217,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Horizontal Dock to Western Cave Shaft": {
+                        "Door to Western Cave Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5778,7 +6226,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Western Cave Shaft": {
+                "Door to Western Cave Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5797,17 +6245,18 @@
                         "y": 144
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Western Cave Shaft",
-                        "node": "Horizontal Dock to Western Cave Save Station"
+                        "node": "Door to Western Cave Save Station"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -5849,7 +6298,12 @@
                         "x": 45,
                         "y": 37
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Western Cave Shaft": {
@@ -5877,6 +6331,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "After Tunnel": {
                             "type": "and",
@@ -5912,6 +6367,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "After Tunnel": {
                             "type": "and",
@@ -6029,7 +6485,12 @@
                         "x": 46,
                         "y": 40
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Snaky Skorp Cavern": {
@@ -6057,6 +6518,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Fat Crocomire Room": {
                             "type": "and",
@@ -6092,6 +6554,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Snaky Skorp Cavern": {
                             "type": "or",
@@ -6122,15 +6585,6 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 5,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "template",
                                                     "data": "Can Use Spider Ball"
                                                 },
@@ -6144,12 +6598,24 @@
                                                                 "data": "Can Use Bombs"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 4,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -6170,12 +6636,53 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "WJ without upgrades: https://www.youtube.com/watch?v=TrW9CmBHJSg",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -6187,7 +6694,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Shinespark (TODO: add short charge option)",
+                                            "comment": "Shinespark (TODO: add short charge option): https://www.youtube.com/watch?v=1LWLu7JxS1k",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6247,7 +6754,12 @@
                         "x": 45,
                         "y": 41
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to The Pit": {
@@ -6275,6 +6787,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Skreek Street": {
                             "type": "and",
@@ -6310,6 +6823,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to The Pit": {
                             "type": "or",
@@ -6370,12 +6884,24 @@
                                                                 "data": "Can Use Bombs"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -6520,10 +7046,15 @@
                         "x": 43,
                         "y": 41
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Tower East Exterior Access": {
+                "Door to Tower East Exterior Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6542,17 +7073,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Tower East Exterior Access",
-                        "node": "Horizontal Dock to Skreek Street"
+                        "node": "Door to Skreek Street"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Fat Crocomire Room": {
                             "type": "and",
@@ -6600,8 +7132,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Tower East Exterior Access": {
+                        "Door to Tower East Exterior Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6610,7 +7143,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to The Descent": {
+                "Door to The Descent": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6629,17 +7162,18 @@
                         "y": 848
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "The Descent",
-                        "node": "Horizontal Dock to Skreek Street"
+                        "node": "Door to Skreek Street"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Near hidden wall": {
                             "type": "or",
@@ -6665,7 +7199,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Blocks do not show up by bombing: https://youtu.be/4Fmq3-tIOLU&t=21",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6716,7 +7250,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Tower East Exterior Access": {
+                        "Door to Tower East Exterior Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6732,7 +7266,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to The Descent": {
+                        "Door to The Descent": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6744,7 +7278,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Blocks do not show up by bombing: https://www.youtube.com/watch?v=4Fmq3-tIOLU",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -6799,10 +7333,15 @@
                         "x": 39,
                         "y": 41
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to The Tower": {
+                "Door to The Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6821,19 +7360,20 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "The Tower",
                         "area": "Tower Exterior South East",
-                        "node": "Horizontal Dock to Main Caves"
+                        "node": "Door to Main Caves"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Skreek Street": {
+                        "Door to Skreek Street": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6895,7 +7435,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Skreek Street": {
+                "Door to Skreek Street": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6914,19 +7454,20 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Skreek Street",
-                        "node": "Horizontal Dock to Tower East Exterior Access"
+                        "node": "Door to Tower East Exterior Access"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to The Tower": {
+                        "Door to The Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7000,14 +7541,14 @@
                     "valid_starting_location": false,
                     "event_name": "A0RockEntranceToA4",
                     "connections": {
-                        "Horizontal Dock to The Tower": {
+                        "Door to The Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Skreek Street": {
+                        "Door to Skreek Street": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7039,10 +7580,15 @@
                         "x": 43,
                         "y": 47
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Skreek Street": {
+                "Door to Skreek Street": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7061,19 +7607,20 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Skreek Street",
-                        "node": "Horizontal Dock to The Descent"
+                        "node": "Door to The Descent"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Distribution Center": {
+                        "Door to Distribution Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7085,7 +7632,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to Rite of the Serpent": {
+                        "Door to Rite of the Serpent": {
                             "type": "and",
                             "data": {
                                 "comment": "New goal removes vanilla requirement",
@@ -7094,7 +7641,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Distribution Center": {
+                "Door to Distribution Center": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7113,19 +7660,20 @@
                         "y": 128
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Distribution Center",
                         "area": "Distribution Entranceway",
-                        "node": "Horizontal Dock to Main Caves"
+                        "node": "Door to Main Caves"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Skreek Street": {
+                        "Door to Skreek Street": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7148,7 +7696,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Rite of the Serpent": {
+                "Door to Rite of the Serpent": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7167,19 +7715,20 @@
                         "y": 928
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Rite of the Serpent",
-                        "node": "Horizontal Dock to The Descent"
+                        "node": "Door to The Descent"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Skreek Street": {
+                        "Door to Skreek Street": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7220,10 +7769,15 @@
                         "x": 44,
                         "y": 51
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to The Descent": {
+                "Door to The Descent": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7242,17 +7796,18 @@
                         "y": 208
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "The Descent",
-                        "node": "Horizontal Dock to Rite of the Serpent"
+                        "node": "Door to Rite of the Serpent"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "After First Screw": {
                             "type": "and",
@@ -7289,7 +7844,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Southern Cave Save Station": {
+                "Door to Southern Cave Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7308,17 +7863,18 @@
                         "y": 1168
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Southern Cave Save Station",
-                        "node": "Horizontal Dock to Rite of the Serpent"
+                        "node": "Door to Rite of the Serpent"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -7406,7 +7962,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to The Descent": {
+                        "Door to The Descent": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7475,7 +8031,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Southern Cave Save Station": {
+                        "Door to Southern Cave Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7539,15 +8095,6 @@
                                         "data": "Can Use Spider Ball"
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 4,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": "IBJ",
@@ -7564,6 +8111,10 @@
                                                         "amount": 3,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can IBJ"
                                                 }
                                             ]
                                         }
@@ -7600,12 +8151,57 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Walljump"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -7628,7 +8224,12 @@
                         "y": 51
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -7648,7 +8249,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Horizontal Dock to Rite of the Serpent": {
+                        "Door to Rite of the Serpent": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7664,7 +8265,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Rite of the Serpent": {
+                "Door to Rite of the Serpent": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7683,17 +8284,18 @@
                         "y": 208
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Rite of the Serpent",
-                        "node": "Horizontal Dock to Southern Cave Save Station"
+                        "node": "Door to Southern Cave Save Station"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -7729,6 +8331,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -7762,7 +8365,12 @@
                         "x": 42,
                         "y": 52
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Southern Cave Save Station": {
@@ -7790,8 +8398,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Drivel Drive": {
+                        "Door to Drivel Drive": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7800,7 +8409,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Drivel Drive": {
+                "Door to Drivel Drive": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7819,17 +8428,18 @@
                         "y": 656
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Drivel Drive",
-                        "node": "Horizontal Dock to Halzyn Hallway"
+                        "node": "Door to Halzyn Hallway"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Southern Cave Save Station": {
                             "type": "and",
@@ -7871,7 +8481,12 @@
                         "x": 40,
                         "y": 53
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 1,
+                    "liquid_level": 201
+                }
             },
             "nodes": {
                 "Horizontal Dock to The Depths": {
@@ -7903,6 +8518,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Right side of morph ball tunnel": {
                             "type": "or",
@@ -8015,7 +8631,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": null,
+                                                                                            "comment": "Suitless: https://www.youtube.com/watch?v=gPyE7qZ4GpY",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -8055,7 +8671,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Halzyn Hallway": {
+                "Door to Halzyn Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8074,17 +8690,18 @@
                         "y": 176
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Halzyn Hallway",
-                        "node": "Horizontal Dock to Drivel Drive"
+                        "node": "Door to Drivel Drive"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Right side of morph ball tunnel": {
                             "type": "and",
@@ -8127,7 +8744,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to Halzyn Hallway": {
+                        "Door to Halzyn Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -8192,7 +8809,12 @@
                         "x": 45,
                         "y": 26
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 1,
+                    "liquid_level": 192
+                }
             },
             "nodes": {
                 "Horizontal Dock to Bend Chasm": {
@@ -8220,6 +8842,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Research Site Elevator": {
                             "type": "or",
@@ -8371,6 +8994,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Bend Chasm": {
                             "type": "or",
@@ -8512,7 +9136,12 @@
                         "x": 41,
                         "y": 26
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 1,
+                    "liquid_level": 672
+                }
             },
             "nodes": {
                 "Horizontal Dock to Octroll Lava Pool": {
@@ -8544,6 +9173,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Research Site": {
                             "type": "and",
@@ -8586,6 +9216,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Octroll Lava Pool": {
                             "type": "and",
@@ -8650,6 +9281,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Power Bomb Blocks": {
                             "type": "and",
@@ -8704,7 +9336,12 @@
                         "x": 44,
                         "y": 24
                     }
-                ]
+                ],
+                "light_level": "2",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Door to Research Site Storage": {
@@ -8734,6 +9371,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Research Site Elevator": {
                             "type": "and",
@@ -8813,6 +9451,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Research Site Storage": {
                             "type": "and",
@@ -8954,7 +9593,12 @@
                         "x": 45,
                         "y": 24
                     }
-                ]
+                ],
+                "light_level": "3",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Door to Research Site": {
@@ -8984,6 +9628,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - DualAlphasTrigger": {
                             "type": "and",
@@ -9077,7 +9722,12 @@
                         "x": 52,
                         "y": 29
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Eastern Cave Intersection": {
@@ -9109,6 +9759,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility O-Shape Shaft": {
                             "type": "and",
@@ -9144,6 +9795,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Eastern Cave Intersection": {
                             "type": "and",
@@ -9182,7 +9834,12 @@
                         "x": 51,
                         "y": 32
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Mining Facility 3-Shape Shaft": {
@@ -9210,6 +9867,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Moto Miners": {
                             "type": "and",
@@ -9245,6 +9903,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility 3-Shape Shaft": {
                             "type": "and",
@@ -9347,12 +10006,24 @@
                                                                 "data": "Can Use Bombs"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -9385,7 +10056,12 @@
                         "x": 54,
                         "y": 32
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Mining Facility O-Shape Shaft": {
@@ -9413,6 +10089,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Destroyed Drill Cavern": {
                             "type": "and",
@@ -9448,6 +10125,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility O-Shape Shaft": {
                             "type": "and",
@@ -9473,7 +10151,12 @@
                         "x": 55,
                         "y": 33
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Moto Miners": {
@@ -9501,6 +10184,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Moto Mania": {
                             "type": "and",
@@ -9536,6 +10220,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Moto Miners": {
                             "type": "and",
@@ -9590,7 +10275,12 @@
                         "x": 54,
                         "y": 33
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Drill Excavation Access": {
@@ -9618,6 +10308,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Destroyed Drill Cavern": {
                             "type": "and",
@@ -9653,6 +10344,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Drill Excavation Access": {
                             "type": "and",
@@ -9682,7 +10374,12 @@
                         "x": 48,
                         "y": 35
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Moto Mania": {
@@ -9710,8 +10407,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Drill Excavation": {
+                        "Door to Drill Excavation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9720,7 +10418,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Drill Excavation": {
+                "Door to Drill Excavation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9739,17 +10437,18 @@
                         "y": 416
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Drill Excavation",
-                        "node": "Horizontal Dock to Drill Excavation Access"
+                        "node": "Door to Drill Excavation Access"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Moto Mania": {
                             "type": "or",
@@ -9813,10 +10512,15 @@
                         "x": 52,
                         "y": 35
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Mining Facility Intersection": {
+                "Door to Mining Facility Intersection": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9835,17 +10539,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Mining Facility Intersection",
-                        "node": "Horizontal Dock to Drill Excavation"
+                        "node": "Door to Drill Excavation"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "After Drill Sequence": {
                             "type": "and",
@@ -9856,7 +10561,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Drill Excavation Access": {
+                "Door to Drill Excavation Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9875,17 +10580,18 @@
                         "y": 416
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Drill Excavation Access",
-                        "node": "Horizontal Dock to Drill Excavation"
+                        "node": "Door to Drill Excavation"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "After Drill Sequence": {
                             "type": "or",
@@ -9971,7 +10677,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Mining Facility Intersection": {
+                        "Door to Mining Facility Intersection": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10018,7 +10724,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to Drill Excavation Access": {
+                        "Door to Drill Excavation Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10070,7 +10776,7 @@
                     "valid_starting_location": false,
                     "event_name": "A0DrillCrystal",
                     "connections": {
-                        "Horizontal Dock to Drill Excavation Access": {
+                        "Door to Drill Excavation Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10157,10 +10863,15 @@
                         "x": 54,
                         "y": 37
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Drill Excavation": {
+                "Door to Drill Excavation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10179,17 +10890,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Main Caves",
                         "area": "Drill Excavation",
-                        "node": "Horizontal Dock to Mining Facility Intersection"
+                        "node": "Door to Mining Facility Intersection"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility Save Station": {
                             "type": "or",
@@ -10239,8 +10951,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Drill Excavation": {
+                        "Door to Drill Excavation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10295,6 +11008,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility Save Station": {
                             "type": "or",
@@ -10368,6 +11082,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility Alpha Nest Access": {
                             "type": "and",
@@ -10390,7 +11105,12 @@
                         "y": 34
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -10444,6 +11164,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -10473,7 +11194,12 @@
                         "x": 52,
                         "y": 36
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 1,
+                    "liquid_level": 176
+                }
             },
             "nodes": {
                 "Horizontal Dock to Mining Facility Intersection": {
@@ -10501,6 +11227,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility Alpha Nest": {
                             "type": "or",
@@ -10636,6 +11363,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility Intersection": {
                             "type": "or",
@@ -10765,7 +11493,12 @@
                         "x": 49,
                         "y": 38
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 1,
+                    "liquid_level": 656
+                }
             },
             "nodes": {
                 "Horizontal Dock to Mining Facility Alpha Nest Access": {
@@ -10793,6 +11526,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha": {
                             "type": "and",
@@ -10912,12 +11646,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -10994,7 +11740,12 @@
                         "x": 57,
                         "y": 38
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 1,
+                    "liquid_level": 184
+                }
             },
             "nodes": {
                 "Horizontal Dock to Mining Facility Intersection": {
@@ -11022,6 +11773,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility Gamma Nest": {
                             "type": "or",
@@ -11145,6 +11897,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Mining Facility Intersection": {
                             "type": "or",
@@ -11279,7 +12032,12 @@
                         "x": 59,
                         "y": 39
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 1,
+                    "liquid_level": 672
+                }
             },
             "nodes": {
                 "Horizontal Dock to Mining Facility Gamma Nest Access": {
@@ -11307,6 +12065,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Gamma": {
                             "type": "and",
@@ -11391,12 +12150,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]

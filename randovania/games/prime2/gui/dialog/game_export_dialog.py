@@ -10,6 +10,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
+from randovania.games.prime2.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -19,7 +20,6 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for,
     update_validation,
 )
-from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir
 
 if TYPE_CHECKING:

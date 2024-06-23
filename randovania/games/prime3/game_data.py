@@ -14,9 +14,9 @@ if typing.TYPE_CHECKING:
 
 
 def _options() -> type[PerGameOptions]:
-    from randovania.interface_common.options import PerGameOptions
+    from randovania.games.prime3.exporter.options import CorruptionPerGameOptions
 
-    return PerGameOptions
+    return CorruptionPerGameOptions
 
 
 def _gui() -> game.GameGui:
@@ -67,7 +67,7 @@ def _hash_words() -> list[str]:
 game_data: game.GameData = game.GameData(
     short_name="Corruption",
     long_name="Metroid Prime 3: Corruption",
-    development_state=game.DevelopmentState.EXPERIMENTAL,
+    development_state=game.DevelopmentState.DEVELOPMENT,
     presets=[{"path": "starter_preset.rdvpreset"}],
     faq=[
         (

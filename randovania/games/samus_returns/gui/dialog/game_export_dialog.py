@@ -12,17 +12,19 @@ from PySide6 import QtGui, QtWidgets
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
+from randovania.games.samus_returns.gui.generated.msr_game_export_dialog_ui import Ui_MSRGameExportDialog
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
+    is_file_validator,
     output_input_intersection_validator,
     path_in_edit,
     prompt_for_input_directory,
+    prompt_for_input_file,
     prompt_for_output_directory,
     spoiler_path_for_directory,
     update_validation,
 )
-from randovania.gui.generated.msr_game_export_dialog_ui import Ui_MSRGameExportDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.lib.ftp_uploader import FtpUploader
 from randovania.lib.windows_drives import get_windows_drives
@@ -81,18 +83,31 @@ def romfs_validation(line: QtWidgets.QLineEdit) -> bool:
         return True
 
     path = Path(line.text())
-    return not all(
-        p.is_file()
-        for p in [
-            path.joinpath("system", "files.toc"),
-            path.joinpath("packs", "system", "system_discardables.pkg"),
-            path.joinpath("packs", "maps", "s000_surface", "s000_surface.pkg"),
-            path.joinpath("packs", "maps", "s010_area1", "s010_area1.pkg"),
-        ]
+    return not (
+        all(
+            p.is_file()
+            for p in [
+                path.joinpath("system", "files.toc"),
+                path.joinpath("packs", "system", "system_discardables.pkg"),
+                path.joinpath("packs", "maps", "s000_surface", "s000_surface.pkg"),
+                path.joinpath("packs", "maps", "s010_area1", "s010_area1.pkg"),
+            ]
+        )
+        and not all(p.is_file() for p in [path.joinpath("custom_names.json")])
     )
 
 
-#
+def exheader_validation(path: Path | None) -> bool:
+    if is_file_validator(path):
+        return True
+    assert path is not None
+    with path.open("rb") as exheader:
+        if b"MATADORA" not in exheader.read(8):
+            return True
+        else:
+            return False
+
+
 class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -106,16 +121,32 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         self._validate_input_file()
         self._validate_custom_path()
+        self._validate_input_exheader()
 
         # Input
         self.input_file_edit.textChanged.connect(self._on_input_file_change)
         self.input_file_button.clicked.connect(self._on_input_file_button)
+
+        # Input exheader
+        self.input_exheader_edit.textChanged.connect(self._on_input_exheader_change)
+        self.input_exheader_button.clicked.connect(self._on_input_exheader_button)
 
         # Target Platform
         if per_game.target_platform == MSRModPlatform.LUMA:
             self.luma_radio.setChecked(True)
         else:
             self.citra_radio.setChecked(True)
+
+        # Check for auto tracker and/or multiworld
+        if patch_data.get("enable_remote_lua", False):
+            self.citra_radio.setChecked(True)
+            self.luma_radio.setDisabled(True)
+        else:
+            self.input_exheader_edit.has_error = False
+            self.input_exheader_button.hide()
+            self.input_exheader_edit.hide()
+            self.input_exheader_label.hide()
+            self.input_exheader_warning_label.hide()
 
         self.luma_radio.toggled.connect(self._on_update_target_platform)
         self.citra_radio.toggled.connect(self._on_update_target_platform)
@@ -162,7 +193,6 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         # Output to Citra
         self._citra_label_placeholder = self.citra_label.text()
-        self.update_citra_ui()
         self.tab_citra.serialize_options = dict
         self.tab_citra.restore_options = lambda p: None
         self.tab_citra.is_valid = lambda: True
@@ -173,6 +203,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             self.pal_radio.setChecked(True)
         self.ntsc_radio.toggled.connect(self.update_citra_ui)
         self.pal_radio.toggled.connect(self.update_citra_ui)
+        self.update_citra_ui()
 
         # Output to Custom
         self.custom_path_edit.textChanged.connect(self._on_custom_path_change)
@@ -193,6 +224,9 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         # Restore options
         if per_game.input_directory is not None:
             self.input_file_edit.setText(str(per_game.input_directory))
+
+        if per_game.input_exheader is not None:
+            self.input_exheader_edit.setText(str(per_game.input_exheader))
 
         if per_game.output_preference is not None:
             output_preference = json.loads(per_game.output_preference)
@@ -233,6 +267,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         return MSRPerGameOptions(
             cosmetic_patches=per_game.cosmetic_patches,
             input_directory=self.input_file,
+            input_exheader=self.input_exheader,
             target_platform=self.target_platform,
             target_version=self.target_version,
             output_preference=output_preference,
@@ -259,6 +294,8 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         if self.output_tab_widget.indexOf(self.tab_sd_card) in visible_tabs:
             self.refresh_drive_list()
 
+        self.console_reminder_label.setVisible(target_platform == MSRModPlatform.LUMA)
+
         self.output_tab_widget.setCurrentIndex(visible_tabs[0])
 
     # Getters
@@ -284,6 +321,10 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         else:
             return MSRGameVersion.PAL
 
+    @property
+    def input_exheader(self) -> Path | None:
+        return path_in_edit(self.input_exheader_edit)
+
     # Input file
 
     def _validate_input_file(self) -> None:
@@ -297,6 +338,20 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         input_file = prompt_for_input_directory(self, self.input_file_edit)
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
+
+    # Input exheader
+
+    def _validate_input_exheader(self) -> None:
+        common_qt_lib.set_error_border_stylesheet(self.input_exheader_edit, exheader_validation(self.input_exheader))
+
+    def _on_input_exheader_change(self) -> None:
+        self._validate_input_exheader()
+        self.update_accept_validation()
+
+    def _on_input_exheader_button(self) -> None:
+        input_exheader = prompt_for_input_file(self, self.input_exheader_edit, ["bin"])
+        if input_exheader is not None:
+            self.input_exheader_edit.setText(str(input_exheader.absolute()))
 
     # SD Card
     def get_sd_card_output_path(self) -> Path:
@@ -404,7 +459,10 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
     def update_accept_validation(self) -> None:
         tab = self.output_tab_widget.currentWidget()
         self.accept_button.setEnabled(
-            hasattr(tab, "is_valid") and tab.is_valid() and not self.input_file_edit.has_error
+            hasattr(tab, "is_valid")
+            and tab.is_valid()
+            and not self.input_file_edit.has_error
+            and not self.input_exheader_edit.has_error
         )
 
     def get_game_export_params(self) -> GameExportParams:
@@ -436,6 +494,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         return MSRGameExportParams(
             spoiler_output=spoiler_path_for_directory(self.auto_save_spoiler, output_path),
             input_path=self.input_file,
+            input_exheader=self.input_exheader,
             output_path=output_path,
             target_platform=self.target_platform,
             target_version=self.target_version,

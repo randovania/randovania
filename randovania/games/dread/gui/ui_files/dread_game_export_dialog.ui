@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DreadGameExportDialog</class>
+ <widget class="QDialog" name="DreadGameExportDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>538</width>
+    <height>427</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Game Patching</string>
+  </property>
+  <layout class="QGridLayout" name="root_layout">
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="input_file_label">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Input Path (Unmodified Dread extracted RomFS)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="description_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to create the randomized game, an extracted RomFS of Metroid Dread for the Nintendo Switch is necessary.&lt;br/&gt;If you're unsure how to extract your RomFS, you can &lt;a href=&quot;https://randovania.org/guides/export-romfs&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#1d99f3;&quot;&gt;consult this guide&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="target_platform_layout">
+     <item>
+      <widget class="QLabel" name="target_platform_label">
+       <property name="text">
+        <string>Target Platform</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="atmosphere_radio">
+       <property name="text">
+        <string>Atmosphère (Modded Switch)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="ryujinx_radio">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania only supports Ryujinx.&lt;/p&gt;&lt;p&gt;Use other emulators at your own risk, but do not report any issues.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Ryujinx</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="input_file_button">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Select Folder</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" rowspan="2" colspan="3">
+    <widget class="QTabWidget" name="output_tab_widget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_sd_card">
+      <attribute name="title">
+       <string>SD Card</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="sd_label">
+         <property name="text">
+          <string>Select the drive letter for your SD Card</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="sd_driver_layout">
+         <item>
+          <widget class="QComboBox" name="sd_combo">
+           <item>
+            <property name="text">
+             <string>D:</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="sd_non_removable">
+           <property name="text">
+            <string>Show non-removable</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sd_refresh_button">
+           <property name="text">
+            <string>Refresh</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="sd_mod_manager_check">
+         <property name="text">
+          <string>Use path compatible with SimpleModManager</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_ftp">
+      <attribute name="title">
+       <string>Upload via FTP</string>
+      </attribute>
+      <layout class="QGridLayout" name="tab_ftp_layout">
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="ftp_description_label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your Switch, via FTP, to a path compatible with &lt;a href=&quot;https://github.com/nadrino/SimpleModManager/blob/master/README.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;SimpleModManager&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your Switch, run either &lt;a href=&quot;https://github.com/mtheall/ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ftpd&lt;/span&gt;&lt;/a&gt; or &lt;a href=&quot;https://github.com/jakibaki/sys-ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;sys-ftpd&lt;/span&gt;&lt;/a&gt; as homebrew.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="ftp_anonymous_check">
+         <property name="text">
+          <string>Anonymous</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="ftp_username_edit">
+         <property name="placeholderText">
+          <string>Username</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QLineEdit" name="ftp_password_edit">
+         <property name="placeholderText">
+          <string>Password</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="ftp_ip_label">
+         <property name="text">
+          <string>Switch IP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="ftp_ip_edit"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="ftp_port_edit">
+         <property name="text">
+          <string>21</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QPushButton" name="ftp_test_button">
+         <property name="text">
+          <string>Test connection</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_ryujinx">
+      <attribute name="title">
+       <string>Ryujinx</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="horizontalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="layout_linux_choice">
+         <item>
+          <widget class="QRadioButton" name="linux_flatpak_radio">
+           <property name="text">
+            <string>Use Flatpak Ryujinx folder</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="linux_native_radio">
+           <property name="text">
+            <string>Use native Ryujinx folder</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="ryujinx_label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The game will be exported directly to Ryujinx's mod folder for Metroid Dread in this computer.&lt;/p&gt;&lt;p&gt;Path to be used:&lt;br/&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;{mod_path}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Please make sure Ryujinx is closed before exporting a game.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_custom_path">
+      <attribute name="title">
+       <string>Custom Path</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="custom_path_edit">
+         <property name="placeholderText">
+          <string>Path where to place randomized game</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="custom_path_button">
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Select File</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="custom_path_label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saves the mod to a path or your choosing, leaving the responsibility of placing the files in the correct location to you.&lt;/p&gt;&lt;p&gt;This path and input path are not allowed to contain the other.&lt;/p&gt;&lt;p&gt;It's recommended to use one of the other options.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="3">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="9" column="0">
+    <widget class="QCheckBox" name="auto_save_spoiler_check">
+     <property name="text">
+      <string>Include a spoiler log on same directory</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="2">
+    <widget class="QPushButton" name="cancel_button">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLineEdit" name="input_file_edit">
+     <property name="placeholderText">
+      <string>Path to vanilla extracted RomFS</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

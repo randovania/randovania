@@ -1,0 +1,957 @@
+{
+    "name": "Tourian",
+    "extra": {},
+    "areas": {
+        "Tourian Entrance": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Tourian/x40_y75"
+            },
+            "nodes": {
+                "Teleporter to Brinstar": {
+                    "node_type": "dock",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 832.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "object_id": 100022
+                    },
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Brinstar",
+                        "area": "Tourian Prelude",
+                        "node": "Teleporter to Tourian"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": true,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Testing Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Testing Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Testing Chamber",
+                        "node": "Door to Tourian Entrance"
+                    },
+                    "default_dock_weakness": "10 Missiles Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Teleporter to Brinstar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Testing Chamber": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Tourian/x96_y97"
+            },
+            "nodes": {
+                "Door to Tourian Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Tourian Entrance",
+                        "node": "Door to Testing Chamber"
+                    },
+                    "default_dock_weakness": "10 Missiles Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Rinka Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Rinka Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1512.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Rinka Tower",
+                        "node": "Door to Testing Chamber"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Tourian Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Rinka Tower": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Tourian/x152_y127"
+            },
+            "nodes": {
+                "Door to Testing Chamber": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 1098.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Testing Chamber",
+                        "node": "Door to Rinka Tower"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Pipe Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Pipe Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Pipe Hall",
+                        "node": "Door to Rinka Tower"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Testing Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Pipe Hall": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Tourian/x104_y157"
+            },
+            "nodes": {
+                "Door to Rinka Tower": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1256.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Rinka Tower",
+                        "node": "Door to Pipe Hall"
+                    },
+                    "default_dock_weakness": "Missile Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Command Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Command Center": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Command Center",
+                        "node": "Door to Pipe Hall"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Rinka Tower": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Get rid of Larva Metroid"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Command Center": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Tourian/x40_y157"
+            },
+            "nodes": {
+                "Door to Pipe Hall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 744.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Pipe Hall",
+                        "node": "Door to Command Center"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Gate 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gate 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 672.3588175331294,
+                        "y": 181.3251783893986,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MBGate1Destroyed",
+                    "connections": {
+                        "Gate 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gate 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 547.0988786952089,
+                        "y": 186.54434250764527,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MBGate2Destroyed",
+                    "connections": {
+                        "Gate 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gate 3": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 419.2293577981651,
+                        "y": 202.20183486238534,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MBGate3Destroyed",
+                    "connections": {
+                        "Gate 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gate 4": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 286.1406727828746,
+                        "y": 183.93476044852193,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MBGate4Destroyed",
+                    "connections": {
+                        "Gate 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gate 5": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 163.49031600407747,
+                        "y": 183.93476044852193,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MBGate5Destroyed",
+                    "connections": {
+                        "Gate 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Mother Brain": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 85.20285423037717,
+                        "y": 189.1539245667686,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MotherBrainDead",
+                    "connections": {
+                        "Mother Brain": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Route": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Escape Route",
+                        "node": "Door to Command Center"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Mother Brain": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "MotherBrainDead",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Gate 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 680.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Pipe Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Gate 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 10,
+                                "negate": false
+                            }
+                        },
+                        "Gate 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "MBGate1Destroyed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Gate 5": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 168.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gate 5": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 10,
+                                "negate": false
+                            }
+                        },
+                        "Mother Brain": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "MBGate5Destroyed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Gate 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Mother Brain": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 72.0,
+                        "y": 112.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Mother Brain": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 33,
+                                "negate": false
+                            }
+                        },
+                        "Dock to Escape Route": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "MotherBrainDead",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Gate 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Gate 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 552.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gate 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 10,
+                                "negate": false
+                            }
+                        },
+                        "Gate 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Gate 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "MBGate2Destroyed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Gate 3": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 424.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gate 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 10,
+                                "negate": false
+                            }
+                        },
+                        "Gate 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Gate 4": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "MBGate3Destroyed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Gate 4": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 296.0,
+                        "y": 128.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Event - Gate 4": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Missiles",
+                                "amount": 10,
+                                "negate": false
+                            }
+                        },
+                        "Gate 5": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "MBGate4Destroyed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Gate 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Escape Route": {
+            "default_node": null,
+            "extra": {
+                "map_name": "Tourian/x8_y97"
+            },
+            "nodes": {
+                "Door to Command Center": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 232.0,
+                        "y": 136.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "door",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Command Center",
+                        "node": "Dock to Escape Route"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Teleporter to Escape Route": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Escape Route": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 128.0,
+                        "y": 2032.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "teleporter",
+                    "default_connection": {
+                        "region": "Tourian",
+                        "area": "Escape Route",
+                        "node": "Event - End Game"
+                    },
+                    "default_dock_weakness": "Teleporter",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Door to Command Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - End Game": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 119.45299145299144,
+                        "y": 2149.5970695970695,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Credits",
+                    "connections": {
+                        "Teleporter to Escape Route": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

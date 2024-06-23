@@ -3,8 +3,8 @@ from __future__ import annotations
 import functools
 from typing import TYPE_CHECKING
 
+from randovania.games.dread.gui.generated.preset_dread_energy_ui import Ui_PresetDreadEnergy
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.gui.generated.preset_dread_energy_ui import Ui_PresetDreadEnergy
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 

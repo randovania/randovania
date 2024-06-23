@@ -40,7 +40,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         self.separator_line.hide()
 
         for case in enum_lib.iterate_enum(StandardPickupStateCase):
-            if case == StandardPickupStateCase.VANILLA and pickup.original_location is None:
+            if case == StandardPickupStateCase.VANILLA and not pickup.original_locations:
                 continue
             if case == StandardPickupStateCase.STARTING_ITEM and len(pickup.progression) > 1:
                 continue
@@ -70,7 +70,7 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
         self.priority_combo.currentIndexChanged.connect(self._on_select)
 
         # Update
-        self.vanilla_check.setEnabled(pickup.original_location is not None)
+        self.vanilla_check.setEnabled(bool(pickup.original_locations))
         if not self.vanilla_check.isEnabled():
             self.vanilla_check.setToolTip(
                 "This item does not exist in the original game, so there's no vanilla location."
@@ -82,14 +82,11 @@ class StandardPickupWidget(QWidget, Ui_StandardPickupWidget):
 
         if pickup.ammo:
             ammo_names = " and ".join(resources_database.get_item(ammo_index).long_name for ammo_index in pickup.ammo)
-            self.provided_ammo_label.setText(
-                f"<html><head/><body><p>{ammo_names} provided by {pickup.name}</p></body></html>"
-            )
             self.provided_ammo_spinbox.setMaximum(
                 min(resources_database.get_item(ammo_index).max_capacity for ammo_index in pickup.ammo)
             )
+            self.provided_ammo_spinbox.setSuffix(f" {ammo_names}")
         else:
-            self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
 
         if self._pickup.description is not None:

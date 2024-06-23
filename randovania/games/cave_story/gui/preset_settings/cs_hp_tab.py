@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.gui.generated.preset_cs_hp_ui import Ui_PresetCSHP
+from randovania.games.cave_story.gui.generated.preset_cs_hp_ui import Ui_PresetCSHP
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:

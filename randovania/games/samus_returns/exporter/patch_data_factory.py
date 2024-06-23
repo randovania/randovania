@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -15,6 +15,7 @@ from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -105,13 +106,6 @@ def get_resources_for_details(
 class MSRPatchDataFactory(PatchDataFactory):
     cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.memo_data = MSRAcquiredMemo.with_expansion_text()
-
-        tank = self.configuration.energy_per_tank
-        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
@@ -216,7 +210,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[logbook_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,
@@ -389,8 +383,6 @@ class MSRPatchDataFactory(PatchDataFactory):
         if self.cosmetic_patches.use_laser_color:
             cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
             cosmetic_patches["laser_unlocked_color"] = [x / 255 for x in c.laser_unlocked_color]
-
-        if self.cosmetic_patches.use_grapple_laser_color:
             cosmetic_patches["grapple_laser_locked_color"] = [x / 255 for x in c.grapple_laser_locked_color]
             cosmetic_patches["grapple_laser_unlocked_color"] = [x / 255 for x in c.grapple_laser_unlocked_color]
 
@@ -408,25 +400,121 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return cosmetic_patches
 
+    def _build_elevator_dict(self) -> dict[str, dict[str, dict[str, str]]]:
+        # generate a 2D dictionary of source (scenario, actor) => target (scenario, actor)
+        elevator_dict: dict = {}
+        for node, connection in self.patches.all_dock_connections():
+            if not isinstance(node, DockNode):
+                continue
+            if node.dock_type not in self.game.dock_weakness_database.all_teleporter_dock_types:
+                continue
+
+            scenario = self._level_name_for(node)
+            actor_name = node.extra["actor_name"]
+            if elevator_dict.get(scenario, None) is None:
+                elevator_dict[scenario] = {}
+            elevator_dict[scenario][actor_name] = self._start_point_ref_for(connection)
+
+        return elevator_dict
+
+    def _add_custom_doors(self) -> list[dict]:
+        custom_doors: list = []
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            assert node.location is not None
+            if not isinstance(node, DockNode):
+                continue
+            if node.default_dock_weakness.name != "Access Open":
+                continue
+            if any(entry["door_actor"] == self._teleporter_ref_for(node) for entry in custom_doors):
+                continue
+
+            # Make a set of the entity groups for each room that each door exists in
+            entity_groups = {
+                self.game.region_list.area_by_area_location(node.identifier.area_identifier).extra["asset_id"],
+                self.game.region_list.area_by_area_location(node.default_connection.area_identifier).extra["asset_id"],
+            }
+
+            # Add additional entity groups if needed, mainly for post-Metroid groups
+            if "append_entity_group" in node.extra:
+                entity_groups.add(node.extra["append_entity_group"])
+
+            # Make a list of the tile_indices listed in each door node and append them
+            tile_indices = [
+                node.extra["tile_index"],
+                self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
+            ]
+
+            custom_doors.append(
+                {
+                    "door_actor": self._teleporter_ref_for(node),
+                    "position": {
+                        # FIXME: location_override only exists because DB maps are not 1:1, so fix maps
+                        "x": node.extra.get("location_x_override", node.location.x),
+                        "y": node.extra.get("location_y_override", node.location.y),
+                        "z": node.extra.get("location_z_override", node.location.z),
+                    },
+                    "tile_indices": sorted(tile_indices),  # [left, right]
+                    "entity_groups": sorted(entity_groups),
+                }
+            )
+
+        return custom_doors
+
+    def _door_patches(self) -> list[dict[str, str]]:
+        wl = self.game.region_list
+
+        result: list = []
+        used_actors: dict[str, str] = {}
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            if "type" not in weakness.extra:
+                raise ValueError(
+                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness"
+                )
+
+            if "actor_name" not in node.extra:
+                print(f"Invalid door (no actor): {node}")
+                continue
+
+            if any(entry["actor"] == self._teleporter_ref_for(node) for entry in result):
+                continue
+
+            result.append(
+                {
+                    "actor": (actor := self._teleporter_ref_for(node)),
+                    "door_type": (door_type := weakness.extra["type"]),
+                }
+            )
+            actor_idef = str(actor)
+            if used_actors.get(actor_idef, door_type) != door_type:
+                raise ValueError(
+                    f"Door for {wl.node_name(node)} ({actor}) previously "
+                    f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}."
+                )
+            used_actors[actor_idef] = door_type
+
+        return result
+
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
+        self.memo_data = MSRAcquiredMemo.with_expansion_text()
+
+        tank = self.configuration.energy_per_tank
+        memo_data = MSRAcquiredMemo.with_expansion_text()
+        memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
+        return memo_data
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
+
     def create_game_specific_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()
 
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
 
         energy_per_tank = self.configuration.energy_per_tank
 
@@ -437,6 +525,9 @@ class MSRPatchDataFactory(PatchDataFactory):
             "pickups": [
                 data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
+            "elevators": self._build_elevator_dict()
+            if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA
+            else {},
             "energy_per_tank": energy_per_tank,
             "reserves_per_tank": {
                 "life_tank_size": self.configuration.life_tank_size,
@@ -460,6 +551,14 @@ class MSRPatchDataFactory(PatchDataFactory):
             "hints": self._encode_hints(self.rng),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
+            "custom_doors": self._add_custom_doors(),
+            "door_patches": self._door_patches(),
+            "constant_environment_damage": {
+                "heat": self.configuration.constant_heat_damage,
+                "lava": self.configuration.constant_lava_damage,
+            },
+            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
         }
 
 

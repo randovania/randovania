@@ -37,6 +37,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Area Centre": {
                             "type": "and",
@@ -80,6 +81,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "West Side": {
                             "type": "and",
@@ -134,22 +136,21 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Has Weapon"
-                                    },
-                                    {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "pacifist",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Kill dragon",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Weapon"
+                                                }
+                                            ]
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Walk through the dragon",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -175,6 +176,23 @@
                                                         "type": "tricks",
                                                         "name": "Dboost",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Jump over dragon",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -287,13 +305,21 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Has Weapon"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Kill dragon",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Weapon"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Fly over dragon",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -427,6 +453,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Area Centre": {
                             "type": "and",
@@ -470,6 +497,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "East Side": {
                             "type": "and",
@@ -505,6 +533,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "East Side": {
                             "type": "and",
@@ -540,6 +569,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "East Side": {
                             "type": "and",
@@ -575,6 +605,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "West Side": {
                             "type": "and",
@@ -770,6 +801,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Egg Corridor? (Lower)": {
                             "type": "and",
@@ -900,6 +932,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Egg Corridor? (Upper)": {
                             "type": "and",
@@ -1040,6 +1073,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Egg Corridor? (Eastern)": {
                             "type": "and",
@@ -1075,6 +1109,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Egg Corridor? (Western)": {
                             "type": "or",
@@ -1461,6 +1496,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Point": {
                             "type": "and",
@@ -1561,6 +1597,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Outer Wall": {
                             "type": "resource",
@@ -1598,6 +1635,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Egg Corridor?": {
                             "type": "and",
@@ -1643,6 +1681,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Bottom": {
                             "type": "and",
@@ -1678,6 +1717,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Bottom": {
                             "type": "template",
@@ -1710,16 +1750,24 @@
                         "Room Top": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "https://youtu.be/-hZwtVL18l0",
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Has Weapon"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Kill enemies",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Weapon"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Fly over problematic Hoppies",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1740,7 +1788,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Tank a hit on a Hoppy",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1766,7 +1814,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "https://youtu.be/-hZwtVL18l0",
+                                            "comment": "Damageless",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1826,6 +1874,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Entered Outer Wall from Storehouse": {
                             "type": "and",
@@ -1990,6 +2039,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Entered Outer Wall from Clock Room": {
                             "type": "and",
@@ -2129,6 +2179,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Little House)": {
                             "type": "and",
@@ -2264,6 +2315,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Clock Room)": {
                             "type": "and",

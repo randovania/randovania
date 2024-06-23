@@ -7,9 +7,8 @@ import struct
 import typing
 from enum import IntEnum
 
-from PySide6.QtCore import QObject, Signal
-
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
+from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 
 
 class AM2RConnectionException(Exception):
@@ -37,16 +36,6 @@ class ClientInterests(IntEnum):
     MULTIWORLD = b"2"
 
 
-# This is stupid but AM2RExecutor defines a "connect" method which makes a lot of trouble if it would
-# inherit QObject
-class AM2RExecutorToConnectorSignals(QObject):
-    new_inventory = Signal(str)
-    new_collected_locations = Signal(bytes)
-    new_received_pickups = Signal(str)
-    new_player_location = Signal(str)
-    connection_lost = Signal()
-
-
 class AM2RExecutor:
     _port = 2016
     _socket: AM2RSocketHolder | None = None
@@ -55,7 +44,7 @@ class AM2RExecutor:
 
     def __init__(self, ip: str):
         self.logger = logging.getLogger(type(self).__name__)
-        self.signals = AM2RExecutorToConnectorSignals()
+        self.signals = ExecutorToConnectorSignals()
         self._ip = ip
 
     @property

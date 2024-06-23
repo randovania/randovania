@@ -4,7 +4,7 @@ import dataclasses
 import functools
 from typing import TYPE_CHECKING
 
-from randovania.gui.generated.preset_patcher_super_patches_ui import Ui_PresetPatcherSuperPatches
+from randovania.games.super_metroid.gui.generated.preset_patcher_super_patches_ui import Ui_PresetPatcherSuperPatches
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:

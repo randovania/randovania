@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+import pytest
 from PySide6 import QtCore
 
 from randovania.games.samus_returns.gui.dialog.cosmetic_patches_dialog import MSRCosmeticPatchesDialog
@@ -21,17 +22,6 @@ def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     skip_qtbot.mouseClick(dialog.custom_laser_color_check, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(use_laser_color=True)
-
-
-def test_custom_grapple_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
-    cosmetic_patches = MSRCosmeticPatches(use_grapple_laser_color=False)
-
-    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
-    skip_qtbot.addWidget(dialog)
-
-    skip_qtbot.mouseClick(dialog.custom_grapple_laser_color_check, QtCore.Qt.MouseButton.LeftButton)
-
-    assert dialog.cosmetic_patches == MSRCosmeticPatches(use_grapple_laser_color=True)
 
 
 def test_custom_energy_tank_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
@@ -76,3 +66,20 @@ def test_room_names_dropdown(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     set_combo_with_value(dialog.room_names_dropdown, MSRRoomGuiType.ALWAYS)
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(show_room_names=MSRRoomGuiType.ALWAYS)
+
+
+@pytest.mark.parametrize(
+    ("widget_field", "field_name"),
+    [
+        ("enable_remote_lua", "enable_remote_lua"),
+    ],
+)
+def test_certain_field(skip_qtbot: pytestqt.qtbot.QtBot, widget_field: str, field_name: str) -> None:
+    cosmetic_patches = MSRCosmeticPatches(**{field_name: False})  # type: ignore[arg-type]
+
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    skip_qtbot.addWidget(dialog)
+
+    skip_qtbot.mouseClick(getattr(dialog, widget_field), QtCore.Qt.MouseButton.LeftButton)
+
+    assert dialog.cosmetic_patches == MSRCosmeticPatches(**{field_name: True})  # type: ignore[arg-type]

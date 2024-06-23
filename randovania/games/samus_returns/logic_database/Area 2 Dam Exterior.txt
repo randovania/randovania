@@ -13,7 +13,7 @@ Extra - asset_id: collision_camera_005
 
 > Elevator to Area 2 Dam Interior; Heals? False
   * Layers: default
-  * Elevator to Wave Beam & Transport to Dam Exterior West/Elevator to Area 2 Dam Exterior
+  * Elevator to Wave Beam & Transport to Dam Exterior West/Elevator to Area 2 Dam Exterior; Custom name: Dam Exterior Elevator West
   * Extra - actor_name: LE_Platform_Elevator_FromArea02B
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02B
@@ -30,7 +30,7 @@ Extra - asset_id: collision_camera_005
 
 > Elevator to Area 2 Dam Entryway; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Lightning Armor & Transport to Dam Exterior East/Elevator to Area 2 Dam Exterior
+  * Elevator to Lightning Armor & Transport to Dam Exterior East/Elevator to Area 2 Dam Exterior; Custom name: Dam Exterior Elevator East
   * Extra - actor_name: LE_Platform_Elevator_FromArea02C
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02C
@@ -360,8 +360,10 @@ Extra - asset_id: collision_camera_008
   > Door to Rock Icicle Corridor
       Any of the following:
           Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
-          # Freeze the left Moheek https://youtu.be/TjVwz2ZOIg4
-          Stand on Frozen Enemy (Beginner) and Freeze Enemy to Climb Higher
+          All of the following:
+              # Freeze the left Moheek https://youtu.be/TjVwz2ZOIg4
+              Ice Beam and Stand on Frozen Enemy (Beginner)
+              Charge Beam or Freeze Enemy with Melee (Intermediate)
           All of the following:
               # Get up with HJ
               High Jump Boots
@@ -539,7 +541,7 @@ Extra - asset_id: collision_camera_027
       Trivial
   > Door to Metroid Caverns Alpha Arena North West
       Trivial
-  > Dock to Metroid Caverns Alpha Arena East Access
+  > Door to Metroid Caverns Alpha Arena East Access
       Trivial
   > Tunnel to Metroid Caverns Maze
       Lay Any Bomb
@@ -568,9 +570,12 @@ Extra - asset_id: collision_camera_027
   > Energy Recharge Station
       Trivial
 
-> Dock to Metroid Caverns Alpha Arena East Access; Heals? False
+> Door to Metroid Caverns Alpha Arena East Access; Heals? False
   * Layers: default
-  * Open Passage to Metroid Caverns Alpha Arena East Access/Dock to Metroid Caverns Save Station
+  * Access Open to Metroid Caverns Alpha Arena East Access/Door to Metroid Caverns Save Station
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 48
   > Energy Recharge Station
       Trivial
 
@@ -725,14 +730,17 @@ Extra - asset_id: collision_camera_031
 > Tunnel to Metroid Caverns Alpha Arena East; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Metroid Caverns Alpha Arena East/Tunnel to Metroid Caverns Alpha Arena East Access
-  > Dock to Metroid Caverns Save Station
+  > Door to Metroid Caverns Save Station
       Lay Any Bomb
   > Start Point
       Morph Ball
 
-> Dock to Metroid Caverns Save Station; Heals? False
+> Door to Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Open Passage to Metroid Caverns Save Station/Dock to Metroid Caverns Alpha Arena East Access
+  * Access Open to Metroid Caverns Save Station/Door to Metroid Caverns Alpha Arena East Access
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 49
   > Tunnel to Metroid Caverns Alpha Arena East
       Any of the following:
           Lay Power Bomb

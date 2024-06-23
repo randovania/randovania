@@ -177,6 +177,16 @@ def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name:
     )
 
 
+def prompt_user_for_preset_folder(window: QtWidgets.QWidget) -> None | Path:
+    """
+    Shows a QFileDialog asking the user for a directory in which to save multiple Randovania preset files
+    :param parent:
+    :return: A string if the user selected a directory, None otherwise
+    """
+
+    return _prompt_user_for_directory(window, caption="Select a directory in which to place preset files")
+
+
 def set_default_window_icon(window: QtWidgets.QWidget):
     """
     Sets the window icon for the given widget to the default icon

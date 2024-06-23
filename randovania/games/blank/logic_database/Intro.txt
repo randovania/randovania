@@ -20,6 +20,10 @@ Starting Area
       Trivial
   > Door to Heated Room
       Trivial
+  > Door to Ledge Room
+      Trivial
+  > Event - Post Weapon
+      Collected Intro/Starting Area/Pickup (Weapon)
 
 > Pickup (Weapon); Heals? False
   * Layers: default
@@ -71,6 +75,18 @@ Starting Area
 > Door to Heated Room; Heals? False
   * Layers: default
   * Normal Door to Heated Room/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Door to Ledge Room; Heals? False
+  * Layers: default
+  * Normal Door to Ledge Room/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Event - Post Weapon; Heals? False
+  * Layers: default
+  * Event Post Weapon
   > Spawn Point
       Trivial
 
@@ -232,6 +248,50 @@ Extra - map_name: Orange
   * Normal Door to Starting Area/Door to Heated Room
   > Pickup (Health)
       Normal Damage ≥ 49
+
+----------------
+Ledge Room
+Extra - map_name: Square
+> Door to Starting Area; Heals? False
+  * Layers: default
+  * Normal Door to Starting Area/Door to Ledge Room
+  > High Ledge
+      Trivial
+
+> High Ledge; Heals? False
+  * Layers: default
+  > Door to Starting Area
+      Trivial
+  > Bottom
+      Trivial
+
+> Bottom; Heals? False
+  * Layers: default
+  > High Ledge
+      Double Jump
+  > Low Ledge
+      Can Jump
+  > Pickup (Jump)
+      Trivial
+
+> Low Ledge; Heals? False
+  * Layers: default
+  > Bottom
+      Trivial
+  > Pickup (Double Jump)
+      Trivial
+
+> Pickup (Jump); Heals? False
+  * Layers: default
+  * Pickup 7; Category? Major
+  > Bottom
+      Trivial
+
+> Pickup (Double Jump); Heals? False
+  * Layers: default
+  * Pickup 8; Category? Major
+  > Low Ledge
+      Trivial
 
 ----------------
 Empty Area

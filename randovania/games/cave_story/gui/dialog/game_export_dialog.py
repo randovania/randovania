@@ -8,6 +8,7 @@ from caver.patcher import CSPlatform
 
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
+from randovania.games.cave_story.gui.generated.cs_game_export_dialog_ui import Ui_CSGameExportDialog
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
@@ -16,7 +17,6 @@ from randovania.gui.dialog.game_export_dialog import (
     prompt_for_output_directory,
     spoiler_path_for_directory,
 )
-from randovania.gui.generated.cs_game_export_dialog_ui import Ui_CSGameExportDialog
 
 if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExportParams

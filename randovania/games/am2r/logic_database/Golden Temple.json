@@ -13,7 +13,12 @@
                         "x": 51,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Main Caves": {
@@ -45,6 +50,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Needler Nation": {
                             "type": "and",
@@ -80,6 +86,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Main Caves": {
                             "type": "or",
@@ -155,18 +162,26 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShortCharge",
-                                                                                "amount": 4,
-                                                                                "negate": false
+                                                                                "comment": "Same room: https://www.youtube.com/watch?v=uY0Nx4CTbEg",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "ShortCharge",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/7a_MN_ZBc58",
+                                                                                "comment": "Charge from other room: https://youtu.be/7a_MN_ZBc58",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -189,7 +204,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Pure Walljump up https://youtu.be/VpVOOVz0Wqo",
+                                                        "comment": "Pure Walljump up: https://youtu.be/VpVOOVz0Wqo",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -201,12 +216,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -227,12 +254,20 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "misc",
-                                                                                "name": "EntranceRando",
-                                                                                "amount": 1,
-                                                                                "negate": true
+                                                                                "comment": "Spider from next room",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "misc",
+                                                                                            "name": "EntranceRando",
+                                                                                            "amount": 1,
+                                                                                            "negate": true
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         },
                                                                         {
@@ -247,7 +282,7 @@
                                                                                     {
                                                                                         "type": "or",
                                                                                         "data": {
-                                                                                            "comment": "https://youtu.be/kxqAgmdHK_g",
+                                                                                            "comment": "Spider + Spring + Bombs: https://youtu.be/kxqAgmdHK_g",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "template",
@@ -271,19 +306,31 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/f_xVasfp93M",
+                                                                                "comment": "IBJ: https://youtu.be/f_xVasfp93M",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
                                                                                         "data": "Can Use Bombs"
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "IBJ",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can IBJ"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "IBJ",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -292,7 +339,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/t42hj6u94cI",
+                                                                                "comment": "Mid-Air Morph: https://youtu.be/t42hj6u94cI",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -309,7 +356,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/q8JhGGl8u-c",
+                                                                                "comment": "CBJ: https://youtu.be/q8JhGGl8u-c",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -348,15 +395,6 @@
                                                         "comment": "Bombs + Walljump",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "or",
                                                                 "data": {
                                                                     "comment": null,
@@ -364,7 +402,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "IBJ https://youtu.be/BYGrFjVOOXQ",
+                                                                                "comment": "IBJ: https://youtu.be/BYGrFjVOOXQ",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -385,7 +423,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "CBJ https://youtu.be/f-OY6Ic-H9w",
+                                                                                "comment": "CBJ: https://youtu.be/f-OY6Ic-H9w",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
@@ -397,6 +435,39 @@
                                                                                             "type": "tricks",
                                                                                             "name": "ChargedBombJump",
                                                                                             "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -460,7 +531,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Gaurdian Quick Kill https://youtu.be/LegC7Fn0GIs",
+                                                                    "comment": "Gaurdian Quick Kill: https://youtu.be/LegC7Fn0GIs",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -537,6 +608,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Needler Nation": {
                             "type": "and",
@@ -584,7 +656,12 @@
                         "y": 14
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -645,6 +722,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -680,6 +758,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -713,7 +792,12 @@
                         "x": 52,
                         "y": 14
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Guardian Arena": {
@@ -741,6 +825,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Gawron Gangway": {
                             "type": "and",
@@ -783,6 +868,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Guardian Arena": {
                             "type": "and",
@@ -818,6 +904,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Guardian Arena": {
                             "type": "and",
@@ -855,7 +942,12 @@
                         "x": 57,
                         "y": 11
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Needler Nation": {
@@ -883,6 +975,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
@@ -918,6 +1011,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Needler Nation": {
                             "type": "and",
@@ -1095,7 +1189,12 @@
                         "x": 67,
                         "y": 11
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Gawron Gangway": {
@@ -1123,6 +1222,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Golden Temple Visited": {
                             "type": "and",
@@ -1158,6 +1258,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple East Hall": {
                             "type": "and",
@@ -1245,12 +1346,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1294,17 +1407,8 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Insane walljump",
+                                            "comment": "Insane walljump: https://www.youtube.com/watch?v=FZI6scXiurM",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -1322,6 +1426,39 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1329,7 +1466,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "less insane walljump",
+                                            "comment": "Less insane walljump",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1359,12 +1496,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1383,18 +1532,42 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 4,
+                                                        "name": "ChargedBombJump",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "ChargedBombJump",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1403,7 +1576,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "easier WJ with CBJ",
+                                            "comment": "Easier WJ with CBJ",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1424,12 +1597,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -1488,6 +1673,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple East Hall": {
                             "type": "and",
@@ -1515,15 +1701,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "and",
                                         "data": {
@@ -1553,12 +1730,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -1612,12 +1801,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1669,11 +1870,56 @@
                                                                 }
                                                             },
                                                             {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Walljump"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Walljump",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -1720,6 +1966,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -1762,6 +2009,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Outer Temple Save Station": {
                             "type": "and",
@@ -1803,15 +2051,6 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
                                             "type": "items",
                                             "name": "Space Jump",
                                             "amount": 1,
@@ -1828,12 +2067,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1860,6 +2111,39 @@
                                                         "name": "Shinesparking",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Walljump"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1895,6 +2179,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Outer Temple Save Station": {
                             "type": "and",
@@ -2030,12 +2315,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2047,15 +2344,6 @@
                                             "type": "items",
                                             "name": "Space Jump",
                                             "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Walljump",
-                                            "amount": 3,
                                             "negate": false
                                         }
                                     },
@@ -2076,6 +2364,10 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can IBJ"
                                                 }
                                             ]
                                         }
@@ -2130,15 +2422,6 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
                                                                 "type": "and",
                                                                 "data": {
                                                                     "comment": null,
@@ -2168,6 +2451,39 @@
                                                                                 "name": "Damage",
                                                                                 "amount": 5,
                                                                                 "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -2221,11 +2537,56 @@
                                                                 }
                                                             },
                                                             {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Walljump"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Walljump",
-                                                                    "amount": 1,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2305,12 +2666,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -2404,12 +2777,24 @@
                                                                                                                 }
                                                                                                             },
                                                                                                             {
-                                                                                                                "type": "resource",
+                                                                                                                "type": "and",
                                                                                                                 "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "Walljump",
-                                                                                                                    "amount": 3,
-                                                                                                                    "negate": false
+                                                                                                                    "comment": null,
+                                                                                                                    "items": [
+                                                                                                                        {
+                                                                                                                            "type": "template",
+                                                                                                                            "data": "Can Walljump"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "tricks",
+                                                                                                                                "name": "Walljump",
+                                                                                                                                "amount": 3,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
                                                                                                                 }
                                                                                                             }
                                                                                                         ]
@@ -2499,12 +2884,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2590,7 +2987,12 @@
                         "x": 69,
                         "y": 9
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Golden Temple Exterior": {
@@ -2618,6 +3020,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha": {
                             "type": "and",
@@ -2709,7 +3112,12 @@
                         "y": 11
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -2780,6 +3188,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -2815,6 +3224,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -2850,7 +3260,12 @@
                         "x": 69,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Vertical Dock to Outer Temple Save Station": {
@@ -2878,6 +3293,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Spider Ball)": {
                             "type": "and",
@@ -2923,6 +3339,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 },
                 "Pickup (Spider Ball)": {
@@ -2987,12 +3404,24 @@
                                                         "comment": "https://youtu.be/BHjwXtE4i44",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -3013,12 +3442,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -3047,7 +3488,12 @@
                         "x": 51,
                         "y": 12
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Vertical Dock to Guardian Arena": {
@@ -3075,6 +3521,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Storage Cavern": {
                             "type": "or",
@@ -3091,12 +3538,24 @@
                                                     "data": "Can Use Bombs"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3165,18 +3624,42 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
+                                                        "name": "MidAirMorph",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3196,15 +3679,6 @@
                                                     "data": {
                                                         "comment": "Jump off the pillar",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "and",
                                                                 "data": {
@@ -3339,6 +3813,39 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -3353,15 +3860,6 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "Power Grip",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -3402,12 +3900,24 @@
                                                                             "data": "Can Use Bombs"
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "IBJ",
-                                                                                "amount": 2,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can IBJ"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "IBJ",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -3438,6 +3948,39 @@
                                                                                 "name": "ChargedBombJump",
                                                                                 "amount": 1,
                                                                                 "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -3525,17 +4068,41 @@
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Walljump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
                                                                             "type": "template",
                                                                             "data": "Can Use Spider Ball"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Walljump"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -3574,21 +4141,57 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can IBJ"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3626,6 +4229,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Vertical Dock to Guardian Arena": {
                             "type": "or",
@@ -3687,7 +4291,12 @@
                         "x": 50,
                         "y": 11
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Door to Guardian Storage": {
@@ -3717,6 +4326,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
@@ -3767,7 +4377,12 @@
                         "y": 11
                     }
                 ],
-                "unlocked_save_station": true
+                "unlocked_save_station": true,
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Save Station": {
@@ -3794,7 +4409,7 @@
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Inner Temple West Hall": {
+                        "Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3830,6 +4445,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -3840,7 +4456,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Inner Temple West Hall": {
+                "Door to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3859,17 +4475,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple West Hall",
-                        "node": "Horizontal Dock to Inner Temple Save Station"
+                        "node": "Door to Inner Temple Save Station"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -3899,10 +4516,15 @@
                         "x": 61,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Inner Temple Save Station": {
+                "Door to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3921,17 +4543,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple Save Station",
-                        "node": "Horizontal Dock to Inner Temple West Hall"
+                        "node": "Door to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -3942,7 +4565,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Bomb Chamber Access": {
+                "Door to Bomb Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3961,17 +4584,18 @@
                         "y": 640
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Bomb Chamber Access",
-                        "node": "Horizontal Dock to Inner Temple West Hall"
+                        "node": "Door to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "or",
@@ -4011,12 +4635,24 @@
                                                         "comment": "https://youtu.be/Ms2W8U5Drpg",
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -4037,12 +4673,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -4060,7 +4708,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to 1-Orb Hallway": {
+                "Door to 1-Orb Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4079,19 +4727,20 @@
                         "y": 400
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "1-Orb Hallway",
-                        "node": "Horizontal Dock to Inner Temple West Hall"
+                        "node": "Door to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Bomb Chamber Access": {
+                        "Door to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4136,21 +4785,21 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Inner Temple Save Station": {
+                        "Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Bomb Chamber Access": {
+                        "Door to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to 1-Orb Hallway": {
+                        "Door to 1-Orb Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4174,10 +4823,15 @@
                         "x": 60,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Inner Temple West Hall": {
+                "Door to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4196,17 +4850,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple West Hall",
-                        "node": "Horizontal Dock to Bomb Chamber Access"
+                        "node": "Door to Bomb Chamber Access"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Bomb Chamber": {
                             "type": "and",
@@ -4244,8 +4899,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Inner Temple West Hall": {
+                        "Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4265,7 +4921,12 @@
                         "x": 58,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Door to Bomb Chamber Access": {
@@ -4295,6 +4956,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Bombs)": {
                             "type": "and",
@@ -4401,10 +5063,15 @@
                         "x": 64,
                         "y": 10
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Inner Temple East Hall": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4423,17 +5090,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Horizontal Dock to 3-Orb Hallway"
+                        "node": "Door to 3-Orb Hallway"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Golden Temple Exterior": {
                             "type": "and",
@@ -4517,8 +5185,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4598,7 +5267,7 @@
                     "pickup_index": 102,
                     "location_category": "minor",
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4636,7 +5305,7 @@
                     "pickup_index": 108,
                     "location_category": "minor",
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4707,7 +5376,12 @@
                         "x": 65,
                         "y": 14
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Door to Golden Temple Exterior": {
@@ -4737,6 +5411,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4747,7 +5422,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Charge Beam Chamber Access": {
+                "Door to Charge Beam Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4766,17 +5441,18 @@
                         "y": 1120
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Charge Beam Chamber Access",
-                        "node": "Horizontal Dock to Inner Temple East Hall"
+                        "node": "Door to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4787,7 +5463,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Armory": {
+                "Door to Armory": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4806,17 +5482,18 @@
                         "y": 880
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Armory",
-                        "node": "Horizontal Dock to Inner Temple East Hall"
+                        "node": "Door to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4827,7 +5504,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to 3-Orb Hallway": {
+                "Door to 3-Orb Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4846,17 +5523,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "3-Orb Hallway",
-                        "node": "Horizontal Dock to Inner Temple East Hall"
+                        "node": "Door to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4867,7 +5545,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to 1-Orb Hallway": {
+                "Door to 1-Orb Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4886,17 +5564,18 @@
                         "y": 640
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "1-Orb Hallway",
-                        "node": "Horizontal Dock to Inner Temple East Hall"
+                        "node": "Door to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -4932,6 +5611,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "or",
@@ -4988,6 +5668,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -5025,28 +5706,28 @@
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Charge Beam Chamber Access": {
+                        "Door to Charge Beam Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Armory": {
+                        "Door to Armory": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to 3-Orb Hallway": {
+                        "Door to 3-Orb Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to 1-Orb Hallway": {
+                        "Door to 1-Orb Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5175,10 +5856,15 @@
                         "x": 64,
                         "y": 12
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Inner Temple West Hall": {
+                "Door to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5197,17 +5883,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple West Hall",
-                        "node": "Horizontal Dock to 1-Orb Hallway"
+                        "node": "Door to 1-Orb Hallway"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "or",
@@ -5223,7 +5910,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Inner Temple East Hall": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5242,17 +5929,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Horizontal Dock to 1-Orb Hallway"
+                        "node": "Door to 1-Orb Hallway"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Middle": {
                             "type": "and",
@@ -5326,6 +6014,15 @@
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Long Beam",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -5347,7 +6044,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Inner Temple West Hall": {
+                        "Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5359,7 +6056,7 @@
                                 ]
                             }
                         },
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5404,7 +6101,7 @@
                     "pickup_index": 103,
                     "location_category": "minor",
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5429,7 +6126,7 @@
                     "valid_starting_location": false,
                     "event_name": "A1Orb1",
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": "Logical return path after activating with wave beam",
@@ -5488,10 +6185,15 @@
                         "x": 68,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Inner Temple East Hall": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5510,17 +6212,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Horizontal Dock to Armory"
+                        "node": "Door to Armory"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Tunnel": {
                             "type": "or",
@@ -5596,7 +6299,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Spring+Bomb https://www.youtube.com/watch?v=zjSIvxyjc00",
+                                                        "comment": "Spring+Bomb: https://www.youtube.com/watch?v=zjSIvxyjc00",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -5617,19 +6320,31 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "IBJ https://www.youtube.com/watch?v=Z5j1qOOBOSk",
+                                                        "comment": "IBJ: https://www.youtube.com/watch?v=Z5j1qOOBOSk",
                                                         "items": [
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Use Bombs"
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "IBJ",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can IBJ"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "IBJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -5647,7 +6362,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Mid air morph in https://youtu.be/1T8X8W6G4-U",
+                                                        "comment": "Mid air morph in: https://youtu.be/1T8X8W6G4-U",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5727,6 +6442,15 @@
                                                                                     {
                                                                                         "type": "template",
                                                                                         "data": "Can Use Any Bombs"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "misc",
+                                                                                            "name": "ShuffledOpenHatches",
+                                                                                            "amount": 1,
+                                                                                            "negate": true
+                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
@@ -5749,7 +6473,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Expert midair morph https://www.youtube.com/watch?v=Ttq2UmsIBJE",
+                                                        "comment": "Expert midair morph: https://www.youtube.com/watch?v=Ttq2UmsIBJE",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5761,12 +6485,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -5775,7 +6511,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "CBJ https://www.youtube.com/watch?v=pQZt-9CaVSs",
+                                                        "comment": "CBJ: https://www.youtube.com/watch?v=pQZt-9CaVSs",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -5826,6 +6562,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Tunnel": {
                             "type": "and",
@@ -5861,7 +6598,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5947,12 +6684,24 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
+                                                                                        "type": "and",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Walljump",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Walljump"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Walljump",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -6041,7 +6790,7 @@
                     "pickup_index": 104,
                     "location_category": "minor",
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6069,7 +6818,7 @@
                     "pickup_index": 105,
                     "location_category": "minor",
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6097,7 +6846,7 @@
                     "pickup_index": 106,
                     "location_category": "minor",
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6169,10 +6918,15 @@
                         "x": 64,
                         "y": 14
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Inner Temple East Hall": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6191,17 +6945,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Inner Temple East Hall",
-                        "node": "Horizontal Dock to Charge Beam Chamber Access"
+                        "node": "Door to Charge Beam Chamber Access"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Charge Beam Chamber": {
                             "type": "and",
@@ -6249,8 +7004,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6275,7 +7031,12 @@
                         "x": 62,
                         "y": 14
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Door to Charge Beam Chamber Access": {
@@ -6305,6 +7066,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Charge Beam)": {
                             "type": "and",
@@ -6362,7 +7124,12 @@
                         "x": 64,
                         "y": 13
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Inner Temple East Hall": {
@@ -6390,6 +7157,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pipe to Distribution Center": {
                             "type": "and",
@@ -6439,6 +7207,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Horizontal Dock to Inner Temple East Hall": {
                             "type": "and",
@@ -6514,7 +7283,12 @@
                         "x": 69,
                         "y": 16
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Door to Inner Temple East Hall": {
@@ -6544,6 +7318,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
                             "type": "and",
@@ -6600,15 +7375,6 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "template",
                                                     "data": "Can Use Spider Ball"
                                                 },
@@ -6627,12 +7393,24 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -6645,6 +7423,39 @@
                                                         "name": "Movement",
                                                         "amount": 3,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Walljump"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6725,7 +7536,12 @@
                         "x": 57,
                         "y": 14
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
                 "Horizontal Dock to Breeding Grounds Save Station": {
@@ -6753,6 +7569,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Past Bombs": {
                             "type": "and",
@@ -6793,6 +7610,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Past Bombs": {
                             "type": "and",
@@ -6920,10 +7738,15 @@
                         "x": 58,
                         "y": 16
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Breeding Grounds Alpha Nest South West": {
+                "Door to Breeding Grounds Alpha Nest South West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6942,26 +7765,27 @@
                         "y": 640
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Alpha Nest South West",
-                        "node": "Horizontal Dock to Breeding Grounds Hub"
+                        "node": "Door to Breeding Grounds Hub"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Alpha Nest North East": {
+                        "Door to Breeding Grounds Alpha Nest North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Horizontal Dock to Breeding Grounds Alpha Nest South East": {
+                        "Door to Breeding Grounds Alpha Nest South East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6995,8 +7819,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Alpha Nest North East": {
+                        "Door to Breeding Grounds Alpha Nest North East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7005,7 +7830,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Breeding Grounds Alpha Nest North East": {
+                "Door to Breeding Grounds Alpha Nest North East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7024,19 +7849,20 @@
                         "y": 400
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Alpha Nest North East",
-                        "node": "Horizontal Dock to Breeding Grounds Hub"
+                        "node": "Door to Breeding Grounds Hub"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Alpha Nest South West": {
+                        "Door to Breeding Grounds Alpha Nest South West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7052,7 +7878,7 @@
                         }
                     }
                 },
-                "Horizontal Dock to Breeding Grounds Alpha Nest South East": {
+                "Door to Breeding Grounds Alpha Nest South East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7071,19 +7897,20 @@
                         "y": 640
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Alpha Nest South East",
-                        "node": "Horizontal Dock to Breeding Grounds Hub"
+                        "node": "Door to Breeding Grounds Hub"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Alpha Nest South West": {
+                        "Door to Breeding Grounds Alpha Nest South West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7119,10 +7946,15 @@
                         "x": 63,
                         "y": 15
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Breeding Grounds Hub": {
+                "Door to Breeding Grounds Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7141,17 +7973,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Hub",
-                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest North East"
+                        "node": "Door to Breeding Grounds Alpha Nest North East"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha": {
                             "type": "and",
@@ -7183,7 +8016,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha3",
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Hub": {
+                        "Door to Breeding Grounds Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7250,10 +8083,15 @@
                         "x": 57,
                         "y": 16
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Breeding Grounds Hub": {
+                "Door to Breeding Grounds Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7272,17 +8110,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Hub",
-                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest South West"
+                        "node": "Door to Breeding Grounds Alpha Nest South West"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha": {
                             "type": "and",
@@ -7314,7 +8153,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha5",
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Hub": {
+                        "Door to Breeding Grounds Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7373,10 +8212,15 @@
                         "x": 60,
                         "y": 16
                     }
-                ]
+                ],
+                "light_level": "0",
+                "liquid_info": {
+                    "liquid_type": 0,
+                    "liquid_level": 0
+                }
             },
             "nodes": {
-                "Horizontal Dock to Breeding Grounds Hub": {
+                "Door to Breeding Grounds Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7395,17 +8239,18 @@
                         "y": 160
                     },
                     "valid_starting_location": false,
-                    "dock_type": "horizontal_dock",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Golden Temple",
                         "area": "Breeding Grounds Hub",
-                        "node": "Horizontal Dock to Breeding Grounds Alpha Nest South East"
+                        "node": "Door to Breeding Grounds Alpha Nest South East"
                     },
-                    "default_dock_weakness": "4-Tiles High Dock",
+                    "default_dock_weakness": "Open Transition",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha": {
                             "type": "and",
@@ -7440,7 +8285,7 @@
                     "valid_starting_location": false,
                     "event_name": "Alpha4",
                     "connections": {
-                        "Horizontal Dock to Breeding Grounds Hub": {
+                        "Door to Breeding Grounds Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,

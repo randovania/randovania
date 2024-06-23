@@ -13,6 +13,7 @@ class TrickResourceInfo:
     long_name: str = dataclasses.field(hash=False)
     short_name: str = dataclasses.field(hash=False)
     description: str = dataclasses.field(hash=False)
+    require_documentation_above: int = 0
     extra: frozendict = dataclasses.field(hash=False, default_factory=frozendict)
     resource_type: ResourceType = dataclasses.field(init=False, hash=False, repr=False, default=ResourceType.TRICK)
 

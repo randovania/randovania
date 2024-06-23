@@ -26,9 +26,12 @@ Extra - asset_id: collision_camera_000
   > Save Station
       Trivial
 
-> Dock to Hornoad Hallway; Heals? False
+> Door to Hornoad Hallway; Heals? False
   * Layers: default
-  * Open Passage to Hornoad Hallway/Dock to Landing Site
+  * Access Open to Hornoad Hallway/Door to Landing Site
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 195
   > Ship
       Trivial
 
@@ -37,7 +40,7 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_name: StartPoint0
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: StartPoint0
-  > Dock to Hornoad Hallway
+  > Door to Hornoad Hallway
       Trivial
   > Top of Mountain
       Any of the following:
@@ -222,7 +225,8 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_ChozoUnlockAreaDNA_Checkpoint
   > Pickup (Missile Tank)
-      Impossible
+      # Freeze the Gullugg and Melee Clip left - TODO: Video, NSJ
+      Charge Beam and Ice Beam and Space Jump and Melee Clip (Intermediate) and Out of Bounds Movement (Intermediate)
   > Door to Morph Ball Chamber
       Trivial
   > Door to Scan Pulse Chamber
@@ -292,7 +296,7 @@ Extra - asset_id: collision_camera_006
 
 > Elevator to Area 1; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Surface and Area 2/Elevator to Surface East
+  * Elevator to Transport to Surface and Area 2/Elevator to Surface East; Custom name: Surface East Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea01
@@ -630,8 +634,10 @@ Extra - asset_id: collision_camera_014
                   Any of the following:
                       Super Jump (Intermediate)
                       Morph Ball and Unmorph Extend (Beginner)
-              # Lure Moheek to the right and freeze it: https://youtu.be/8ehWaf87lqM
-              Stand on Frozen Enemy (Intermediate) and Freeze Enemy to Climb Higher
+              All of the following:
+                  # Lure Moheek to the right and freeze it: https://youtu.be/8ehWaf87lqM
+                  Ice Beam and Stand on Frozen Enemy (Intermediate)
+                  Charge Beam or Freeze Enemy with Melee (Intermediate)
   > Tunnel to Cavern Alcove
       All of the following:
           Morph Ball
@@ -738,9 +744,12 @@ Extra - asset_id: collision_camera_016
   > Highest Point
       Trivial
 
-> Dock to Landing Site; Heals? False
+> Door to Landing Site; Heals? False
   * Layers: default
-  * Open Passage to Landing Site/Dock to Hornoad Hallway
+  * Access Open to Landing Site/Door to Hornoad Hallway
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 196
   > Past First Missile Block
       Any of the following:
           Morph Ball or Space Jump or Shoot Any Missile
@@ -757,7 +766,7 @@ Extra - asset_id: collision_camera_016
 
 > Past First Missile Block; Heals? False
   * Layers: default
-  > Dock to Landing Site
+  > Door to Landing Site
       Trivial
   > Highest Point
       Any of the following:
@@ -802,7 +811,7 @@ Extra - asset_id: collision_camera_018
 
 > Door to Landing Site; Heals? False
   * Layers: default
-  * Spazer Beam Door to Landing Site/Door to Surface Stash; Dock Lock Rando incompatible with: Access Open
+  * Spazer Beam Door to Landing Site/Door to Surface Stash
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Room Center

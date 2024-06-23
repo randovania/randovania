@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
@@ -101,13 +101,7 @@ class DreadPatchDataFactory(PatchDataFactory):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.memo_data = DreadAcquiredMemo.with_expansion_text()
         self.new_spawn_points: dict[Node, dict] = {}
-
-        tank = self.configuration.energy_per_tank
-        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
-        if self.configuration.immediate_energy_parts:
-            self.memo_data["Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {tank / 4:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
@@ -264,17 +258,17 @@ class DreadPatchDataFactory(PatchDataFactory):
 
         return [
             {
-                "accesspoint_actor": self._teleporter_ref_for(logbook_node),
-                "hint_id": logbook_node.extra["hint_id"],
+                "accesspoint_actor": self._teleporter_ref_for(hint_node),
+                "hint_id": hint_node.extra["hint_id"],
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[hint_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,
                 ),
             }
-            for logbook_node in self.game.region_list.iterate_nodes()
-            if isinstance(logbook_node, HintNode)
+            for hint_node in self.game.region_list.iterate_nodes()
+            if isinstance(hint_node, HintNode)
         ]
 
     def _static_text_changes(self) -> dict[str, str]:
@@ -338,6 +332,25 @@ class DreadPatchDataFactory(PatchDataFactory):
 
         return cc_name, area.name
 
+    def _build_teleporter_name_dict(self) -> dict[str, dict[str, str]]:
+        cc_dict: dict = {}
+        for node, connection in self.patches.all_dock_connections():
+            if (
+                isinstance(node, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+            ):
+                src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
+                    node.identifier.area_identifier
+                )
+                src_cc = src_area.extra["asset_id"]
+                dest_name = _get_destination_room_for_teleportal(connection)
+
+                if src_region.extra["scenario_id"] not in cc_dict:
+                    cc_dict[src_region.extra["scenario_id"]] = {}
+                cc_dict[src_region.extra["scenario_id"]][src_cc] = f"Transport to {dest_name}"
+
+        return cc_dict
+
     def _build_area_name_dict(self) -> dict[str, dict[str, str]]:
         # generate a 2D dictionary of (scenario, collision camera) => room name
         all_dict: dict = {}
@@ -351,22 +364,15 @@ class DreadPatchDataFactory(PatchDataFactory):
             all_dict[scenario] = region_dict
 
         # rename transporters to the correct transporter rooms
-        for node, connection in self.patches.all_dock_connections():
-            if (
-                isinstance(node, DockNode)
-                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
-            ):
-                src_region, src_area = self.game.region_list.region_and_area_by_area_identifier(
-                    node.identifier.area_identifier
-                )
-                src_cc = src_area.extra["asset_id"]
-                dest_name = _get_destination_room_for_teleportal(connection)
-                all_dict[src_region.extra["scenario_id"]][src_cc] = f"Transport to {dest_name}"
+        teleporter_dict = self._build_teleporter_name_dict()
+        for k, v in teleporter_dict.items():
+            all_dict[k].update(v)
+
         return all_dict
 
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
-        return {
+        cosmetic_dict: dict = {
             "config": {
                 "AIManager": {
                     "bShowBossLifebar": c.show_boss_lifebar,
@@ -385,7 +391,6 @@ class DreadPatchDataFactory(PatchDataFactory):
                     "enable_death_counter": c.show_death_counter,
                     "enable_room_name_display": c.show_room_names.value,
                 },
-                "camera_names_dict": self._build_area_name_dict(),
             },
             "shield_versions": {
                 "ice_missile": c.alt_ice_missile.value,
@@ -397,6 +402,14 @@ class DreadPatchDataFactory(PatchDataFactory):
                 "closed": c.alt_closed.value,
             },
         }
+
+        if c.show_room_names.value != "NEVER":
+            cosmetic_dict["lua"]["camera_names_dict"] = self._build_area_name_dict()
+        elif not self.configuration.teleporters.is_vanilla:
+            cosmetic_dict["lua"]["custom_init"]["enable_room_name_display"] = "ALWAYS"
+            cosmetic_dict["lua"]["camera_names_dict"] = self._build_teleporter_name_dict()
+
+        return cosmetic_dict
 
     def _door_patches(self):
         wl = self.game.region_list
@@ -464,26 +477,26 @@ class DreadPatchDataFactory(PatchDataFactory):
             }
         ]
 
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
+        tank = self.configuration.energy_per_tank
+        memo_data = DreadAcquiredMemo.with_expansion_text()
+        memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
+        if self.configuration.immediate_energy_parts:
+            memo_data["Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {tank / 4:g}."
+        return memo_data
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
+
     def create_game_specific_data(self) -> dict:
         starting_location_node = self.game.region_list.node_by_identifier(self.patches.starting_location)
         starting_location = self._start_point_ref_for(starting_location_node)
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = [self._starting_inventory_text()]
 
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
 
         energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
 
@@ -500,6 +513,14 @@ class DreadPatchDataFactory(PatchDataFactory):
                 or node.dock_type.extra.get("is_teleportal", False)
             )
         ]
+
+        # special-case the Ghavoran Flipper train to update the map correctly
+        flipper_list = [t for t in teleporters if t["teleporter"]["actor"] == "wagontrain_quarantine_with_cutscene_000"]
+        if flipper_list:
+            other_train = deepcopy(flipper_list[0])
+            other_train["teleporter"]["actor"] = "wagontrain_quarantine_000"
+            teleporters.append(other_train)
+
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,

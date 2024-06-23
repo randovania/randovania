@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 @pytest.fixture(params=[False, True])
-def logbook_node(request, blank_game_description):
+def hint_node(request, blank_game_description):
     has_translator = request.param
     translator = blank_game_description.resource_database.get_item("BlueKey")
 
@@ -31,9 +31,9 @@ def logbook_node(request, blank_game_description):
     return has_translator, translator, node
 
 
-def test_logbook_node_requirements_to_leave(logbook_node, empty_patches):
+def test_hint_node_requirements_to_leave(hint_node, empty_patches):
     # Setup
-    has_translator, translator, node = logbook_node
+    has_translator, translator, node = hint_node
     db = empty_patches.game.resource_database
 
     def ctx(resources):
@@ -50,28 +50,31 @@ def test_logbook_node_requirements_to_leave(logbook_node, empty_patches):
     assert to_leave.satisfied(ctx(rc3), 99)
 
 
-def test_logbook_node_can_collect(logbook_node, empty_patches):
+def test_hint_node_should_collect(hint_node, empty_patches):
     # Setup
     db = empty_patches.game.resource_database
-    has_translator, translator, node = logbook_node
+    has_translator, translator, node = hint_node
     node_provider = MagicMock()
 
     def ctx(*args: ResourceInfo):
         resources = ResourceCollection.from_dict(db, {r: 1 for r in args})
         return NodeContext(empty_patches, resources, db, node_provider)
 
-    assert node.can_collect(ctx()) != has_translator
-    assert node.can_collect(ctx(translator))
+    assert node.requirement_to_collect().satisfied(ctx(), 0) != has_translator
+    assert node.requirement_to_collect().satisfied(ctx(translator), 0)
+
+    assert node.should_collect(ctx())
+    assert node.should_collect(ctx(translator))
 
     resource = node.resource(ctx())
-    assert not node.can_collect(ctx(resource))
-    assert not node.can_collect(ctx(resource, translator))
+    assert not node.should_collect(ctx(resource))
+    assert not node.should_collect(ctx(resource, translator))
 
 
-def test_logbook_node_resource_gain_on_collect(logbook_node, empty_patches):
+def test_hint_node_resource_gain_on_collect(hint_node, empty_patches):
     # Setup
     db = empty_patches.game.resource_database
-    node = logbook_node[-1]
+    node = hint_node[-1]
     context = NodeContext(empty_patches, ResourceCollection(), db, MagicMock())
 
     # Run

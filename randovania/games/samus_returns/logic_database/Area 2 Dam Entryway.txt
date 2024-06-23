@@ -13,7 +13,7 @@ Extra - asset_id: collision_camera
 
 > Elevator to Area 1; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Surface and Area 2/Elevator to Area 2 Dam Entryway
+  * Elevator to Transport to Surface and Area 2/Elevator to Area 2 Dam Entryway; Custom name: Area 2 Chozo Seal Elevator North
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea01
@@ -22,7 +22,7 @@ Extra - asset_id: collision_camera
 
 > Elevator to Area 3 Factory Exterior; Heals? False
   * Layers: default
-  * Elevator to Transport to Area 2/Elevator to Area 2 Dam Entryway
+  * Elevator to Transport to Area 2/Elevator to Area 2 Dam Entryway; Custom name: Area 2 Chozo Seal Elevator South
   * Extra - actor_name: LE_Platform_Elevator_FromArea03
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea03
@@ -200,8 +200,8 @@ Extra - asset_id: collision_camera_004
   * Pickup 50; Category? Minor
   * Extra - actor_name: LE_Item_002
   * Extra - actor_type: item_missiletank
-  > Right of Paraby Swarm
-      Morph Ball
+  > Next to Pickup
+      Trivial
 
 > Pickup (Lightning Armor); Heals? False
   * Layers: default
@@ -209,13 +209,13 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: LE_SpecialAbility_EnergyShield
   * Extra - actor_type: powerup_energyshield
   > Left Spawnpoint
-      Morph Ball
+      Trivial
   > Right Spawnpoint
-      Morph Ball
+      Trivial
 
 > Elevator to Area 2 Dam Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Dam Exterior/Elevator to Area 2 Dam Entryway
+  * Elevator to Dam Exterior/Elevator to Area 2 Dam Entryway; Custom name: Lightning Armor Chamber Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea02A
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02A
@@ -243,34 +243,40 @@ Extra - asset_id: collision_camera_004
   * Extra - start_point_actor_name: ST_CheckPoint_002
   > Pickup (Lightning Armor)
       Morph Ball
-  > Right of Paraby Swarm
-      Trivial
+  > Event - Unlock Door
+      Morph Ball
+  > Next to Pickup
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Lightning Armor
+              Hazard Runs (Intermediate) and Hazard Damage ≥ 250
 
 > Right Spawnpoint; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_Bestowal
   > Pickup (Lightning Armor)
-      Morph Ball
+      Any of the following:
+          Morph Ball
+          # Clip into the statue: https://youtu.be/nlu3akHbJew
+          Out of Bounds Movement (Intermediate)
   > Door to Transport Access (Bottom)
       Trivial
 
 > Event - Unlock Door; Heals? False
   * Layers: default
   * Event Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
-  > Right of Paraby Swarm
-      Morph Ball
-
-> Right of Paraby Swarm; Heals? False
-  * Layers: default
-  > Pickup (Missile Tank)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Lightning Armor
-              Hazard Runs (Intermediate) and Normal Damage ≥ 250
   > Right Spawnpoint
       Morph Ball
-  > Event - Unlock Door
+
+> Next to Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Trivial
+  > Elevator to Area 2 Dam Exterior
+      # Freeze the Moheek below the Crumble Block and Melee Clip right: https://youtu.be/3VLe-42BmeE
+      Charge Beam and Ice Beam and Morph Ball and Stand on Frozen Enemy (Advanced) and Melee Clip (Advanced) and Out of Bounds Movement (Advanced)
+  > Right Spawnpoint
       Morph Ball
 
 ----------------
@@ -314,12 +320,16 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Lightning Armor & Transport to Dam Exterior East/Door to Transport Access (Top)
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
-  > Dock to Alpha+ Arena
+  > Door to Alpha+ Arena
       Trivial
 
-> Dock to Alpha+ Arena; Heals? False
+> Door to Alpha+ Arena; Heals? False
   * Layers: default
-  * Open Passage to Alpha+ Arena/Dock to Transport Access
+  * Access Open to Alpha+ Arena/Door to Transport Access
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 91
+  * Extra - append_entity_group: PostAlpha_002
   > Door to Lightning Armor & Transport to Dam Exterior East (Top)
       Any of the following:
           After Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
@@ -348,7 +358,7 @@ Extra - asset_id: collision_camera_005
       Any of the following:
           Lightning Armor or Use Spider Ball
           Hazard Runs (Beginner) and Hazard Damage ≥ 40
-  > Dock to Alpha+ Arena
+  > Door to Alpha+ Arena
       Any of the following:
           Lightning Armor or Use Spider Ball
           Hazard Runs (Beginner) and Hazard Damage ≥ 45
@@ -397,9 +407,13 @@ Extra - asset_id: collision_camera_007
   > Inside Arena
       Trivial
 
-> Dock to Transport Access; Heals? False
+> Door to Transport Access; Heals? False
   * Layers: default
-  * Open Passage to Transport Access/Dock to Alpha+ Arena
+  * Access Open to Transport Access/Door to Alpha+ Arena
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 92
+  * Extra - append_entity_group: PostAlpha_002
   > Inside Arena
       Morph Ball and Shoot Any Missile
   > Outside Arena
@@ -416,7 +430,7 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
   > Door to Entryway Teleporter
       Trivial
-  > Dock to Transport Access
+  > Door to Transport Access
       Morph Ball and Shoot Any Missile
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
@@ -424,7 +438,7 @@ Extra - asset_id: collision_camera_007
 > Outside Arena; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_002B
-  > Dock to Transport Access
+  > Door to Transport Access
       Trivial
 
 > Pickup (DNA); Heals? False

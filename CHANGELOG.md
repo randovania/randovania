@@ -5,49 +5,406 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.0.0] - 2024-05-??
+## [8.2.0] - 2024-07-??
+
+- Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
+- Added: When generating for a multiworld, all mentions of a world now use the world's name.
+- Added: "Export all presets" option under multiworld session Advanced Options.
+- Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
+- Added: Warn when generating a game with Door Lock Randomizer in Types Mode and Permanently Locked doors are set as a valid option.
+- Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
+- Changed: The Receiver/Provider world selector in the History tab is now sorted.
+
+### AM2R
+
+- Added: Chaos Options to randomly make a room dark, submerged in water or submerged in lava.
+- Added: 10 Videos added to the logic database.
+- Fixed: Dread's Wide Beam will now show as a Wide Beam sprite instead of a Spazer Beam sprite.
+
+#### Logic Database
+
+##### Distribution Center
+
+- Added: Facility Storage Spiked Path: It is now possible to cross the rooms with Wall Jumps and Intermediate Zips.
+- Fixed: Pipe Hub Access: Solving the EMP Puzzle is not possible to do with Power Bombs anymore.
+
+##### Hydro Station
+
+- Changed: Breeding Grounds Entrance: The Walljump that's used to get to Breeding Grounds Save Station with a Damage Boost is now Intermediate instead of Expert.
+
+##### Industrial Complex
+
+- Fixed: Spiky Shaft: It is now not trivial anymore to go between the top left door and the top right door.
+
+##### The Depths
+
+- Added: Bubble Lair Shinespark Cave: Expert Walljump and Intermediate Morph Glide option to climb the room as well as a video demonstration.
+- Changed: Hideout Omega Nest: Getting past the Omega is now Movement Intermediate with Space Jump, and Movement Advanced with Spider Ball.
+
+### Metroid Dread
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+- Fixed: The transport in Ghavoran - Flipper now shows the destination on the minimap icon.
+
+#### Logic database
+
+##### Cataris
+
+- Fixed: Moving Magnet Walls (Tall) now uses the correct lava button event for the magnet surfaces.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Fixed: Overgrown Cavern now has the correct node marked as player spawn
+
+### Metroid Prime
+
+- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
+
+### Metroid Prime 2: Echoes
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
+### Metroid: Samus Returns
+
+- **Major** - Added: Multiworld and automatic item tracker support for Citra.
+- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
+- Added: Option to configure if heated rooms or lava deals constant instead of scaled damage.
+- Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
+- Changed: Item icons on the map will now show the icon of the pickup instead of the open circles. Powerups and Nothings currently share the same icon. Hidden Pickups will still show up as open circles.
+- Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
+- Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
+- Changed: Area 4 Crystal Mines - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
+- Fixed: When exporting a new seed, any leftover data from previous seeds will be deleted.
+- Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
+- Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
+- Fixed: Crash when defeating the Larva Metroids in reverse.
+
+### Logic Database
+
+#### Area 5 Tower Exterior
+
+- Fixed: Picking up `Missile Tank (Top)` from the top of the room now requires Bombs.
+
+## [8.1.1] - 2024-06-08
+
+### Metroid Prime
+
+- Fixed: Arboretum - Gate not staying open on room reload if the gate cutscene was skipped
+- Fixed: Sunchamber - Artifact unveil cutscene black bars not going away
+
+## [8.1.0] - 2024-06-04
+
+- Changed: In Item Pool tab, improved the presentation for configuring ammo.
+- Changed: Error messages have been made more detailed if Randovania is unable to connect to Dolphin.
+- Fixed: Events followed by pickups are now better weighted during generation.
+- Fixed: During generation, the starting health is now properly accounted for when deciding how many Energy Tanks (and similar) are needed for a requirement.
+- Fixed: Text in the Customize Preset window's Randomizer Logic > Generation tab is now game-neutral.
+- Fixed: Items placed before standard generation now respect vanilla item placement settings to not assign two items to one location.
+- Fixed: The Spoiler Playthrough tab is now hidden when creating a game with minimal logic, as it's not a reliable source on determining whether a seed is beatable.
+- Fixed: Locked/Disabled Doors will, in addition to checking if you can reach the backside of the door, also check if you can leave from there.
+- Fixed: Games that support randomisation of any type of transport with the "Two-way, between regions" mode now ensure that all regions are reachable.
+
+### AM2R
+
+- **Major** - Added: Transport Pipe randomizer. If enabled, it will change where Transport Pipes lead to.
+- **Major** - Added: Long Beam, Walljump Boots and Infinite Bomb Propulsion have been added as items.
+- Added: It is now possible to have a seperate shuffled amount and required amount of DNA.
+- Added: Exposed Metroid Queen-Locked doors for Door Lock Rando.
+- Added: Exposed Open Transitions for Door Lock Rando. Shuffling these in, will place Doors on all 4-Tile high transitions.
+- Added: All Bosses now drop Power Bombs.
+- Added: The following sprites have been added: Spider Ball for Prime 1, Missile Launcher, Speed Booster Upgrades and Super Missile Launcher for Dread.
+- Changed: The following sprites were changed in order to fit more with AM2R's art style: Ice Missiles and Storm Missiles for Dread, Annihilator Beam, Dark Suit, Dark Visor, Echo Visor, Light Suit and Progressive Suit for Echoes, Gravity Suit, Phazon Suit and Varia Suit for Prime 1.
+- Changed: The hints are now in color.
+- Changed: The sprites for the EMP doors have been changed to be more distinct.
+- Changed: When Doors are shuffled over Research Site Hatches, they are now not obscured by the rock background.
+- Changed: The Starter Preset now has `Unlock Genetics Laboratory Doors` enabled.
+- Changed: The Starter Preset now has Progressive Jumps and Progressive Suits enabled.
+- Fixed: When Research Site Hatches are shuffled to Ammo doors (Missile, Super Missile, Power Bomb), they will now get unlocked automatically when going through them.
+
+#### Logic Database
+
+##### Distribution Center
+
+- Changed: Dual Gammas: Fighting them without Gravity Suit now requires intermediate combat instead of beginner.
+- Changed: Dual Gammas: Fighting them with Charge Beam now requires you to be able to climb the platforms in the room.
+- Fixed: Gravity Area Trapdoor: Shinesparking up is now impossible on Door Lock Rando.
+- Fixed: Gravity Area Shaft: Shinesparking up is now impossible on Door Lock Rando and also properly accounts for Missiles.
+
+##### Genetics Laboratory
+
+- Added: Waterfalls Exterior: Hypermode option of climbing the room with Walljumps and Morph Glides.
+- Fixed: Hatchling Room Underside: Shinesparking up is now impossible on Door Lock Rando.
+
+##### Industrial Complex
+
+- Changed: Upper Factory Gamma Nest: Leaving to the top with Spider Ball or IBJ now requires the Gamma to be dead first.
+- Changed: Upper Factory Gamma Nest: Leaving to the top with only Walljump is now an Expert Walljump instead of Advanced.
+- Changed: Upper Factory Gamma Nest: Leaving to the top with Walljumps and the Septoggs is now an Intermediate Walljump instead of Beginner.
+- Changed: Fighting Torizo without any Beam Upgrades is now Advanced Combat.
+
+##### GFS Thoth
+
+- Changed: Fighting Genesis without any Beam Upgrades is now Expert Combat.
+
+##### Golden Temple
+
+- Added: Golden Temple Exterior: A video for the Walljump to Exterior Alpha Nest.
+
+##### The Tower
+
+- Changed: Tower Exterior South East: Shinesparking up to the cliff near the Gamma Nest has been changed from a beginner shinespark to an intermediate one.
+
+### Cave Story
+
+- Added: 60fps can be enabled for Freeware by setting the appropriate value in the `settings.ini` file next to the executable after an export.
+- Changed: When playing a Multiworld, Windows will not show a Firewall prompt anymore to allow the game.
+- Fixed: Cave Story Tweaked now runs on the Steam Deck.
+
+### Discord Bot
+
+- Changed: The website command now points to `https://randovania.org` rather than `https://randovania.github.io`.
+
+### Metroid Dread
+
+- Changed: The Morph Launcher leading to Experiment Z-57 will no longer cause Thermal Doors to temporarily be closed.
+- Changed: The exporting dialog now links to a guide that explains how to dump the RomFS.
+- Changed: In the preset energy tab, the explanation of environmental damage being non-logical is now less misleading.
+- Changed: When transports are randomized, the room names will now always be displayed on the HUD for rooms containing transports, regardless of cosmetic settings.
+- Fixed: Typo on the exporting dialog.
+- Removed: The `Ryujinx (Legacy)` option for exporting has been removed. The `Ryujinx` option should be used instead.
+
+#### Logic database
+
+- Added: New trick: Climb Sloped Surfaces.
+
+#### Artaria
+
+- Added: Wall Jump (Beginner) is now an option for reaching the bottom part of the slope in EMMI Zone Spinner.
+- Added: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with Phantom Cloak and Climb Sloped Surfaces (Advanced).
+- Changed: Climbing the slope in EMMI Zone Spinner with Spin Boost has been reclassified from Movement to Climb Sloped Surfaces.
+- Changed: Using Speed Booster to climb the slope in EMMI Zone Spinner has been reclassified to Speed Booster Conservation.
+- Changed: In Waterfall: Getting from Tower Middle to Door to Behind Waterfall with no items has been reclassified from Movement (Advanced) to Climb Sloped Surfaces (Expert).
+- Changed: In Waterfall: Getting from Right of Rotatable to Tower Middle  with Spin Boost now requires Climb Sloped Surfaces (Beginner).
+
+#### Burenia
+
+- Changed: Using Flash Shift to get the Missile Tank Pickup in Main Hub Tower Top now requires tricks, either Movement (Beginner) with 3 Flash charges, Climb Sloped Surfaces (Intermediate) with 2 Flash chargers, or Wall Jump (Beginner) and Climb Sloped Surfaces (Beginner) with 1 Flash Charge.
+
+##### Dairon
+
+- Added: Door Types for the two Dairon Power Events for future-proofing (not the Missile or Wide doors) and updated the relevant connections.
+- Added: Using Stand on Frozen Enemies trick to get the item in Big Hub, using either Flash Shift or Spin Boost.
+
+##### Ferenia
+
+- Added: Climb Sloped Surfaces (Intermediate) with Flash Shift to reach the pickup in Pitfall Puzzle Room, with 2 Flash Charges.
+- Added: Climb Sloped Surfaces (Beginner) with Flash Shift to climb the slope at the bottom of Speedboost Slopes Maze, with 1 Flach Charge.
+
+##### Ghavoran
+
+- Changed: Climbing to the pickup at the top of Spin Boost Tower using Flash Shift has been reclassified from Climb Sloped Tunnels to Climb Sloped Surfaces.
+- Changed: Climbing to the pickup at the top of Spin Boost Tower Using Flash Shit, the Wall Jump has been reduced from Advanced to Intermediate.
+
+### Metroid Prime
+
+- Fixed: The artifact totems now break during the Meta-Ridley fight if less artifacts were required than shuffled
+- Fixed: Crashes in several rooms when pressing start to skip cutscene exactly 1 second from the end of cutscene
+- Fixed: Crash in certain elevator rooms when warping the moment connecting room(s) finish loading
+- Fixed: Incorrect shield texture for vertical **Power Beam Only** doors
+- Fixed: Elite Research - Stuttering when loading the room
+- Fixed: Mine Security Station - Wave Pirates not dropping down if the player didn't skip the cutscene immediately
+- Fixed: Reactor Core - Escape music restarting when leaving the room after Parasite Queen has been killed
+- Fixed: Furnace - Ghost elements re-appearing when re-entering the room from East Furnace Access
+- Fixed: Main Plaza - Door background texture not rendering on the correct side
+- Fixed: Hive Totem - Skipping the cutscene now behaves more accurately as if the cutscene wasn't skipped
+- Fixed: Ruined Courtyard - Skipping the cutscene now behaves more accurately as if the cutscene wasn't skipped
+- Fixed: Phendrana Shorelines - The item behind the ice can now be collected again with Infinite Speed
+- Fixed: Control Tower - Flying Pirates incorrectly flying away from the player when skipping the cutscene
+- Fixed: Research Core - Combat Visor being forced after grabbing the pickup on Competitive Cutscene mode
+- Fixed: Research Entrance - Softlock if the player kills the pirates before touching the cutscene trigger
+- Fixed: Research Entrance - Fog disappearing after clearing the 1st Pass Pirates and before the 2nd Pass Shadow Pirates
+- Fixed: Energy Core - Underwater sound incorrectly playing when the player was not underwater
+- Fixed: Energy Core - Puzzle music not playing again if the player re-enters the room during the countdown
+- Fixed: Ruined Shrine - Beetle music incorrectly continues playing after leaving towards Main Plaza
+- Fixed: Save Station B - Incorrectly playing save station music instead of Phendrana music if the player leaves too quickly
+- Fixed: Observatory - Projector activation cutscene skip activating the projector twice if the cutscene was skipped late
+- Fixed: Observatory - Fixed incorrect music playing when the projector is active
+- Fixed: Observatory - Panel activation cutscene incorrectly playing on 2nd Pass when the projector is already active
+- Added: New option for suit damage reduction: "Additive", where each suit provides a specific amount of damage reduction
+- Changed: The map tracker uses the same names for elevators as when editing a preset
+- Changed: Updated tournament winners scan
+- Changed: Ventilation Shaft: Cutscene skip no longer waits for nearby rooms to load
+- Changed: Mine Security Station: The Wave Pirates now get activated with the same timing, regardless of what death animation the Shadow Pirates play
+- Changed: Mine Security Station: Adjusted cutscene trigger so it can't be accidentally skipped
+- Changed: Ruined Shrine - Adjusted position of the cutscene skip lock-on point
+- Changed: Control Tower - "Doors Unlocked" HUD Memo now shows in Control Tower once the fight is done on Competitive Cutscene mode
+- Changed: Ruined Fountain - Morph Ball can no longer get stuck at the bend on the Spider Track
+- Changed: Energy Core - Increased the size of the Load Trigger to Furnace Access
+- Changed: Hive Totem - Adjusted the Hive Totem scan position to match how it is on PAL
+- Changed: Sun Tower Elevator - Cutscene now shows Samus facing the correct direction
+- Changed: Observatory - Restored an unused particle effect for the projector
+- Changed: Observatory - The projector is now activated on room load, instead of activating immediately after the room loaded
+- Changed: Research Entrance - 2nd Pass Shadow Pirates can longer interrupt 1st Pass fight music if they die too slowly
+- Changed: Omega Research - Ambient music now resumes when the pirates die instead of when they fully despawn
+- Changed: Geothermal Core - The previously invisible ledge connected to Plasma Processing is now always visible
+
+#### Logic Database
+
+##### Magmoor Caverns
+
+- Fixed: Geothermal Core: Various Puddle Spore requirements now require Before Storage Depot B instead of After.
+
+##### Phazon Mines
+
+- Changed: Central Dynamo: Infinite Speed trick no longer requires Knowledge (Advanced)
+- Changed: Fungal Hall Access now appropriately requires Plasma
+- Added: Mine Security Station: Combat logic for getting Storage Depot A
+- Changed: Mine Security Station: Adjusted combat logic to have stricter requirements
+
+##### Phendrana Drifts
+
+- Changed: Temple Entryway: Breaking ice properly requires Plasma/Wave/Power
+
+##### Tallon Overworld
+
+- Changed: Root Cave: NSJ climb connects to a skybox which connects to the item and Arbor Chamber
+- Changed: Root Cave: NSJ climb to item no longer needs Standable Terrain and Invisible Objects has been nerfed to Beginner for the item
+- Changed: Root Cave: NSJ climb now appropriately requires Door Lock Rando to be off
+- Changed: Root Cave: Combat Dash from Arbor Chamber to item no longer requires X-Ray/Invisible Objects
+- Added: Root Cave: NSJ climb now has comments to explain methodology
+- Added: Root Cave: Advanced Combat Dash to Arbor Chamber from item that does not need X-Ray/Invisible Objects
+
+### Metroid Prime 2: Echoes
+
+- Fixed: A small typo with "immune" in the energy preset tab.
+- Fixed: Seeker Locks without Seeker now properly show all usages when asked for.
+
+### Metroid: Samus Returns
+
+- **Major** - Added: Door Lock randomizer has been added, along with new door types.
+- **Major** - Added: Elevator randomizer has been added.
+- Changed: DNA hints now just say "DNA" instead of "Metroid DNA".
+- Fixed: If no seed was exported at a previous start of Randovania, the export window now shows the correct title ID in the output path for NTSC without having to switch to PAL and back to NTSC.
+- Fixed: Removed an incorrect start location from Area 4 Central Caves, which failed when exporting the game.
+- Fixed: Typo on the exporting dialog.
+- Fixed: Common case where a modified input RomFS was considered being unmodified.
+- Fixed: Starting at Area 3 Factory Exterior - Beam Burst Chamber & Tsumuri Station no longer spawns Samus out of bounds.
+- Fixed: The Laser Aim cosmetic options UI no longer exports the wrong colors and has been simplified.
+- Fixed: The item in Area 7 - Omega Arena South Access no longer disappears after defeating the Omega in Area 7 - Omega Arena South.
+- Fixed: Case where Power Bombs would not be disabled when fighting Diggernaut.
+
+#### Logic Database
+
+##### Area 1
+
+- Fixed: Metroid Caverns Hub: Dock to Metroid Caverns Save Station -> Tunnel to Metroid Caverns Save Station now has the correct grouping for the logical paths.
+
+##### Area 3 Metroid Caverns
+
+- Added: Caverns Teleporter East - Reaching the pickup now has correct requirements with High Jump Boots, requiring either a Super Jump (Advanced), Unmorph Extend (Intermediate), or Freezing the Moheek (Intermediate).
+
+## [8.0.0] - 2024-05-01
 
 - **Major** - Added: Metroid Samus Returns has been added with full single player support. Includes random starting locations, some toggleable patches, and more.
-
-## [7.6.0] - 2024-05-??
-
-- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
 - Added: Highlighting nodes in the Map view of the Map tracker will now update the current location.
+- Changed: The output after verifying the installation has been made less misleading.
+- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
+- Changed: Improve error handling when exporting presets.
+- Fixed: The Map view on the Map tracker will not show doors and generic nodes as being inaccessible if only resources were shown on the Text Map view.
 
 ### Resolver
 
 - Fixed: Some cases of seeds being wrongly considered as impossible.
 
-### Metroid Prime
-
-- Added: FAQ Entry about non-Superheated rooms
-
-## [7.5.1] - 2024-04-??
-
-- Changed: The output after verifying the installation has been made less misleading.
-- Changed: Show better errors on Linux and macOS when something goes wrong while trying to open a directory.
-
 ### Discord Bot
 
 - Added: The Discord bot now mentions the game when describing a preset.
+- Changed: Experimental games are now only available in the development bot.
 
 ### AM2R
 
+- Added: 1 joke hint.
 - Changed: All ammo tanks are now consistently being referred to as "Tanks" rather than "Expansions".
+
+#### Logic Database
+
+- Changed: Zipping from destroyable objects with Missiles is now rated as Expert.
 
 ##### Hydro Station
 
 - Fixed: Varia Chamber Access: Logic will not expect you to Infinite Bomb Jump with only Power Bombs to get to the item anymore.
+- Fixed: Inner Alpha Nest South: It's not logical anymore to get the Missile tank with only Walljumps and Mid-Air Morphs.
+- Added: Inner Alpha Nest South: A video link to get the Missile Tank with a Morph Glide.
 
 ### Cave Story
 
 - Fixed: If the objective has been set to the bad ending, then the Explosive will be in its vanilla location, rather than not being shuffled at all.
 - Fixed: King does not have a third ear anymore when using him as a player sprite.
 
+##### Sand Zone
+
+- Fixed: Sand Zone: Breaking the blocks now properly accounts for having either Missile Launcher or Super Missile Launcher.
+- Fixed: Sand Zone: Breaking the blocks to go from the Sunstones to before the omega fight now properly accounts for killing enemies to farm Missiles.
+- Fixed: Sand Zone: Reaching the Storehouse now expects you to have a weapon on trickless instead of the ability to fly.
+- Added: Sand Zone: Breaking the blocks near the Storehouse is now accounted for with Missiles/Bubbler.
+- Added: Sand Zone: Collecting the running puppy now expects you to either kill the Armadillos, or avoid them via intermediate Pacifist strats.
+
 ### Metroid Dread
 
+- Added: Linux and macOS now have the Ryujinx exporting option available.
+- Changed: The Missile Tank pickup in Invisible Corpius Room in Artaria has been moved to the left so that it won't overlap with the door in Door Lock Rando.
+- Changed: There is now a thermal gate preventing players from entering the Experiment Z-57 fight without activating the nearby thermal first.
 - Fixed: The `Hints Location` tab no longer refers to Prime 2 when describing where the hints are placed.
+- Fixed: Customizing a preset where EMMI and Bosses were turned off for DNA placement won't have the DNA slider be initially enabled.
+- Fixed: A `drive letter` typo in the exporting window.
 - Removed: The FAQ entry stating that only the English language is supported has been removed, as all languages are patched since version 7.4.0.
+
+#### Logic database
+
+##### Cataris
+
+- Added: Pseudo Wave Beam (Beginner) to break the blob above Blue Teleportal to Artaria, from the left side of the wall.
+
+### Metroid Prime
+
+- Added: FAQ Entry about non-Superheated rooms
+- Added: Exposed "Power Beam Only"-Doors for Door Lock Rando.
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Changed: Main Plaza: The R-Jump and L-Jump to reach the Grapple Ledge Missile Expansion have been lowered to beginner.
+
+##### Frigate Orpheon
+
+- Added: Biotech Research Area 2 can now be crossed with a Hypermode Wall Boost
+
+##### Magmoor Caverns
+
+- Added: The Sloped R-Jump in Geothermal Core to get to the door to Plasma Processing (commonly referred to as Eagle Jump) is now in logic.
+
+##### Phendrana Drifts
+
+- Added: The jump to the upper pickup in Gravity Chamber now requires an intermediate R-Jump or an Advanced L-Jump alongside the Advanced Slope Jump requirement.
+
+### Metroid Prime 2: Echoes
+
+#### Logic Database
+
+- Fixed: Normal Doors now account for having a beam or Morph Ball Bombs to open.
+
+##### Agon Wastes
+
+- Added: Movement (Intermediate) to get from the center platforms in Central Mining Station to the cannons using Space Jump Boots.
+- Added: Screw Attack from the cannons to get the item in Central Mining Station before the Pirate fight.
+- Added: Mining Station B - Room Center to Transit Station with Boost Ball, Bombs, BSJ (Intermediate), and Standable Terrain (Intermediate).
+- Fixed: The video link for the Expert Slope Jump in Central Mining Station now links to a working video.
+- Fixed: Mining Station B - Room Center to Transit Station now properly requires Boost Ball and Standable Terrain (Intermediate) for the No Space Jump Post-Puzzle path.
 
 ## [7.5.0] - 2024-04-01
 

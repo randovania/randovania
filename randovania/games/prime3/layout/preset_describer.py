@@ -7,7 +7,6 @@ from randovania.layout.preset_describer import (
     ConditionalMessageTree,
     GamePresetDescriber,
     fill_template_strings_from_tree,
-    has_shuffled_item,
     message_for_required_mains,
 )
 
@@ -19,20 +18,12 @@ if TYPE_CHECKING:
 class CorruptionPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, CorruptionConfiguration)
-        standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
         extra_message_tree: ConditionalMessageTree = {
-            "Item Pool": [
-                {
-                    "Progressive Missile": has_shuffled_item(standard_pickups, "Progressive Missile"),
-                    "Progressive Beam": has_shuffled_item(standard_pickups, "Progressive Beam"),
-                }
-            ],
             "Difficulty": [
                 {f"{configuration.energy_per_tank} energy per Energy Tank": configuration.energy_per_tank != 100},
             ],
-            "Gameplay": [],
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,

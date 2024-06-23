@@ -23,7 +23,9 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType, DockWeakness
     from randovania.game_description.db.region import Region
+    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.resources.pickup_index import PickupIndex
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
@@ -127,7 +129,7 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
 
         if other_node is not None:
             if isinstance(other_node, DockNode):
-                if other_node.default_connection != region_list.identifier_for_node(node):
+                if other_node.default_connection != node.identifier:
                     yield (
                         f"{node.name} connects to '{node.default_connection}', but that dock connects "
                         f"to '{other_node.default_connection}' instead."
@@ -265,6 +267,20 @@ def find_recursive_templates(game: GameDescription) -> Iterator[str]:
             yield f"Checking {root_template}: {msg}"
 
 
+def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
+    known_indices: dict[PickupIndex, str] = {}
+
+    for node in region_list.all_nodes:
+        if isinstance(node, PickupNode):
+            name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
+            if node.pickup_index in known_indices:
+                yield (
+                    f"{name} has {node.pickup_index}, " f"but it was already used in {known_indices[node.pickup_index]}"
+                )
+            else:
+                known_indices[node.pickup_index] = name
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -276,5 +292,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
         result.extend(find_region_errors(game, region))
     result.extend(find_invalid_strongly_connected_components(game))
     result.extend(find_recursive_templates(game))
+    result.extend(find_duplicated_pickup_index(game.region_list))
 
     return result

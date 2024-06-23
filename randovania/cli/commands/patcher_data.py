@@ -6,14 +6,14 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, Namespace, _SubParsersAction
 
 
-def patcher_data_command_logic(args):
+def patcher_data_command_logic(args: Namespace) -> None:
     return asyncio.run(patcher_data_command_logic_async(args))
 
 
-async def patcher_data_command_logic_async(args):
+async def patcher_data_command_logic_async(args: Namespace) -> None:
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.layout_description import LayoutDescription
 
@@ -38,7 +38,7 @@ async def patcher_data_command_logic_async(args):
         print(output)
 
 
-def add_patcher_data_command(sub_parsers):
+def add_patcher_data_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("patcher-data", help="Exports the patcher data.")
     parser.add_argument("--layout-file", type=Path, required=True, help="The rdvgame file to use")
     parser.add_argument(

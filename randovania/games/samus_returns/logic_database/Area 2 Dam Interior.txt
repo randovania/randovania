@@ -13,7 +13,7 @@ Extra - asset_id: collision_camera009
 
 > Elevator to Area 2 Dam Exterior; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Dam Exterior/Elevator to Area 2 Dam Interior
+  * Elevator to Dam Exterior/Elevator to Area 2 Dam Interior; Custom name: Dam Interior Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea02A
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02A
@@ -248,7 +248,7 @@ Extra - asset_id: collision_camera011
 
 > Door to Whimsical Waterwheels; Heals? False
   * Layers: default
-  * Access Open to Whimsical Waterwheels/Door to Interior Intersection Terminal
+  * Power Beam Door to Whimsical Waterwheels/Door to Interior Intersection Terminal
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Right Shaft
@@ -258,7 +258,7 @@ Extra - asset_id: collision_camera011
 
 > Door to Gamma Arena; Heals? False
   * Layers: default
-  * Access Open to Gamma Arena/Door to Interior Intersection Terminal
+  * Power Beam Door to Gamma Arena/Door to Interior Intersection Terminal
   * Extra - actor_name: Door018
   * Extra - actor_type: doorpowerpower
   > Bottom of Morph Ball Shaft
@@ -610,7 +610,7 @@ Extra - asset_id: collision_camera018
   * Pickup 40; Category? Major
   * Extra - actor_name: LE_Item_001
   * Extra - actor_type: item_energytank
-  > Door to Fleech Fire Containment
+  > Door to Dam Basement (Open Hatch Right)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -626,7 +626,7 @@ Extra - asset_id: collision_camera018
   * Power Beam Door to Fleech Fire Containment/Door to Dam Basement
   * Extra - actor_name: Door014
   * Extra - actor_type: doorpowerpower
-  > Pickup (Energy Tank)
+  > Door to Dam Basement (Open Hatch Left)
       Trivial
 
 > Tunnel to Gullugg Hideout; Heals? False
@@ -634,6 +634,25 @@ Extra - asset_id: collision_camera018
   * Tunnel to Gullugg Hideout/Tunnel to Dam Basement
   > Pickup (Missile Tank)
       Morph Ball
+
+> Door to Dam Basement (Open Hatch Left); Heals? False
+  * Layers: default
+  * Access Open to Dam Basement/Door to Dam Basement (Open Hatch Right)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 4
+  * Extra - location_x_override: -280.0
+  > Door to Fleech Fire Containment
+      Trivial
+
+> Door to Dam Basement (Open Hatch Right); Heals? False
+  * Layers: default
+  * Access Open to Dam Basement/Door to Dam Basement (Open Hatch Left)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 5
+  > Pickup (Energy Tank)
+      Trivial
 
 ----------------
 Gullugg Hideout
@@ -657,8 +676,10 @@ Extra - asset_id: collision_camera019
               Lay Any Bomb
               Any of the following:
                   High Jump Boots or Space Jump or Super Jump (Intermediate) or Unmorph Extend (Intermediate)
-                  # Freeze a Gullugg near the left side
-                  Stand on Frozen Enemy (Beginner) and Freeze Enemy to Climb Higher
+                  All of the following:
+                      # Freeze a Gullugg near the left side
+                      Ice Beam and Stand on Frozen Enemy (Beginner)
+                      Charge Beam or Freeze Enemy with Melee (Intermediate)
                   # Wall Jump below the slime
                   Wall Jump (Intermediate)
           Spider Boost (Intermediate) and Can Spider Boost
@@ -834,7 +855,7 @@ Extra - polygon: [[-5800.0, -800.0], [-5800.0, -2800.0], [-4100.0, -2800.0], [-4
 Extra - asset_id: collision_camera041
 > Door to Wave Beam & Transport to Dam Exterior West; Heals? False
   * Layers: default
-  * Charge Beam Door to Wave Beam & Transport to Dam Exterior West/Door to Generator Access
+  * Charge Beam Door to Wave Beam & Transport to Dam Exterior West/Door to Generator Access; Dock Lock Rando incompatible with: Wave Beam Door
   * Extra - actor_name: Door003
   * Extra - actor_type: doorchargecharge
   > Door to Varia Suit Chamber

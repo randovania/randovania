@@ -30,11 +30,7 @@ def test_list_paths_with_resource_logic(
     resource_c = SimpleResourceInfo(2, "Long Name C", "C", ResourceType.ITEM)
     resources = [resource_a, resource_b, resource_c]
 
-    game.resource_database = [
-        [resource_a],
-        [resource_b],
-        [resource_c],
-    ]
+    game.resource_database = MagicMock(item=[resource_a], event=[resource_b], trick=[resource_c])
 
     resource = resources[expected_resource]
     args.resource = resource.long_name
@@ -125,5 +121,12 @@ def test_trick_usage_documentation_logic_blank(tmp_path: Path) -> None:
 
     # Assert
     assert args.output_path.read_text() == "\n".join(
-        ["" "# Intro", "", "## Boss Arena", "### Door to Starting Area -> Event - Boss:", "- [X] Combat (Beginner)"]
+        [
+            "\n",
+            "# Intro",
+            "",
+            "## Boss Arena",
+            "### Door to Starting Area -> Event - Boss:",
+            "- (Documented) Combat (Beginner)",
+        ]
     )

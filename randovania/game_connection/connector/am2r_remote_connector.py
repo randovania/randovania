@@ -52,8 +52,6 @@ class AM2RRemoteConnector(RemoteConnector):
 
     def connection_lost(self) -> None:
         self.logger.info("Finishing connector")
-        # TODO: Finished signal is never used. Remove it everywhere?
-        self.Finished.emit()
 
     async def force_finish(self) -> None:
         self.executor.disconnect()
@@ -169,6 +167,10 @@ class AM2RRemoteConnector(RemoteConnector):
 
             # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.
             item_name_replacement = {
+                "Missile Tank": "Nothing",
+                "Super Missile Tank": "Nothing",
+                "Power Bomb Tank": "Nothing",
+                # These names were used in older versions. To not break compatibility, we're keeping them here.
                 "Missile Expansion": "Nothing",
                 "Super Missile Expansion": "Nothing",
                 "Power Bomb Expansion": "Nothing",
