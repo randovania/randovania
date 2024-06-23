@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 
 from randovania import monitoring
 from randovania.generator import generator
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
@@ -53,6 +54,11 @@ def generate_layout(
         span.set_tag(
             "minimal_logic", any(preset.configuration.trick_level.minimal_logic for preset in parameters.presets)
         )
+        if len(games) == 1:
+            manager = PresetManager(None)
+            preset = parameters.get_preset(0)
+            if manager.is_included_preset_uuid(preset.uuid):
+                span.set_tag("builtin_preset", f"{preset.name} ({preset.game.short_name})")
 
         extra_args = {
             "generator_params": parameters,
