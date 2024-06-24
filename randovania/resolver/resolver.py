@@ -10,7 +10,6 @@ from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -267,7 +266,7 @@ async def _inner_advance_depth(
 
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
-    actions_by_priority: dict[ActionPriority, list[tuple[ResourceNode, DamageState]]] = {
+    actions_by_priority: dict[ActionPriority, list[tuple[WorldGraphNode, DamageState]]] = {
         priority: [] for priority in ActionPriority
     }
 
@@ -310,7 +309,9 @@ async def _inner_advance_depth(
 
         actions_by_priority[_priority_for_resource_action(action, state, logic)].append((action, damage_state))
 
-    actions: list[tuple[ResourceNode, DamageState]] = list(itertools.chain.from_iterable(actions_by_priority.values()))
+    actions: list[tuple[WorldGraphNode, DamageState]] = list(
+        itertools.chain.from_iterable(actions_by_priority.values())
+    )
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, damage_state in actions:
@@ -354,11 +355,7 @@ async def _inner_advance_depth(
 
         additional_requirements = additional_requirements.union(additional)
 
-    resources = (
-        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
-        if isinstance(state.node, ResourceNode)
-        else []
-    )
+    resources = [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
 
     progressive_chain_info = _progressive_chain_info(state.node, state.node_context())
 
