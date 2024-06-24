@@ -33,6 +33,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
     )
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {
+        "_randovania_meta": {"layout_was_user_modified": True},
         "patch": "data",
         "gameConfig": {},
         "hasSpoiler": True,

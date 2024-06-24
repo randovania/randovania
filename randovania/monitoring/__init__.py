@@ -164,7 +164,7 @@ def attach_patcher_data(patcher_data: dict):
             filename="patcher.json",
             content_type="application/json",
         )
-        yield
+        yield scope
 
 
 trace_function = sentry_sdk.trace
