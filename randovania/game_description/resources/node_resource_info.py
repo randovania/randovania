@@ -3,11 +3,10 @@ from __future__ import annotations
 import dataclasses
 import typing
 
-from randovania.game_description.db.node import Node
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.db.node import NodeContext
+    from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
 
 
@@ -36,10 +35,6 @@ class NodeResourceInfo:
     @classmethod
     def from_identifier(cls, identifier: NodeIdentifier, context: NodeContext) -> NodeResourceInfo:
         return cls.from_node(context.node_provider.node_by_identifier(identifier), context)
-
-    def to_node(self, context: NodeContext) -> Node:
-        node_index = self.resource_index - context.database.first_unused_resource_index()
-        return typing.cast(Node, context.node_provider.all_nodes[node_index])
 
     @property
     def extra(self) -> dict:
