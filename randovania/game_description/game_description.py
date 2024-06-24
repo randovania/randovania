@@ -37,30 +37,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
-def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:
-    for individual in requirement.iterate_resource_requirements(context):
-        if individual.negate:
-            yield individual.resource
-
-
-def _calculate_dangerous_resources_in_db(
-    db: DockWeaknessDatabase,
-    context: NodeContext,
-) -> Iterator[ResourceInfo]:
-    for dock_type in db.dock_types:
-        for dock_weakness in db.weaknesses[dock_type].values():
-            yield from _requirement_dangerous(context.node_provider.open_requirement_for(dock_weakness), context)
-            if dock_weakness.lock is not None:
-                yield from _requirement_dangerous(context.node_provider.lock_requirement_for(dock_weakness), context)
-
-
-def _calculate_dangerous_resources_in_areas(context: NodeContext) -> Iterator[ResourceInfo]:
-    for area in context.node_provider.all_areas:
-        for node in area.nodes:
-            for _, requirement in context.node_provider.area_connections_from(node):
-                yield from _requirement_dangerous(requirement, context)
-
-
 @dataclasses.dataclass(frozen=True)
 class IndexWithReason:
     name: str
@@ -85,7 +61,6 @@ class GameDescription(GameDatabaseView):
     victory_condition: Requirement
     starting_location: NodeIdentifier
     minimal_logic: MinimalLogicData | None
-    _dangerous_resources: frozenset[ResourceInfo] | None = None
     region_list: RegionList
     _used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None
     mutable: bool = False
@@ -103,7 +78,6 @@ class GameDescription(GameDatabaseView):
             starting_location=self.starting_location,
             minimal_logic=self.minimal_logic,
         )
-        new_game._dangerous_resources = self._dangerous_resources
         return new_game
 
     def __init__(
@@ -149,14 +123,6 @@ class GameDescription(GameDatabaseView):
             self.region_list,
         )
 
-    def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float) -> None:
-        if not self.mutable:
-            raise ValueError("self is not mutable")
-
-        context = self.create_node_context(resources)
-        self.region_list.patch_requirements(damage_multiplier, context, self.dock_weakness_database)
-        self._dangerous_resources = None
-
     def get_prefilled_docks(self) -> list[int | None]:
         region_list = self.region_list
         dock_connection = [None] * len(region_list.all_nodes)
@@ -167,16 +133,6 @@ class GameDescription(GameDatabaseView):
                 target = region_list.node_by_identifier(source.default_connection)
                 connections[source.node_index] = target.node_index
         return connections
-
-    @property
-    def dangerous_resources(self) -> frozenset[ResourceInfo]:
-        if self._dangerous_resources is None:
-            context = self.create_node_context(ResourceCollection())
-            first = _calculate_dangerous_resources_in_areas(context)
-            second = _calculate_dangerous_resources_in_db(self.dock_weakness_database, context)
-            self._dangerous_resources = frozenset(first) | frozenset(second)
-
-        return self._dangerous_resources
 
     def get_used_trick_levels(self, *, ignore_cache: bool = False) -> dict[TrickResourceInfo, set[int]]:
         if self._used_trick_levels is not None and not ignore_cache:
@@ -314,6 +270,17 @@ class GameDescription(GameDatabaseView):
             for _, area, node in self.iterate_nodes_of_type(PickupNode)
             if (feature in area.hint_features) or (feature in node.hint_features)
         )
+
+    def interesting_resources_for_damage(
+        self, resource: SimpleResourceInfo, collection: ResourceCollection
+    ) -> Iterator[ResourceInfo]:
+        """
+        Provides all interesting resources for the given damage resource
+        """
+        yield self.resource_database.energy_tank
+        for reduction in self.resource_database.damage_reductions.get(resource, []):
+            if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
+                yield reduction.inventory_item
 
 
 def _resources_for_damage(
