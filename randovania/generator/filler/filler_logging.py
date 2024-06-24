@@ -50,7 +50,7 @@ def print_retcon_loop_start(
             for node in reach.nodes:
                 print(
                     f"[{reach.is_reachable_node(node)!s:>5}, {reach.is_safe_node(node)!s:>5}] "
-                    f"{player.game.region_list.node_name(node)}"
+                    f"{node.identifier.as_string}"
                 )
 
 

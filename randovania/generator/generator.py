@@ -188,6 +188,11 @@ def _distribute_remaining_items(rng: Random, filler_results: FillerResults, pres
         assignments[player] = []
 
     def assign_pickup(node_player: int, node: PickupNode, pickup_target: PickupTarget) -> None:
+        if debug.debug_level() > 2:
+            print(
+                f"Assigning World {pickup_target.player + 1}'s {pickup_target.pickup.name} "
+                f"to {node_player + 1}'s {node.pickup_index}"
+            )
         assignments[node_player].append((node.pickup_index, pickup_target))
 
     def assign_while_both_non_empty(nodes: list[tuple[int, PickupNode]], pickups: list[PickupTarget]) -> None:
