@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_type import ResourceType
@@ -109,6 +108,10 @@ def _should_check_if_action_is_safe(
     )
 
 
+def _is_lock_action(action: WorldGraphNode) -> bool:
+    return isinstance(action.original_node, DockLockNode | EventNode | EventPickupNode)
+
+
 async def _inner_advance_depth(
     state: State,
     logic: Logic,
@@ -182,7 +185,7 @@ async def _inner_advance_depth(
             dangerous_actions.append(action_tuple)
         elif _is_major_or_key_pickup_node(action):
             major_pickup_actions.append(action_tuple)
-        elif isinstance(action.original_node, DockLockNode | EventNode | EventPickupNode):
+        elif _is_lock_action(action):
             lock_actions.append(action_tuple)
         else:
             rest_of_actions.append(action_tuple)
@@ -233,11 +236,7 @@ async def _inner_advance_depth(
 
         additional_requirements = additional_requirements.union(additional)
 
-    resources = (
-        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
-        if isinstance(state.node, ResourceNode)
-        else []
-    )
+    resources = [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
     logic.set_additional_requirements(
         state.node, _simplify_additional_requirement_set(additional_requirements, state, resources)
     )
