@@ -65,7 +65,9 @@ class NodeRequirement(Requirement):
         return hash(self.node_identifier)
 
     def as_resource_requirement(self, context: NodeContext) -> ResourceRequirement:
-        return ResourceRequirement.simple(NodeResourceInfo.from_identifier(self.node_identifier, context))
+        return ResourceRequirement.simple(
+            context.node_provider.get_node_resource_info_for(self.node_identifier, context)
+        )
 
     def patch_requirements(self, damage_multiplier: float, context: NodeContext) -> Requirement:
         return self.as_resource_requirement(context)

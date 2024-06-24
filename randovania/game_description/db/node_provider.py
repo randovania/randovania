@@ -8,12 +8,12 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from randovania.game_description.db.area import Area
-    from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.node import Node, NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
     from randovania.game_description.requirements.base import Requirement
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 class NodeProvider:
@@ -86,15 +86,11 @@ class NodeProvider:
             area=self.nodes_to_area(node).name,
         )
 
-    def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        return weakness.requirement
-
-    def lock_requirement_for(self, weakness: DockWeakness) -> Requirement:
-        assert weakness.lock is not None
-        return weakness.lock.requirement
-
     def nodes_in_network(self, network_name: str) -> list[TeleporterNetworkNode]:
         raise NotImplementedError
 
     def get_configurable_node_requirement(self, identifier: NodeIdentifier) -> Requirement:
+        raise NotImplementedError
+
+    def get_node_resource_info_for(self, identifier: NodeIdentifier, context: NodeContext) -> ResourceInfo:
         raise NotImplementedError
