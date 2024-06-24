@@ -8,7 +8,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.event_node import EventNode
 from randovania.game_description.db.event_pickup import EventPickupNode
-from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_type import ResourceType
@@ -174,7 +173,7 @@ async def _inner_advance_depth(
 
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
-    actions_by_priority: dict[ActionPriority, list[tuple[ResourceNode, int]]] = {
+    actions_by_priority: dict[ActionPriority, list[tuple[WorldGraphNode, int]]] = {
         priority: [] for priority in ActionPriority
     }
 
@@ -253,11 +252,7 @@ async def _inner_advance_depth(
 
         additional_requirements = additional_requirements.union(additional)
 
-    resources = (
-        [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
-        if isinstance(state.node, ResourceNode)
-        else []
-    )
+    resources = [x for x, _ in state.node.resource_gain_on_collect(state.node_context())]
     logic.set_additional_requirements(
         state.node, _simplify_additional_requirement_set(additional_requirements, state, resources)
     )
