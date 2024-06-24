@@ -140,6 +140,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self.create_preset_description.linkActivated.connect(self._on_click_create_preset_description)
 
         self._update_preset_tree_items()
+        self.on_preset_changed(None)
 
     def _update_preset_tree_items(self):
         self.create_preset_tree.update_items()
