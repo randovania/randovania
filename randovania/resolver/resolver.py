@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import enum
 import itertools
 from typing import TYPE_CHECKING
 
@@ -116,6 +117,39 @@ def _should_check_if_action_is_safe(
     )
 
 
+class ActionPriority(enum.IntEnum):
+    """
+    Priority values for how important acting on any given ResourceNode should be.
+    Lesser values are higher priority.
+    """
+
+    MAJOR_PICKUP = enum.auto()
+    """This node gives a pickup that is considered major or a key."""
+
+    LOCK_ACTION = enum.auto()
+    """This node gives an event or unlocks a dock"""
+
+    EVERYTHING_ELSE = enum.auto()
+    """This node has nothing of note."""
+
+    POINT_OF_NO_RETURN = enum.auto()
+    """This node is beyond a point of no return"""
+
+    DANGEROUS = enum.auto()
+    """This node grants a dangerous resource"""
+
+
+def _priority_for_resource_action(action: ResourceNode, state: State, logic: Logic) -> ActionPriority:
+    if _is_dangerous_event(state, action, logic.game.dangerous_resources):
+        return ActionPriority.DANGEROUS
+    elif _is_major_or_key_pickup_node(action, state):
+        return ActionPriority.MAJOR_PICKUP
+    elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
+        return ActionPriority.LOCK_ACTION
+    else:
+        return ActionPriority.EVERYTHING_ELSE
+
+
 async def _inner_advance_depth(
     state: State,
     logic: Logic,
@@ -147,11 +181,9 @@ async def _inner_advance_depth(
 
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
-    major_pickup_actions = []
-    lock_actions = []
-    dangerous_actions = []
-    point_of_no_return_actions = []
-    rest_of_actions = []
+    actions_by_priority: dict[ActionPriority, list[tuple[ResourceNode, int]]] = {
+        priority: [] for priority in ActionPriority
+    }
 
     for action, energy in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
@@ -181,24 +213,12 @@ async def _inner_advance_depth(
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
             else:
-                point_of_no_return_actions.append((action, energy))
+                actions_by_priority[ActionPriority.POINT_OF_NO_RETURN].append((action, energy))
                 continue
 
-        action_tuple = (action, energy)
-        if _is_dangerous_event(state, action, logic.game.dangerous_resources):
-            dangerous_actions.append(action_tuple)
-        elif _is_major_or_key_pickup_node(action, state):
-            major_pickup_actions.append(action_tuple)
-        elif isinstance(action, DockLockNode | EventNode | EventPickupNode):
-            lock_actions.append(action_tuple)
-        else:
-            rest_of_actions.append(action_tuple)
+        actions_by_priority[_priority_for_resource_action(action, state, logic)].append((action, energy))
 
-    actions = list(
-        itertools.chain(
-            major_pickup_actions, lock_actions, rest_of_actions, point_of_no_return_actions, dangerous_actions
-        )
-    )
+    actions = list(itertools.chain.from_iterable(actions_by_priority.values()))
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
     for action, energy in actions:
