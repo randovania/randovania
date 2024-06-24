@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Facility Storage Spiked Path: It is now possible to cross the rooms with Wall Jumps and Intermediate Zips.
 - Fixed: Pipe Hub Access: Solving the EMP Puzzle is not possible to do with Power Bombs anymore.
+- Fixed: Zipping across in Serris Arena now requires Morph Ball.
 
 ##### Hydro Station
 
