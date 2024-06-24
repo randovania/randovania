@@ -67,13 +67,13 @@ class DockNode(Node):
         if weakness is self.default_dock_weakness and self.override_default_open_requirement is not None:
             return self.override_default_open_requirement
         else:
-            return context.node_provider.open_requirement_for(weakness)
+            return weakness.requirement
 
     def _get_lock_requirement(self, context: NodeContext, weakness: DockWeakness) -> Requirement:
         if weakness is self.default_dock_weakness and self.override_default_lock_requirement is not None:
             return self.override_default_lock_requirement
         else:
-            return context.node_provider.lock_requirement_for(weakness)
+            return weakness.lock.requirement
 
     def _open_dock_connection(
         self,
