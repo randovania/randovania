@@ -4,6 +4,7 @@ import collections
 import re
 from typing import TYPE_CHECKING
 
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -21,7 +22,6 @@ from randovania.resolver import debug
 if TYPE_CHECKING:
     from randovania.game_description.assignment import PickupTarget
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.db.resource_node import ResourceNode
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.location_category import LocationCategory
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -29,7 +29,7 @@ if TYPE_CHECKING:
     from randovania.generator.filler.filler_configuration import FillerConfiguration
     from randovania.generator.filler.weighted_locations import WeightedLocations
     from randovania.graph.state import State
-    from randovania.graph.world_graph import WorldGraph
+    from randovania.graph.world_graph import WorldGraph, WorldGraphNode
 
 
 class PlayerState:
@@ -41,7 +41,7 @@ class PlayerState:
     hint_seen_count: collections.defaultdict[NodeIdentifier, int]
     hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
     event_seen_count: dict[ResourceInfo, int]
-    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
+    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[WorldGraphNode, ...]]
     num_starting_pickups_placed: int
     num_assigned_pickups: int
 
@@ -123,7 +123,7 @@ class PlayerState:
     def potential_actions(self, locations_weighted: WeightedLocations) -> list[Action]:
         extra_indices = self.configuration.maximum_random_starting_pickups - self.num_starting_pickups_placed
 
-        pickup_groups, uncollected_resource_nodes = self._unfiltered_potential_actions
+        pickup_groups, uncollected_nodes = self._unfiltered_potential_actions
         result: list[Action] = [
             action
             for pickup_tuple in pickup_groups
@@ -134,7 +134,7 @@ class PlayerState:
         if logical_resource_action == LayoutLogicalResourceAction.RANDOMLY or (
             logical_resource_action == LayoutLogicalResourceAction.LAST_RESORT and not result
         ):
-            result.extend(Action((resource_node,)) for resource_node in uncollected_resource_nodes)
+            result.extend(Action((node,)) for node in uncollected_nodes)
 
         return result
 
@@ -272,7 +272,9 @@ class PlayerState:
         return locations.count_for_player(self)
 
     def get_location_category(self, index: PickupIndex) -> LocationCategory:
-        return self.game.region_list.node_from_pickup_index(index).location_category
+        node = self.world_graph.node_by_pickup_index[index]
+        assert isinstance(node.original_node, PickupNode)
+        return node.original_node.location_category
 
     def can_place_pickup_at(self, pickup: PickupEntry, index: PickupIndex) -> bool:
         if self.configuration.randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:

@@ -132,7 +132,7 @@ class OldGeneratorReach(GeneratorReach):
             # print(">>> will check starting at", self.game.region_list.node_name(path.node))
             path.add_to_graph(self._digraph)
 
-            if path.node.is_resource_node:
+            if path.node.is_resource_node():
                 resource_nodes_to_check.add(path.node.node_index)
 
             for target_node, requirement_set in self._potential_nodes_from(path.node):
