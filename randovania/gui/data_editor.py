@@ -4,7 +4,7 @@ import dataclasses
 import re
 import typing
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Self
 
 import frozendict
 from PySide6 import QtGui, QtWidgets
@@ -242,13 +242,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.focus_on_connection(current_connection)
 
     @classmethod
-    def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> DataEditorWindow:
+    def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> Self:
         default_data.read_json_then_binary.cache_clear()
         path: Path | None = None
         path, data = default_data.read_json_then_binary(game)
         if path.suffix == ".bin":
             path = None
-        return DataEditorWindow(data, path, True, edit_mode)
+        return cls(data, path, True, edit_mode)
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         if self._check_for_edit_dialog():
@@ -807,18 +807,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.editor.add_node(target_area, new_node_other_lock)
 
         if source_count == 1:
-            source_node_name = current_area.node_with_name(source_name_base)
-            target_node_name = target_area.node_with_name(target_name_base)
-            assert source_node_name
-            assert target_node_name
+            source_node = current_area.node_with_name(source_name_base)
+            target_node = target_area.node_with_name(target_name_base)
+            assert source_node
+            assert target_node
             self.editor.rename_node(
                 current_area,
-                source_node_name,
+                source_node,
                 f"{source_name_base} (1)",
             )
             self.editor.rename_node(
                 target_area,
-                target_node_name,
+                target_node,
                 f"{target_name_base} (1)",
             )
         self.on_select_area(new_node_this_area)
