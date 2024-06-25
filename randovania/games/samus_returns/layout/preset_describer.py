@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
+from randovania.games.samus_returns.layout.hint_configuration import BabyHintMode, ItemHintMode
 from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -64,7 +64,13 @@ def format_environmental_damage(configuration: MSRConfiguration) -> list:
     ]
 
 
-_MSR_HINT_TEXT = {
+_MSR_BABY_HINT = {
+    BabyHintMode.DISABLED: None,
+    BabyHintMode.HIDE_AREA: "Area only",
+    BabyHintMode.PRECISE: "Area and room",
+}
+
+_MSR_DNA_HINT = {
     ItemHintMode.DISABLED: None,
     ItemHintMode.HIDE_AREA: "Area only",
     ItemHintMode.PRECISE: "Area and room",
@@ -78,7 +84,8 @@ class MSRPresetDescriber(GamePresetDescriber):
         standard_pickups = configuration.standard_pickup_configuration
         template_strings = super().format_params(configuration)
 
-        dna_hint = _MSR_HINT_TEXT[configuration.hints.artifacts]
+        dna_hint = _MSR_DNA_HINT[configuration.hints.artifacts]
+        baby_hint = _MSR_BABY_HINT[configuration.hints.baby_metroid]
 
         extra_message_tree = {
             "Logic Settings": [
@@ -146,6 +153,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                 },
             ],
             "Hints": [
+                {f"Baby Metroid Hint: {baby_hint}": baby_hint is not None},
                 {f"DNA Hints: {dna_hint}": dna_hint is not None},
             ],
             "Environmental Damage": format_environmental_damage(configuration),

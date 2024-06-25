@@ -13,7 +13,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
-from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
+from randovania.games.samus_returns.layout.hint_configuration import BabyHintMode, ItemHintMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -203,8 +203,8 @@ class MSRPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        namer = MSRHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(hint_namer, self.rng, ["A joke hint."])
 
         hints = [
             {
@@ -227,7 +227,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                MSRHintNamer(self.description.all_patches, self.players_config),
+                hint_namer,
                 hint_config.artifacts == ItemHintMode.HIDE_AREA,
                 artifacts,
                 False,
@@ -264,6 +264,29 @@ class MSRPatchDataFactory(PatchDataFactory):
             )
 
         return hints
+
+    def _create_baby_metroid_hint(self) -> str:
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        hint_config = self.configuration.hints
+
+        baby_metroid = [(self.game.resource_database.get_item("Baby"))]
+        baby_metroid_hint = {}
+        if hint_config.baby_metroid != BabyHintMode.DISABLED:
+            temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                hint_namer,
+                hint_config.baby_metroid == BabyHintMode.HIDE_AREA,
+                baby_metroid,
+                False,
+            )
+            baby_metroid_hint = temp_baby_hint[baby_metroid[0]].replace(
+                "Metroid is located", "cries have been reported"
+            )
+        else:
+            baby_metroid_hint = "Continue searching for the Baby Metroid!"
+
+        return baby_metroid_hint
 
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
@@ -549,6 +572,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(self.rng),
+            "baby_metroid_hint": self._create_baby_metroid_hint(),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),

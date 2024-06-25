@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 from enum import Enum
 
@@ -12,10 +14,21 @@ class ItemHintMode(BitPackEnum, Enum):
     PRECISE = "precise"
 
     @classmethod
-    def default(cls) -> "ItemHintMode":
+    def default(cls) -> ItemHintMode:
+        return cls.PRECISE
+
+
+class BabyHintMode(BitPackEnum, Enum):
+    DISABLED = "disabled"
+    HIDE_AREA = "hide-area"
+    PRECISE = "precise"
+
+    @classmethod
+    def default(cls) -> BabyHintMode:
         return cls.PRECISE
 
 
 @dataclasses.dataclass(frozen=True)
 class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
     artifacts: ItemHintMode
+    baby_metroid: BabyHintMode
