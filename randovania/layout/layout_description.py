@@ -61,7 +61,7 @@ def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
     return " ".join(selected_words)
 
 
-def _info_hash(data: dict) -> str:
+def _dict_hash(data: dict) -> str:
     bytes_representation = json.dumps(data).encode()
     return hashlib.blake2b(bytes_representation).hexdigest()
 
@@ -87,6 +87,7 @@ class LayoutDescription:
     generator_parameters: GeneratorParameters
     all_patches: dict[int, GamePatches]
     item_order: tuple[str, ...]
+    user_modified: bool
 
     def __post_init__(self):
         object.__setattr__(self, "__cached_serialized_patches", None)
@@ -108,14 +109,18 @@ class LayoutDescription:
             generator_parameters=generator_parameters,
             all_patches=all_patches,
             item_order=item_order,
+            user_modified=False,
         )
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> typing.Self:
+        expected_checksum = json_dict.pop("checksum", None)
+        actual_checksum = _dict_hash(json_dict)
+
         if "secret" in json_dict:
             try:
                 secret = obfuscator.deobfuscate_json(json_dict["secret"])
-                if _info_hash(json_dict["info"]) == secret.pop("info_hash"):
+                if _dict_hash(json_dict["info"]) == secret.pop("info_hash"):
                     for key, value in secret.items():
                         json_dict[key] = value
             except (obfuscator.MissingSecret, obfuscator.InvalidSecret):
@@ -143,15 +148,26 @@ class LayoutDescription:
         if len(json_dict["game_modifications"]) != generator_parameters.world_count:
             raise InvalidLayoutDescription("Preset count does not match modifications count")
 
+        try:
+            all_patches = game_patches_serializer.decode(
+                json_dict["game_modifications"],
+                {index: preset.configuration for index, preset in enumerate(generator_parameters.presets)},
+            )
+        except Exception as e:
+            if expected_checksum == actual_checksum:
+                raise
+            else:
+                raise InvalidLayoutDescription(
+                    f"Unable to parse game modifications and the rdvgame has been modified.\n\nOriginal error: {e}"
+                ) from e
+
         return LayoutDescription(
             randovania_version_text=json_dict["info"]["randovania_version"],
             randovania_version_git=bytes.fromhex(json_dict["info"]["randovania_version_git"]),
             generator_parameters=generator_parameters,
-            all_patches=game_patches_serializer.decode(
-                json_dict["game_modifications"],
-                {index: preset.configuration for index, preset in enumerate(generator_parameters.presets)},
-            ),
+            all_patches=all_patches,
             item_order=json_dict["item_order"],
+            user_modified=expected_checksum != actual_checksum,
         )
 
     @classmethod
@@ -227,11 +243,14 @@ class LayoutDescription:
             for k, v in spoiler.items():
                 result[k] = v
         else:
-            spoiler["info_hash"] = _info_hash(result["info"])
+            spoiler["info_hash"] = _dict_hash(result["info"])
             try:
                 result["secret"] = obfuscator.obfuscate_json(spoiler)
             except obfuscator.MissingSecret:
                 pass
+
+        if not self.user_modified:
+            result["checksum"] = _dict_hash(result)
 
         return result
 
