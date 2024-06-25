@@ -15,14 +15,16 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
 
 
 class MSRBasePatchesFactory(BasePatchesFactory[MSRConfiguration]):
     def dock_connections_assignment(
-        self, configuration: MSRConfiguration, game: GameDescription, rng: Random
+        self, configuration: MSRConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
-        teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
+        teleporter_connection = get_teleporter_connections(
+            configuration.teleporters, game, rng, [t for t in game.get_dock_types() if t.extra.get("is_teleporter")]
+        )
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
         )

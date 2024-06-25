@@ -135,19 +135,21 @@ class GamePatches:
                 yield node, self.get_dock_connection_for(node)
 
     # Dock Weakness
-    def assign_dock_weakness(self, weaknesses: Iterable[tuple[DockNode, DockWeakness]]) -> GamePatches:
+    def assign_dock_weakness(self, weaknesses: Iterable[tuple[NodeIdentifier, DockWeakness]]) -> GamePatches:
         new_weakness = copy.copy(self.dock_weakness)
 
-        for node, weakness in weaknesses:
-            new_weakness[node.identifier] = weakness
+        for identifier, weakness in weaknesses:
+            assert isinstance(self.game.node_by_identifier(identifier), DockNode)
+            new_weakness[identifier] = weakness
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
 
-    def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[DockNode, bool]]) -> GamePatches:
+    def assign_weaknesses_to_shuffle(self, weaknesses: Iterable[tuple[NodeIdentifier, bool]]) -> GamePatches:
         new_to_shuffle = copy.copy(self.weaknesses_to_shuffle)
 
-        for node, shuffle in weaknesses:
-            new_to_shuffle[node.identifier] = shuffle
+        for identifier, shuffle in weaknesses:
+            assert isinstance(self.game.node_by_identifier(identifier), DockNode)
+            new_to_shuffle[identifier] = shuffle
 
         return dataclasses.replace(self, weaknesses_to_shuffle=new_to_shuffle)
 

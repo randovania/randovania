@@ -5,7 +5,7 @@ from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.generator.base_patches_factory import MissingRng
+from randovania.game_description.game_database_view import typed_node_by_identifier
 from randovania.layout.lib.teleporters import TeleporterConfiguration, TeleporterShuffleMode
 
 if TYPE_CHECKING:
@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_database_view import GameDatabaseView
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import TeleporterConnection
 
 
@@ -172,15 +171,13 @@ def create_teleporter_database(
 
 
 def get_dock_connections_assignment_for_teleporter(
-    teleporters: TeleporterConfiguration, game: GameDescription, teleporter_connection: TeleporterConnection
+    teleporters: TeleporterConfiguration, game: GameDatabaseView, teleporter_connection: TeleporterConnection
 ) -> list[tuple[DockNode, Node]]:
-    region_list = game.region_list
-
     for teleporter, destination in teleporters.static_teleporters.items():
         teleporter_connection[teleporter] = destination
 
     assignment = [
-        (region_list.typed_node_by_identifier(identifier, DockNode), region_list.node_by_identifier(target))
+        (typed_node_by_identifier(game, identifier, DockNode), game.node_by_identifier(target))
         for identifier, target in teleporter_connection.items()
     ]
 
@@ -196,9 +193,6 @@ def get_teleporter_connections(
     teleporter_connection: TeleporterConnection = {}
 
     if not teleporters.is_vanilla:
-        if rng is None:
-            raise MissingRng("Teleporter")
-
         teleporter_db = create_teleporter_database(game, teleporters.editable_teleporters, teleporter_dock_types)
 
         # TODO: Error on unsupported modes

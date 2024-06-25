@@ -226,10 +226,10 @@ def _progressive_chain_info(node: Node, context: NodeContext) -> None | tuple[li
     return None
 
 
-def _assign_hint_available_locations(state: State, action: ResourceNode, logic: Logic) -> None:
-    if state.hint_state is not None and isinstance(action, AnyPickupNode):
-        available = state.hint_state.valid_available_locations_for_hint(state, logic.game)
-        state.hint_state.assign_available_locations(_pickup_index_for_node(action), available)
+def _assign_hint_available_locations(state: State, action: WorldGraphNode, logic: Logic) -> None:
+    if state.hint_state is not None and action.pickup_index is not None:
+        available = state.hint_state.valid_available_locations_for_hint(state, logic.graph)
+        state.hint_state.assign_available_locations(action.pickup_index, available)
 
 
 async def _inner_advance_depth(
