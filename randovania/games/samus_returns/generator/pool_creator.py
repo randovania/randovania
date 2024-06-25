@@ -13,8 +13,7 @@ from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 METROID_DNA_CATEGORY = pickup_category.PickupCategory(
@@ -24,12 +23,12 @@ METROID_DNA_CATEGORY = pickup_category.PickupCategory(
 
 def create_msr_artifact(
     artifact_number: int,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
 ) -> PickupEntry:
     return PickupEntry(
         name=f"Metroid DNA {artifact_number + 1}",
         progression=((resource_database.get_item(f"Metroid DNA {artifact_number + 1}"), 1),),
-        model=PickupModel(game=resource_database.game_enum, name="adn"),
+        model=PickupModel(game=RandovaniaGame.METROID_SAMUS_RETURNS, name="adn"),
         pickup_category=METROID_DNA_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
         offworld_models=frozendict({RandovaniaGame.AM2R: "sItemDNA"}),
@@ -40,13 +39,13 @@ def create_msr_artifact(
     )
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDatabaseView) -> None:
     assert isinstance(configuration, MSRConfiguration)
 
     results.extend_with(artifact_pool(game, configuration.artifacts))
 
 
-def artifact_pool(game: GameDescription, config: MSRArtifactConfig) -> PoolResults:
+def artifact_pool(game: GameDatabaseView, config: MSRArtifactConfig) -> PoolResults:
     # Check whether we have valid artifact requirements in configuration
     max_artifacts = 0
     if config.prefer_anywhere:
@@ -62,7 +61,7 @@ def artifact_pool(game: GameDescription, config: MSRArtifactConfig) -> PoolResul
     if config.required_artifacts > max_artifacts:
         raise InvalidConfiguration("More Metroid DNA than allowed!")
 
-    keys: list[PickupEntry] = [create_msr_artifact(i, game.resource_database) for i in range(39)]
+    keys: list[PickupEntry] = [create_msr_artifact(i, game.get_resource_database_view()) for i in range(39)]
     keys_to_shuffle = keys[: config.required_artifacts]
     starting_keys = keys[config.required_artifacts :]
 

@@ -7,10 +7,10 @@ from randovania.generator.pickup_pool.pickup_creator import create_standard_pick
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
 
@@ -27,7 +27,7 @@ def _find_ammo_for(
 
 
 def add_standard_pickups(
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     standard_pickup_configuration: StandardPickupConfiguration,
     ammo_pickup_configuration: AmmoPickupConfiguration,
 ) -> PoolResults:

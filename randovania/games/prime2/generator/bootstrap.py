@@ -87,8 +87,8 @@ class EchoesBootstrap(MetroidBootstrap):
         damage_reductions = copy.copy(db.damage_reductions)
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1")] = [
             DamageReduction(None, configuration.varia_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
-            DamageReduction(db.get_item_by_name("Light Suit"), 0.0),
+            DamageReduction(db.get_item_by_display_name("Dark Suit"), configuration.dark_suit_damage / 6.0),
+            DamageReduction(db.get_item_by_display_name("Light Suit"), 0.0),
         ]
         return dataclasses.replace(db, damage_reductions=damage_reductions)
 

@@ -5,11 +5,12 @@ from typing import TYPE_CHECKING
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime3.patcher import corruption_items
 from randovania.generator.pickup_pool import PoolResults
 
 if TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_database_view import ResourceDatabaseView
 
 ENERGY_CELL_CATEGORY = pickup_category.PickupCategory(
     name="energy_cell", long_name="Energy Cell", hint_details=("an ", "energy cell"), hinted_as_major=True, is_key=True
@@ -17,7 +18,7 @@ ENERGY_CELL_CATEGORY = pickup_category.PickupCategory(
 
 
 def add_energy_cells(
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
 ) -> PoolResults:
     """
     :param resource_database:
@@ -33,7 +34,7 @@ def add_energy_cells(
 
 def create_energy_cell(
     cell_index: int,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
 ) -> PickupEntry:
     return PickupEntry(
         name=f"Energy Cell {cell_index + 1}",
@@ -43,7 +44,7 @@ def create_energy_cell(
             (resource_database.get_item(corruption_items.PERCENTAGE), 1),
         ),
         model=PickupModel(
-            game=resource_database.game_enum,
+            game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             name=corruption_items.ENERGY_CELL_MODEL,
         ),
         pickup_category=ENERGY_CELL_CATEGORY,

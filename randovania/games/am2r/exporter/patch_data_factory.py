@@ -472,7 +472,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
-            self.game.resource_database,
+            self.game.game,
             model_name="sItemNothing",
         )
 

@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
 
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import PatchDataFactory
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.pickup_pool import PoolResults
@@ -81,7 +81,7 @@ class GameGui:
 
 @dataclass(frozen=True)
 class GameGenerator:
-    pickup_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDescription], None]
+    pickup_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDatabaseView], None]
     """Extends the base pickup pools with any specific item pools such as Artifacts."""
 
     bootstrap: Bootstrap

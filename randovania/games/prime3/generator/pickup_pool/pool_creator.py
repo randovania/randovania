@@ -6,12 +6,12 @@ from randovania.games.prime3.generator.pickup_pool.energy_cells import add_energ
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def corruption_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
+def corruption_specific_pool(results: PoolResults, configuration: BaseConfiguration, game: GameDatabaseView) -> None:
     assert isinstance(configuration, CorruptionConfiguration)
     # Adding Energy Cells to pool
-    results.extend_with(add_energy_cells(game.resource_database))
+    results.extend_with(add_energy_cells(game.get_resource_database_view()))

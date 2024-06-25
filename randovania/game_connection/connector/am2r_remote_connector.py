@@ -193,7 +193,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         inventory = Inventory(
             {
-                self.game.resource_database.get_item_by_name(name): InventoryItem(quantity, quantity)
+                self.game.resource_database.get_item_by_display_name(name): InventoryItem(quantity, quantity)
                 for name, quantity in inventory_dict.items()
             }
         )

@@ -83,21 +83,21 @@ async def test_new_inventory_received(connector: AM2RRemoteConnector):
     inventory_updated.assert_called_once()
 
     # Check Missiles
-    missiles = connector.game.resource_database.get_item_by_name("Missiles")
+    missiles = connector.game.resource_database.get_item_by_display_name("Missiles")
     assert connector.last_inventory[missiles].capacity == 10
 
     # Check Space Jump + HJ
-    hijump = connector.game.resource_database.get_item_by_name("Hi-Jump Boots")
+    hijump = connector.game.resource_database.get_item_by_display_name("Hi-Jump Boots")
     assert connector.last_inventory[hijump].capacity == 1
-    spacejump = connector.game.resource_database.get_item_by_name("Space Jump")
+    spacejump = connector.game.resource_database.get_item_by_display_name("Space Jump")
     assert connector.last_inventory[spacejump].capacity == 1
 
     # Check Speed booster
-    speedbooster = connector.game.resource_database.get_item_by_name("Speed Booster")
+    speedbooster = connector.game.resource_database.get_item_by_display_name("Speed Booster")
     assert connector.last_inventory[speedbooster].capacity == 1
 
     # Check Missile Launcher
-    missile_launcher = connector.game.resource_database.get_item_by_name("Missile Launcher")
+    missile_launcher = connector.game.resource_database.get_item_by_display_name("Missile Launcher")
     assert connector.last_inventory[missile_launcher].capacity == 1
 
 

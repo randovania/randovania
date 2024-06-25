@@ -40,7 +40,7 @@ class SuperMetroidBootstrap(MetroidBootstrap):
         return enabled_resources
 
     def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
-        num_suits = sum(current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit"])
+        num_suits = sum(current_resources[db.get_item_by_display_name(suit)] for suit in ["Varia Suit", "Gravity Suit"])
         return 2 ** (-num_suits)
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:

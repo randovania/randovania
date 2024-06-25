@@ -12,8 +12,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import PoolResults
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 DREAD_ARTIFACT_CATEGORY = pickup_category.PickupCategory(
@@ -21,14 +20,14 @@ DREAD_ARTIFACT_CATEGORY = pickup_category.PickupCategory(
 )
 
 
-def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDescription) -> None:
+def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: GameDatabaseView) -> None:
     assert isinstance(configuration, DreadConfiguration)
 
     results.extend_with(artifact_pool(game, configuration.artifacts))
 
 
-def artifact_pool(game: GameDescription, config: DreadArtifactConfig) -> PoolResults:
-    keys = [create_dread_artifact(i, game.resource_database) for i in range(12)]
+def artifact_pool(game: GameDatabaseView, config: DreadArtifactConfig) -> PoolResults:
+    keys = [create_dread_artifact(i, game.get_resource_database_view()) for i in range(12)]
     keys_to_shuffle = keys[: config.required_artifacts]
     starting_keys = keys[config.required_artifacts :]
 
@@ -37,12 +36,12 @@ def artifact_pool(game: GameDescription, config: DreadArtifactConfig) -> PoolRes
 
 def create_dread_artifact(
     artifact_number: int,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
 ) -> PickupEntry:
     return PickupEntry(
         name=f"Metroid DNA {artifact_number + 1}",
         progression=((resource_database.get_item(f"Artifact{artifact_number + 1}"), 1),),
-        model=PickupModel(game=resource_database.game_enum, name=f"DNA_{artifact_number + 1}"),
+        model=PickupModel(game=RandovaniaGame.METROID_DREAD, name=f"DNA_{artifact_number + 1}"),
         pickup_category=DREAD_ARTIFACT_CATEGORY,
         broad_category=pickup_category.GENERIC_KEY_CATEGORY,
         offworld_models=frozendict({RandovaniaGame.AM2R: "sItemDNA"}),

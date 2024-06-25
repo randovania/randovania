@@ -36,7 +36,7 @@ class CorruptionPatchDataFactory(PatchDataFactory):
         starting_items.add_resource_gain(
             [
                 (
-                    game.resource_database.get_item_by_name("Suit Type"),
+                    game.resource_database.get_item_by_display_name("Suit Type"),
                     cosmetic.player_suit.value,
                 ),
             ]

@@ -26,7 +26,7 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
             ConditionalResources(
                 None,
                 None,
-                ((prime1_resource_database.get_item_by_name("Missile"), 6),),
+                ((prime1_resource_database.get_item_by_display_name("Missile"), 6),),
             )
         ],
         conversion=[],

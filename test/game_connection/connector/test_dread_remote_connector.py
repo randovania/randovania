@@ -74,15 +74,15 @@ async def test_new_inventory_received(connector: DreadRemoteConnector):
     assert connector.inventory_index == 69
 
     # check wide beam
-    wide_beam = connector.game.resource_database.get_item_by_name("Wide Beam")
+    wide_beam = connector.game.resource_database.get_item_by_display_name("Wide Beam")
     assert connector.last_inventory[wide_beam].capacity == 1
 
     # check plasma beam
-    plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
+    plasma_beam = connector.game.resource_database.get_item_by_display_name("Plasma Beam")
     assert connector.last_inventory[plasma_beam].capacity == 0
 
     # check wave beam
-    wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
+    wave_beam = connector.game.resource_database.get_item_by_display_name("Wave Beam")
     assert connector.last_inventory.get(wave_beam) == InventoryItem(0, 0)
 
     inventory_updated.assert_called_once()

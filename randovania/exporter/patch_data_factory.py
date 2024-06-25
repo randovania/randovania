@@ -77,11 +77,11 @@ class PatchDataFactory:
 
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
-        return pickup_creator.create_nothing_pickup(self.game.resource_database)
+        return pickup_creator.create_nothing_pickup(self.game.game)
 
     def create_visual_nothing(self) -> PickupEntry:
         """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
-        return pickup_creator.create_visual_nothing(self.game_enum())
+        raise NotImplementedError
 
     def export_pickup_list(self) -> list[pickup_exporter.ExportedPickupDetails]:
         """

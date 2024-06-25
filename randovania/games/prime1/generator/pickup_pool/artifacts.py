@@ -12,7 +12,7 @@ from randovania.games.prime1.patcher import prime_items
 from randovania.generator.pickup_pool import PoolResults
 
 if TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 
 ARTIFACT_CATEGORY = pickup_category.PickupCategory(
@@ -21,7 +21,7 @@ ARTIFACT_CATEGORY = pickup_category.PickupCategory(
 
 
 def add_artifacts(
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     total: LayoutArtifactMode,
     artifact_minimum_progression: int,
 ) -> PoolResults:
@@ -51,13 +51,13 @@ def add_artifacts(
 def create_artifact(
     artifact_index: int,
     minimum_progression: int,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
 ) -> PickupEntry:
     return PickupEntry(
         name=prime_items.ARTIFACT_NAMES[artifact_index],
         progression=((resource_database.get_item(prime_items.ARTIFACT_ITEMS[artifact_index]), 1),),
         model=PickupModel(
-            game=resource_database.game_enum,
+            game=RandovaniaGame.METROID_PRIME,
             name=prime_items.ARTIFACT_MODEL[artifact_index],
         ),
         pickup_category=ARTIFACT_CATEGORY,
