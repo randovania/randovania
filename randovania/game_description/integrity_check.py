@@ -7,8 +7,9 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.dock_lock_node import DockLockNode
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.event_node import EventNode
-from randovania.game_description.db.node import Node, NodeContext
+from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
@@ -22,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.dock import DockType, DockWeakness
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
@@ -205,19 +207,27 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             continue
         graph.add_node(node)
 
-    context = _create_node_context(game)
+    def nodes_from(a: Area, n: Node):
+        yield from a.connections[n].keys()
 
-    for node in game.region_list.iterate_nodes():
+        if isinstance(n, DockNode):
+            yield game.region_list.node_by_identifier(n.default_connection)
+
+        if isinstance(n, TeleporterNetworkNode):
+            for o in game.region_list.nodes_in_network(n.network):
+                if o != n:
+                    yield o
+
+    for region, area, node in game.region_list.all_regions_areas_nodes:
         if node not in graph:
             continue
 
         try:
-            for other, req in game.region_list.potential_nodes_from(node, context):
+            for other in nodes_from(area, node):
                 if other not in graph:
                     continue
 
-                if req != Requirement.impossible():
-                    graph.add_edge(node, other)
+                graph.add_edge(node, other)
 
         except KeyError:
             # Broken docks
