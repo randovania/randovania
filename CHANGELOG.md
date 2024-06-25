@@ -47,6 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Changed: The water in Early Cloak Room in Artaria will disappear after the blob is broken, instead of flooding the lower section with the tunnel.
+- Changed: Water will no longer appear in First Tutorial after using the water device in EMMI Zone Hub in Artaria.
+- Fixed: Entering Intro Room in Artaria will no longer cause long loads or crash the game.
+- Fixed: The Navigation Station in Itorash now has a map icon.
+- Fixed: The Thermal Gate blocking the Morph Launcher to Experiment Z-57 now has a map icon.
 - Fixed: The transport in Ghavoran - Flipper now shows the destination on the minimap icon.
 
 #### Logic Database
