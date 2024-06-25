@@ -17,6 +17,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.dock import DockWeakness
     from randovania.game_description.db.node import Node
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -58,7 +59,7 @@ class PrimeBasePatchesFactory(BasePatchesFactory):
         return parent.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
-        self, configuration: PrimeConfiguration, game: GameDescription, rng: Random
+        self, configuration: PrimeConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
         teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
         dock_assignment = get_dock_connections_assignment_for_teleporter(

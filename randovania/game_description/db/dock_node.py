@@ -11,7 +11,7 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 
 if typing.TYPE_CHECKING:
-    from collections.abc import Iterable, Iterator
+    from collections.abc import Iterator
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
@@ -129,18 +129,15 @@ class DockNode(Node):
         return patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
-        patches: GamePatches = context.patches  # type: ignore
-        result: Iterable[tuple[Node, Requirement]] | None = patches.get_cached_dock_connections_from(self)
-        if result is None:
-            connections = []
+        patches: GamePatches = context.patches
+        assert patches is not None
 
-            target_node = patches.get_dock_connection_for(self)
-            connections.append(self._open_dock_connection(context, target_node))
+        connections = []
 
-            if (lock_connection := self._lock_connection(context)) is not None:
-                connections.append(lock_connection)
+        target_node = patches.get_dock_connection_for(self)
+        connections.append(self._open_dock_connection(context, target_node))
 
-            patches.set_cached_dock_connections_from(self, tuple(connections))
-            result = connections
+        if (lock_connection := self._lock_connection(context)) is not None:
+            connections.append(lock_connection)
 
-        yield from result
+        yield from connections

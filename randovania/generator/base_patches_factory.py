@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -31,7 +32,7 @@ class BasePatchesFactory:
         self,
         configuration: BaseConfiguration,
         rng: Random,
-        game: GameDescription,
+        game: GameDatabaseView,
         is_multiworld: bool,
         player_index: int,
         rng_required: bool = True,
@@ -80,7 +81,7 @@ class BasePatchesFactory:
             )
 
     def dock_connections_assignment(
-        self, configuration: BaseConfiguration, game: GameDescription, rng: Random
+        self, configuration: BaseConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
         """
         Adds dock connections if a game's patcher factory overwrites it. e.g. add teleporters
