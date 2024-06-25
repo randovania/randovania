@@ -7,7 +7,9 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
+    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
+    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -16,6 +18,8 @@ if TYPE_CHECKING:
 class GameDatabaseView:
     """
     Provides access to the GameDescription and nested, with support for being filtered for Preset settings.
+
+    These APIs are all expected to be slow and shouldn't be used in any performance sensitive code.
     """
 
     def node_iterator(self) -> Iterable[tuple[Region, Area, Node]]:
@@ -24,10 +28,36 @@ class GameDatabaseView:
         """
         raise NotImplementedError
 
+    def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
+        """
+        Find a node with the given NodeIdentifier.
+        Raises KeyError if no node could be found.
+        """
+        raise NotImplementedError
+
     def interesting_resources_for_damage(
         self, resource: SimpleResourceInfo, collection: ResourceCollection
     ) -> Iterator[ResourceInfo]:
         """
         Provides all interesting resources for the given damage resource
+        """
+        raise NotImplementedError
+
+    def assert_pickup_index_exists(self, index: PickupIndex) -> None:
+        """
+        If the PickupIndex does not exist, this function raises an Exception
+        """
+        raise NotImplementedError
+
+    def create_resource_collection(self) -> ResourceCollection:
+        """
+        Creates a new ResourceCollection
+        """
+        raise NotImplementedError
+        # ResourceCollection
+
+    def default_starting_location(self) -> NodeIdentifier:
+        """
+        The default starting location for the game. Not really used since the preset starting location replaces this...
         """
         raise NotImplementedError
