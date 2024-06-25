@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_database_view import GameDatabaseView
-    from randovania.game_description.game_description import GameDescription
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -35,32 +34,17 @@ class BasePatchesFactory:
         game: GameDatabaseView,
         is_multiworld: bool,
         player_index: int,
-        rng_required: bool = True,
     ) -> GamePatches:
         """ """
         patches = GamePatches.create_from_game(game, player_index, configuration)
 
         # Teleporters
-        try:
-            patches = patches.assign_dock_connections(self.dock_connections_assignment(configuration, game, rng))
-        except MissingRng as e:
-            if rng_required:
-                raise e
+        patches = patches.assign_dock_connections(self.dock_connections_assignment(configuration, game, rng))
 
         # Starting Location
-        try:
-            patches = patches.assign_starting_location(
-                self.starting_location_for_configuration(configuration, game, rng)
-            )
-        except MissingRng as e:
-            if rng_required:
-                raise e
+        patches = patches.assign_starting_location(self.starting_location_for_configuration(configuration, game, rng))
 
-        try:
-            patches = patches.assign_game_specific(self.create_game_specific(configuration, game, rng))
-        except MissingRng as e:
-            if rng_required:
-                raise e
+        patches = patches.assign_game_specific(self.create_game_specific(configuration, game, rng))
 
         # Check Item Pool
         self.check_item_pool(configuration)
@@ -95,7 +79,7 @@ class BasePatchesFactory:
     def starting_location_for_configuration(
         self,
         configuration: BaseConfiguration,
-        game: GameDescription,
+        game: GameDatabaseView,
         rng: Random,
     ) -> NodeIdentifier:
         locations = list(configuration.starting_location.locations)
@@ -104,11 +88,14 @@ class BasePatchesFactory:
         elif len(locations) == 1:
             location = locations[0]
         else:
-            if rng is None:
-                raise MissingRng("Starting Location")
             location = rng.choice(locations)
+
+        try:
+            game.node_by_identifier(location)
+        except KeyError:
+            raise InvalidConfiguration(f"Invalid starting location: {location}")
 
         return location
 
-    def create_game_specific(self, configuration: BaseConfiguration, game: GameDescription, rng: Random) -> dict:
+    def create_game_specific(self, configuration: BaseConfiguration, game: GameDatabaseView, rng: Random) -> dict:
         return {}

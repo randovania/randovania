@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.node import Node
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -26,18 +26,17 @@ class DreadBasePatchesFactory(BasePatchesFactory):
         self,
         configuration: BaseConfiguration,
         rng: Random,
-        game: GameDescription,
+        game: GameDatabaseView,
         is_multiworld: bool,
         player_index: int,
-        rng_required: bool = True,
     ) -> GamePatches:
         assert isinstance(configuration, DreadConfiguration)
-        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
+        parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index)
 
         dock_weakness = []
         if configuration.hanubia_easier_path_to_itorash:
             nic = NodeIdentifier.create
-            power_weak = game.dock_weakness_database.get_by_weakness("door", "Power Beam Door")
+            power_weak = game.get_dock_weakness("door", "Power Beam Door")
 
             dock_weakness.extend(
                 [
@@ -46,14 +45,15 @@ class DreadBasePatchesFactory(BasePatchesFactory):
                 ]
             )
 
-        return parent.assign_dock_weakness(
-            ((game.region_list.node_by_identifier(identifier), target) for identifier, target in dock_weakness)
-        )
+        return parent.assign_dock_weakness(dock_weakness)
 
     def dock_connections_assignment(
-        self, configuration: DreadConfiguration, game: GameDescription, rng: Random
+        self, configuration: BaseConfiguration, game: GameDatabaseView, rng: Random
     ) -> Iterable[tuple[DockNode, Node]]:
-        teleporter_connection = get_teleporter_connections(configuration.teleporters, game, rng)
+        assert isinstance(configuration, DreadConfiguration)
+        teleporter_connection = get_teleporter_connections(
+            configuration.teleporters, game, rng, [t for t in game.get_dock_types() if t.extra.get("is_teleporter")]
+        )
         dock_assignment = get_dock_connections_assignment_for_teleporter(
             configuration.teleporters, game, teleporter_connection
         )

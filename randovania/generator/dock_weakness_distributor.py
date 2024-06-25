@@ -62,13 +62,13 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
 
     if dock_rando.mode == DockRandoMode.DOCKS:
         docks_to_unlock = [
-            (node, weakness_database.dock_rando_params[node.dock_type].unlocked) for node in nodes_to_shuffle
+            (node.identifier, weakness_database.dock_rando_params[node.dock_type].unlocked) for node in nodes_to_shuffle
         ]
         if weakness_database.dock_rando_config.force_change_two_way:
             unlocked = [node for node, _ in docks_to_unlock]
             docks_to_unlock.extend(
                 [
-                    (node, weakness_database.dock_rando_params[node.dock_type].unlocked)
+                    (node.identifier, weakness_database.dock_rando_params[node.dock_type].unlocked)
                     for node, target in all_docks.items()
                     if node not in unlocked and target in unlocked and node.dock_type is target.dock_type
                 ]
@@ -127,7 +127,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
         # if the node's not compatible with the new weakness, change to unlocked instead
         patches = patches.assign_dock_weakness(
             (
-                node,
+                node.identifier,
                 (
                     weakness
                     if compatible_weakness(node, weakness)
@@ -141,7 +141,7 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
         if weakness_database.dock_rando_config.force_change_two_way:
             # if a dock is being changed, make sure to make the other side match
             return patches.assign_dock_weakness(
-                (source, patches.get_dock_weakness_for(target))
+                (source.identifier, patches.get_dock_weakness_for(target))
                 for source, target in all_docks.items()
                 if target in nodes_to_shuffle
             )
@@ -227,8 +227,8 @@ async def _run_dock_resolver(
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
     """
     locks = [
-        (dock, DockRandoLogic.special_locked_weakness()),
-        (target, DockRandoLogic.special_locked_weakness()),  # Two Way
+        (dock.identifier, DockRandoLogic.special_locked_weakness()),
+        (target.identifier, DockRandoLogic.special_locked_weakness()),  # Two Way
     ]
 
     state = setup[0].copy()
@@ -383,13 +383,13 @@ async def distribute_post_fill_weaknesses(
         # Assign the dock (and its target if desired/possible)
         weakness = random_lib.select_element_with_weight(weighted_weaknesses, rng)
         new_assignment = [
-            (dock, weakness),
+            (dock.identifier, weakness),
         ]
         if (
             target.default_dock_weakness in dock_type_state.can_change_from
             or game.dock_weakness_database.dock_rando_config.force_change_two_way
         ):
-            new_assignment.append((target, weakness))
+            new_assignment.append((target.identifier, weakness))
 
         docks_placed += 1
         debug.debug_print(f"Possibilities: {weighted_weaknesses}")

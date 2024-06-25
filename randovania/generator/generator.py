@@ -86,7 +86,7 @@ async def create_player_pool(
     for i in range(10):
         status_update(f"Attempt {i + 1} for initial state for world '{world_name}'")
         patches = game_generator.base_patches_factory.create_base_patches(
-            configuration, rng, game, num_players > 1, player_index=player_index, rng_required=True
+            configuration, rng, game, num_players > 1, player_index=player_index
         )
         patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(patches, rng)
         patches = await game_generator.hint_distributor.assign_pre_filler_hints(

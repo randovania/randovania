@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import typing
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game_description.db.area import Area
+    from randovania.game_description.db.dock import DockType, DockWeakness
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
@@ -13,6 +15,8 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+
+    NodeT = typing.TypeVar("NodeT", bound=Node)
 
 
 class GameDatabaseView:
@@ -61,3 +65,24 @@ class GameDatabaseView:
         The default starting location for the game. Not really used since the preset starting location replaces this...
         """
         raise NotImplementedError
+
+    def get_dock_types(self) -> list[DockType]:
+        """
+        List all available DockTypes
+        """
+        raise NotImplementedError
+
+    def get_dock_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
+        """
+        Gets a DockWeakness via names
+        """
+        raise NotImplementedError
+
+
+def typed_node_by_identifier(game: GameDatabaseView, i: NodeIdentifier, t: type[NodeT]) -> NodeT:
+    """
+    Wrapper for calling game.node_by_identifier, followed by an isinstance.
+    """
+    result = game.node_by_identifier(i)
+    assert isinstance(result, t)
+    return result

@@ -211,7 +211,7 @@ def decode_single(
 
     dock_weakness = [
         (
-            get_dock_source(NodeIdentifier.from_string(source_name)),
+            NodeIdentifier.from_string(source_name),
             weakness_db.get_by_weakness(
                 weakness_data["type"],
                 weakness_data["name"],
