@@ -662,13 +662,13 @@ jobs:
   notify_failure:
     runs-on: ubuntu-latest
     needs: release
-    if: ${{ failure() }}
+    if: ${{ failure() && github.event_name != 'pull_request' && github.event_name != 'merge_group' }}
     steps:
       - name: Alert Failure
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.GENERAL_TALK_WEBHOOK }}
           nodetail: true
-          title: Release Job failed!
+          title: CI failed!
           description: |
-            [Release Job failed for `${{ github.ref_name }}`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            [CI failed for `${{ github.ref_name }}`](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
