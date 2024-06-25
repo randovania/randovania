@@ -10,11 +10,11 @@ from randovania.generator.pickup_pool.standard_pickup import add_standard_pickup
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def calculate_pool_results(layout_configuration: BaseConfiguration, game: GameDescription) -> PoolResults:
+def calculate_pool_results(layout_configuration: BaseConfiguration, game: GameDatabaseView) -> PoolResults:
     """
     Creates a PoolResults with all starting items and pickups in fixed locations, as well as a list of
     pickups we should shuffle.
@@ -23,20 +23,19 @@ def calculate_pool_results(layout_configuration: BaseConfiguration, game: GameDe
     :return:
     """
     base_results = PoolResults([], {}, [])
+    resource_database = game.get_resource_database_view()
 
     # Adding standard pickups to the pool
     base_results.extend_with(
         add_standard_pickups(
-            game.resource_database,
+            resource_database,
             layout_configuration.standard_pickup_configuration,
             layout_configuration.ammo_pickup_configuration,
         )
     )
 
     # Adding ammo to the pool
-    base_results.to_place.extend(
-        add_ammo_pickups(game.resource_database, layout_configuration.ammo_pickup_configuration)
-    )
+    base_results.to_place.extend(add_ammo_pickups(resource_database, layout_configuration.ammo_pickup_configuration))
 
     # Add game-specific entries to the pool
     layout_configuration.game.generator.pickup_pool_creator(base_results, layout_configuration, game)

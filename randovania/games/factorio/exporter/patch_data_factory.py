@@ -26,7 +26,7 @@ class FactorioPatchDataFactory(PatchDataFactory[FactorioConfiguration, FactorioC
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
-            self.game.resource_database,
+            self.game.game,
             model_name="__randovania-assets__/graphics/icons/nothing.png",
         )
 

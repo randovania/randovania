@@ -7,6 +7,7 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.generator.pickup_pool.pool_creator import calculate_pool_results
 
 if TYPE_CHECKING:
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -56,7 +57,7 @@ def _pickups_count_by_name(pickups: list[PickupEntry]) -> dict[str, int]:
 
 
 def additional_starting_pickups(
-    layout_configuration: BaseConfiguration, game: GameDescription, starting_pickups: list[PickupEntry]
+    layout_configuration: BaseConfiguration, game: GameDatabaseView, starting_pickups: list[PickupEntry]
 ) -> list[str]:
     initial_pickups = _pickups_count_by_name(calculate_pool_results(layout_configuration, game).starting)
     final_pickups = _pickups_count_by_name(starting_pickups)
@@ -69,9 +70,9 @@ def additional_starting_pickups(
 
 
 def additional_starting_items(
-    layout_configuration: BaseConfiguration, game: GameDescription, starting_items: ResourceCollection
+    layout_configuration: BaseConfiguration, game: GameDatabaseView, starting_items: ResourceCollection
 ) -> list[str]:
-    initial_items = ResourceCollection.with_database(game.resource_database)
+    initial_items = game.create_resource_collection()
     for pickup in calculate_pool_results(layout_configuration, game).starting:
         initial_items.add_resource_gain(pickup.resource_gain(initial_items))
 

@@ -11,12 +11,46 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
+    from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+    from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
     NodeT = typing.TypeVar("NodeT", bound=Node)
+
+
+class ResourceDatabaseView:
+    def get_item(self, short_name: str) -> ItemResourceInfo:
+        """
+        Gets a ItemResourceInfo, using internal name
+        """
+        raise NotImplementedError
+
+    def get_event(self, short_name: str) -> SimpleResourceInfo:
+        """
+        Gets a ResourceInfo of type Event, using internal name
+        """
+        raise NotImplementedError
+
+    def get_trick(self, short_name: str) -> TrickResourceInfo:
+        """
+        Gets a TrickResourceInfo using internal name
+        """
+        raise NotImplementedError
+
+    def get_damage(self, short_name: str) -> SimpleResourceInfo:
+        """
+        Gets a ResourceInfo of type Damage, using internal name
+        """
+        raise NotImplementedError
+
+    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
+        """
+        TODO
+        """
+        raise NotImplementedError
 
 
 class GameDatabaseView:
@@ -75,6 +109,12 @@ class GameDatabaseView:
     def get_dock_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
         """
         Gets a DockWeakness via names
+        """
+        raise NotImplementedError
+
+    def get_resource_database_view(self) -> ResourceDatabaseView:
+        """
+        Gets a view for the ResourceDatabase
         """
         raise NotImplementedError
 

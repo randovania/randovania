@@ -13,17 +13,17 @@ if TYPE_CHECKING:
     from typing import Any
 
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.pickup.pickup_definition.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.pickup_definition.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
 def create_standard_pickup(
     pickup: StandardPickupDefinition,
     state: StandardPickupState,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     ammo: AmmoPickupDefinition | None,
     ammo_requires_main_item: bool,
 ) -> PickupEntry:
@@ -54,7 +54,7 @@ def create_standard_pickup(
         start_case=pickup.starting_condition,
         extra_resources=tuple(extra_resources),
         model=PickupModel(
-            game=resource_database.game_enum,
+            game=pickup.game,
             name=pickup.model_name,
         ),
         offworld_models=pickup.offworld_models,
@@ -77,7 +77,7 @@ def create_ammo_pickup(
     ammo: AmmoPickupDefinition,
     ammo_count: Sequence[int],
     requires_main_item: bool,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
 ) -> PickupEntry:
     """
     Creates a PickupEntry for an expansion of the given ammo.
@@ -95,7 +95,7 @@ def create_ammo_pickup(
         progression=(),
         extra_resources=tuple(resources),
         model=PickupModel(
-            game=resource_database.game_enum,
+            game=ammo.game,
             name=ammo.model_name,
         ),
         offworld_models=ammo.offworld_models,
@@ -116,7 +116,7 @@ def create_ammo_pickup(
 
 def create_generated_pickup(
     pickup_group: str,
-    resource_database: ResourceDatabase,
+    resource_database: ResourceDatabaseView,
     *,
     minimum_progression: int = 0,
     **format_kwargs: Any,
@@ -168,10 +168,10 @@ USELESS_PICKUP_CATEGORY = hint_features.HintFeature(
 )
 
 
-def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str = "Nothing") -> PickupEntry:
+def create_nothing_pickup(game_enum: RandovaniaGame, model_name: str = "Nothing") -> PickupEntry:
     """
     Creates a Nothing pickup.
-    :param resource_database:
+    :param game_enum:
     :param model_name:
     :return:
     """
@@ -179,7 +179,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
         name="Nothing",
         progression=(),
         model=PickupModel(
-            game=resource_database.game_enum,
+            game=game_enum,
             name=model_name,
         ),
         gui_category=USELESS_PICKUP_CATEGORY,

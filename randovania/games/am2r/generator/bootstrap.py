@@ -80,7 +80,8 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
         self, configuration: AM2RConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
     ) -> float:
         num_suits = sum(
-            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+            (1 if current_resources[db.get_item_by_display_name(suit)] else 0)
+            for suit in ("Varia Suit", "Gravity Suit")
         )
         dr = 0.0
         if num_suits == 1:
