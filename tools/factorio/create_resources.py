@@ -253,13 +253,16 @@ _custom_shuffled_count = {
 }
 
 
-def create_pickups(techs_raw: dict, tech_csv: dict) -> dict:
+def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_csv: dict) -> dict:
     result = {}
 
     for tech_name, data in tech_csv.items():
         pickup_name = data["pickup_name"]
         if pickup_name in result:
             result[pickup_name]["progression"].append(tech_name)
+            if tech_name in existing_pickup_ids:
+                if "original_locations" in result[pickup_name]:
+                    result[pickup_name]["original_locations"].append(existing_pickup_ids[tech_name])
         else:
             tech = techs_raw[tech_name]
             if "icons" in tech:
@@ -276,6 +279,9 @@ def create_pickups(techs_raw: dict, tech_csv: dict) -> dict:
                 "preferred_location_category": "major" if data["category"] != "enhancement" else "minor",
                 "expected_case_for_describer": "shuffled",
             }
+            if tech_name in existing_pickup_ids:
+                result[pickup_name]["original_locations"] = [existing_pickup_ids[tech_name]]
+
             if pickup_name in _custom_shuffled_count:
                 if _custom_shuffled_count[pickup_name] == 0:
                     result[pickup_name]["expected_case_for_describer"] = "missing"
@@ -283,7 +289,6 @@ def create_pickups(techs_raw: dict, tech_csv: dict) -> dict:
                     result[pickup_name]["custom_count_for_shuffled_case"] = _custom_shuffled_count[pickup_name]
 
     result["Rocket Silo"]["expected_case_for_describer"] = "vanilla"
-    result["Rocket Silo"]["original_location"] = 136
     result["Rocket Silo"]["hide_from_gui"] = True
 
     return result
@@ -316,6 +321,8 @@ def main():
     util.read_locales(factorio_path)
     tech_csv = read_tech_csv(csv_path)
 
+    existing_pickup_ids = util.load_existing_pickup_ids(rdv_factorio_path.joinpath("logic_database/Tech.json"))
+
     with raw_dump_path.open() as f:
         raw_dump: dict[str, dict[str, typing.Any]] = json.load(f)
 
@@ -336,7 +343,7 @@ def main():
     create_resources(header, data_parser.get_recipes_unlock_by_tech(techs_raw))
     update_templates(header, recipes_raw, data_parser.get_techs_for_recipe(techs_raw))
 
-    pickup_db["standard_pickups"] = create_pickups(techs_raw, tech_csv)
+    pickup_db["standard_pickups"] = create_pickups(techs_raw, existing_pickup_ids, tech_csv)
 
     header["resource_database"]["requirement_template"] = dict(
         sorted(header["resource_database"]["requirement_template"].items(), key=lambda it: it[1]["display_name"])

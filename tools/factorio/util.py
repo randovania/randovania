@@ -1,4 +1,5 @@
 import configparser
+import json
 from pathlib import Path
 
 locale = configparser.ConfigParser()
@@ -72,3 +73,20 @@ def or_req(entries: list, comment: str | None = None) -> dict:
     if len(entries) == 1:
         return entries[0]
     return {"type": "or", "data": {"comment": comment, "items": entries}}
+
+
+def load_existing_pickup_ids(region_path: Path) -> dict[str, int]:
+    try:
+        with region_path.open() as f:
+            all_areas = json.load(f)["areas"]
+    except FileNotFoundError:
+        return {}
+
+    result = {}
+
+    for area in all_areas.values():
+        for node_data in area["nodes"].values():
+            if node_data["node_type"] == "pickup":
+                result[node_data["extra"]["original_tech"]] = node_data["pickup_index"]
+
+    return result

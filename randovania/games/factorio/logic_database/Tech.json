@@ -530,6 +530,27 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Inserter)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Steam power)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Automation science pack)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -622,6 +643,90 @@
                             }
                         }
                     }
+                },
+                "Pickup (Inserter)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "original_tech": "inserter",
+                        "tech_name": "randovania-inserter",
+                        "count": 20,
+                        "time": 10,
+                        "ingredients": []
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 186,
+                    "location_category": "major",
+                    "connections": {
+                        "Connection to Tech Tree": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Steam power)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "original_tech": "steam-power",
+                        "tech_name": "randovania-steam-power",
+                        "count": 50,
+                        "time": 20,
+                        "ingredients": []
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 185,
+                    "location_category": "major",
+                    "connections": {
+                        "Connection to Tech Tree": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Automation science pack)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "original_tech": "automation-science-pack",
+                        "tech_name": "randovania-automation-science-pack",
+                        "count": 10,
+                        "time": 10,
+                        "ingredients": []
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 184,
+                    "location_category": "major",
+                    "connections": {
+                        "Connection to Tech Tree": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -701,18 +806,6 @@
                             }
                         },
                         "Pickup (Optics)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "craft-automation-science-pack"
-                                    }
-                                ]
-                            }
-                        },
-                        "Pickup (Fluid storage)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -865,36 +958,6 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 5,
-                    "location_category": "major",
-                    "connections": {
-                        "Connection to Tech Tree": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Pickup (Fluid storage)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "original_tech": "fluid-storage",
-                        "tech_name": "randovania-fluid-storage",
-                        "count": 10,
-                        "time": 15,
-                        "ingredients": [
-                            "automation-science-pack"
-                        ]
-                    },
-                    "valid_starting_location": false,
-                    "pickup_index": 183,
                     "location_category": "major",
                     "connections": {
                         "Connection to Tech Tree": {
@@ -1142,6 +1205,30 @@
                                             "region": "Tech",
                                             "area": "Tier 4",
                                             "node": "Pickup (Engine)"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Fluid storage)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "craft-automation-science-pack"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "craft-logistic-science-pack"
+                                    },
+                                    {
+                                        "type": "node",
+                                        "data": {
+                                            "region": "Tech",
+                                            "area": "Tier 3",
+                                            "node": "Pickup (Barrel handling)"
                                         }
                                     }
                                 ]
@@ -1464,6 +1551,37 @@
                     },
                     "valid_starting_location": false,
                     "pickup_index": 33,
+                    "location_category": "major",
+                    "connections": {
+                        "Connection to Tech Tree": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Fluid storage)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "original_tech": "fluid-storage",
+                        "tech_name": "randovania-fluid-storage",
+                        "count": 50,
+                        "time": 15,
+                        "ingredients": [
+                            "automation-science-pack",
+                            "logistic-science-pack"
+                        ]
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 183,
                     "location_category": "major",
                     "connections": {
                         "Connection to Tech Tree": {

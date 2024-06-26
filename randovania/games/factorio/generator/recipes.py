@@ -1,103 +1,172 @@
+import collections
+import itertools
 import math
 import random
-import time
 
-from randovania.games.factorio.generator.complexity import Complexity, fitness_for, item_is_fluid
+from randovania.games.factorio.generator.item_cost import ItemCost, cost_for_ingredient_list, item_is_fluid
 from randovania.lib import pyeasyga
+
+_TARGET_FITNESS = 0.25
+
+
+class RecipeAlgorithm(pyeasyga.GeneticAlgorithm):
+    all_good_solutions: set[tuple[int, ...]]
+
+    def __init__(
+        self,
+        item_names: list[str],
+        seed_data: list[ItemCost],
+        rng: random.Random,
+        target_cost: ItemCost,
+        max_fluid: int,
+        max_items: int,
+    ):
+        population_size = 200
+        generations = 10
+        crossover_probability = 0.1
+        mutation_probability = 0.8
+
+        self.item_names = item_names
+        self.target_cost = target_cost
+        self.max_fluid = max_fluid
+        self.max_items = max_items
+        self.all_good_solutions = set()
+
+        super().__init__(
+            seed_data,
+            population_size,
+            generations,
+            crossover_probability,
+            mutation_probability,
+            elitism=False,
+            maximise_fitness=False,
+            rng=rng,
+        )
+
+    def create_individual(self, seed_data: list[ItemCost]) -> pyeasyga.Genes:
+        genes = [0] * len(seed_data)
+        genes[self.random.randint(0, len(seed_data) - 1)] = 1
+        return genes
+
+    def create_individual_from_indices(self, indices: tuple[int, ...]) -> pyeasyga.Genes:
+        genes = [0] * len(self.seed_data)
+        for idx in indices:
+            genes[idx] = 1
+        return genes
+
+    def mutate_function(self, individual: list[int]) -> None:
+        if self.random.randrange(4) == 0:
+            # 25% chance of increasing the ingredient cost of an existing ingredient
+            idx = [i for i, v in enumerate(individual) if v > 0]
+            if idx:
+                individual[self.random.choice(idx)] += 1
+                return
+
+        mutate_index = self.random.randrange(len(individual))
+        individual[mutate_index] = (0, 1)[individual[mutate_index] == 0]
+
+    def fitness_function(self, individual: list[int], data: list[ItemCost]) -> float:
+        item_count = 0
+        fluid_count = 0
+
+        ingredients = []
+
+        for selected, item in zip(individual, data):
+            if selected:
+                item: ItemCost
+                item_count += 1
+
+                if item.is_fluid:
+                    fluid_count += 1
+                    if fluid_count > self.max_fluid:
+                        return math.inf
+
+                if item_count > self.max_items:
+                    return math.inf
+
+                ingredients.append((item, selected))
+
+        material, complexity = cost_for_ingredient_list(ingredients)
+
+        material_distance = math.fabs(self.target_cost.material - material) / self.target_cost.material
+        complexity_distance = math.fabs(self.target_cost.complexity - complexity) / self.target_cost.complexity
+
+        return material_distance + complexity_distance
+
+    def create_initial_population(self) -> None:
+        """Create a population with all combinations of items, of increasing size."""
+        initial_population = []
+        for k in itertools.count(1):
+            new_genes = [
+                self.create_individual_from_indices(comb)
+                for comb in itertools.combinations(range(len(self.seed_data)), k)
+            ]
+            missing_genes = self.population_size - len(initial_population)
+            if len(new_genes) - missing_genes > 0:
+                self.random.shuffle(new_genes)
+
+            initial_population.extend(pyeasyga.Chromosome(genes) for genes in new_genes[:missing_genes])
+            if len(initial_population) >= self.population_size:
+                break
+
+        self.all_good_solutions = set()
+        self.current_generation = initial_population
+
+    def create_next_generation(self) -> None:
+        super().create_next_generation()
+
+        for recipe in self.current_generation:
+            if recipe.fitness > _TARGET_FITNESS:
+                break
+            self.all_good_solutions.add(tuple(recipe.genes))
 
 
 def make_random_recipe(
     rng: random.Random,
     item_pool: list[str],
-    target_complexity: Complexity,
-    item_complexity: dict[str, Complexity],
+    target_item: str,
+    item_costs: dict[str, ItemCost],
     max_items: int = 6,
     max_fluid: int = 1,
 ) -> tuple[tuple[str, int], ...]:
-    target_fitness = fitness_for(target_complexity.cost, target_complexity.craft)
-    good_enough_fitness = target_fitness * 0.9
-
+    target_cost = item_costs[target_item]
     possible_items = [
         item_name
         for item_name in item_pool
-        if item_complexity[item_name].cost < target_complexity.cost
-        and item_complexity[item_name].craft < target_complexity.craft
+        if item_costs[item_name].material <= target_cost.material
+        and item_costs[item_name].complexity <= target_cost.complexity
+        and item_name != target_item
     ]
 
-    ga = pyeasyga.GeneticAlgorithm(
-        seed_data=[item_complexity[item_name] for item_name in possible_items],
-        population_size=200,
-        crossover_probability=0.2,
-        mutation_probability=0.8,
+    ga = RecipeAlgorithm(
+        item_names=possible_items,
+        seed_data=[item_costs[item_name] for item_name in possible_items],
         rng=rng,
+        target_cost=target_cost,
+        max_fluid=max_fluid,
+        max_items=max_items,
     )
-
-    def create_individual(seed_data):
-        genes = [0] * len(seed_data)
-        genes[rng.randint(0, len(seed_data) - 1)] = 1
-        return genes
-
-    def mutate_function(individual: list[int]) -> None:
-        if rng.randrange(4) == 0:
-            # 25% chance of increasing the ingredient cost of an existing ingredient
-            idx = [i for i, v in enumerate(individual) if v > 0]
-            if idx:
-                individual[rng.choice(idx)] += 1
-                return
-
-        mutate_index = rng.randrange(len(individual))
-        individual[mutate_index] = (0, 1)[individual[mutate_index] == 0]
-
-    ga.create_individual = create_individual
-    ga.mutate_function = mutate_function
-
-    def fitness(individual: list[int], data: list[Complexity]) -> float:
-        cost, craft = 0.0, 1
-        item_count = 0
-        fluid_count = 0
-
-        for selected, item in zip(individual, data):
-            if selected:
-                item: Complexity
-                item_count += 1
-
-                extra_cost, extra_craft = item.ingredient_cost(selected)
-                cost += extra_cost
-                craft += extra_craft
-
-                if item.is_fluid:
-                    fluid_count += 1
-                    if fluid_count > max_fluid:
-                        return 0
-
-                if item_count > max_items:
-                    return 0
-
-        if cost > target_complexity.cost or craft > target_complexity.craft:
-            return 0
-
-        target = fitness_for(cost, craft)
-        return min(target_fitness - math.fabs(target - target_fitness), good_enough_fitness)
-
-    ga.fitness_function = fitness
 
     def ingredient_from_genes(genes: list[int]) -> tuple[tuple[str, int], ...]:
         return tuple((possible_items[i], selected) for i, selected in enumerate(genes) if selected)
 
-    time.time()
+    def group_by_items(all_genes: list[tuple[int, ...]]) -> dict[tuple[int, ...], list[list[int]]]:
+        groups = collections.defaultdict(list)
+        for gene in all_genes:
+            indices = tuple(idx for idx, selected in enumerate(gene) if selected)
+            groups[indices].append(gene)
+
+        return groups
+
     ga.run()
-    time.time()
 
-    valid_solutions = {
-        (gens.fitness, ingredient_from_genes(gens.genes))
-        for gens in ga.current_generation
-        if gens.fitness >= good_enough_fitness
-    }
-    result = rng.choice(sorted(valid_solutions))
+    grouped_solutions = group_by_items(sorted(ga.all_good_solutions))
 
-    # print("REFERENCE", target_fitness, "ACTUAL", result[0])
-    # print(reference_item, result[1])
-    return result[1]
+    result_key = rng.choice(list(grouped_solutions.keys()))
+    best_solution = min(grouped_solutions[result_key], key=lambda it: ga.fitness_function(it, ga.seed_data))
+    result = ingredient_from_genes(best_solution)
+
+    return result
 
 
 def determine_recipe_category(recipe_name: str, base_category: str, ingredients: dict[str, int]) -> str:

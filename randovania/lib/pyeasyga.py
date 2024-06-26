@@ -51,9 +51,23 @@ Fitness: typing.TypeAlias = float
 Genes: typing.TypeAlias = list[int]
 
 
+class Chromosome:
+    """Chromosome class that encapsulates an individual's fitness and solution
+    representation.
+    """
+
+    def __init__(self, genes: Genes):
+        """Initialise the Chromosome."""
+        self.genes = genes
+        self.fitness = 0.0
+
+    def __repr__(self) -> str:
+        """Return initialised Chromosome representation in human readable form."""
+        return repr((self.fitness, self.genes))
+
+
 class GeneticAlgorithm:
     tournament_size: int
-    fitness_function: typing.Callable[[Genes, list[SeedData]], Fitness] | None
 
     """Genetic Algorithm class.
 
@@ -97,7 +111,6 @@ class GeneticAlgorithm:
         :param float mutation_probability: probability of mutation operation
 
         """
-
         if rng is None:
             rng = random.Random()
 
@@ -112,60 +125,57 @@ class GeneticAlgorithm:
 
         self.current_generation: list[Chromosome] = []
 
-        def create_individual(seed_data: list[SeedData]) -> Genes:
-            """Create a candidate solution representation.
-
-            e.g. for a bit array representation:
-
-            >>> return [random.randint(0, 1) for _ in range(len(data))]
-
-            :param seed_data: input data to the Genetic Algorithm
-            :type seed_data: list of objects
-            :returns: candidate solution representation as a list
-
-            """
-            return [rng.randint(0, 1) for _ in range(len(seed_data))]
-
-        def crossover(parent_1: Genes, parent_2: Genes) -> tuple[Genes, Genes]:
-            """Crossover (mate) two parents to produce two children.
-
-            :param parent_1: candidate solution representation (list)
-            :param parent_2: candidate solution representation (list)
-            :returns: tuple containing two children
-
-            """
-            index = rng.randrange(1, len(parent_1))
-            child_1 = parent_1[:index] + parent_2[index:]
-            child_2 = parent_2[:index] + parent_1[index:]
-            return child_1, child_2
-
-        def mutate(individual: Genes) -> None:
-            """Reverse the bit of a random index in an individual."""
-            mutate_index = rng.randrange(len(individual))
-            individual[mutate_index] = (0, 1)[individual[mutate_index] == 0]
-
-        def random_selection(population: list[Chromosome]) -> Chromosome:
-            """Select and return a random member of the population."""
-            return rng.choice(population)
-
-        def tournament_selection(population: list[Chromosome]) -> Chromosome:
-            """Select a random number of individuals from the population and
-            return the fittest member of them all.
-            """
-            if self.tournament_size == 0:
-                self.tournament_size = 2
-
-            members = rng.sample(population, self.tournament_size)
-            return (max if self.maximise_fitness else min)(members, key=attrgetter("fitness"))
-
-        self.fitness_function = None
-        self.tournament_selection = tournament_selection
         self.tournament_size = self.population_size // 10
-        self.random_selection = random_selection
-        self.create_individual = create_individual
-        self.crossover_function = crossover
-        self.mutate_function = mutate
         self.selection_function = self.tournament_selection
+
+    def create_individual(self, seed_data: list[SeedData]) -> Genes:
+        """Create a candidate solution representation.
+
+        e.g. for a bit array representation:
+
+        >>> return [random.randint(0, 1) for _ in range(len(data))]
+
+        :param seed_data: input data to the Genetic Algorithm
+        :type seed_data: list of objects
+        :returns: candidate solution representation as a list
+
+        """
+        return [self.random.randint(0, 1) for _ in range(len(seed_data))]
+
+    def crossover_function(self, parent_1: Genes, parent_2: Genes) -> tuple[Genes, Genes]:
+        """Crossover (mate) two parents to produce two children.
+
+        :param parent_1: candidate solution representation (list)
+        :param parent_2: candidate solution representation (list)
+        :returns: tuple containing two children
+
+        """
+        index = self.random.randrange(1, len(parent_1))
+        child_1 = parent_1[:index] + parent_2[index:]
+        child_2 = parent_2[:index] + parent_1[index:]
+        return child_1, child_2
+
+    def mutate_function(self, individual: Genes) -> None:
+        """Reverse the bit of a random index in an individual."""
+        mutate_index = self.random.randrange(len(individual))
+        individual[mutate_index] = (0, 1)[individual[mutate_index] == 0]
+
+    def random_selection(self, population: list[Chromosome]) -> Chromosome:
+        """Select and return a random member of the population."""
+        return self.random.choice(population)
+
+    def tournament_selection(self, population: list[Chromosome]) -> Chromosome:
+        """Select a random number of individuals from the population and
+        return the fittest member of them all.
+        """
+        if self.tournament_size == 0:
+            self.tournament_size = 2
+
+        members = self.random.sample(population, self.tournament_size)
+        return (max if self.maximise_fitness else min)(members, key=attrgetter("fitness"))
+
+    def fitness_function(self, individual: Genes, data: list[SeedData]) -> Fitness:
+        raise NotImplementedError
 
     def create_initial_population(self) -> None:
         """Create members of the first population randomly."""
@@ -180,7 +190,6 @@ class GeneticAlgorithm:
         """Calculate the fitness of every member of the given population using
         the supplied fitness_function.
         """
-        assert self.fitness_function is not None
         for individual in self.current_generation:
             individual.fitness = self.fitness_function(individual.genes, self.seed_data)
 
@@ -194,32 +203,33 @@ class GeneticAlgorithm:
         """Create a new population using the genetic operators (selection,
         crossover, and mutation) supplied.
         """
-        new_population: list[Chromosome] = []
+        new_genes: set[tuple[int, ...]] = set()
         elite = self.current_generation[0]
         selection = self.selection_function
 
-        while len(new_population) < self.population_size:
+        while len(new_genes) < self.population_size:
             parent_1 = copy.copy(selection(self.current_generation))
             parent_2 = copy.copy(selection(self.current_generation))
 
-            child_1, child_2 = parent_1, parent_2
-            child_1.fitness, child_2.fitness = 0, 0
+            child_1, child_2 = parent_1.genes, parent_2.genes
 
             can_crossover = self.random.random() < self.crossover_probability
             can_mutate = self.random.random() < self.mutation_probability
 
             if can_crossover:
-                child_1.genes, child_2.genes = self.crossover_function(list(parent_1.genes), list(parent_2.genes))
+                child_1, child_2 = self.crossover_function(list(parent_1.genes), list(parent_2.genes))
 
             if can_mutate:
-                child_1.genes = list(child_1.genes)
-                child_2.genes = list(child_2.genes)
-                self.mutate_function(child_1.genes)
-                self.mutate_function(child_2.genes)
+                child_1 = list(child_1)
+                child_2 = list(child_2)
+                self.mutate_function(child_1)
+                self.mutate_function(child_2)
 
-            new_population.append(child_1)
-            if len(new_population) < self.population_size:
-                new_population.append(child_2)
+            new_genes.add(tuple(child_1))
+            if len(new_genes) < self.population_size:
+                new_genes.add(tuple(child_2))
+
+        new_population = [Chromosome(list(gene)) for gene in new_genes]
 
         if self.elitism:
             new_population[0] = elite
@@ -259,18 +269,3 @@ class GeneticAlgorithm:
     def last_generation(self) -> typing.Iterable[tuple[Fitness, Genes]]:
         """Return members of the last generation as a generator function."""
         return ((member.fitness, member.genes) for member in self.current_generation)
-
-
-class Chromosome:
-    """Chromosome class that encapsulates an individual's fitness and solution
-    representation.
-    """
-
-    def __init__(self, genes: Genes):
-        """Initialise the Chromosome."""
-        self.genes = genes
-        self.fitness = 0.0
-
-    def __repr__(self) -> str:
-        """Return initialised Chromosome representation in human readable form."""
-        return repr((self.fitness, self.genes))
