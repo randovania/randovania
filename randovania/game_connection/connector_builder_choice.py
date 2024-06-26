@@ -9,12 +9,12 @@ import randovania
 
 
 class ConnectorBuilderChoice(Enum):
+    AM2R = "am2r"
+    CS = "cave-story"
     DEBUG = "debug"
     DOLPHIN = "dolphin"
-    NINTENDONT = "nintendont"
     DREAD = "dread"
-    CS = "cave-story"
-    AM2R = "am2r"
+    NINTENDONT = "nintendont"
     MSR = "msr"
 
     @property
@@ -46,11 +46,11 @@ class ConnectorBuilderChoice(Enum):
 
 
 _pretty_backend_name = {
+    ConnectorBuilderChoice.AM2R: "AM2R",
+    ConnectorBuilderChoice.CS: "Cave Story",
     ConnectorBuilderChoice.DEBUG: "Debug",
     ConnectorBuilderChoice.DOLPHIN: "Dolphin",
-    ConnectorBuilderChoice.NINTENDONT: "Nintendont",
     ConnectorBuilderChoice.DREAD: "Dread",
-    ConnectorBuilderChoice.CS: "Cave Story",
-    ConnectorBuilderChoice.AM2R: "AM2R",
+    ConnectorBuilderChoice.NINTENDONT: "Nintendont",
     ConnectorBuilderChoice.MSR: "Samus Returns",
 }
