@@ -563,7 +563,7 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: packages/**
+          file: packages/Randovania * *
           file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
