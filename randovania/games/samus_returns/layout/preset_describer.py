@@ -79,6 +79,7 @@ class MSRPresetDescriber(GamePresetDescriber):
         template_strings = super().format_params(configuration)
 
         dna_hint = _MSR_HINT_TEXT[configuration.hints.artifacts]
+        baby_hint = _MSR_HINT_TEXT[configuration.hints.baby_metroid]
 
         extra_message_tree = {
             "Logic Settings": [
@@ -146,6 +147,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                 },
             ],
             "Hints": [
+                {f"Baby Metroid Hint: {baby_hint}": baby_hint is not None},
                 {f"DNA Hints: {dna_hint}": dna_hint is not None},
             ],
             "Environmental Damage": format_environmental_damage(configuration),

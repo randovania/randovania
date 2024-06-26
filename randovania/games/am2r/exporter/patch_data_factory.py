@@ -182,11 +182,11 @@ class AM2RPatchDataFactory(PatchDataFactory):
         return_dict = {}
         for region in self.game.region_list.regions:
             for area in region.areas:
-                light_level = None
+                light_level = area.extra["light_level"]
                 if rng.random() < (self.configuration.darkness_chance / 1000.0):
                     light_level = str(rng.randint(self.configuration.darkness_min, self.configuration.darkness_max))
 
-                liquid_info = {}
+                liquid_info = None
                 # 0 - water, 1 - lava
                 liquid_type = rng.choices(
                     [0, 1, None],
@@ -202,6 +202,18 @@ class AM2RPatchDataFactory(PatchDataFactory):
                         "liquid_level": -100,
                         "should_be_at_very_front": True,
                     }
+                else:
+                    linfo = area.extra.get("liquid_info", {})
+                    if len(linfo) > 0:
+                        liquid_info = {
+                            "liquid_type": linfo["liquid_type"],
+                            "liquid_level": linfo["liquid_level"],
+                            "should_move_horizontally": linfo.get("should_move_horizontally", False),
+                            "should_wave": linfo.get("should_wave", False),
+                            "wave_speed": linfo.get("wave_speed", 0),
+                            "wave_height": linfo.get("wave_height", 0),
+                            "should_be_at_very_front": linfo.get("should_be_at_very_front", False),
+                        }
 
                 return_dict[area.extra["map_name"]] = {
                     "display_name": area.name,

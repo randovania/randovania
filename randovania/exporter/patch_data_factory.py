@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import typing
 from random import Random
 from typing import TYPE_CHECKING
 
@@ -21,6 +22,10 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.layout_description import LayoutDescription
+
+
+class PatcherDataMeta(typing.TypedDict):
+    layout_was_user_modified: bool
 
 
 class PatchDataFactory:
@@ -60,8 +65,11 @@ class PatchDataFactory:
 
     def create_data(self) -> dict:
         game_data = self.create_game_specific_data()
-
-        return json_delta.patch(game_data, self.patches.custom_patcher_data, False)
+        json_delta.patch(game_data, self.patches.custom_patcher_data)
+        game_data["_randovania_meta"] = {
+            "layout_was_user_modified": self.description.user_modified,
+        }
+        return game_data
 
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""

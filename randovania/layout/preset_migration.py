@@ -1154,6 +1154,13 @@ def _migrate_v83(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v84(preset: dict) -> dict:
+    if preset["game"] == "samus_returns":
+        preset["configuration"]["hints"]["baby_metroid"] = "hide-area"
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1238,6 +1245,7 @@ _MIGRATIONS = [
     _migrate_v81,
     _migrate_v82,
     _migrate_v83,
+    _migrate_v84,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -12,8 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: "Export all presets" option under multiworld session Advanced Options.
 - Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
 - Added: Warn when generating a game with Door Lock Randomizer in Types Mode and Permanently Locked doors are set as a valid option.
+- Added: Rdvgame files now contain a checksum, in order to detect if invalid files were user-modified.
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
+- Fixed: When opening the window to select a preset for Multiworld sessions, it will not show placeholder text anymore.
 
 ### AM2R
 
@@ -27,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Facility Storage Spiked Path: It is now possible to cross the rooms with Wall Jumps and Intermediate Zips.
 - Fixed: Pipe Hub Access: Solving the EMP Puzzle is not possible to do with Power Bombs anymore.
+- Fixed: Zipping across in Serris Arena now requires Morph Ball.
 
 ##### Hydro Station
 
@@ -44,13 +47,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Changed: The water in Early Cloak Room in Artaria will disappear after the blob is broken, instead of flooding the lower section with the tunnel.
+- Changed: Water will no longer appear in First Tutorial after using the water device in EMMI Zone Hub in Artaria.
+- Fixed: Entering Intro Room in Artaria will no longer cause long loads or crash the game.
+- Fixed: The Navigation Station in Itorash now has a map icon.
+- Fixed: The Thermal Gate blocking the Morph Launcher to Experiment Z-57 now has a map icon.
 - Fixed: The transport in Ghavoran - Flipper now shows the destination on the minimap icon.
 
-#### Logic database
+#### Logic Database
 
 ##### Cataris
 
 - Fixed: Moving Magnet Walls (Tall) now uses the correct lava button event for the magnet surfaces.
+
+##### Hanubia
+
+- Changed: The Door to Orange EMMI Introduction is excluded from Door Lock Rando.
 
 ### Metroid Prime
 
@@ -73,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Multiworld and automatic item tracker support for Citra.
 - Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
 - Added: Option to configure if heated rooms or lava deals constant instead of scaled damage.
+- Added: If you don't have the Baby Metroid, a configurable hint is now displayed in the textbox after collecting all DNA.
 - Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
 - Changed: Item icons on the map will now show the icon of the pickup instead of the open circles. Powerups and Nothings currently share the same icon. Hidden Pickups will still show up as open circles.
 - Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.

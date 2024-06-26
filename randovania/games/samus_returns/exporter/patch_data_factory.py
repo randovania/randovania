@@ -203,8 +203,8 @@ class MSRPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        namer = MSRHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(hint_namer, self.rng, ["A joke hint."])
 
         hints = [
             {
@@ -221,13 +221,13 @@ class MSRPatchDataFactory(PatchDataFactory):
         ]
 
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
-        dna_hint_mapping = {}
+        dna_hint_mapping: dict = {}
         hint_config = self.configuration.hints
         if hint_config.artifacts != ItemHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                MSRHintNamer(self.description.all_patches, self.players_config),
+                hint_namer,
                 hint_config.artifacts == ItemHintMode.HIDE_AREA,
                 artifacts,
                 False,
@@ -264,6 +264,29 @@ class MSRPatchDataFactory(PatchDataFactory):
             )
 
         return hints
+
+    def _create_baby_metroid_hint(self) -> str:
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        hint_config = self.configuration.hints
+
+        baby_metroid = [(self.game.resource_database.get_item("Baby"))]
+        baby_metroid_hint: str = ""
+        if hint_config.baby_metroid != ItemHintMode.DISABLED:
+            temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                hint_namer,
+                hint_config.baby_metroid == ItemHintMode.HIDE_AREA,
+                baby_metroid,
+                False,
+            )
+            baby_metroid_hint = "A " + temp_baby_hint[baby_metroid[0]].replace(
+                " Metroid is located in ", "'s Cry can be heard echoing from|"
+            )
+        else:
+            baby_metroid_hint = "Continue searching for the Baby Metroid!"
+
+        return baby_metroid_hint
 
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
@@ -549,6 +572,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(self.rng),
+            "baby_metroid_hint": self._create_baby_metroid_hint(),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),
