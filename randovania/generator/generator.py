@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 import tenacity
 
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
@@ -15,7 +16,6 @@ from randovania.generator.filler.filler_library import UnableToGenerate, filter_
 from randovania.generator.filler.runner import run_filler
 from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.generator.pre_fill_params import PreFillParams
-from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
 
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -37,14 +37,27 @@ if TYPE_CHECKING:
 DEFAULT_ATTEMPTS = 15
 
 
+def count_pickup_nodes(game: GameDatabaseView) -> int:
+    """
+    Count how many PickupNodes shows up in a given GameDatabaseView
+    """
+    return sum(1 for _, _, node in game.node_iterator() if isinstance(node, PickupNode))
+
+
 def _validate_pickup_pool_size(
-    item_pool: list[PickupEntry], game: GameDescription, configuration: BaseConfiguration
+    item_pool: list[PickupEntry], game: GameDatabaseView, configuration: BaseConfiguration
 ) -> None:
+    """
+    Checks if the given game has enough pickup nodes for the given item pool, plus minimum/starting pickups.
+    Raises exceptions on failure.
+    """
+    num_pickup_nodes = count_pickup_nodes(game)
     min_starting_pickups = configuration.standard_pickup_configuration.minimum_random_starting_pickups
-    if len(item_pool) > game.region_list.num_pickup_nodes + min_starting_pickups:
+
+    if len(item_pool) > num_pickup_nodes + min_starting_pickups:
         raise InvalidConfiguration(
             f"Item pool has {len(item_pool)} items, "
-            f"which is more than {game.region_list.num_pickup_nodes} (game) "
+            f"which is more than {num_pickup_nodes} (game) "
             f"+ {min_starting_pickups} (minimum starting items)"
         )
 
@@ -70,6 +83,12 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
             return False
 
 
+def get_filtered_database_view(configuration: BaseConfiguration) -> GameDatabaseView:
+    # Layers
+    # game_generator.bootstrap.patch_resource_database
+    raise NotImplementedError
+
+
 async def create_player_pool(
     rng: Random,
     configuration: BaseConfiguration,
@@ -78,10 +97,10 @@ async def create_player_pool(
     world_name: str,
     status_update: Callable[[str], None],
 ) -> PlayerPool:
-    game = filtered_database.game_description_for_layout(configuration).get_mutable()
+    game_enum = configuration.game
+    game = get_filtered_database_view(configuration)
 
-    game_generator = game.game.generator
-    game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
+    game_generator = game_enum.generator
 
     for i in range(10):
         status_update(f"Attempt {i + 1} for initial state for world '{world_name}'")
@@ -97,7 +116,6 @@ async def create_player_pool(
                 game,
                 num_players > 1,
             ),
-            rng_required=True,
         )
 
         pool_results = pool_creator.calculate_pool_results(configuration, game)

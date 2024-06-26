@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import RegionList
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
@@ -32,7 +33,7 @@ def _energy_tank_difference(
 
 @dataclasses.dataclass(frozen=True)
 class StateGameData:
-    resource_database: ResourceDatabase
+    resource_database: ResourceDatabaseView
     region_list: RegionList
     energy_per_tank: int
     starting_energy: int
@@ -49,7 +50,7 @@ class State:
     game_data: StateGameData
 
     @property
-    def resource_database(self) -> ResourceDatabase:
+    def resource_database(self) -> ResourceDatabaseView:
         return self.game_data.resource_database
 
     @property

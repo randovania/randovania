@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from random import Random
 
+    from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_category import PickupCategory
@@ -37,7 +38,7 @@ class Bootstrap:
     def trick_resources_for_configuration(
         self,
         configuration: TrickLevelConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         """
         :param configuration:
@@ -47,7 +48,7 @@ class Bootstrap:
 
         static_resources = {}
 
-        for trick in resource_database.trick:
+        for trick in resource_database.get_all_tricks():
             if configuration.minimal_logic:
                 level = LayoutTrickLevel.maximum()
             else:
@@ -60,14 +61,14 @@ class Bootstrap:
     def event_resources_for_configuration(
         self,
         configuration: BaseConfiguration,
-        resource_database: ResourceDatabase,
+        resource_database: ResourceDatabaseView,
     ) -> ResourceGain:
         yield from []
 
     def _add_minimal_logic_initial_resources(
         self,
         resources: ResourceCollection,
-        game: GameDescription,
+        game: GameDatabaseView,
         standard_pickups: StandardPickupConfiguration,
     ) -> None:
         resource_database = game.resource_database
@@ -102,7 +103,7 @@ class Bootstrap:
         return EnergyConfig(99, 100)
 
     def calculate_initial_resources(
-        self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
+        self, game: GameDatabaseView, patches: GamePatches, configuration: BaseConfiguration
     ) -> ResourceCollection:
         """Determines what should be the ResourceCollection for a starting State"""
         resources = patches.starting_resources()
@@ -178,7 +179,7 @@ class Bootstrap:
     def logic_bootstrap(
         self,
         configuration: BaseConfiguration,
-        game: GameDescription,
+        game: GameDatabaseView,
         patches: GamePatches,
     ) -> tuple[WorldGraph, State]:
         """
@@ -188,13 +189,11 @@ class Bootstrap:
         :param patches:
         :return:
         """
-        if not game.mutable:
-            raise ValueError("Running logic_bootstrap with non-mutable game")
-
-        game.region_list.ensure_has_node_cache()
         # starting_state = self.calculate_starting_state(game, patches, configuration)
 
-        starting_node = game.region_list.node_by_identifier(patches.starting_location)
+        resource_database = game.get_resource_database_view()
+
+        starting_node = game.node_by_identifier(patches.starting_location)
         initial_resources = self.calculate_initial_resources(game, patches, configuration)
 
         if starting_node.is_resource_node:
@@ -210,7 +209,7 @@ class Bootstrap:
                 ),
             )
 
-        static_resources = self.calculate_static_resources(configuration, game.resource_database)
+        static_resources = self.calculate_static_resources(configuration, resource_database)
         for resource, quantity in static_resources.as_resource_gain():
             initial_resources.set_resource(resource, quantity)
 
@@ -218,7 +217,7 @@ class Bootstrap:
 
         starting_energy, energy_per_tank = self.energy_config(configuration)
 
-        game_data = StateGameData(game.resource_database, game.region_list, energy_per_tank, starting_energy)
+        game_data = StateGameData(resource_database, game.region_list, energy_per_tank, starting_energy)
         graph = world_graph.create_graph(
             game_data=game_data,
             patches=patches,

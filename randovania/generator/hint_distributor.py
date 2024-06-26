@@ -54,7 +54,7 @@ class HintDistributor(ABC):
     def get_generic_hint_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
         return [
             node.identifier
-            for node in prefill.game.region_list.iterate_nodes()
+            for _, _, node in prefill.game.node_iterator()
             if isinstance(node, HintNode) and node.kind == HintNodeKind.GENERIC
         ]
 
@@ -71,8 +71,7 @@ class HintDistributor(ABC):
             HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY, include_owner=True
         )
 
-        wl = prefill.game.region_list
-        for node in wl.iterate_nodes():
+        for _, _, node in prefill.game.node_iterator():
             if isinstance(node, HintNode) and node.kind == HintNodeKind.SPECIFIC_PICKUP:
                 identifier = node.identifier
                 patches = patches.assign_hint(
@@ -131,15 +130,16 @@ class HintDistributor(ABC):
         return patches
 
     async def assign_pre_filler_hints(
-        self, patches: GamePatches, prefill: PreFillParams, rng_required: bool = True
+        self,
+        patches: GamePatches,
+        prefill: PreFillParams,
     ) -> GamePatches:
         patches = await self.assign_specific_location_hints(patches, prefill)
         hint_identifiers = self.get_generic_hint_nodes(prefill)
-        if rng_required or prefill.rng is not None:
-            prefill.rng.shuffle(hint_identifiers)
-            patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
-            patches = await self.assign_other_hints(patches, hint_identifiers, prefill)
-            patches = await self.assign_joke_hints(patches, hint_identifiers, prefill)
+        prefill.rng.shuffle(hint_identifiers)
+        patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
+        patches = await self.assign_other_hints(patches, hint_identifiers, prefill)
+        patches = await self.assign_joke_hints(patches, hint_identifiers, prefill)
         return patches
 
     async def assign_post_filler_hints(
