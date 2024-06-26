@@ -40,6 +40,12 @@ class ResourceDatabaseView:
         """
         raise NotImplementedError
 
+    def get_all_tricks(self) -> list[TrickResourceInfo]:
+        """
+        Gets a list of all TrickResourceInfo
+        """
+        raise NotImplementedError
+
     def get_damage(self, short_name: str) -> SimpleResourceInfo:
         """
         Gets a ResourceInfo of type Damage, using internal name
