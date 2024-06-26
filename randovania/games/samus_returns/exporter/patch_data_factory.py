@@ -280,8 +280,8 @@ class MSRPatchDataFactory(PatchDataFactory):
                 baby_metroid,
                 False,
             )
-            baby_metroid_hint = temp_baby_hint[baby_metroid[0]].replace(
-                "Metroid is located", "cries have been reported"
+            baby_metroid_hint = "A " + temp_baby_hint[baby_metroid[0]].replace(
+                " Metroid is located in ", "'s Cry can be heard echoing from|"
             )
         else:
             baby_metroid_hint = "Continue searching for the Baby Metroid!"
