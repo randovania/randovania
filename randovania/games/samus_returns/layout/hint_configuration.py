@@ -18,17 +18,7 @@ class ItemHintMode(BitPackEnum, Enum):
         return cls.PRECISE
 
 
-class BabyHintMode(BitPackEnum, Enum):
-    DISABLED = "disabled"
-    HIDE_AREA = "hide-area"
-    PRECISE = "precise"
-
-    @classmethod
-    def default(cls) -> BabyHintMode:
-        return cls.PRECISE
-
-
 @dataclasses.dataclass(frozen=True)
 class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):
     artifacts: ItemHintMode
-    baby_metroid: BabyHintMode
+    baby_metroid: ItemHintMode

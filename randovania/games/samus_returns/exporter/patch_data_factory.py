@@ -13,7 +13,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
-from randovania.games.samus_returns.layout.hint_configuration import BabyHintMode, ItemHintMode
+from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -271,12 +271,12 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         baby_metroid = [(self.game.resource_database.get_item("Baby"))]
         baby_metroid_hint: str = ""
-        if hint_config.baby_metroid != BabyHintMode.DISABLED:
+        if hint_config.baby_metroid != ItemHintMode.DISABLED:
             temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 hint_namer,
-                hint_config.baby_metroid == BabyHintMode.HIDE_AREA,
+                hint_config.baby_metroid == ItemHintMode.HIDE_AREA,
                 baby_metroid,
                 False,
             )

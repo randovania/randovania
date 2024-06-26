@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore
 
 from randovania.games.samus_returns.gui.generated.preset_msr_hints_ui import Ui_PresetMSRHints
-from randovania.games.samus_returns.layout.hint_configuration import BabyHintMode, ItemHintMode
+from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -29,7 +29,7 @@ class PresetMSRHints(PresetTab, Ui_PresetMSRHints):
             self.hint_artifact_combo.setItemData(i, item_hint_mode)
         self.hint_artifact_combo.currentIndexChanged.connect(self._on_art_combo_changed)
 
-        for i, baby_hint_mode in enumerate(BabyHintMode):
+        for i, baby_hint_mode in enumerate(ItemHintMode):
             self.hint_baby_combo.setItemData(i, baby_hint_mode)
         self.hint_baby_combo.currentIndexChanged.connect(self._on_baby_combo_changed)
 
