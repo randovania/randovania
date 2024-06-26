@@ -221,7 +221,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         ]
 
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
-        dna_hint_mapping = {}
+        dna_hint_mapping: dict = {}
         hint_config = self.configuration.hints
         if hint_config.artifacts != ItemHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
@@ -270,7 +270,7 @@ class MSRPatchDataFactory(PatchDataFactory):
         hint_config = self.configuration.hints
 
         baby_metroid = [(self.game.resource_database.get_item("Baby"))]
-        baby_metroid_hint = {}
+        baby_metroid_hint: str = ""
         if hint_config.baby_metroid != BabyHintMode.DISABLED:
             temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,

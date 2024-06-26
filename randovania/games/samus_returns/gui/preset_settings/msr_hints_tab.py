@@ -48,7 +48,7 @@ class PresetMSRHints(PresetTab, Ui_PresetMSRHints):
                 dataclasses.replace(editor.configuration.hints, artifacts=self.hint_artifact_combo.currentData()),
             )
 
-    def _on_baby_combo_changed(self, new_index: int):
+    def _on_baby_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
             editor.set_configuration_field(
                 "hints",
