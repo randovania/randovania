@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Added: Added an option to nerf out of bounds movement.
 - Fixed: Typo on the Quality of Life preset tab.
 
 #### Logic Database
