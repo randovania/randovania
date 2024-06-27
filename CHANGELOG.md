@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Rdvgame files now contain a checksum, in order to detect if invalid files were user-modified.
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
+- Changed: The dropdown to select a connector is now sorted alphabetically.
 - Fixed: When opening the window to select a preset for Multiworld sessions, it will not show placeholder text anymore.
 
 ### AM2R
@@ -65,6 +66,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Door to Orange EMMI Introduction is excluded from Door Lock Rando.
 
 ### Metroid Prime
+
+- Fixed: Typo on the Quality of Life preset tab.
 
 #### Logic Database
 
