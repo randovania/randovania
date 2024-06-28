@@ -1593,6 +1593,82 @@
                         "negate": false
                     }
                 }
+            },
+            "Fight Ghor-G": {
+                "display_name": "Fight Ghor-G",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "BoostBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "HyperModeBall",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Enter Hypermode"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],
@@ -2039,6 +2115,7 @@
         "Knowledge": [
             1,
             2,
+            3,
             4
         ],
         "BSJ": [
