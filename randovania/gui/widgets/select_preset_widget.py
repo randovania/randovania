@@ -12,6 +12,7 @@ import markdown
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
+from randovania import monitoring
 from randovania.gui.dialog.preset_history_dialog import PresetHistoryDialog
 from randovania.gui.generated.select_preset_widget_ui import Ui_SelectPresetWidget
 from randovania.gui.lib import async_dialog, common_qt_lib
@@ -164,6 +165,8 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             self._logic_settings_window.raise_()
             return
 
+        monitoring.metrics.incr("gui_preset_customize_clicked")
+
         old_preset = self._current_preset_data.get_preset()
         if self._current_preset_data.is_included_preset:
             parent_uuid = old_preset.uuid
@@ -188,6 +191,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     @asyncSlot()
     async def _on_delete_preset(self):
+        monitoring.metrics.incr("gui_preset_delete_clicked")
         result = await async_dialog.warning(
             self,
             "Delete preset?",
@@ -196,12 +200,14 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             default_button=async_dialog.StandardButton.No,
         )
         if result == async_dialog.StandardButton.Yes:
+            monitoring.metrics.incr("gui_preset_delete_confirmed")
             self._window_manager.preset_manager.delete_preset(self._current_preset_data)
             self._update_preset_tree_items()
             self._on_select_preset()
 
     @asyncSlot()
     async def _on_view_preset_history(self):
+        monitoring.metrics.incr("gui_preset_history_clicked")
         if self._preset_history is not None:
             return await async_dialog.warning(
                 self, "Dialog already open", "Another preset history dialog is already open. Please close it first."
@@ -248,6 +254,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._trick_usage_popup.open()
 
     def _on_import_preset(self):
+        monitoring.metrics.incr("gui_preset_import_clicked")
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
         if path is not None:
             self.import_preset_file(path)

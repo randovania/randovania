@@ -10,6 +10,7 @@ from PySide6 import QtWidgets
 from qasync import asyncSlot
 
 import randovania
+from randovania import monitoring
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
 from randovania.gui.lib import async_dialog
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
@@ -98,14 +99,17 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     @asyncSlot()
     async def generate_new_layout_regular(self) -> None:
+        monitoring.metrics.incr("gui_generate_plain")
         return await self.generate_new_layout(spoiler=True)
 
     @asyncSlot()
     async def generate_new_layout_no_retry(self) -> None:
+        monitoring.metrics.incr("gui_generate_no_retry")
         return await self.generate_new_layout(spoiler=True, retries=0)
 
     @asyncSlot()
     async def generate_new_layout_race(self) -> None:
+        monitoring.metrics.incr("gui_generate_race")
         return await self.generate_new_layout(spoiler=False)
 
     async def generate_new_layout(self, spoiler: bool, retries: int | None = None) -> None:
