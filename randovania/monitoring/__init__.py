@@ -9,6 +9,7 @@ from pathlib import Path
 
 import sentry_sdk
 import sentry_sdk.integrations.logging
+import sentry_sdk.metrics
 import sentry_sdk.scrubber
 import sentry_sdk.types
 
@@ -170,6 +171,7 @@ def attach_patcher_data(patcher_data: dict):
 trace_function = sentry_sdk.trace
 set_tag = sentry_sdk.set_tag
 start_transaction = sentry_sdk.start_transaction
+metrics = sentry_sdk.metrics
 
 
 def trace_block(description: str):

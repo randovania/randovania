@@ -131,6 +131,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         multiworld_client: MultiworldClient,
         preview: bool,
     ):
+        monitoring.metrics.incr("gui_rdv_started")
+
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle(f"Randovania {VERSION}")
@@ -449,13 +451,17 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     @asyncSlot()
     async def _import_permalink(self):
+        monitoring.metrics.incr(key="gui_import_permalink_click_opened")
         from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 
         dialog = PermalinkDialog()
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.DialogCode.Accepted:
+            monitoring.metrics.incr(key="gui_import_permalink_click_accepted")
             permalink = dialog.get_permalink_from_field()
             await self.generate_seed_from_permalink(permalink)
+        else:
+            monitoring.metrics.incr(key="gui_import_permalink_click_cancelled")
 
     @asyncSlot()
     async def _import_spoiler_log(self):
@@ -467,6 +473,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     @asyncSlot()
     async def _browse_racetime(self):
+        monitoring.metrics.incr(key="gui_browse_racetime_opened")
         from randovania.gui.dialog.racetime_browser_dialog import RacetimeBrowserDialog
 
         dialog = RacetimeBrowserDialog()
@@ -474,7 +481,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             return
         result = await async_dialog.execute_dialog(dialog)
         if result == QtWidgets.QDialog.DialogCode.Accepted:
+            monitoring.metrics.incr(key="gui_browse_racetime_accepted")
             await self.generate_seed_from_permalink(dialog.permalink)
+        else:
+            monitoring.metrics.incr(key="gui_browse_racetime_cancelled")
 
     def open_game_details(self, layout: LayoutDescription, players: list[str] | None = None):
         self.GameDetailsSignal.emit(LayoutWithPlayers(layout, players))
@@ -738,8 +748,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             options.dark_mode = self.menu_action_dark_mode.isChecked()
 
     def _on_menu_action_show_multiworld_banner(self) -> None:
+        banner_val = self.menu_action_show_multiworld_banner.isChecked()
+        monitoring.metrics.incr(f"gui_multiworld_banner_option_{"checked" if banner_val else "unchecked"}")
         with self._options as options:
-            options.show_multiworld_banner = self.menu_action_show_multiworld_banner.isChecked()
+            options.show_multiworld_banner = banner_val
 
     def _on_menu_action_experimental_settings(self):
         with self._options as options:

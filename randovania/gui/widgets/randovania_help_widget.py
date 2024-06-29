@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from PySide6 import QtGui, QtWidgets
 
+from randovania import monitoring
 from randovania.gui.generated.randovania_help_widget_ui import Ui_RandovaniaHelpWidget
 from randovania.gui.lib import common_qt_lib
 
@@ -10,6 +11,7 @@ class RandovaniaHelpWidget(QtWidgets.QTabWidget, Ui_RandovaniaHelpWidget):
     _first_show: bool = True
 
     def _on_first_show(self):
+        monitoring.metrics.incr("gui_show_rdv_help_widget")
         self.setupUi(self)
         common_qt_lib.set_icon_data_paths(self.database_viewer_label)
         common_qt_lib.set_icon_data_paths(self.tracker_label)
