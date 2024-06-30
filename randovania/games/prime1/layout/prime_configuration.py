@@ -123,6 +123,8 @@ class PrimeConfiguration(BaseConfiguration):
 
     enemy_attributes: EnemyAttributeRandomizer | None
 
+    nerf_oob: bool
+
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME

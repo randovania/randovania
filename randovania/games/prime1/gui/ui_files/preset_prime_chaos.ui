@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>487</width>
-         <height>1190</height>
+         <width>482</width>
+         <height>1440</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -118,6 +118,32 @@
             <widget class="QLabel" name="legacy_mode_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. This includes:&lt;/p&gt;&lt;p&gt;Fixed crashes, Fixed softlocks, Fast item acquisition, Better pickup scans, Undo non-NTSC sequence break patches, Varia-only heat protection and &amp;quot;General&amp;quot; QoL&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="nerf_oob_group">
+          <property name="title">
+           <string>Out of Bounds</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QCheckBox" name="nerf_oob_check">
+             <property name="text">
+              <string>Nerf Out of Bounds</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this box to nerf out of bounds movement. It currently achieves this by reducing the size for room transitions drastically.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

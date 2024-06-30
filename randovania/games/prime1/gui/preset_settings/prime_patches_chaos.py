@@ -41,6 +41,7 @@ class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
             self._add_persist_option(getattr(self, f"{f}_check"), f)
         signal_handling.on_checked(self.small_samus_check, self._on_small_samus_changed)
         signal_handling.on_checked(self.large_samus_check, self._on_large_samus_changed)
+        signal_handling.on_checked(self.nerf_oob_check, self._on_nerf_oob_changed)
         self.superheated_slider.valueChanged.connect(self._on_slider_changed)
         self.submerged_slider.valueChanged.connect(self._on_slider_changed)
 
@@ -74,6 +75,10 @@ class PresetPrimeChaos(PresetTab, Ui_PresetPrimeChaos):
             editor.set_configuration_field("large_samus", value)
             if value:
                 editor.set_configuration_field("small_samus", False)
+
+    def _on_nerf_oob_changed(self, value: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("nerf_oob", value)
 
     def _on_room_rando_changed(self, value: RoomRandoMode):
         with self._editor as editor:
