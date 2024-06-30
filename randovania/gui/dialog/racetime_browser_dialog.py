@@ -45,6 +45,7 @@ _SUPPORTED_GAME_URLS = {
     RandovaniaGame.METROID_PRIME_ECHOES: "https://racetime.gg/mp2r/data",
     RandovaniaGame.METROID_DREAD: "https://racetime.gg/dread-rando/data",
     RandovaniaGame.AM2R: "https://racetime.gg/am2r-rdv/data",
+    RandovaniaGame.METROID_SAMUS_RETURNS: "https://racetime.gg/msrr/data",
 }
 _TEST_RESPONSE = {
     "name": "Metroid Prime 2: Echoes Randomizer",
