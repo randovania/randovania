@@ -92,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
 - Changed: Item icons on the map will now show the icon of the pickup instead of the open circles. Powerups and Nothings currently share the same icon. Hidden Pickups will still show up as open circles.
 - Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
+- Changed: Some "hidden area" obstructions have been removed in the following areas to improve visibility in certain sections: Area 1, Area 3 Factory Exterior, Area 4 Central Caves, Area 7.
 - Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
 - Changed: Area 4 Crystal Mines - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
 - Fixed: When exporting a new seed, any leftover data from previous seeds will be deleted.
