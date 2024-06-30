@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Changed: The water in Early Cloak Room in Artaria will disappear after the blob is broken, instead of flooding the lower section with the tunnel.
 - Changed: Water will no longer appear in First Tutorial after using the water device in EMMI Zone Hub in Artaria.
+- Changed: Prime 1's Missile Launcher now shows up as a Missile Tank.
 - Fixed: Entering Intro Room in Artaria will no longer cause long loads or crash the game.
 - Fixed: The Navigation Station in Itorash now has a map icon.
 - Fixed: The Thermal Gate blocking the Morph Launcher to Experiment Z-57 now has a map icon.
@@ -96,6 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Some "hidden area" obstructions have been removed in the following areas to improve visibility in certain sections: Area 1, Area 3 Factory Exterior, Area 4 Central Caves, Area 7.
 - Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
 - Changed: Area 4 Crystal Mines - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
+- Changed: The description for the `Missile Reserve Tank` is now more explicit about when it can be used.
 - Fixed: When exporting a new seed, any leftover data from previous seeds will be deleted.
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
 - Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
