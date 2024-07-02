@@ -87,6 +87,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._tool_button_menu.addAction(self._action_view_trick_usages)
 
         # Signals
+        self.permalink_copy_button.clicked.connect(self._permalink_copy_clicked)
         self.export_log_button.clicked.connect(self._export_log)
         self.export_iso_button.clicked.connect(self._export_iso)
         self._action_open_tracker.triggered.connect(self._open_map_tracker)
@@ -122,6 +123,11 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         )
 
     # Operations
+    def _permalink_copy_clicked(self):
+        self._copy_permalink()
+        QtWidgets.QToolTip.showText(self.permalink_copy_button.pos(), "Permalink copied!")
+        print("clicked")
+
     def _copy_permalink(self):
         common_qt_lib.set_clipboard(self.layout_description.permalink.as_base64_str)
 
