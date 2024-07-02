@@ -203,7 +203,7 @@ async def _inner_advance_depth(
                 if new_result[0] is None:
                     additional = logic.get_additional_requirements(action).alternatives
 
-                    resources = [x for x, _ in action.resource_gain_on_collect(potential_state.node_context())]
+                    resources = [x for x, _ in action.resource_gain_on_collect(state.node_context())]
 
                     logic.set_additional_requirements(
                         state.node, _simplify_additional_requirement_set(additional, state, resources)
