@@ -540,7 +540,7 @@ def _migrate_v27(data: dict) -> dict:
         migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a5_pipe_rename"]
 
         dock_connections = game.get("dock_connections")
-        if dock_connections is not None and dock_connections is not {}:
+        if dock_connections is not None and dock_connections != {}:
             for old_node, new_node in migration["nodes"].items():
                 if old_node in dock_connections.keys():
                     dock_connections[new_node] = dock_connections.pop(old_node)
@@ -549,7 +549,7 @@ def _migrate_v27(data: dict) -> dict:
                         dock_connections[orig_connection] = new_node
 
         dock_weakness = game.get("dock_weakness")
-        if dock_weakness is not None and dock_weakness is not {}:
+        if dock_weakness is not None and dock_weakness != {}:
             for old_name, new_name in migration["doors"].items():
                 if old_name in dock_weakness.keys():
                     dock_weakness[new_name] = dock_weakness.pop(old_name)
@@ -567,7 +567,7 @@ def _migrate_v28(data: dict) -> dict:
 
         dock_weakness = game.get("dock_weakness")
         migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a1_dlr_rename"]
-        if dock_weakness is not None and dock_weakness is not {}:
+        if dock_weakness is not None and dock_weakness != {}:
             for old_name, new_name in migration.items():
                 if old_name in dock_weakness.keys():
                     dock_weakness[new_name] = dock_weakness.pop(old_name)
