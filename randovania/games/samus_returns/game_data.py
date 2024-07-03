@@ -69,6 +69,7 @@ game_data: game.GameData = game.GameData(
     development_state=game.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
+        {"path": "multiworld-starter-preset.rdvpreset"},
     ],
     faq=[
         (
@@ -163,5 +164,6 @@ game_data: game.GameData = game.GameData(
     generator=_generator,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
 )

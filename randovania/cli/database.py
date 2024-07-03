@@ -16,31 +16,31 @@ from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
 
 if typing.TYPE_CHECKING:
-    from argparse import _SubParsersAction
+    from argparse import Namespace, _SubParsersAction
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
-def _get_sorted_list_of_names(input_list: list[Any], prefix: str = "") -> list[str]:
+def _get_sorted_list_of_names(input_list: list[Any], prefix: str = "") -> typing.Iterable[str]:
     for item in sorted(input_list, key=lambda x: x.name):
         yield prefix + item.name
 
 
-def decode_data_file(args) -> dict:
+def decode_data_file(args: Namespace) -> dict:
     json_database: Path | None = args.json_database
     if json_database is not None:
-        return json_lib.read_path(json_database)
+        return typing.cast(dict, json_lib.read_path(json_database))
     else:
         return default_data.read_json_then_binary(RandovaniaGame(args.game))[1]
 
 
-def export_as_binary(data: dict, output_binary: Path):
+def export_as_binary(data: dict, output_binary: Path) -> None:
     with output_binary.open("wb") as x:
         binary_data.encode(data, x)
 
 
-def convert_database_command_logic(args):
+def convert_database_command_logic(args: Namespace) -> None:
     from randovania.game_description import data_reader, data_writer
 
     data = decode_data_file(args)
@@ -60,7 +60,7 @@ def convert_database_command_logic(args):
         raise ValueError("Neither binary nor JSON set. Argparse is broken?")
 
 
-def create_convert_database_command(sub_parsers):
+def create_convert_database_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "convert-database",
         help="Converts a database file between JSON and binary encoded formats. Input defaults to embedded database.",
@@ -88,7 +88,7 @@ def create_convert_database_command(sub_parsers):
     parser.set_defaults(func=convert_database_command_logic)
 
 
-def export_videos_command_logic(args):
+def export_videos_command_logic(args: Namespace) -> None:
     from randovania.cli.commands.export_db_videos import export_videos
 
     games = []
@@ -102,7 +102,7 @@ def export_videos_command_logic(args):
         export_videos(game, args.output_dir)
 
 
-def create_export_videos_command(sub_parsers):
+def create_export_videos_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "export-videos",
         help="Create HTML pages for easy vewing of YouTube video comments.",
@@ -123,7 +123,7 @@ def create_export_videos_command(sub_parsers):
     parser.set_defaults(func=export_videos_command_logic)
 
 
-def view_area_command_logic(args):
+def view_area_command_logic(args: Namespace) -> None:
     from randovania.game_description import pretty_print
 
     game = load_game_description(args)
@@ -148,7 +148,7 @@ def view_area_command_logic(args):
     pretty_print.pretty_print_area(game, area)
 
 
-def load_game_description(args):
+def load_game_description(args: Namespace) -> GameDescription:
     from randovania.game_description import data_reader
 
     data = decode_data_file(args)
@@ -156,7 +156,7 @@ def load_game_description(args):
     return gd
 
 
-def view_area_command(sub_parsers):
+def view_area_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "view-area", help="View information about an area.", formatter_class=argparse.MetavarTypeHelpFormatter
     )
@@ -167,7 +167,7 @@ def view_area_command(sub_parsers):
     parser.set_defaults(func=view_area_command_logic)
 
 
-def update_human_readable_logic(args):
+def update_human_readable_logic(args: Namespace) -> None:
     from randovania.game_description import data_reader, pretty_print
 
     game = RandovaniaGame(args.game)
@@ -179,7 +179,7 @@ def update_human_readable_logic(args):
     pretty_print.write_human_readable_game(gd, path.with_suffix(""))
 
 
-def update_human_readable(sub_parsers):
+def update_human_readable(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "update-human-readable",
         help="Update the human readable versions",
@@ -188,7 +188,7 @@ def update_human_readable(sub_parsers):
     parser.set_defaults(func=update_human_readable_logic)
 
 
-def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescription]):
+def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescription]) -> None:
     from randovania.game_description import data_writer, pretty_print
 
     for game, gd in game_descriptions.items():
@@ -200,7 +200,7 @@ def write_game_descriptions(game_descriptions: dict[RandovaniaGame, GameDescript
         pretty_print.write_human_readable_game(gd, path)
 
 
-def refresh_game_description_logic(args):
+def refresh_game_description_logic(args: Namespace) -> None:
     from randovania.game_description import integrity_check
 
     gd_per_game = {}
@@ -222,7 +222,7 @@ def refresh_game_description_logic(args):
         write_game_descriptions(gd_per_game)
 
 
-def refresh_game_description_command(sub_parsers):
+def refresh_game_description_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "refresh-game-description",
         help="Re-exports the json and txt files of all game descriptions",
@@ -236,14 +236,14 @@ def refresh_game_description_command(sub_parsers):
     parser.set_defaults(func=refresh_game_description_logic)
 
 
-def refresh_pickup_database_logic(args):
+def refresh_pickup_database_logic(args: Namespace) -> None:
     for game in iterate_enum(RandovaniaGame):
         logging.info("Updating %s", game.long_name)
         pdb = default_database.pickup_database_for_game(game)
         default_database.write_pickup_database_for_game(pdb, game)
 
 
-def refresh_pickup_database_command(sub_parsers):
+def refresh_pickup_database_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "refresh-pickup-database",
         help="Re-exports the json of all pickup databases",
@@ -252,13 +252,13 @@ def refresh_pickup_database_command(sub_parsers):
     parser.set_defaults(func=refresh_pickup_database_logic)
 
 
-def _list_paths_with_resource(game, print_only_area: bool, resource: ResourceInfo, needed_quantity: int | None):
+def _list_paths_with_resource(
+    game: GameDescription, print_only_area: bool, resource: ResourceInfo, needed_quantity: int | None
+) -> None:
     from randovania.game_description.db.node import NodeContext
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_collection import ResourceCollection
 
     count = 0
-    game = typing.cast(GameDescription, game)
     context = NodeContext(None, ResourceCollection(), game.resource_database, game.region_list)
 
     for area in game.region_list.all_areas:
@@ -290,7 +290,7 @@ def _list_paths_with_resource(game, print_only_area: bool, resource: ResourceInf
     print(f"Total routes: {count}")
 
 
-def list_paths_with_dangerous_logic(args):
+def list_paths_with_dangerous_logic(args: Namespace) -> None:
     game = load_game_description(args)
     print_only_area = args.print_only_area
     count = 0
@@ -324,7 +324,7 @@ def list_paths_with_dangerous_logic(args):
     print(f"Total routes: {count}")
 
 
-def list_paths_with_dangerous_command(sub_parsers):
+def list_paths_with_dangerous_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "list-dangerous-usage",
         help="List all connections that needs a resource to be missing.",
@@ -336,12 +336,13 @@ def list_paths_with_dangerous_command(sub_parsers):
     parser.set_defaults(func=list_paths_with_dangerous_logic)
 
 
-def list_paths_with_resource_logic(args):
+def list_paths_with_resource_logic(args: Namespace) -> None:
     gd = load_game_description(args)
     resource_name: str = args.resource
 
     resource = None
-    for resource_type in gd.resource_database:
+    # TODO: make this nicer
+    for resource_type in [gd.resource_database.item + gd.resource_database.event + gd.resource_database.trick]:
         try:
             resource = find_resource_info_with_long_name(resource_type, resource_name)
             break
@@ -355,7 +356,7 @@ def list_paths_with_resource_logic(args):
     _list_paths_with_resource(gd, args.print_only_area, resource, None)
 
 
-def list_paths_with_resource_command(sub_parsers):
+def list_paths_with_resource_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "list-resource-usage",
         help="List all connections that needs the resource.",
@@ -368,17 +369,20 @@ def list_paths_with_resource_command(sub_parsers):
     parser.set_defaults(func=list_paths_with_resource_logic)
 
 
-def pickups_per_area_command_logic(args):
+def pickups_per_area_command_logic(args: Namespace) -> None:
     from randovania.game_description.db.pickup_node import PickupNode
 
     gd = load_game_description(args)
 
+    total = 0
     for region in gd.region_list.regions:
         num_pickups = sum(1 for node in region.all_nodes if isinstance(node, PickupNode))
+        total += num_pickups
         print(f"{region.correct_name(False)}: {num_pickups}")
+    print(f"Total: {total}")
 
 
-def pickups_per_area_command(sub_parsers):
+def pickups_per_area_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "pickups-per-area",
         help="Print how many pickups there are in each area",
@@ -387,7 +391,7 @@ def pickups_per_area_command(sub_parsers):
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
-def trick_usage_documentation_logic(args: argparse.Namespace) -> None:
+def trick_usage_documentation_logic(args: Namespace) -> None:
     gd = load_game_description(args)
     output_path: Path = args.output_path
 
@@ -457,7 +461,7 @@ def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     create_export_videos_command(sub_parsers)
     trick_usage_documentation_command(sub_parsers)
 
-    def check_command(args):
+    def check_command(args: Namespace) -> None:
         if args.database_command is None:
             parser.print_help()
             raise SystemExit(1)

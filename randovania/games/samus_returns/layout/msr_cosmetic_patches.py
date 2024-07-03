@@ -48,6 +48,7 @@ class MSRCosmeticPatches(BaseCosmeticPatches):
     aeion_bar_color: tuple[int, int, int] = DEFAULT_AEION_BAR_COLOR
     ammo_hud_color: tuple[int, int, int] = DEFAULT_AMMO_HUD_COLOR
     show_room_names: MSRRoomGuiType = MSRRoomGuiType.NONE
+    enable_remote_lua: bool = False
 
     @classmethod
     def default(cls) -> MSRCosmeticPatches:

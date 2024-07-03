@@ -1,5 +1,5 @@
 {
-    "schema_version": 8,
+    "schema_version": 9,
     "pickup_categories": {
         "beam": {
             "long_name": "Beams",
@@ -118,13 +118,17 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 0
+            "original_locations": [
+                0
+            ]
         },
         "Power Grip": {
             "pickup_category": "movement",
             "broad_category": "movement",
             "model_name": "sItemPowergrip",
-            "offworld_models": {},
+            "offworld_models": {
+                "samus_returns": "powerup_powergrip"
+            },
             "progression": [
                 "Power Grip"
             ],
@@ -146,7 +150,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 2
+            "original_locations": [
+                2
+            ]
         },
         "Spring Ball": {
             "pickup_category": "morph_ball",
@@ -160,7 +166,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 3
+            "original_locations": [
+                3
+            ]
         },
         "Screw Attack": {
             "pickup_category": "movement",
@@ -176,7 +184,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 8
+            "original_locations": [
+                8
+            ]
         },
         "Varia Suit": {
             "pickup_category": "suit",
@@ -193,7 +203,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 5
+            "original_locations": [
+                5
+            ]
         },
         "Space Jump": {
             "pickup_category": "movement",
@@ -210,7 +222,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 6
+            "original_locations": [
+                6
+            ]
         },
         "Speed Booster": {
             "pickup_category": "movement",
@@ -219,14 +233,17 @@
             "offworld_models": {
                 "prime1": "Boost Ball",
                 "prime2": "BoostBall",
-                "dread": "powerup_speedbooster"
+                "dread": "powerup_speedbooster",
+                "samus_returns": "powerup_speedbooster"
             },
             "progression": [
                 "Speed Booster"
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 7
+            "original_locations": [
+                7
+            ]
         },
         "Hi-Jump Boots": {
             "pickup_category": "movement",
@@ -243,7 +260,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 4
+            "original_locations": [
+                4
+            ]
         },
         "Progressive Jump": {
             "pickup_category": "movement",
@@ -252,7 +271,7 @@
             "offworld_models": {
                 "prime1": "Space Jump Boots",
                 "prime2": "SpaceJumpBoots",
-                "samus_returns": "PROGRESSIVE_JUMP",
+                "samus_returns": "powerup_spacejump",
                 "dread": "powerup_doublejump"
             },
             "progression": [
@@ -277,7 +296,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 9
+            "original_locations": [
+                9
+            ]
         },
         "Progressive Suit": {
             "pickup_category": "suit",
@@ -286,7 +307,7 @@
             "offworld_models": {
                 "prime1": "Gravity Suit",
                 "prime2": "VariaSuit INCOMPLETE",
-                "samus_returns": "PROGRESSIVE_SUIT",
+                "samus_returns": "powerup_gravitysuit",
                 "dread": "powerup_gravitysuit"
             },
             "progression": [
@@ -311,7 +332,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 10
+            "original_locations": [
+                10
+            ]
         },
         "Ice Beam": {
             "pickup_category": "beam",
@@ -327,7 +350,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 11
+            "original_locations": [
+                11
+            ]
         },
         "Wave Beam": {
             "pickup_category": "beam",
@@ -343,7 +368,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 12
+            "original_locations": [
+                12
+            ]
         },
         "Spazer Beam": {
             "pickup_category": "beam",
@@ -359,7 +386,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 13
+            "original_locations": [
+                13
+            ]
         },
         "Plasma Beam": {
             "pickup_category": "beam",
@@ -375,7 +404,9 @@
             ],
             "preferred_location_category": "major",
             "expected_case_for_describer": "shuffled",
-            "original_location": 14
+            "original_locations": [
+                14
+            ]
         },
         "Morph Ball": {
             "pickup_category": "morph_ball",
@@ -431,7 +462,9 @@
                 "Super Missiles"
             ],
             "unlocks_ammo": true,
-            "original_location": 206
+            "original_locations": [
+                206
+            ]
         },
         "Power Bomb Launcher": {
             "pickup_category": "morph_ball",
@@ -452,7 +485,9 @@
                 "Power Bombs"
             ],
             "unlocks_ammo": true,
-            "original_location": 253
+            "original_locations": [
+                253
+            ]
         },
         "Energy Tank": {
             "pickup_category": "energy_tank",
@@ -475,43 +510,37 @@
             "pickup_category": "misc",
             "broad_category": "beam_related",
             "model_name": "sItemLongBeam",
-            "description": "A custom item. Allows you to fire long-distance shots.",
-            "offworld_models": {
-
-            },
+            "offworld_models": {},
             "progression": [
                 "Long Beam"
             ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item"
+            "expected_case_for_describer": "starting_item",
+            "description": "A custom item. Allows you to fire long-distance shots."
         },
         "Infinite Bomb Propulsion": {
             "pickup_category": "misc",
             "broad_category": "morph_ball_related",
             "model_name": "sItemIBJ",
-            "description": "A custom item. Enables you to Infinite Bomb Jump.",
-            "offworld_models": {
-
-            },
+            "offworld_models": {},
             "progression": [
                 "Infinite Bomb Propulsion"
             ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item"
+            "expected_case_for_describer": "starting_item",
+            "description": "A custom item. Enables you to Infinite Bomb Jump."
         },
         "Walljump Boots": {
             "pickup_category": "misc",
             "broad_category": "movement",
             "model_name": "sItemWallJump",
-            "description": "A custom item. Enables you to Walljump.",
-            "offworld_models": {
-
-            },
+            "offworld_models": {},
             "progression": [
                 "Walljump Boots"
             ],
             "preferred_location_category": "major",
-            "expected_case_for_describer": "starting_item"
+            "expected_case_for_describer": "starting_item",
+            "description": "A custom item. Enables you to Walljump."
         }
     },
     "ammo_pickups": {

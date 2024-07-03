@@ -46,6 +46,24 @@ def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
         ]
 
 
+def format_environmental_damage(configuration: MSRConfiguration) -> list:
+    def format_dmg(value: int | None) -> str:
+        if value is None:
+            return "Unmodified"
+        elif value == 0:
+            return "Removed"
+        else:
+            return f"Constant {value} dmg/s"
+
+    return [
+        {f"{name}: {format_dmg(dmg)}": True}
+        for name, dmg in [
+            ("Heat", configuration.constant_heat_damage),
+            ("Lava", configuration.constant_lava_damage),
+        ]
+    ]
+
+
 _MSR_HINT_TEXT = {
     ItemHintMode.DISABLED: None,
     ItemHintMode.HIDE_AREA: "Area only",
@@ -61,6 +79,7 @@ class MSRPresetDescriber(GamePresetDescriber):
         template_strings = super().format_params(configuration)
 
         dna_hint = _MSR_HINT_TEXT[configuration.hints.artifacts]
+        baby_hint = _MSR_HINT_TEXT[configuration.hints.baby_metroid]
 
         extra_message_tree = {
             "Logic Settings": [
@@ -128,8 +147,10 @@ class MSRPresetDescriber(GamePresetDescriber):
                 },
             ],
             "Hints": [
+                {f"Baby Metroid Hint: {baby_hint}": baby_hint is not None},
                 {f"DNA Hints: {dna_hint}": dna_hint is not None},
             ],
+            "Environmental Damage": format_environmental_damage(configuration),
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 

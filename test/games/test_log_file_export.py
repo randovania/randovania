@@ -84,6 +84,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         # Cross Game Multis
         "multi-cs+dread+prime1+prime2.rdvgame",
         "multi-am2r+cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2+msr.rdvgame",
         "prime1_and_2_multi.rdvgame",
         "cs_echoes_multi_1.rdvgame",
         "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
@@ -95,6 +96,9 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "am2r/starting_items.rdvgame",  # Starter preset + random starting items
         "am2r/transport_pipe_shuffle.rdvgame",  # Starter preset + shuffled transport pipes
         "am2r/custom_dna_required.rdvgame",  # Has 20/30 dna
+        "am2r/chaos_options.rdvgame",  # Has Chaos Options
+        # Blank
+        "blank/issue-3717.rdvgame",
         # Factorio
         "factorio/starter_preset.rdvgame",
         # Dread
@@ -112,6 +116,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "samus_returns/starter_preset.rdvgame",  # starter preset
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
         "samus_returns/door_lock.rdvgame",  # starter preset + door lock
+        "samus_returns/door_lock_access_open.rdvgame",  # door lock + access open doors
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]

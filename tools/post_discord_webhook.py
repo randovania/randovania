@@ -50,6 +50,11 @@ async def post_to_discord():
         if artifact != "Python Package"
     ]
 
+    message = message.strip()
+    if len(message) > 4096:
+        truncated = "\n<truncated due to size>"
+        message = message[: 4090 - len(truncated)] + truncated
+
     webhook_data = {
         "embeds": [
             {

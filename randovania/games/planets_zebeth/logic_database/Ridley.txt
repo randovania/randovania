@@ -1,0 +1,480 @@
+----------------
+Ridley Entrance
+Extra - map_name: Ridley/x392_y360
+> Teleporter to Norfair; Heals? True; Spawn Point
+  * Layers: default
+  * Teleporter to Ridley Prelude/Teleporter to Ridley
+  * Extra - object_id: 100066
+  * Extra - global_x: 6272
+  * Extra - global_y: 5632
+  > Door to Block Room E
+      Trivial
+  > Door to Lava Foyer
+      Trivial
+
+> Door to Block Room E; Heals? False
+  * Layers: default
+  * Normal Door to Block Room E/Door to Ridley Entrance
+  > Teleporter to Norfair
+      Trivial
+
+> Door to Lava Foyer; Heals? False
+  * Layers: default
+  * Normal Door to Lava Foyer/Door to Ridley Entrance
+  > Teleporter to Norfair
+      Trivial
+
+----------------
+Block Room E
+Extra - map_name: Ridley/x376_y367
+> Door to Ridley Entrance; Heals? False
+  * Layers: default
+  * Normal Door to Ridley Entrance/Door to Block Room E
+  > Door to Block Room W
+      Trivial
+
+> Door to Block Room W; Heals? False
+  * Layers: default
+  * Normal Door to Block Room W/Door to Block Room E
+  > Door to Ridley Entrance
+      Trivial
+
+----------------
+Block Room W
+Extra - map_name: Ridley/x360_y359
+> Door to Block Room E; Heals? False
+  * Layers: default
+  * Normal Door to Block Room E/Door to Block Room W
+  > Door to Purple Gauntlet
+      Any of the following:
+          Hi-Jump Boots
+          # TODO: Add movement/IBJ
+          Can Use Bombs
+  > Door to Hall of Pillars
+      Trivial
+
+> Door to Purple Gauntlet; Heals? False
+  * Layers: default
+  * Normal Door to Purple Gauntlet/Door to Block Room W
+  > Door to Block Room E
+      Can Use Bombs
+
+> Door to Hall of Pillars; Heals? False
+  * Layers: default
+  * Normal Door to Hall of Pillars/Door to Block Room W
+  > Door to Block Room E
+      Trivial
+
+----------------
+Purple Gauntlet
+Extra - map_name: Ridley/x311_y352
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 27; Category? Minor
+  * Extra - object_id: 100053
+  > Door to Block Room W
+      Trivial
+
+> Door to Block Room W; Heals? False
+  * Layers: default
+  * Normal Door to Block Room W/Door to Purple Gauntlet
+  > Pickup (Missile Tank)
+      Trivial
+
+----------------
+Hall of Pillars
+Extra - map_name: Ridley/x312_y367
+> Door to Block Room W; Heals? False
+  * Layers: default
+  * Normal Door to Block Room W/Door to Hall of Pillars
+  > Tunnel entrance (Right)
+      Trivial
+
+> Door to Artificial Passage; Heals? False
+  * Layers: default
+  * Missile Door to Artificial Passage/Door to Hall of Pillars
+  > Tunnel entrance (Left)
+      Trivial
+
+> Tunnel entrance (Right); Heals? False
+  * Layers: default
+  > Door to Block Room W
+      Trivial
+  > Tunnel entrance (Left)
+      Can Use Bombs
+
+> Tunnel entrance (Left); Heals? False
+  * Layers: default
+  > Door to Artificial Passage
+      Trivial
+  > Tunnel entrance (Right)
+      Can Use Bombs
+
+----------------
+Artificial Passage
+Extra - map_name: Ridley/x264_y382
+> Door to Hall of Pillars; Heals? False
+  * Layers: default
+  * Missile Door to Hall of Pillars/Door to Artificial Passage
+  > Pickup (Energy Tank)
+      Trivial
+  > Pit
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 28; Category? Minor
+  * Extra - object_id: 100054
+  > Door to Hall of Pillars
+      Trivial
+  > Door to Dessgeega Attic
+      Trivial
+
+> Door to Dessgeega Attic; Heals? False
+  * Layers: default
+  * Normal Door to Dessgeega Attic/Door to Artificial Passage
+  > Pickup (Energy Tank)
+      Trivial
+
+> Door to Path of Reflection; Heals? False
+  * Layers: default
+  * Normal Door to Path of Reflection/Door to Artificial Passage
+  > Bottom part
+      Trivial
+
+> Door to Green Bridge; Heals? False
+  * Layers: default
+  * Normal Door to Green Bridge/Door to Artificial Passage
+  > Bottom part
+      Trivial
+
+> Pit; Heals? False
+  * Layers: default
+  * The pit is 2 block large
+  > Door to Hall of Pillars
+      # TODO: ADD IBJ
+      Can Use Bombs
+  > Bottom part
+      Trivial
+
+> Bottom part; Heals? False
+  * Layers: default
+  > Door to Path of Reflection
+      Trivial
+  > Door to Green Bridge
+      Trivial
+
+----------------
+Dessgeega Attic
+Extra - map_name: Ridley/x240_y367
+> Door to Artificial Passage; Heals? False
+  * Layers: default
+  * Normal Door to Artificial Passage/Door to Dessgeega Attic
+  > Door to Tower of Doom
+      Trivial
+
+> Door to Tower of Doom; Heals? False
+  * Layers: default
+  * Normal Door to Tower of Doom/Door to Dessgeega Attic
+  > Door to Artificial Passage
+      Trivial
+
+----------------
+Path of Reflection
+Extra - map_name: Ridley/x240_y397
+> Door to Artificial Passage; Heals? False
+  * Layers: default
+  * Normal Door to Artificial Passage/Door to Path of Reflection
+  > Door to Tower of Doom
+      Trivial
+
+> Door to Tower of Doom; Heals? False
+  * Layers: default
+  * Normal Door to Tower of Doom/Door to Path of Reflection
+  > Door to Artificial Passage
+      Trivial
+
+----------------
+Tower of Doom
+Extra - map_name: Ridley/x216_y404
+> Door to Dessgeega Attic; Heals? False
+  * Layers: default
+  * Normal Door to Dessgeega Attic/Door to Tower of Doom
+  > Door to Path of Reflection
+      Trivial
+
+> Door to Path of Reflection; Heals? False
+  * Layers: default
+  * Normal Door to Path of Reflection/Door to Tower of Doom
+  > Door to Dessgeega Attic
+      Trivial
+  > Door to Infinite Gauntlet
+      Trivial
+
+> Door to Infinite Gauntlet; Heals? False
+  * Layers: default
+  * Normal Door to Infinite Gauntlet/Door to Tower of Doom
+  > Door to Path of Reflection
+      # TODO: IBJ
+      Can Use Bombs
+
+----------------
+Infinite Gauntlet
+Extra - map_name: Ridley/x344_y442
+> Door to Tower of Doom; Heals? False
+  * Layers: default
+  * Normal Door to Tower of Doom/Door to Infinite Gauntlet
+  > Pickup (Missile Tank)
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 30; Category? Minor
+  * Extra - object_id: 100056
+  > Door to Tower of Doom
+      Trivial
+  > Door to Purple Tower
+      Trivial
+
+> Door to Purple Tower; Heals? False
+  * Layers: default
+  * Normal Door to Purple Tower/Door to Infinite Gauntlet
+  > Pickup (Missile Tank)
+      Trivial
+
+----------------
+Purple Tower
+Extra - map_name: Ridley/x472_y404
+> Door to Infinite Gauntlet; Heals? False
+  * Layers: default
+  * Normal Door to Infinite Gauntlet/Door to Purple Tower
+  > Door to Green Gauntlet
+      Trivial
+
+> Door to The Wall; Heals? False
+  * Layers: default
+  * Normal Door to The Wall/Door to Purple Tower
+  > Door to Green Gauntlet
+      Trivial
+  > Door to Lava Foyer
+      Trivial
+
+> Door to Green Gauntlet; Heals? False
+  * Layers: default
+  * Normal Door to Green Gauntlet/Door to Purple Tower
+  > Door to Infinite Gauntlet
+      Trivial
+  > Door to The Wall
+      Trivial
+
+> Door to Lava Foyer; Heals? False
+  * Layers: default
+  * Normal Door to Lava Foyer/Door to Purple Tower
+  > Door to The Wall
+      Trivial
+
+----------------
+Central Cache
+Extra - map_name: Ridley/x368_y397
+> Door to Gambit Tower; Heals? False
+  * Layers: default
+  * Normal Door to Gambit Tower/Door to Central Cache
+  > Pickup (Missile Tank)
+      Trivial
+
+> Pickup (Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 31; Category? Minor
+  * Extra - object_id: 100057
+  > Door to Gambit Tower
+      Trivial
+
+----------------
+Gambit Tower
+Extra - map_name: Ridley/x344_y412
+> Door to Green Bridge; Heals? False
+  * Layers: default
+  * Normal Door to Green Bridge/Door to Gambit Tower
+  > Door to Central Cache
+      Trivial
+  > Bottom part
+      Trivial
+
+> Door to Central Cache; Heals? False
+  * Layers: default
+  * Normal Door to Central Cache/Door to Gambit Tower
+  > Door to Green Bridge
+      Trivial
+
+> Door to Green Gauntlet; Heals? False
+  * Layers: default
+  * Normal Door to Green Gauntlet/Door to Gambit Tower
+  > Bottom part
+      Trivial
+
+> Door to Ominous Hall; Heals? False
+  * Layers: default
+  * Normal Door to Ominous Hall/Door to Gambit Tower
+  > Bottom part
+      Trivial
+
+> Bottom part; Heals? False
+  * Layers: default
+  > Door to Green Bridge
+      # TODO: ADD IBJ
+      Can Use Bombs
+  > Door to Green Gauntlet
+      Trivial
+  > Door to Ominous Hall
+      Trivial
+
+----------------
+Green Bridge
+Extra - map_name: Ridley/x304_y397
+> Door to Artificial Passage; Heals? False
+  * Layers: default
+  * Normal Door to Artificial Passage/Door to Green Bridge
+  > Door to Gambit Tower
+      Trivial
+
+> Door to Gambit Tower; Heals? False
+  * Layers: default
+  * Normal Door to Gambit Tower/Door to Green Bridge
+  > Door to Artificial Passage
+      Trivial
+
+----------------
+Green Gauntlet
+Extra - map_name: Ridley/x408_y427
+> Door to Gambit Tower; Heals? False
+  * Layers: default
+  * Normal Door to Gambit Tower/Door to Green Gauntlet
+  > Door to Purple Tower
+      Trivial
+
+> Door to Purple Tower; Heals? False
+  * Layers: default
+  * Normal Door to Purple Tower/Door to Green Gauntlet
+  > Door to Gambit Tower
+      Trivial
+
+----------------
+Ominous Hall
+Extra - map_name: Ridley/x304_y427
+> Door to Gambit Tower; Heals? False
+  * Layers: default
+  * Normal Door to Gambit Tower/Door to Ominous Hall
+  > Door to Ridley Arena
+      Trivial
+
+> Door to Ridley Arena; Heals? False
+  * Layers: default
+  * Normal Door to Ridley Arena/Door to Ominous Hall
+  > Door to Gambit Tower
+      Trivial
+
+----------------
+Ridley Arena
+Extra - map_name: Ridley/x264_y427
+> Door to Ominous Hall; Heals? False
+  * Layers: default
+  * Normal Door to Ominous Hall/Door to Ridley Arena
+  > Platform
+      Trivial
+
+> Door to Lava Reliquary; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Lava Reliquary/Door to Ridley Arena
+  > Platform
+      All of the following:
+          Morph Ball
+          # TODO: add movement
+          Bombs
+
+> Event - Ridley Killed; Heals? False
+  * Layers: default
+  * Event Ridley Boss Killed
+  > Platform
+      Trivial
+  > Pickup (Boss Key)
+      Trivial
+
+> Platform; Heals? False
+  * Layers: default
+  > Door to Ominous Hall
+      Trivial
+  > Door to Lava Reliquary
+      Can Use Bombs
+  > Event - Ridley Killed
+      All of the following:
+          # TODO: combat reqs
+          # Energy requirements
+          Combat (Advanced) or Normal Damage ≥ 250
+
+> Pickup (Boss Key); Heals? False
+  * Layers: default
+  * Pickup 40; Category? Major
+  * Extra - object_id: 10085
+  > Pickup (Big Missile Tank)
+      Trivial
+
+> Pickup (Big Missile Tank); Heals? False
+  * Layers: default
+  * Pickup 41; Category? Major
+  * Extra - object_id: 100086
+  > Event - Ridley Killed
+      Trivial
+
+----------------
+Lava Reliquary
+Extra - map_name: Ridley/x240_y427
+> Pickup (Energy Tank); Heals? False
+  * Layers: default
+  * Pickup 29; Category? Minor
+  * Extra - object_id: 100055
+  > Fake lava
+      Trivial
+
+> Door to Ridley Arena; Heals? False
+  * Layers: default
+  * 10 Missiles Door to Ridley Arena/Door to Lava Reliquary
+  > Fake lava
+      Trivial
+
+> Fake lava; Heals? False
+  * Layers: default
+  > Pickup (Energy Tank)
+      Trivial
+  > Door to Ridley Arena
+      Hi-Jump Boots
+
+----------------
+Lava Foyer
+Extra - map_name: Ridley/x432_y367
+> Door to Ridley Entrance; Heals? False
+  * Layers: default
+  * Normal Door to Ridley Entrance/Door to Lava Foyer
+  > Door to Purple Tower
+      Trivial
+
+> Door to Purple Tower; Heals? False
+  * Layers: default
+  * Normal Door to Purple Tower/Door to Lava Foyer
+  > Door to Ridley Entrance
+      Trivial
+
+----------------
+The Wall
+Extra - map_name: Ridley/x424_y397
+> Door to Purple Tower; Heals? False
+  * Layers: default
+  * Normal Door to Purple Tower/Door to The Wall
+  > Air hole
+      Trivial
+
+> Air hole; Heals? True
+  * Layers: default
+  * Kill enemies coming from there to get health and ammo
+  > Door to Purple Tower
+      Trivial
+

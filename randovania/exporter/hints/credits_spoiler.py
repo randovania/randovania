@@ -5,6 +5,7 @@ import math
 from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
+from randovania.generator.pickup_pool import pool_creator
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
@@ -48,6 +49,21 @@ def get_locations_for_major_pickups_and_keys(
     return results
 
 
+def starting_pickups_with_count(patches: GamePatches) -> dict[PickupEntry, int]:
+    result = collections.defaultdict(int)
+
+    if not isinstance(patches.starting_equipment, list):
+        return {}
+
+    for pickup in patches.starting_equipment:
+        result[pickup] += 1
+
+    for pickup in pool_creator.calculate_pool_results(patches.configuration, patches.game).starting:
+        result[pickup] -= 1
+
+    return result
+
+
 def generic_credits(
     standard_pickup_configuration: StandardPickupConfiguration,
     all_patches: dict[int, GamePatches],
@@ -67,6 +83,19 @@ def generic_credits(
     major_pickups_spoiler = {
         pickup: [entry.export(namer, use_player_color) for entry in entries] for pickup, entries in details.items()
     }
+
+    starting_pickups = starting_pickups_with_count(all_patches[players_config.player_index])
+    for pickup, count in starting_pickups.items():
+        if count < 1:
+            continue
+
+        if pickup not in major_pickups_spoiler:
+            major_pickups_spoiler[pickup] = []
+
+        msg = "As a random starting item"
+        if count > 1:
+            msg += f" ({count} copies)"
+        major_pickups_spoiler[pickup].append(msg)
 
     return {
         pickup_name_format.format(pickup.name): "\n".join(major_pickups_spoiler[pickup]) or "Nowhere"

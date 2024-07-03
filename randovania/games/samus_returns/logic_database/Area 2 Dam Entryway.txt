@@ -320,12 +320,16 @@ Extra - asset_id: collision_camera_005
   * Power Beam Door to Lightning Armor & Transport to Dam Exterior East/Door to Transport Access (Top)
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
-  > Dock to Alpha+ Arena
+  > Door to Alpha+ Arena
       Trivial
 
-> Dock to Alpha+ Arena; Heals? False
+> Door to Alpha+ Arena; Heals? False
   * Layers: default
-  * Open Passage to Alpha+ Arena/Dock to Transport Access
+  * Access Open to Alpha+ Arena/Door to Transport Access
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 91
+  * Extra - append_entity_group: PostAlpha_002
   > Door to Lightning Armor & Transport to Dam Exterior East (Top)
       Any of the following:
           After Area 2 (Dam Entryway) - Transport to Dam Exterior Unlock Door
@@ -354,7 +358,7 @@ Extra - asset_id: collision_camera_005
       Any of the following:
           Lightning Armor or Use Spider Ball
           Hazard Runs (Beginner) and Hazard Damage ≥ 40
-  > Dock to Alpha+ Arena
+  > Door to Alpha+ Arena
       Any of the following:
           Lightning Armor or Use Spider Ball
           Hazard Runs (Beginner) and Hazard Damage ≥ 45
@@ -403,9 +407,13 @@ Extra - asset_id: collision_camera_007
   > Inside Arena
       Trivial
 
-> Dock to Transport Access; Heals? False
+> Door to Transport Access; Heals? False
   * Layers: default
-  * Open Passage to Transport Access/Dock to Alpha+ Arena
+  * Access Open to Transport Access/Door to Alpha+ Arena
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 92
+  * Extra - append_entity_group: PostAlpha_002
   > Inside Arena
       Morph Ball and Shoot Any Missile
   > Outside Arena
@@ -422,7 +430,7 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_name: ST_Alpha_002_Checkpoint
   > Door to Entryway Teleporter
       Trivial
-  > Dock to Transport Access
+  > Door to Transport Access
       Morph Ball and Shoot Any Missile
   > Event - Alpha Metroid+
       Defeat Alpha Metroid+
@@ -430,7 +438,7 @@ Extra - asset_id: collision_camera_007
 > Outside Arena; Heals? False
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_002B
-  > Dock to Transport Access
+  > Door to Transport Access
       Trivial
 
 > Pickup (DNA); Heals? False

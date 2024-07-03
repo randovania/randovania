@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.gui.corruption_layout_editor import CorruptionLayoutEditor
+from randovania.games.prime3.gui.corruption_layout_editor import CorruptionLayoutEditor
 
 
 def test_construct(skip_qtbot):

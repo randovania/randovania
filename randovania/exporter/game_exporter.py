@@ -1,7 +1,11 @@
 import dataclasses
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from randovania.lib import status_update_lib
+
+if TYPE_CHECKING:
+    from randovania.exporter.patch_data_factory import PatcherDataMeta
 
 
 @dataclasses.dataclass(frozen=True)
@@ -50,13 +54,15 @@ class GameExporter:
         export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ):
+        meta_data: PatcherDataMeta = patch_data.pop("_randovania_meta")
         self._before_export()
         from randovania import monitoring
 
         try:
-            with monitoring.attach_patcher_data(patch_data):
-                with monitoring.start_transaction(op="task", name="export_game") as span:
+            with monitoring.attach_patcher_data(patch_data) as scope:
+                with scope.start_transaction(op="task", name="export_game") as span:
                     span.set_tag("exporter", type(self).__name__)
+                    span.set_tag("layout_was_user_modified", meta_data["layout_was_user_modified"])
                     self._do_export_game(patch_data, export_params, progress_update)
         finally:
             self._after_export()

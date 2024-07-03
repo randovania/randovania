@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
@@ -31,9 +30,6 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
     from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
-    from randovania.interface_common.players_configuration import PlayersConfiguration
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-    from randovania.layout.layout_description import LayoutDescription
 
 _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "Nothing"): ["itemsphere"],
@@ -110,18 +106,6 @@ def get_resources_for_details(
 class MSRPatchDataFactory(PatchDataFactory):
     cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
-
-    def __init__(
-        self,
-        description: LayoutDescription,
-        players_config: PlayersConfiguration,
-        cosmetic_patches: BaseCosmeticPatches,
-    ) -> None:
-        super().__init__(description, players_config, cosmetic_patches)
-        self.memo_data = MSRAcquiredMemo.with_expansion_text()
-
-        tank = self.configuration.energy_per_tank
-        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
@@ -219,14 +203,14 @@ class MSRPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        namer = MSRHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(hint_namer, self.rng, ["A joke hint."])
 
         hints = [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[logbook_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,
@@ -237,13 +221,13 @@ class MSRPatchDataFactory(PatchDataFactory):
         ]
 
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
-        dna_hint_mapping = {}
+        dna_hint_mapping: dict = {}
         hint_config = self.configuration.hints
         if hint_config.artifacts != ItemHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                MSRHintNamer(self.description.all_patches, self.players_config),
+                hint_namer,
                 hint_config.artifacts == ItemHintMode.HIDE_AREA,
                 artifacts,
                 False,
@@ -280,6 +264,29 @@ class MSRPatchDataFactory(PatchDataFactory):
             )
 
         return hints
+
+    def _create_baby_metroid_hint(self) -> str:
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        hint_config = self.configuration.hints
+
+        baby_metroid = [(self.game.resource_database.get_item("Baby"))]
+        baby_metroid_hint: str = ""
+        if hint_config.baby_metroid != ItemHintMode.DISABLED:
+            temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                hint_namer,
+                hint_config.baby_metroid == ItemHintMode.HIDE_AREA,
+                baby_metroid,
+                False,
+            )
+            baby_metroid_hint = "A " + temp_baby_hint[baby_metroid[0]].replace(
+                " Metroid is located in ", "'s Cry can be heard echoing from|"
+            )
+        else:
+            baby_metroid_hint = "Continue searching for the Baby Metroid!"
+
+        return baby_metroid_hint
 
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
@@ -433,10 +440,54 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return elevator_dict
 
+    def _add_custom_doors(self) -> list[dict]:
+        custom_doors: list = []
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            assert node.location is not None
+            if not isinstance(node, DockNode):
+                continue
+            if node.default_dock_weakness.name != "Access Open":
+                continue
+            if any(entry["door_actor"] == self._teleporter_ref_for(node) for entry in custom_doors):
+                continue
+
+            # Make a set of the entity groups for each room that each door exists in
+            entity_groups = {
+                self.game.region_list.area_by_area_location(node.identifier.area_identifier).extra["asset_id"],
+                self.game.region_list.area_by_area_location(node.default_connection.area_identifier).extra["asset_id"],
+            }
+
+            # Add additional entity groups if needed, mainly for post-Metroid groups
+            if "append_entity_group" in node.extra:
+                entity_groups.add(node.extra["append_entity_group"])
+
+            # Make a list of the tile_indices listed in each door node and append them
+            tile_indices = [
+                node.extra["tile_index"],
+                self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
+            ]
+
+            custom_doors.append(
+                {
+                    "door_actor": self._teleporter_ref_for(node),
+                    "position": {
+                        # FIXME: location_override only exists because DB maps are not 1:1, so fix maps
+                        "x": node.extra.get("location_x_override", node.location.x),
+                        "y": node.extra.get("location_y_override", node.location.y),
+                        "z": node.extra.get("location_z_override", node.location.z),
+                    },
+                    "tile_indices": sorted(tile_indices),  # [left, right]
+                    "entity_groups": sorted(entity_groups),
+                }
+            )
+
+        return custom_doors
+
     def _door_patches(self) -> list[dict[str, str]]:
         wl = self.game.region_list
 
-        result = []
+        result: list = []
         used_actors: dict[str, str] = {}
 
         for node, weakness in self.patches.all_dock_weaknesses():
@@ -447,6 +498,9 @@ class MSRPatchDataFactory(PatchDataFactory):
 
             if "actor_name" not in node.extra:
                 print(f"Invalid door (no actor): {node}")
+                continue
+
+            if any(entry["actor"] == self._teleporter_ref_for(node) for entry in result):
                 continue
 
             result.append(
@@ -465,25 +519,25 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return result
 
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
+        self.memo_data = MSRAcquiredMemo.with_expansion_text()
+
+        tank = self.configuration.energy_per_tank
+        memo_data = MSRAcquiredMemo.with_expansion_text()
+        memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
+        return memo_data
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
+
     def create_game_specific_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()
 
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
 
         energy_per_tank = self.configuration.energy_per_tank
 
@@ -518,9 +572,17 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(self.rng),
+            "baby_metroid_hint": self._create_baby_metroid_hint(),
             "cosmetic_patches": self._create_cosmetics(),
             "configuration_identifier": self.description.shareable_hash,
+            "custom_doors": self._add_custom_doors(),
             "door_patches": self._door_patches(),
+            "constant_environment_damage": {
+                "heat": self.configuration.constant_heat_damage,
+                "lava": self.configuration.constant_lava_damage,
+            },
+            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
         }
 
 

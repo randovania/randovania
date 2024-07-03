@@ -53,13 +53,12 @@ def add_standard_pickups(
         ammo, locked_ammo = _find_ammo_for(pickup.ammo, ammo_pickup_configuration)
 
         if state.include_copy_in_original_location:
-            if pickup.original_location is None:
+            if not pickup.original_locations:
                 raise InvalidConfiguration(
                     f"Item {pickup.name} does not exist in the original game, cannot use state {state}",
                 )
-            new_assignment[pickup.original_location] = create_standard_pickup(
-                pickup, state, resource_database, ammo, locked_ammo
-            )
+            for location in pickup.original_locations:
+                new_assignment[location] = create_standard_pickup(pickup, state, resource_database, ammo, locked_ammo)
 
         for _ in range(state.num_shuffled_pickups):
             item_pool.append(create_standard_pickup(pickup, state, resource_database, ammo, locked_ammo))

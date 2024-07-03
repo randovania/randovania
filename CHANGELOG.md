@@ -7,10 +7,110 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.2.0] - 2024-07-??
 
-- Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
+- Added: When generating for a multiworld, certain error messages now mention the names of relevant worlds.
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
+- Added: "Export all presets" option under multiworld session Advanced Options.
+- Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
+- Added: Warn when generating a game with Door Lock Randomizer in Types Mode and Permanently Locked doors are set as a valid option.
+- Added: Rdvgame files now contain a checksum, in order to detect if invalid files were user-modified.
+- Added: Metroid Samus Returns racetime.gg rooms are now viewable in the racetime.gg browser.
 - Changed: Significantly improved the performance of uploading a game to multiworld session, as well as downloading the spoiler.
 - Changed: The Receiver/Provider world selector in the History tab is now sorted.
+- Changed: The dropdown to select a connector is now sorted alphabetically.
+- Fixed: When opening the window to select a preset for Multiworld sessions, it will not show placeholder text anymore.
+
+### AM2R
+
+- Added: Chaos Options to randomly make a room dark, submerged in water or submerged in lava.
+- Added: 10 Videos added to the logic database.
+- Fixed: Dread's Wide Beam will now show as a Wide Beam sprite instead of a Spazer Beam sprite.
+- Fixed: A crash when in Door Lock Rando, a Research Site Hatch was shuffled to become a Research Site Hatch.
+
+#### Logic Database
+
+##### Distribution Center
+
+- Added: Facility Storage Spiked Path: It is now possible to cross the rooms with Wall Jumps and Intermediate Zips.
+- Fixed: Pipe Hub Access: Solving the EMP Puzzle is not possible to do with Power Bombs anymore.
+- Fixed: Zipping across in Serris Arena now requires Morph Ball.
+
+##### Hydro Station
+
+- Changed: Breeding Grounds Entrance: The Walljump that's used to get to Breeding Grounds Save Station with a Damage Boost is now Intermediate instead of Expert.
+
+##### Industrial Complex
+
+- Fixed: Spiky Shaft: It is now not trivial anymore to go between the top left door and the top right door.
+
+##### The Depths
+
+- Added: Bubble Lair Shinespark Cave: Expert Walljump and Intermediate Morph Glide option to climb the room as well as a video demonstration.
+- Changed: Hideout Omega Nest: Getting past the Omega is now Movement Intermediate with Space Jump, and Movement Advanced with Spider Ball.
+
+### Metroid Dread
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+- Changed: The water in Early Cloak Room in Artaria will disappear after the blob is broken, instead of flooding the lower section with the tunnel.
+- Changed: Water will no longer appear in First Tutorial after using the water device in EMMI Zone Hub in Artaria.
+- Changed: Prime 1's Missile Launcher now shows up as a Missile Tank.
+- Fixed: Entering Intro Room in Artaria will no longer cause long loads or crash the game.
+- Fixed: The Navigation Station in Itorash now has a map icon.
+- Fixed: The Thermal Gate blocking the Morph Launcher to Experiment Z-57 now has a map icon.
+- Fixed: The transport in Ghavoran - Flipper now shows the destination on the minimap icon.
+
+#### Logic Database
+
+##### Cataris
+
+- Fixed: Moving Magnet Walls (Tall) now uses the correct lava button event for the magnet surfaces.
+
+##### Hanubia
+
+- Changed: The Door to Orange EMMI Introduction is excluded from Door Lock Rando.
+
+### Metroid Prime
+
+- Fixed: Typo on the Quality of Life preset tab.
+- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Fixed: Removed redundant connection to Hive Totem.
+
+##### Tallon Overworld
+
+- Fixed: Overgrown Cavern now has the correct node marked as player spawn.
+
+### Metroid Prime 2: Echoes
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
+### Metroid: Samus Returns
+
+- **Major** - Added: Multiworld and automatic item tracker support for Citra.
+- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Melee while having Lightning Armor enabled.
+- Added: Option to configure if heated rooms or lava deals constant instead of scaled damage.
+- Added: If you don't have the Baby Metroid, a configurable hint is now displayed in the textbox after collecting all DNA.
+- Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
+- Changed: Item icons on the map will now show the icon of the pickup instead of the open circles. Powerups and Nothings currently share the same icon. Hidden Pickups will still show up as open circles.
+- Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
+- Changed: Some "hidden area" obstructions have been removed in the following areas to improve visibility in certain sections: Area 1, Area 3 Factory Exterior, Area 4 Central Caves, Area 7.
+- Changed: Area 1 - Inner Temple East Hall: The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
+- Changed: Area 4 Crystal Mines: The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
+- Changed: The description for the `Missile Reserve Tank` is now more explicit about when it can be used.
+- Fixed: When exporting a new seed, any leftover data from previous seeds will be deleted.
+- Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
+- Fixed: Beam Doors are no longer mismatched with the door they are attached to, which would prevent certain doors from being opened.
+- Fixed: Crash when defeating the Larva Metroids in reverse.
+- Fixed: Typos in `Patches` tab regarding area names.
+
+### Logic Database
+
+#### Area 5 Tower Exterior
+
+- Fixed: Picking up `Missile Tank (Top)` from the top of the room now requires Bombs.
 
 ## [8.1.1] - 2024-06-08
 
@@ -203,7 +303,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Fixed: A small typo with "immune" in the energy preset tab
+- Fixed: A small typo with "immune" in the energy preset tab.
 - Fixed: Seeker Locks without Seeker now properly show all usages when asked for.
 
 ### Metroid: Samus Returns
@@ -218,6 +318,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Starting at Area 3 Factory Exterior - Beam Burst Chamber & Tsumuri Station no longer spawns Samus out of bounds.
 - Fixed: The Laser Aim cosmetic options UI no longer exports the wrong colors and has been simplified.
 - Fixed: The item in Area 7 - Omega Arena South Access no longer disappears after defeating the Omega in Area 7 - Omega Arena South.
+- Fixed: Case where Power Bombs would not be disabled when fighting Diggernaut.
 
 #### Logic Database
 

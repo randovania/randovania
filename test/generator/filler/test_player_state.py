@@ -59,6 +59,7 @@ def test_current_state_report(state_for_blank):
         "Resources to progress: Blue Key, Double Jump, Jump, Missile, Weapon\n\n"
         "Paths to be opened:\n"
         "* Intro/Blue Key Room/Lock - Door to Starting Area (Exit): Blue Key\n"
+        "* Intro/Hint Room/Hint with Translator: Blue Key\n"
         "* Intro/Ledge Room/Low Ledge: Double Jump\n"
         "* Intro/Ledge Room/Low Ledge: Jump\n"
         "* Intro/Starting Area/Door to Boss Arena: Missile and Weapon\n"

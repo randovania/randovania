@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import types
 import typing
 
@@ -17,7 +18,8 @@ def resolve_optional(type_: type) -> tuple[type, bool]:
 
 def is_named_tuple(type_: type) -> bool:
     return (
-        issubclass(type_, tuple)
+        inspect.isclass(type_)
+        and issubclass(type_, tuple)
         and hasattr(type_, "__annotations__")
         and hasattr(type_, "_fields")
         and hasattr(type_, "_field_defaults")

@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import math
 import pprint
+import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.node import Node
 from randovania.game_description.hint import Hint, HintType
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -29,7 +31,7 @@ if TYPE_CHECKING:
 _DANGEROUS_ACTION_MULTIPLIER = 0.75
 _EVENTS_WEIGHT_MULTIPLIER = 0.5
 _INDICES_WEIGHT_MULTIPLIER = 1
-_LOGBOOKS_WEIGHT_MULTIPLIER = 1
+_HINTS_WEIGHT_MULTIPLIER = 1
 _ADDITIONAL_NODES_WEIGHT_MULTIPLIER = 0.01
 _VICTORY_WEIGHT = 1000
 
@@ -139,7 +141,7 @@ def weighted_potential_actions(
 
         potential_reach = reach_lib.advance_to_with_reach_copy(player_state.reach, state)
         potential_reaches[action] = potential_reach
-        base_weight = _calculate_weights_for(potential_reach, current_uncollected)
+        base_weight = _calculate_weights_for(potential_reach, current_uncollected, action)
         actions_weights[action] = base_weight * multiplier + offset
         update_for_option()
 
@@ -438,19 +440,19 @@ def _calculate_hint_location_for_action(
 ) -> NodeIdentifier | None:
     """
     Calculates where a hint for the given action should be placed.
-    :return: A LogbookAsset to use, or None if no hint should be placed.
+    :return: A hint's NodeIdentifier to use, or None if no hint should be placed.
     """
     if index_owner_state.should_have_hint(action, current_uncollected, all_locations):
         potential_hint_locations = [
             identifier
-            for identifier in current_uncollected.logbooks
+            for identifier in current_uncollected.hints
             if pickup_index not in hint_initial_pickups[identifier]
         ]
         if potential_hint_locations:
             return rng.choice(sorted(potential_hint_locations))
         else:
             debug.debug_print(
-                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.logbooks)}"
+                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.hints)}"
             )
     else:
         debug.debug_print(f">> Pickup {action.name} was decided to not have a hint.")
@@ -460,6 +462,7 @@ def _calculate_hint_location_for_action(
 def _calculate_weights_for(
     potential_reach: GeneratorReach,
     current_uncollected: UncollectedState,
+    action: Action,
 ) -> float:
     """
     Calculate a weight to be used for this action, based on what's collected in the reach.
@@ -468,11 +471,21 @@ def _calculate_weights_for(
         return _VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
+    if debug.debug_level() > 2:
+        nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
+
+        print(f">>> {action}")
+        print(f"indices: {potential_uncollected.indices}")
+        print(f"hints: {[hint.as_string for hint in potential_uncollected.hints]}")
+        print(f"events: {[event.long_name for event in potential_uncollected.events]}")
+        print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
+        print()
+
     return sum(
         (
             _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
             _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
-            _LOGBOOKS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.logbooks)),
+            _HINTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.hints)),
         )
     )
 

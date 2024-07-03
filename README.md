@@ -77,7 +77,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 
 ## Games
 
-### Metroid Prime 1
+### Metroid Prime
 * Game patching via [randomprime](https://github.com/randovania/randomprime). Originally authored by [April Wade](https://github.com/aprilwade), it is now maintained and developed by [toasterparty](https://github.com/toasterparty) with contributions from [others](https://github.com/randovania/randomprime/graphs/contributors)
 * Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [SolventMercury](https://github.com/SolventMercury).
 * Converting Metroid Prime 2 models by [Migs](https://www.twitch.tv/migslive).
@@ -146,11 +146,19 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [Haxaplax](https://github.com/haxaplax)
 
 ## Auto Tracker
+
+### Primes
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
 * Pixel theme assets were provided by [Uncle Reggie](https://www.twitch.tv/unclereggie).
+
+### AM2R
 * AM2R 1.5.5 item sprites were made by [Eskimode7](https://twitter.com/shmegleskimo) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 * The AM2R DNA sprite was made by [AbyssalCreature](https://github.com/AbyssalCreature) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 * The AM2R Morph Ball and Power Grip sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+### Metroid: Samus Returns
+
+* Game theme assets were provided by [Dyceron](https://www.twitch.tv/dyceron).
 
 ## Multiworld
 Server and logic written by [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/).
@@ -167,6 +175,9 @@ The "unplug" icon is by tezar tantular from [Noun Project](https://thenounprojec
 
 ### Another Metroid 2 Remake
 Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and are made by [AbyssalCreature](https://github.com/AbyssalCreature), ShirtyScarab554 and [many others](https://github.com/randovania/YAMS/blob/main/YAMS-LIB/sprites/Attribution.md).
+
+### Metroid: Samus Returns
+Integration written by [Thanatos](https://github.com/ThanatosGit).
 
 <!-- End CREDITS -->
 

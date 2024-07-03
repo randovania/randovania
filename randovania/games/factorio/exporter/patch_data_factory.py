@@ -2,10 +2,7 @@ from __future__ import annotations
 
 import typing
 
-from randovania.exporter import pickup_exporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.exporter.pickup_exporter import GenericAcquiredMemo
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.games.factorio.data_importer import data_parser
@@ -17,6 +14,7 @@ from randovania.generator.pickup_pool import pickup_creator
 if typing.TYPE_CHECKING:
     import factorio_randovania_mod.configuration as cfg
 
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.games.factorio.generator.base_patches_factory import FactorioGameSpecific
 
 
@@ -24,31 +22,23 @@ class FactorioPatchDataFactory(PatchDataFactory):
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.FACTORIO
 
-    def create_data(self) -> dict:
-        memo_data = GenericAcquiredMemo()
-
-        rl = self.game.region_list
-
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(
-                self.game.resource_database,
-                model_name="__randovania-layout__/graphics/icons/nothing.png",
-            ),
-            self.players_config.player_index,
+    def create_useless_pickup(self) -> PickupEntry:
+        """Used for any location with no PickupEntry assigned to it."""
+        return pickup_creator.create_nothing_pickup(
+            self.game.resource_database,
+            model_name="__randovania-layout__/graphics/icons/nothing.png",
         )
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return self.create_useless_pickup()
+
+    def create_game_specific_data(self) -> dict:
+        rl = self.game.region_list
 
         technologies = []
 
-        for exported in pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            rl,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            useless_target.pickup,
-        ):
+        for exported in self.export_pickup_list():
             node = rl.node_from_pickup_index(exported.index)
             area = rl.nodes_to_area(node)
 

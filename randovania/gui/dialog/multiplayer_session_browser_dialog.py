@@ -92,8 +92,11 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
 
     @property
     def selected_session(self) -> MultiplayerSessionListEntry:
-        selection: QtCore.QItemSelectionRange = self._selection_model().selection().first()
-        return selection.topLeft().data(Qt.ItemDataRole.UserRole)
+        # Keep the data structures in variables to ensure lifetime lasts the entire function
+        selection: QtCore.QItemSelection = self._selection_model().selection()
+        assert not selection.isEmpty()
+        selection_range: QtCore.QItemSelectionRange = selection.first()
+        return selection_range.topLeft().data(Qt.ItemDataRole.UserRole)
 
     @asyncSlot(QTableWidgetItem)
     async def on_double_click(self, item):

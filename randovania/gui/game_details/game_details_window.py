@@ -7,6 +7,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 import randovania
+from randovania import monitoring
 from randovania.gui import game_specific_gui
 from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
 from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
@@ -66,6 +67,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         # Ui
         self._tool_button_menu = QtWidgets.QMenu(self.tool_button)
         self.tool_button.setMenu(self._tool_button_menu)
+        self.tool_button.triggered.connect(lambda: monitoring.metrics.incr("gui_export_window_tool_button_clicked"))
 
         self._action_open_tracker = QtGui.QAction(self)
         self._action_open_tracker.setText("Open map tracker")
@@ -161,7 +163,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         has_spoiler = layout.has_spoiler
         options = self._options
 
+        game = self.current_player_game
+
         if not options.is_alert_displayed(InfoAlert.FAQ):
+            monitoring.metrics.incr("gui_export_window_alert_shown", tags={"game": game.short_name})
             await async_dialog.message_box(
                 self,
                 QtWidgets.QMessageBox.Icon.Information,
@@ -170,7 +175,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             )
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
-        game = self.current_player_game
+        monitoring.metrics.incr("gui_export_window_export_clicked", tags={"game": game.short_name})
 
         cosmetic_patches = options.options_for_game(game).cosmetic_patches
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
@@ -299,6 +304,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     def _open_user_preferences_dialog(self):
         game = self.current_player_game
+        monitoring.metrics.incr("gui_export_window_cosmetic_clicked", tags={"game": game.short_name})
         per_game_options = self._options.options_for_game(game)
 
         dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)

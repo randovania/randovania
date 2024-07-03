@@ -4,10 +4,9 @@ import typing
 from random import Random
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
@@ -21,6 +20,7 @@ from randovania.lib import json_lib, random_lib
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 
 
@@ -177,15 +177,53 @@ class AM2RPatchDataFactory(PatchDataFactory):
         return pickup_map_dict
 
     def _create_room_dict(self) -> dict:
-        return {
-            area.extra["map_name"]: {
-                "display_name": area.name,
-                "region_name": region.name,
-                "minimap_data": area.extra["minimap_data"],
-            }
-            for region in self.game.region_list.regions
-            for area in region.areas
-        }
+        rng = Random(self.description.get_seed_for_player(self.players_config.player_index))
+
+        return_dict = {}
+        for region in self.game.region_list.regions:
+            for area in region.areas:
+                light_level = area.extra["light_level"]
+                if rng.random() < (self.configuration.darkness_chance / 1000.0):
+                    light_level = str(rng.randint(self.configuration.darkness_min, self.configuration.darkness_max))
+
+                liquid_info = None
+                # 0 - water, 1 - lava
+                liquid_type = rng.choices(
+                    [0, 1, None],
+                    weights=[
+                        self.configuration.submerged_water_chance,
+                        self.configuration.submerged_lava_chance,
+                        1000 - self.configuration.submerged_water_chance - self.configuration.submerged_lava_chance,
+                    ],
+                )[0]
+                if liquid_type is not None:
+                    liquid_info = {
+                        "liquid_type": liquid_type,
+                        "liquid_level": -100,
+                        "should_be_at_very_front": True,
+                    }
+                else:
+                    linfo = area.extra.get("liquid_info", {})
+                    if len(linfo) > 0:
+                        liquid_info = {
+                            "liquid_type": linfo["liquid_type"],
+                            "liquid_level": linfo["liquid_level"],
+                            "should_move_horizontally": linfo.get("should_move_horizontally", False),
+                            "should_wave": linfo.get("should_wave", False),
+                            "wave_speed": linfo.get("wave_speed", 0),
+                            "wave_height": linfo.get("wave_height", 0),
+                            "should_be_at_very_front": linfo.get("should_be_at_very_front", False),
+                        }
+
+                return_dict[area.extra["map_name"]] = {
+                    "display_name": area.name,
+                    "region_name": region.name,
+                    "minimap_data": area.extra["minimap_data"],
+                    "light_level": light_level,
+                    "liquid_info": liquid_info,
+                }
+
+        return return_dict
 
     def _create_starting_popup(self, patches: GamePatches) -> dict | None:
         extra_items = item_names.additional_starting_equipment(patches.configuration, patches.game, patches)
@@ -413,28 +451,29 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         return spoiler
 
-    def create_game_specific_data(self) -> dict:
-        db = self.game
-
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(db.resource_database, "sItemNothing"), self.players_config.player_index
-        )
-
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
         text_data = self._get_text_data()
-        model_data = self._get_model_data()
         memo_data = {key: value["text_desc"] for key, value in text_data.items()}
         memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.configuration.energy_per_tank)
+        return memo_data
 
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "sItemUnknown"),
+    def create_useless_pickup(self) -> PickupEntry:
+        """Used for any location with no PickupEntry assigned to it."""
+        return pickup_creator.create_nothing_pickup(
+            self.game.resource_database,
+            model_name="sItemNothing",
         )
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "sItemUnknown")
+
+    def create_game_specific_data(self) -> dict:
+        text_data = self._get_text_data()
+        model_data = self._get_model_data()
+
+        pickup_list = self.export_pickup_list()
 
         pipes = {
             str(node.extra["instance_id"]): {
