@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.2.0] - 2024-07-??
 
-- Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
+- Added: When generating for a multiworld, certain error messages now mention the names of relevant worlds.
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
 - Added: "Export all presets" option under multiworld session Advanced Options.
 - Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
@@ -90,15 +90,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - **Major** - Added: Multiworld and automatic item tracker support for Citra.
-- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
+- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Melee while having Lightning Armor enabled.
 - Added: Option to configure if heated rooms or lava deals constant instead of scaled damage.
 - Added: If you don't have the Baby Metroid, a configurable hint is now displayed in the textbox after collecting all DNA.
 - Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
 - Changed: Item icons on the map will now show the icon of the pickup instead of the open circles. Powerups and Nothings currently share the same icon. Hidden Pickups will still show up as open circles.
 - Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
 - Changed: Some "hidden area" obstructions have been removed in the following areas to improve visibility in certain sections: Area 1, Area 3 Factory Exterior, Area 4 Central Caves, Area 7.
-- Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
-- Changed: Area 4 Crystal Mines - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
+- Changed: Area 1 - Inner Temple East Hall: The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
+- Changed: Area 4 Crystal Mines: The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
 - Changed: The description for the `Missile Reserve Tank` is now more explicit about when it can be used.
 - Fixed: When exporting a new seed, any leftover data from previous seeds will be deleted.
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
