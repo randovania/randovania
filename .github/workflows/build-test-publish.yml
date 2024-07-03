@@ -527,6 +527,7 @@ jobs:
       - name: Download the executables
         uses: actions/download-artifact@v4.1.0
         with:
+          pattern: '* *'
           path: packages/
 
       - name: Install Python packages
