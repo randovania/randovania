@@ -71,16 +71,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Typo on the Quality of Life preset tab.
+- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
 
 #### Logic Database
 
+##### Chozo Ruins
+
+- Fixed: Removed redundant connection to Hive Totem.
+
 ##### Tallon Overworld
 
-- Fixed: Overgrown Cavern now has the correct node marked as player spawn
-
-### Metroid Prime
-
-- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
+- Fixed: Overgrown Cavern now has the correct node marked as player spawn.
 
 ### Metroid Prime 2: Echoes
 
