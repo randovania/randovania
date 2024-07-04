@@ -563,7 +563,7 @@ jobs:
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: packages/Randovania * *
+          file: packages/Randovania*
           file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
@@ -647,15 +647,16 @@ jobs:
         env: 
           TAG_NAME: ${{ github.ref }}
         run: |
-          # Tag is of format vX.Y.Z, cut the v off.
-          echo "NEW_VERSION=$(${TAG_NAME:1})" >> $GITHUB_OUTPUT
+          # Tag is of format refs/tags/vX.Y.Z, cut everything before X.Y.Z off.
+          echo "NEW_VERSION=${TAG_NAME:11}" >> $GITHUB_OUTPUT
 
       - name: Replace version, commit and push
         run: |
-          sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./website/ci.sh
+          cd website
+          sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./ci.sh
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add ./website/ci.sh
+          git add ./ci.sh
           git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           git push
 
