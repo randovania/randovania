@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.3.x] - 2024-08-??
 
-- Nothing yet! Add changes here.
+### AM2R
+
+#### Logic Database
+
+##### The Tower
+
+- Fixed: Ext. Zeta Nest East Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 
 ## [8.2.0] - 2024-07-03
 
