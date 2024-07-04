@@ -5,9 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.2.0] - 2024-07-??
+## [8.3.x] - 2024-08-??
 
-- Added: When generating for a multiworld, certain error messages now mention the name of relevant world.
+### AM2R
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
+### Metroid: Samus Returns
+
+- Added: More starting locations have been added for all areas.
+- Added: Progressive pickups can now be configured to be placed vanilla.
+- Changed: Room Names on the HUD are now enabled by default.
+
+## [8.2.0] - 2024-07-03
+
+- Added: When generating for a multiworld, certain error messages now mention the names of relevant worlds.
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
 - Added: "Export all presets" option under multiworld session Advanced Options.
 - Added: Credits spoiler log now mention if one of the items was randomly placed as a starting item.
@@ -24,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Chaos Options to randomly make a room dark, submerged in water or submerged in lava.
 - Added: 10 Videos added to the logic database.
 - Fixed: Dread's Wide Beam will now show as a Wide Beam sprite instead of a Spazer Beam sprite.
+- Fixed: A crash when in Door Lock Rando, a Research Site Hatch was shuffled to become a Research Site Hatch.
 
 #### Logic Database
 
@@ -70,16 +83,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Typo on the Quality of Life preset tab.
+- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
 
 #### Logic Database
 
+##### Chozo Ruins
+
+- Fixed: Removed redundant connection to Hive Totem.
+
 ##### Tallon Overworld
 
-- Fixed: Overgrown Cavern now has the correct node marked as player spawn
-
-### Metroid Prime
-
-- Changed: Open Map can be used with Elevator Randomization (Unvisited rooms do not reveal their name. Unvisited Elevators do not reveal their destination.)
+- Fixed: Overgrown Cavern now has the correct node marked as player spawn.
 
 ### Metroid Prime 2: Echoes
 
@@ -88,15 +102,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - **Major** - Added: Multiworld and automatic item tracker support for Citra.
-- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Lightning Melee.
+- Added: New door types: `Access Open` and `Lightning Armor`. Access Open adds new doors to most 3-Tile high open transitions, which can then be shuffled. Lightning Armor doors can be opened with a Melee while having Lightning Armor enabled.
 - Added: Option to configure if heated rooms or lava deals constant instead of scaled damage.
 - Added: If you don't have the Baby Metroid, a configurable hint is now displayed in the textbox after collecting all DNA.
 - Changed: The popup when collecting an item has been removed, and has been replaced with a message that does not interrupt gameplay.
 - Changed: Item icons on the map will now show the icon of the pickup instead of the open circles. Powerups and Nothings currently share the same icon. Hidden Pickups will still show up as open circles.
 - Changed: When collecting a Reserve Tank, the HUD will now properly update instead of disabling the bottom screen.
 - Changed: Some "hidden area" obstructions have been removed in the following areas to improve visibility in certain sections: Area 1, Area 3 Factory Exterior, Area 4 Central Caves, Area 7.
-- Changed: Area 1 - Inner Temple East Hall - The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
-- Changed: Area 4 Crystal Mines - The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
+- Changed: Area 1 - Inner Temple East Hall: The top crumble block no longer respawns to help prevent a possible softlock in Door Lock Rando.
+- Changed: Area 4 Crystal Mines: The upper door in Mines Entrance can now be shuffled in Door Lock Rando.
 - Changed: The description for the `Missile Reserve Tank` is now more explicit about when it can be used.
 - Fixed: When exporting a new seed, any leftover data from previous seeds will be deleted.
 - Fixed: If progressives are enabled, the models for Wave Beam and High Jump Boots now face right to be more recognizable.
@@ -104,9 +118,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Crash when defeating the Larva Metroids in reverse.
 - Fixed: Typos in `Patches` tab regarding area names.
 
-### Logic Database
+#### Logic Database
 
-#### Area 5 Tower Exterior
+##### Area 5 Tower Exterior
 
 - Fixed: Picking up `Missile Tank (Top)` from the top of the room now requires Bombs.
 
