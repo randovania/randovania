@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.2.0] - 2024-07-??
+## [8.3.x] - 2024-08-??
+
+- Nothing yet! Add changes here.
+
+## [8.2.0] - 2024-07-03
 
 - Added: When generating for a multiworld, certain error messages now mention the names of relevant worlds.
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
@@ -106,9 +110,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Crash when defeating the Larva Metroids in reverse.
 - Fixed: Typos in `Patches` tab regarding area names.
 
-### Logic Database
+#### Logic Database
 
-#### Area 5 Tower Exterior
+##### Area 5 Tower Exterior
 
 - Fixed: Picking up `Missile Tank (Top)` from the top of the room now requires Bombs.
 
