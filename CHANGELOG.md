@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.3.x] - 2024-08-??
 
+### AM2R
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
 ### Metroid: Samus Returns
 
+- Added: Progressive pickups can now be configured to be placed vanilla.
 - Changed: Room Names on the HUD are now enabled by default.
 
 ## [8.2.0] - 2024-07-03
