@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.3.x] - 2024-08-??
 
-- Nothing yet! Add changes here.
+### Metroid: Samus Returns
+
+- Added: More starting locations have been added for all areas.
 
 ## [8.2.0] - 2024-07-03
 
