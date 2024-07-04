@@ -648,7 +648,7 @@ jobs:
           TAG_NAME: ${{ github.ref }}
         run: |
           # Tag is of format refs/tags/vX.Y.Z, cut everything before X.Y.Z off.
-          echo "NEW_VERSION=$(${TAG_NAME:11})" >> $GITHUB_OUTPUT
+          echo "NEW_VERSION=${TAG_NAME:11}" >> $GITHUB_OUTPUT
 
       - name: Replace version, commit and push
         run: |
