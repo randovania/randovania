@@ -226,7 +226,7 @@ _CONVERTER_FOR_VERSION = [
     _dread_linux_ryujinx_path,  # added Dread Ryujinx export to Unix systems
     _msr_cosmetic_laser_color,  # remove the Grapple Laser color checkbox for MSR Cosmetics
     _msr_exheader_path,  # adds empty exheader path for MSR
-    _msr_room_names_visible, # forces room name display to be on by default
+    _msr_room_names_visible,  # forces room name display to be on by default
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 
