@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Added: More starting locations have been added for all areas.
+- Changed: Room Names on the HUD are now enabled by default.
 
 ## [8.2.0] - 2024-07-03
 
