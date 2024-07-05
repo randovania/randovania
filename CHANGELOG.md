@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.2.1] - 2024-07-??
 
+### AM2R
+
+- Fixed: The Tower is now properly unlit when it hasn't been activated, and lit when it has been activated.
+
 ### Metroid Dread
 
 - Fixed: Added missing dependency for Storm Missile Doors, which could crash the game when visiting a region where there was no other door that used the Super Missile Door as a base.
