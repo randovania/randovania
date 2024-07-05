@@ -5,7 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.2.0] - 2024-07-??
+## [8.3.x] - 2024-08-??
+
+### AM2R
+
+- Added: Progressive pickups can now be configured to be placed vanilla.
+
+### Metroid: Samus Returns
+
+- Added: More starting locations have been added for all areas.
+- Added: Progressive pickups can now be configured to be placed vanilla.
+- Changed: Room Names on the HUD are now enabled by default.
+
+
+## [8.2.1] - 2024-07-05
+
+### AM2R
+
+- Fixed: The Tower is now properly unlit when it hasn't been activated, and lit when it has been activated.
+
+### Metroid Dread
+
+- Fixed: Added missing dependency for Storm Missile Doors, which could crash the game when visiting a region where there was no other door that used the Super Missile Door as a base.
+
+### Metroid: Samus Returns
+
+- Changed: The hidden area obstruction before Diggernaut in Area 6 has been removed.
+- Fixed: Hidden area obstructions not being properly removed.
+- Fixed: An issue where items collected in Surface West weren't being sent in Multiworld.
+
+## [8.2.0] - 2024-07-03
 
 - Added: When generating for a multiworld, certain error messages now mention the names of relevant worlds.
 - Added: When generating for a multiworld, all mentions of a world now use the world's name.
