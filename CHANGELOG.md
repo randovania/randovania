@@ -17,7 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Changed: Room Names on the HUD are now enabled by default.
 
-## [8.2.1] - 2024-07-??
+
+## [8.2.1] - 2024-07-05
 
 ### AM2R
 
@@ -26,6 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: Added missing dependency for Storm Missile Doors, which could crash the game when visiting a region where there was no other door that used the Super Missile Door as a base.
+
+### Metroid: Samus Returns
+
+- Changed: The hidden area obstruction before Diggernaut in Area 6 has been removed.
+- Fixed: Hidden area obstructions not being properly removed.
+- Fixed: An issue where items collected in Surface West weren't being sent in Multiworld.
 
 ## [8.2.0] - 2024-07-03
 
