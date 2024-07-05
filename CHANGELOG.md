@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Fixed: The Tower is now properly unlit when it hasn't been activated, and lit when it has been activated.
 
 ### Metroid: Samus Returns
 
