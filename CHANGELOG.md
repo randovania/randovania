@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Changed: Room Names on the HUD are now enabled by default.
+- Changed: The hidden area obstruction before Diggernaut in Area 6 has been removed.
+- Fixed: Hidden area obstructions not being properly removed.
+- Fixed: An issue where items collected in Surface West not being sent in Multiworld.
 
 ## [8.2.0] - 2024-07-03
 
