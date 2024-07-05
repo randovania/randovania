@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Fixed: The Tower - Dark Maze now has the correct light level.
 
 ### Metroid: Samus Returns
 
