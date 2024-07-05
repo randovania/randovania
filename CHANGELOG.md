@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.4.x] - 2024-08-??
+
+- To be added
+
 ## [8.3.x] - 2024-08-??
 
 ### AM2R
@@ -16,7 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Changed: Room Names on the HUD are now enabled by default.
-
 
 ## [8.2.1] - 2024-07-05
 
@@ -135,9 +138,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Crash when defeating the Larva Metroids in reverse.
 - Fixed: Typos in `Patches` tab regarding area names.
 
-### Logic Database
+#### Logic Database
 
-#### Area 5 Tower Exterior
+##### Area 5 Tower Exterior
 
 - Fixed: Picking up `Missile Tank (Top)` from the top of the room now requires Bombs.
 

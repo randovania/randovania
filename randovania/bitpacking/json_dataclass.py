@@ -31,7 +31,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
     elif type_lib.is_named_tuple(type_):
         return type_(**arg)
 
-    elif type_origin == list:
+    elif type_origin is list:
         if type_args := typing.get_args(type_):
             value_types = type_args[0]
         else:
@@ -39,7 +39,7 @@ def _decode_with_type(arg: typing.Any, type_: type, extra_args: dict) -> typing.
 
         return [_decode_with_type(value, value_types, {}) for value in arg]
 
-    elif type_origin == tuple:
+    elif type_origin is tuple:
         type_args = typing.get_args(type_)
         if type_args:
             if len(type_args) == 2 and type_args[1] == Ellipsis:
