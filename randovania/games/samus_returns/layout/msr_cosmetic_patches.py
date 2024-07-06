@@ -3,6 +3,7 @@ from __future__ import annotations
 import dataclasses
 from enum import Enum
 
+from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import enum_lib
@@ -34,6 +35,12 @@ enum_lib.add_long_name(
 )
 
 
+class MusicMode(BitPackEnum, Enum):
+    VANILLA = "vanilla_music"
+    TYPE = "type_music"
+    FULL = "full_music"
+
+
 @dataclasses.dataclass(frozen=True)
 class MSRCosmeticPatches(BaseCosmeticPatches):
     use_laser_color: bool = False
@@ -49,6 +56,7 @@ class MSRCosmeticPatches(BaseCosmeticPatches):
     ammo_hud_color: tuple[int, int, int] = DEFAULT_AMMO_HUD_COLOR
     show_room_names: MSRRoomGuiType = MSRRoomGuiType.ALWAYS
     enable_remote_lua: bool = False
+    music: MusicMode = MusicMode.VANILLA
 
     @classmethod
     def default(cls) -> MSRCosmeticPatches:

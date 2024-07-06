@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from random import Random
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
@@ -14,12 +15,13 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.lib import random_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
-    from random import Random
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
@@ -102,6 +104,96 @@ def get_resources_for_details(
 
     return resources
 
+
+def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
+    combat_list = [
+        "boss_go",
+        "boss_mae_32",
+        "m_boss_alpha_mn",
+        "m_boss_alpha2_99",
+        "m_boss_arachnus03",
+        "m_boss_gamma04",
+        "m_boss_manic_miner_bot99",
+        "m_boss_manic_miner_chase99",
+        "m_boss_omega02",
+        "m_boss_queen02",
+        "m_boss_ridley_second99",
+        "m_boss_ridley_third99",
+        "m_boss_ridley01",
+        "m_boss_zeta06",
+    ]
+
+    exploration_list = [
+        "ele",
+        "k_brinstra_0714",
+        "k_crateria99",
+        "k_matad_result",
+        "k_ravacaves2_0916",
+        "m_allarea_a99",
+        "m_allarea_b99",
+        "m_area_indefinite01_99",
+        "m_area_tension02",
+        "m_area1_add1_03",
+        "m_area2_add1_02",
+        "m_area2_basic02",
+        "m_area4_5_basic01",
+        "m_area6_basic01",
+        "m_area7_8_basic01",
+        "m_area10_basic02",
+        "m_boss_before99",
+        "m_chozo_gallery_las",
+        "m_met2_ancient_chozo_ruins_2_99",
+        "m_met2_ancient_chozo_ruins99",
+        "m_met2_caverns1_99",
+        "m_met2_caverns3_99",
+        "m_met2_caverns4_99",
+        "m_met2_metroid_hatching99",
+        "m_prologue99",
+        "m_select99",
+        "m_title99",
+        "t_m2_ancient_chozo_ruins_arr2_lp",
+        "t_m2_surface_arr1",
+        "t_matad_ambi06",
+        "t_matad_area01_damage",
+    ]
+
+    fanfare_list = [
+        "event_jingle_placeholder",
+        "k_matad_jinchozo",
+        "matad_jintojo_32728k",
+        "special_ability2_32",
+        "sphere_jingle_placeholder",
+        "tank_jingle",
+    ]
+
+    excluded_list = [
+        "m_movie_ship_landing99",
+        "m_staffcredit99",
+    ]
+
+    if music_mode == MusicMode.VANILLA:
+        return {}
+
+    # Music is now either TYPE or FULL
+    assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
+
+    total_orig = combat_list + exploration_list + fanfare_list
+
+    if music_mode == MusicMode.FULL:
+        total_orig += excluded_list
+        total_new = random_lib.shuffle(rng, total_orig)
+    else:
+        # MusicMode is TYPE
+        # TODO: copying is not necessary anymore, clean this up in the future.
+        shuffled_combat = combat_list.copy()
+        shuffled_exploration = exploration_list.copy()
+        shuffled_fanfare = fanfare_list.copy()
+        rng.shuffle(shuffled_combat)
+        rng.shuffle(shuffled_exploration)
+        rng.shuffle(shuffled_fanfare)
+        total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
+
+    return {f"{orig}": f"{new}" for orig, new in zip(total_orig, total_new, strict=True)}
 
 class MSRPatchDataFactory(PatchDataFactory):
     cosmetic_patches: MSRCosmeticPatches
@@ -399,7 +491,7 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return all_dict
 
-    def _create_cosmetics(self) -> dict:
+    def _create_cosmetics(self, seed_number: int) -> dict:
         c = self.cosmetic_patches
         cosmetic_patches: dict = {}
         # Game needs each color component in [0-1] range
@@ -420,6 +512,8 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         cosmetic_patches["enable_room_name_display"] = c.show_room_names.value
         cosmetic_patches["camera_names_dict"] = self._build_area_name_dict()
+
+        cosmetic_patches["music_shuffle_dict"] = _construct_music_shuffle_dict(c.music, Random(seed_number))
 
         return cosmetic_patches
 
@@ -573,7 +667,9 @@ class MSRPatchDataFactory(PatchDataFactory):
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(self.rng),
             "baby_metroid_hint": self._create_baby_metroid_hint(),
-            "cosmetic_patches": self._create_cosmetics(),
+            "cosmetic_patches": self._create_cosmetics(
+                self.description.get_seed_for_player(self.players_config.player_index)
+            ),
             "configuration_identifier": self.description.shareable_hash,
             "custom_doors": self._add_custom_doors(),
             "door_patches": self._door_patches(),
