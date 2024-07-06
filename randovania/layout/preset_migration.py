@@ -1206,6 +1206,13 @@ def _migrate_v108(preset: dict, game: RandovaniaGame) -> None:
         preset["configuration"]["instant_morph"] = True
 
 
+def _migrate_v109(preset: dict, game: RandovaniaGame) -> None:
+    if game == RandovaniaGame.METROID_PRIME_ECHOES:
+        preset["configuration"]["use_new_patcher"] = (
+            "both" if preset["configuration"]["use_new_patcher"] else "disabled"
+        )
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1315,6 +1322,7 @@ _MIGRATIONS = [
     _migrate_v106,  # add pre-placement to prime
     _migrate_v107,  # fusion remove anti-softlock
     _migrate_v108,  # fusion instant morph
+    _migrate_v109,  # echoes new patcher only
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

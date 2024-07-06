@@ -11,7 +11,7 @@ from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.games.prime2.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, EchoesNewPatcher
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -48,8 +48,10 @@ def delete_internal_copy(internal_copies_path: Path) -> None:
         shutil.rmtree(internal_copies_path)
 
 
-def check_extracted_game(input_file_edit: QLineEdit, input_file_button: QPushButton, contents_file_path: Path) -> bool:
-    prompt_input_file = not has_internal_copy(contents_file_path)
+def check_extracted_game(
+    input_file_edit: QLineEdit, input_file_button: QPushButton, contents_file_path: Path, requires_input_iso: bool
+) -> bool:
+    prompt_input_file = requires_input_iso or not has_internal_copy(contents_file_path)
     input_file_edit.setEnabled(prompt_input_file)
 
     if prompt_input_file:
@@ -85,10 +87,11 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
         games: list[RandovaniaGame],
     ):
         super().__init__(options, configuration, word_hash, spoiler, games)
+        self.requires_input_iso = configuration.use_new_patcher == EchoesNewPatcher.ONLY
 
         self.default_output_name = f"Echoes Randomizer - {word_hash}"
         self._prompt_input_file = check_extracted_game(
-            self.input_file_edit, self.input_file_button, self._contents_file_path
+            self.input_file_edit, self.input_file_button, self._contents_file_path, self.requires_input_iso
         )
 
         per_game = options.per_game_options(EchoesPerGameOptions)
@@ -205,7 +208,7 @@ class EchoesGameExportDialog(GameExportDialog[EchoesConfiguration], Ui_EchoesGam
             delete_internal_copy(self._options.internal_copies_path)
             self.input_file_edit.setText("")
             self._prompt_input_file = check_extracted_game(
-                self.input_file_edit, self.input_file_button, self._contents_file_path
+                self.input_file_edit, self.input_file_button, self._contents_file_path, self.requires_input_iso
             )
 
     # Output File
