@@ -195,6 +195,7 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
 
     return {f"{orig}": f"{new}" for orig, new in zip(total_orig, total_new, strict=True)}
 
+
 class MSRPatchDataFactory(PatchDataFactory):
     cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
