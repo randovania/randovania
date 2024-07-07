@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 
+### Metroid: Samus Returns
+
+- Changed: Room Names on the HUD are now enabled by default.
+
 ## [8.2.0] - 2024-07-03
 
 - Added: When generating for a multiworld, certain error messages now mention the names of relevant worlds.
