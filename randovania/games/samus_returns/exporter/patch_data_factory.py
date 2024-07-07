@@ -175,25 +175,20 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
         return {}
 
     # Music is now either TYPE or FULL
-    assert music_mode in (MusicMode.TYPE, MusicMode.FULL)
-
-    total_orig = combat_list + exploration_list + fanfare_list
+    original_list: list = combat_list + exploration_list
+    new_list: list = []
 
     if music_mode == MusicMode.FULL:
-        total_orig += excluded_list
-        total_new = random_lib.shuffle(rng, total_orig)
-    else:
-        # MusicMode is TYPE
-        # TODO: copying is not necessary anymore, clean this up in the future.
-        shuffled_combat = combat_list.copy()
-        shuffled_exploration = exploration_list.copy()
-        shuffled_fanfare = fanfare_list.copy()
-        rng.shuffle(shuffled_combat)
-        rng.shuffle(shuffled_exploration)
-        rng.shuffle(shuffled_fanfare)
-        total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
+        original_list += excluded_list
 
-    return {f"{orig}": f"{new}" for orig, new in zip(total_orig, total_new, strict=True)}
+    # Shuffle the new list
+    new_list = random_lib.shuffle(rng, iter(original_list))
+    # Shuffle the fanfare list separately and append to the new list
+    new_list += random_lib.shuffle(rng, iter(fanfare_list))
+    # Append the fanfare list to the original list
+    original_list += fanfare_list
+
+    return {f"{orig}": f"{new}" for orig, new in zip(original_list, new_list, strict=True)}
 
 
 class MSRPatchDataFactory(PatchDataFactory):
