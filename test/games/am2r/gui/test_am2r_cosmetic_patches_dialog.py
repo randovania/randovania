@@ -43,12 +43,13 @@ def test_change_music_option(
     }
     radio_button = str_to_option_map[option_to_click]
 
+    print(radio_button)
     skip_qtbot.mouseClick(radio_button, QtCore.Qt.MouseButton.LeftButton)
 
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(music=music_end_value)
 
 
-def test_show_unexplored_map(skip_qtbot):
+def test_show_unexplored_map(skip_qtbot: QtBot) -> None:
     cosmetic_patches = AM2RCosmeticPatches(show_unexplored_map=True)
 
     dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
@@ -59,7 +60,7 @@ def test_show_unexplored_map(skip_qtbot):
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(show_unexplored_map=False)
 
 
-def test_unveiled_blocks(skip_qtbot):
+def test_unveiled_blocks(skip_qtbot: QtBot) -> None:
     cosmetic_patches = AM2RCosmeticPatches(unveiled_blocks=True)
 
     dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
@@ -70,7 +71,7 @@ def test_unveiled_blocks(skip_qtbot):
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(unveiled_blocks=False)
 
 
-def test_custom_hud_colors(skip_qtbot):
+def test_custom_hud_colors(skip_qtbot: QtBot) -> None:
     # Setup
     cosmetic_patches = AM2RCosmeticPatches(health_hud_rotation=0, etank_hud_rotation=0, dna_hud_rotation=0)
 
@@ -109,3 +110,33 @@ def test_hue_rotate_color():
 
     color_4 = hue_rotate_color(initial_color, 0)
     assert color_4 == initial_color
+
+
+def test_rotate_tilesets_and_backgrounds(skip_qtbot: QtBot) -> None:
+    cosmetic_patches = AM2RCosmeticPatches()
+
+    dialog = AM2RCosmeticPatchesDialog(None, cosmetic_patches)
+    skip_qtbot.addWidget(dialog)
+
+    assert (
+        dialog.tileset_rotation_spinner_min.value()
+        == dialog.tileset_rotation_spinner_max.value()
+        == dialog.background_rotation_spinner_min.value()
+        == dialog.background_rotation_spinner_max.value()
+        == 0
+    )
+
+    dialog.tileset_rotation_spinner_max.setValue(360)
+    dialog.background_rotation_spinner_max.setValue(360)
+
+    dialog.tileset_rotation_spinner_min.setValue(120)
+    dialog.background_rotation_spinner_min.setValue(240)
+
+    assert dialog.tileset_rotation_spinner_max.minimum() == 120
+    assert dialog.background_rotation_spinner_max.minimum() == 240
+
+    dialog.tileset_rotation_spinner_max.setValue(240)
+    dialog.background_rotation_spinner_max.setValue(300)
+
+    assert dialog.tileset_rotation_spinner_min.maximum() == 240
+    assert dialog.background_rotation_spinner_min.maximum() == 300
