@@ -14,7 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Added: The first log entry in the game now displays a history of the collected items.
+- Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
+- Changed:  The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
 - Fixed: The Tower - Dark Maze now has the correct light level.
+- Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
+- Fixed: The Baby now requires all DNA in order to be collected again.
 
 #### Logic Database
 
