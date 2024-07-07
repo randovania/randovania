@@ -95,16 +95,12 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
 
     if music_mode == MusicMode.FULL:
         total_orig += excluded_list
-        total_new = random_lib.shuffle(rng, total_orig)
+        total_new = random_lib.shuffle(rng, iter(total_orig))
     else:
         # MusicMode is TYPE
-        # TODO: copying is not necessary anymore, clean this up in the future.
-        shuffled_combat = combat_list.copy()
-        shuffled_exploration = exploration_list.copy()
-        shuffled_fanfare = fanfare_list.copy()
-        rng.shuffle(shuffled_combat)
-        rng.shuffle(shuffled_exploration)
-        rng.shuffle(shuffled_fanfare)
+        shuffled_combat = random_lib.shuffle(rng, iter(combat_list))
+        shuffled_exploration = random_lib.shuffle(rng, iter(exploration_list))
+        shuffled_fanfare = random_lib.shuffle(rng, iter(fanfare_list))
         total_new = shuffled_combat + shuffled_exploration + shuffled_fanfare
 
     return {f"{orig}.ogg": f"{new}.ogg" for orig, new in zip(total_orig, total_new, strict=True)}
