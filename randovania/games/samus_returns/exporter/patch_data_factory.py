@@ -180,9 +180,13 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
 
     if music_mode == MusicMode.FULL:
         original_list += excluded_list
+        new_list = random_lib.shuffle(rng, iter(original_list))
+    else:
+        # MusicMode is TYPE
+        shuffled_combat = random_lib.shuffle(rng, iter(combat_list))
+        shuffled_exploration = random_lib.shuffle(rng, iter(exploration_list))
+        new_list = shuffled_combat + shuffled_exploration
 
-    # Shuffle the new list
-    new_list = random_lib.shuffle(rng, iter(original_list))
     # Shuffle the fanfare list separately and append to the new list
     new_list += random_lib.shuffle(rng, iter(fanfare_list))
     # Append the fanfare list to the original list
