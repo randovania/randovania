@@ -43,8 +43,9 @@ def test_change_music_option(
     }
     radio_button = str_to_option_map[option_to_click]
 
-    print(radio_button)
-    skip_qtbot.mouseClick(radio_button, QtCore.Qt.MouseButton.LeftButton)
+    # For *some* reason, mouseClick sometimes randomly doesn't actually click it.
+    # So we trigger the thing with space instead.
+    skip_qtbot.keyClick(radio_button, QtCore.Qt.Key.Key_Space)
 
     assert dialog.cosmetic_patches == AM2RCosmeticPatches(music=music_end_value)
 
