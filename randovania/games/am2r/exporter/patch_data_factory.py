@@ -487,6 +487,26 @@ class AM2RPatchDataFactory(PatchDataFactory):
             if (
                 isinstance(node, DockNode)
                 and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                and node.dock_type.short_name == "teleporter"
+            )
+        }
+
+        entrances = {
+            str(node.extra["instance_id"]): {
+                "dest_id": connection.extra["instance_id"],
+                "dest_direction": connection.extra["facing"],
+                "dest_room": self.game.region_list.area_by_area_location(connection.identifier.area_identifier).extra[
+                    "map_name"
+                ],
+                "force_idle_after_transition": (node.extra["facing"] == connection.extra["facing"])
+                or (node.default_dock_weakness != connection.default_dock_weakness),
+            }
+            for node, connection in self.patches.all_dock_connections()
+            if (
+                isinstance(node, DockNode)
+                and isinstance(connection, DockNode)
+                and node.dock_type in self.game.dock_weakness_database.all_teleporter_dock_types
+                and node.extra.get("is_area_transition", False)
             )
         }
 
@@ -498,6 +518,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "rooms": self._create_room_dict(),
             "game_patches": self._create_game_patches(self.configuration, pickup_list, text_data, self.rng),
             "pipes": pipes if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA else {},
+            "entrances": entrances if self.configuration.areas.mode != TeleporterShuffleMode.VANILLA else {},
             "door_locks": self._create_door_locks(),
             "hints": self._create_hints(self.rng),
             "cosmetics": self._create_cosmetics(self.description.get_seed_for_player(self.players_config.player_index)),

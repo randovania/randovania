@@ -4,7 +4,7 @@ import dataclasses
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.games.am2r.layout.am2r_teleporters import AM2RTeleporterConfiguration
+from randovania.games.am2r.layout.am2r_teleporters import AM2RAreaRandoConfiguration, AM2RTeleporterConfiguration
 from randovania.games.am2r.layout.hint_configuration import HintConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -25,6 +25,7 @@ class AM2RConfiguration(BaseConfiguration):
     softlock_prevention_blocks: bool
     septogg_helpers: bool
     teleporters: AM2RTeleporterConfiguration
+    areas: AM2RAreaRandoConfiguration
     skip_cutscenes: bool
     skip_save_cutscene: bool
     skip_item_cutscenes: bool

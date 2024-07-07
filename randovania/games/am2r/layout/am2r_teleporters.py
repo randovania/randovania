@@ -34,3 +34,30 @@ class AM2RTeleporterConfiguration(TeleporterConfiguration):
             return result
         else:
             return []
+
+
+@dataclasses.dataclass(frozen=True)
+class AM2RAreaRandoConfiguration(TeleporterConfiguration):
+    # Area Transitions are the only valid targets and sources.
+    @property
+    def valid_targets(self) -> list[NodeIdentifier]:
+        if self.mode in {
+            TeleporterShuffleMode.ONE_WAY_TELEPORTER,
+            TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT,
+        }:
+            game_description = default_database.game_description_for(self.game)
+            teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
+            region_list = game_description.region_list
+
+            result = []
+            for identifier in self.editable_teleporters:
+                node = region_list.node_by_identifier(identifier)
+                if (
+                    isinstance(node, DockNode)
+                    and node.dock_type in teleporter_dock_types
+                    and node.extra.get("is_area_transition", False)
+                ):
+                    result.append(identifier)
+            return result
+        else:
+            return []

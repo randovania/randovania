@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-class AM2RTeleporterDetailsTab(BaseConnectionDetailsTab):
+class AM2RAreaRandoDetailsTab(BaseConnectionDetailsTab):
     @classmethod
     def should_appear_for(
         cls, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
@@ -28,7 +28,7 @@ class AM2RTeleporterDetailsTab(BaseConnectionDetailsTab):
         patches: GamePatches,
     ) -> None:
         for source, destination_loc in patches.all_dock_connections():
-            if source.dock_type.short_name == "teleporter":
+            if source.extra.get("is_area_transition", False):
                 if source.dock_type not in patches.game.dock_weakness_database.all_teleporter_dock_types:
                     continue
                 source_region = region_list.region_by_area_location(source.identifier.area_identifier)
@@ -39,4 +39,4 @@ class AM2RTeleporterDetailsTab(BaseConnectionDetailsTab):
                 )
 
     def tab_title(self) -> str:
-        return "Transport Pipes"
+        return "Area Rando"
