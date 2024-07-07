@@ -188,7 +188,7 @@ def _msr_exheader_path(options: dict) -> dict:
 
 def _msr_room_names_visible(options: dict) -> dict:
     if "game_samus_returns" in options:
-        options["game_samus_returns"]["cosmetic_patches"]["show_room_names"] = "Always"
+        options["game_samus_returns"]["cosmetic_patches"]["show_room_names"] = "ALWAYS"
 
     return options
 
