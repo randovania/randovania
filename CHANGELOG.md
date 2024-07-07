@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### The Tower
 
-- Added: Ext. Zeta Nest East Access now has an IBJ(intermediate) + Spider method of crossing the room from the right.
+- Added: Ext. Zeta Nest East Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from the right.
+- Added: Gamma Nest West Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from center to right.
 - Fixed: Ext. Zeta Nest East Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
