@@ -1106,7 +1106,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_ManicMiner"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Diggernaut Arena": {
                             "type": "and",
@@ -4363,7 +4363,7 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_DEBUG_ManicMinerAbsorption"
+                        "start_point_actor_name": "ST_DEBUG_ManicMinerAbsorbption"
                     },
                     "valid_starting_location": false,
                     "connections": {
@@ -6738,6 +6738,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -6803,11 +6810,37 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2250.0,
+                        "y": 7500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Omega_001B"
+                    },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Omega Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Zeta Arena Access": {
-            "default_node": "Start Point (Left)",
+            "default_node": "Start Point (Omega)",
             "extra": {
                 "total_boundings": {
                     "x1": 1950.0,
@@ -6870,7 +6903,7 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Start Point (Left)": {
+                        "Start Point (Omega)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6913,7 +6946,7 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Start Point (Right)": {
+                        "Start Point (Zeta)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6960,7 +6993,7 @@
                         }
                     }
                 },
-                "Start Point (Left)": {
+                "Start Point (Omega)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -6986,7 +7019,7 @@
                         }
                     }
                 },
-                "Start Point (Right)": {
+                "Start Point (Zeta)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -8310,7 +8343,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint_002"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -9421,6 +9454,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -9490,6 +9530,32 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1025.0,
+                        "y": 9700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "start_point_actor_name": "ST_SG_Omega_001C"
+                    },
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Hideout Sprawl (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
