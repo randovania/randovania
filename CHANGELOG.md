@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
-- Added: New cosmetic to shuffle music either by song type or full shuffle.
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
 - Changed: Room Names on the HUD are now enabled by default.
 
 ## [8.2.1] - 2024-07-05
