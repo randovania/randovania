@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Added: FAQ for Sanctuary Entrance Kenetic Orb Canon.
+- Added: FAQ for Sanctuary Entrance Kinetic Orb Canon.
 
 ### Metroid: Samus Returns
 

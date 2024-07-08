@@ -117,7 +117,7 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door.",
         ),
         (
-            "Why can't I use the kenetic orb cannon in Sanctuary Entrance?",
+            "Why can't I use the Kinetic Orb Cannon in Sanctuary Entrance?",
             "The morph cannon will only be active once the scan post has been scanned and the room has been reloaded.",
         ),
     ],
