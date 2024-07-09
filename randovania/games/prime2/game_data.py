@@ -116,6 +116,10 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "Why can't I cross the door between Underground Transport and Torvus Temple?",
             "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door.",
         ),
+        (
+            "Why can't I use the Kinetic Orb Cannon in Sanctuary Entrance?",
+            "The morph cannon will only be active once the scan post has been scanned and the room has been reloaded.",
+        ),
     ],
     web_info=game.GameWebInfo(
         what_can_randomize=[

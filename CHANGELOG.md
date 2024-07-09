@@ -32,6 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 
+### Metroid Prime 2: Echoes
+
+- Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
+
 ### Metroid: Samus Returns
 
 - Added: More starting locations have been added for all areas.
