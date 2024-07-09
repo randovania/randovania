@@ -36,6 +36,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
 
+#### Logic Database
+
+##### Temple Grounds
+
+- Added: Great Wind Chamber terminal fall to the morph cannon now has comments and video.
+
 ### Metroid: Samus Returns
 
 - Added: More starting locations have been added for all areas.
