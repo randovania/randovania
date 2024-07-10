@@ -52,6 +52,17 @@ class AM2RConfiguration(BaseConfiguration):
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.AM2R
 
+    def dangerous_settings(self) -> list[str]:
+        result = super().dangerous_settings()
+
+        if self.submerged_water_chance > 0 or self.submerged_lava_chance > 0:
+            result.append("Submerged Rooms")
+
+        if self.darkness_chance > 0:
+            result.append("Darkened Rooms")
+
+        return result
+
     def active_layers(self) -> set[str]:
         result = super().active_layers()
 
