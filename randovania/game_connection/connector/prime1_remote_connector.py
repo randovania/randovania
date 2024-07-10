@@ -116,7 +116,6 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
                 if item.extra.get("max_increase", None) == 0:
-                    print("max increase path hit!")
                     patches.append(
                         all_prime_dol_patches.adjust_item_amount_patch(
                             self.version.powerup_functions,
@@ -126,7 +125,6 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                         )
                     )
                 else:
-                    print("normal path hit!")
                     patches.append(
                         all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                             self.version.powerup_functions,
