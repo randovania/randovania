@@ -1160,6 +1160,7 @@ def _migrate_v84(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v85(preset: dict) -> dict:
     if preset["game"] == "prime1":
         state = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
