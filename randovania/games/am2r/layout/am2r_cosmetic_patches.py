@@ -44,6 +44,10 @@ class AM2RCosmeticPatches(BaseCosmeticPatches):
     etank_hud_rotation: int = 0
     dna_hud_rotation: int = 0
     music: MusicMode = MusicMode.VANILLA
+    tileset_rotation_min: int = 0
+    tileset_rotation_max: int = 0
+    background_rotation_min: int = 0
+    background_rotation_max: int = 0
     # TODO: decide how to add samus palettes. will probably only get added after patcher is integrated
 
     @classmethod

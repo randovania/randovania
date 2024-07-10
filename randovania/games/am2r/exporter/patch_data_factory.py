@@ -395,6 +395,8 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "health_hud_rotation": c.health_hud_rotation,
             "etank_hud_rotation": c.etank_hud_rotation,
             "dna_hud_rotation": c.dna_hud_rotation,
+            "tileset_rotation": Random(seed_number).randint(c.tileset_rotation_min, c.tileset_rotation_max),
+            "background_rotation": Random(seed_number).randint(c.background_rotation_min, c.background_rotation_max),
             "room_names_on_hud": c.show_room_names.value,
             "music_shuffle": _construct_music_shuffle_dict(c.music, Random(seed_number)),
         }
