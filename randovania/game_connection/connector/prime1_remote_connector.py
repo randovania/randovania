@@ -121,7 +121,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                         all_prime_dol_patches.adjust_item_amount_patch(
                             self.version.powerup_functions,
                             self.version.game,
-                            self.extra["item_id"],
+                            item.extra["refill_id"] if item.extra.get("is_refill", None) else item.extra["item_id"],
                             delta,
                         )
                     )
