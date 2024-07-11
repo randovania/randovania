@@ -14,6 +14,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Added: The first log entry in the game now displays a history of the collected items.
+- Added: Multiworld generation now warns when chaos settings are enabled.
+- Added: Cosmetic option to randomly color shift tilesets or backgrounds.
+- Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
+- Changed:  The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
+- Fixed: The Tower - Dark Maze now has the correct light level.
+- Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
+- Fixed: The Baby now requires all DNA in order to be collected again.
+
+#### Logic Database
+
+##### The Tower
+
+- Added: Ext. Zeta Nest East Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from the right.
+- Added: Gamma Nest West Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from center to right.
+- Fixed: Ext. Zeta Nest East Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
+
+### Metroid Prime 2: Echoes
+
+- Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
 
 ### Metroid: Samus Returns
 
