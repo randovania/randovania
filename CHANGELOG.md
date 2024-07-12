@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Room Names on the HUD are now enabled by default.
 - Changed: Power Bomb drop rates have been bumped to 20% from 10-15% for nearly all enemies.
 - Changed: The music in Surface West now plays the Surface East - Landing Site theme if you do not have the Baby and all DNA collected.
+- Changed: The Aeion orbs after collecting major upgrades has been restored.
 - Fixed: The hidden area in Area 7 - Spider Boost Tunnel South not being removed fully.
 - Fixed: Negative Metroid count if defeating the Larva Metroids in reverse.
 - Fixed: Visual bug where Samus would display incorrectly after reloading to checkpoint from a boss fight.
