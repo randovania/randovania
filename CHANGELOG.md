@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Added: New generic offworld items for Missiles, Beams, and Suits in multiworld.
