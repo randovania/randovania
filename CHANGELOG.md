@@ -34,6 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Ruined Shrine NSJ climb now has both NTSC and non-NTSC versions documented.
+
 ### Metroid Prime 2: Echoes
 
 - Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
