@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
 - Changed: The Area View of the Data Visualizer now always has a dark gray background to help with readability.
 
+### Resolver
+
+- Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
+
 ### AM2R
 
 #### Logic Database
