@@ -49,6 +49,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - When dodging the later attack without Flash Shift or a Spin Jump, 250 Energy is required
     - The fan phase requires a Spin Jump or Combat (Intermediate) with 300 Energy.
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Ruined Shrine NSJ climb now has both NTSC and non-NTSC versions documented.
+
 ### Metroid Prime 2: Echoes
 
 - Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
