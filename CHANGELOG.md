@@ -34,6 +34,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Cataris
+
+- Changed: The fight with Experiment Z-57 now requires more resources
+  - Charge Beam changes
+    - Using just Charge Beam has been upgraded to Combat (Intermediate)
+    - Using Charge Beam with beams dealing at least 75 damage satisfies Combat (Beginner)
+    - Using Charge Beams with beams dealing at least 120 damage is in logic with no tricks.
+  - Health changes
+    - When dodging the later attack without Flash Shift or a Spin Jump, 250 Energy is required
+    - The fan phase requires a Spin Jump or Combat (Intermediate) with 300 Energy.
+
 ### Metroid Prime 2: Echoes
 
 - Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
