@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The Tower - Dark Maze now has the correct light level.
 - Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
 - Fixed: The Baby now requires all DNA in order to be collected again.
+- Fixed: When using Door Lock rando, doors in boss rooms will not close instantly when stepping into the room, but instead stay open until the proper event starts.
+- Fixed: Doors in boss rooms will not lock again when reentering the boss room after the boss was defeated.
+- Fixed: In Door Lock Rando, when doors unlock in Genetic Laboratory rooms, they will now properly switch to ammo doors rather than switching to blue doors.
+- Fixed: The softlock prevention in Super Missile Chamber now doesn't have a shot block overlapping with a crumble block.
+- Fixed: In Door Lock Rando, if another Water Turbine has been destroyed, it will now not cause the original Water Turbine in Hydro Station to get destroyed.
 
 #### Logic Database
 
