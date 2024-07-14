@@ -193,7 +193,7 @@ class NodeAdapter(construct.Adapter):
     def _decode(self, obj: construct.Container, context, path):
         result = construct.Container(node_type=obj["node_type"])
         result.update(obj["data"])
-        result.move_to_end("connections")
+        result["connections"] = result.pop("connections")
         return result
 
     def _encode(self, obj: construct.Container, context, path):
