@@ -8,7 +8,7 @@ import typing
 import uuid
 from enum import Enum
 
-import construct
+import construct  # type: ignore[import-untyped]
 from frozendict import frozendict
 
 from randovania.lib import construct_lib, type_lib

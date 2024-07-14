@@ -9,7 +9,7 @@ import operator
 from typing import TYPE_CHECKING
 
 import bitstruct
-import construct
+import construct  # type: ignore[import-untyped]
 
 import randovania
 from randovania.bitpacking.bitpacking import single_byte_hash
