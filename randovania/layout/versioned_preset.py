@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from uuid import UUID
 
 import aiofiles
-import construct
+import construct  # type: ignore[import-untyped]
 import slugify
 
 from randovania.games.game import RandovaniaGame

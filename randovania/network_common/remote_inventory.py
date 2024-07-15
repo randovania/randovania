@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import construct
+import construct  # type: ignore[import-untyped]
 
 from randovania.bitpacking import construct_pack
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
