@@ -991,6 +991,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 },
                 "requiredArtifactCount": (12 - self.configuration.artifact_target.value)
                 + self.configuration.artifact_required.value,
+                "patchWallcrawling": self.configuration.nerf_oob,
             },
             "tweaks": ctwk_config,
             "levelData": level_data,
