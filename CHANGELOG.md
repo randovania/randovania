@@ -52,6 +52,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
 
+#### Logic Database
+
+##### Temple Grounds
+
+- Added: Great Wind Chamber terminal fall to the morph cannon now has standable terrain (beginner) and is documented.
+
 ### Metroid: Samus Returns
 
 - Added: Cosmetic option to shuffle music either by song type or full shuffle.
