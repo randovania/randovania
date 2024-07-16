@@ -47,6 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Burenia
 
 - Added: Use Pseudo Wave Beam (Intermediate) with Diffusion Beam to break the Early Gravity Blob through the wall.
+- Removed: Using Water Bomb Jumps to reach the Blob Alcove in Gravity Suit Tower.
+
 ### Metroid Prime
 
 #### Logic Database
