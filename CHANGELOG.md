@@ -40,6 +40,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Burenia
+
+- Added: Use Pseudo Wave Beam (Intermediate) with Diffusion Beam to break the Early Gravity Blob through the wall.
 ### Metroid Prime
 
 #### Logic Database
