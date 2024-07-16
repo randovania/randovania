@@ -485,7 +485,7 @@ class Options:
         return getattr(self, f"game_{game.value}")
 
     def set_options_for_game(self, game: RandovaniaGame, per_game: PerGameOptions):
-        if type(per_game) != game.options:
+        if type(per_game) is not game.options:
             raise ValueError(f"Expected {game.options}, got {type(per_game)}")
 
         self._edit_field(f"game_{game.value}", per_game)
