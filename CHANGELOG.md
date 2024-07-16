@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Temple Grounds
 
-- Added: Great Wind Chamber terminal fall to the morph cannon now has comments and video.
+- Added: Great Wind Chamber terminal fall to the morph cannon now has standable terrain (beginner) and is documented.
 
 ### Metroid: Samus Returns
 
