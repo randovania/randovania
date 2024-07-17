@@ -1,16 +1,12 @@
 from __future__ import annotations
 
-import functools
 from typing import TYPE_CHECKING
 
 from randovania.games.am2r.gui.generated.preset_am2r_energy_ui import Ui_PresetAM2REnergy
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
-from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
-    from PySide6 import QtWidgets
-
     from randovania.game_description.game_description import GameDescription
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
@@ -48,11 +44,11 @@ class PresetAM2REnergy(PresetTab, Ui_PresetAM2REnergy):
     def _persist_first_suit_dr(self):
         with self._editor as editor:
             editor.set_configuration_field("first_suit_dr", int(self.first_suit_spin_box.value()))
-        if (self.second_suit_spin_box.value() < self.first_suit_spin_box.value()):
+        if self.second_suit_spin_box.value() < self.first_suit_spin_box.value():
             self.second_suit_spin_box.setValue(self.first_suit_spin_box.value())
 
     def _persist_second_suit_dr(self):
         with self._editor as editor:
             editor.set_configuration_field("second_suit_dr", int(self.second_suit_spin_box.value()))
-        if (self.second_suit_spin_box.value() < self.first_suit_spin_box.value()):
+        if self.second_suit_spin_box.value() < self.first_suit_spin_box.value():
             self.first_suit_spin_box.setValue(self.second_suit_spin_box.value())
