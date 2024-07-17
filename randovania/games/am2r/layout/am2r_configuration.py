@@ -23,6 +23,8 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    first_suit_dr: int = dataclasses.field(metadata={"min": 0, "max": 100, "precision": 1})
+    second_suit_dr: int = dataclasses.field(metadata={"min": 0, "max": 100, "precision": 1})
     softlock_prevention_blocks: bool
     septogg_helpers: bool
     teleporters: AM2RTeleporterConfiguration

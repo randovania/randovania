@@ -285,6 +285,8 @@ class AM2RPatchDataFactory(PatchDataFactory):
             "skip_save_cutscene": config.skip_save_cutscene,
             "skip_item_cutscenes": config.skip_item_cutscenes,
             "energy_per_tank": config.energy_per_tank,
+            "one_suit_damage_multiplier": (1-config.first_suit_dr/100),
+            "two_suits_damage_multiplier": (1-config.second_suit_dr/100),
             "grave_grotto_blocks": config.grave_grotto_blocks,
             "fusion_mode": config.fusion_mode,
             "supers_on_missile_doors": config.supers_on_missile_doors,
