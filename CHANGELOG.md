@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
 - Changed: A warning will be shown when having Queen Metroid-Locked Doors as a target in Multiworlds.
 - Fixed: The Tower - Dark Maze now has the correct light level.
+- Fixed: Industrial Complex - Breeding Grounds Fly Stadium Access now has the correct light level.
 - Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
 - Fixed: The Baby now requires all DNA in order to be collected again.
 - Fixed: When using Door Lock rando, doors in boss rooms will not close instantly when stepping into the room, but instead stay open until the proper event starts.
