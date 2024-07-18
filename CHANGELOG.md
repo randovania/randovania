@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Added: 10 more joke hints have been added.
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Added: The first log entry in the game now displays a history of the collected items.
 - Added: Multiworld generation now warns when chaos settings are enabled.
