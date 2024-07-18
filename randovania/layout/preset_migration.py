@@ -1161,6 +1161,13 @@ def _migrate_v84(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v85(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        preset["configuration"]["areas"] = {"mode": "vanilla", "excluded_teleporters": [], "excluded_targets": []}
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1246,6 +1253,7 @@ _MIGRATIONS = [
     _migrate_v82,
     _migrate_v83,
     _migrate_v84,
+    _migrate_v85,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

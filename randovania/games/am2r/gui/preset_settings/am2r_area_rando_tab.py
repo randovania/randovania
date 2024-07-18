@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import dataclasses
 import typing
 from typing import TYPE_CHECKING
 
@@ -13,6 +14,7 @@ from randovania.gui.lib.node_list_helper import NodeListHelper
 from randovania.gui.preset_settings.preset_teleporter_tab import PresetTeleporterTab
 from randovania.layout.lib.teleporters import (
     TeleporterConfiguration,
+    TeleporterList,
     TeleporterShuffleMode,
 )
 
@@ -27,43 +29,96 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeListHelper):
+class PresetAreaRandoAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeListHelper):
     teleporter_mode_to_description = {
-        TeleporterShuffleMode.VANILLA: "All transport pipes are connected to where they do in the original game.",
+        TeleporterShuffleMode.VANILLA: "All area transitions are connected to where they do in the original game.",
+        TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
+            "After going through an area transition, the transition in the room you are in will bring you back to "
+            "where you were. "
+            "A transition will never connect to another in the same region. "
+            "This is the only setting that guarantees all regions are reachable."
+        ),
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
-            "After taking a transport pipe, the transport pipe in the room you are in"
-            " will bring you back to where you were. Transport pipes can connect to another one in the same region."
+            "After going through an area transition, the transition in the room you are in"
+            " will bring you back to where you were. Area transitions can connect to another one in the same region."
         ),
         TeleporterShuffleMode.ONE_WAY_TELEPORTER: (
-            "All transport pipes bring you to a transport pipe room, but going backwards can go somewhere else. "
-            "All rooms are used as a destination exactly once, causing all transport pipes to be separated into loops."
+            "All area transitions bring you to another transition room, but going backwards can go somewhere else. "
+            "All rooms are used as a destination exactly once, causing all area transitions to be separated into loops."
         ),
         TeleporterShuffleMode.ONE_WAY_TELEPORTER_REPLACEMENT: (
-            "All transport pipes bring you to a transport pipe room, but going backwards can go somewhere else. "
-            "Rooms can be used as a destination multiple times, causing transport pipes which you can possibly"
+            "All area transitions bring you to a transition room, but going backwards can go somewhere else. "
+            "Rooms can be used as a destination multiple times, causing area transitions which you can possibly"
             " not come back to."
         ),
     }
+
+    def _update_teleporter_mode(self):
+        with self._editor as editor:
+            conf = editor.configuration
+            assert isinstance(conf, AM2RConfiguration)
+            editor.set_configuration_field(
+                "areas",
+                dataclasses.replace(
+                    conf.areas,
+                    mode=self.teleporters_combo.currentData(),
+                ),
+            )
+
+    def _on_teleporter_source_check_changed(self, checked: bool):
+        with self._editor as editor:
+            upper_conf = editor.configuration
+            assert isinstance(upper_conf, AM2RConfiguration)
+            config = upper_conf.areas
+            editor.set_configuration_field(
+                "areas",
+                dataclasses.replace(
+                    config,
+                    excluded_teleporters=TeleporterList.with_elements(
+                        [
+                            location
+                            for location, check in self._teleporters_source_for_location.items()
+                            if not check.isChecked()
+                        ],
+                        self.game_enum,
+                    ),
+                ),
+            )
+
+    def _on_teleporter_target_check_changed(self, areas: list[NodeIdentifier], checked: bool):
+        with self._editor as editor:
+            upper_conf = editor.configuration
+            assert isinstance(upper_conf, AM2RConfiguration)
+            config = upper_conf.areas
+            editor.set_configuration_field(
+                "areas",
+                dataclasses.replace(
+                    config,
+                    excluded_targets=config.excluded_targets.ensure_has_locations(areas, not checked),
+                ),
+            )
 
     def setup_ui(self) -> None:
         self.setupUi(self)
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Transport Pipes"
+        return "Area Rando"
 
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
-        self.teleporters_source_group.setTitle("Transport Pipes to randomize")
+        self.teleporters_source_group.setTitle("Area Transitions to randomize")
 
-    def teleporter_pipe_nodes(self, game: RandovaniaGame) -> list[NodeIdentifier]:
+    def area_transition_nodes(self, game: RandovaniaGame) -> list[NodeIdentifier]:
         game_description = default_database.game_description_for(game)
-        teleporter_dock_type = game_description.dock_weakness_database.find_type("teleporter")
+        teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
         region_list = game_description.region_list
         nodes = [
             node.identifier
             for node in region_list.all_nodes
-            if isinstance(node, DockNode) and node.dock_type == teleporter_dock_type
+            if isinstance(node, DockNode)
+            and node.dock_type in teleporter_dock_types
+            and node.extra.get("is_area_transition", False)
         ]
         nodes.sort()
         return nodes
@@ -72,7 +127,7 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         row = 0
         region_list = self.game_description.region_list
 
-        locations = self.teleporter_pipe_nodes(self.game_enum)
+        locations = self.area_transition_nodes(self.game_enum)
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
         }
@@ -102,10 +157,10 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, AM2RConfiguration)
-        config_teleporters: TeleporterConfiguration = config.teleporters
+        config_teleporters: TeleporterConfiguration = config.areas
 
         descriptions = [
-            "<p>Controls where each teleporter pipe connects to.</p>",
+            "<p>Controls where each area transition connects to.</p>",
             f" {self.teleporter_mode_to_description[config_teleporters.mode]}</p>",
         ]
         self.teleporters_description_label.setText("".join(descriptions))

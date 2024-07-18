@@ -186,18 +186,17 @@ def get_dock_connections_assignment_for_teleporter(
     return assignment
 
 
-def get_teleporter_connections(
-    teleporters: TeleporterConfiguration, game: GameDescription, rng: Random
+def get_teleporter_connections_for_db(
+    teleporters: TeleporterConfiguration,
+    game: GameDescription,
+    rng: Random,
+    teleporter_db: tuple[TeleporterHelper, ...],
 ) -> TeleporterConnection:
-    region_list = game.region_list
     teleporter_connection: TeleporterConnection = {}
 
     if not teleporters.is_vanilla:
         if rng is None:
             raise MissingRng("Teleporter")
-
-        teleporter_dock_types = game.dock_weakness_database.all_teleporter_dock_types
-        teleporter_db = create_teleporter_database(region_list, teleporters.editable_teleporters, teleporter_dock_types)
 
         # TODO: Error on unsupported modes
         if teleporters.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:
@@ -217,3 +216,16 @@ def get_teleporter_connections(
         teleporter_connection.update(connections)
 
     return teleporter_connection
+
+
+def get_teleporter_connections(
+    teleporters: TeleporterConfiguration, game: GameDescription, rng: Random
+) -> TeleporterConnection:
+    return get_teleporter_connections_for_db(
+        teleporters,
+        game,
+        rng,
+        create_teleporter_database(
+            game.region_list, teleporters.editable_teleporters, game.dock_weakness_database.all_teleporter_dock_types
+        ),
+    )

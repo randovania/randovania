@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
+    from randovania.games.am2r.gui.preset_settings.am2r_area_rando_tab import PresetAreaRandoAM2R
     from randovania.games.am2r.gui.preset_settings.am2r_chaos_tab import PresetAM2RChaos
     from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
     from randovania.games.am2r.gui.preset_settings.am2r_hints_tab import PresetAM2RHints
@@ -32,6 +33,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPatcherEnergy,
         PresetMetroidStartingArea,
         PresetDockRando,
+        PresetAreaRandoAM2R,
         PresetTeleportersAM2R,
         PresetAM2RPatches,
         PresetAM2RChaos,
