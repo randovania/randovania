@@ -23,7 +23,7 @@ JOKE_HINTS = [
     "*Hear the words of O-Lir, last Sentin- wait, wrong game.*",
     "*Skippy is on an epic quest to unravel its true destiny.*",
     "*Uh oh! It seems your Metroid can't crawl, please contact Wisdom Septogg S.A. for help.*",
-    "*Maybe the Metroid DNA were the friends we made along the way...*",
+    "*Maybe the Metroid DNA was the friends we made along the way...*",
     "*Translating Wisdom Septogg noises. It mumbles the words 'The Baby' over and over.*",
     "*You know, you should never trust strangers, Sammy.*",
     "*Metroid DNA!? Never heard of it.*",
