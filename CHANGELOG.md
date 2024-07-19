@@ -5,17 +5,95 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.4.x] - 2024-08-??
+
+- To be added
+
 ## [8.3.x] - 2024-08-??
 
 ### AM2R
 
+- Added: 10 more joke hints have been added.
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Added: The first log entry in the game now displays a history of the collected items.
+- Added: Multiworld generation now warns when chaos settings are enabled.
+- Added: Cosmetic option to randomly color shift tilesets or backgrounds.
+- Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
+- Changed: The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
+- Changed: A warning will be shown when having Queen Metroid-Locked Doors as a target in Multiworlds.
+- Fixed: The Tower - Dark Maze now has the correct light level.
+- Fixed: Industrial Complex - Breeding Grounds Fly Stadium Access now has the correct light level.
+- Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
+- Fixed: The Baby now requires all DNA in order to be collected again.
+- Fixed: When using Door Lock rando, doors in boss rooms will not close instantly when stepping into the room, but instead stay open until the proper event starts.
+- Fixed: Doors in boss rooms will not lock again when reentering the boss room after the boss was defeated.
+- Fixed: In Door Lock Rando, when doors unlock in Genetic Laboratory rooms, they will now properly switch to ammo doors rather than switching to blue doors.
+- Fixed: The softlock prevention in Super Missile Chamber now doesn't have a shot block overlapping with a crumble block.
+- Fixed: In Door Lock Rando, if another Water Turbine has been destroyed, it will now not cause the original Water Turbine in Hydro Station to get destroyed.
+
+#### Logic Database
+
+##### The Tower
+
+- Added: Ext. Zeta Nest East Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from the right.
+- Added: Gamma Nest West Access now has an IBJ (intermediate) + Knowledge (Beginner) + Spider method of crossing the room from center to right.
+- Fixed: Ext. Zeta Nest East Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
+- Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Ruined Shrine NSJ climb now has both NTSC and non-NTSC versions documented.
+
+### Metroid Prime 2: Echoes
+
+- Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
+
+#### Logic Database
+
+##### Temple Grounds
+
+- Added: Great Wind Chamber terminal fall to the morph cannon now has standable terrain (beginner) and is documented.
+
+##### Torvus Bog
+
+- Fixed: Transit Tunnel East: Getting from Door to Training Chamber to Door to Catacombs without Gravity Boost now requires Morph Ball.
 
 ### Metroid: Samus Returns
 
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Added: New generic offworld items for Missiles, Beams, and Suits in multiworld.
 - Changed: Room Names on the HUD are now enabled by default.
+- Changed: Power Bomb drop rates have been bumped to 20% from 10-15% for nearly all enemies.
+- Changed: The music in Surface West now plays the Surface East - Landing Site theme if you do not have the Baby and all DNA collected.
+- Changed: The Aeion orbs after collecting major upgrades has been restored.
+- Fixed: The hidden area in Area 7 - Spider Boost Tunnel South not being removed fully.
+- Fixed: Negative Metroid count if defeating the Larva Metroids in reverse.
+- Fixed: Visual bug where Samus would display incorrectly after reloading to checkpoint from a boss fight.
+- Fixed: The pickup from Arachnus no longer faces the screen when it spawns.
+
+## [8.2.1] - 2024-07-05
+
+### AM2R
+
+- Fixed: The Tower is now properly unlit when it hasn't been activated, and lit when it has been activated.
+
+### Metroid Dread
+
+- Fixed: Added missing dependency for Storm Missile Doors, which could crash the game when visiting a region where there was no other door that used the Super Missile Door as a base.
+
+### Metroid: Samus Returns
+
+- Changed: The hidden area obstruction before Diggernaut in Area 6 has been removed.
+- Fixed: Hidden area obstructions not being properly removed.
+- Fixed: An issue where items collected in Surface West weren't being sent in Multiworld.
 
 ## [8.2.0] - 2024-07-03
 

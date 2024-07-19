@@ -227,6 +227,8 @@ _CONVERTER_FOR_VERSION = [
     _msr_cosmetic_laser_color,  # remove the Grapple Laser color checkbox for MSR Cosmetics
     _msr_exheader_path,  # adds empty exheader path for MSR
     _msr_room_names_visible,  # forces room name display to be on by default
+    _only_new_fields,  # Adds tileset+background rotation for AM2R
+    _only_new_fields,  # added MSR's music shuffle cosemetic option
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

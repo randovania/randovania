@@ -6,11 +6,44 @@ import pytest
 from PySide6 import QtCore
 
 from randovania.games.samus_returns.gui.dialog.cosmetic_patches_dialog import MSRCosmeticPatchesDialog
-from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRRoomGuiType
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches, MSRRoomGuiType, MusicMode
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
     import pytestqt.qtbot  # type: ignore[import]
+
+
+@pytest.mark.parametrize(
+    ("music_start_value", "option_to_click", "music_end_value"),
+    [
+        (MusicMode.VANILLA, "vanilla_music_option", MusicMode.VANILLA),
+        (MusicMode.VANILLA, "type_music_option", MusicMode.TYPE),
+        (MusicMode.VANILLA, "full_music_option", MusicMode.FULL),
+        (MusicMode.TYPE, "vanilla_music_option", MusicMode.VANILLA),
+        (MusicMode.TYPE, "type_music_option", MusicMode.TYPE),
+        (MusicMode.TYPE, "full_music_option", MusicMode.FULL),
+        (MusicMode.FULL, "vanilla_music_option", MusicMode.VANILLA),
+        (MusicMode.FULL, "type_music_option", MusicMode.TYPE),
+        (MusicMode.FULL, "full_music_option", MusicMode.FULL),
+    ],
+)
+def test_change_music_option(
+    skip_qtbot: pytestqt.qtbot.QtBot, music_start_value: MusicMode, option_to_click: str, music_end_value: MusicMode
+) -> None:
+    cosmetic_patches = MSRCosmeticPatches(music=music_start_value)
+
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    skip_qtbot.addWidget(dialog)
+    str_to_option_map = {
+        "vanilla_music_option": dialog.vanilla_music_option,
+        "type_music_option": dialog.type_music_option,
+        "full_music_option": dialog.full_music_option,
+    }
+    radio_button = str_to_option_map[option_to_click]
+
+    skip_qtbot.mouseClick(radio_button, QtCore.Qt.MouseButton.LeftButton)
+
+    assert dialog.cosmetic_patches == MSRCosmeticPatches(music=music_end_value)
 
 
 def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:

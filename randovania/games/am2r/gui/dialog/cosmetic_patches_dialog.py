@@ -83,6 +83,11 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
         self.custom_etank_rotation_field.valueChanged.connect(self._persist_hud_rotations)
         self.custom_dna_rotation_field.valueChanged.connect(self._persist_hud_rotations)
 
+        self.tileset_rotation_spinner_min.valueChanged.connect(self._rotation_spinners)
+        self.tileset_rotation_spinner_max.valueChanged.connect(self._rotation_spinners)
+        self.background_rotation_spinner_min.valueChanged.connect(self._rotation_spinners)
+        self.background_rotation_spinner_max.valueChanged.connect(self._rotation_spinners)
+
         for music_mode, radio_button in self.radio_buttons.items():
             radio_button.toggled.connect(functools.partial(self._on_music_option_changed, music_mode))
 
@@ -99,6 +104,20 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
         )
         self._update_color_squares()
 
+    def _rotation_spinners(self) -> None:
+        self.tileset_rotation_spinner_min.setMaximum(self.tileset_rotation_spinner_max.value())
+        self.tileset_rotation_spinner_max.setMinimum(self.tileset_rotation_spinner_min.value())
+        self.background_rotation_spinner_min.setMaximum(self.background_rotation_spinner_max.value())
+        self.background_rotation_spinner_max.setMinimum(self.background_rotation_spinner_min.value())
+
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
+            tileset_rotation_min=self.tileset_rotation_spinner_min.value(),
+            tileset_rotation_max=self.tileset_rotation_spinner_max.value(),
+            background_rotation_min=self.background_rotation_spinner_min.value(),
+            background_rotation_max=self.background_rotation_spinner_max.value(),
+        )
+
     def _on_room_name_mode_update(self) -> None:
         self._cosmetic_patches = dataclasses.replace(
             self._cosmetic_patches, show_room_names=self.room_name_dropdown.currentData()
@@ -111,6 +130,10 @@ class AM2RCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_AM2RCosmeticPatche
         self.custom_health_rotation_field.setValue(patches.health_hud_rotation)
         self.custom_etank_rotation_field.setValue(patches.etank_hud_rotation)
         self.custom_dna_rotation_field.setValue(patches.dna_hud_rotation)
+        self.tileset_rotation_spinner_min.setValue(patches.tileset_rotation_min)
+        self.tileset_rotation_spinner_max.setValue(patches.tileset_rotation_max)
+        self.background_rotation_spinner_min.setValue(patches.background_rotation_min)
+        self.background_rotation_spinner_max.setValue(patches.background_rotation_max)
 
         for music_mode, radio_button in self.radio_buttons.items():
             radio_button.setChecked(music_mode == patches.music)
