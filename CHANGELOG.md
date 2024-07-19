@@ -59,6 +59,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Great Wind Chamber terminal fall to the morph cannon now has standable terrain (beginner) and is documented.
 
+##### Torvus Bog
+
+- Fixed: Transit Tunnel East: Getting from Door to Training Chamber to Door to Catacombs without Gravity Boost now requires Morph Ball.
+
 ### Metroid: Samus Returns
 
 - Added: Cosmetic option to shuffle music either by song type or full shuffle.
