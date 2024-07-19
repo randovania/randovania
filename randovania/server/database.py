@@ -48,6 +48,8 @@ def is_boolean(field, value: bool):
 
 
 class BaseModel(peewee.Model):
+    DoesNotExist: type[peewee.DoesNotExist]
+
     class Meta:
         database = db
         legacy_table_names = False

@@ -62,7 +62,11 @@ def admin_sessions(user: User) -> ResponseReturnValue:
 
 
 def admin_session(user: User, session_id: int) -> ResponseReturnValue:
-    session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    try:
+        session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    except MultiplayerSession.DoesNotExist:
+        return "Session not found", 404
+
     rows = []
 
     associations: list[WorldUserAssociation] = list(
@@ -123,7 +127,10 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
 
 
 def download_session_spoiler(user: User, session_id: int) -> ResponseReturnValue:
-    session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    try:
+        session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    except MultiplayerSession.DoesNotExist:
+        return "Session not found", 404
 
     layout = session.get_layout_description_as_json()
     if layout is None:
@@ -138,9 +145,15 @@ def delete_session(user: User, session_id: int) -> ResponseReturnValue:
     if flask.request.method == "GET":
         return '<form method="POST"><input type="submit" value="Confirm delete"></form>'
 
-    session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    try:
+        session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
+    except MultiplayerSession.DoesNotExist:
+        return "Session not found", 404
     session.delete_instance(recursive=True)
-    return "Session deleted."
+
+    return "Session deleted. <a href='{to_list}'>Return to list</a>".format(
+        to_list=flask.url_for("admin_sessions"),
+    )
 
 
 def setup_app(sa: ServerApp):
