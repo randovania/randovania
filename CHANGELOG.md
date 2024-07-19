@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Added: 10 more joke hints have been added.
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Added: The first log entry in the game now displays a history of the collected items.
 - Added: Multiworld generation now warns when chaos settings are enabled.
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
 - Changed: A warning will be shown when having Queen Metroid-Locked Doors as a target in Multiworlds.
 - Fixed: The Tower - Dark Maze now has the correct light level.
+- Fixed: Industrial Complex - Breeding Grounds Fly Stadium Access now has the correct light level.
 - Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
 - Fixed: The Baby now requires all DNA in order to be collected again.
 - Fixed: When using Door Lock rando, doors in boss rooms will not close instantly when stepping into the room, but instead stay open until the proper event starts.
@@ -49,6 +51,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Use Pseudo Wave Beam (Intermediate) with Diffusion Beam to break the Early Gravity Blob through the wall.
 - Removed: Using Water Bomb Jumps to reach the Blob Alcove in Gravity Suit Tower.
 
+##### Cataris
+
+- Changed: The fight with Experiment Z-57 now requires more resources
+  - Charge Beam changes
+    - Using just Charge Beam has been upgraded to Combat (Intermediate)
+    - Using Charge Beam with beams dealing at least 75 damage satisfies Combat (Beginner)
+    - Using Charge Beams with beams dealing at least 120 damage is in logic with no tricks.
+  - Health changes
+    - When dodging the later attack without Flash Shift or a Spin Jump, 250 Energy is required
+    - The fan phase requires a Spin Jump or Combat (Intermediate) with 300 Energy.
+
 ### Metroid Prime
 
 #### Logic Database
@@ -66,6 +79,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Temple Grounds
 
 - Added: Great Wind Chamber terminal fall to the morph cannon now has standable terrain (beginner) and is documented.
+
+##### Torvus Bog
+
+- Fixed: Transit Tunnel East: Getting from Door to Training Chamber to Door to Catacombs without Gravity Boost now requires Morph Ball.
 
 ### Metroid: Samus Returns
 

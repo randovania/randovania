@@ -4,6 +4,7 @@ import uuid
 import peewee
 
 import randovania
+from randovania import monitoring
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
@@ -370,6 +371,8 @@ def _get_permalink(sa: ServerApp, session: MultiplayerSession) -> str:
 
 
 def admin_session(sa: ServerApp, session_id: int, action: str, *args):
+    monitoring.set_tag("action", action)
+
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
 
@@ -570,6 +573,8 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
 
 
 def admin_player(sa: ServerApp, session_id: int, user_id: int, action: str, *args):
+    monitoring.set_tag("action", action)
+
     verify_has_admin(sa, session_id, user_id)
     action: SessionAdminUserAction = SessionAdminUserAction(action)
 

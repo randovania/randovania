@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
 import pytest
@@ -9,8 +10,13 @@ from randovania.network_common.remote_inventory import RemoteInventory
 from randovania.server import database
 from randovania.server.multiplayer import web_api
 
+if TYPE_CHECKING:
+    import peewee
 
-def test_admin_sessions(server_app, solo_two_world_session):
+    from randovania.server.server_app import ServerApp
+
+
+def test_admin_sessions(server_app: ServerApp, solo_two_world_session: database.MultiplayerSession) -> None:
     # Setup
     web_api.setup_app(server_app)
 
@@ -22,7 +28,18 @@ def test_admin_sessions(server_app, solo_two_world_session):
     assert entry in result
 
 
-def test_admin_session(server_app, solo_two_world_session):
+def test_admin_session_missing(server_app: ServerApp, clean_database: peewee.SqliteDatabase) -> None:
+    # Setup
+    web_api.setup_app(server_app)
+
+    # Run
+    with server_app.app.test_request_context("/session/1"):
+        result = web_api.admin_session(MagicMock(), 1)
+
+    assert result == ("Session not found", 404)
+
+
+def test_admin_session_exists(server_app: ServerApp, solo_two_world_session: database.MultiplayerSession) -> None:
     # Setup
     web_api.setup_app(server_app)
 
@@ -43,7 +60,7 @@ def test_admin_session(server_app, solo_two_world_session):
     assert entry2 in result
 
 
-def test_delete_session_get(server_app, solo_two_world_session) -> None:
+def test_delete_session_get(server_app: ServerApp, solo_two_world_session: database.MultiplayerSession) -> None:
     # Setup
     web_api.setup_app(server_app)
 
@@ -55,7 +72,7 @@ def test_delete_session_get(server_app, solo_two_world_session) -> None:
     assert database.MultiplayerSession.get_by_id(1) == solo_two_world_session
 
 
-def test_delete_session_post(server_app, solo_two_world_session) -> None:
+def test_delete_session_post(server_app: ServerApp, solo_two_world_session: database.MultiplayerSession) -> None:
     # Setup
     web_api.setup_app(server_app)
 
@@ -63,7 +80,7 @@ def test_delete_session_post(server_app, solo_two_world_session) -> None:
     with server_app.app.test_request_context("/session/1/delete", method="POST"):
         result = web_api.delete_session(MagicMock(), 1)
 
-    assert result == "Session deleted."
+    assert result == "Session deleted. <a href='/sessions'>Return to list</a>"
 
     with pytest.raises(database.MultiplayerSession.DoesNotExist):
         database.MultiplayerSession.get_by_id(1)
