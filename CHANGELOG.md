@@ -46,6 +46,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Burenia
+
+- Added: Use Pseudo Wave Beam (Intermediate) with Diffusion Beam to break the Early Gravity Blob through the wall.
+- Removed: Using Water Bomb Jumps to reach the Blob Alcove in Gravity Suit Tower.
+
 ##### Cataris
 
 - Changed: The fight with Experiment Z-57 now requires more resources
