@@ -356,14 +356,21 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
         septogg_hints = {}
         gm_newline = "#-#"
-        dud_hint = "This creature did not give any useful DNA hints."
+        dud_hints = ["This creature did not give any useful DNA hints.", "Metroid DNA is hidden somewhere on SR-388."]
+        joke_hints = JOKE_HINTS + dud_hints
         area_to_amount_map = {0: (0, 5), 1: (5, 9), 2: (9, 17), 3: (17, 27), 4: (27, 33), 5: (33, 41), 6: (41, 46)}
         for i in range(7):
             start, end = area_to_amount_map[i]
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
-            shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
+            shuffled_hints = [
+                hint
+                for hint in shuffled_hints
+                if not ("Hunter already started with" in hint or "is hidden somewhere on SR-388" in hint)
+            ]
             if not shuffled_hints:
-                shuffled_hints = [hint_namer.format_joke(rng.choice(JOKE_HINTS + [dud_hint]), True)]
+                joke = rng.choice(joke_hints)
+                joke_hints.remove(joke)
+                shuffled_hints = [hint_namer.format_joke(joke, True)]
             septogg_hints[f"septogg_a{i}"] = gm_newline.join(shuffled_hints)
 
         ice_hint = {}

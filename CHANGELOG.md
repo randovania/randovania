@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
 - Changed: The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
 - Changed: A warning will be shown when having Queen Metroid-Locked Doors as a target in Multiworlds.
+- Changed: In a generated game, every joke hint will now be unique.
+- Changed: When the DNA hint setting is set to `No hints`, joke hints will now also be shown, instead of the same generic text.
 - Fixed: The Tower - Dark Maze now has the correct light level.
 - Fixed: Industrial Complex - Breeding Grounds Fly Stadium Access now has the correct light level.
 - Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
