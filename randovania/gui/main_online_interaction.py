@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 from qasync import asyncSlot
 
+from randovania import monitoring
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.multiplayer_session_browser_dialog import MultiplayerSessionBrowserDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
@@ -92,6 +93,8 @@ class OnlineInteractions(QtWidgets.QWidget):
         if not await self.network_client.ensure_logged_in(self):
             return
 
+        monitoring.metrics.incr("gui_multiworld_generate_clicked")
+
         session_name = await TextPromptDialog.prompt(
             parent=self,
             title="Enter session name",
@@ -101,6 +104,8 @@ class OnlineInteractions(QtWidgets.QWidget):
         )
         if session_name is None:
             return
+
+        monitoring.metrics.incr("gui_multiworld_generate_accepted")
 
         new_session = await self.network_client.create_new_session(session_name)
         await self.window_manager.ensure_multiplayer_session_window(
