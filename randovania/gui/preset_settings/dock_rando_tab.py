@@ -54,6 +54,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         self.mode_description.setText(dock_rando.mode.description)
 
         self.multiworld_label.setVisible(len(dock_rando.settings_incompatible_with_multiworld()) > 0)
+        self.line.setVisible(self.multiworld_label.isVisible())
         self.dock_types_group.setVisible(dock_rando.mode != DockRandoMode.VANILLA)
 
         for dock_type, weakness_checks in self.type_checks.items():
