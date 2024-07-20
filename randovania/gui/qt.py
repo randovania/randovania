@@ -11,6 +11,7 @@ from pathlib import Path
 from PySide6 import QtCore, QtWidgets
 
 import randovania
+from randovania import monitoring
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persistence
 
@@ -28,6 +29,7 @@ logger = logging.getLogger(__name__)
 
 def display_exception(val: Exception):
     if not isinstance(val, KeyboardInterrupt):
+        monitoring.metrics.incr("amount_of_exceptions")
         logging.exception("unhandled exception", exc_info=val)
 
         from randovania.gui.lib import error_message_box

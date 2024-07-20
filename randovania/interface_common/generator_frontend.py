@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import multiprocessing
+import operator
 from concurrent.futures import ProcessPoolExecutor
 from typing import TYPE_CHECKING
 
@@ -9,6 +10,7 @@ from randovania import monitoring
 from randovania.generator import generator
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
 
@@ -44,7 +46,7 @@ def generate_layout(
         span.set_tag("num_worlds", parameters.world_count)
         span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")
         span.set_tag("amount_of_games", len(games))
-        span.set_tag("unique_games", sorted(set(games)))
+        span.set_tag("unique_games", str(sorted(set(games))))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
         span.set_tag(
@@ -59,6 +61,22 @@ def generate_layout(
             preset = parameters.get_preset(0)
             if manager.is_included_preset_uuid(preset.uuid):
                 span.set_tag("builtin_preset", f"{preset.name} ({preset.game.short_name})")
+
+        for preset in parameters.presets:
+            tag_name_to_trick = {
+                "generation_trick_amount_disabled": LayoutTrickLevel.DISABLED,
+                "generation_trick_amount_beginner": LayoutTrickLevel.BEGINNER,
+                "generation_trick_amount_intermediate": LayoutTrickLevel.INTERMEDIATE,
+                "generation_trick_amount_advanced": LayoutTrickLevel.ADVANCED,
+                "generation_trick_amount_expert": LayoutTrickLevel.EXPERT,
+                "generation_trick_amount_hypermode": LayoutTrickLevel.HYPERMODE,
+            }
+            for tag_name, trick in tag_name_to_trick.items():
+                monitoring.metrics.incr(
+                    tag_name,
+                    value=operator.countOf(preset.configuration.trick_level.specific_levels.values(), trick),
+                    tags={"game": preset.game.short_name},
+                )
 
         extra_args = {
             "generator_params": parameters,

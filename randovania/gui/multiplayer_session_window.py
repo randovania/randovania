@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Self
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
+from randovania import monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.gui.auto_tracker_window import load_trackers_configuration
@@ -665,16 +666,19 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     @handle_network_errors
     async def generate_game_with_spoiler(self):
+        monitoring.metrics.incr("gui_multiworld_generate_plain")
         await self.generate_game(True, retries=None)
 
     @asyncSlot()
     @handle_network_errors
     async def generate_game_with_spoiler_no_retry(self):
+        monitoring.metrics.incr("gui_multiworld_generate_no_retry")
         await self.generate_game(True, retries=0)
 
     @asyncSlot()
     @handle_network_errors
     async def generate_game_without_spoiler(self):
+        monitoring.metrics.incr("gui_multiworld_generate_race")
         await self.generate_game(False, retries=None)
 
     async def generate_game(self, spoiler: bool, retries: int | None):

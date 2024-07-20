@@ -10,6 +10,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt, Signal
 from qasync import asyncSlot
 
+from randovania import monitoring
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.gui import game_specific_gui
@@ -249,6 +250,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         options = self._options
 
         if not options.is_alert_displayed(InfoAlert.MULTIWORLD_FAQ):
+            monitoring.metrics.incr("gui_multiworld_alert_shown")
             await async_dialog.message_box(
                 self,
                 QtWidgets.QMessageBox.Icon.Information,

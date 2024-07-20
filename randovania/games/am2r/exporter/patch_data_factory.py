@@ -4,6 +4,7 @@ import typing
 from random import Random
 from typing import TYPE_CHECKING
 
+from randovania import monitoring
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
@@ -166,6 +167,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
             shiny_id = (pickup_obj["item_effect"], pickup_obj["sprite_details"]["name"], pickup_obj["text"]["header"])
 
             if (shiny_id in self.SHINIES) and not pickup.other_player and rng.randint(0, self._EASTER_EGG_SHINY) == 0:
+                monitoring.metrics.incr("am2r_rolled_shiny", tags={"item": shiny_id[0]})
                 sprite, text = self.SHINIES[shiny_id]
                 pickup_obj["sprite_details"]["name"] = sprite
                 pickup_obj["text"]["header"] = text
