@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.3.x] - 2024-08-??
 
+- Changed: Reduced some visual noise in the main window and customize preset window.
+
 ### AM2R
 
 - Added: 10 more joke hints have been added.
