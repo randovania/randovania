@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The first log entry in the game now displays a history of the collected items.
 - Added: Multiworld generation now warns when chaos settings are enabled.
 - Added: Cosmetic option to randomly color shift tilesets or backgrounds.
-- Added: Custom Damage Reduction for suits.
+- Added: Configurable Damage Reduction for suits.
 - Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
 - Changed: The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
 - Changed: A warning will be shown when having Queen Metroid-Locked Doors as a target in Multiworlds.

@@ -44,11 +44,9 @@ class PresetAM2REnergy(PresetTab, Ui_PresetAM2REnergy):
     def _persist_first_suit_dr(self):
         with self._editor as editor:
             editor.set_configuration_field("first_suit_dr", int(self.first_suit_spin_box.value()))
-        if self.second_suit_spin_box.value() < self.first_suit_spin_box.value():
-            self.second_suit_spin_box.setValue(self.first_suit_spin_box.value())
+        self.first_suit_spin_box.setMaximum(self.second_suit_spin_box.value())
 
     def _persist_second_suit_dr(self):
         with self._editor as editor:
             editor.set_configuration_field("second_suit_dr", int(self.second_suit_spin_box.value()))
-        if self.second_suit_spin_box.value() < self.first_suit_spin_box.value():
-            self.first_suit_spin_box.setValue(self.second_suit_spin_box.value())
+        self.second_suit_spin_box.setMinimum(self.first_suit_spin_box.value())
