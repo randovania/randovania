@@ -1160,6 +1160,7 @@ def _migrate_v84(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v85(preset: dict) -> dict:
     if preset["game"] == "am2r":
         config = preset["configuration"]
@@ -1167,6 +1168,7 @@ def _migrate_v85(preset: dict) -> dict:
         config["second_suit_dr"] = 75
 
     return preset
+
 
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
