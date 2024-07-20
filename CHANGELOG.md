@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Multiworld generation now warns when chaos settings are enabled.
 - Added: Cosmetic option to randomly color shift tilesets or backgrounds.
 - Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
+- Changed: On the Starter Preset, Screw Attack's priority has been changed to be `Low`.
 - Changed: The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
 - Changed: A warning will be shown when having Queen Metroid-Locked Doors as a target in Multiworlds.
 - Fixed: The Tower - Dark Maze now has the correct light level.
