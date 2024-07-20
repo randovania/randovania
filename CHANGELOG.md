@@ -47,6 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Dread
 
+- Fixed: The option to hide scans with Nothing data now behaves as expected.
+
 #### Logic Database
 
 ##### Burenia
