@@ -21,7 +21,10 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node_identifier import NodeIdentifier
+    from randovania.game_description.game_description import GameDescription
     from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+    from randovania.gui.lib.window_manager import WindowManager
+    from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
 
@@ -48,8 +51,16 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
         ),
     }
 
-    def setup_ui(self):
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager) -> None:
+        super().__init__(editor, game_description, window_manager)
+        self.teleporters_line.setVisible(self.teleporters_combo.currentData() != TeleporterShuffleMode.VANILLA)
+
+    def setup_ui(self) -> None:
         self.setupUi(self)
+
+    def _update_teleporter_mode(self) -> None:
+        super()._update_teleporter_mode()
+        self.teleporters_line.setVisible(self.teleporters_combo.currentData() != TeleporterShuffleMode.VANILLA)
 
     @classmethod
     def tab_title(cls) -> str:
