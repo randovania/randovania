@@ -29,6 +29,7 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
         self._widget_for_game = {}
 
         self.tabBar().setVisible(False)
+        self.tabBar().setDocumentMode(True)
 
         for game in RandovaniaGame.sorted_all_games():
             widget = QtWidgets.QWidget()
