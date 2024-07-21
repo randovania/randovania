@@ -105,6 +105,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Visual bug where Samus would display incorrectly after reloading to checkpoint from a boss fight.
 - Fixed: The pickup from Arachnus no longer faces the screen when it spawns.
 
+#### Logic Database
+
+##### Area 1
+
+- Added: Destroyed Armory - Reach the pickup by doing a Damage Boost (Advanced) off the Gullugg, along with Precise Aiming (Beginner), Single-Wall Wall Jump (Intermediate), and Unmorph Extend (Advanced).
+- Added: Temple Exterior
+    - Video for the Melee Clip to access Exterior Alpha Arena from the tunnel.
+    - Methods to climb the right side of the room to the door and to the top:
+        - High Jump Boots, Damage Boost (Advanced), Super Jump (Hypermode).
+        - High Jump Boots, Super Jump (Expert), Unmorph Extend (Advanced).
+        - Single-Wall Wall Jump/Wall Jump (Intermediate) and either High Jump Boots, Ice Beam (Intermediate), or Damage Boosts (Advanced).
+
+##### Area 4 Central Caves
+
+- Added: Amethyst Altars - Reach the pickup with Spider Ball and Single-Wall Wall Jumps (Expert).
+
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior
+    - Reach the door to Zeta Arena Access with High Jump Boots, Single-Wall Wall Jumps (Beginner) and either Super Jump (Intermediate) or Unmorph Extend (Intermediate).
+    - Reach the center top of the tower with High Jump Boots, Single-Wall Wall Jump (Intermediate), Super Jump (Advanced), and Unmorph Extend (Advanced).
+    - Reach the top ledge to Gamma+ Arena Access with High Jump Boots and Ice Beam, and either Charge Beam (Intermediate), Phase Drift (Advanced), or nothing extra (Expert).
+
+##### Area 7
+
+- Added: Omega Arena South Access
+    - Reach the pickup with Bombs and a Bomb Launch (Diagonal Bomb Jump (Advanced)).
+    - Reach the door to Omega Arena South by freezing the Gullugg and using High Jump Boots or Super Jump (Advanced).
+
 ## [8.2.1] - 2024-07-05
 
 ### AM2R
