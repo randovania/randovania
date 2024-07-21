@@ -8,6 +8,7 @@ import pytest
 
 from randovania.games.am2r.gui.preset_settings.am2r_energy_tab import PresetAM2REnergy
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
+from randovania.interface_common.preset_editor import PresetEditor
 
 
 @pytest.mark.parametrize(
@@ -29,9 +30,10 @@ def test_configurable_damage_reduction(
     base = preset_manager.default_preset_for_game(game).get_preset()
     preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
     base_configuration = preset.configuration
+    options = MagicMock()
     assert isinstance(base_configuration, AM2RConfiguration)
 
-    tab = PresetAM2REnergy(am2r_game_description, MagicMock())
+    tab = PresetAM2REnergy(PresetEditor(preset, options), am2r_game_description, MagicMock())
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
 
