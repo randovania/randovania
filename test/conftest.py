@@ -206,6 +206,11 @@ def am2r_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
+def am2r_resource_database() -> ResourceDatabase:
+    return default_database.resource_database_for(RandovaniaGame.AM2R)
+
+
+@pytest.fixture(scope="session")
 def msr_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_SAMUS_RETURNS)
 
