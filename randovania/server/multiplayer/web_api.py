@@ -1,3 +1,6 @@
+import html
+import json
+
 import construct
 import flask
 from flask.typing import ResponseReturnValue
@@ -7,7 +10,7 @@ from randovania.game_description import default_database
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import json_lib
 from randovania.network_common import remote_inventory
-from randovania.server.database import MultiplayerSession, User, World, WorldUserAssociation
+from randovania.server.database import MultiplayerMembership, MultiplayerSession, User, World, WorldUserAssociation
 from randovania.server.server_app import ServerApp
 
 
@@ -28,12 +31,13 @@ def admin_sessions(user: User) -> ResponseReturnValue:
                     for col in [
                         "<a href='{}'>{}</a>".format(
                             flask.url_for("admin_session", session_id=session.id),
-                            session.name,
+                            html.escape(session.name),
                         ),
-                        session.creator.name,
+                        html.escape(session.creator.name),
                         session.creation_date,
                         len(session.members),
                         len(session.worlds),
+                        session.password is not None,
                     ]
                 )
             )
@@ -48,7 +52,7 @@ def admin_sessions(user: User) -> ResponseReturnValue:
     if page < paginated_query.get_page_count():
         next_link = "<a href='{}'>Next</a>".format(flask.url_for(".admin_sessions", page=page + 1))
 
-    header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds"]
+    header = ["Name", "Creator", "Creation Date", "Num Users", "Num Worlds", "Has Password?"]
     return (
         "<table border='1'><tr>{header}</tr>{content}</table>Page {page} of {num_pages}. {previous} / {next}."
     ).format(
@@ -96,22 +100,27 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
 
         rows.append(
             [
-                association.user.name,
-                association.world.name,
+                html.escape(association.user.name),
+                html.escape(association.world.name),
+                json.loads(association.world.preset)["game"],
                 association.connection_state.pretty_text,
                 ", ".join(inventory),
+                MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,
             ]
         )
 
-    header = ["User", "World", "Connection State", "Inventory"]
+    header = ["User", "World", "Game", "Connection State", "Inventory", "Is Admin?"]
     table = "<table border='1'><tr>{}</tr>{}</table>".format(
         "".join(f"<th>{h}</th>" for h in header),
         "".join("<tr>{}</tr>".format("".join(f"<td>{h}</td>" for h in r)) for r in rows),
     )
 
     entries = [
-        f"<p>Session: {session.name}</p>",
-        f"<p>Created by {session.creator.name} at {session.creation_datetime}</p>",
+        f"<p>Session: {html.escape(session.name)}</p>",
+        f"<p>Created by {html.escape(session.creator.name)} at {session.creation_datetime}</p>",
+        f"<p>Session is password protected, password is <code>{html.escape(session.password)}</code></p>"
+        if session.password is not None
+        else "Session is not password protected",
         "<p><a href='{link}'>Download rdvgame</a></p>".format(
             link=flask.url_for("download_session_spoiler", session_id=session_id)
         )
