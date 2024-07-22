@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Cosmetic option to randomly color shift tilesets or backgrounds.
 - Added: Configurable Damage Reduction for suits.
 - Added: The seed hash will be displayed on the clear screen as well.
+- Added: Options for flipping the gameplay vertically and horizontally.
 - Added: The following offworld sprites have been added: Charge Beam, Energy Tank and Missile Expansion for Prime 1, Missile Launcher for Samus Returns.
 - Changed: The offworld sprite for Prime 1 Bombs has been changed to better fit with the existing artstyle.
 - Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.

@@ -104,6 +104,8 @@ class AM2RPresetDescriber(GamePresetDescriber):
                     "Open Missile Doors with Supers": configuration.supers_on_missile_doors,
                 },
                 {
+                    "Horizontally flipped gameplay": configuration.horizontally_flip_gameplay,
+                    "Vertically flipped gameplay": configuration.vertically_flip_gameplay,
                     darkness_probability: darkness_probability is not None,
                     submerged_water_probability: submerged_water_probability is not None,
                     submerged_lava_probability: submerged_lava_probability is not None,

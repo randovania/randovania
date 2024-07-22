@@ -44,6 +44,8 @@ class AM2RConfiguration(BaseConfiguration):
     force_blue_labs: bool
 
     # Chaos options
+    vertically_flip_gameplay: bool
+    horizontally_flip_gameplay: bool
     # div 1000 to get coefficient, div 10 to get %
     darkness_chance: int = dataclasses.field(metadata={"min": 0, "max": 1000})
     darkness_min: int = dataclasses.field(metadata={"min": 0, "max": 4})
