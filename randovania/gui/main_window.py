@@ -302,6 +302,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         # Setting this event only now, so all options changed trigger only once
         options.on_options_changed = self.options_changed_signal.emit
         self._options = options
+        if self._options.dark_mode:
+            monitoring.metrics.incr("gui_starts_with_dark_mode")
+        if self._options.experimental_settings:
+            monitoring.metrics.incr("gui_starts_with_experimental_settings")
         self.tab_game_details.set_main_window(self)
         self.refresh_game_list()
 

@@ -8,6 +8,7 @@ from randovania.games.am2r.layout.am2r_teleporters import AM2RTeleporterConfigur
 from randovania.games.am2r.layout.hint_configuration import HintConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 
 @dataclasses.dataclass(frozen=True)
@@ -22,6 +23,8 @@ class AM2RArtifactConfig(BitPackDataclass, JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class AM2RConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    first_suit_dr: int = dataclasses.field(metadata={"min": 0, "max": 100, "precision": 1})
+    second_suit_dr: int = dataclasses.field(metadata={"min": 0, "max": 100, "precision": 1})
     softlock_prevention_blocks: bool
     septogg_helpers: bool
     teleporters: AM2RTeleporterConfiguration
@@ -60,6 +63,13 @@ class AM2RConfiguration(BaseConfiguration):
 
         if self.darkness_chance > 0:
             result.append("Darkened Rooms")
+
+        if self.dock_rando.mode == DockRandoMode.WEAKNESSES:
+            weakness_database = self.dock_rando.weakness_database
+            for dock_type, state in self.dock_rando.types_state.items():
+                queen = weakness_database.get_by_weakness("door", "Queen Metroid-Locked Door")
+                if queen in state.can_change_to:
+                    result.append(f"{queen.long_name} is unsafe as a target in Door Lock Types")
 
         return result
 

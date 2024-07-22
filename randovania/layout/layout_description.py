@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from random import Random
 
-import construct
+import construct  # type: ignore[import-untyped]
 
 import randovania
 from randovania.games.game import RandovaniaGame

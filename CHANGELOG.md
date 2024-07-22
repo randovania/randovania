@@ -11,17 +11,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.3.x] - 2024-08-??
 
+- Changed: Reduced some visual noise in the main window and customize preset window.
+- Changed: Don't show unnecessary lines on Door Lock and Teleporter rando customization tabs.
+
 ### AM2R
 
+- Added: 10 more joke hints have been added.
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Added: The first log entry in the game now displays a history of the collected items.
 - Added: Multiworld generation now warns when chaos settings are enabled.
 - Added: Cosmetic option to randomly color shift tilesets or backgrounds.
+- Added: Configurable Damage Reduction for suits.
+- Added: The seed hash will be displayed on the clear screen as well.
+- Added: The following offworld sprites have been added: Charge Beam, Energy Tank and Missile Expansion for Prime 1, Missile Launcher for Samus Returns.
+- Changed: The offworld sprite for Prime 1 Bombs has been changed to better fit with the existing artstyle.
 - Changed: When "Skip Gameplay cutscenes" is on, the Tower activation cutscene will also be skipped.
-- Changed:  The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
+- Changed: On the Starter Preset, Screw Attack's priority has been changed to be `Low`.
+- Changed: The Septogg in Breeding Grounds 3 South Gamma will now spawn instantly after defeating the Gamma.
+- Changed: A warning will be shown when having Queen Metroid-Locked Doors as a target in Multiworlds.
 - Fixed: The Tower - Dark Maze now has the correct light level.
+- Fixed: Industrial Complex - Breeding Grounds Fly Stadium Access now has the correct light level.
 - Fixed: Exporting a game after a Music Rando game now properly deletes all randomized songs.
 - Fixed: The Baby now requires all DNA in order to be collected again.
+- Fixed: When using Door Lock rando, doors in boss rooms will not close instantly when stepping into the room, but instead stay open until the proper event starts.
+- Fixed: Doors in boss rooms will not lock again when reentering the boss room after the boss was defeated.
+- Fixed: In Door Lock Rando, when doors unlock in Genetic Laboratory rooms, they will now properly switch to ammo doors rather than switching to blue doors.
+- Fixed: The softlock prevention in Super Missile Chamber now doesn't have a shot block overlapping with a crumble block.
+- Fixed: In Door Lock Rando, if another Water Turbine has been destroyed, it will now not cause the original Water Turbine in Hydro Station to get destroyed.
 
 #### Logic Database
 
@@ -34,15 +50,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Ext. Gamma Nest NE Access now has corrected Morph Ball requirements and trick types.
 - Fixed: Ext. Zeta Nest West Access now has corrected Morph Ball requirements and trick types.
 
+### Metroid Dread
+
+- Fixed: The option to hide scans with Nothing data now behaves as expected.
+
+#### Logic Database
+
+##### Burenia
+
+- Added: Use Pseudo Wave Beam (Intermediate) with Diffusion Beam to break the Early Gravity Blob through the wall.
+- Removed: Using Water Bomb Jumps to reach the Blob Alcove in Gravity Suit Tower.
+
+##### Cataris
+
+- Changed: The fight with Experiment Z-57 now requires more resources
+  - Charge Beam changes
+    - Using just Charge Beam has been upgraded to Combat (Intermediate)
+    - Using Charge Beam with beams dealing at least 75 damage satisfies Combat (Beginner)
+    - Using Charge Beams with beams dealing at least 120 damage is in logic with no tricks.
+  - Health changes
+    - When dodging the later attack without Flash Shift or a Spin Jump, 250 Energy is required
+    - The fan phase requires a Spin Jump or Combat (Intermediate) with 300 Energy.
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Chozo Ruins
+
+- Added: Ruined Shrine NSJ climb now has both NTSC and non-NTSC versions documented.
+
 ### Metroid Prime 2: Echoes
 
 - Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.
 
+#### Logic Database
+
+##### Temple Grounds
+
+- Added: Great Wind Chamber terminal fall to the morph cannon now has standable terrain (beginner) and is documented.
+
+##### Torvus Bog
+
+- Fixed: Transit Tunnel East: Getting from Door to Training Chamber to Door to Catacombs without Gravity Boost now requires Morph Ball.
+
 ### Metroid: Samus Returns
 
+- Added: Cosmetic option to shuffle music either by song type or full shuffle.
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
+- Added: New generic offworld items for Missiles, Beams, and Suits in multiworld.
 - Changed: Room Names on the HUD are now enabled by default.
+- Changed: Power Bomb drop rates have been bumped to 20% from 10-15% for nearly all enemies.
+- Changed: The music in Surface West now plays the Surface East - Landing Site theme if you do not have the Baby and all DNA collected.
+- Changed: The Aeion orbs after collecting major upgrades has been restored.
+- Fixed: The hidden area in Area 7 - Spider Boost Tunnel South not being removed fully.
+- Fixed: Negative Metroid count if defeating the Larva Metroids in reverse.
+- Fixed: Visual bug where Samus would display incorrectly after reloading to checkpoint from a boss fight.
+- Fixed: The pickup from Arachnus no longer faces the screen when it spawns.
 
 ## [8.2.1] - 2024-07-05
 

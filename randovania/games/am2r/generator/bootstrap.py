@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+from functools import partial
 from typing import TYPE_CHECKING
 
 from randovania.games.am2r.generator.pool_creator import METROID_DNA_CATEGORY
@@ -67,14 +68,21 @@ class AM2RBootstrap(MetroidBootstrap):
 
         return enabled_resources
 
-    def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
+    def _damage_reduction(
+        self, configuration: BaseConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
+    ):
         num_suits = sum(current_resources[db.get_item_by_name(suit)] for suit in ["Varia Suit", "Gravity Suit"])
-        return 2 ** (-num_suits)
+        if num_suits == 0:
+            dr = 0
+        if num_suits == 1:
+            dr = configuration.first_suit_dr
+        if num_suits == 2:
+            dr = configuration.second_suit_dr
+        damage_reduction = 1 - (dr / 100)
+        return damage_reduction
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
-        base_damage_reduction = self._damage_reduction
-
-        return dataclasses.replace(db, base_damage_reduction=base_damage_reduction)
+        return dataclasses.replace(db, base_damage_reduction=partial(self._damage_reduction, configuration))
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, AM2RConfiguration)

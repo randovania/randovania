@@ -15,7 +15,7 @@ class InfiniteTimer(QtCore.QObject):
     should_start_timer: bool = False
     _current_task: asyncio.Task | None = None
 
-    def __init__(self, target: Callable[[], Awaitable[None]], interval: float, *, strict: bool = True):
+    def __init__(self, target: Callable[[], Awaitable[None]], interval: float, *, strict: bool = False):
         super().__init__()
         self._dt = interval
         self.target = target
@@ -57,5 +57,5 @@ class InfiniteTimer(QtCore.QObject):
             return
 
         assert self._current_task is None
-        self._current_task = asyncio.create_task(self._target_wrap())
+        self._current_task = asyncio.create_task(self._target_wrap(), name=f"Infinite Timer for {self.target}")
         self._current_task.add_done_callback(_error_handler)

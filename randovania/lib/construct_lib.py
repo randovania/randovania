@@ -4,7 +4,7 @@ import json
 import typing
 from typing import Any
 
-import construct
+import construct  # type: ignore[import-untyped]
 from construct import CString, Flag, If, PascalString, PrefixedArray, Rebuild, Struct, VarInt
 
 if typing.TYPE_CHECKING:

@@ -196,7 +196,7 @@ class DreadPatchDataFactory(PatchDataFactory):
         elif alt_model[0] == "itemsphere":
             map_icon = {
                 "custom_icon": {
-                    "label": detail.original_pickup.name.upper(),
+                    "label": detail.name.upper(),
                 }
             }
         else:

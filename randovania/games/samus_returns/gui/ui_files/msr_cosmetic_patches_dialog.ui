@@ -7,35 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>524</width>
-    <height>461</height>
+    <height>770</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Metroid: Samus Returns - Cosmetic Options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="1">
-    <widget class="QPushButton" name="cancel_button">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="reset_button">
-     <property name="text">
-      <string>Reset to Defaults</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3">
+   <item row="0" column="0" colspan="3">
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -46,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>504</width>
-        <height>414</height>
+        <height>723</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -448,8 +427,108 @@
          </layout>
         </widget>
        </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Music</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="10" column="0">
+           <widget class="QRadioButton" name="full_music_option">
+            <property name="text">
+             <string>Full Random</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="music_sub_label">
+            <property name="text">
+             <string>Changes how music is shuffled.</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="vanilla_music_option">
+            <property name="text">
+             <string>Vanilla</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="type_music_option">
+            <property name="text">
+             <string>Per Type</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="type_music_label">
+            <property name="text">
+             <string>Only shuffles songs within certain types, those being &quot;combat&quot;, &quot;exploration&quot; and &quot;fanfares&quot;. This ensures that you won't be hearing boss music while trying to explore an area. Certain songs, such as the Credits song are exempt from shuffling.</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="vanilla_music_label">
+            <property name="text">
+             <string>Does not shuffle any songs.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="full_music_label">
+            <property name="text">
+             <string>Will shuffle all songs. In this mode, songs from the &quot;fanfare&quot; type are still shuffled amongst themselves. Note: This mode may cause songs to overlap and be loud.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="cancel_button">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="reset_button">
+     <property name="text">
+      <string>Reset to Defaults</string>
+     </property>
     </widget>
    </item>
   </layout>

@@ -33318,7 +33318,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Catacombs": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -33326,13 +33326,13 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Gravity",
+                                            "name": "MorphBall",
                                             "amount": 1,
-                                            "negate": true
+                                            "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
@@ -33340,48 +33340,40 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "MorphBall",
+                                                        "name": "Bombs",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "and",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Boost",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "WallBoost",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "items",
+                                                                    "name": "Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
+                                                                    "type": "tricks",
+                                                                    "name": "WallBoost",
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
