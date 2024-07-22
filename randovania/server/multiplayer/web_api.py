@@ -1,3 +1,4 @@
+import html
 import json
 
 import construct
@@ -30,9 +31,9 @@ def admin_sessions(user: User) -> ResponseReturnValue:
                     for col in [
                         "<a href='{}'>{}</a>".format(
                             flask.url_for("admin_session", session_id=session.id),
-                            session.name,
+                            html.escape(session.name),
                         ),
-                        session.creator.name,
+                        html.escape(session.creator.name),
                         session.creation_date,
                         len(session.members),
                         len(session.worlds),
@@ -99,8 +100,8 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
 
         rows.append(
             [
-                association.user.name,
-                association.world.name,
+                html.escape(association.user.name),
+                html.escape(association.world.name),
                 json.loads(association.world.preset)["game"],
                 association.connection_state.pretty_text,
                 ", ".join(inventory),
@@ -115,9 +116,9 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
     )
 
     entries = [
-        f"<p>Session: {session.name}</p>",
-        f"<p>Created by {session.creator.name} at {session.creation_datetime}</p>",
-        f"<p>Session is password protected, password is <code>{session.password}</code></p>"
+        f"<p>Session: {html.escape(session.name)}</p>",
+        f"<p>Created by {html.escape(session.creator.name)} at {session.creation_datetime}</p>",
+        f"<p>Session is password protected, password is <code>{html.escape(session.password)}</code></p>"
         if session.password is not None
         else "Session is not password protected",
         "<p><a href='{link}'>Download rdvgame</a></p>".format(
