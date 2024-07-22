@@ -1166,10 +1166,10 @@ def _migrate_v85(preset: dict) -> dict:
         config = preset["configuration"]
         config["first_suit_dr"] = 50
         config["second_suit_dr"] = 75
-
     return preset
 
-  def _migrate_v86(preset: dict) -> dict:
+
+def _migrate_v86(preset: dict) -> dict:
     if preset["game"] == "prime1":
         state = preset["configuration"]["ammo_pickup_configuration"]["pickups_state"]
         item_list = [("Energy Refill", 20), ("Missile Refill", 5), ("Power Bomb Refill", 1)]
