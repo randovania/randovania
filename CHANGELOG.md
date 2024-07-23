@@ -119,13 +119,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Area 4 Central Caves
 
-- Added: Amethyst Altars - Reach the pickup with Spider Ball and Single-Wall Wall Jumps (Expert).
+- Added: Amethyst Altars - Reach the pickup with Spider Ball, Single-Wall Wall Jumps (Expert), and Movement (Advanced).
 
 ##### Area 5 Tower Exterior
 
 - Added: Tower Exterior
     - Reach the door to Zeta Arena Access with High Jump Boots, Single-Wall Wall Jumps (Beginner) and either Super Jump (Intermediate) or Unmorph Extend (Intermediate).
-    - Reach the center top of the tower with High Jump Boots, Single-Wall Wall Jump (Intermediate), Super Jump (Advanced), and Unmorph Extend (Advanced).
+    - Reach the center top of the tower with High Jump Boots, Single-Wall Wall Jump (Intermediate), Super Jump (Advanced), Unmorph Extend (Advanced), and Movement (Advanced).
     - Reach the top ledge to Gamma+ Arena Access with High Jump Boots and Ice Beam, and either Charge Beam (Intermediate), Phase Drift (Advanced), or nothing extra (Expert).
 
 ##### Area 7
