@@ -1,6 +1,9 @@
 import dataclasses
+import json
 from pathlib import Path
 from typing import TYPE_CHECKING
+
+import sentry_sdk
 
 from randovania.lib import status_update_lib
 
@@ -56,10 +59,14 @@ class GameExporter:
     ):
         meta_data: PatcherDataMeta = patch_data.pop("_randovania_meta")
         self._before_export()
-        from randovania import monitoring
 
         try:
-            with monitoring.attach_patcher_data(patch_data) as scope:
+            with sentry_sdk.push_scope() as scope:
+                scope.add_attachment(
+                    json.dumps(patch_data).encode("utf-8"),
+                    filename="patcher.json",
+                    content_type="application/json",
+                )
                 with scope.start_transaction(op="task", name="export_game") as span:
                     span.set_tag("exporter", type(self).__name__)
                     span.set_tag("layout_was_user_modified", meta_data["layout_was_user_modified"])
