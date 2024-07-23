@@ -995,44 +995,33 @@ Extra - asset_id: collision_camera_012
   * Pickup 147; Category? Minor
   * Extra - actor_name: LE_Item_009
   * Extra - actor_type: item_missiletank
-  > Door to Laboratory Teleporter East
-      Screw Attack and Use Spider Ball
-  > Door to Omega Arena South
-      Spider Boost (Beginner) and Can Spider Boost
+  > Above Pickup
+      Any of the following:
+          Spider Boost (Beginner) and Can Spider Boost
+          All of the following:
+              Screw Attack
+              Any of the following:
+                  Lightning Armor or Use Spider Ball
+                  Hazard Runs (Beginner) and Normal Damage ≥ 20
 
 > Door to Laboratory Teleporter East; Heals? False
   * Layers: default
   * Spazer Beam Door to Laboratory Teleporter East/Door to Omega Arena South Access; Dock Lock Rando incompatible with: Wave Beam Door
   * Extra - actor_name: Door007
   * Extra - actor_type: doorpowerpower
-  > Door to Omega Arena South
+  > Above Pickup
       Any of the following:
-          Any of the following:
-              # Get through lower part
-              Lightning Armor or Screw Attack
-              Hazard Runs (Intermediate) and Hazard Damage ≥ 75
-          Any of the following:
-              # Jump to the ledge - TODO: test freezing with gullugg
-              Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump, No IBJ)
-              All of the following:
-                  # High Jump
-                  High Jump Boots
-                  Any of the following:
-                      Super Jump (Advanced)
-                      Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Intermediate)
+          Lightning Armor or Screw Attack
+          Hazard Runs (Intermediate) and Normal Damage ≥ 75
 
 > Door to Omega Arena South; Heals? False
   * Layers: default
   * Power Beam Door to Omega Arena South/Door to Omega Arena South Access
   * Extra - actor_name: Door015
   * Extra - actor_type: doorpowerpower
-  > Pickup (Missile Tank)
-      Spider Boost (Beginner) and Can Spider Boost
-  > Door to Laboratory Teleporter East
-      Any of the following:
-          Lightning Armor or Screw Attack
-          Hazard Runs (Intermediate) and Hazard Damage ≥ 75
   > Start Point
+      Trivial
+  > Above Pickup
       Trivial
 
 > Tunnel to Omega Arena South; Heals? False
@@ -1046,6 +1035,31 @@ Extra - asset_id: collision_camera_012
   * Extra - start_point_actor_name: ST_SG_Omega_003
   > Door to Omega Arena South
       Trivial
+
+> Above Pickup; Heals? False
+  * Layers: default
+  > Pickup (Missile Tank)
+      Any of the following:
+          Spider Boost (Beginner) and Can Spider Boost
+          # Lay a Bomb and launch sideways into the alcove: https://youtu.be/ODIIfviIrRI
+          Diagonal Bomb Jump (Advanced) and Lay Bomb
+  > Door to Laboratory Teleporter East
+      Any of the following:
+          Lightning Armor or Screw Attack
+          Hazard Runs (Intermediate) and Normal Damage ≥ 75
+  > Door to Omega Arena South
+      Any of the following:
+          Single-wall Wall Jump (Beginner) or Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
+          All of the following:
+              # Freeze the leftmost Gullugg
+              Freeze Enemy to Climb Higher
+              # TODO: Add videos
+              High Jump Boots or Super Jump (Advanced)
+          All of the following:
+              High Jump Boots
+              Any of the following:
+                  Super Jump (Advanced)
+                  Morph Ball and Super Jump (Intermediate) and Unmorph Extend (Intermediate)
 
 ----------------
 Omega Arena South
