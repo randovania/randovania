@@ -102,10 +102,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: More starting locations have been added for all areas.
 - Added: Progressive pickups can now be configured to be placed vanilla.
 - Added: New generic offworld items for Missiles, Beams, and Suits in multiworld.
+- Added: A unique icon for major items on the map.
 - Changed: Room Names on the HUD are now enabled by default.
 - Changed: Power Bomb drop rates have been bumped to 20% from 10-15% for nearly all enemies.
 - Changed: The music in Surface West now plays the Surface East - Landing Site theme if you do not have the Baby and all DNA collected.
 - Changed: The Aeion orbs after collecting major upgrades has been restored.
+- Changed: Beams have been rebalanced again Diggernaut.
 - Fixed: The hidden area in Area 7 - Spider Boost Tunnel South not being removed fully.
 - Fixed: Negative Metroid count if defeating the Larva Metroids in reverse.
 - Fixed: Visual bug where Samus would display incorrectly after reloading to checkpoint from a boss fight.
