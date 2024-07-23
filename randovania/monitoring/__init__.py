@@ -57,7 +57,7 @@ def _filter_data(data: object, str_filter: typing.Callable[[str], str]) -> typin
     return result
 
 
-_HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\])([^/\\]+)([/\\])")
+_HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\]+)([^/\\]+)([/\\])")
 
 
 def _filter_user_home(data: typing.Any) -> typing.Any | None:
