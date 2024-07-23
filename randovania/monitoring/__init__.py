@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import contextlib
-import json
 import platform
 import re
 import typing
@@ -165,17 +164,6 @@ def server_init(sampling_rate: float) -> None:
 
 def bot_init() -> None:
     return _init(False, "bot")
-
-
-@contextlib.contextmanager
-def attach_patcher_data(patcher_data: dict):
-    with sentry_sdk.push_scope() as scope:
-        scope.add_attachment(
-            json.dumps(patcher_data).encode("utf-8"),
-            filename="patcher.json",
-            content_type="application/json",
-        )
-        yield scope
 
 
 trace_function = sentry_sdk.trace
