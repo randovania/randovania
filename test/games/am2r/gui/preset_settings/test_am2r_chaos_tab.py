@@ -30,14 +30,14 @@ def test_flip_checks(skip_qtbot: QtBot, am2r_game_description: GameDescription, 
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
 
-    assert not tab.vertically_flip_check.value()
-    assert not tab.horizontally_flip_check.value()
+    assert not tab.vertically_flip_check.isChecked()
+    assert not tab.horizontally_flip_check.isChecked()
 
     skip_qtbot.mouseClick(tab.vertically_flip_check, QtCore.Qt.MouseButton.LeftButton)
     skip_qtbot.mouseClick(tab.horizontally_flip_check, QtCore.Qt.MouseButton.LeftButton)
 
-    assert tab.vertically_flip_check.value()
-    assert tab.horizontally_flip_check.value()
+    assert tab.vertically_flip_check.isChecked()
+    assert tab.horizontally_flip_check.isChecked()
 
 
 def test_darkness_spins(
