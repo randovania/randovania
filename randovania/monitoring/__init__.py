@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import contextlib
+import os
 import platform
 import re
 import typing
@@ -138,7 +139,7 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         before_breadcrumb=before_breadcrumb,
         before_send=before_send,
     )
-    sentry_sdk.set_context(
+    sentry_sdk.Scope.get_global_scope().set_context(
         "os",
         {
             "name": platform.system(),
@@ -150,8 +151,11 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
 def client_init() -> None:
     _init(False, "client", exclude_server_name=True)
 
-    sentry_sdk.set_tag("frozen", randovania.is_frozen())
-    sentry_sdk.set_tag("cpu.architecture", platform.machine())
+    global_scope = sentry_sdk.Scope.get_global_scope()
+    global_scope.set_tag("frozen", randovania.is_frozen())
+    global_scope.set_tag("cpu.architecture", platform.machine())
+    global_scope.set_tag("cpu.processor", platform.processor())
+    global_scope.set_tag("cpu.count", os.cpu_count())
 
     # Ignore the "packet queue is empty, aborting" message
     # It causes a disconnect, but we smoothly reconnect in that case.

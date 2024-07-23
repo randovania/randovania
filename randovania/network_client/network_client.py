@@ -520,7 +520,7 @@ class NetworkClient:
     def _update_reported_username(self) -> None:
         if self.allow_reporting_username and self._current_user and self._current_user.discord_id:
             self.logger.info("Setting sentry user to %s (%d)", self._current_user.name, self._current_user.discord_id)
-            sentry_sdk.set_user(
+            sentry_sdk.Scope.get_global_scope().set_user(
                 {
                     "id": self._current_user.discord_id,
                     "username": self._current_user.name,
@@ -529,7 +529,7 @@ class NetworkClient:
             )
         else:
             self.logger.info("Removing sentry user")
-            sentry_sdk.set_user(None)
+            sentry_sdk.Scope.get_global_scope().set_user(None)
 
     @property
     def last_connection_error(self) -> str | None:
