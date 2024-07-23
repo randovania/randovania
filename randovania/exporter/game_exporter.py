@@ -61,7 +61,7 @@ class GameExporter:
         self._before_export()
 
         try:
-            with sentry_sdk.new_scope() as scope:
+            with sentry_sdk.configure_scope() as scope:
                 scope.add_attachment(
                     json.dumps(patch_data).encode("utf-8"),
                     filename="patcher.json",
