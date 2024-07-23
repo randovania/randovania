@@ -106,7 +106,7 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
 
         integrations.append(FlaskIntegration())
     else:
-        profiles_sample_rate = 0.0
+        profiles_sample_rate = 0.5 if randovania.is_dev_version() else 0.0
 
         # We use asyncio for clients and bot, but not server.
         from sentry_sdk.integrations.asyncio import AsyncioIntegration
