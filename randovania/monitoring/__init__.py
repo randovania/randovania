@@ -109,6 +109,11 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
     else:
         profiles_sample_rate = 0.0
 
+        # We use asyncio for clients and bot, but not server.
+        from sentry_sdk.integrations.asyncio import AsyncioIntegration
+
+        integrations.append(AsyncioIntegration())
+
     server_name = None
     if exclude_server_name:
         # hostname for clients contains pii, so exclude them if we're not doing server.
