@@ -310,6 +310,8 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 "description": pb_text,
             },
             "required_amount_of_dna": 46 - (config.artifacts.placed_artifacts - config.artifacts.required_artifacts),
+            "flip_vertically": config.vertically_flip_gameplay,
+            "flip_horizontally": config.horizontally_flip_gameplay,
         }
         for item, state in config.ammo_pickup_configuration.pickups_state.items():
             launcher_dict = {

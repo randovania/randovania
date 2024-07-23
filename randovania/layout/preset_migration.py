@@ -1178,6 +1178,15 @@ def _migrate_v86(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v87(preset: dict) -> dict:
+    if preset["game"] == "am2r":
+        config = preset["configuration"]
+        config["vertically_flip_gameplay"] = False
+        config["horizontally_flip_gameplay"] = False
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1265,6 +1274,7 @@ _MIGRATIONS = [
     _migrate_v84,
     _migrate_v85,  # am2r configurable DR
     _migrate_v86,
+    _migrate_v87,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

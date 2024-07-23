@@ -44,6 +44,8 @@ class AM2RConfiguration(BaseConfiguration):
     force_blue_labs: bool
 
     # Chaos options
+    vertically_flip_gameplay: bool
+    horizontally_flip_gameplay: bool
     # div 1000 to get coefficient, div 10 to get %
     darkness_chance: int = dataclasses.field(metadata={"min": 0, "max": 1000})
     darkness_min: int = dataclasses.field(metadata={"min": 0, "max": 4})
@@ -86,6 +88,9 @@ class AM2RConfiguration(BaseConfiguration):
 
         if self.artifacts.required_artifacts > self.artifacts.placed_artifacts:
             result.append("The amount of required DNA cannot be higher than the total amount of placed DNA.")
+
+        if self.horizontally_flip_gameplay or self.vertically_flip_gameplay:
+            result.append("Gameplay is flipped horizontally or vertically.")
 
         if self.darkness_min > self.darkness_max:
             result.append("The minimum darkness value cannot be higher than the maximum darkness value.")

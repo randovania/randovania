@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.am2r.gui.generated.preset_am2r_chaos_ui import Ui_PresetAM2RChaos
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
+from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -18,6 +19,8 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
         super().__init__(editor, game_description, window_manager)
 
         self.setupUi(self)
+        signal_handling.on_checked(self.vertically_flip_check, self._on_vertical_flip_changed)
+        signal_handling.on_checked(self.horizontally_flip_check, self._on_horizontal_flip_changed)
         self.darkness_slider.valueChanged.connect(self._on_slider_changed)
         self.darkness_min_spin.valueChanged.connect(self._on_darkness_spin_changed)
         self.darkness_max_spin.valueChanged.connect(self._on_darkness_spin_changed)
@@ -25,6 +28,14 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
         self.submerged_lava_slider.valueChanged.connect(self._on_slider_changed)
 
         self._change_sliders()
+
+    def _on_vertical_flip_changed(self, value: bool) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("vertically_flip_gameplay", value)
+
+    def _on_horizontal_flip_changed(self, value: bool) -> None:
+        with self._editor as editor:
+            editor.set_configuration_field("horizontally_flip_gameplay", value)
 
     def _on_darkness_spin_changed(self) -> None:
         self.darkness_min_spin.setMaximum(self.darkness_max_spin.value())
@@ -57,6 +68,9 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
 
     def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, AM2RConfiguration)
+        self.vertically_flip_check.setChecked(preset.configuration.vertically_flip_gameplay)
+        self.horizontally_flip_check.setChecked(preset.configuration.horizontally_flip_gameplay)
+
         self.darkness_min_spin.setValue(preset.configuration.darkness_min)
         self.darkness_max_spin.setValue(preset.configuration.darkness_max)
 
