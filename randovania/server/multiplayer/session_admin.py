@@ -100,6 +100,14 @@ def _get_preset(preset_bytes: bytes) -> VersionedPreset:
         raise error.InvalidActionError(f"invalid preset: {e}")
 
 
+def _verify_preset_allowed_for(preset: VersionedPreset, session: MultiplayerSession) -> None:
+    if preset.game not in session.allowed_games:
+        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
+
+    if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
+        raise error.InvalidActionError("Preset uses unsupported features.")
+
+
 def _create_world(
     sa: ServerApp, session: MultiplayerSession, name: str, preset_bytes: bytes, for_user: int | None = None
 ):
@@ -109,8 +117,7 @@ def _create_world(
     _verify_not_in_generation(session)
     preset = _get_preset(preset_bytes)
 
-    if preset.game not in session.allowed_games:
-        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
+    _verify_preset_allowed_for(preset, session)
 
     if WORLD_NAME_RE.match(name) is None:
         raise error.InvalidActionError("Invalid world name")
@@ -135,11 +142,7 @@ def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UU
     _verify_world_has_session(world, session)
     verify_has_admin_or_claimed(sa, world)
 
-    if preset.game not in session.allowed_games:
-        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
-
-    if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
-        raise error.InvalidActionError("Preset uses unsupported features.")
+    _verify_preset_allowed_for(preset, session)
 
     try:
         with database.db.atomic():
