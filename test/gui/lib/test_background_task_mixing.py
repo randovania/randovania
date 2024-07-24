@@ -5,7 +5,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.gui.lib.background_task_mixin import AbortBackgroundTask, BackgroundTaskMixin
+from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
+from randovania.lib.background_task import AbortBackgroundTask
 
 
 @pytest.fixture()
