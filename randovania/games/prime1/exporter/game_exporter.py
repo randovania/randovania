@@ -9,7 +9,7 @@ from textwrap import wrap
 from typing import TYPE_CHECKING
 
 from randovania import monitoring
-from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.exporter.game_exporter import GameExporter, GameExportParams, input_hash_for_file
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
@@ -31,6 +31,12 @@ class PrimeGameExportParams(GameExportParams):
     asset_cache_path: Path
     use_echoes_models: bool
     cache_path: Path
+
+    def calculate_input_hash(self) -> dict[str, str | None]:
+        return {
+            "prime1_iso": input_hash_for_file(self.input_path),
+            "prime2_iso": input_hash_for_file(self.echoes_input_path),
+        }
 
 
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):

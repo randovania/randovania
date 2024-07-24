@@ -8,6 +8,7 @@ import threading
 from PySide6.QtCore import Signal
 
 import randovania.games.prime2.patcher.csharp_subprocess
+from randovania.lib.background_task import AbortBackgroundTask
 
 
 class BackgroundTaskInProgressError(Exception):
@@ -80,7 +81,3 @@ class BackgroundTaskMixin:
     @property
     def has_background_process(self) -> bool:
         return self._background_thread is not None
-
-
-class AbortBackgroundTask(Exception):
-    pass

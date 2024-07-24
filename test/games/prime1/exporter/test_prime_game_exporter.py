@@ -325,6 +325,9 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     progress_update = MagicMock()
 
+    tmp_path.joinpath("input.iso").write_bytes(b"hi")
+    tmp_path.joinpath("prime2.iso").write_bytes(b"hi")
+
     mock_create_map_using_matplotlib: MagicMock = mocker.patch(
         "randovania.games.prime1.exporter.game_exporter.create_map_using_matplotlib"
     )
@@ -341,7 +344,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
                 spoiler_output=tmp_path,
                 input_path=tmp_path.joinpath("input.iso"),
                 output_path=tmp_path.joinpath("output.iso"),
-                echoes_input_path=None,
+                echoes_input_path=tmp_path.joinpath("prime2.iso"),
                 asset_cache_path=tmp_path.joinpath("asset_cache_path"),
                 use_echoes_models=False,
                 cache_path=tmp_path.joinpath("cache_path"),
