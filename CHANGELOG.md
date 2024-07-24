@@ -78,6 +78,19 @@ Fixed: Seeds with more than 3 starting Energy Parts can be exported and played.
 
 ### Metroid Prime
 
+- Fixed: Crash in Central Dynamo/Quarantine Access A due to the memory from extra blast shields
+- Fixed: Crash in Deck Beta Security Hall due to the memory from extra blast shields and auto-loads
+- Fixed: Non-NTSC 0-00 Ruined Courtyard thermal conduit patch exploit where Super Missiles could be skipped
+- Fixed: Upper Research Core door forcefield having the wrong color/vulnerability when a custom blast shield is placed
+- Fixed: Upper Research Core door opening if a custom blast shield is destroyed while the door is unpowered
+- Fixed: Export error when using (deprecated) Major cutscene skips
+- Fixed: Shorelines lighthouse cutscene skip not working if the player had visited the save station
+- Fixed: Missing black bars in the Elite Research bottom platform activation cutscene
+- Fixed: Black bars sometimes disappearing prematurely in the Chozo Ice Temple cutscene
+- Fixed: Missing screen fade-in from Arrival cutscenes in Transport to Chozo Ruins East and Transport to Tallon Overworld South when skipped
+- Fixed: Ghost music in Furnace not playing when coming from Energy Core
+- Changed: Updated tournament winners scan text
+
 #### Logic Database
 
 ##### Chozo Ruins
