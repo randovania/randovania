@@ -6,7 +6,7 @@ import math
 from randovania.games.factorio.data_importer import data_parser
 
 BASIC_RESOURCES = {"water", "steam", "crude-oil", "iron-ore", "copper-ore", "coal", "stone"}
-_k_fluids = {"water", "steam", "crude-oil", "heavy-oil", "light-oil", "petroleum-gas", "lubricant", "sulfuric-acid"}
+_FLUID_NAMES = {"water", "steam", "crude-oil", "heavy-oil", "light-oil", "petroleum-gas", "lubricant", "sulfuric-acid"}
 _COMPLEXITY_PER_INGREDIENT = 2
 
 
@@ -111,7 +111,7 @@ def cost_calculator(recipes_raw: dict[str, dict], techs_raw: dict[str, dict]) ->
         else:
             raise ValueError(f"No recipes for {item_name}")
 
-        item_costs[item_name] = dataclasses.replace(cost, is_fluid=item_name in _k_fluids)
+        item_costs[item_name] = dataclasses.replace(cost, is_fluid=item_name in _FLUID_NAMES)
         processing_items.remove(item_name)
         return cost
 
@@ -134,22 +134,4 @@ def cost_calculator(recipes_raw: dict[str, dict], techs_raw: dict[str, dict]) ->
 
 
 def item_is_fluid(item_name: str) -> bool:
-    return item_name in _k_fluids
-
-
-def print_things():
-    recipes_raw = data_parser.load_recipes_raw()
-    techs_raw = data_parser.load_techs_raw()
-    complexities = cost_calculator(recipes_raw, techs_raw)
-
-    from prettytable import PrettyTable
-
-    t = PrettyTable(["Item", "Material", "Complexity", "Steps"], float_format="10.2", int_format="5")
-    for item, c in sorted(complexities.items(), key=lambda it: it[1].material):
-        t.add_row([item, c.material, c.complexity, c.steps])
-
-    print(t)
-
-
-if __name__ == "__main__":
-    print_things()
+    return item_name in _FLUID_NAMES
