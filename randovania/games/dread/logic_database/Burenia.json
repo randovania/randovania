@@ -12906,29 +12906,12 @@
                             }
                         },
                         "Dock to Early Gravity Speedboost Room 1 (Lower)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BureniaEarlyGravSpeedBlocks",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Speedbooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "BureniaEarlyGravSpeedBlocks",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Water Pit": {
@@ -12960,6 +12943,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Speedbooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -12982,7 +12974,7 @@
                     "valid_starting_location": false,
                     "event_name": "BureniaEarlyGravSpeedBlocks",
                     "connections": {
-                        "Dock to Early Gravity Speedboost Room 1 (Lower)": {
+                        "Slope Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
