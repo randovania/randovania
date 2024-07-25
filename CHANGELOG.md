@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Reduced some visual noise in the main window and customize preset window.
 - Changed: Don't show unnecessary lines on Door Lock and Teleporter rando customization tabs.
+- Fixed: In multiworld sessions, creating a new world with a preset with unsupported features is now properly rejected.
 
 ### AM2R
 
