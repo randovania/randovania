@@ -57,15 +57,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Dread
 
 - Fixed: The option to hide scans with Nothing data now behaves as expected.
-Fixed: Seeds with more than 3 starting Energy Parts can be exported and played.
+- Fixed: Seeds with more than 3 starting Energy Parts can be exported and played.
 
 #### Logic Database
 
 ##### Burenia
 
 - Added: Use Pseudo Wave Beam (Intermediate) with Diffusion Beam to break the Early Gravity Blob through the wall.
-- Removed: Using Water Bomb Jumps to reach the Blob Alcove in Gravity Suit Tower.
 - Fixed: The Early Gravity Speed Booster puzzle now correctly requires Speed Booster Conservation set to Beginner.
+- Removed: Using Water Bomb Jumps to reach the Blob Alcove in Gravity Suit Tower.
 
 ##### Cataris
 
