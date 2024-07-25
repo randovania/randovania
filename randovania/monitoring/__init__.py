@@ -154,7 +154,7 @@ def client_init() -> None:
     global_scope = sentry_sdk.Scope.get_global_scope()
     global_scope.set_tag("frozen", randovania.is_frozen())
     global_scope.set_tag("cpu.architecture", platform.machine())
-    global_scope.set_tag("cpu.processor", platform.processor())
+    global_scope.set_tag("cpu.processor", platform.processor() or "unknown")  # Empty string is an invalid value
     global_scope.set_tag("cpu.count", os.cpu_count())
 
     # Ignore the "packet queue is empty, aborting" message
