@@ -94,6 +94,12 @@ Tier 1
       Craft Automation science pack
   > Pickup (Wall)
       Craft Automation science pack
+  > Pickup (Inserter)
+      Trivial
+  > Pickup (Steam power)
+      Trivial
+  > Pickup (Automation science pack)
+      Trivial
 
 > Pickup (Automation); Heals? False
   * Layers: default
@@ -128,6 +134,39 @@ Tier 1
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Inserter); Heals? False
+  * Layers: default
+  * Pickup 186; Category? Major
+  * Extra - original_tech: inserter
+  * Extra - tech_name: randovania-inserter
+  * Extra - count: 20
+  * Extra - time: 10
+  * Extra - ingredients: ()
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Steam power); Heals? False
+  * Layers: default
+  * Pickup 185; Category? Major
+  * Extra - original_tech: steam-power
+  * Extra - tech_name: randovania-steam-power
+  * Extra - count: 50
+  * Extra - time: 20
+  * Extra - ingredients: ()
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Automation science pack); Heals? False
+  * Layers: default
+  * Pickup 184; Category? Major
+  * Extra - original_tech: automation-science-pack
+  * Extra - tech_name: randovania-automation-science-pack
+  * Extra - count: 10
+  * Extra - time: 10
+  * Extra - ingredients: ()
+  > Connection to Tech Tree
+      Trivial
+
 ----------------
 Tier 2
 > Connection to Tech Tree; Heals? False
@@ -142,8 +181,6 @@ Tier 2
   > Pickup (Logistics)
       Craft Automation science pack
   > Pickup (Optics)
-      Craft Automation science pack
-  > Pickup (Fluid storage)
       Craft Automation science pack
 
 > Pickup (Military); Heals? False
@@ -201,17 +238,6 @@ Tier 2
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Fluid storage); Heals? False
-  * Layers: default
-  * Pickup 183; Category? Major
-  * Extra - original_tech: fluid-storage
-  * Extra - tech_name: randovania-fluid-storage
-  * Extra - count: 10
-  * Extra - time: 15
-  * Extra - ingredients: ('automation-science-pack',)
-  > Connection to Tech Tree
-      Trivial
-
 ----------------
 Tier 3
 > Connection to Tech Tree; Heals? False
@@ -231,6 +257,8 @@ Tier 3
       Tech/Tier 3/Pickup (Military 2) and Tech/Tier 1/Pickup (Wall) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Barrel handling)
       Tech/Tier 3/Pickup (Automation 2) and Tech/Tier 4/Pickup (Engine) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Fluid storage)
+      Tech/Tier 3/Pickup (Barrel handling) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Chemical science pack)
       Tech/Tier 5/Pickup (Advanced electronics) and Tech/Tier 5/Pickup (Sulfur processing) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Nightvision)
@@ -311,6 +339,17 @@ Tier 3
   * Pickup 33; Category? Major
   * Extra - original_tech: fluid-handling
   * Extra - tech_name: randovania-fluid-handling
+  * Extra - count: 50
+  * Extra - time: 15
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Fluid storage); Heals? False
+  * Layers: default
+  * Pickup 183; Category? Major
+  * Extra - original_tech: fluid-storage
+  * Extra - tech_name: randovania-fluid-storage
   * Extra - count: 50
   * Extra - time: 15
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')

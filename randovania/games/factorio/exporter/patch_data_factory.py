@@ -7,7 +7,7 @@ from randovania.game_description.requirements.node_requirement import NodeRequir
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
-from randovania.games.factorio.generator.complexity import item_is_fluid
+from randovania.games.factorio.generator.item_cost import item_is_fluid
 from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 

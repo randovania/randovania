@@ -96,6 +96,22 @@ def count_for_result(recipe: dict, target_result: str) -> int:
     return 0
 
 
+def get_results(recipe: dict) -> dict[str, int]:
+    result = {}
+
+    if "result" in recipe:
+        result[recipe["result"]] = recipe.get("result_count", 1)
+
+    if "results" in recipe:
+        for r in recipe["results"]:
+            if isinstance(r, list):
+                result[r[0]] = r[1]
+            else:
+                result[r["name"]] = r["amount"]
+
+    return result
+
+
 def load_recipes_raw() -> dict[str, dict[str, typing.Any]]:
     assets_folder = RandovaniaGame.FACTORIO.data_path.joinpath("assets")
 
