@@ -107,8 +107,6 @@ def get_resources_for_details(
 
 def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
     combat_list = [
-        "boss_go",
-        "boss_mae_32",
         "m_boss_alpha_mn",
         "m_boss_alpha2_99",
         "m_boss_arachnus03",
@@ -124,6 +122,8 @@ def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[st
     ]
 
     exploration_list = [
+        "boss_go",
+        "boss_mae_32",
         "ele",
         "k_brinstra_0714",
         "k_crateria99",
