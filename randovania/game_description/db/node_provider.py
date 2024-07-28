@@ -45,23 +45,6 @@ class NodeProvider:
     def nodes_to_area(self, node: Node) -> Area:
         raise NotImplementedError
 
-    def area_connections_from(self, node: Node) -> Iterator[tuple[Node, Requirement]]:
-        """
-        Queries all nodes from the same area you can go from a given node.
-        :param node:
-        :return: Generator of pairs Node + Requirement for going to that node
-        """
-        raise NotImplementedError
-
-    def potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
-        """
-        Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
-        :param node:
-        :param context:
-        :return: Generator of pairs Node + Requirement for going to that node
-        """
-        raise NotImplementedError
-
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         area = self.area_by_area_location(identifier.area_identifier)
         node = area.node_with_name(identifier.node)

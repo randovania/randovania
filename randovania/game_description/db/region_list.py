@@ -161,16 +161,6 @@ class RegionList(NodeProvider):
         area = self.nodes_to_area(node)
         return area.connections[node].items()
 
-    def potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
-        """
-        Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
-        :param node:
-        :param context:
-        :return: Generator of pairs Node + Requirement for going to that node
-        """
-        yield from node.connections_from(context)
-        yield from self.area_connections_from(node)
-
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         cache_result = self._identifier_to_node.get(identifier)
         if cache_result is not None:
