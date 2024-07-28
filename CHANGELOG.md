@@ -99,6 +99,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Ruined Shrine NSJ climb now has both NTSC and non-NTSC versions documented.
 
+##### Phazon Mines
+
+- Fixed: Added back the item requirements to Mines Security Station Barrier after they were accidently removed.
+
 ### Metroid Prime 2: Echoes
 
 - Added: FAQ for Sanctuary Entrance Kinetic Orb Cannon.

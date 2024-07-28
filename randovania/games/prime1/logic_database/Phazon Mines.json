@@ -2999,173 +2999,45 @@
                             }
                         },
                         "Event - Mine Security Station Barrier Opened": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
-                                            "comment": "Avoid Wave Pirates",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "events",
-                                                        "name": "Event55",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
+                                                        "comment": "Avoid Wave Pirates",
                                                         "items": [
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": "Avoid All Pirates",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 5,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "Damage",
-                                                                                "amount": 299,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Fight Shadow Pirates",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Shoot Any Beam"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "or",
-                                                                                        "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "Combat",
-                                                                                                        "amount": 3,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "damage",
-                                                                                                        "name": "Damage",
-                                                                                                        "amount": 199,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "tricks",
-                                                                                                                    "name": "Combat",
-                                                                                                                    "amount": 2,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "or",
-                                                                                                                "data": {
-                                                                                                                    "comment": null,
-                                                                                                                    "items": [
-                                                                                                                        {
-                                                                                                                            "type": "resource",
-                                                                                                                            "data": {
-                                                                                                                                "type": "damage",
-                                                                                                                                "name": "Damage",
-                                                                                                                                "amount": 99,
-                                                                                                                                "negate": false
-                                                                                                                            }
-                                                                                                                        },
-                                                                                                                        {
-                                                                                                                            "type": "and",
-                                                                                                                            "data": {
-                                                                                                                                "comment": null,
-                                                                                                                                "items": [
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "items",
-                                                                                                                                            "name": "Charge",
-                                                                                                                                            "amount": 1,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "resource",
-                                                                                                                                        "data": {
-                                                                                                                                            "type": "damage",
-                                                                                                                                            "name": "Damage",
-                                                                                                                                            "amount": 49,
-                                                                                                                                            "negate": false
-                                                                                                                                        }
-                                                                                                                                    }
-                                                                                                                                ]
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    ]
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "events",
+                                                                    "name": "Event55",
+                                                                    "amount": 1,
+                                                                    "negate": true
                                                                 }
                                                             },
                                                             {
-                                                                "type": "and",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "comment": "Fight Wave Pirates",
+                                                                    "comment": null,
                                                                     "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Shoot Wave Beam"
-                                                                        },
                                                                         {
                                                                             "type": "or",
                                                                             "data": {
-                                                                                "comment": null,
+                                                                                "comment": "Avoid All Pirates",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "Combat",
-                                                                                            "amount": 3,
+                                                                                            "amount": 5,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
@@ -3174,23 +3046,18 @@
                                                                                         "data": {
                                                                                             "type": "damage",
                                                                                             "name": "Damage",
-                                                                                            "amount": 249,
+                                                                                            "amount": 299,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": null,
+                                                                                            "comment": "Fight Shadow Pirates",
                                                                                             "items": [
                                                                                                 {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "Charge",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
+                                                                                                    "type": "template",
+                                                                                                    "data": "Shoot Any Beam"
                                                                                                 },
                                                                                                 {
                                                                                                     "type": "or",
@@ -3202,7 +3069,7 @@
                                                                                                                 "data": {
                                                                                                                     "type": "tricks",
                                                                                                                     "name": "Combat",
-                                                                                                                    "amount": 2,
+                                                                                                                    "amount": 3,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             },
@@ -3211,21 +3078,21 @@
                                                                                                                 "data": {
                                                                                                                     "type": "damage",
                                                                                                                     "name": "Damage",
-                                                                                                                    "amount": 149,
+                                                                                                                    "amount": 199,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             },
                                                                                                             {
                                                                                                                 "type": "and",
                                                                                                                 "data": {
-                                                                                                                    "comment": "Fight Shadow Pirates",
+                                                                                                                    "comment": null,
                                                                                                                     "items": [
                                                                                                                         {
                                                                                                                             "type": "resource",
                                                                                                                             "data": {
                                                                                                                                 "type": "tricks",
                                                                                                                                 "name": "Combat",
-                                                                                                                                "amount": 1,
+                                                                                                                                "amount": 2,
                                                                                                                                 "negate": false
                                                                                                                             }
                                                                                                                         },
@@ -3244,12 +3111,30 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     {
-                                                                                                                                        "type": "template",
-                                                                                                                                        "data": "Shoot Ice Beam"
-                                                                                                                                    },
-                                                                                                                                    {
-                                                                                                                                        "type": "template",
-                                                                                                                                        "data": "Shoot Plasma Beam"
+                                                                                                                                        "type": "and",
+                                                                                                                                        "data": {
+                                                                                                                                            "comment": null,
+                                                                                                                                            "items": [
+                                                                                                                                                {
+                                                                                                                                                    "type": "resource",
+                                                                                                                                                    "data": {
+                                                                                                                                                        "type": "items",
+                                                                                                                                                        "name": "Charge",
+                                                                                                                                                        "amount": 1,
+                                                                                                                                                        "negate": false
+                                                                                                                                                    }
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "type": "resource",
+                                                                                                                                                    "data": {
+                                                                                                                                                        "type": "damage",
+                                                                                                                                                        "name": "Damage",
+                                                                                                                                                        "amount": 49,
+                                                                                                                                                        "negate": false
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
                                                                                                                                     }
                                                                                                                                 ]
                                                                                                                             }
@@ -3265,70 +3150,15 @@
                                                                                     }
                                                                                 ]
                                                                             }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Event55",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Avoid Pirates",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 249,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
+                                                                        },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Fight Pirates",
+                                                                                "comment": "Fight Wave Pirates",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "template",
-                                                                                        "data": "Shoot Ice Beam"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Shoot Super Missile"
+                                                                                        "data": "Shoot Wave Beam"
                                                                                     },
                                                                                     {
                                                                                         "type": "or",
@@ -3349,7 +3179,7 @@
                                                                                                     "data": {
                                                                                                         "type": "damage",
                                                                                                         "name": "Damage",
-                                                                                                        "amount": 149,
+                                                                                                        "amount": 249,
                                                                                                         "negate": false
                                                                                                     }
                                                                                                 },
@@ -3386,14 +3216,14 @@
                                                                                                                             "data": {
                                                                                                                                 "type": "damage",
                                                                                                                                 "name": "Damage",
-                                                                                                                                "amount": 99,
+                                                                                                                                "amount": 149,
                                                                                                                                 "negate": false
                                                                                                                             }
                                                                                                                         },
                                                                                                                         {
                                                                                                                             "type": "and",
                                                                                                                             "data": {
-                                                                                                                                "comment": null,
+                                                                                                                                "comment": "Fight Shadow Pirates",
                                                                                                                                 "items": [
                                                                                                                                     {
                                                                                                                                         "type": "resource",
@@ -3405,12 +3235,28 @@
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     {
-                                                                                                                                        "type": "resource",
+                                                                                                                                        "type": "or",
                                                                                                                                         "data": {
-                                                                                                                                            "type": "damage",
-                                                                                                                                            "name": "Damage",
-                                                                                                                                            "amount": 49,
-                                                                                                                                            "negate": false
+                                                                                                                                            "comment": null,
+                                                                                                                                            "items": [
+                                                                                                                                                {
+                                                                                                                                                    "type": "resource",
+                                                                                                                                                    "data": {
+                                                                                                                                                        "type": "damage",
+                                                                                                                                                        "name": "Damage",
+                                                                                                                                                        "amount": 99,
+                                                                                                                                                        "negate": false
+                                                                                                                                                    }
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "type": "template",
+                                                                                                                                                    "data": "Shoot Ice Beam"
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "type": "template",
+                                                                                                                                                    "data": "Shoot Plasma Beam"
+                                                                                                                                                }
+                                                                                                                                            ]
                                                                                                                                         }
                                                                                                                                     }
                                                                                                                                 ]
@@ -3432,6 +3278,203 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "Event55",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Avoid Pirates",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 249,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "Fight Pirates",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Shoot Ice Beam"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Shoot Super Missile"
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "or",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Combat",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "damage",
+                                                                                                                    "name": "Damage",
+                                                                                                                    "amount": 149,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "and",
+                                                                                                                "data": {
+                                                                                                                    "comment": null,
+                                                                                                                    "items": [
+                                                                                                                        {
+                                                                                                                            "type": "resource",
+                                                                                                                            "data": {
+                                                                                                                                "type": "items",
+                                                                                                                                "name": "Charge",
+                                                                                                                                "amount": 1,
+                                                                                                                                "negate": false
+                                                                                                                            }
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                            "type": "or",
+                                                                                                                            "data": {
+                                                                                                                                "comment": null,
+                                                                                                                                "items": [
+                                                                                                                                    {
+                                                                                                                                        "type": "resource",
+                                                                                                                                        "data": {
+                                                                                                                                            "type": "tricks",
+                                                                                                                                            "name": "Combat",
+                                                                                                                                            "amount": 2,
+                                                                                                                                            "negate": false
+                                                                                                                                        }
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "type": "resource",
+                                                                                                                                        "data": {
+                                                                                                                                            "type": "damage",
+                                                                                                                                            "name": "Damage",
+                                                                                                                                            "amount": 99,
+                                                                                                                                            "negate": false
+                                                                                                                                        }
+                                                                                                                                    },
+                                                                                                                                    {
+                                                                                                                                        "type": "and",
+                                                                                                                                        "data": {
+                                                                                                                                            "comment": null,
+                                                                                                                                            "items": [
+                                                                                                                                                {
+                                                                                                                                                    "type": "resource",
+                                                                                                                                                    "data": {
+                                                                                                                                                        "type": "tricks",
+                                                                                                                                                        "name": "Combat",
+                                                                                                                                                        "amount": 1,
+                                                                                                                                                        "negate": false
+                                                                                                                                                    }
+                                                                                                                                                },
+                                                                                                                                                {
+                                                                                                                                                    "type": "resource",
+                                                                                                                                                    "data": {
+                                                                                                                                                        "type": "damage",
+                                                                                                                                                        "name": "Damage",
+                                                                                                                                                        "amount": 49,
+                                                                                                                                                        "negate": false
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                ]
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Item Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Scan",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
