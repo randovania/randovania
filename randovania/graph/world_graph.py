@@ -287,6 +287,56 @@ def _dangerous_resources(nodes: list[WorldGraphNode], context: NodeContext) -> I
                     yield individual.resource
 
 
+def create_node(
+    node_index: int,
+    patches: GamePatches,
+    original_node: Node,
+    area: Area,
+    region: Region,
+) -> WorldGraphNode:
+    """
+    Creates one WorldGraphNode based on one original node.
+    """
+
+    resource_gain: list[ResourceQuantity] = []
+    requirement_to_collect = Requirement.trivial()
+
+    if isinstance(original_node, ResourceNode):
+        requirement_to_collect = original_node.requirement_to_collect()
+
+    if isinstance(original_node, EventNode):
+        resource_gain.append((original_node.event, 1))
+    elif isinstance(original_node, EventPickupNode):
+        resource_gain.append((original_node.event_node.event, 1))
+
+    pickup_index = None
+    if isinstance(original_node, PickupNode):
+        pickup_index = original_node.pickup_index
+    elif isinstance(original_node, EventPickupNode):
+        pickup_index = original_node.pickup_node.pickup_index
+
+    pickup_entry = None
+    if pickup_index is not None:
+        target = patches.pickup_assignment.get(pickup_index)
+        if target is not None and target.player == patches.player_index:
+            pickup_entry = target.pickup
+
+    return WorldGraphNode(
+        node_index=node_index,
+        identifier=original_node.identifier,
+        heal=original_node.heal,
+        connections=[],  # to be filled later
+        resource_gain=resource_gain,
+        requirement_to_collect=requirement_to_collect,
+        require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
+        pickup_index=pickup_index,
+        pickup_entry=pickup_entry,
+        original_node=original_node,
+        original_area=area,
+        original_region=region,
+    )
+
+
 def create_graph(
     database_view: GameDatabaseView,
     game_data: StateGameData,
@@ -314,46 +364,7 @@ def create_graph(
         if original_node is None:
             continue
 
-        node_index = len(nodes)
-        resource_gain: list[ResourceQuantity] = []
-        requirement_to_collect = Requirement.trivial()
-
-        if isinstance(original_node, ResourceNode):
-            requirement_to_collect = original_node.requirement_to_collect()
-
-        if isinstance(original_node, EventNode):
-            resource_gain.append((original_node.event, 1))
-        elif isinstance(original_node, EventPickupNode):
-            resource_gain.append((original_node.event_node.event, 1))
-
-        pickup_index = None
-        if isinstance(original_node, PickupNode):
-            pickup_index = original_node.pickup_index
-        elif isinstance(original_node, EventPickupNode):
-            pickup_index = original_node.pickup_node.pickup_index
-
-        pickup_entry = None
-        if pickup_index is not None:
-            target = patches.pickup_assignment.get(pickup_index)
-            if target is not None and target.player == patches.player_index:
-                pickup_entry = target.pickup
-
-        nodes.append(
-            WorldGraphNode(
-                node_index=node_index,
-                identifier=original_node.identifier,
-                heal=original_node.heal,
-                connections=[],  # to be filled later
-                resource_gain=resource_gain,
-                requirement_to_collect=requirement_to_collect,
-                require_collected_to_leave=isinstance(original_node, EventNode | PickupNode | EventPickupNode),
-                pickup_index=pickup_index,
-                pickup_entry=pickup_entry,
-                original_node=original_node,
-                original_area=area,
-                original_region=region,
-            )
-        )
+        nodes.append(create_node(len(nodes), patches, original_node, area, region))
 
     original_to_node = {node.original_node.node_index: node for node in nodes}
     node_provider = WorldGraphNodeProvider(game_data.region_list, original_to_node)
