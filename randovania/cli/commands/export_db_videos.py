@@ -159,20 +159,19 @@ def get_yt_ids(req: Requirement, highest_diff: int) -> Iterable[tuple[str, int, 
     if (diff := get_difficulty(req)) is not None and diff > highest_diff:
         highest_diff = diff
 
-    if req.comment is not None:
-        if "youtu" in req.comment:
-            for word in req.comment.split(" "):
-                if "youtu" not in word:
-                    continue
+    if req.comment is not None and "youtu" in req.comment:
+        for word in req.comment.split(" "):
+            if "youtu" not in word:
+                continue
 
-                # Parse Video ID
-                video_id = word.split("/")[-1].split("watch?v=")[-1].split(" ")[0]
-                start_time = 0
-                if "?t=" in word:
-                    start_time = int(video_id.split("?t=")[-1])
-                video_id = video_id.split("?t=")[0]
+            # Parse Video ID
+            video_id = word.split("/")[-1].split("watch?v=")[-1].split(" ")[0]
+            start_time = 0
+            if "?t=" in word:
+                start_time = int(video_id.split("?t=")[-1])
+            video_id = video_id.split("?t=")[0]
 
-                yield video_id, start_time, highest_diff
+            yield video_id, start_time, highest_diff
 
     for i in req.items:
         yield from get_yt_ids(i, highest_diff)

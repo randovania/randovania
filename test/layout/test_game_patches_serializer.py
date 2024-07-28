@@ -278,7 +278,8 @@ async def test_round_trip_generated_patches(default_preset):
     encoded = game_patches_serializer.serialize(all_patches)
     decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
     decoded_with_original_game = {
-        i: dataclasses.replace(d, game=orig.game) for (i, d), orig in zip(decoded.items(), all_patches.values())
+        i: dataclasses.replace(d, game=orig.game)
+        for (i, d), orig in zip(decoded.items(), all_patches.values(), strict=False)
     }
 
     # Assert

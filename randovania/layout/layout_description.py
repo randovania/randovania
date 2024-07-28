@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import contextlib
 import hashlib
 import itertools
 import json
@@ -244,10 +245,8 @@ class LayoutDescription:
                 result[k] = v
         else:
             spoiler["info_hash"] = _dict_hash(result["info"])
-            try:
+            with contextlib.suppress(obfuscator.MissingSecret):
                 result["secret"] = obfuscator.obfuscate_json(spoiler)
-            except obfuscator.MissingSecret:
-                pass
 
         if not self.user_modified:
             result["checksum"] = _dict_hash(result)

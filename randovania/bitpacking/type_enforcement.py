@@ -56,10 +56,8 @@ class DataclassPostInitTypeCheck:
                 if errors:
                     raise ValueError(f"Errors for field {f.name} ({v}):\n" + "\n".join(errors))
 
-            if "min" in f.metadata:
-                if v < f.metadata["min"]:
-                    raise ValueError(f"Field {f.name} has value {v}, which is less than minimum {f.metadata['min']}")
+            if "min" in f.metadata and v < f.metadata["min"]:
+                raise ValueError(f"Field {f.name} has value {v}, which is less than minimum {f.metadata['min']}")
 
-            if "max" in f.metadata:
-                if v > f.metadata["max"]:
-                    raise ValueError(f"Field {f.name} has value {v}, which is more than maximum {f.metadata['max']}")
+            if "max" in f.metadata and v > f.metadata["max"]:
+                raise ValueError(f"Field {f.name} has value {v}, which is more than maximum {f.metadata['max']}")

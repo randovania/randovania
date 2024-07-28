@@ -108,10 +108,9 @@ _TEST_RESPONSE = {
 
 
 async def _query_server(race_url) -> dict:
-    async with aiohttp.ClientSession() as session:
-        async with session.get(race_url) as response:
-            response.raise_for_status()
-            return await response.json()
+    async with aiohttp.ClientSession() as session, session.get(race_url) as response:
+        response.raise_for_status()
+        return await response.json()
 
 
 class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
@@ -191,7 +190,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
     @handle_network_errors
     async def attempt_join(self):
         if not self.races:
-            return
+            return None
 
         race = self.selected_race
 
@@ -209,6 +208,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
             await async_dialog.warning(
                 self, "Missing permalink", "Unable to get a valid Permalink from this race's info."
             )
+            return None
         else:
             self.permalink = permalink
             return self.accept()

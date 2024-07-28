@@ -90,10 +90,7 @@ class RequirementSet:
         :param current_energy:
         :return:
         """
-        for requirement_list in self.alternatives:
-            if requirement_list.satisfied(context, current_energy):
-                return True
-        return False
+        return any(requirement_list.satisfied(context, current_energy) for requirement_list in self.alternatives)
 
     def union(self, other: RequirementSet) -> RequirementSet:
         """Create a new RequirementSet that is only satisfied when both are satisfied"""

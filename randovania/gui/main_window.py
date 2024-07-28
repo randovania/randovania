@@ -384,7 +384,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         for game_menu in self.game_menus:
             self.menu_open.removeAction(game_menu.menuAction())
 
-        for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits, strict=True):
+        for game_menu, _edit_action in zip(self.game_menus, self.menu_action_edits, strict=True):
             game: RandovaniaGame = game_menu.game
             if game.data.development_state.can_view():
                 self.menu_open.addAction(game_menu.menuAction())
@@ -745,15 +745,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         old_value = self._options.advanced_validate_seed_after
         new_value = self.menu_action_validate_seed_after.isChecked()
 
-        if old_value and not new_value:
-            if not await async_dialog.yes_no_prompt(
-                self,
-                "Disable validation?",
-                text=_DISABLE_VALIDATION_WARNING,
-                icon=QtWidgets.QMessageBox.Icon.Warning,
-            ):
-                self.menu_action_validate_seed_after.setChecked(True)
-                return
+        if old_value and not new_value and not await async_dialog.yes_no_prompt(
+            self,
+            "Disable validation?",
+            text=_DISABLE_VALIDATION_WARNING,
+            icon=QtWidgets.QMessageBox.Icon.Warning,
+        ):
+            self.menu_action_validate_seed_after.setChecked(True)
+            return
 
         with self._options as options:
             options.advanced_validate_seed_after = new_value
@@ -768,14 +767,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         old_value = self._options.advanced_generate_in_another_process
         new_value = self.menu_action_generate_in_another_process.isChecked()
 
-        if old_value and not new_value:
-            if not await async_dialog.yes_no_prompt(
-                self,
-                "Run generation in the same process?",
-                text=_ANOTHER_PROCESS_GENERATION_WARNING,
-            ):
-                self.menu_action_generate_in_another_process.setChecked(True)
-                return
+        if old_value and not new_value and not await async_dialog.yes_no_prompt(
+            self,
+            "Run generation in the same process?",
+            text=_ANOTHER_PROCESS_GENERATION_WARNING,
+        ):
+            self.menu_action_generate_in_another_process.setChecked(True)
+            return
 
         with self._options as options:
             options.advanced_generate_in_another_process = new_value
@@ -893,6 +891,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             await async_dialog.warning(
                 self, "Bad Installation", "The following errors were found:\n" + "\n".join(errors)
             )
+            return None
         else:
             await async_dialog.message_box(
                 self,
@@ -900,6 +899,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 "Clean Installation",
                 f"No issues found out of {len(hash_list)} files.",
             )
+            return None
 
     def _on_menu_action_changelog(self):
         if self.all_change_logs is None:

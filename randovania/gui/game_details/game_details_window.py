@@ -146,7 +146,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         if len(all_games) > 1:
             game_name = "Crossgame Multiworld"
         else:
-            game_name = f"{list(all_games)[0].short_name} Randomizer"
+            game_name = f"{next(iter(all_games)).short_name} Randomizer"
 
         default_name = (
             f"{game_name} - {self.layout_description.shareable_word_hash}.{self.layout_description.file_extension()}"

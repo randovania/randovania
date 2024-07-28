@@ -12,7 +12,7 @@ class CloseEventWidget(QtWidgets.QMainWindow):
 
     def closeEvent(self, event: QtGui.QCloseEvent):
         if self.ignore_close_event(event):
-            return
+            return None
 
         self.CloseEvent.emit()
         return super().closeEvent(event)

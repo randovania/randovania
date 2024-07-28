@@ -139,6 +139,7 @@ class GameValidatorWidget(QtWidgets.QWidget, Ui_GameValidatorWidget):
     def stop_validator(self) -> None:
         if self._current_task is not None:
             self._current_task.cancel()
+        return None
 
     def _update_needs_refresh(self) -> None:
         need_refresh_filters = not (self._last_run_filters is None or self._action_filters == self._last_run_filters)

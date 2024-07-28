@@ -45,6 +45,7 @@ def catch_exceptions(t, val, tb):
     display_exception(val)
     if old_handler is not None:
         return old_handler(t, val, tb)
+    return None
 
 
 def catch_exceptions_async(loop, context):

@@ -30,10 +30,7 @@ class RequirementOr(RequirementArrayBase):
             return MAX_DAMAGE
 
     def satisfied(self, context: NodeContext, current_energy: int) -> bool:
-        for item in self.items:
-            if item.satisfied(context, current_energy):
-                return True
-        return False
+        return any(item.satisfied(context, current_energy) for item in self.items)
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         new_items = expand_items(self.items, RequirementOr, Requirement.impossible(), keep_comments)

@@ -29,9 +29,8 @@ class FusionConfiguration(BaseConfiguration):
         return RandovaniaGame.FUSION
 
     def active_layers(self) -> set[str]:
-        result = super().active_layers()
+        return super().active_layers()
 
-        return result
 
     def unsupported_features(self) -> list[str]:
         result = super().unsupported_features()

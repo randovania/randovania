@@ -48,7 +48,7 @@ def test_keys(
     # The slider value should never increase from what it was before
     assert slider_value_after_first_set >= tab.keys_slider.value()
     assert tab.keys_slider.value() == 2
-    assert not tab.keys_slider.isEnabled() == vanilla_tourian_keys
+    assert tab.keys_slider.isEnabled() != vanilla_tourian_keys
     assert editor.configuration.artifacts.vanilla_tourian_keys == vanilla_tourian_keys
     # If default value in configuration is smaller than the max allowed value, it shouldn't increase
     expected_artifacts = expected_max_slider

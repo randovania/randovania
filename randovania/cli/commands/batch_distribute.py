@@ -116,19 +116,18 @@ def batch_distribute_command_logic(args: Namespace) -> None:
                 f.cancel()
 
     try:
-        with sleep_inhibitor.get_inhibitor():
-            with ProcessPoolExecutor(max_workers=args.process_count) as pool:
-                for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
-                    result = pool.submit(
-                        batch_distribute_helper,
-                        base_params,
-                        seed_number,
-                        timeout,
-                        validate,
-                        output_dir,
-                    )
-                    result.add_done_callback(functools.partial(with_result, seed_number))
-                    all_futures.append(result)
+        with sleep_inhibitor.get_inhibitor(), ProcessPoolExecutor(max_workers=args.process_count) as pool:
+            for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
+                result = pool.submit(
+                    batch_distribute_helper,
+                    base_params,
+                    seed_number,
+                    timeout,
+                    validate,
+                    output_dir,
+                )
+                result.add_done_callback(functools.partial(with_result, seed_number))
+                all_futures.append(result)
 
     except KeyboardInterrupt:
         pass

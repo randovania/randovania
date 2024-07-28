@@ -112,7 +112,7 @@ def get_ingame_hash(hash_bytes: bytes) -> list[int]:
     num %= NUM_HASH_ITEMS**5
 
     out = []
-    for i in range(5):
+    for _i in range(5):
         out.append((num % NUM_HASH_ITEMS) + 1)
         num //= NUM_HASH_ITEMS
     return out

@@ -10,9 +10,8 @@ if TYPE_CHECKING:
 
 
 def game_description_for_layout(configuration: BaseConfiguration) -> GameDescription:
-    game = derived_nodes.remove_inactive_layers(
+    return derived_nodes.remove_inactive_layers(
         default_database.game_description_for(configuration.game),
         configuration.active_layers(),
     )
 
-    return game

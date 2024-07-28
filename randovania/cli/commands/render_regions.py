@@ -165,7 +165,7 @@ def render_region_graph_logic(args: Namespace) -> None:
     if single_image:
         full_dot.render(format="png", view=True, cleanup=True)
     else:
-        for name, this_dot in per_region_dot.items():
+        for _name, this_dot in per_region_dot.items():
             this_dot.render(format="png", view=True, cleanup=True)
 
 

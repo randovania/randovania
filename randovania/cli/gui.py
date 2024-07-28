@@ -18,3 +18,4 @@ def create_subparsers(sub_parsers: _SubParsersAction) -> None:
         from randovania.gui import qt
 
         return qt.create_subparsers(sub_parsers)
+    return None

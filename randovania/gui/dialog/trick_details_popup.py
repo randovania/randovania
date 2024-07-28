@@ -68,9 +68,8 @@ def _area_uses_resource(
         return False
 
     for node in area.nodes:
-        if isinstance(node, DockNode):
-            if _dock_uses_trick(node):
-                yield f"Open {node.name}"
+        if isinstance(node, DockNode) and _dock_uses_trick(node):
+            yield f"Open {node.name}"
 
         for target, req in area.connections[node].items():
             if _uses_trick(req):

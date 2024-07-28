@@ -59,13 +59,13 @@ def _format_expected_counts(
         return template.format(
             total=" and ".join(
                 item_names.add_quantity_to_resource(item_for_index[ammo_index].long_name, self_count, True)
-                for ammo_index, self_count in zip(ammo.items, self_counts)
+                for ammo_index, self_count in zip(ammo.items, self_counts, strict=False)
             ),
             from_items=" and ".join(
                 item_names.add_quantity_to_resource(
                     item_for_index[ammo_index].long_name, ammo_provided[ammo_index] - self_count, True
                 )
-                for ammo_index, self_count in zip(ammo.items, self_counts)
+                for ammo_index, self_count in zip(ammo.items, self_counts, strict=False)
             ),
             maximum=" and ".join(
                 item_names.add_quantity_to_resource(

@@ -111,9 +111,8 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if preset.configuration.dock_rando.is_enabled():
             raise InvalidLayoutForTracker("Tracker does not support Door Lock rando")
 
-        if isinstance(preset.configuration, EchoesConfiguration):
-            if preset.configuration.portal_rando:
-                raise InvalidLayoutForTracker("Tracker does not support Portal rando")
+        if isinstance(preset.configuration, EchoesConfiguration) and preset.configuration.portal_rando:
+            raise InvalidLayoutForTracker("Tracker does not support Portal rando")
 
         if preset.game == RandovaniaGame.FACTORIO:
             raise InvalidLayoutForTracker("Tracker does not support Factorio")

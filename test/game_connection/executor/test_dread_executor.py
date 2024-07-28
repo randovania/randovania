@@ -10,8 +10,7 @@ from randovania.game_connection.executor.dread_executor import DreadExecutor, Dr
 
 @pytest.fixture(name="executor")
 def dread_executor():
-    executor = DreadExecutor("localhost")
-    return executor
+    return DreadExecutor("localhost")
 
 
 async def test_connect(executor, mocker):

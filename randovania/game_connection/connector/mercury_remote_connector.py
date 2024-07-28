@@ -109,7 +109,7 @@ class MercuryConnector(RemoteConnector):
         items = [r for r in self.game.resource_database.item if "item_id" in r.extra]
 
         inventory = Inventory(
-            {item: InventoryItem(quantity, quantity) for item, quantity in zip(items, inventory_ints)}
+            {item: InventoryItem(quantity, quantity) for item, quantity in zip(items, inventory_ints, strict=False)}
         )
         self.last_inventory = inventory
         self.InventoryUpdated.emit(inventory)

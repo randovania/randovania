@@ -114,7 +114,7 @@ class EnumField(peewee.CharField):
         return value.value
 
     def python_value(self, value: Any) -> Any:
-        return self.choices(type(list(self.choices)[0].value)(value))
+        return self.choices(type(next(iter(self.choices)).value)(value))
 
 
 class User(BaseModel):

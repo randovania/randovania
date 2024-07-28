@@ -118,9 +118,8 @@ class PickupEntry:
                 )
 
         for resource, quantity in self.extra_resources:
-            if isinstance(resource, ItemResourceInfo):
-                if quantity > resource.max_capacity:
-                    raise ValueError(f"Attempt to give {quantity} of {resource.long_name}, more than max capacity")
+            if isinstance(resource, ItemResourceInfo) and quantity > resource.max_capacity:
+                raise ValueError(f"Attempt to give {quantity} of {resource.long_name}, more than max capacity")
 
     def __hash__(self) -> int:
         return hash(self.name)
@@ -136,7 +135,7 @@ class PickupEntry:
             yield ConditionalResources(
                 name=progression[0].long_name,
                 item=previous,
-                resources=(progression,) + self.extra_resources,
+                resources=(progression, *self.extra_resources),
             )
             previous = progression[0]
 

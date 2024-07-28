@@ -71,7 +71,7 @@ def test_create_tracker_valid(skip_qtbot, game, tracker_name):
     assert window._current_tracker_game == game
 
     # Select new theme
-    action = [action for action in window._tracker_actions[game] if action.text() == tracker_name][0]
+    action = next(action for action in window._tracker_actions[game] if action.text() == tracker_name)
     action.setChecked(True)
 
     window.create_tracker()

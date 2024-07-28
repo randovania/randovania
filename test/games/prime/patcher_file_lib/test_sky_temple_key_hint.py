@@ -123,7 +123,7 @@ def test_create_hints_all_placed(
 
     expected = [
         {"asset_id": asset_id, "strings": _create_hint_text(hide_area, multiworld, i + 1, text)}
-        for i, (asset_id, text) in enumerate(zip(assets, locations))
+        for i, (asset_id, text) in enumerate(zip(assets, locations, strict=False))
     ]
 
     namer = EchoesHintNamer({0: patches, 1: other_patches}, players_config)

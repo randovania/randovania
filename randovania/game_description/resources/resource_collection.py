@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import copy
 from typing import TYPE_CHECKING
 
@@ -133,10 +134,8 @@ class ResourceCollection:
         """
         resource_index = resource.resource_index
         self._existing_resources.pop(resource_index, None)
-        try:
+        with contextlib.suppress(IndexError):
             self._resource_array[resource_index] = 0
-        except IndexError:
-            pass
 
         mask = 1 << resource_index
         if self.resource_bitmask & mask:

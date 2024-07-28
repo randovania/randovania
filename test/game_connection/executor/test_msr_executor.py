@@ -10,8 +10,7 @@ from randovania.game_connection.executor.msr_executor import MSRExecutor, MSRLua
 
 @pytest.fixture(name="executor")
 def msr_executor():
-    executor = MSRExecutor("localhost")
-    return executor
+    return MSRExecutor("localhost")
 
 
 async def test_connect(executor, mocker):

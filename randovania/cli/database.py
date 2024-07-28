@@ -153,8 +153,7 @@ def load_game_description(args: Namespace) -> GameDescription:
     from randovania.game_description import data_reader
 
     data = decode_data_file(args)
-    gd = data_reader.decode_data(data)
-    return gd
+    return data_reader.decode_data(data)
 
 
 def view_area_command(sub_parsers: _SubParsersAction) -> None:
@@ -310,7 +309,7 @@ def list_paths_with_dangerous_logic(args: Namespace) -> None:
         area_had_resource = False
 
         for source, connection in area.connections.items():
-            for target, requirement in connection.items():
+            for _target, requirement in connection.items():
                 for individual in requirement.iterate_resource_requirements(context):
                     if individual.negate:
                         area_had_resource = True

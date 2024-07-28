@@ -106,7 +106,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
     @handle_network_errors
     async def _attempt_join(self):
         if not self.visible_sessions:
-            return
+            return None
 
         session = self.selected_session
 
@@ -118,6 +118,7 @@ class MultiplayerSessionBrowserDialog(QDialog, Ui_MultiplayerSessionBrowserDialo
 
         if self.joined_session is not None:
             return self.accept()
+        return None
 
     def update_list(self):
         self.item_model.removeRows(0, self.item_model.rowCount())

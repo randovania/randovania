@@ -27,9 +27,8 @@ class PlanetsZebethConfiguration(BaseConfiguration):
         return RandovaniaGame.METROID_PLANETS_ZEBETH
 
     def active_layers(self) -> set[str]:
-        result = super().active_layers()
+        return super().active_layers()
 
         # if self.include_extra_pickups:
         #    result.add("extra_pickups")
 
-        return result

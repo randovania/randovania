@@ -398,7 +398,7 @@ def export_all_indices(
 
     indices = sorted(node.pickup_index for node in region_list.iterate_nodes_of_type(PickupNode))
 
-    pickups = [
+    return [
         exporter.export(
             index,
             pickup_assignment.get(index, useless_target),
@@ -409,7 +409,6 @@ def export_all_indices(
         for i, index in enumerate(indices)
     ]
 
-    return pickups
 
 
 class GenericAcquiredMemo(dict[str, str]):

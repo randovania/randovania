@@ -527,10 +527,7 @@ class RequirementEditor:
                 self._last_items = current_requirement.items
                 self._last_comment = current_requirement.comment
 
-        elif isinstance(current_requirement, RequirementTemplate):
-            pass
-
-        elif isinstance(current_requirement, NodeRequirement):
+        elif isinstance(current_requirement, RequirementTemplate | NodeRequirement):
             pass
 
         elif current_requirement is not None:

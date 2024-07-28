@@ -260,13 +260,14 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         if self._check_for_edit_dialog():
             event.ignore()
+            return None
         else:
             if self.edit_mode:
                 data = data_writer.write_game_description(self.game_description)
-                if data != self._last_data:
-                    if not self.prompt_unsaved_changes_warning():
-                        return event.ignore()
+                if data != self._last_data and not self.prompt_unsaved_changes_warning():
+                    return event.ignore()
             super().closeEvent(event)
+            return None
 
     def prompt_unsaved_changes_warning(self) -> bool:
         """Return value: True, if user decided to discard"""
@@ -650,9 +651,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _save_database(self, path: Path) -> bool:
         errors = integrity_check.find_database_errors(self.game_description)
-        if errors:
-            if not self.display_integrity_errors_warning(errors):
-                return False
+        if errors and not self.display_integrity_errors_warning(errors):
+            return False
 
         data = data_writer.write_game_description(self.game_description)
         if self._is_internal:

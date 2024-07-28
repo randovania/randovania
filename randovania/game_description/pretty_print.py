@@ -176,7 +176,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
     if area.hint_features:
         print_function(pretty_print_hint_features(area.hint_features))
 
-    for i, node in enumerate(area.nodes):
+    for _i, node in enumerate(area.nodes):
         if node.is_derived_node:
             continue
 
@@ -229,7 +229,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function: typing.
 
 def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     output.write("====================\nTemplates\n")
-    for template_name, template in game.resource_database.requirement_template.items():
+    for _template_name, template in game.resource_database.requirement_template.items():
         output.write(f"\n* {template.display_name}:\n")
         for level, text in pretty_format_requirement(template.requirement, game.resource_database):
             output.write("      {}{}\n".format("    " * level, text))

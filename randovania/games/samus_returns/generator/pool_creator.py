@@ -22,7 +22,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 def artifact_pool(game: GameDatabaseView, config: MSRArtifactConfig) -> PoolResults:
     # Check whether we have valid artifact requirements in configuration
     max_artifacts = 0
-    if config.prefer_anywhere:
+    if config.prefer_anywhere or config.prefer_metroids and config.prefer_stronger_metroids:
         max_artifacts = 39
     if config.prefer_metroids:
         max_artifacts += 24

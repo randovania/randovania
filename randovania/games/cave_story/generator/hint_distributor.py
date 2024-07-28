@@ -56,13 +56,12 @@ class CSHintDistributor(HintDistributor):
                 items_with_hint.append("Arthur's Key")
 
             already_hinted_indices = [hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)]
-            indices_with_hint = [
+            return [
                 (node.pickup_index, PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False))
                 for node in patches.game.region_list.iterate_nodes_of_type(PickupNode)
                 if node.pickup_index not in already_hinted_indices
                 and patches.pickup_assignment[node.pickup_index].pickup.name in items_with_hint
             ]
-            return indices_with_hint
 
         return []
 

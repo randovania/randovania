@@ -75,6 +75,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
     def current_preset_data(self) -> VersionedPreset | None:
         for item in self.selectedItems():
             return self.preset_for_item(item)
+        return None
 
     def update_items(self):
         if self.expanded_connected:

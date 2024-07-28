@@ -188,7 +188,7 @@ def test_create_hints_item_dark_temple_keys(
     db = echoes_game_description.resource_database
     keys = [
         (PickupIndex(index), dataclasses.replace(blank_pickup, progression=((db.get_item(item), 1),)))
-        for index, item in zip(indices, echoes_items.DARK_TEMPLE_KEY_ITEMS[1])
+        for index, item in zip(indices, echoes_items.DARK_TEMPLE_KEY_ITEMS[1], strict=False)
     ]
 
     patches = dataclasses.replace(

@@ -22,9 +22,8 @@ class ConnectorBuilderChoice(Enum):
         return _pretty_backend_name[self]
 
     def is_usable(self) -> bool:
-        if self is ConnectorBuilderChoice.DEBUG:
-            if randovania.is_frozen() or not randovania.is_dev_version():
-                return False
+        if self is ConnectorBuilderChoice.DEBUG and (randovania.is_frozen() or not randovania.is_dev_version()):
+            return False
 
         if self is ConnectorBuilderChoice.DOLPHIN:
             # using sys.platform here instead of platform.system() due to a mypy limitation

@@ -176,12 +176,11 @@ def get_dock_connections_assignment_for_teleporter(
     for teleporter, destination in teleporters.static_teleporters.items():
         teleporter_connection[teleporter] = destination
 
-    assignment = [
+    return [
         (game.typed_node_by_identifier(identifier, DockNode), game.node_by_identifier(target))
         for identifier, target in teleporter_connection.items()
     ]
 
-    return assignment
 
 
 def get_teleporter_connections(

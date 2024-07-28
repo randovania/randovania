@@ -238,6 +238,8 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             assert new_preset is not None
             self._window_manager.preset_manager.add_new_preset(VersionedPreset.with_preset(new_preset))
             self._update_preset_tree_items()
+            return None
+        return None
 
     def _on_export_preset(self):
         default_name = f"{self._current_preset_data.slug_name}.rdvpreset"

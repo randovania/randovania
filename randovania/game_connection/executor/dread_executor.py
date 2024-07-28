@@ -284,7 +284,7 @@ class DreadExecutor:
 
     async def _check_header(self) -> None:
         if self._socket is None:
-            return None
+            return
         received_number: bytes = await asyncio.wait_for(self._socket.reader.read(1), None)
         if received_number[0] != self._socket.request_number:
             num_as_string = received_number.decode("ascii")
@@ -292,7 +292,7 @@ class DreadExecutor:
 
     async def _send_keep_alive(self) -> None:
         if self._socket is None:
-            return None
+            return
         while self.is_connected():
             try:
                 await asyncio.sleep(2)

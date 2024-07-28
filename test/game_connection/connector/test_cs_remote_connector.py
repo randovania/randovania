@@ -23,8 +23,7 @@ def remote_connector():
     executor_mock.server_info = MagicMock(CSServerInfo)
     executor_mock.server_info.uuid = INVALID_UUID
     executor_mock.server_info.platform = "Freeware"
-    connector = CSRemoteConnector(executor_mock)
-    return connector
+    return CSRemoteConnector(executor_mock)
 
 
 async def test_general_class_content(connector: CSRemoteConnector):

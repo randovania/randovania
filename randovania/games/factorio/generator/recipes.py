@@ -71,7 +71,7 @@ class RecipeAlgorithm(pyeasyga.GeneticAlgorithm):
 
         ingredients = []
 
-        for selected, item in zip(individual, data):
+        for selected, item in zip(individual, data, strict=False):
             if selected:
                 item: ItemCost
                 item_count += 1
@@ -167,9 +167,8 @@ def make_random_recipe(
 
     result_key = rng.choice(list(grouped_solutions.keys()))
     best_solution = min(grouped_solutions[result_key], key=lambda it: ga.fitness_function(it, ga.seed_data))
-    result = ingredient_from_genes(best_solution)
+    return ingredient_from_genes(best_solution)
 
-    return result
 
 
 def determine_recipe_category(recipe_name: str, base_category: str, ingredients: dict[str, int]) -> str:

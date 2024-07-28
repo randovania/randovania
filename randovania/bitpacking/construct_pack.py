@@ -84,7 +84,7 @@ class ConstructTypedStruct[T](construct.Adapter):
                 obj = Container([
 """
         for field_name in self.field_types.keys():
-            block += f"                    ({repr(field_name)}, obj.{field_name}),\n"
+            block += f"                    ({field_name!r}, obj.{field_name}),\n"
         block += f"""
                 ])
                 return {construct_lib.compile_build_struct(self.subcon, code)}

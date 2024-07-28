@@ -484,7 +484,9 @@ def test_export_all_presets(
     extension = VersionedPreset.file_extension()
     export_filenames = [
         string_lib.sanitize_for_path(f"World{i + 1}-{game}-{owner_name}-{world_name}") + f".{extension}"
-        for i, game, owner_name, world_name in zip(range(len(world_names)), games, owner_names, world_names)
+        for i, game, owner_name, world_name in zip(
+            range(len(world_names)), games, owner_names, world_names, strict=False
+        )
     ]
 
     # Run
@@ -1126,7 +1128,7 @@ async def test_track_world_listener_create(
     window.network_client.world_track_inventory.assert_awaited_once_with(world_uid, user_id, True)
 
 
-@pytest.mark.parametrize("visibility", list(MultiplayerSessionVisibility) + [None])
+@pytest.mark.parametrize("visibility", [*list(MultiplayerSessionVisibility), None])
 async def test_session_visibility_button_clicked(window: MultiplayerSessionWindow, visibility):
     window._session = MagicMock()
     window._session.visibility = visibility

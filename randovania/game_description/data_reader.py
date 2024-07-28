@@ -259,9 +259,9 @@ def read_dock_weakness_database(
                 change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
             )
 
-    default_dock_type = [
+    default_dock_type = next(
         dock_type for dock_type in dock_types if dock_type.short_name == data["default_weakness"]["type"]
-    ][0]
+    )
     default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
     dock_rando_config = DockRandoConfig(

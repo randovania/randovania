@@ -19,6 +19,7 @@ class DelayedTextLabel(QtWidgets.QLabel):
             return super().setText(t)
         else:
             self._delayed_text = t
+            return None
 
     def text(self) -> str:
         if self._already_shown:

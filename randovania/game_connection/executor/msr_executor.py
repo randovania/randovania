@@ -270,7 +270,7 @@ class MSRExecutor:
 
     async def _check_header(self) -> None:
         if self._socket is None:
-            return None
+            return
         received_number = await asyncio.wait_for(self._socket.reader.read(1), None)
         if received_number[0] != self._socket.request_number:
             num_as_string = received_number.decode("ascii")

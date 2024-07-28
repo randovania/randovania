@@ -354,7 +354,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
         # Shuffle DNA hints
         hint_texts = list(dna_hint_mapping.values())
         rng.shuffle(hint_texts)
-        dna_hint_mapping = dict(zip(artifacts, hint_texts))
+        dna_hint_mapping = dict(zip(artifacts, hint_texts, strict=False))
 
         dud_hint = "This Chozo Seal did not give any useful DNA hints."
         actor_to_amount_map = [
@@ -374,7 +374,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
             shuffled_hints = [hint for hint in shuffled_hints if "Hunter already started with" not in hint]
             if not shuffled_hints:
-                shuffled_hints = [rng.choice(MSR_JOKE_HINTS + [dud_hint])]
+                shuffled_hints = [rng.choice([*MSR_JOKE_HINTS, dud_hint])]
             hints.append(
                 {"accesspoint_actor": {"scenario": scenario, "actor": actor}, "text": "\n".join(shuffled_hints) + "\n"}
             )
@@ -520,17 +520,14 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
     def _static_room_name_fixes(self, scenario_name: str, area: Area) -> tuple[str, str]:
         # static fixes for some rooms
         cc_name = area.extra["asset_id"]
-        if scenario_name == "s025_area2b":
-            if cc_name == "collision_camera011":
-                return cc_name, "Varia Suit Chamber & Interior Intersection Terminal"
+        if scenario_name == "s025_area2b" and cc_name == "collision_camera011":
+            return cc_name, "Varia Suit Chamber & Interior Intersection Terminal"
 
-        if scenario_name == "s065_area6b":
-            if cc_name == "collision_camera_014":
-                return cc_name, "Gamma+ Arena & Access"
+        if scenario_name == "s065_area6b" and cc_name == "collision_camera_014":
+            return cc_name, "Gamma+ Arena & Access"
 
-        if scenario_name == "s100_area10":
-            if cc_name == "collision_camera_008":
-                return cc_name, "Metroid Nest Foyer & Hallway South"
+        if scenario_name == "s100_area10" and cc_name == "collision_camera_008":
+            return cc_name, "Metroid Nest Foyer & Hallway South"
 
         return cc_name, area.name
 
@@ -590,7 +587,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
 
             scenario = self._level_name_for(node)
             actor_name = node.extra["actor_name"]
-            if elevator_dict.get(scenario, None) is None:
+            if elevator_dict.get(scenario) is None:
                 elevator_dict[scenario] = {}
             elevator_dict[scenario][actor_name] = self._start_point_ref_for(connection)
 
@@ -599,7 +596,7 @@ class MSRPatchDataFactory(PatchDataFactory[MSRConfiguration, MSRCosmeticPatches]
     def _add_custom_doors(self) -> list[dict]:
         custom_doors: list = []
 
-        for node, weakness in self.patches.all_dock_weaknesses():
+        for node, _weakness in self.patches.all_dock_weaknesses():
             assert node.location is not None
             if not isinstance(node, DockNode):
                 continue

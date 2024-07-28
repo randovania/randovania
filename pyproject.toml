@@ -258,8 +258,11 @@ extend-ignore = [
   "SIM108",   # if-else-block-instead-of-if-exp
   "SIM118",   # in-dict-keys
   "RET505", "RET506", "RET507", "RET508",  # no autofix
-    "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
+  "PLC0415",  # we explicitly use the import within a function to postpone the loading of a module
 
+
+  "RUF009",  # causes issues with _int_field
+  "B023",  # revisit later
 ]
 
 [tool.ruff.lint.isort]

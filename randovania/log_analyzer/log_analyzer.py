@@ -51,10 +51,7 @@ NON_MAJOR_PROGRESSION = [
 
 def is_non_major_progression(x: str):
     x = x.lower()
-    for item in NON_MAJOR_PROGRESSION:
-        if x == item.lower():
-            return True
-    return False
+    return any(x == item.lower() for item in NON_MAJOR_PROGRESSION)
 
 
 def iterate_with_log(x):
@@ -136,6 +133,7 @@ def calculate_stddev(pickup_count: dict[str, int], item_counts: dict[str, float]
 def first_key(d: dict):
     for key in d:
         return key
+    return None
 
 
 def get_items_order(

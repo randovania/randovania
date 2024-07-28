@@ -261,9 +261,8 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
         pickup_name = data["pickup_name"]
         if pickup_name in result:
             result[pickup_name]["progression"].append(tech_name)
-            if tech_name in existing_pickup_ids:
-                if "original_locations" in result[pickup_name]:
-                    result[pickup_name]["original_locations"].append(existing_pickup_ids[tech_name])
+            if tech_name in existing_pickup_ids and "original_locations" in result[pickup_name]:
+                result[pickup_name]["original_locations"].append(existing_pickup_ids[tech_name])
         else:
             tech = techs_raw[tech_name]
             if "icons" in tech:

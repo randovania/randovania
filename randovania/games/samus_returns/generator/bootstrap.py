@@ -37,11 +37,14 @@ def is_dna_node(node: PickupNode, config: MSRConfiguration) -> bool:
     pickup_index = node.pickup_index.index
     # Metroid pickups
     if pickup_type == "metroid":
-        if artifact_config.prefer_metroids and artifact_config.prefer_stronger_metroids:
-            return True
-        elif artifact_config.prefer_metroids and pickup_index not in _stronger_metroid_indices:
-            return True
-        elif artifact_config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
+        if (
+            artifact_config.prefer_metroids
+            and artifact_config.prefer_stronger_metroids
+            or artifact_config.prefer_metroids
+            and pickup_index not in _stronger_metroid_indices
+            or artifact_config.prefer_stronger_metroids
+            and pickup_index in _stronger_metroid_indices
+        ):
             return True
     # Boss pickups/locations
     elif artifact_config.prefer_bosses:

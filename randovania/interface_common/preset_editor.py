@@ -49,11 +49,10 @@ class PresetEditor[Configuration: BaseConfiguration]:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if self._nested_autosave_level == 1:
-            if self._is_dirty:
-                # TODO: maybe it should be an error to change options to different values in on_options_changed?
-                if self._on_changed is not None:
-                    self._on_changed()
+        if self._nested_autosave_level == 1 and self._is_dirty:
+            # TODO: maybe it should be an error to change options to different values in on_options_changed?
+            if self._on_changed is not None:
+                self._on_changed()
         self._nested_autosave_level -= 1
 
     # Events

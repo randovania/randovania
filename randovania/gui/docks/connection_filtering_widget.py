@@ -105,7 +105,7 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
     async def _on_load_preset(self):
         preset_file = await file_prompts.prompt_preset(self, False)
         if preset_file is None:
-            return
+            return None
 
         try:
             preset = (await VersionedPreset.from_file(preset_file)).get_preset()
@@ -120,6 +120,7 @@ class ConnectionFilteringWidget(QtWidgets.QDockWidget):
             layer_check.setChecked(layer_check.text() in active_layers)
 
         self.set_selected_tricks(preset.configuration.trick_level)
+        return None
 
     def set_selected_tricks(self, trick_level: TrickLevelConfiguration):
         for (trick, trick_check), combo in self.tricks.items():

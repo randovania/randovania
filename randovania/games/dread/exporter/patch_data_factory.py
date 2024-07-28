@@ -331,17 +331,14 @@ class DreadPatchDataFactory(PatchDataFactory[DreadConfiguration, DreadCosmeticPa
             if cc_name == "collision_camera_023_B":
                 return "collision_camera_023", area_name
 
-        if scenario_name == "s050_forest":
-            if cc_name == "collision_camera_024":
-                return cc_name, "Golzuna Tower"
+        if scenario_name == "s050_forest" and cc_name == "collision_camera_024":
+            return cc_name, "Golzuna Tower"
 
-        if scenario_name == "s060_quarantine":
-            if cc_name == "collision_camera_MBL_B":
-                return "collision_camera_MBL", area.name
+        if scenario_name == "s060_quarantine" and cc_name == "collision_camera_MBL_B":
+            return "collision_camera_MBL", area.name
 
-        if scenario_name == "s070_basesanc":
-            if cc_name == "collision_camera_038_A":
-                return "collision_camera_038", area.name
+        if scenario_name == "s070_basesanc" and cc_name == "collision_camera_038_A":
+            return "collision_camera_038", area.name
 
         return cc_name, area.name
 

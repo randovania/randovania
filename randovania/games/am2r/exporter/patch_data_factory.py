@@ -349,7 +349,7 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 else node.extra["instance_id"]
             ): {
                 "lock": weakness.extra.get("door_name", weakness.long_name),
-                "is_dock": True if node.default_dock_weakness.extra.get("is_dock", None) is not None else False,
+                "is_dock": node.default_dock_weakness.extra.get("is_dock", None) is not None,
                 "facing_direction": node.extra["facing"] if node.extra.get("facing", None) is not None else "invalid",
             }
             for node, weakness in self.patches.all_dock_weaknesses()
@@ -423,9 +423,8 @@ class AM2RPatchDataFactory(PatchDataFactory[AM2RConfiguration, AM2RCosmeticPatch
                 "we seem to have misplaced it."
             }
 
-        hints = septogg_hints | ice_hint
+        return septogg_hints | ice_hint
 
-        return hints
 
     def _create_cosmetics(self, seed_number: int) -> dict:
         c = self.cosmetic_patches

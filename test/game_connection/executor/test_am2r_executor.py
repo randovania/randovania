@@ -10,8 +10,7 @@ from randovania.game_connection.executor.am2r_executor import AM2RConnectionExce
 
 @pytest.fixture(name="executor")
 def am2r_executor():
-    executor = AM2RExecutor("localhost")
-    return executor
+    return AM2RExecutor("localhost")
 
 
 async def test_connect(executor, mocker):

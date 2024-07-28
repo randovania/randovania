@@ -66,7 +66,7 @@ class AM2RConfiguration(BaseConfiguration):
 
         if self.dock_rando.mode == DockRandoMode.WEAKNESSES:
             weakness_database = self.dock_rando.weakness_database
-            for dock_type, state in self.dock_rando.types_state.items():
+            for _dock_type, state in self.dock_rando.types_state.items():
                 queen = weakness_database.get_by_weakness("door", "Queen Metroid-Locked Door")
                 if queen in state.can_change_to:
                     result.append(f"{queen.long_name} is unsafe as a target in Door Lock Types")

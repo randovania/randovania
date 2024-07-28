@@ -140,13 +140,12 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
         except (ValueError, KeyError) as e:
             yield f"{node.name} is a Dock Node, but connection '{node.default_connection}' is invalid: {e}"
 
-        if other_node is not None:
-            if isinstance(other_node, DockNode):
-                if other_node.default_connection != node.identifier:
-                    yield (
-                        f"{node.name} connects to '{node.default_connection}', but that dock connects "
-                        f"to '{other_node.default_connection}' instead."
-                    )
+        if other_node is not None and isinstance(other_node, DockNode):
+            if other_node.default_connection != node.identifier:
+                yield (
+                    f"{node.name} connects to '{node.default_connection}', but that dock connects "
+                    f"to '{other_node.default_connection}' instead."
+                )
 
     elif any(
         re.match(rf"{dock_type.long_name}\s*(to|from)", node.name)

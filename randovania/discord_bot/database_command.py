@@ -52,7 +52,7 @@ def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
         if source.is_derived_node:
             continue
 
-        for target_node, requirement in target.items():
+        for target_node, _requirement in target.items():
             if target_node.is_derived_node:
                 continue
 
@@ -91,7 +91,7 @@ def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
         draw = ImageDraw.Draw(im)
 
         def draw_connections_from(source_node: Node):
-            for target_node, requirement in area.connections[source_node].items():
+            for target_node, _requirement in area.connections[source_node].items():
                 if target_node.is_derived_node:
                     continue
 
@@ -359,6 +359,7 @@ class SelectAreaItem(discord.ui.Select):
             files=files,
             view=area.view,
         )
+        return None
 
 
 class SelectSplitRegionItem(discord.ui.Select):

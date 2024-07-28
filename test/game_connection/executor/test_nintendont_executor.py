@@ -10,8 +10,7 @@ from randovania.game_connection.executor.nintendont_executor import NintendontEx
 
 @pytest.fixture(name="executor")
 def nintendont_executor():
-    executor = NintendontExecutor("localhost")
-    return executor
+    return NintendontExecutor("localhost")
 
 
 async def test_perform_memory_operations_success(executor: NintendontExecutor):

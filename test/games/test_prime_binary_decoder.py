@@ -130,7 +130,7 @@ def test_full_data_encode_is_equal(game_enum):
 
     comparable_json = _comparable_dict(json_database)
     comparable_binary = _comparable_dict(decoded_database)
-    for a, b in zip(comparable_json, comparable_binary):
+    for a, b in zip(comparable_json, comparable_binary, strict=False):
         assert a == b
 
     assert comparable_binary == comparable_json

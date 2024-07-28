@@ -22,9 +22,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 def artifact_pool(game: GameDatabaseView, config: AM2RArtifactConfig) -> PoolResults:
     # Check whether we have valid artifact requirements in configuration
     max_artifacts = 0
-    if config.prefer_anywhere:
-        max_artifacts = 46
-    elif config.prefer_metroids:
+    if config.prefer_anywhere or config.prefer_metroids:
         max_artifacts = 46
     elif config.prefer_bosses:
         max_artifacts = 6

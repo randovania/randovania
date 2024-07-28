@@ -60,9 +60,8 @@ class DockLockNode(ResourceNode):
 
         patches: GamePatches = context.patches  # type: ignore[assignment]
         front_weak = patches.get_dock_weakness_for(dock)
-        if not context.has_resource(self.resource(context)):
-            if front_weak.lock is not None:
-                return True
+        if not context.has_resource(self.resource(context)) and front_weak.lock is not None:
+            return True
 
         target = dock.get_target_node(context)
         if not context.has_resource(NodeResourceInfo.from_node(target, context)) and front_weak.can_unlock_from_back(

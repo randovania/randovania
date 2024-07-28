@@ -39,7 +39,7 @@ def create_report(
         except json.JSONDecodeError:
             continue
 
-        for i, game_modification in enumerate(seed_data["game_modifications"]):
+        for _i, game_modification in enumerate(seed_data["game_modifications"]):
             game_specific: FactorioGameSpecific = game_modification["game_specific"]
             total += 1
 

@@ -32,10 +32,7 @@ def does_requirement_contain_resource(requirement, resource, db):
         if requirement.pretty_text == resource:
             return True
         return False
-    for subreq in requirement.items:
-        if does_requirement_contain_resource(subreq, resource, db):
-            return True
-    return False
+    return any(does_requirement_contain_resource(subreq, resource, db) for subreq in requirement.items)
 
 
 def test_all_tricks_should_have_proper_requirements():

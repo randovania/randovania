@@ -133,8 +133,8 @@ def _migrate_v13(data: dict, game: RandovaniaGame) -> None:
 
 def _migrate_v14(data: dict, game: RandovaniaGame) -> None:
     for world in data["worlds"]:
-        for area_name, area in world["areas"].items():
-            for node_name, node in area["nodes"].items():
+        for _area_name, area in world["areas"].items():
+            for _node_name, node in area["nodes"].items():
                 if node["node_type"] == "pickup":
                     node["location_category"] = "major" if node.pop("major_location") else "minor"
 
@@ -145,8 +145,8 @@ def _migrate_v15(data: dict, game: RandovaniaGame) -> None:
 
 def _migrate_v16(data: dict, game: RandovaniaGame) -> None:
     for world in data["worlds"]:
-        for area_name, area in world["areas"].items():
-            for node_name, node in area["nodes"].items():
+        for _area_name, area in world["areas"].items():
+            for _node_name, node in area["nodes"].items():
                 if node["node_type"] == "dock":
                     node["exclude_from_dock_rando"] = node["extra"].pop("exclude_from_dock_rando", False)
                     node["incompatible_dock_weaknesses"] = node["extra"].pop("excluded_dock_weaknesses", [])
@@ -164,8 +164,8 @@ def _migrate_v17(data: dict, game: RandovaniaGame) -> None:
 
     _fix(data["starting_location"])
     for world in data["regions"]:
-        for area_name, area in world["areas"].items():
-            for node_name, node in area["nodes"].items():
+        for _area_name, area in world["areas"].items():
+            for _node_name, node in area["nodes"].items():
                 if node["node_type"] == "dock":
                     _fix(node["default_connection"])
                 elif node["node_type"] == "teleporter":
