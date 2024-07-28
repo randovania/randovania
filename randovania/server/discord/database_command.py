@@ -232,7 +232,7 @@ class SelectNodesItem(discord.ui.Select):
 
             node_bodies = []
 
-            for target_node, requirement in db.region_list.area_connections_from(node):
+            for target_node, requirement in self.area.area.connections[node].items():
                 if target_node.is_derived_node:
                     continue
 
