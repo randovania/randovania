@@ -711,11 +711,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                     if self.configuration.shuffle_item_pos or node.extra.get("position_required"):
                         aabb = area.extra["aabb"]
                         pickup["position"] = _pick_random_point_in_aabb(self.rng, aabb, area.name)
-
-                        if node.extra.get("position_required"):
-                            # Scan this item through walls
-                            assert self.configuration.items_every_room
-                            pickup["jumboScan"] = True
+                        pickup["jumboScan"] = True
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
 
