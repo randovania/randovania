@@ -224,10 +224,20 @@ def _random_factor(rng: Random, min: float, max: float, target: float):
 
 
 def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
-    # Hand-coded exception for artifact temple which is uneccessarily massive
     if room_name == "Artifact Temple":
         center = [-373, 47, -30]
         scale = [65, 50, 16]
+        return [rng.uniform(center[i] - scale[i] / 2, center[i] + scale[i] / 2) for i in range(3)]
+
+    if room_name == "Burn Dome":
+        if bool(rng.getrandbits(1)):
+            # Main Room
+            center = [577.5, -13.1, 34.9]
+            scale = [25, 22.4, 7.4]
+        else:
+            # Missile Room
+            center = [588.8, 39.5, 33.9]
+            scale = [9, 8, 5]
         return [rng.uniform(center[i] - scale[i] / 2, center[i] + scale[i] / 2) for i in range(3)]
 
     # return a quasi-random point within the provided aabb, but bias towards being closer to in-bounds
@@ -242,7 +252,6 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
         "Triclops Pit",
         "Elite Quarters",
         "Quarantine Cave",
-        "Burn Dome",
         "Research Lab Hydra",
         "Research Lab Aether",
     ]
