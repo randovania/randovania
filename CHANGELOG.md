@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Reduced some visual noise in the main window and customize preset window.
 - Changed: Don't show unnecessary lines on Door Lock and Teleporter rando customization tabs.
+- Changed: Clarified the description for the "Two way, between regions" transporter mode.
 - Fixed: In multiworld sessions, creating a new world with a preset with unsupported features is now properly rejected.
 
 ### AM2R
@@ -58,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The option to hide scans with Nothing data now behaves as expected.
 - Fixed: Seeds with more than 3 starting Energy Parts can be exported and played.
+- Fixed: The "start the game with the X released" option now also mentions Experiment Z-57.
 
 #### Logic Database
 
