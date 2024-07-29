@@ -91,6 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Black bars sometimes disappearing prematurely in the Chozo Ice Temple cutscene
 - Fixed: Missing screen fade-in from Arrival cutscenes in Transport to Chozo Ruins East and Transport to Tallon Overworld South when skipped
 - Fixed: Ghost music in Furnace not playing when coming from Energy Core
+- Fixed: [Experimental] Item Position Rando fixes in Artifact Temple and Burn Dome
 - Changed: Updated tournament winners scan text
 
 #### Logic Database
