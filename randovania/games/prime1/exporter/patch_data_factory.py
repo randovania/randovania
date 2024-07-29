@@ -724,6 +724,15 @@ class PrimePatchDataFactory(PatchDataFactory):
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
 
+        if self.configuration.shuffle_item_pos:
+            # Allow temple cutscene without collecting item
+            level_data["Tallon Overworld"]["rooms"]["Artifact Temple"]["triggers"] = [
+                {
+                    "id": 0x00100470,
+                    "active": True,
+                }
+            ]
+
         # serialize room modifications
         if self.configuration.superheated_probability != 0:
             probability = self.configuration.superheated_probability / 1000.0
