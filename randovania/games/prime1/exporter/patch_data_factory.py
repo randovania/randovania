@@ -224,6 +224,12 @@ def _random_factor(rng: Random, min: float, max: float, target: float):
 
 
 def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
+    # Hand-coded exception for artifact temple which is uneccessarily massive
+    if room_name == "Artifact Temple":
+        center = [-373, 47, -30]
+        scale = [65, 50, 16]
+        return [rng.uniform(center[i] - scale[i] / 2, center[i] + scale[i] / 2) for i in range(3)]
+
     # return a quasi-random point within the provided aabb, but bias towards being closer to in-bounds
     offset_xy = 0.0
     offset_max_z = 0.0
@@ -244,7 +250,6 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
     if room_name in ROOMS_THAT_NEED_HELP:
         offset_xy = 0.1
         offset_max_z = -0.3
-
     x_factor = _random_factor(rng, 0.15 + offset_xy, 0.85 - offset_xy, 0.5)
     y_factor = _random_factor(rng, 0.15 + offset_xy, 0.85 - offset_xy, 0.5)
     z_factor = _random_factor(rng, 0.1, 0.8 + offset_max_z, 0.35)
