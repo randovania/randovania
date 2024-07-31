@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Don't show unnecessary lines on Door Lock and Teleporter rando customization tabs.
 - Changed: Clarified the description for the "Two way, between regions" transporter mode.
 - Fixed: In multiworld sessions, creating a new world with a preset with unsupported features is now properly rejected.
+- Fixed: The "Users and Worlds" tab on the Multiworld Session window is now easier to select.
 
 ### AM2R
 
