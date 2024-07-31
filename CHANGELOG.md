@@ -147,6 +147,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - High Jump Boots, Damage Boost (Advanced), Super Jump (Hypermode).
         - High Jump Boots, Super Jump (Expert), Unmorph Extend (Advanced).
         - Single-Wall Wall Jump/Wall Jump (Intermediate) and either High Jump Boots, Ice Beam (Intermediate), or Damage Boosts (Advanced).
+- Fixed: Inner Temple West Hall - Reaching Door to Inner Temple Save Station properly requires Morph Ball on the Unmorph Extend paths.
 
 ##### Area 4 Central Caves
 
