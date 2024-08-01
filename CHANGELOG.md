@@ -83,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: Updated tournament winners scan text
 - Fixed: Crash in Central Dynamo/Quarantine Access A due to the memory from extra blast shields
 - Fixed: Crash in Deck Beta Security Hall due to the memory from extra blast shields and auto-loads
 - Fixed: Non-NTSC 0-00 Ruined Courtyard thermal conduit patch exploit where Super Missiles could be skipped
@@ -94,9 +95,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Black bars sometimes disappearing prematurely in the Chozo Ice Temple cutscene
 - Fixed: Missing screen fade-in from Arrival cutscenes in Transport to Chozo Ruins East and Transport to Tallon Overworld South when skipped
 - Fixed: Ghost music in Furnace not playing when coming from Energy Core
-- Changed: Updated tournament winners scan text
 
 #### Logic Database
+
+- Fixed: When elevators are shuffled one-way (cycles/replacement/anywhere), and an elevator leads into the Ship on uncrashed Frigate Orpheon, coming back now properly needs Parasite Queen defeated.
 
 ##### Chozo Ruins
 
