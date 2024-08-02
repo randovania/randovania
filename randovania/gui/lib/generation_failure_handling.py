@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 
-class GenerationFailureHandler(QtWidgets.QWidget):
+class GenerationFailureHandler(QtCore.QObject):
     failed_to_generate_signal = QtCore.Signal(GenerationFailure)
 
     def __init__(self, parent: QtWidgets.QWidget):

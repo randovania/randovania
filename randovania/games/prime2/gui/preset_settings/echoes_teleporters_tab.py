@@ -48,7 +48,7 @@ class PresetTeleportersPrime2(PresetTeleporterTab, Ui_PresetTeleportersPrime2, N
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were. "
             "An elevator will never connect to another in the same region. "
-            "This is the only setting that guarantees all regions are reachable."
+            "This is the only non-vanilla setting which guarantees that all regions are reachable."
         ),
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
             "after taking an elevator, the elevator in the room you are in will bring you back to where you were."

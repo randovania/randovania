@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.x] - 2024-08-??
 
-- To be added
+### Metroid Prime
+
+- Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
 
 ## [8.3.x] - 2024-08-??
 
 - Changed: Reduced some visual noise in the main window and customize preset window.
 - Changed: Don't show unnecessary lines on Door Lock and Teleporter rando customization tabs.
+- Changed: Clarified the description for the "Two way, between regions" transporter mode.
 - Fixed: In multiworld sessions, creating a new world with a preset with unsupported features is now properly rejected.
+- Fixed: The "Users and Worlds" tab on the Multiworld Session window is now easier to select.
 
 ### AM2R
 
@@ -58,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The option to hide scans with Nothing data now behaves as expected.
 - Fixed: Seeds with more than 3 starting Energy Parts can be exported and played.
+- Fixed: The "start the game with the X released" option now also mentions Experiment Z-57.
 
 #### Logic Database
 
@@ -80,6 +85,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Changed: Updated tournament winners scan text
 - Fixed: Crash in Central Dynamo/Quarantine Access A due to the memory from extra blast shields
 - Fixed: Crash in Deck Beta Security Hall due to the memory from extra blast shields and auto-loads
 - Fixed: Non-NTSC 0-00 Ruined Courtyard thermal conduit patch exploit where Super Missiles could be skipped
@@ -91,10 +97,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Black bars sometimes disappearing prematurely in the Chozo Ice Temple cutscene
 - Fixed: Missing screen fade-in from Arrival cutscenes in Transport to Chozo Ruins East and Transport to Tallon Overworld South when skipped
 - Fixed: Ghost music in Furnace not playing when coming from Energy Core
-- Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
 - Changed: Updated tournament winners scan text
 
 #### Logic Database
+
+- Fixed: When elevators are shuffled one-way (cycles/replacement/anywhere), and an elevator leads into the Ship on uncrashed Frigate Orpheon, coming back now properly needs Parasite Queen defeated.
 
 ##### Chozo Ruins
 
@@ -102,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Phazon Mines
 
-- Fixed: Added back the item requirements to Mines Security Station Barrier after they were accidently removed.
+- Fixed: Added back the item requirements to Mines Security Station Barrier after they were accidentally removed.
 
 ### Metroid Prime 2: Echoes
 
@@ -146,6 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         - High Jump Boots, Damage Boost (Advanced), Super Jump (Hypermode).
         - High Jump Boots, Super Jump (Expert), Unmorph Extend (Advanced).
         - Single-Wall Wall Jump/Wall Jump (Intermediate) and either High Jump Boots, Ice Beam (Intermediate), or Damage Boosts (Advanced).
+- Fixed: Inner Temple West Hall - Reaching Door to Inner Temple Save Station properly requires Morph Ball on the Unmorph Extend paths.
 
 ##### Area 4 Central Caves
 
