@@ -633,7 +633,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with: 
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WEBSITE_VERSION_UPDATER_PAT }}
           repository: randovania/randovania.github.io
           path: ./website
         
@@ -654,8 +654,8 @@ jobs:
         run: |
           cd website
           sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./ci.sh
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name Website-Version-Updater
+          git config user.email <>
           git add ./ci.sh
           git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           git push
