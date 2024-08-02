@@ -230,7 +230,9 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         self.tab_misc.setModel(ResourceDatabaseGenericModel(db, ResourceType.MISC))
 
         for tab in self._all_tabs:
-            tab.model().dataChanged.connect(functools.partial(self._on_data_changed, tab.model()))
+            tab_model = tab.model()
+            assert isinstance(tab_model, ResourceDatabaseGenericModel)
+            tab.model().dataChanged.connect(functools.partial(self._on_data_changed, tab_model))
 
         self.tab_template.header().setVisible(False)
         self.create_new_template_item = QtWidgets.QTreeWidgetItem(self.tab_template)
