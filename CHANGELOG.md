@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.x] - 2024-08-??
 
-- To be added
+### Metroid Prime
+
+- Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
 
 ## [8.3.x] - 2024-08-??
 
