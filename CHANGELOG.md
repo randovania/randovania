@@ -106,7 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Phazon Mines
 
-- Fixed: Added back the item requirements to Mines Security Station Barrier after they were accidently removed.
+- Fixed: Added back the item requirements to Mines Security Station Barrier after they were accidentally removed.
 
 ### Metroid Prime 2: Echoes
 
