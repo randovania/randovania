@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
 
+### Metroid: Samus Returns
+
+- Changed: Area 6 - The Door to Chozo Seal West Intersection Terminal from Crumbling Stairwell is excluded from Door Lock Rando.
+
 ## [8.3.x] - 2024-08-??
 
 - Changed: Reduced some visual noise in the main window and customize preset window.
