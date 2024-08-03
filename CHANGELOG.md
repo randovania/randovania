@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.x] - 2024-08-??
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Changed: The door that is locked by both Super Missile and Charge Beam is now using lock overrides. This ensures that the requirements of these locks are both respected by logic when randomizing Doors and this door is unchanged.
+
 ### Metroid Prime
 
 - Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions

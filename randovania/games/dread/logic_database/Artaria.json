@@ -6758,37 +6758,8 @@
                     "location_category": "minor",
                     "connections": {
                         "Door to Chain Reaction Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.",
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Open Charge Door"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "DoorLocks",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Lay Any Bomb"
                         }
                     }
                 },
@@ -6823,7 +6794,22 @@
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Shoot Super Missile"
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Open Charge Door"
+                                }
+                            ]
+                        }
+                    },
                     "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank, Supers-locked)": {
@@ -18129,7 +18115,22 @@
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
-                    "override_default_lock_requirement": null,
+                    "override_default_lock_requirement": {
+                        "type": "and",
+                        "data": {
+                            "comment": null,
+                            "items": [
+                                {
+                                    "type": "template",
+                                    "data": "Shoot Super Missile"
+                                },
+                                {
+                                    "type": "template",
+                                    "data": "Open Charge Door"
+                                }
+                            ]
+                        }
+                    },
                     "ui_custom_name": null,
                     "connections": {
                         "Room Middle": {
@@ -18282,13 +18283,8 @@
                         "Door to Teleport to Cataris": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Open Charge Door"
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tunnel to Teleport to Cataris (Tunnel)": {
