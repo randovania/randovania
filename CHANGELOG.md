@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: In multiworld sessions, creating a new world with a preset with unsupported features is now properly rejected.
 - Fixed: The "Users and Worlds" tab on the Multiworld Session window is now easier to select.
 
+### Resolver
+
+- Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
+
 ### AM2R
 
 - Added: 10 more joke hints have been added.
