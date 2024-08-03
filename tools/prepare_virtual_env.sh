@@ -3,7 +3,7 @@
 set -e -x
 cd -- "$( dirname -- "${BASH_SOURCE[0]}" )/.."
 
-python3.12 tools/test_py_version.py
+python3.12 tools/check_py_version.py
 
 python3.12 -m venv venv
 source venv/bin/activate
