@@ -1209,10 +1209,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Chain Reaction Access
-      All of the following:
-          # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
-          Lay Any Bomb
-          Enabled Door Lock Randomizer or Open Charge Door
+      Lay Any Bomb
 
 > Door to Chain Reaction Access; Heals? False
   * Layers: default
@@ -1223,6 +1220,9 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Override default lock requirement:
+    Open Charge Door and Shoot Super Missile
+
   > Pickup (Missile Tank, Supers-locked)
       Lay Any Bomb
 
@@ -3285,6 +3285,9 @@ Extra - asset_id: collision_camera_055
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  * Override default lock requirement:
+    Open Charge Door and Shoot Super Missile
+
   > Room Middle
       Trivial
 
@@ -3311,8 +3314,7 @@ Extra - asset_id: collision_camera_055
   > Door to Chain Reaction Room
       Morph Ball
   > Door to Teleport to Cataris
-      # TODO: The dock is a charge beam door with a super missile lock. Handle this with the dock, and not with a node path.
-      Open Charge Door
+      Trivial
   > Tunnel to Teleport to Cataris (Tunnel)
       Trivial
 
