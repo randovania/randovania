@@ -1,5 +1,5 @@
 {
-    "schema_version": 26,
+    "schema_version": 27,
     "game": "samus_returns",
     "resource_database": {
         "items": {
@@ -5779,7 +5779,6 @@
             "elevator": {
                 "name": "Elevator",
                 "extra": {
-                    "is_teleporter": true,
                     "ignore_for_hints": true
                 },
                 "items": {
@@ -5806,6 +5805,11 @@
             "force_change_two_way": true,
             "resolver_attempts": 300,
             "to_shuffle_proportion": 1.0
+        },
+        "teleporter_rando": {
+            "default": [
+                "elevator"
+            ]
         }
     },
     "used_trick_levels": {

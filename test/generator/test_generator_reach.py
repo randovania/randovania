@@ -259,7 +259,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     )
     game = GameDescription(
         RandovaniaGame.METROID_PRIME_ECHOES,
-        DockWeaknessDatabase([], {}, {}, (MagicMock(), MagicMock()), MagicMock()),
+        DockWeaknessDatabase([], {}, {}, {}, (MagicMock(), MagicMock()), MagicMock()),
         echoes_resource_database,
         ("default",),
         Requirement.impossible(),

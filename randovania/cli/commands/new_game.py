@@ -174,6 +174,7 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
             },
         },
         dock_rando_params={},
+        teleporter_rando_params={},
         default_weakness=(dock_types[1], impossible_weak),
         dock_rando_config=DockRandoConfig(
             force_change_two_way=False,
