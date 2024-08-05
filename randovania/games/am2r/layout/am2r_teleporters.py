@@ -29,7 +29,11 @@ class AM2RTeleporterConfiguration(TeleporterConfiguration):
             result = []
             for identifier in self.editable_teleporters:
                 node = region_list.node_by_identifier(identifier)
-                if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types:
+                if (
+                    isinstance(node, DockNode)
+                    and node.dock_type in teleporter_dock_types
+                    and node.dock_type.short_name == "teleporter"
+                ):
                     result.append(identifier)
             return result
         else:
