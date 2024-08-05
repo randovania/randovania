@@ -368,7 +368,7 @@ jobs:
         run: python setup.py build_ui
 
       - name: Mypy on required files
-        uses: tsuyoshicho/action-mypy@v4
+        uses: tsuyoshicho/action-mypy@v5
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
@@ -405,7 +405,7 @@ jobs:
         run: python setup.py build_ui
 
       - name: Mypy on modified files
-        uses: tsuyoshicho/action-mypy@v4
+        uses: tsuyoshicho/action-mypy@v5
         with:
           github_token: ${{ secrets.github_token }}
           # Change reviewdog reporter if you need [github-pr-check,github-check,github-pr-review].
