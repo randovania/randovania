@@ -318,6 +318,7 @@ ConstructDockWeaknessDatabase = Struct(
         resolver_attempts=VarInt,
         to_shuffle_proportion=Float64b,
     ),
+    teleporter_rando=ConstructDict(PrefixedArray(VarInt, String)),
 )
 
 ConstructUsedTrickLevels = OptionalValue(ConstructDict(PrefixedArray(VarInt, construct.Byte)))

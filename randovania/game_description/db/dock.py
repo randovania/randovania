@@ -118,6 +118,7 @@ class DockWeaknessDatabase:
     dock_types: list[DockType]
     weaknesses: dict[DockType, dict[str, DockWeakness]]
     dock_rando_params: dict[DockType, DockRandoParams]
+    teleporter_rando_params: dict[str, list[DockType]]
     default_weakness: tuple[DockType, DockWeakness]
     dock_rando_config: DockRandoConfig
 
@@ -141,7 +142,7 @@ class DockWeaknessDatabase:
     # FIXME: Make is_teleporter and ignore_for_hints proper DockType fields
     @property
     def all_teleporter_dock_types(self) -> list[DockType]:
-        return [dock_type for dock_type in self.dock_types if dock_type.extra.get("is_teleporter", False)]
+        return [dock_type for dock_type_list in self.teleporter_rando_params.values() for dock_type in dock_type_list]
 
     @property
     def all_ignore_hints_dock_types(self) -> list[DockType]:

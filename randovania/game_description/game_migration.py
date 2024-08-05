@@ -327,6 +327,16 @@ def _migrate_v25(data: dict) -> dict:
     return data
 
 
+def _migrate_v26(data: dict) -> dict:
+    dock_types: list[str] = []
+    for dock_type, dock_info in data["dock_weakness_database"]["types"].items():
+        if dock_info["extra"].pop("is_teleporter", False):
+            dock_types.append(dock_type)
+
+    data["dock_weakness_database"]["teleporter_rando"] = {"default": dock_types}
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -353,6 +363,7 @@ _MIGRATIONS = [
     _migrate_v23,  # add require_documentation_above
     _migrate_v24,
     _migrate_v25,  # flatten_to_set_on_patch
+    _migrate_v26,  # add separate teleporter rando field
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
