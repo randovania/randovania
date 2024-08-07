@@ -385,6 +385,9 @@ class DreadPatchDataFactory(PatchDataFactory):
                     "fSfxVolume": c.sfx_volume / 100,
                     "fEnvironmentStreamsVolume": c.ambience_volume / 100,
                 },
+                "SubAreaManager": {
+                    "bKillPlayerOutsideScenario": not self.configuration.freesink,
+                },
             },
             "lua": {
                 "custom_init": {
