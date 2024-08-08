@@ -234,6 +234,7 @@ def read_dock_weakness_database(
     dock_types = read_dict(data["types"], read_dock_type)
     weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
     dock_rando: dict[DockType, DockRandoParams] = {}
+    teleporter_rando: dict[str, list[DockType]] = {}
     next_index = 0
 
     def get_index() -> int:
@@ -249,6 +250,7 @@ def read_dock_weakness_database(
         }
 
         dr = type_data["dock_rando"]
+
         if dr is not None:
             dock_rando[dock_type] = DockRandoParams(
                 unlocked=weaknesses[dock_type][dr["unlocked"]],
@@ -268,10 +270,16 @@ def read_dock_weakness_database(
         to_shuffle_proportion=data["dock_rando"]["to_shuffle_proportion"],
     )
 
+    for teleporter_group_name, dock_list in data["teleporter_rando"].items():
+        teleporter_rando[teleporter_group_name] = [
+            next(d for d in dock_types if d.short_name == dock) for dock in dock_list
+        ]
+
     return DockWeaknessDatabase(
         dock_types=dock_types,
         weaknesses=weaknesses,
         dock_rando_params=dock_rando,
+        teleporter_rando_params=teleporter_rando,
         default_weakness=(default_dock_type, default_dock_weakness),
         dock_rando_config=dock_rando_config,
     )
