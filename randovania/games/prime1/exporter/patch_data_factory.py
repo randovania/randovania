@@ -119,10 +119,10 @@ def prime1_pickup_details_to_patcher(
     else:
         for resource, quantity in detail.conditional_resources[0].resources:
             # Refill items
-            if resource.extra.get("is_refill"):
+            if resource.extra.get("is_special_pickup"):
                 pickup_type = resource.extra.get("pickup_type", resource.long_name)
-                count = quantity
-                max_count = 0
+                count = resource.extra.get("refill_by", quantity)
+                max_count = resource.extra.get("max_increase", quantity)
                 break
             # Regular items
             elif resource.extra["item_id"] < 1000:
