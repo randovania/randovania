@@ -61,6 +61,7 @@ class DreadConfiguration(BaseConfiguration):
     nerf_power_bombs: bool
     warp_to_start: bool
     april_fools_hints: bool
+    freesink: bool
     artifacts: DreadArtifactConfig
     constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
     constant_cold_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
