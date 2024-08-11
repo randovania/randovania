@@ -3660,85 +3660,82 @@
                             }
                         },
                         "Pickup (Missile Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "Destroy the blocks",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Lay Cross Bomb"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
-                                                },
-                                                {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Destroy the blocks with Cross Bomb or Power Bomb",
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Lay Bomb"
+                                                                "data": "Lay Cross Bomb"
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Then grab the item",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
                                                                         {
+                                                                            "type": "template",
+                                                                            "data": "Use Spin Boost"
+                                                                        },
+                                                                        {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "Space",
-                                                                                "amount": 1,
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
                                                                                 "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Use Spin Boost"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "https://www.youtube.com/watch?v=AaSlxp8GajA",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 3,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -3748,56 +3745,67 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "Grab the item",
+                                            "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Lay Normal Bomb"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
+                                                        "comment": "With Normal Bombs, the means to break the blocks blend together with reaching the item",
                                                         "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spin Boost"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://www.youtube.com/watch?v=AaSlxp8GajA",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 3,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
