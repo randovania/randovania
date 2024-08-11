@@ -331,7 +331,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
         return {
             str(
                 node.extra["door_instance_id"]
-                if node.default_dock_weakness != "Open Transition"
+                if node.default_dock_weakness.name != "Open Transition"
                 else node.extra["instance_id"]
             ): {
                 "lock": weakness.extra.get("door_name", weakness.long_name),
