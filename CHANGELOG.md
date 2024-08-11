@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.x] - 2024-08-??
 
+- Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
+- Changed: In the game details window, add a tooltip mentioning when the export of a game cannot be stopped.
+
 ### Metroid Dread
 
 #### Logic Database
