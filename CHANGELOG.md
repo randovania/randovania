@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.x] - 2024-08-??
 
+- Changed: When replacing a preset in a multiworld session, the user playing the world will now be unmarked from being ready.
+
 ### Metroid Dread
 
 #### Logic Database

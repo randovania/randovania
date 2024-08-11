@@ -161,6 +161,12 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     @asyncSlot()
     async def _world_replace_preset(self, world_uid: uuid.UUID):
         game = self._session.get_world(world_uid).preset.game
+
+        for user in self._session.users.values():
+            if user.worlds.get(world_uid, None) is not None:
+                if user.ready:
+                    await self._session_api.switch_readiness(user.id)
+
         preset = await self._prompt_for_preset(game)
         if preset is not None:
             await self._session_api.replace_preset_for(world_uid, preset)
