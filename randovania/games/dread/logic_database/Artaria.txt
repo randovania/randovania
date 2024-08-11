@@ -1636,10 +1636,16 @@ Extra - asset_id: collision_camera_015
       Trivial
   > Pickup (Missile Tank)
       Any of the following:
-          Grapple Beam
+          After Artaria - EMMI Spinner Pulled
           Before Artaria - EMMI Spinner Rotated and Enabled Door Lock Randomizer and Enabled Highly Dangerous Logic
   > Door to White EMMI Introduction
-      After Artaria - EMMI Spinner Rotated
+      All of the following:
+          After Artaria - EMMI Spinner Rotated
+          Any of the following:
+              After Artaria - EMMI Spinner Rotated Again
+              Before Artaria - EMMI Spinner Pulled and Enabled Door Lock Randomizer and Enabled Highly Dangerous Logic
+  > Event - EMMI Spinner Pulled
+      Grapple Beam and After Artaria - EMMI Spinner Rotated
 
 > Door to Wide Beam Block Room; Heals? False
   * Layers: default
@@ -1668,6 +1674,8 @@ Extra - asset_id: collision_camera_015
       Trivial
   > Event - EMMI Spinner Rotated
       Trivial
+  > Event - EMMI Spinner Rotated Again
+      After Artaria - EMMI Spinner Pulled
 
 > Tunnel to White EMMI Arena; Heals? False
   * Layers: default
@@ -1696,6 +1704,18 @@ Extra - asset_id: collision_camera_015
 > Start Point; Heals? False; Default Node
   * Layers: default
   > Door to Wide Beam Block Room
+      Trivial
+
+> Event - EMMI Spinner Pulled; Heals? False
+  * Layers: default
+  * Event Artaria - EMMI Spinner Pulled
+  > Door to White EMMI Arena (Top)
+      Trivial
+
+> Event - EMMI Spinner Rotated Again; Heals? False
+  * Layers: default
+  * Event Artaria - EMMI Spinner Rotated Again
+  > Door to White EMMI Arena (Top)
       Trivial
 
 ----------------
