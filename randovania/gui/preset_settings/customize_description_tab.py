@@ -17,7 +17,6 @@ class PresetCustomizeDescription(PresetTab, Ui_PresetCustomizeDescription):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.description_edit.setText(editor.description)
         self.description_edit.textChanged.connect(self._edit_description)
 
     @classmethod
@@ -29,7 +28,7 @@ class PresetCustomizeDescription(PresetTab, Ui_PresetCustomizeDescription):
         return False
 
     def on_preset_changed(self, preset: Preset):
-        return
+        self.description_edit.setText(preset.description)
 
     def _edit_description(self):
         with self._editor as editor:
