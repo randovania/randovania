@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import itertools
 from typing import TYPE_CHECKING
+
+from randovania.gui.preset_settings.customize_description_tab import PresetCustomizeDescription
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -24,4 +27,4 @@ def create_dialog_for_cosmetic_patches(
 
 
 def preset_editor_tabs_for(editor: PresetEditor, window_manager: WindowManager) -> Iterable[type[PresetTab]]:
-    return editor.game.gui.tab_provider(editor, window_manager)
+    return itertools.chain(editor.game.gui.tab_provider(editor, window_manager), {PresetCustomizeDescription})
