@@ -50,13 +50,8 @@ class PresetTabRoot(QtWidgets.QWidget):
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
-    _tab_types: list[type[PresetTab]]
     _editor: PresetEditor
     _current_tab: PresetTabRoot | None
-
-    def _changed(self, item: QtWidgets.QListWidgetItem):
-        widget = self.listToWidget[item.text()]
-        self.stackedWidget.setCurrentWidget(widget)
 
     def __init__(self, window_manager: WindowManager, editor: PresetEditor):
         super().__init__()
@@ -65,19 +60,21 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
 
         self._editor = editor
         self.window_manager = window_manager
-        self._tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
+        _tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
         self._current_tab = None
         self.listToWidget = {}
+        header_entry_counts = []
 
-        randomizer_item = QtWidgets.QListWidgetItem()
-        patches_item = QtWidgets.QListWidgetItem()
-        preset_item = QtWidgets.QListWidgetItem()
-        tmp_mapping = []
-        for header_name, header_entry in [
-            ("Randomizer Logic", randomizer_item),
-            ("Game Modifications", patches_item),
-            ("Preset Info", preset_item),
+        index_for_headers = []
+        # Maybe instead of hardcoding the headers like this, we have some kind of enum? Then we could also
+        # change the presetTabs to instead of having "uses patches" to directly indicate which header they should be
+        # displayed under. Future stuff tho.
+        for header_name in [
+            "Randomizer Logic",
+            "Game Modifications",
+            "Preset Info",
         ]:
+            # Add headers
             header_entry = QtWidgets.QListWidgetItem(header_name)
             font = header_entry.font()
             font.setBold(True)
@@ -86,12 +83,12 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             header_entry.setFont(font)
             header_entry.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
             self.listWidget.addItem(header_entry)
-            tmp_mapping.append(self.listWidget.count())
-
-        rando_index, patches_index, preset_index = tmp_mapping
+            index_for_headers.append(self.listWidget.count())
+            header_entry_counts.append(0)
 
         first_selection = None
-        for extra_tab in self._tab_types:
+        # Add child tabs, will be positioned under their corresponding headers
+        for extra_tab in _tab_types:
             if not self.editor._options.experimental_settings and extra_tab.is_experimental():
                 continue
 
@@ -101,23 +98,29 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             self.listToWidget[list_item.text()] = tab
             self.stackedWidget.addWidget(tab)
             if extra_tab.tab_title() == "Preset Description":
-                self.listWidget.insertItem(preset_index, list_item)
-                preset_index += 1
+                index = 2
             elif extra_tab.uses_patches_tab():
-                self.listWidget.insertItem(patches_index, list_item)
-                patches_index += 1
-                preset_index += 1
+                index = 1
             else:
-                self.listWidget.insertItem(rando_index, list_item)
-                rando_index += 1
-                patches_index += 1
-                preset_index += 1
+                index = 0
+
+            self.listWidget.insertItem(index_for_headers[index], list_item)
+            header_entry_counts[index] += 1
+            for i, indexAdjust in enumerate(index_for_headers):
+                if i < index:
+                    continue
+                index_for_headers[i] += 1
 
             if first_selection is None:
                 first_selection = list_item
 
+        # Remove headers that don't have children.
+        for index, count in zip(index_for_headers, header_entry_counts):
+            if count == 0:
+                self.listWidget.takeItem(index - 1)
+
         self.listWidget.setCurrentItem(first_selection)
-        self.listWidget.currentItemChanged.connect(self._changed)
+        self.listWidget.currentItemChanged.connect(self.changed_list_item_selection)
         self.listWidget.setMaximumWidth(self.listWidget.sizeHintForColumn(0) * 1.1)
 
         self.name_edit.textEdited.connect(self._edit_name)
@@ -129,6 +132,10 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             if self._current_tab is not None:
                 self._current_tab.release_widget()
             self._current_tab = tab
+
+    def changed_list_item_selection(self, item: QtWidgets.QListWidgetItem):
+        widget = self.listToWidget[item.text()]
+        self.stackedWidget.setCurrentWidget(widget)
 
     # Options
     def on_preset_changed(self, preset: Preset):
