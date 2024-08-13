@@ -80,7 +80,7 @@ class WorldWidgetEntry:
 
         if detail is not None:
             self.item.setText(4, "Last Activity:")
-            self.item.setTextAlignment(4, QtCore.Qt.AlignmentFlag.AlignRight)
+            self.item.setTextAlignment(4, QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignCenter)
             self.item.setData(
                 5,
                 QtCore.Qt.ItemDataRole.DisplayRole,
