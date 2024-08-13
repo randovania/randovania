@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.x] - 2024-08-??
 
+- Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
+
 ### Metroid Dread
 
 #### Logic Database
