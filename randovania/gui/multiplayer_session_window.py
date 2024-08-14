@@ -225,7 +225,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.import_layout_action = QtGui.QAction("Import game/spoiler", self.generate_game_menu)
 
         self.generate_game_menu.addAction(self.generate_game_with_spoiler_action)
-        self.generate_game_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
+        if self._window_manager.is_preview_mode:
+            self.generate_game_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
         self.generate_game_menu.addAction(self.generate_game_without_spoiler_action)
         self.generate_game_menu.addAction(self.import_permalink_action)
         self.generate_game_menu.addAction(self.import_layout_action)

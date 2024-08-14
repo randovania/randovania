@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.4.x] - 2024-08-??
 
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
+- Changed: Generating a Multiworld game without any retries is now locked behind the "preview" command line flag.
 
 ### Metroid Dread
 
