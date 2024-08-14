@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import dataclasses
 import datetime
 import json
 import uuid
@@ -704,6 +705,33 @@ async def test_import_permalink_unsupported_games(window: MultiplayerSessionWind
     mock_warning.assert_awaited_once_with(
         window, "Invalid layout", "Unsupported games: FooBar's Adventure, FooBar's Revenge"
     )
+
+
+async def test_uncheck_ready_when_replacing_preset(
+    window: MultiplayerSessionWindow, mocker: MockerFixture, sample_session: MultiplayerSessionEntry
+):
+    mock_prompt_preset = mocker.patch(
+        "randovania.gui.widgets.multiplayer_session_users_widget.MultiplayerSessionUsersWidget._prompt_for_preset",
+        new_callable=AsyncMock,
+    )
+
+    window._session = sample_session
+    window.users_widget._session = sample_session
+
+    user = next(iter(window._session.users.values()))
+    assert user.ready
+
+    async def change_user_readiness(_):
+        nonlocal user
+        user = dataclasses.replace(user, ready=not user.ready)
+
+    window.users_widget._session_api = AsyncMock()
+    window.users_widget._session_api.switch_readiness = change_user_readiness
+
+    await window.users_widget._world_replace_preset(next(iter(user.worlds.keys())))
+
+    assert not user.ready
+    mock_prompt_preset.assert_awaited_once()
 
 
 @pytest.mark.parametrize("end_state", ["reject", "wrong_count", "import"])

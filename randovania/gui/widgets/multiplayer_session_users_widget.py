@@ -163,7 +163,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         game = self._session.get_world(world_uid).preset.game
 
         for user in self._session.users.values():
-            if user.worlds.get(world_uid, None) is not None:
+            if world_uid in user.worlds:
                 if user.ready:
                     await self._session_api.switch_readiness(user.id)
 
