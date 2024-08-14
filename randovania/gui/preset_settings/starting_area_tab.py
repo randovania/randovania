@@ -69,8 +69,8 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
         return "Starting Area"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     @property
     def game_enum(self) -> RandovaniaGame:

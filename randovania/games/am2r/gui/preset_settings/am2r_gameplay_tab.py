@@ -44,7 +44,7 @@ class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
         return "Gameplay Changes"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return True
 
     def on_preset_changed(self, preset: Preset):

@@ -42,8 +42,8 @@ class PresetPlanetsZebethPatches(PresetTab):
         return "Other"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:

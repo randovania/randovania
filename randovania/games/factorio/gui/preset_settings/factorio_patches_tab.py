@@ -26,7 +26,7 @@ class PresetFactorioPatches(PresetTab, Ui_PresetFactorioPatches):
         return "Changes"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     def on_preset_changed(self, preset: Preset) -> None:

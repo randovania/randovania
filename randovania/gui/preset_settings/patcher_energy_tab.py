@@ -79,7 +79,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         return "Energy"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return True
 
     def on_preset_changed(self, preset: Preset) -> None:

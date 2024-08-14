@@ -116,7 +116,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         return "Item Pool"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     def on_preset_changed(self, preset: Preset):

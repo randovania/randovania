@@ -109,7 +109,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         return "Trick Level"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     @property

@@ -70,8 +70,8 @@ cutscenes happen. Inferior to the above options, but kept around because it's fu
         return "Quality of Life"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
         def persist(value: bool):

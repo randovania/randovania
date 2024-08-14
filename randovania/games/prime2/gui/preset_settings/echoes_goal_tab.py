@@ -37,7 +37,7 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     def _set_slider_visible(self, visible: bool):

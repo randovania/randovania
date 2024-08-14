@@ -38,7 +38,7 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     def _update_slider_max(self) -> None:

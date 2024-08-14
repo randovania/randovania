@@ -5,6 +5,10 @@ from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 
 
 class PresetCSStartingArea(PresetStartingArea):
+    @classmethod
+    def starts_new_header(cls) -> bool:
+        return True
+
     def create_quick_fill_buttons(self):
         super().create_quick_fill_buttons()
 

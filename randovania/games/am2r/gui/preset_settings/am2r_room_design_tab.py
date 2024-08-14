@@ -42,8 +42,8 @@ class PresetAM2RRoomDesign(PresetTab, Ui_PresetAM2RRoomDesign):
         return "Room Changes"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
         def persist(value: bool):

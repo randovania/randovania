@@ -24,8 +24,8 @@ class PresetCSHP(PresetTab, Ui_PresetCSHP):
         return "HP"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     def _on_starting_hp_changed(self):
         with self._editor as editor:

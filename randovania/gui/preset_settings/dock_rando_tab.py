@@ -45,8 +45,8 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         return "Door Locks"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     def on_preset_changed(self, preset: Preset):
         dock_rando = preset.configuration.dock_rando

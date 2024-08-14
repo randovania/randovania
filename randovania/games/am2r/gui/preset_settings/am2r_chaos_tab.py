@@ -52,8 +52,8 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
         return "Chaos Settings"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, AM2RConfiguration)

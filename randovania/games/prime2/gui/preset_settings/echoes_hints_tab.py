@@ -34,7 +34,7 @@ class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
         return "Hints"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     def _on_stk_combo_changed(self, new_index: int):

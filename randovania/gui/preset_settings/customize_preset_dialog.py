@@ -63,28 +63,9 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         _tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
         self._current_tab = None
         self.listToWidget = {}
-        header_entry_counts = []
 
-        index_for_headers = []
-        # Maybe instead of hardcoding the headers like this, we have some kind of enum? Then we could also
-        # change the presetTabs to instead of having "uses patches" to directly indicate which header they should be
-        # displayed under. Future stuff tho.
-        for header_name in [
-            "Randomizer Logic",
-            "Game Modifications",
-            "Preset Info",
-        ]:
-            # Add headers
-            header_entry = QtWidgets.QListWidgetItem(header_name)
-            font = header_entry.font()
-            font.setBold(True)
-            font.setUnderline(True)
-            font.setPointSizeF(font.pointSize() * 1.2)
-            header_entry.setFont(font)
-            header_entry.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
-            self.listWidget.addItem(header_entry)
-            index_for_headers.append(self.listWidget.count())
-            header_entry_counts.append(0)
+        header_indices = []
+        max_title_characters = 0
 
         first_selection = None
         # Add child tabs, will be positioned under their corresponding headers
@@ -97,27 +78,24 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
 
             self.listToWidget[list_item.text()] = tab
             self.stackedWidget.addWidget(tab)
-            if extra_tab.tab_title() == "Preset Description":
-                index = 2
-            elif extra_tab.uses_patches_tab():
-                index = 1
-            else:
-                index = 0
 
-            self.listWidget.insertItem(index_for_headers[index], list_item)
-            header_entry_counts[index] += 1
-            for i, indexAdjust in enumerate(index_for_headers):
-                if i < index:
-                    continue
-                index_for_headers[i] += 1
+            if extra_tab.starts_new_header():
+                header_indices.append(self.listWidget.count())
+                seperator = QtWidgets.QListWidgetItem("")
+                seperator.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
+                self.listWidget.addItem(seperator)
+
+            self.listWidget.addItem(list_item)
+
+            if len(extra_tab.tab_title()) > max_title_characters:
+                max_title_characters = len(extra_tab.tab_title())
 
             if first_selection is None:
                 first_selection = list_item
 
-        # Remove headers that don't have children.
-        for index, count in zip(index_for_headers, header_entry_counts):
-            if count == 0:
-                self.listWidget.takeItem(index - 1)
+        # Change seperator placeholders to have proper text
+        for index in header_indices:
+            self.listWidget.item(index).setText("─" * max_title_characters)
 
         self.listWidget.setCurrentItem(first_selection)
         self.listWidget.currentItemChanged.connect(self.changed_list_item_selection)

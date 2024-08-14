@@ -69,8 +69,8 @@ class PresetTeleporterTab(PresetTab, NodeListHelper):
         raise NotImplementedError
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def starts_new_header(cls) -> bool:
+        return False
 
     @property
     def game_enum(self):

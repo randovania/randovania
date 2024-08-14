@@ -38,7 +38,7 @@ class PresetMSRHints(PresetTab, Ui_PresetMSRHints):
         return "Hints"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     def _on_art_combo_changed(self, new_index: int) -> None:

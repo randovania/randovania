@@ -36,7 +36,7 @@ class PresetTab(QtWidgets.QMainWindow):
         raise NotImplementedError
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         raise NotImplementedError
 
     def on_preset_changed(self, preset: Preset):

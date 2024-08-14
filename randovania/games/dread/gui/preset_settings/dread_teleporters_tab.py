@@ -66,6 +66,10 @@ class PresetTeleportersDread(PresetTeleporterTab, Ui_PresetTeleportersDread, Nod
     def tab_title(cls) -> str:
         return "Transporters"
 
+    @classmethod
+    def starts_new_header(cls) -> bool:
+        return True
+
     def _create_source_teleporters(self):
         row = 0
         region_list = self.game_description.region_list

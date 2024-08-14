@@ -38,7 +38,7 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
         return "Objective"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     def _on_objective_changed(self):

@@ -92,7 +92,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         return "Generation"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
+    def starts_new_header(cls) -> bool:
         return False
 
     @property
