@@ -75,7 +75,6 @@ game_data: game.GameData = game.GameData(
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "darkszero_deluxe.rdvpreset"},
-        {"path": "fewest_changes.rdvpreset"},
     ],
     faq=[
         (
