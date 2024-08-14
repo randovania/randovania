@@ -62,23 +62,26 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self.window_manager = window_manager
         _tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
         self._current_tab = None
-        self.listToWidget = {}
+        self.item_to_widget = {}
 
         header_indices = []
         max_title_characters = 0
 
         first_selection = None
-        # Add child tabs, will be positioned under their corresponding headers
+
+        # Add entries
         for extra_tab in _tab_types:
+            # Skip experimental if we don't have the setting on
             if not self.editor._options.experimental_settings and extra_tab.is_experimental():
                 continue
 
             tab = PresetTabRoot(self, extra_tab)
             list_item = QtWidgets.QListWidgetItem(tab.tab_type.tab_title())
 
-            self.listToWidget[list_item.text()] = tab
+            self.item_to_widget[list_item.text()] = tab
             self.stackedWidget.addWidget(tab)
 
+            # Add placeholder header entry, that gets proper text later
             if extra_tab.starts_new_header():
                 header_indices.append(self.listWidget.count())
                 seperator = QtWidgets.QListWidgetItem("")
@@ -99,7 +102,8 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
 
         self.listWidget.setCurrentItem(first_selection)
         self.listWidget.currentItemChanged.connect(self.changed_list_item_selection)
-        self.listWidget.setMaximumWidth(self.listWidget.sizeHintForColumn(0) * 1.1)
+        # Need some extra space to adjust for scrollbar
+        self.listWidget.setMaximumWidth(self.listWidget.sizeHintForColumn(0) * 1.12)
 
         self.name_edit.textEdited.connect(self._edit_name)
         self.button_box.accepted.connect(self.accept)
@@ -112,7 +116,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             self._current_tab = tab
 
     def changed_list_item_selection(self, item: QtWidgets.QListWidgetItem):
-        widget = self.listToWidget[item.text()]
+        widget = self.item_to_widget[item.text()]
         self.stackedWidget.setCurrentWidget(widget)
 
     # Options
