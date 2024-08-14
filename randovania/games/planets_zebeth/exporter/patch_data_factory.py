@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import textwrap
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
+from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
 from randovania.games.game import RandovaniaGame
+from randovania.games.planets_zebeth.exporter.hint_namer import PlanetsZebethHintNamer
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib
 
@@ -13,8 +15,12 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.games.planets_zebeth.layout.planets_zebeth_configuration import PlanetsZebethConfiguration
     from randovania.games.planets_zebeth.layout.planets_zebeth_cosmetic_patches import PlanetsZebethCosmeticPatches
+
+
+MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX = 33
 
 
 class PlanetsZebethPatchDataFactory(PatchDataFactory):
@@ -45,7 +51,9 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
                     "header": item_info[pickup.name]["text_header"]
                     if not self.players_config.is_multiworld
                     else pickup.name,
-                    "description": pickup.collection_text[text_index],
+                    "description": textwrap.wrap(
+                        pickup.collection_text[text_index], width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX
+                    ),
                 },
             }
 
@@ -55,12 +63,17 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
         starting_resources = self.patches.starting_resources()
         return {resource.long_name: quantity for resource, quantity in starting_resources.as_resource_gain()}
 
-    def _create_starting_memo(self) -> str:
+    def _create_starting_memo(self) -> dict:
         starting_memo = None
         extra_starting = item_names.additional_starting_equipment(self.configuration, self.game, self.patches)
         if extra_starting:
             starting_memo = ", ".join(extra_starting)
-        return starting_memo
+
+        if starting_memo is not None:
+            return {
+                "header": "Extra Starting Items",
+                "description": textwrap.wrap(starting_memo, width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX),
+            }
 
     def _create_starting_location(self) -> dict:
         return {
@@ -81,6 +94,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
             "seed_identifier": self._create_hash_dict(),
             "starting_items": self._create_starting_items_dict(),
             "starting_memo": self._create_starting_memo(),
+            "credits_string": self._credits_spoiler(),
         }
 
     def _create_cosmetics(self) -> dict:
@@ -90,43 +104,62 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
             "room_names_on_hud": c.show_room_names.value,
         }
 
-    def _get_item_data(self):
-        item_data = json_lib.read_path(
+    def _get_item_data(self) -> dict:
+        item_data: dict = json_lib.read_path(
             RandovaniaGame.METROID_PLANETS_ZEBETH.data_path.joinpath("pickup_database", "item_data.json")
         )
 
+        for i in range(1, 10):
+            item_data[f"Tourian Key {i}"] = item_data["Tourian Key"]
         item_data["Missiles"] = item_data["Missile Tank"]
         item_data["EnergyTransferModule"] = item_data["Nothing"]
         return item_data
 
-    def _create_object_datas(self):
-        pass
-
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_PLANETS_ZEBETH
 
-    def create_data(self) -> dict:
-        db = self.game
+    def _credits_spoiler(self) -> list:
+        spoiler = []
+        spoiler_dict = credits_spoiler.generic_credits(
+            self.configuration.standard_pickup_configuration,
+            self.description.all_patches,
+            self.players_config,
+            PlanetsZebethHintNamer(self.description.all_patches, self.players_config),
+            "{}",
+            False,
+        )
+        for key, value in spoiler_dict.items():
+            spoiler.append(
+                {
+                    "header": key,
+                    "description": value.split("\n"),
+                }
+            )
 
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(db.resource_database, "spr_ITEM_Nothing"),
-            self.players_config.player_index,
+        return spoiler
+
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
+        text_data = self._get_item_data()
+        memo_data = {key: value["text_desc"] for key, value in text_data.items()}
+        memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.configuration.energy_per_tank)
+        return memo_data
+
+    def create_useless_pickup(self) -> PickupEntry:
+        """Used for any location with no PickupEntry assigned to it."""
+        return pickup_creator.create_nothing_pickup(
+            self.game.resource_database,
+            model_name="spr_ITEM_Nothing",
         )
 
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "spr_ITEM_Nothing")
+
+    def create_game_specific_data(self) -> dict:
         item_data = self._get_item_data()
-        memo_data = {key: value["text_desc"] for key, value in item_data.items()}
-        memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=100)
 
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "spr_ITEM_Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
 
         return {
             "seed": self.description.get_seed_for_player(self.players_config.player_index),
