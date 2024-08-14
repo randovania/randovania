@@ -21,13 +21,13 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel,
-        PresetTeleportersDread,
-        PresetMetroidStartingArea,
-        PresetDockRando,
         PresetDreadGeneration,
         PresetLocationPool,
         PresetDreadGoal,
         DreadPresetItemPool,
+        PresetTeleportersDread,
+        PresetMetroidStartingArea,
+        PresetDockRando,
         PresetDreadEnergy,
         PresetDreadPatches,
     ]
