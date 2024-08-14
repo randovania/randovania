@@ -22,16 +22,16 @@
    </property>
    <layout class="QVBoxLayout" name="goal_layout">
     <property name="leftMargin">
-     <number>4</number>
+     <number>6</number>
     </property>
     <property name="topMargin">
-     <number>8</number>
+     <number>6</number>
     </property>
     <property name="rightMargin">
-     <number>4</number>
+     <number>6</number>
     </property>
     <property name="bottomMargin">
-     <number>8</number>
+     <number>6</number>
     </property>
     <item>
      <widget class="QLabel" name="description_label">
@@ -45,8 +45,26 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="dna_slider_layout">
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
       <item>
        <widget class="QSlider" name="dna_slider">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="maximum">
          <number>39</number>
         </property>
@@ -64,14 +82,14 @@
       <item>
        <widget class="QLabel" name="dna_slider_label">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>20</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
@@ -93,6 +111,12 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QRadioButton" name="restrict_placement_radiobutton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Restricted Placement</string>
          </property>
@@ -100,6 +124,9 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <property name="leftMargin">
           <number>20</number>
          </property>
@@ -115,6 +142,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="prefer_metroids_check">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Prefer Standard Metroids (10 Alphas, 9 Gammas, 3 Zetas, 3 Omegas)</string>
            </property>
@@ -122,6 +155,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="prefer_stronger_metroids_check">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Prefer Stronger Metroids (7 Alpha+, 5 Gamma+, 1 Zeta+, 1 Omega+)</string>
            </property>
@@ -129,6 +168,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="prefer_bosses_check">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Prefer Bosses (Arachnus, Diggernaut Chase Reward, Diggernaut, Queen Metroid)</string>
            </property>
@@ -138,6 +183,12 @@
        </item>
        <item>
         <widget class="QRadioButton" name="free_placement_radiobutton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Free Placement</string>
          </property>
@@ -159,19 +210,6 @@
        </item>
       </layout>
      </widget>
-    </item>
-    <item>
-     <spacer name="spacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>
