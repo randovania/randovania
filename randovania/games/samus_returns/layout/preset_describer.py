@@ -34,7 +34,7 @@ def describe_objective(artifacts: MSRArtifactConfig, final_boss: FinalBossConfig
     if has_artifacts and artifacts.prefer_anywhere:
         return [
             {
-                f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}": True,
             },
             {
                 "Place at any item location": artifacts.prefer_anywhere,
@@ -44,7 +44,7 @@ def describe_objective(artifacts: MSRArtifactConfig, final_boss: FinalBossConfig
     elif has_artifacts:
         return [
             {
-                f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}": True,
             },
             {
                 "Prefers Standard Metroids": artifacts.prefer_metroids,
