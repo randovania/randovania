@@ -43,7 +43,7 @@ if TYPE_CHECKING:
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
-@pytest.fixture()
+@pytest.fixture
 async def window(skip_qtbot) -> MultiplayerSessionWindow:
     window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
@@ -51,7 +51,7 @@ async def window(skip_qtbot) -> MultiplayerSessionWindow:
     return window
 
 
-@pytest.fixture()
+@pytest.fixture
 def sample_session(preset_manager):
     u1 = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
     u2 = uuid.UUID("4bdb294e-9059-4fdf-9822-3f649023249a")
@@ -400,7 +400,7 @@ def test_export_all_presets(
         assert len(list(fake_export_path.iterdir())) == 0
 
 
-@pytest.fixture()
+@pytest.fixture
 def prepare_to_upload_layout():
     result = MagicMock(spec=contextlib.AbstractAsyncContextManager)
     result.__aenter__ = AsyncMock()

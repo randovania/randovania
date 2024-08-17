@@ -11,7 +11,7 @@ from randovania.gui.main_online_interaction import OnlineInteractions
 from randovania.interface_common.options import Options
 
 
-@pytest.fixture()
+@pytest.fixture
 def default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteractions:
     main_window = MagicMock()
     parent = QtWidgets.QWidget()

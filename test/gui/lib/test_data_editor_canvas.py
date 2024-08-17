@@ -10,7 +10,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
 
 
-@pytest.fixture()
+@pytest.fixture
 def canvas(skip_qtbot, dread_game_description):
     canvas = DataEditorCanvas()
     skip_qtbot.addWidget(canvas)

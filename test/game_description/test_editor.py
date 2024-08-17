@@ -15,7 +15,7 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate
 
 
-@pytest.fixture()
+@pytest.fixture
 def game_editor(echoes_game_data):
     return Editor(data_reader.decode_data(echoes_game_data))
 

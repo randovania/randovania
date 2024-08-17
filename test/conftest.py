@@ -59,7 +59,7 @@ def echo_tool(request, test_files_dir) -> Path:
     return test_files_dir.joinpath("echo_tool.py")
 
 
-@pytest.fixture()
+@pytest.fixture
 def preset_manager(tmp_path) -> PresetManager:
     return PresetManager(tmp_path.joinpath("presets"))
 
@@ -106,7 +106,7 @@ def blank_resource_db(blank_game_description) -> ResourceDatabase:
     return blank_game_description.resource_database
 
 
-@pytest.fixture()
+@pytest.fixture
 def blank_game_patches(default_blank_configuration, blank_game_description) -> GamePatches:
     return GamePatches.create_from_game(blank_game_description, 0, default_blank_configuration)
 
@@ -138,7 +138,7 @@ def default_echoes_configuration(default_echoes_preset) -> EchoesConfiguration:
     return default_echoes_preset.configuration
 
 
-@pytest.fixture()
+@pytest.fixture
 def echoes_game_patches(default_echoes_configuration, echoes_game_description) -> GamePatches:
     return GamePatches.create_from_game(echoes_game_description, 0, default_echoes_configuration)
 
@@ -150,7 +150,7 @@ def default_prime_configuration() -> PrimeConfiguration:
     return preset.configuration
 
 
-@pytest.fixture()
+@pytest.fixture
 def prime_game_patches(default_prime_configuration, prime_game_description) -> GamePatches:
     return GamePatches.create_from_game(prime_game_description, 0, default_prime_configuration)
 
@@ -231,7 +231,7 @@ def default_fusion_configuration(default_fusion_preset) -> FusionConfiguration:
     return default_fusion_preset.configuration
 
 
-@pytest.fixture()
+@pytest.fixture
 def fusion_game_patches(default_fusion_configuration, fusion_game_description) -> GamePatches:
     return GamePatches.create_from_game(fusion_game_description, 0, default_fusion_configuration)
 
@@ -267,7 +267,7 @@ def is_frozen(request, mocker) -> bool:
     return request.param
 
 
-@pytest.fixture()
+@pytest.fixture
 def generic_pickup_category() -> PickupCategory:
     return PickupCategory(
         name="generic",
@@ -277,14 +277,14 @@ def generic_pickup_category() -> PickupCategory:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def default_generator_params() -> PickupGeneratorParams:
     return PickupGeneratorParams(
         preferred_location_category=LocationCategory.MAJOR,
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def blank_pickup(echoes_pickup_database, default_generator_params) -> PickupEntry:
     return PickupEntry(
         name="Blank Pickup",
@@ -301,7 +301,7 @@ def blank_pickup(echoes_pickup_database, default_generator_params) -> PickupEntr
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def dread_spider_pickup(default_generator_params) -> PickupEntry:
     dread_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_DREAD)
     return PickupEntry(
@@ -330,7 +330,7 @@ def dread_spider_pickup(default_generator_params) -> PickupEntry:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def msr_ice_beam_pickup(default_generator_params) -> PickupEntry:
     msr_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.METROID_SAMUS_RETURNS)
     return PickupEntry(
@@ -359,7 +359,7 @@ def msr_ice_beam_pickup(default_generator_params) -> PickupEntry:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def am2r_varia_pickup(default_generator_params) -> PickupEntry:
     am2r_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.AM2R)
     return PickupEntry(
@@ -387,7 +387,7 @@ def am2r_varia_pickup(default_generator_params) -> PickupEntry:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def cs_panties_pickup(default_generator_params) -> PickupEntry:
     cs_pickup_database = default_database.pickup_database_for_game(RandovaniaGame.CAVE_STORY)
     return PickupEntry(
@@ -423,7 +423,7 @@ def cs_panties_pickup(default_generator_params) -> PickupEntry:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def small_echoes_game_description(test_files_dir) -> GameDescription:
     from randovania.game_description import data_reader
 
@@ -435,18 +435,18 @@ class DataclassTestLib:
         return MagicMock(spec=[field.name for field in dataclasses.fields(obj)])
 
 
-@pytest.fixture()
+@pytest.fixture
 def dataclass_test_lib() -> DataclassTestLib:
     return DataclassTestLib()
 
 
-@pytest.fixture()
+@pytest.fixture
 def empty_patches(default_blank_configuration, blank_game_description) -> GamePatches:
     configuration = default_blank_configuration
     return GamePatches.create_from_game(blank_game_description, 0, configuration)
 
 
-@pytest.fixture()
+@pytest.fixture
 def _mock_seed_hash(mocker: pytest_mock.MockerFixture):
     mocker.patch(
         "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
@@ -465,7 +465,7 @@ def _mock_seed_hash(mocker: pytest_mock.MockerFixture):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def obfuscator_test_secret(monkeypatch):
     from randovania.lib import obfuscator
 
@@ -474,7 +474,7 @@ def obfuscator_test_secret(monkeypatch):
     obfuscator._encrypt = None
 
 
-@pytest.fixture()
+@pytest.fixture
 def obfuscator_no_secret(monkeypatch):
     from randovania.lib import obfuscator
 
@@ -524,14 +524,14 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
             asyncio.events._set_running_loop(None)
             super()._after_run_forever()
 
-    @pytest.fixture()
+    @pytest.fixture
     def skip_qtbot(request, qtbot):
         if request.config.option.skip_gui_tests:
             pytest.skip()
 
         return qtbot
 
-    @pytest.fixture()
+    @pytest.fixture
     def event_loop(request: pytest.FixtureRequest):
         if "skip_qtbot" in request.fixturenames:
             loop = EventLoopWithRunningFlag(request.getfixturevalue("qapp"), set_running_loop=False)
@@ -542,7 +542,7 @@ if all(find_spec(n) is not None for n in ("pytestqt", "qasync")):
 
 else:
 
-    @pytest.fixture()
+    @pytest.fixture
     def skip_qtbot(request):
         pytest.skip()
         return "no qtbot"

@@ -140,7 +140,7 @@ _include_tricks_for_game = {
 }
 
 
-@pytest.mark.skip_resolver_tests()
+@pytest.mark.skip_resolver_tests
 @pytest.mark.parametrize(
     ("game_enum", "ignore_events", "ignore_pickups", "include_tricks"),
     [
