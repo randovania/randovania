@@ -15,17 +15,17 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 from randovania.server import database
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_emit_session_update(mocker) -> MagicMock:
     return mocker.patch("randovania.server.multiplayer.session_common.emit_session_meta_update", autospec=True)
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_audit(mocker) -> MagicMock:
     return mocker.patch("randovania.server.multiplayer.session_common.add_audit_entry", autospec=True)
 
 
-@pytest.fixture()
+@pytest.fixture
 def solo_two_world_session(clean_database, test_files_dir):
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
     preset_0 = VersionedPreset.with_preset(description.get_preset(0))
@@ -61,7 +61,7 @@ def solo_two_world_session(clean_database, test_files_dir):
     return session
 
 
-@pytest.fixture()
+@pytest.fixture
 def two_player_session(clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other Name")
@@ -89,7 +89,7 @@ def two_player_session(clean_database):
     return session
 
 
-@pytest.fixture()
+@pytest.fixture
 def session_update(clean_database, mocker):
     mock_layout = MagicMock(spec=LayoutDescription)
     mock_layout.shareable_word_hash = "Words of O-Lir"

@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
-@pytest.fixture()
+@pytest.fixture
 def window(skip_qtbot, mocker):
     game_connection = MagicMock()
     game_connection.connection_builders = []

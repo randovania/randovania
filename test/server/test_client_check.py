@@ -5,7 +5,7 @@ import pytest
 from randovania.server import client_check
 
 
-@pytest.fixture()
+@pytest.fixture
 def expected_headers():
     return {
         "X-Randovania-API-Version": "2",

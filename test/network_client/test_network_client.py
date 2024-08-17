@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     import pytest_mock
 
 
-@pytest.fixture()
+@pytest.fixture
 def client(tmp_path):
     return NetworkClient(tmp_path, {"server_address": "http://localhost:5000"})
 

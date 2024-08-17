@@ -11,7 +11,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.server import database
 
 
-@pytest.fixture()
+@pytest.fixture
 def empty_database():
     old_db = database.db
     try:
@@ -24,13 +24,13 @@ def empty_database():
         database.db = old_db
 
 
-@pytest.fixture()
+@pytest.fixture
 def clean_database(empty_database):
     empty_database.create_tables(database.all_classes)
     return empty_database
 
 
-@pytest.fixture()
+@pytest.fixture
 def flask_app():
     app = flask.Flask("test_app")
     app.config["TESTING"] = True
@@ -39,12 +39,12 @@ def flask_app():
         yield app
 
 
-@pytest.fixture()
+@pytest.fixture
 def fernet():
     return cryptography.fernet.Fernet(b"s2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A=")
 
 
-@pytest.fixture()
+@pytest.fixture
 def default_game_list(is_dev_version):
     return [g.value for g in RandovaniaGame.sorted_all_games() if g.data.defaults_available_in_game_sessions]
 

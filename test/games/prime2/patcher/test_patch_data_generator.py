@@ -35,7 +35,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
 
 
-@pytest.fixture()
+@pytest.fixture
 def multiworld_item(echoes_resource_database):
     return echoes_resource_database.get_item(echoes_items.MULTIWORLD_ITEM)
 

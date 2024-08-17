@@ -575,7 +575,7 @@ def test_pickup_scan_for_ammo_expansion(echoes_pickup_database, echoes_resource_
     assert result == expected
 
 
-@pytest.fixture()
+@pytest.fixture
 def pickup_for_create_pickup_data(generic_pickup_category, default_generator_params):
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)

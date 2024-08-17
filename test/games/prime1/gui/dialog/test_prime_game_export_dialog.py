@@ -16,7 +16,7 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.interface_common.options import Options
 
 
-@pytest.fixture()
+@pytest.fixture
 def patch_data():
     return {
         "randEnemyAttributes": None,

@@ -22,7 +22,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
-@pytest.fixture()
+@pytest.fixture
 def connection(skip_qtbot):
     return GameConnection(MagicMock(), MagicMock())
 
