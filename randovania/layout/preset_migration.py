@@ -1187,6 +1187,14 @@ def _migrate_v87(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v88(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        config = preset["configuration"]
+        config["freesink"] = False
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1275,6 +1283,7 @@ _MIGRATIONS = [
     _migrate_v85,  # am2r configurable DR
     _migrate_v86,
     _migrate_v87,
+    _migrate_v88,  # dread freesink
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
