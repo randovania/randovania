@@ -31,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Area 6 - The Door to Chozo Seal West Intersection Terminal from Crumbling Stairwell is excluded from Door Lock Rando.
 
+#### Area 3 Metroid Caverns
+
+- Fixed: The Grapple block between Letum Shrine and Gravitt Garden can now be removed from both sides.
+
 ## [8.3.x] - 2024-08-??
 
 - Changed: Reduced some visual noise in the main window and customize preset window.
