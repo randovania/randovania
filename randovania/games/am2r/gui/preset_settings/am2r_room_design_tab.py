@@ -4,7 +4,7 @@ import typing
 
 from PySide6 import QtWidgets
 
-from randovania.games.am2r.gui.generated.preset_am2r_patches_ui import Ui_PresetAM2RPatches
+from randovania.games.am2r.gui.generated.preset_am2r_room_design_ui import Ui_PresetAM2RRoomDesign
 from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -18,22 +18,15 @@ if typing.TYPE_CHECKING:
 _FIELDS = [
     "septogg_helpers",
     "respawn_bomb_blocks",
-    "skip_cutscenes",
-    "skip_save_cutscene",
-    "skip_item_cutscenes",
     "grave_grotto_blocks",
-    "fusion_mode",
-    "supers_on_missile_doors",
     "nest_pipes",
     "softlock_prevention_blocks",
     "a3_entrance_blocks",
     "screw_blocks",
-    "blue_save_doors",
-    "force_blue_labs",
 ]
 
 
-class PresetAM2RPatches(PresetTab, Ui_PresetAM2RPatches):
+class PresetAM2RRoomDesign(PresetTab, Ui_PresetAM2RRoomDesign):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -46,7 +39,7 @@ class PresetAM2RPatches(PresetTab, Ui_PresetAM2RPatches):
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Other"
+        return "Room Design"
 
     @classmethod
     def uses_patches_tab(cls) -> bool:
