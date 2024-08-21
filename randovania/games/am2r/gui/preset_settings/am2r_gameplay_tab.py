@@ -17,17 +17,16 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-_CHECKBOX_FIELDS = [
-    "skip_cutscenes",
-    "skip_save_cutscene",
-    "skip_item_cutscenes",
-    "fusion_mode",
-    "vertically_flip_gameplay",
-    "horizontally_flip_gameplay",
-]
-
-
 class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
+    _CHECKBOX_FIELDS = [
+        "skip_cutscenes",
+        "skip_save_cutscene",
+        "skip_item_cutscenes",
+        "fusion_mode",
+        "vertically_flip_gameplay",
+        "horizontally_flip_gameplay",
+    ]
+
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
@@ -37,7 +36,7 @@ class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
         self.second_suit_spin_box.valueChanged.connect(self._persist_second_suit_dr)
 
         # Checkbox Signals
-        for f in _CHECKBOX_FIELDS:
+        for f in self._CHECKBOX_FIELDS:
             self._add_checkbox_persist_option(getattr(self, f"{f}_check"), f)
 
     @classmethod
@@ -54,7 +53,7 @@ class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
         self.first_suit_spin_box.setValue(config.first_suit_dr)
         self.second_suit_spin_box.setValue(config.second_suit_dr)
-        for f in _CHECKBOX_FIELDS:
+        for f in self._CHECKBOX_FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
 
     def _persist_tank_capacity(self):

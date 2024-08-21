@@ -41,7 +41,6 @@ def test_has_unsupported_features(preset_manager: PresetManager, flip_vertical: 
 
     assert configuration.unsupported_features() == [
         "The amount of required DNA cannot be higher than the total amount of placed DNA.",
-        "Gameplay is flipped horizontally or vertically.",
         "The minimum darkness value cannot be higher than the maximum darkness value.",
         (
             "The probability of a room being submerged in water and being submerged in "
