@@ -74,7 +74,7 @@ class AM2RBootstrap(MetroidBootstrap):
         num_suits = sum(
             (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
         )
-        if num_suits == 0:
+        if num_suits <= 0:
             dr = 0
         if num_suits == 1:
             dr = configuration.first_suit_dr
