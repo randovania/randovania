@@ -31,7 +31,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
-            object_id = self.game.region_list.node_from_pickup_index(pickup.index).extra["object_id"]
+            object_id = str(self.game.region_list.node_from_pickup_index(pickup.index).extra["object_id"])
             res_lock = pickup.original_pickup.resource_lock
             text_index = (
                 1
