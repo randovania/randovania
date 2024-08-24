@@ -45,14 +45,14 @@ def test_preferred_dna(
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
 
-    assert tab.dna_slider.isEnabled()
-    assert tab.dna_slider.value() > 0
-    initial_slider_value = tab.dna_slider.value()
+    assert tab.placed_slider.isEnabled()
+    assert tab.placed_slider.value() > 0
+    initial_slider_value = tab.placed_slider.value()
 
     # Run
     tab.prefer_metroids_check.setChecked(prefer_metroids)
     tab.prefer_stronger_metroids_check.setChecked(prefer_stronger_metroids)
-    slider_value_after_first_set = tab.dna_slider.value()
+    slider_value_after_first_set = tab.placed_slider.value()
     tab.prefer_bosses_check.setChecked(prefer_bosses)
     tab._update_slider_max()
 
@@ -60,10 +60,10 @@ def test_preferred_dna(
     if not prefer_metroids and not prefer_stronger_metroids:
         assert slider_value_after_first_set == 0
     # The slider value should never increase from what it was before
-    assert slider_value_after_first_set >= tab.dna_slider.value()
+    assert slider_value_after_first_set >= tab.placed_slider.value()
     assert tab.num_preferred_locations == expected_max_slider
-    assert tab.dna_slider.maximum() == expected_max_slider
-    assert tab.dna_slider.isEnabled() == (expected_max_slider > 0)
+    assert tab.placed_slider.maximum() == expected_max_slider
+    assert tab.placed_slider.isEnabled() == (expected_max_slider > 0)
 
     configuration = editor.configuration
     assert isinstance(configuration, MSRConfiguration)
@@ -78,8 +78,8 @@ def test_preferred_dna(
     if slider_value_after_first_set == 0:
         expected_artifacts = 0
 
-    assert configuration.artifacts.required_artifacts == expected_artifacts
-    assert tab.dna_slider.value() == expected_artifacts
+    assert configuration.artifacts.placed_artifacts == expected_artifacts
+    assert tab.placed_slider.value() == expected_artifacts
 
 
 def test_restricted_placement(
@@ -99,7 +99,7 @@ def test_restricted_placement(
     assert isinstance(editor.configuration, MSRConfiguration)
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
-    artifact_count = editor.configuration.artifacts.required_artifacts
+    artifact_count = editor.configuration.artifacts.placed_artifacts
 
     tab.free_placement_radiobutton.setChecked(True)
 
@@ -111,7 +111,7 @@ def test_restricted_placement(
     assert tab.prefer_stronger_metroids_check.isEnabled()
     assert tab.prefer_bosses_check.isEnabled()
     assert tab.restrict_placement_radiobutton.isChecked()
-    assert editor.configuration.artifacts.required_artifacts == artifact_count
+    assert editor.configuration.artifacts.placed_artifacts == artifact_count
 
 
 def test_free_placement(

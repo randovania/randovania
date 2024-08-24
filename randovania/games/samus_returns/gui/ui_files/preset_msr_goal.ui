@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1196</width>
-    <height>313</height>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
     <item>
      <widget class="QLabel" name="description_label">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it is now necessary to collect Metroid DNA in order to reach Ridley. The minimum and maximum are limited to 0 and 39 DNA respectively. You start with 39 DNA minus the shuffled amount.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it is now necessary to collect Metroid DNA in order to reach Ridley. The minimum and maximum are limited to 0 and 39 DNA respectively. You can choose to have more DNA in the Pool than what is required to collect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -44,7 +44,14 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="dna_slider_layout">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Controls how much Metroid DNA is obtainable.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="placed_slider_layout">
       <property name="leftMargin">
        <number>6</number>
       </property>
@@ -58,13 +65,7 @@
        <number>6</number>
       </property>
       <item>
-       <widget class="QSlider" name="dna_slider">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="QSlider" name="placed_slider">
         <property name="maximum">
          <number>39</number>
         </property>
@@ -80,7 +81,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="dna_slider_label">
+       <widget class="QLabel" name="placed_slider_label">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -98,6 +99,52 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Controls how much Metroid DNA is required to be collected.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="required_slider_layout">
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QSlider" name="required_slider">
+        <property name="maximum">
+         <number>39</number>
+        </property>
+        <property name="pageStep">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksBelow</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="required_slider_label">
+        <property name="text">
+         <string>0</string>
         </property>
        </widget>
       </item>

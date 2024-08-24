@@ -17,6 +17,7 @@ class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_bosses: bool
     prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
+    placed_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
 
 
 @dataclasses.dataclass(frozen=True)
@@ -47,3 +48,11 @@ class MSRConfiguration(BaseConfiguration):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
+
+    def unsupported_features(self) -> list[str]:
+        result = super().unsupported_features()
+
+        if self.artifacts.required_artifacts > self.artifacts.placed_artifacts:
+            result.append("The amount of required DNA cannot be higher than the total amount of placed DNA.")
+
+        return result
