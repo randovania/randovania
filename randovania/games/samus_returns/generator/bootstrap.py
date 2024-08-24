@@ -57,6 +57,10 @@ class MSRBootstrap(MetroidBootstrap):
             "surface_crumbles": "SurfaceCrumbles",
             "area1_crumbles": "Area1Crumbles",
             "reverse_area8": "ReverseArea8",
+            "final_boss_arachnus": "FinalBossArachnus",
+            "final_boss_diggernaut": "FinalBossDiggernaut",
+            "final_boss_queen": "FinalBossQueen",
+            "final_boss_ridley": "FinalBossRidley",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
@@ -67,6 +71,10 @@ class MSRBootstrap(MetroidBootstrap):
 
         if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
             enabled_resources.add("DoorLockRandoTypes")
+
+        # If Queen is the final boss, remove the wall next to the arena
+        if configuration.final_boss == "Queen":
+            enabled_resources.add("ReverseArea8")
 
         return enabled_resources
 
@@ -91,6 +99,13 @@ class MSRBootstrap(MetroidBootstrap):
                 resource_database.get_event(
                     "Area 3 (Factory Interior) - Gamma Arena & Transport to Metroid Caverns East Grapple Block"
                 ),
+                1,
+            )
+
+        # If Diggernaut is the final boss, move the Grapple Block by the elevator
+        if configuration.final_boss == "Diggernaut" and not configuration.elevator_grapple_blocks:
+            yield (
+                resource_database.get_event("Area 6 - Transport to Area 7 Grapple Block Pull"),
                 1,
             )
 

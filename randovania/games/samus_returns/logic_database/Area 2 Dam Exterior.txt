@@ -85,11 +85,7 @@ Extra - asset_id: collision_camera_005
   * Missile Door to Arachnus Arena/Door from Dam Exterior
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Door from Maintenance Tunnel
-      Trivial
-  > Top of Wall
-      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-  > Start Point (Bottom)
+  > Next to Arachnus Arena
       Trivial
 
 > Door to Metroid Caverns Entrance (Bottom); Heals? False
@@ -191,10 +187,24 @@ Extra - asset_id: collision_camera_005
   > Door to Exterior Alpha+ Arena
       Trivial
 
-> Start Point (Bottom); Heals? False; Spawn Point
+> Next to Arachnus Arena; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Arachnus
   > Door to Arachnus Arena
+      Any of the following:
+          Disabled Final Boss Arachnus
+          Enabled Final Boss Arachnus and All DNA
+  > Door from Maintenance Tunnel
+      Trivial
+  > Top of Wall
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > Event - Credits
+      After Area 2 (Dam Exterior) - Arachnus
+
+> Event - Credits; Heals? False
+  * Layers: final-boss-arachnus
+  * Event Credits
+  > Next to Arachnus Arena
       Trivial
 
 ----------------
@@ -227,12 +237,14 @@ Extra - asset_id: collision_camera_006
 > Event - Arachnus; Heals? False
   * Layers: default
   * Event Area 2 (Dam Exterior) - Arachnus
-  > Pickup (Spring Ball)
+  > Room Center
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_007
+  > Pickup (Spring Ball)
+      After Area 2 (Dam Exterior) - Arachnus and Disabled Final Boss Arachnus
   > Door from Dam Exterior
       Trivial
   > Tunnel to Fan Funnel
@@ -261,7 +273,11 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Tunnel with Bomb Block to Maintenance Tunnel/Tunnel to Fan Funnel
   > Tunnel to Arachnus Arena
-      Lay Any Bomb
+      All of the following:
+          Lay Any Bomb
+          Any of the following:
+              Disabled Final Boss Arachnus
+              Enabled Final Boss Arachnus and All DNA
 
 ----------------
 Critter Playground

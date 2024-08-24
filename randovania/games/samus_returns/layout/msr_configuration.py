@@ -63,6 +63,20 @@ class MSRConfiguration(BaseConfiguration):
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
 
+    def active_layers(self) -> set[str]:
+        result = super().active_layers()
+
+        if FinalBossConfiguration.ARACHNUS:
+            result.add("final-boss-arachnus")
+        elif FinalBossConfiguration.DIGGERNAUT:
+            result.add("final-boss-diggernaut")
+        elif FinalBossConfiguration.QUEEN:
+            result.add("final-boss-queen")
+        elif FinalBossConfiguration.RIDLEY:
+            result.add("final-boss-ridley")
+
+        return result
+
     def unsupported_features(self) -> list[str]:
         result = super().unsupported_features()
 

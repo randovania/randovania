@@ -621,7 +621,7 @@ class MSRPatchDataFactory(PatchDataFactory):
     def _objective(self, config: MSRConfiguration) -> dict:
         return {
             "required_dna": config.artifacts.required_artifacts,
-            "final_boss": "Ridley",
+            "final_boss": config.final_boss,
         }
 
     def create_memo_data(self) -> dict:
