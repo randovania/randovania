@@ -1604,31 +1604,31 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Missile Shield": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Kill the Shield from the reverse side - https://youtu.be/HKkIXyZ9a6Y",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Kill the Shield from the reverse side - https://youtu.be/HKkIXyZ9a6Y",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 3,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -6449,7 +6449,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get up - https://youtu.be/ycp5oCd5-9I",
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -6462,6 +6462,23 @@
                                                         "name": "WallJump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "With Screw Attack Only - https://youtu.be/ycp5oCd5-9I",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
