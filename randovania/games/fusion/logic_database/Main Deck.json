@@ -1592,7 +1592,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1603,6 +1603,32 @@
                                             "name": "MainDeckOperationsMissileShield",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Kill the Shield from the reverse side - https://youtu.be/HKkIXyZ9a6Y",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6423,7 +6449,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get up",
+                                            "comment": "Get up - https://youtu.be/ycp5oCd5-9I",
                                             "items": [
                                                 {
                                                     "type": "template",
