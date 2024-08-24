@@ -110,6 +110,9 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/custom_patcher_data.rdvgame",  # custom patcher data
         "dread/all_settings.rdvgame",  # all settings enabled
         "dread/hide_all_with_nothing.rdvgame",  # Model+scan+name hidden with nothing data
+        # Planets (Zebeth)
+        "planets_zebeth/starter_preset.rdvgame",  # starter preset (vanilla keys)
+        "planets_zebeth/starter_preset_shuffle_keys.rdvgame",  # starter preset (shuffled keys)
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
