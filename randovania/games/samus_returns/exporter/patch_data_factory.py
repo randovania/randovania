@@ -613,7 +613,7 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return result
 
-    def _objective(self, config: MSRConfiguration) -> dict[str[int], str[str]]:
+    def _objective(self, config: MSRConfiguration) -> dict:
         return {
             "required_dna": config.artifacts.required_artifacts,
             "final_boss": "Ridley",
