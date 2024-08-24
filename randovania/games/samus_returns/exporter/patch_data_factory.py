@@ -515,6 +515,11 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         cosmetic_patches["music_shuffle_dict"] = _construct_music_shuffle_dict(c.music, Random(seed_number))
 
+        cosmetic_patches["volume_adjustments"] = {
+            "music": c.music_volume / 100,
+            "environment_sfx": c.ambience_volume / 100,
+        }
+
         return cosmetic_patches
 
     def _build_elevator_dict(self) -> dict[str, dict[str, dict[str, str]]]:
