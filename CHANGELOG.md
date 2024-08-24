@@ -31,7 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Underwater screen effect persisting after traversing backwards through Biotech Research Area 1
+- Fixed: [JP/PAL] Reverse Lower Mines setting impassible at Metroid Quarantine B
 - Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
+- Changed: Cosmetic improvements to Impact Crater's dead bosses 2nd pass layer
 
 ### Metroid: Samus Returns
 
