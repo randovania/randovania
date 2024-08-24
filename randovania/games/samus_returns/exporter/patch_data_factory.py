@@ -618,6 +618,12 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return result
 
+    def _objective(self, config: MSRConfiguration) -> dict:
+        return {
+            "required_dna": config.artifacts.required_artifacts,
+            "final_boss": "Ridley",
+        }
+
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""
         self.memo_data = MSRAcquiredMemo.with_expansion_text()
@@ -682,6 +688,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "heat": self.configuration.constant_heat_damage,
                 "lava": self.configuration.constant_lava_damage,
             },
+            "objective": self._objective(self.configuration),
             "layout_uuid": str(self.players_config.get_own_uuid()),
             "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
         }

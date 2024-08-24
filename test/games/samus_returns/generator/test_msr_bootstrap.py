@@ -17,13 +17,13 @@ from randovania.generator.pickup_pool import pool_creator
 @pytest.mark.parametrize(
     ("artifacts", "expected"),
     [
-        (MSRArtifactConfig(True, True, False, False, 5), [203, 207, 178, 182, 187]),
-        (MSRArtifactConfig(True, True, False, False, 39), range(172, 211)),
-        (MSRArtifactConfig(False, False, False, False, 0), []),
-        (MSRArtifactConfig(False, False, True, False, 4), [37, 99, 139, 171]),
-        (MSRArtifactConfig(True, False, False, False, 1), [183]),
-        (MSRArtifactConfig(False, True, False, False, 2), [178, 187]),
-        (MSRArtifactConfig(True, True, True, False, 1), [197]),
+        (MSRArtifactConfig(True, True, False, False, 5, 5), [203, 207, 178, 182, 187]),
+        (MSRArtifactConfig(True, True, False, False, 39, 39), range(172, 211)),
+        (MSRArtifactConfig(False, False, False, False, 0, 0), []),
+        (MSRArtifactConfig(False, False, True, False, 4, 4), [37, 99, 139, 171]),
+        (MSRArtifactConfig(True, False, False, False, 1, 1), [183]),
+        (MSRArtifactConfig(False, True, False, False, 2, 2), [178, 187]),
+        (MSRArtifactConfig(True, True, True, False, 1, 1), [197]),
     ],
 )
 def test_assign_pool_results_predetermined(msr_game_description, msr_configuration, artifacts, expected):
@@ -47,10 +47,10 @@ def test_assign_pool_results_predetermined(msr_game_description, msr_configurati
 @pytest.mark.parametrize(
     ("artifacts"),
     [
-        (MSRArtifactConfig(False, False, False, True, 5)),
-        (MSRArtifactConfig(True, False, False, True, 10)),
-        (MSRArtifactConfig(False, True, True, True, 15)),
-        (MSRArtifactConfig(True, True, True, True, 6)),
+        (MSRArtifactConfig(False, False, False, True, 5, 5)),
+        (MSRArtifactConfig(True, False, False, True, 10, 10)),
+        (MSRArtifactConfig(False, True, True, True, 15, 15)),
+        (MSRArtifactConfig(True, True, True, True, 6, 6)),
     ],
 )
 def test_assign_pool_results_prefer_anywhere(msr_game_description, msr_configuration, artifacts):
@@ -71,6 +71,6 @@ def test_assign_pool_results_prefer_anywhere(msr_game_description, msr_configura
     shuffled_dna = [pickup for pickup in pool_results.to_place if pickup.pickup_category == METROID_DNA_CATEGORY]
 
     assert pool_results.to_place == initial_starting_place
-    assert len(shuffled_dna) == artifacts.required_artifacts
+    assert len(shuffled_dna) == artifacts.placed_artifacts
     assert result.starting_equipment == pool_results.starting
     assert result.pickup_assignment == {}

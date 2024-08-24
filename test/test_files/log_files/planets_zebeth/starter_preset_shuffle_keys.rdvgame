@@ -1,0 +1,229 @@
+{
+    "schema_version": 29,
+    "info": {
+        "randovania_version": "8.4.0.dev114",
+        "randovania_version_git": "ffbd61bc",
+        "permalink": "Da26_ux7Vv-9YbwMY6vNF4saRfuVLRR0ANnA",
+        "has_spoiler": true,
+        "seed": 340891882,
+        "hash": "XL7OY62W",
+        "word_hash": "Wave Ice Brick",
+        "presets": [
+            {
+                "schema_version": 88,
+                "base_preset_uuid": null,
+                "name": "Starter Preset (Shuffle Keys)",
+                "uuid": "dc33eec9-332f-4296-99d2-6404df5d4e39",
+                "description": "Basic preset.",
+                "game": "planets_zebeth",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": false,
+                        "specific_levels": {}
+                    },
+                    "starting_location": [
+                        {
+                            "region": "Brinstar",
+                            "area": "Maru Mari Hall",
+                            "node": "Starting Point"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": []
+                    },
+                    "standard_pickup_configuration": {
+                        "pickups_state": {
+                            "Bombs": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Screw Attack": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Varia Suit": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Hi-Jump Boots": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Ice Beam": {
+                                "num_shuffled_pickups": 2
+                            },
+                            "Wave Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Long Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Morph Ball": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Missile Launcher": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    5
+                                ]
+                            },
+                            "Energy Tank": {
+                                "num_shuffled_pickups": 8
+                            }
+                        },
+                        "default_pickups": {},
+                        "minimum_random_starting_pickups": 0,
+                        "maximum_random_starting_pickups": 0
+                    },
+                    "ammo_pickup_configuration": {
+                        "pickups_state": {
+                            "Missile Tank": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 13,
+                                "requires_main_item": true
+                            },
+                            "Big Missile Tank": {
+                                "ammo_count": [
+                                    75
+                                ],
+                                "pickup_count": 2,
+                                "requires_main_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "minimum_available_locations_for_hint_placement": 0,
+                    "minimum_location_weight_for_hint_placement": 0.0,
+                    "dock_rando": {
+                        "mode": "vanilla",
+                        "types_state": {
+                            "door": {
+                                "can_change_from": [
+                                    "Missile Door",
+                                    "Normal Door"
+                                ],
+                                "can_change_to": [
+                                    "Missile Door",
+                                    "Normal Door"
+                                ]
+                            }
+                        }
+                    },
+                    "single_set_for_pickups_that_solve": true,
+                    "staggered_multi_pickup_placement": true,
+                    "check_if_beatable_after_base_patches": false,
+                    "artifacts": {
+                        "vanilla_tourian_keys": false,
+                        "required_artifacts": 9
+                    },
+                    "energy_per_tank": 100,
+                    "include_extra_pickups": false
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "planets_zebeth",
+            "starting_equipment": {
+                "pickups": []
+            },
+            "starting_location": "Brinstar/Maru Mari Hall/Starting Point",
+            "dock_connections": {
+                "Brinstar/Norfair Prelude/Teleporter to Norfair": "Norfair/Norfair Entrance/Teleporter to Brinstar",
+                "Brinstar/Kraid Prelude/Teleporter to Kraid": "Kraid/Kraid Entrance/Teleporter to Brinstar",
+                "Brinstar/Tourian Prelude/Teleporter to Tourian": "Tourian/Tourian Entrance/Teleporter to Brinstar",
+                "Kraid/Kraid Entrance/Teleporter to Brinstar": "Brinstar/Kraid Prelude/Teleporter to Kraid",
+                "Norfair/Norfair Entrance/Teleporter to Brinstar": "Brinstar/Norfair Prelude/Teleporter to Norfair",
+                "Norfair/Ridley Prelude/Teleporter to Ridley": "Ridley/Ridley Entrance/Teleporter to Norfair",
+                "Ridley/Ridley Entrance/Teleporter to Norfair": "Norfair/Ridley Prelude/Teleporter to Ridley",
+                "Tourian/Tourian Entrance/Teleporter to Brinstar": "Brinstar/Tourian Prelude/Teleporter to Tourian",
+                "Tourian/Escape Route/Teleporter to Escape Route": "Tourian/Escape Route/Event - End Game"
+            },
+            "dock_weakness": {},
+            "locations": {
+                "Brinstar": {
+                    "Blue Rocks East/Pickup (Energy Tank)": "Tourian Key 8",
+                    "Green Sanctuary E/Pickup (Energy Tank)": "Tourian Key 6",
+                    "Green Sanctuary E/Pickup (Missile Tank)": "Wave Beam",
+                    "Item Room (Bombs)/Pickup (Bombs)": "Ice Beam",
+                    "Item Room (Ice Beam)/Pickup (Ice Beam)": "Missile Tank",
+                    "Item Room (Long Beam)/Pickup (Long Beam)": "Ice Beam",
+                    "Item Room (Varia)/Pickup (Varia Suit)": "Missile Tank",
+                    "Maru Mari Hall/Pickup (Morph Ball)": "Morph Ball",
+                    "Orange Corridor/Pickup (Missile Launcher)": "Missile Tank",
+                    "The Overhang/Pickup (Energy Tank)": "Missile Tank"
+                },
+                "Kraid": {
+                    "Acid Pier/Pickup (Missile Tank)": "Energy Tank",
+                    "Arrival Chamber/Pickup (Missile Tank)": "Screw Attack",
+                    "Back Storage/Pickup (Missile Tank)": "Energy Tank",
+                    "Blue Closet/Pickup (Energy Tank)": "Missile Tank",
+                    "Kraid Arena/Pickup (Big Missile Tank)": "Tourian Key 5",
+                    "Kraid Arena/Pickup (Boss Key)": "Tourian Key 9",
+                    "Kraid Arena/Pickup (Energy Tank)": "Missile Tank",
+                    "Upper Hall/Pickup (Missile Tank)": "Energy Tank"
+                },
+                "Norfair": {
+                    "Basalt Cache/Pickup (Missile Tank)": "Energy Tank",
+                    "Bubble Cache/Pickup (Missile Tank 2)": "Energy Tank",
+                    "Bubble Cache/Pickup (Missile Tank)": "Big Missile Tank",
+                    "Bubble Wall/Pickup (Missile Tank)": "Bombs",
+                    "Fire Sea/Pickup (Energy Tank)": "Tourian Key 2",
+                    "Gauntlet/Pickup (Missile Tank 2)": "Varia Suit",
+                    "Gauntlet/Pickup (Missile Tank)": "Missile Tank",
+                    "Hidden Cache/Pickup (Missile Tank 2)": "Big Missile Tank",
+                    "Hidden Cache/Pickup (Missile Tank)": "Missile Tank",
+                    "Item Room (High Jump)/Pickup (Hi-Jump)": "Energy Tank",
+                    "Item Room (Ice Beam)/Pickup (Ice Beam)": "Missile Tank",
+                    "Item Room (Screw Attack)/Pickup (Screw Attack)": "Tourian Key 1",
+                    "Item Room (Wave Beam)/Pickup (Wave Beam)": "Tourian Key 7",
+                    "Path of Destruction/Pickup (Missile Tank)": "Tourian Key 3",
+                    "Weapons Cache/Pickup (Missile Tank 2)": "Long Beam",
+                    "Weapons Cache/Pickup (Missile Tank 3)": "Tourian Key 4",
+                    "Weapons Cache/Pickup (Missile Tank)": "Hi-Jump Boots"
+                },
+                "Ridley": {
+                    "Artificial Passage/Pickup (Energy Tank)": "Missile Tank",
+                    "Central Cache/Pickup (Missile Tank)": "Energy Tank",
+                    "Infinite Gauntlet/Pickup (Missile Tank)": "Missile Launcher",
+                    "Lava Reliquary/Pickup (Energy Tank)": "Energy Tank",
+                    "Purple Gauntlet/Pickup (Missile Tank)": "Missile Tank",
+                    "Ridley Arena/Pickup (Big Missile Tank)": "Missile Tank",
+                    "Ridley Arena/Pickup (Boss Key)": "Missile Tank"
+                }
+            },
+            "hints": {},
+            "game_specific": {}
+        }
+    ],
+    "item_order": [
+        "Morph Ball at Brinstar/Maru Mari Hall/Pickup (Morph Ball)",
+        "Bombs at Norfair/Bubble Wall/Pickup (Missile Tank)",
+        "Missile Launcher at Ridley/Infinite Gauntlet/Pickup (Missile Tank)",
+        "Energy Tank at Kraid/Acid Pier/Pickup (Missile Tank)",
+        "Ice Beam at Brinstar/Item Room (Long Beam)/Pickup (Long Beam)",
+        "Hi-Jump Boots at Norfair/Weapons Cache/Pickup (Missile Tank)",
+        "Missile Tank at Brinstar/The Overhang/Pickup (Energy Tank)",
+        "Energy Tank at Ridley/Lava Reliquary/Pickup (Energy Tank)",
+        "Missile Tank at Brinstar/Item Room (Ice Beam)/Pickup (Ice Beam)",
+        "Energy Tank at Norfair/Bubble Cache/Pickup (Missile Tank 2)",
+        "Missile Tank at Ridley/Ridley Arena/Pickup (Boss Key)",
+        "Missile Tank at Kraid/Blue Closet/Pickup (Energy Tank)",
+        "Tourian Key 5 at Kraid/Kraid Arena/Pickup (Big Missile Tank)",
+        "Tourian Key 2 at Norfair/Fire Sea/Pickup (Energy Tank)",
+        "Tourian Key 9 at Kraid/Kraid Arena/Pickup (Boss Key)",
+        "Tourian Key 3 at Norfair/Path of Destruction/Pickup (Missile Tank)",
+        "Tourian Key 1 at Norfair/Item Room (Screw Attack)/Pickup (Screw Attack)",
+        "Tourian Key 8 at Brinstar/Blue Rocks East/Pickup (Energy Tank)",
+        "Tourian Key 7 at Norfair/Item Room (Wave Beam)/Pickup (Wave Beam)",
+        "Tourian Key 4 at Norfair/Weapons Cache/Pickup (Missile Tank 3)",
+        "Tourian Key 6 at Brinstar/Green Sanctuary E/Pickup (Energy Tank)",
+        "Missile Tank at Brinstar/Orange Corridor/Pickup (Missile Launcher)",
+        "Missile Tank at Kraid/Kraid Arena/Pickup (Energy Tank)"
+    ],
+    "checksum": "7b081b19713b66cefb2eb4c70ed892ce560cc22e36d3bc232eb96dcfd94c4b78d0eda7d994d749a0d3db54a149c97e6570499273dc1e74643cb7c3f3821797f5"
+}
