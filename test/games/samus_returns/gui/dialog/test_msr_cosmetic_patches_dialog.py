@@ -66,6 +66,7 @@ def test_certain_slider(skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, labe
 
     assert dialog.cosmetic_patches == MSRCosmeticPatches(**{field_name: 80})  # type: ignore[arg-type]
     assert label.text() == " 80%"
+    assert slider.value() == 80
 
 
 def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
