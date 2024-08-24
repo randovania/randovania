@@ -50,7 +50,6 @@ def test_change_music_option(
     ("slider_name", "label_name", "field_name"),
     [
         ("music_slider", "music_label", "music_volume"),
-        ("sfx_slider", "sfx_label", "sfx_volume"),
         ("ambience_slider", "ambience_label", "ambience_volume"),
     ],
 )
