@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
+- Added: Changing the volume of the music and background ambience is now possible via cosmetic options.
 - Changed: Area 6 - The Door to Chozo Seal West Intersection Terminal from Crumbling Stairwell is excluded from Door Lock Rando.
 
 #### Area 3 Metroid Caverns
