@@ -1592,7 +1592,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1602,6 +1602,32 @@
                                             "type": "events",
                                             "name": "MainDeckOperationsMissileShield",
                                             "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Missile Shield": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Kill the Shield from the reverse side - https://youtu.be/HKkIXyZ9a6Y",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 3,
                                             "negate": false
                                         }
                                     }
@@ -6436,6 +6462,23 @@
                                                         "name": "WallJump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "With Screw Attack Only - https://youtu.be/ycp5oCd5-9I",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
