@@ -25,6 +25,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The door that is locked by both Super Missile and Charge Beam is now using lock overrides. This ensures that the requirements of these locks are both respected by logic when randomizing Doors and this door is unchanged.
 
+##### Cataris
+
+- Added: Pseudo Wave Beam (Intermediate) to break the Blob above Blue Teleportal with Diffusion Beam.
+- Added: Breaking the Blob above Blue Teleportal from the bottom the lava, Knowledge (Beginner)
+- Fixed: The Power Bomb requirement to reach the Blue Teleportal from above was circumvented when breaking the Blob from the left side of the wall.
+
 ##### Ferenia
 
 - Removed: Getting the Missile Tank Pickup in Space Jump Room using Normal Bombs and Speed Booster.
