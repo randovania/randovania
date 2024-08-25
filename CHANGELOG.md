@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Cataris
 
 - Added: Pseudo Wave Beam (Intermediate) to break the Blob above Blue Teleportal with Diffusion Beam.
-- Added: Breaking the Blob above Blue Teleportal from the bottom the lava, Knowledge (Beginner)
+- Added: Breaking the Blob above Blue Teleportal from the bottom of the lava, Knowledge (Beginner)
 - Fixed: The Power Bomb requirement to reach the Blue Teleportal from above was circumvented when breaking the Blob from the left side of the wall.
 
 ##### Ferenia
