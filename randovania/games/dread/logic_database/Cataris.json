@@ -5202,7 +5202,7 @@
                                 ]
                             }
                         },
-                        "Right Room": {
+                        "Center Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5557,7 +5557,7 @@
                     "heal": false,
                     "coordinates": {
                         "x": 18300.0,
-                        "y": 700.0,
+                        "y": -500.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -5571,7 +5571,7 @@
                     "valid_starting_location": false,
                     "event_name": "s020_magma:default:breakablemag012",
                     "connections": {
-                        "Teleporter to Artaria": {
+                        "Lava Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5642,22 +5642,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Event - East Blob, below": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Beam"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    }
-                                ]
-                            }
-                        },
                         "Lava Room": {
                             "type": "resource",
                             "data": {
@@ -5672,10 +5656,6 @@
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -5727,6 +5707,22 @@
                                                 }
                                             ]
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - East Blob, above": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
                                     }
                                 ]
                             }
@@ -6447,6 +6443,27 @@
                                 ]
                             }
                         },
+                        "Event - East Blob, below": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Teleporter to Artaria": {
                             "type": "and",
                             "data": {
@@ -6495,8 +6512,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 19040.70351758794,
-                        "y": 2061.6415410385252,
+                        "x": 19040.7,
+                        "y": 1400.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -6572,81 +6589,17 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Slide"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Screw",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Heat",
-                                                                    "amount": 60,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     }
                                 ]
                             }
                         },
                         "Event - East Blob, above": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -6654,6 +6607,27 @@
                                             "name": "Wave",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/IbM7yzxysSk",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Diffusion Beam"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7074,25 +7048,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Slide"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Screw",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
                                     },
                                     {
                                         "type": "or",
@@ -7183,7 +7140,7 @@
                     "valid_starting_location": false,
                     "event_name": "s020_magma:default:breakablemag012",
                     "connections": {
-                        "Right Room": {
+                        "Teleporter to Artaria": {
                             "type": "and",
                             "data": {
                                 "comment": null,
