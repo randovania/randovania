@@ -57,7 +57,7 @@ class MSRConfiguration(BaseConfiguration):
     hints: HintConfiguration
     constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
     constant_lava_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
-    final_boss: FinalBossConfiguration
+    final_boss: FinalBossConfiguration  # TODO: Add support to use random option
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

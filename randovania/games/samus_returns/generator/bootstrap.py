@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout import MSRConfiguration
+from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.resolver.bootstrap import MetroidBootstrap
 
@@ -57,10 +58,6 @@ class MSRBootstrap(MetroidBootstrap):
             "surface_crumbles": "SurfaceCrumbles",
             "area1_crumbles": "Area1Crumbles",
             "reverse_area8": "ReverseArea8",
-            "final_boss_arachnus": "FinalBossArachnus",
-            "final_boss_diggernaut": "FinalBossDiggernaut",
-            "final_boss_queen": "FinalBossQueen",
-            "final_boss_ridley": "FinalBossRidley",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
@@ -73,8 +70,15 @@ class MSRBootstrap(MetroidBootstrap):
             enabled_resources.add("DoorLockRandoTypes")
 
         # If Queen is the final boss, remove the wall next to the arena
-        if configuration.final_boss == "Queen":
+        if configuration.final_boss == FinalBossConfiguration.ARACHNUS:
+            enabled_resources.add("FinalBossArachnus")
+        elif configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            enabled_resources.add("FinalBossDiggernaut")
+        elif configuration.final_boss == FinalBossConfiguration.QUEEN:
+            enabled_resources.add("FinalBossQueen")
             enabled_resources.add("ReverseArea8")
+        elif configuration.final_boss == FinalBossConfiguration.RIDLEY:
+            enabled_resources.add("FinalBossRidley")
 
         return enabled_resources
 
@@ -103,7 +107,7 @@ class MSRBootstrap(MetroidBootstrap):
             )
 
         # If Diggernaut is the final boss, move the Grapple Block by the elevator
-        if configuration.final_boss == "Diggernaut" and not configuration.elevator_grapple_blocks:
+        if configuration.final_boss == FinalBossConfiguration.DIGGERNAUT and not configuration.elevator_grapple_blocks:
             yield (
                 resource_database.get_event("Area 6 - Transport to Area 7 Grapple Block Pull"),
                 1,
