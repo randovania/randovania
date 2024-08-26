@@ -413,6 +413,19 @@ class MSRPatchDataFactory(PatchDataFactory):
                 ", ".join(restricted_text[:-1]), " and " if len(restricted_text) > 1 else "", restricted_text[-1]
             )
 
+        final_boss_text = ""
+        if self.configuration.final_boss == "Arachnus":
+            final_boss_text = " and then fight Arachnus to leave the planet."
+        elif self.configuration.final_boss == "Diggernaut":
+            final_boss_text = " and then fight Diggernaut to leave the planet."
+        elif self.configuration.final_boss == "Queen":
+            final_boss_text = (
+                ", collect Ice Beam, defeat all 10 Larva Metroids, "
+                "and then fight the Metroid Queen to leave the planet."
+            )
+        elif self.configuration.final_boss == "Ridley":
+            final_boss_text = ", find the Baby, and then fight Proteus Ridley at your ship to leave the planet."
+
         # Intro Text
         text["GUI_CUTSCENE_OPENING_1"] = (
             "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
@@ -421,10 +434,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "All of the hazardous liquid has been drained. You can thus freely explore the planet.|"
             "Metroids now also drop items."
         )
-        text["GUI_CUTSCENE_OPENING_3"] = (
-            "In this randomizer, you need to collect all Metroid DNA, find the Baby, "
-            "and then fight Proteus Ridley at your ship to leave the planet."
-        )
+        text["GUI_CUTSCENE_OPENING_3"] = f"In this randomizer, you need to collect all Metroid DNA {final_boss_text}"
         text["GUI_CUTSCENE_OPENING_4"] = (
             f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
             f"It can be found {location_text}."
