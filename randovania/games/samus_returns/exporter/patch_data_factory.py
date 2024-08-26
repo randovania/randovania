@@ -424,9 +424,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "and then fight the Metroid Queen to leave the planet."
             )
         elif self.configuration.final_boss == "Ridley":
-            final_boss_text = (
-                ", find the Baby, and then fight Proteus Ridley at your ship to leave the planet."
-            )
+            final_boss_text = ", find the Baby, and then fight Proteus Ridley at your ship to leave the planet."
 
         # Intro Text
         text["GUI_CUTSCENE_OPENING_1"] = (
@@ -436,9 +434,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "All of the hazardous liquid has been drained. You can thus freely explore the planet.|"
             "Metroids now also drop items."
         )
-        text["GUI_CUTSCENE_OPENING_3"] = (
-            f"In this randomizer, you need to collect all Metroid DNA {final_boss_text}"
-        )
+        text["GUI_CUTSCENE_OPENING_3"] = f"In this randomizer, you need to collect all Metroid DNA {final_boss_text}"
         text["GUI_CUTSCENE_OPENING_4"] = (
             f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
             f"It can be found {location_text}."
