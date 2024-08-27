@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Damage Reduction now functions correctly when more than 1 copy of a suit or more than 2 progressive suits are shuffled in the pool.
 - Fixed: The seed hash on the ending screen will not clip anymore
 
+### Cave Story
+
+- Fixed: The explanation text in the objective tab referring to a 100% objective that does not exist.
+
 ### Metroid Dread
 
 - Added: Freesink can be enabled in a preset's Game Modifications -> Other tab. A more detailed description of this change can be found in the description. This option is **not** accounted for in logic.
