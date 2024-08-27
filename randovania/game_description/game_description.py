@@ -11,7 +11,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.node import Node, NodeContext
 from randovania.game_description.db.region_list import RegionList
-from randovania.game_description.game_database_view import GameDatabaseView
+from randovania.game_description.game_database_view import GameDatabaseView, ResourceDatabaseView
 from randovania.game_description.requirements.resource_requirement import DamageResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -224,6 +224,9 @@ class GameDescription(GameDatabaseView):
         for reduction in self.resource_database.damage_reductions.get(resource, []):
             if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):
                 yield reduction.inventory_item
+
+    def get_resource_database_view(self) -> ResourceDatabaseView:
+        return self.resource_database
 
 
 def _resources_for_damage(

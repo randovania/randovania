@@ -102,10 +102,18 @@ async def create_player_pool(
     world_name: str,
     status_update: Callable[[str], None],
 ) -> PlayerPool:
-    game_enum = configuration.game
-    game = get_filtered_database_view(configuration)
+    """
 
-    game_generator = game_enum.generator
+    :param rng:
+    :param configuration:
+    :param player_index:
+    :param num_players:
+    :param world_name:
+    :param status_update:
+    :return:
+    """
+    game_generator = configuration.game.generator
+    game = game_generator.get_filtered_database_view(configuration)
 
     for i in range(10):
         status_update(f"Attempt {i + 1} for initial state for world '{world_name}'")

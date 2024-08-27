@@ -16,6 +16,10 @@ if TYPE_CHECKING:
 
 @dataclass(frozen=True)
 class GameGenerator:
+    get_filtered_database_view: Callable[[BaseConfiguration], GameDatabaseView]
+    """Creates a GameDatabaseView that automatically hides elements not matching the settings,
+    such as node layers and connections with tricks."""
+
     pickup_pool_creator: Callable[[PoolResults, BaseConfiguration, GameDatabaseView], None]
     """Extends the base pickup pools with any specific item pools such as Artifacts."""
 

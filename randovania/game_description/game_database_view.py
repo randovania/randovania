@@ -3,6 +3,8 @@ from __future__ import annotations
 import typing
 from typing import TYPE_CHECKING
 
+import typing_extensions
+
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
@@ -77,7 +79,12 @@ class GameDatabaseView:
         Find a node with the given NodeIdentifier.
         Raises KeyError if no node could be found.
         """
-        raise NotImplementedError
+        for _, _, node in self.node_iterator():
+            if node.identifier == identifier:
+                return node
+
+        raise KeyError(f"Unknown identifier: {identifier}")
+        # raise NotImplementedError
 
     def interesting_resources_for_damage(
         self, resource: SimpleResourceInfo, collection: ResourceCollection
@@ -123,6 +130,54 @@ class GameDatabaseView:
         Gets a view for the ResourceDatabase
         """
         raise NotImplementedError
+
+
+class GameDatabaseViewProxy(GameDatabaseView):
+    """
+    A GameDatabaseView, implemented by delegating all calls to another GameDatabaseView.
+    Intended to be used to overwrite specific functions.
+    """
+
+    def __init__(self, original: GameDatabaseView):
+        self._original = original
+
+    @typing_extensions.override
+    def node_iterator(self) -> Iterable[tuple[Region, Area, Node]]:
+        return self._original.node_iterator()
+
+    @typing_extensions.override
+    def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
+        return self._original.node_by_identifier(identifier)
+
+    @typing_extensions.override
+    def interesting_resources_for_damage(
+        self, resource: SimpleResourceInfo, collection: ResourceCollection
+    ) -> Iterator[ResourceInfo]:
+        return self._original.interesting_resources_for_damage(resource, collection)
+
+    @typing_extensions.override
+    def assert_pickup_index_exists(self, index: PickupIndex) -> None:
+        return self._original.assert_pickup_index_exists(index)
+
+    @typing_extensions.override
+    def create_resource_collection(self) -> ResourceCollection:
+        return self._original.create_resource_collection()
+
+    @typing_extensions.override
+    def default_starting_location(self) -> NodeIdentifier:
+        return self._original.default_starting_location()
+
+    @typing_extensions.override
+    def get_dock_types(self) -> list[DockType]:
+        return self._original.get_dock_types()
+
+    @typing_extensions.override
+    def get_dock_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
+        return self._original.get_dock_weakness(dock_type_name, weakness_name)
+
+    @typing_extensions.override
+    def get_resource_database_view(self) -> ResourceDatabaseView:
+        return self._original.get_resource_database_view()
 
 
 def typed_node_by_identifier(game: GameDatabaseView, i: NodeIdentifier, t: type[NodeT]) -> NodeT:
