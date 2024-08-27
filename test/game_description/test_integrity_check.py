@@ -69,6 +69,7 @@ def test_invalid_db():
         },
         "layers": ["default"],
         "starting_location": {"world_name": "World", "area_name": "Area 2", "node_name": "Generic Node"},
+        "initial_states": {"Default": []},
         "minimal_logic": None,
         "victory_condition": {"type": "and", "data": {"comment": None, "items": []}},
         "dock_weakness_database": {

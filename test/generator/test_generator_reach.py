@@ -264,7 +264,6 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         ("default",),
         Requirement.impossible(),
         MagicMock(),
-        {},
         None,
         region_list,
     )
