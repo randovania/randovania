@@ -214,7 +214,7 @@ class PrimeGameExporter(GameExporter):
         random_enemy_attributes = new_config.pop("randEnemyAttributes")
         random_enemy_attributes_seed = new_config.pop("seed")
 
-        monitoring.set_tag("prime_room_rando", room_rando_mode != RoomRandoMode.NONE.value)
+        monitoring.set_tag("prime_room_rando_mode", room_rando_mode)
         monitoring.set_tag("prime_random_enemy_attributes", random_enemy_attributes is not None)
 
         split_updater = DynamicSplitProgressUpdate(progress_update)
