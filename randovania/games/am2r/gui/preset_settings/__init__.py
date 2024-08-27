@@ -29,10 +29,10 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetLocationPool,
         PresetAM2RGoal,
         MetroidPresetItemPool,
-        PresetAM2RGameplay,
         PresetMetroidStartingArea,
         PresetAM2RDoors,
         PresetTeleportersAM2R,
+        PresetAM2RGameplay,
         PresetAM2RRoomDesign,
         PresetAM2RChaos,
     ]
