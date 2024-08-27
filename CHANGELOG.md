@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Cave Story
 
-- Fixed: The explanation text in the objective tab referring to a 100% objective that does not exist.
+- Fixed: The explanation text in the objective tab no longer refers to a 100% objective that does not exist.
 
 ### Metroid Dread
 
