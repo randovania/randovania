@@ -39,7 +39,9 @@ def describe_objective(artifacts: MSRArtifactConfig, final_boss: FinalBossConfig
             {
                 "Place at any item location": artifacts.prefer_anywhere,
             },
-            {f"Final Boss: {_BOSS_NAME[final_boss]}": True},
+            {
+                "Defeat " + _BOSS_NAME[final_boss]: True,
+            },
         ]
     elif has_artifacts:
         return [
@@ -51,7 +53,9 @@ def describe_objective(artifacts: MSRArtifactConfig, final_boss: FinalBossConfig
                 "Prefers Stronger Metroids": artifacts.prefer_stronger_metroids,
                 "Prefers Bosses": artifacts.prefer_bosses,
             },
-            {f"Final Boss: {_BOSS_NAME[final_boss]}": True},
+            {
+                "Defeat " + _BOSS_NAME[final_boss]: True,
+            },
         ]
     else:
         return [

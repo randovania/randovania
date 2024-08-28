@@ -125,6 +125,8 @@ _ignore_pickups_for_game = {
     RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
     # Unknown reason why
     RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
+    # Ridley pickup only exists if Ridley is not the final boss
+    RandovaniaGame.METROID_SAMUS_RETURNS: {211},
 }
 
 _include_tricks_for_game = {

@@ -721,14 +721,14 @@ Extra - asset_id: collision_camera_043
 > Event - Diggernaut; Heals? False
   * Layers: default
   * Event Area 6 - Diggernaut
-  > Pickup (Power Bomb)
-      Disabled Final Boss Diggernaut
-  > Event - Credits
-      Enabled Final Boss Diggernaut
+  > Room Center
+      Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_009
+  > Pickup (Power Bomb)
+      After Area 6 - Diggernaut and Disabled Final Boss Diggernaut
   > Door to Electric Escalade
       After Area 6 - Diggernaut and Lay Power Bomb
   > Event - Diggernaut
@@ -769,6 +769,8 @@ Extra - asset_id: collision_camera_043
               Spider Ball
               # Lay a bomb near a weak point when its on the right or top only
               Mid-Air Morph (Advanced) or Infinite Bomb Jump (Advanced)
+  > Event - Credits
+      After Area 6 - Diggernaut
 
 > Event - Credits; Heals? False
   * Layers: final-boss-diggernaut

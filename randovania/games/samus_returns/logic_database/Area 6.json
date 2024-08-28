@@ -5348,8 +5348,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -19401.950891355533,
-                        "y": -7216.548940464178,
+                        "x": -19401.95,
+                        "y": -7216.55,
                         "z": 0.0
                     },
                     "description": "",
@@ -5360,22 +5360,11 @@
                     "valid_starting_location": false,
                     "event_name": "Diggernaut",
                     "connections": {
-                        "Pickup (Power Bomb)": {
-                            "type": "resource",
+                        "Room Center": {
+                            "type": "and",
                             "data": {
-                                "type": "misc",
-                                "name": "FinalBossDiggernaut",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
-                        "Event - Credits": {
-                            "type": "resource",
-                            "data": {
-                                "type": "misc",
-                                "name": "FinalBossDiggernaut",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5397,6 +5386,32 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Power Bomb)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Diggernaut",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossDiggernaut",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Electric Escalade": {
                             "type": "and",
                             "data": {
@@ -5819,6 +5834,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Credits": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Diggernaut",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }

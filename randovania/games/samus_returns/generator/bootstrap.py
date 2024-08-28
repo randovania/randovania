@@ -36,8 +36,17 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
         elif artifact_config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
             return True
     # Boss pickups/locations
-    elif artifact_config.prefer_bosses and pickup_index in _boss_indices:
-        return True
+    elif artifact_config.prefer_bosses:
+        if config.final_boss == FinalBossConfiguration.ARACHNUS:
+            _boss_indices.pop(0)
+        elif config.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            _boss_indices.pop(2)
+        elif config.final_boss == FinalBossConfiguration.QUEEN:
+            _boss_indices.pop(3)
+        elif config.final_boss == FinalBossConfiguration.RIDLEY:
+            _boss_indices.pop(4)
+        if pickup_index in _boss_indices:
+            return True
 
     return False
 

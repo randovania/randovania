@@ -66,13 +66,13 @@ class MSRConfiguration(BaseConfiguration):
     def active_layers(self) -> set[str]:
         result = super().active_layers()
 
-        if FinalBossConfiguration.ARACHNUS:
+        if self.final_boss == FinalBossConfiguration.ARACHNUS:
             result.add("final-boss-arachnus")
-        elif FinalBossConfiguration.DIGGERNAUT:
+        elif self.final_boss == FinalBossConfiguration.DIGGERNAUT:
             result.add("final-boss-diggernaut")
-        elif FinalBossConfiguration.QUEEN:
+        elif self.final_boss == FinalBossConfiguration.QUEEN:
             result.add("final-boss-queen")
-        elif FinalBossConfiguration.RIDLEY:
+        elif self.final_boss == FinalBossConfiguration.RIDLEY:
             result.add("final-boss-ridley")
 
         return result
