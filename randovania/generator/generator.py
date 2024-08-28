@@ -7,8 +7,10 @@ from typing import TYPE_CHECKING
 
 import tenacity
 
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
 from randovania.game_description.db.pickup_node import PickupNode
+from randovania.game_description.filtered_game_database_view import LayerFilteredGameDatabaseView
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
@@ -89,9 +91,9 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
 
 
 def get_filtered_database_view(configuration: BaseConfiguration) -> GameDatabaseView:
-    # Layers
-    # game_generator.bootstrap.patch_resource_database
-    raise NotImplementedError
+    return LayerFilteredGameDatabaseView(
+        default_database.game_description_for(configuration.game_enum()), configuration.active_layers()
+    )
 
 
 async def create_player_pool(
@@ -113,7 +115,7 @@ async def create_player_pool(
     :return:
     """
     game_generator = configuration.game.generator
-    game = game_generator.get_filtered_database_view(configuration)
+    game = get_filtered_database_view(configuration)
 
     for i in range(10):
         status_update(f"Attempt {i + 1} for initial state for world '{world_name}'")

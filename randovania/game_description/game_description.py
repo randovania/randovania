@@ -228,6 +228,12 @@ class GameDescription(GameDatabaseView):
     def get_resource_database_view(self) -> ResourceDatabaseView:
         return self.resource_database
 
+    def default_starting_location(self) -> NodeIdentifier:
+        return self.starting_location
+
+    def create_resource_collection(self) -> ResourceCollection:
+        return ResourceCollection.with_database(self.resource_database)
+
 
 def _resources_for_damage(
     resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection
