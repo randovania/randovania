@@ -73,6 +73,15 @@
                                         }
                                     },
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": "Get up to the screw blocks",
@@ -123,6 +132,36 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Single Wall Jump from below - https://youtu.be/BfqjAd4Mq6Q",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Screw Single Walljump"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -1648,6 +1687,31 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Use Springball"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "New Bob Skip (Wall Clip) - https://youtu.be/aC3VHjplUQw",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Springball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6978,7 +7042,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "WallJump",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -6995,7 +7059,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "WallJump",
-                                                                    "amount": 3,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
