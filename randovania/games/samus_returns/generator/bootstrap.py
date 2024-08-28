@@ -78,11 +78,11 @@ class MSRBootstrap(MetroidBootstrap):
         if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
             enabled_resources.add("DoorLockRandoTypes")
 
-        # If Queen is the final boss, remove the wall next to the arena
         if configuration.final_boss == FinalBossConfiguration.ARACHNUS:
             enabled_resources.add("FinalBossArachnus")
         elif configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
             enabled_resources.add("FinalBossDiggernaut")
+        # If Queen is the final boss, remove the wall next to the arena
         elif configuration.final_boss == FinalBossConfiguration.QUEEN:
             enabled_resources.add("FinalBossQueen")
             enabled_resources.add("ReverseArea8")
