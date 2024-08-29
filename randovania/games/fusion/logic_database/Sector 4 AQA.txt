@@ -209,9 +209,9 @@ Extra - room_id: [6]
       All of the following:
           Can Use Any Bombs
           Any of the following:
-              After Sector 4 Water Level Lowered or Damage Runs (Intermediate)
-              # TODO: damage values
-              Gravity Suit and Damage Runs (Beginner)
+              After Sector 4 Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner) and Electrified Water Damage ≥ 10
+              Damage Runs (Intermediate) and Electrified Water Damage ≥ 40
 
 > Door to Sciser Stall; Heals? False
   * Layers: default
@@ -222,8 +222,7 @@ Extra - room_id: [6]
           Can Use Power Bombs
           Any of the following:
               After Sector 4 Water Level Lowered
-              # TODO: damage values
-              Gravity Suit and Damage Runs (Beginner)
+              Gravity Suit and Damage Runs (Beginner) and Damage Runs (Intermediate) and Electrified Water Damage ≥ 10 and Electrified Water Damage ≥ 40
   > Room Center
       Can Use Any Bombs
 
@@ -545,9 +544,6 @@ Extra - room_id: [14]
   * Layers: default
   * L0 Hatch to Cheddar Bay/Door to Aquarium Shaft West
   * Extra - door_idx: (33,)
-  > Door to Worst Room in the Game
-      # Secret Message Jr
-      Gravity Suit and Level 0 Locks and Level 4 Locks and Speed Booster and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
   > Door to Aquarium Tank
       Trivial
 
@@ -556,7 +552,12 @@ Extra - room_id: [14]
   * L0 Hatch to Aquarium Tank/Door to Aquarium Shaft West
   * Extra - door_idx: (34,)
   > Door to Worst Room in the Game
-      Gravity Suit and Space Jump
+      All of the following:
+          Gravity Suit
+          Any of the following:
+              Space Jump
+              # Secret Message Jr.
+              Level 0 Locks and Level 4 Locks and Speed Booster and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
   > Door to Cheddar Bay
       Trivial
 
@@ -651,7 +652,7 @@ Extra - room_id: [17]
   * Extra - blocky: 20
   > Door to Aquarium Shaft West
       All of the following:
-          Can Use Power Bombs
+          Can Kill Tough Beam-Resistant Enemy and Can Use Power Bombs
           Any of the following:
               All of the following:
                   Gravity Suit
@@ -681,7 +682,7 @@ Extra - room_id: [17]
   * L0 Hatch to Aquarium Shaft West/Door to Aquarium Tank
   * Extra - door_idx: (39,)
   > Pickup (Missile Tank)
-      Can Use Power Bombs
+      Can Kill Tough Beam-Resistant Enemy and Can Use Power Bombs
   > Door to Evir Shaft
       Any of the following:
           Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
@@ -925,7 +926,7 @@ Extra - room_id: [22]
   * Tunnel to Breeding Tank Access/Other to Pump Control Save Room
   * Extra - door_idx: (69,)
   > Door to Pump Control Access
-      Morph Ball
+      Can Use Any Bombs
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
@@ -960,8 +961,12 @@ Extra - room_id: [23]
   * L0 Hatch to Aquarium Shaft West/Door to Cargo Hold to Sector 5 (ARC)
   * Extra - door_idx: (53,)
   > Room Center
-      # Secret Message Shinespark
-      Gravity Suit and Hi-Jump and Level 0 Locks and Level 4 Locks and Space Jump and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
+      All of the following:
+          # Secret Message Shinespark
+          Gravity Suit and Level 0 Locks and Level 4 Locks and Space Jump and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
+          Any of the following:
+              Movement (Expert)
+              Hi-Jump and Movement (Advanced)
 
 > Area Transition to Sector 5 (ARC); Heals? False
   * Layers: default
@@ -986,7 +991,7 @@ Extra - room_id: [23]
   > Door to Aquarium Shaft West
       All of the following:
           Gravity Suit and Speed Booster
-          Hi-Jump or Movement (Beginner)
+          Hi-Jump or Movement (Beginner) or Shinespark Tricks (Beginner)
   > Area Transition to Sector 5 (ARC)
       Trivial
   > Small Nook
@@ -1031,7 +1036,8 @@ Extra - room_id: [24]
       All of the following:
           Missiles
           Any of the following:
-              Can Use Any Bombs
+              Can Use Power Bombs
+              Hi-Jump and Can Use Bombs
               # You can Screw Attack these blocks
               Gravity Suit and Screw Attack and Knowledge (Beginner)
 
@@ -1187,6 +1193,7 @@ Extra - room_id: [28]
           Morph Ball
           Any of the following:
               After Sector 4 Water Level Lowered
+              # TODO: dmg
               Damage Runs (Beginner) and Electrified Water Damage ≥ 100
 
 > Other to Reservoir East; Heals? False
@@ -1205,6 +1212,7 @@ Extra - room_id: [28]
   > Other to Reservoir West
       Any of the following:
           After Sector 4 Water Level Lowered
+          # TODO: refine dmg
           Damage Runs (Beginner) and Electrified Water Damage ≥ 100
 
 > Other to Reservoir West; Heals? False
@@ -1214,6 +1222,7 @@ Extra - room_id: [28]
   > Other to Reservoir East
       Any of the following:
           After Sector 4 Water Level Lowered
+          # TODO: refine dmg
           Damage Runs (Beginner) and Electrified Water Damage ≥ 100
 
 ----------------
@@ -1394,16 +1403,25 @@ Extra - room_id: [34]
   > Other to Security Access
       Any of the following:
           Can Use Any Bombs
-          Gravity Suit and Screw Attack and Knowledge (Beginner)
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Screw Attack and Knowledge (Beginner)
+                  # Small Jump to break block
+                  Speed Booster and Movement (Intermediate)
 
 > Other to Security Access; Heals? False
   * Layers: default
   * Open Passage to Security Access/Other to Security Bypass
   * Extra - door_idx: (82,)
   > Other to Level 4 Security Room
-      Any of the following:
-          Can Use Any Bombs
-          Gravity Suit and Morph Ball and Screw Attack and Knowledge (Beginner)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit and Screw Attack and Knowledge (Beginner)
+              All of the following:
+                  Can Use Any Bombs
+                  Mid-Air Morph (Beginner) or Can Use Springball
   > Other to Cheddar Bay
       All of the following:
           Any of the following:
