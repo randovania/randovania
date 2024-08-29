@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -45,7 +46,7 @@ class DreadBootstrap(Bootstrap[DreadConfiguration]):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: DreadConfiguration, resource_database: ResourceDatabase
+        self, configuration: DreadConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = {"SeparateBeams", "SeparateMissiles"}
 

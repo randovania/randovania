@@ -7,6 +7,7 @@ from randovania.game_description.db.node import NodeContext
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.graph import world_graph
 from randovania.graph.state import State, StateGameData
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -126,18 +127,18 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return resources
 
     def version_resources_for_game(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
         """
         Determines which Version resources should be enabled, according to the configuration.
         Override as needed.
         """
         # Only enable one specific version
-        for resource in resource_database.version:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.VERSION):
             yield resource, 1 if resource.long_name == "NTSC" else 0
 
     def _get_enabled_misc_resources(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         """
         Returns a set of strings corresponding to Misc resource short names which should be enabled.
@@ -146,13 +147,13 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return set()
 
     def misc_resources_for_configuration(
-        self, configuration: Configuration, resource_database: ResourceDatabase
+        self, configuration: Configuration, resource_database: ResourceDatabaseView
     ) -> ResourceGain:
         """
         Determines which Misc resources should be enabled, according to the configuration.
         """
         enabled_resources = self._get_enabled_misc_resources(configuration, resource_database)
-        for resource in resource_database.misc:
+        for resource in resource_database.get_all_resources_of_type(ResourceType.MISC):
             yield resource, 1 if resource.short_name in enabled_resources else 0
 
     def patch_resource_database(self, db: ResourceDatabase, configuration: Configuration) -> ResourceDatabase:
@@ -164,7 +165,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return db
 
     def calculate_static_resources(
-        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabaseView
     ) -> ResourceCollection:
         """
         A ResourceCollection with all resources that have a value that never changes during generation/solver.
@@ -222,6 +223,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         game_data = StateGameData(resource_database, game.region_list, energy_per_tank, starting_energy)
         graph = world_graph.create_graph(
+            database_view=game,
             game_data=game_data,
             patches=patches,
             resources=initial_resources,

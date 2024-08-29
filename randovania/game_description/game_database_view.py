@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_info import ResourceInfo
+    from randovania.game_description.resources.resource_type import ResourceType
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
@@ -57,6 +58,12 @@ class ResourceDatabaseView:
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
         """
         TODO
+        """
+        raise NotImplementedError
+
+    def get_all_resources_of_type(self, resource_type: ResourceType) -> list[ResourceInfo]:
+        """
+        Gets a list of all resources of the given type
         """
         raise NotImplementedError
 

@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -42,7 +43,7 @@ class AM2RBootstrap(Bootstrap[AM2RConfiguration]):
         )
 
     def _get_enabled_misc_resources(
-        self, configuration: AM2RConfiguration, resource_database: ResourceDatabase
+        self, configuration: AM2RConfiguration, resource_database: ResourceDatabaseView
     ) -> set[str]:
         enabled_resources = set()
 
