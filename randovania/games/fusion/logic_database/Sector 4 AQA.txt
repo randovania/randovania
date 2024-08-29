@@ -453,24 +453,24 @@ Extra - room_id: [12]
 Serris Escape
 Extra - map_name: Sector 413
 Extra - room_id: [13]
-> Pickup (Hidden Missile Tank); Heals? False
+> Pickup (Upper Missile Tank); Heals? False
   * Layers: default
   * Pickup 60; Category? Minor
   * Extra - area: 4
   * Extra - room: 13
   * Extra - blockx: 24
   * Extra - blocky: 9
-  > Beside Pickup
+  > Beside Upper Pickup
       Trivial
 
-> Pickup (Missile Tank); Heals? False
+> Pickup (Lower Missile Tank); Heals? False
   * Layers: default
   * Pickup 61; Category? Minor
   * Extra - area: 4
   * Extra - room: 13
   * Extra - blockx: 38
   * Extra - blocky: 15
-  > Beside Other Pickup
+  > Beside Lower Pickup
       Trivial
 
 > Other to Serris Speedway; Heals? False
@@ -493,7 +493,7 @@ Extra - room_id: [13]
   * Extra - door_idx: (117,)
   > Other to Reservoir East
       Trivial
-  > Beside Pickup
+  > Beside Upper Pickup
       Any of the following:
           Can Use Bombs
           All of the following:
@@ -503,23 +503,21 @@ Extra - room_id: [13]
                   # Mid-Air Morph: https://youtu.be/F-XptNF7OOg
                   Mid-Air Morph (Advanced)
 
-> Beside Pickup; Heals? False
+> Beside Upper Pickup; Heals? False
   * Layers: default
-  > Pickup (Hidden Missile Tank)
-      Trivial
+  > Pickup (Upper Missile Tank)
+      Can Use Any Bombs
   > Door to Escape Save Room
       Can Use Any Bombs
-  > Beside Other Pickup
-      Missiles ≥ 2 and Morph Ball
+  > Beside Lower Pickup
+      Missiles ≥ 2 and Morph Ball and Can Use Any Bombs
 
-> Beside Other Pickup; Heals? False
+> Beside Lower Pickup; Heals? False
   * Layers: default
-  > Pickup (Missile Tank)
+  > Pickup (Lower Missile Tank)
       Trivial
   > Door to Escape Save Room
       Trivial
-  > Beside Pickup
-      Morph Ball
 
 ----------------
 Aquarium Shaft West
@@ -655,16 +653,28 @@ Extra - room_id: [17]
       All of the following:
           Can Use Power Bombs
           Any of the following:
-              Gravity Suit and Space Jump
+              All of the following:
+                  Gravity Suit
+                  Any of the following:
+                      Space Jump
+                      All of the following:
+                          Can Single Walljump
+                          Any of the following:
+                              # https://youtu.be/GlJ90IW3FuA
+                              Hi-Jump and Wall Jump (Intermediate)
+                              # https://youtu.be/Ed5b1Yl4c68
+                              Wall Jump (Advanced)
               # Use frozen enemies to escape: https://youtu.be/4Msq5vtRTzw
-              Hi-Jump and Stand On Frozen Enemies (Advanced) and Wall Jump (Intermediate) and Can Freeze Enemies
+              Hi-Jump and Stand On Frozen Enemies (Advanced) and Can Freeze Enemies
 
 > Door to Evir Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Evir Shaft/Door to Aquarium Tank
   * Extra - door_idx: (38,)
   > Door to Aquarium Shaft West
-      Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+      Any of the following:
+          Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+          Damage Boosts (Intermediate) and Normal Damage ≥ 499
 
 > Door to Aquarium Shaft West; Heals? False
   * Layers: default
@@ -673,7 +683,9 @@ Extra - room_id: [17]
   > Pickup (Missile Tank)
       Can Use Power Bombs
   > Door to Evir Shaft
-      Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
+      Any of the following:
+          Combat (Advanced) or Can Kill Tough Beam-Resistant Enemy
+          Damage Boosts (Intermediate) and Normal Damage ≥ 499
 
 ----------------
 Aquarium Hub Access
@@ -712,14 +724,19 @@ Extra - room_id: [19]
       # Shinespark from adjacent room: https://youtu.be/ID3TOSUmCa8
       Gravity Suit and Level 0 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Room Center
-      Gravity Suit and Screw Attack
+      All of the following:
+          Gravity Suit
+          Any of the following:
+              Screw Attack
+              # https://youtu.be/pKQF2grjqDw
+              Level 0 Locks and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Drain Pipe; Heals? False
   * Layers: default
   * L0 Hatch to Drain Pipe/Door to Aquarium Hub
   * Extra - door_idx: (90,)
   > Door to Aquarium Speedway
-      Gravity Suit and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      Gravity Suit and Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Room Center
       Any of the following:
           # To destroy Powamp
@@ -779,15 +796,11 @@ Extra - room_id: [20]
               Can Climb High Jump Wall
               # Shinespark up
               Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
-  > Other to Waterway
-      All of the following:
-          Speed Booster
-          Any of the following:
-              After Sector 4 Water Level Lowered
-              # TODO: Add dmg
-              Gravity Suit and Damage Runs (Beginner)
   > Other to Breeding Tank Access
       Can Use Any Bombs
+  > Bottom of Room
+      # TODO: damage
+      After Sector 4 Water Level Lowered or Damage Runs (Beginner)
 
 > Door to Pump Control Access; Heals? False
   * Layers: default
@@ -804,17 +817,22 @@ Extra - room_id: [20]
           Gravity Suit or After Sector 4 Water Level Lowered or Can Climb High Jump Wall
   > Other to Breeding Tank Access
       Can Break Single Bomb Blocks
+  > Bottom of Room
+      All of the following:
+          Morph Ball
+          # TODO: damage
+          After Sector 4 Water Level Lowered or Damage Runs (Beginner)
 
 > Other to Waterway; Heals? False
   * Layers: default
   * Open Passage to Waterway/Other to Reservoir West
   * Extra - door_idx: (59,)
-  > Door to Skultera Sanctuary
+  > Bottom of Room
       All of the following:
+          # TODO: damage
           Speed Booster and Disabled Entrance Rando
           Any of the following:
               After Sector 4 Water Level Lowered
-              # TODO: damage requirements
               Gravity Suit and Damage Runs (Beginner)
 
 > Other to Breeding Tank Access; Heals? False
@@ -825,6 +843,29 @@ Extra - room_id: [20]
       Can Use Any Bombs
   > Door to Pump Control Access
       Can Break Single Bomb Blocks
+
+> Bottom of Room; Heals? False
+  * Layers: default
+  > Door to Skultera Sanctuary
+      # TODO: damage
+      After Sector 4 Water Level Lowered or Damage Runs (Beginner)
+  > Door to Pump Control Access
+      All of the following:
+          Morph Ball
+          Any of the following:
+              # TODO: damage
+              After Sector 4 Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner)
+          Any of the following:
+              Can Climb High Jump Wall
+              Speed Booster and Shinespark Tricks (Beginner)
+  > Other to Waterway
+      All of the following:
+          # TODO: damage
+          Speed Booster
+          Any of the following:
+              After Sector 4 Water Level Lowered
+              Gravity Suit and Damage Runs (Beginner)
 
 ----------------
 Pump Control Access
@@ -1401,20 +1442,18 @@ Extra - room_id: [35]
   > Door to Glass Tube to Sector 2 (TRO)
       Gravity Suit and Screw Attack
   > Upper Ladder
-      All of the following:
-          Missiles
-          Any of the following:
-              All of the following:
-                  # Gravityless method - Need SJ to get out of "air" section
-                  Space Jump and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
-                  Hi-Jump or Movement (Advanced)
-              All of the following:
-                  # Gravity method
-                  Gravity Suit
-                  Any of the following:
-                      Space Jump
-                      # Shinespark
-                      Level 0 Locks and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Any of the following:
+          All of the following:
+              # Gravityless method - Need SJ to get out of "air" section
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+              Hi-Jump or Movement (Advanced)
+          All of the following:
+              # Gravity method
+              Gravity Suit
+              Any of the following:
+                  Space Jump
+                  # Shinespark
+                  Level 0 Locks and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Glass Tube to Sector 2 (TRO); Heals? False
   * Layers: default
@@ -1490,12 +1529,11 @@ Extra - room_id: [36]
               # Destroy Geron (Template doesn't work underwater)
               Wave Beam
               Missiles ≥ 3 and Super Missile Data
+              Morph Ball and Power Bombs ≥ 2 and Knowledge (Beginner)
               All of the following:
                   Gravity Suit
                   Any of the following:
-                      All of the following:
-                          Knowledge (Beginner)
-                          Power Bombs ≥ 2 or Screw Attack
+                      Screw Attack and Knowledge (Beginner)
                       # Run past Geron spawning
                       Movement (Intermediate)
   > Door to Aquarium Storage
@@ -1594,7 +1632,7 @@ Extra - room_id: [38]
           Gravity Suit
           Any of the following:
               Screw Attack
-              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+              Level 0 Locks and Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Other to Aquarium Speedway; Heals? False
   * Layers: default
@@ -1609,7 +1647,7 @@ Extra - room_id: [38]
           Any of the following:
               Gravity Suit or Space Jump
               # Shinespark
-              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+              Speed Booster and Disabled Entrance Rando
               Hi-Jump and Wall Jump (Beginner)
           Any of the following:
               Underwater Wall Jump (Hypermode)
@@ -1666,7 +1704,9 @@ Extra - room_id: [40]
   * L0 Hatch to Sanctuary Cache/Door to Sciser Sanctuary
   * Extra - door_idx: (102,)
   > Other to Security Access
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Gravity Suit or Hi-Jump or Underwater Wall Jump (Intermediate)
 
 ----------------
 Sanctuary Cache

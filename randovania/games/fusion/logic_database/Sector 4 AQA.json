@@ -3016,7 +3016,7 @@
                 ]
             },
             "nodes": {
-                "Pickup (Hidden Missile Tank)": {
+                "Pickup (Upper Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3038,7 +3038,7 @@
                     "pickup_index": 60,
                     "location_category": "minor",
                     "connections": {
-                        "Beside Pickup": {
+                        "Beside Upper Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3047,7 +3047,7 @@
                         }
                     }
                 },
-                "Pickup (Missile Tank)": {
+                "Pickup (Lower Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3069,7 +3069,7 @@
                     "pickup_index": 61,
                     "location_category": "minor",
                     "connections": {
-                        "Beside Other Pickup": {
+                        "Beside Lower Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3196,7 +3196,7 @@
                                 "items": []
                             }
                         },
-                        "Beside Pickup": {
+                        "Beside Upper Pickup": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3251,12 +3251,12 @@
                         }
                     }
                 },
-                "Beside Pickup": {
+                "Beside Upper Pickup": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 454.64586288416075,
-                        "y": 411.0070921985816,
+                        "x": 454.65,
+                        "y": 411.01,
                         "z": 0.0
                     },
                     "description": "",
@@ -3266,11 +3266,16 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Hidden Missile Tank)": {
+                        "Pickup (Upper Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
+                                    }
+                                ]
                             }
                         },
                         "Door to Escape Save Room": {
@@ -3285,7 +3290,7 @@
                                 ]
                             }
                         },
-                        "Beside Other Pickup": {
+                        "Beside Lower Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3307,18 +3312,22 @@
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Any Bombs"
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Beside Other Pickup": {
+                "Beside Lower Pickup": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 391.6293144208038,
-                        "y": 253.0950354609929,
+                        "x": 391.63,
+                        "y": 253.1,
                         "z": 0.0
                     },
                     "description": "",
@@ -3328,7 +3337,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Pickup (Missile Tank)": {
+                        "Pickup (Lower Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3340,23 +3349,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Beside Pickup": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -4255,12 +4247,83 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpaceJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Screw Single Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "https://youtu.be/GlJ90IW3FuA",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Hi-Jump",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "WallJump",
+                                                                                                                    "amount": 2,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "https://youtu.be/Ed5b1Yl4c68",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "WallJump",
+                                                                                                                    "amount": 3,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -4271,15 +4334,6 @@
                                                     "data": {
                                                         "comment": "Use frozen enemies to escape: https://youtu.be/4Msq5vtRTzw",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -4358,8 +4412,34 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Combat",
-                                            "amount": 2,
+                                            "amount": 3,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 499,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4424,8 +4504,34 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "Combat",
-                                            "amount": 2,
+                                            "amount": 3,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 499,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4693,12 +4799,73 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://youtu.be/pKQF2grjqDw",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "L0Locks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4776,6 +4943,15 @@
                                             "name": "DoorLockRando",
                                             "amount": 1,
                                             "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -5262,66 +5438,6 @@
                                 ]
                             }
                         },
-                        "Other to Waterway": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "LowerWaterLevel",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "TODO: Add dmg",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "GravitySuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Other to Breeding Tank Access": {
                             "type": "or",
                             "data": {
@@ -5330,6 +5446,32 @@
                                     {
                                         "type": "template",
                                         "data": "Can Use Any Bombs"
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom of Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: damage",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "LowerWaterLevel",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DamageRuns",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -5459,6 +5601,49 @@
                                     }
                                 ]
                             }
+                        },
+                        "Bottom of Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: damage",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "LowerWaterLevel",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -5493,27 +5678,35 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Skultera Sanctuary": {
+                        "Bottom of Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: damage",
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -5522,18 +5715,9 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "LowerWaterLevel",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "TODO: damage requirements",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5554,6 +5738,15 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "LowerWaterLevel",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -5615,6 +5808,215 @@
                                     {
                                         "type": "template",
                                         "data": "Can Break Single Bomb Blocks"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Bottom of Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 512.0,
+                        "y": 89.21567600593522,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
+                        "Door to Skultera Sanctuary": {
+                            "type": "or",
+                            "data": {
+                                "comment": "TODO: damage",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "LowerWaterLevel",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DamageRuns",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Pump Control Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "TODO: damage",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "GravitySuit",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageRuns",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "LowerWaterLevel",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpeedBooster",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Climb High Jump Wall"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Other to Waterway": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: damage",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "GravitySuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "LowerWaterLevel",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -9420,15 +9822,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missiles",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -9475,15 +9868,6 @@
                                                                             }
                                                                         }
                                                                     ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -10079,26 +10463,69 @@
                                             "comment": "Destroy Geron (Template doesn't work underwater)",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missiles",
-                                                                    "amount": 3,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SuperMissileData",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "SuperMissileData",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MorphBall",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "PowerBombs",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -10129,29 +10556,12 @@
                                                                                 "comment": null,
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "ScrewAttack",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "PowerBombs",
-                                                                                                        "amount": 2,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "items",
+                                                                                            "name": "ScrewAttack",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
@@ -10864,6 +11274,15 @@
                                                                     "amount": 1,
                                                                     "negate": true
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "L0Locks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -10987,15 +11406,6 @@
                                                                                 "name": "SpeedBooster",
                                                                                 "amount": 1,
                                                                                 "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "misc",
-                                                                                "name": "DoorLockRando",
-                                                                                "amount": 1,
-                                                                                "negate": true
                                                                             }
                                                                         },
                                                                         {
@@ -11471,12 +11881,55 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Other to Security Access": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "GravitySuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnderwaterWallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
