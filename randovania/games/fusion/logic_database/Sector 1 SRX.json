@@ -7444,7 +7444,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Knowledge",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -7807,7 +7807,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "ColdDamage",
+                                                                    "name": "NormalDamage",
                                                                     "amount": 200,
                                                                     "negate": false
                                                                 }
@@ -7980,53 +7980,61 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Freeze Ripper and stand on it:",
+                                                                    "comment": null,
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Freeze Enemies"
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Freeze Ripper and stand on it:",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Knowledge",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "StandOnFrozenEnemies",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "Ledge grab, and diagonally aim down after a neutral jump: https://youtu.be/8tUjNmvbRDE",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Ledge grab, and diagonally aim down after a neutral jump: https://youtu.be/8tUjNmvbRDE",
-                                                                    "items": [
+                                                                        },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "and",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": "Same but with Space Jump which gives you the guarantee of not falling down",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "SpaceJump",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "Same but with Space Jump which gives you the guarantee of not falling down",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "SpaceJump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -8315,7 +8323,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Knowledge",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             }
