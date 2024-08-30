@@ -197,7 +197,7 @@ Extra - room_id: [7, 15]
   > Door to Data Checkpoint
       # dmg runs
       Varia Suit
-  > Door to Artic Underside
+  > Door to Arctic Underside
       All of the following:
           Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
           # Damage Run
@@ -209,7 +209,7 @@ Extra - room_id: [7, 15]
   * Layers: default
   * L0 Hatch to Waver Ward/Door to Arctic Containment
   * Extra - door_idx: (16,)
-  > Door to Artic Underside
+  > Door to Arctic Underside
       Varia Suit and Can Use Any Bombs
 
 > Door to Data Checkpoint; Heals? False
@@ -240,9 +240,9 @@ Extra - room_id: [7, 15]
   > Door to Data Checkpoint
       Can Kill PB Geron
 
-> Door to Artic Underside; Heals? False
+> Door to Arctic Underside; Heals? False
   * Layers: default
-  * L3 Hatch to Artic Underside/Door to Arctic Containment
+  * L3 Hatch to Arctic Underside/Door to Arctic Containment
   * Extra - door_idx: (99,)
   > Door to Geron Checkpoint
       Morph Ball and Varia Suit and Can Climb High Jump Wall
@@ -286,8 +286,11 @@ Extra - room_id: [9]
   * L3 Hatch to Security Save Room/Door to Security Shaft West
   * Extra - door_idx: (18,)
   > Door to Level 3 Security Room
-      # TODO: varia / damage reqs
-      Varia Suit
+      All of the following:
+          # TODO: dmg run
+          Varia Suit
+          # Get past enemies
+          Normal Damage ≥ 40 or Can Kill Tough Beam-Weak Enemy
 
 > Door to Level 3 Security Room; Heals? False
   * Layers: default
@@ -297,7 +300,13 @@ Extra - room_id: [9]
       All of the following:
           # TODO:  damage reqs
           Varia Suit
-          Wall Jump (Beginner) or Can Climb High Jump Wall or Can Use Any Bombs
+          Any of the following:
+              Wall Jump (Beginner) or Can Climb High Jump Wall
+              # Climb Hidden Ladder
+              Knowledge (Beginner) and Can Use Any Bombs
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+          # Get past enemies
+          Normal Damage ≥ 150 or Can Kill Tough Beam-Weak Enemy
 
 ----------------
 Level 3 Security Room
@@ -383,41 +392,60 @@ Extra - room_id: [13]
   * Layers: default
   * L0 Hatch to Mimic Storage/Door to Frozen Tower
   * Extra - door_idx: (24,)
-  > Door to Groznyj Shaft
-      # TODO: varia / damag erun
+  > Bottom of Room
+      # TODO: dmg
       Varia Suit
-  > Door to Data Room
-      # TODO: varia / damage run
-      Space Jump
 
 > Door to Groznyj Shaft; Heals? False
   * Layers: default
   * L3 Hatch to Groznyj Shaft/Door to Frozen Tower
   * Extra - door_idx: (49,)
-  > Door to Mimic Storage
-      All of the following:
-          Space Jump or Can Freeze Enemies
-          # Damage Run
-          Varia Suit
-  > Other to Transmutation Trial
-      # TODO: varia / damage runs
-      Varia Suit and Can Bounce in Ball
+  > Bottom of Room
+      # TODO: dam
+      Varia Suit
 
 > Other to Transmutation Trial; Heals? False
   * Layers: default
   * Tunnel to Transmutation Trial/Other to Frozen Tower
   * Extra - door_idx: (79,)
-  > Door to Groznyj Shaft
-      # TODO: Varia / damag eruns
+  > Bottom of Room
+      # TODO: dmg
       Varia Suit
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L3 Hatch to Data Room/Door to Frozen Tower
   * Extra - door_idx: (90,)
-  > Door to Groznyj Shaft
-      # TODO: varia / frozen
+  > Bottom of Room
+      # TODO: dmg
       Varia Suit
+
+> Bottom of Room; Heals? False
+  * Layers: default
+  > Door to Mimic Storage
+      All of the following:
+          Any of the following:
+              Space Jump or Can Freeze Enemies
+              All of the following:
+                  Jump Extends (Advanced) and Can Single Walljump
+                  Any of the following:
+                      # w/ HJ: https://youtu.be/qIwNHrrM7uE
+                      Hi-Jump and Wall Jump (Intermediate)
+                      # NHJ: https://youtu.be/-GGGrkNAvF4
+                      Wall Jump (Advanced)
+          # TODO: dmg
+          Varia Suit
+  > Door to Groznyj Shaft
+      # TODO: dmg
+      Varia Suit
+  > Other to Transmutation Trial
+      All of the following:
+          Can Bounce in Ball
+          # TODO: dmg
+          Varia Suit
+  > Door to Data Room
+      # TODO: dmg
+      Space Jump and Varia Suit
 
 ----------------
 Mini-Fridge
@@ -688,7 +716,7 @@ Extra - room_id: [22, 21]
           Varia Suit and Can Use Power Bombs
           Any of the following:
               # Get up
-              Space Jump
+              Space Jump or Can Single Walljump
               All of the following:
                   # Stand on frozen Rippers
                   Can Freeze Enemies
@@ -867,14 +895,14 @@ Extra - room_id: [28]
   * L0 Hatch to Nightmare Hub West/Door to Flooded Access
   * Extra - door_idx: (63,)
   > Door to Zebesian Waters
-      Trivial
+      Normal Damage ≥ 250 or Can Kill Tough Beam-Resistant Enemy
 
 > Door to Zebesian Waters; Heals? False
   * Layers: default
   * L0 Hatch to Zebesian Waters/Door to Flooded Access
   * Extra - door_idx: (117,)
   > Door to Nightmare Hub West
-      Trivial
+      Normal Damage ≥ 250 or Can Kill Tough Beam-Resistant Enemy
 
 ----------------
 Security Save Room
@@ -1186,9 +1214,9 @@ Extra - room_id: [39]
 Kago Speedway
 Extra - map_name: Sector 541
 Extra - room_id: [41]
-> Door to Artic Underside; Heals? False
+> Door to Arctic Underside; Heals? False
   * Layers: default
-  * L0 Hatch to Artic Underside/Door to Kago Speedway
+  * L0 Hatch to Arctic Underside/Door to Kago Speedway
   * Extra - door_idx: (102,)
   > Door to Groznyj Shaft
       Trivial
@@ -1197,27 +1225,27 @@ Extra - room_id: [41]
   * Layers: default
   * L0 Hatch to Groznyj Shaft/Door to Kago Speedway
   * Extra - door_idx: (103,)
-  > Door to Artic Underside
+  > Door to Arctic Underside
       Trivial
 
 ----------------
-Artic Underside
+Arctic Underside
 Extra - map_name: Sector 542
 Extra - room_id: [42]
 > Door to Arctic Containment; Heals? False
   * Layers: default
-  * L3 Hatch to Arctic Containment/Door to Artic Underside
+  * L3 Hatch to Arctic Containment/Door to Arctic Underside
   * Extra - door_idx: (100,)
   > Door to Kago Speedway
       Speed Booster and Varia Suit and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Kago Speedway; Heals? False
   * Layers: default
-  * L0 Hatch to Kago Speedway/Door to Artic Underside
+  * L0 Hatch to Kago Speedway/Door to Arctic Underside
   * Extra - door_idx: (101,)
   > Door to Arctic Containment
       # Need to charge spark in other room, This can safely not have Door Lock Rando check
-      Speed Booster and Varia Suit and Disabled Entrance Rando and Can Freeze Enemies
+      Level 0 Locks and Speed Booster and Varia Suit and Disabled Entrance Rando and Can Freeze Enemies
 
 ----------------
 Groznyj Grad
@@ -1267,7 +1295,9 @@ Extra - room_id: [45]
       Any of the following:
           Underwater Wall Jump (Expert)
           Gravity Suit and Space Jump
-          Hi-Jump and Can Freeze Enemies
+          All of the following:
+              Can Freeze Enemies
+              Hi-Jump or Movement (Beginner)
 
 > Beside Missile Block; Heals? False
   * Layers: default
@@ -1292,7 +1322,8 @@ Extra - room_id: [46]
   * Extra - door_idx: (113,)
   > Door to Flooded Airlock to Sector 4 (AQA)
       Any of the following:
-          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Normal Damage ≥ 190 or Can Use Power Bombs
+          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Can Use Power Bombs
+          Damage Boosts (Intermediate) and Normal Damage ≥ 190
           Gravity Suit and Screw Attack
 
 > Door to Flooded Airlock to Sector 4 (AQA); Heals? False
@@ -1301,12 +1332,14 @@ Extra - room_id: [46]
   * Extra - door_idx: (114,)
   > Door to Flooded Tower
       Any of the following:
-          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Normal Damage ≥ 190 or Can Use Power Bombs
+          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Can Use Power Bombs
+          Damage Boosts (Intermediate) and Normal Damage ≥ 190
           Gravity Suit and Screw Attack
   > Door to Flooded Access
       Any of the following:
-          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Normal Damage ≥ 95 or Can Use Power Bombs
+          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Can Use Power Bombs
           Gravity Suit and Screw Attack
+          Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 > Door to Flooded Access; Heals? False
   * Layers: default
@@ -1314,8 +1347,9 @@ Extra - room_id: [46]
   * Extra - door_idx: (116,)
   > Door to Flooded Airlock to Sector 4 (AQA)
       Any of the following:
-          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Normal Damage ≥ 95 or Can Use Power Bombs
+          Charge Beam or Missiles ≥ 10 or Combat (Intermediate) or Can Use Power Bombs
           Gravity Suit and Screw Attack
+          Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 ----------------
 Ruined Break Room
