@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
-    from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.game_database_view import GameDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
@@ -38,7 +38,7 @@ def is_boss_location(node: PickupNode, config: EchoesConfiguration) -> bool:
 
 
 class EchoesBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: EchoesConfiguration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: EchoesConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
@@ -112,8 +112,8 @@ class EchoesBootstrap(Bootstrap):
         return super().assign_pool_results(rng, configuration, patches, pool_results)
 
     def apply_game_specific_patches(
-        self, configuration: EchoesConfiguration, game: GameDescription, patches: GamePatches
-    ) -> None:
+        self, game: GameDatabaseView, configuration: EchoesConfiguration, patches: GamePatches
+    ) -> GameDatabaseView:
         scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 

@@ -101,7 +101,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
             ]
         )
 
-    def create_damage_state(self, game: GameDescription, configuration: Configuration) -> DamageState:
+    def create_damage_state(self, game: GameDatabaseView, configuration: Configuration) -> DamageState:
         """
         Creates a DamageState for the given configuration.
         :param game:
@@ -217,7 +217,7 @@ class Bootstrap[Configuration: BaseConfiguration]:
         for resource, quantity in static_resources.as_resource_gain():
             initial_resources.set_resource(resource, quantity)
 
-        self.apply_game_specific_patches(configuration, game, patches)
+        game = self.apply_game_specific_patches(game, configuration, patches)
 
         starting_energy, energy_per_tank = self.energy_config(configuration)
 
@@ -242,9 +242,16 @@ class Bootstrap[Configuration: BaseConfiguration]:
         return graph, starting_state
 
     def apply_game_specific_patches(
-        self, configuration: Configuration, game: GameDescription, patches: GamePatches
-    ) -> None:
-        pass
+        self, game: GameDatabaseView, configuration: Configuration, patches: GamePatches
+    ) -> GameDatabaseView:
+        """
+        Wraps the given GameDatabaseView into a new one that respects whatever game-specific changes are present.
+        :param game:
+        :param configuration:
+        :param patches:
+        :return:
+        """
+        return game
 
     def assign_pool_results(
         self, rng: Random, configuration: Configuration, patches: GamePatches, pool_results: PoolResults

@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_database import NamedRequirementTemplate
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.resource_type import ResourceType
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
@@ -61,11 +62,55 @@ class ResourceDatabaseView:
         """
         raise NotImplementedError
 
+    def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
+        """
+        :param name:
+        :return:
+        """
+        raise NotImplementedError
+
     def get_all_resources_of_type(self, resource_type: ResourceType) -> list[ResourceInfo]:
         """
         Gets a list of all resources of the given type
         """
         raise NotImplementedError
+
+
+class ResourceDatabaseViewProxy(ResourceDatabaseView):
+    def __init__(self, original: ResourceDatabaseView):
+        self._original = original
+
+    @typing_extensions.override
+    def get_item(self, short_name: str) -> ItemResourceInfo:
+        return self._original.get_item(short_name)
+
+    @typing_extensions.override
+    def get_event(self, short_name: str) -> SimpleResourceInfo:
+        return self._original.get_event(short_name)
+
+    @typing_extensions.override
+    def get_trick(self, short_name: str) -> TrickResourceInfo:
+        return self._original.get_trick(short_name)
+
+    @typing_extensions.override
+    def get_all_tricks(self) -> list[TrickResourceInfo]:
+        return self._original.get_all_tricks()
+
+    @typing_extensions.override
+    def get_damage(self, short_name: str) -> SimpleResourceInfo:
+        return self._original.get_damage(short_name)
+
+    @typing_extensions.override
+    def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection) -> float:
+        return self._original.get_damage_reduction(resource, current_resources)
+
+    @typing_extensions.override
+    def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
+        return self._original.get_template_requirement(name)
+
+    @typing_extensions.override
+    def get_all_resources_of_type(self, resource_type: ResourceType) -> list[ResourceInfo]:
+        return self._original.get_all_resources_of_type(resource_type)
 
 
 class GameDatabaseView:
