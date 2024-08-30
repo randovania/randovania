@@ -1740,7 +1740,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Destroy bomb blocks by standing off of crab: https://youtu.be/h8Q6TKHg8kM",
+                                            "comment": "Destroy bomb blocks by standing off of sciser: https://youtu.be/h8Q6TKHg8kM",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1762,22 +1762,43 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Reach blocks",
                                                         "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Springball"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "MidAirMorph",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Reach sciser",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
                                                             {
                                                                 "type": "and",
                                                                 "data": {
                                                                     "comment": "NHJ: https://youtu.be/6RhuTs1mD1c",
                                                                     "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "MidAirMorph",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
@@ -1789,10 +1810,6 @@
                                                                         }
                                                                     ]
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Springball"
                                                             }
                                                         ]
                                                     }
