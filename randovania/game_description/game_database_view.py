@@ -126,6 +126,12 @@ class GameDatabaseView:
         """
         raise NotImplementedError
 
+    def iterate_nodes_of_type[NodeT: Node](self, node_type: type[NodeT]) -> Iterator[tuple[Region, Area, NodeT]]:
+        """
+        Iterates over only the nodes that are of the given type.
+        """
+        yield from (it for it in self.node_iterator() if isinstance(it[2], node_type))
+
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         """
         Find a node with the given NodeIdentifier.

@@ -7,7 +7,6 @@ from typing import TYPE_CHECKING
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
@@ -114,14 +113,15 @@ class EchoesBootstrap(Bootstrap):
     def apply_game_specific_patches(
         self, game: GameDatabaseView, configuration: EchoesConfiguration, patches: GamePatches
     ) -> GameDatabaseView:
-        scan_visor = search.find_resource_info_with_long_name(game.resource_database.item, "Scan Visor")
+        resource_database = game.get_resource_database_view()
+        scan_visor = resource_database.get_item("Scan")
         scan_visor_req = ResourceRequirement.simple(scan_visor)
 
         translator_gates = patches.game_specific["translator_gates"]
 
-        for node in game.region_list.iterate_nodes_of_type(ConfigurableNode):
+        for _, _, node in game.iterate_nodes_of_type(ConfigurableNode):
             requirement = LayoutTranslatorRequirement(translator_gates[node.identifier.as_string])
-            translator = game.resource_database.get_item(requirement.item_name)
+            translator = resource_database.get_item(requirement.item_name)
             game.region_list.configurable_nodes[node.identifier] = RequirementAnd(
                 [
                     scan_visor_req,
