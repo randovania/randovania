@@ -43,14 +43,24 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
                 else 0
             )
 
+            pickup_type = "Nothing"
+            if not pickup.other_player:
+                if pickup.original_pickup.name.startswith("Tourian Key"):
+                    pickup_type = "Tourian Key"
+                else:
+                    pickup_type = pickup.original_pickup.name
+
+            acquired_msg = f"{pickup.name} acquired"
+            if not self.players_config.is_multiworld:
+                acquired_msg = item_info[pickup.name]["text_header"].replace(pickup_type, pickup.original_pickup.name)
+
             pickup_map_dict[object_id] = {
+                "index": pickup.index.index,
                 "model": pickup.model.name,
-                "type": pickup.original_pickup.name if not pickup.other_player else "Nothing",
+                "type": pickup_type,
                 "quantity": quantity,
                 "text": {
-                    "header": item_info[pickup.name]["text_header"]
-                    if not self.players_config.is_multiworld
-                    else pickup.name,
+                    "header": acquired_msg,
                     "description": textwrap.wrap(
                         pickup.collection_text[text_index], width=MAX_CHARS_LIMIT_FOR_INGAME_MESSAGE_BOX
                     ),
