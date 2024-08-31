@@ -12,7 +12,6 @@ from PySide6 import QtCore, QtWidgets
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -26,6 +25,7 @@ from randovania.lib import frozen_lib
 if typing.TYPE_CHECKING:
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def encode_extra(qt_value: str) -> tuple[bool, typing.Any]:
@@ -61,7 +61,7 @@ class ResourceDatabaseGenericModel(AppendableEditableTableModel[ResourceInfo]):
 
     @typing.override
     def _get_items(self) -> list[ResourceInfo]:
-        return typing.cast(list[ResourceInfo], self.db.get_by_type(self.resource_type))
+        return self.db.get_all_resources_of_type(self.resource_type)
 
     @typing.override
     def _create_item(self, short_name: str) -> ResourceInfo:
@@ -184,7 +184,7 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         first_row = top_left.row()
         last_row = bottom_right.row()
         if first_row == last_row:
-            self.ResourceChanged.emit(self.db.get_by_type(model.resource_type)[first_row])
+            self.ResourceChanged.emit(self.db.get_all_resources_of_type(model.resource_type)[first_row])
 
     def set_allow_edits(self, value: bool) -> None:
         for tab in self._all_tabs:

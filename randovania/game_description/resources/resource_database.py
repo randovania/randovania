@@ -7,7 +7,6 @@ import typing_extensions
 
 from randovania.game_description.game_database_view import ResourceDatabaseView
 from randovania.game_description.resources import search
-from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 
 if typing.TYPE_CHECKING:
@@ -18,6 +17,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
@@ -60,22 +60,22 @@ class ResourceDatabase(ResourceDatabaseView):
     def __post_init__(self) -> None:
         # Reserve index 0 as a placeholder for things without index
         max_index = max(
-            max((resource.resource_index for resource in self.get_by_type(resource_type)), default=0)
+            max((resource.resource_index for resource in self.get_all_resources_of_type(resource_type)), default=0)
             for resource_type in _ALL_TYPES
         )
         self.resource_by_index.clear()
         self.resource_by_index.extend([None] * (max_index + 1))
 
         for resource_type in _ALL_TYPES:
-            for resource in self.get_by_type(resource_type):
+            for resource in self.get_all_resources_of_type(resource_type):
                 assert resource.resource_type == resource_type
                 assert self.resource_by_index[resource.resource_index] is None
                 self.resource_by_index[resource.resource_index] = resource
 
-    def get_by_type(
-        self,
-        resource_type: ResourceType,
-    ) -> list[ItemResourceInfo] | list[SimpleResourceInfo] | list[TrickResourceInfo]:
+    def get_all_resources_of_type(self, resource_type: ResourceType) -> list[ResourceInfo]:
+        """
+        Gets a list of all resources of the given type
+        """
         if resource_type == ResourceType.ITEM:
             return self.item
         elif resource_type == ResourceType.EVENT:
@@ -92,9 +92,7 @@ class ResourceDatabase(ResourceDatabaseView):
             raise ValueError(f"Invalid resource_type: {resource_type}")
 
     def get_by_type_and_index(self, resource_type: ResourceType, name: str) -> ResourceInfo:
-        return search.find_resource_info_with_id(
-            typing.cast(list[ResourceInfo], self.get_by_type(resource_type)), name, resource_type
-        )
+        return search.find_resource_info_with_id(self.get_all_resources_of_type(resource_type), name, resource_type)
 
     @typing_extensions.override
     def get_item(self, short_name: str) -> ItemResourceInfo:
@@ -158,6 +156,13 @@ class ResourceDatabase(ResourceDatabaseView):
         current_resources.add_damage_reduction_cache(resource, damage_reduction)
 
         return damage_reduction
+
+    def get_template_requirement(self, name: str) -> NamedRequirementTemplate:
+        """
+        :param name:
+        :return:
+        """
+        return self.requirement_template[name]
 
     def first_unused_resource_index(self) -> int:
         return len(self.resource_by_index)

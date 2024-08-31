@@ -45,7 +45,7 @@ def _create_resource_name_combo(
     resource_name_combo = ScrollProtectedComboBox(parent)
 
     sorted_resources: list[ResourceInfo] = sorted(
-        resource_database.get_by_type(resource_type), key=lambda x: x.long_name
+        resource_database.get_all_resources_of_type(resource_type), key=lambda x: x.long_name
     )
     for resource in sorted_resources:
         resource_name_combo.addItem(resource.long_name, resource)
@@ -68,7 +68,7 @@ def _create_resource_type_combo(
 
     for resource_type in iterate_enum(ResourceType):
         try:
-            count_elements = len(resource_database.get_by_type(resource_type))
+            count_elements = len(resource_database.get_all_resources_of_type(resource_type))
         except ValueError:
             count_elements = 0
 
@@ -84,7 +84,7 @@ def _create_resource_type_combo(
 
 def _create_default_resource_requirement(resource_database: ResourceDatabase) -> ResourceRequirement:
     return ResourceRequirement.simple(
-        resource_database.get_by_type(ResourceType.ITEM)[0],
+        resource_database.get_all_resources_of_type(ResourceType.ITEM)[0],
     )
 
 
