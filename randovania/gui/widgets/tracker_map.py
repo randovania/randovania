@@ -15,10 +15,10 @@ from randovania.game_description.db.dock_node import DockNode
 if TYPE_CHECKING:
     from matplotlib.axes import Axes
 
-    from randovania.game_description.db.node import Node
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.graph.state import State
+    from randovania.graph.world_graph import WorldGraphNode
 
 
 class MatplotlibWidget(QtWidgets.QWidget):
@@ -62,7 +62,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
 
         return networkx.drawing.spring_layout(g)
 
-    def update_for(self, region: Region, state: State, nodes_in_reach: set[Node]):
+    def update_for(self, region: Region, state: State, nodes_in_reach: set[WorldGraphNode]):
         g = networkx.DiGraph()
 
         for area in region.areas:
