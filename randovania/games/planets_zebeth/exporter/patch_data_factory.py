@@ -27,7 +27,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
     cosmetic_patches: PlanetsZebethCosmeticPatches
     configuration: PlanetsZebethConfiguration
 
-    def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], item_info: dict, rng: Random) -> dict:
+    def _create_pickups_dict(self, pickup_list: list[ExportedPickupDetails], _rng: Random) -> dict:
         pickup_map_dict = {}
         for pickup in pickup_list:
             quantity = pickup.conditional_resources[0].resources[0][1] if not pickup.other_player else 0
@@ -50,12 +50,11 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
                 else:
                     pickup_type = pickup.original_pickup.name
 
-            acquired_msg = f"{pickup.name} acquired"
+            acquired_msg = pickup.name
             if not self.players_config.is_multiworld:
-                acquired_msg = item_info[pickup.name]["text_header"].replace(pickup_type, pickup.original_pickup.name)
+                acquired_msg = f"{pickup.original_pickup.name} acquired"
 
             pickup_map_dict[object_id] = {
-                "index": pickup.index.index,
                 "model": pickup.model.name,
                 "type": pickup_type,
                 "quantity": quantity,
@@ -150,8 +149,7 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
 
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""
-        text_data = self._get_item_data()
-        memo_data = {key: value["text_desc"] for key, value in text_data.items()}
+        memo_data = self._get_item_data()
         memo_data["Energy Tank"] = memo_data["Energy Tank"].format(Energy=self.configuration.energy_per_tank)
         return memo_data
 
@@ -167,13 +165,11 @@ class PlanetsZebethPatchDataFactory(PatchDataFactory):
         return pickup_creator.create_visual_nothing(self.game_enum(), "spr_ITEM_Nothing")
 
     def create_game_specific_data(self) -> dict:
-        item_data = self._get_item_data()
-
         pickup_list = self.export_pickup_list()
 
         return {
             "seed": self.description.get_seed_for_player(self.players_config.player_index),
             "game_config": self._create_game_config_dict(),
             "preferences": self._create_cosmetics(),
-            "level_data": {"room": "rm_Zebeth", "pickups": self._create_pickups_dict(pickup_list, item_data, self.rng)},
+            "level_data": {"room": "rm_Zebeth", "pickups": self._create_pickups_dict(pickup_list, self.rng)},
         }
