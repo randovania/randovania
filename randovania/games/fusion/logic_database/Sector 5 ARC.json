@@ -2591,6 +2591,57 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Mimic Storage": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "TODO: dmg",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Drop down from ledge above https://youtu.be/lUc4sT4UyQY",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "JumpExtends",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Bottom of Room": {
                             "type": "or",
                             "data": {
@@ -2668,7 +2719,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Wall Jump from right side https://youtu.be/-GGGrkNAvF4",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2680,45 +2731,12 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Wall Jump from right side https://youtu.be/-GGGrkNAvF4",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "WallJump",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": "Drop down from ledge above https://youtu.be/lUc4sT4UyQY",
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "Movement",
-                                                                                            "amount": 5,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
