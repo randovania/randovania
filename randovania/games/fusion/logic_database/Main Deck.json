@@ -2552,8 +2552,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "or",
@@ -2563,16 +2568,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Intended method",
+                                                                    "comment": "Freeze Fune",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies"
                                                                         }
                                                                     ]
                                                                 }
@@ -2580,14 +2580,14 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "HJ-Less: https://www.youtube.com/watch?v=AUkhZE_5CbE",
+                                                                    "comment": "https://youtu.be/C56BsRG_eKY",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "WallJump",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -2595,8 +2595,8 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 2,
+                                                                                "name": "JumpExtends",
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -2605,6 +2605,36 @@
                                                             }
                                                         ]
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "NHJ: https://youtu.be/AUkhZE_5CbE",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies"
                                                 }
                                             ]
                                         }
