@@ -414,6 +414,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             )
 
         final_boss_text = ""
+        ridley_text = "If you haven't defeated Proteus Ridley, you can either fight him or continue to your ship."
         if self.configuration.final_boss.value == "Arachnus":
             final_boss_text = " and then fight Arachnus"
         elif self.configuration.final_boss.value == "Diggernaut":
@@ -422,6 +423,10 @@ class MSRPatchDataFactory(PatchDataFactory):
             final_boss_text = ", collect Ice Beam, defeat all 10 Larva Metroids, and then fight the Metroid Queen"
         elif self.configuration.final_boss.value == "Ridley":
             final_boss_text = ", find the Baby, and then fight Proteus Ridley at your ship"
+            ridley_text = (
+                "Once you have collected all the required DNA, "
+                "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
+            )
 
         # Intro Text
         text["GUI_CUTSCENE_OPENING_1"] = (
@@ -438,11 +443,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
             f"It can be found {location_text}."
         )
-        text["GUI_CUTSCENE_OPENING_5"] = (
-            "You may freely travel between Surface and Area 8.|"
-            "Once you have collected all the required DNA, "
-            "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
-        )
+        text["GUI_CUTSCENE_OPENING_5"] = f"You may freely travel between Surface and Area 8.|{ridley_text}"
         text["GUI_CUTSCENE_OPENING_6"] = (
             "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
             "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
