@@ -53,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Option to have more Metroid DNA placed than required.
 - Changed: Area 6 - The Door to Chozo Seal West Intersection Terminal from Crumbling Stairwell is excluded from Door Lock Rando.
 - Changed: The Gullugg next to the DNA Chozo Seal in Area 6 - Crumbling Stairwell has been removed.
+- Fixed: The spawn point in Area 1 - Spider Ball chamber not working correctly.
 
 #### Area 3 Metroid Caverns
 
