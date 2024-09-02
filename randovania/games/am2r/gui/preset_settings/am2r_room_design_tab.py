@@ -39,7 +39,7 @@ class PresetAM2RRoomDesign(PresetTab, Ui_PresetAM2RRoomDesign):
 
     @classmethod
     def tab_title(cls) -> str:
-        return "Room Design"
+        return "Room Changes"
 
     @classmethod
     def uses_patches_tab(cls) -> bool:

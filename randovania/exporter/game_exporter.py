@@ -82,11 +82,13 @@ class GameExporter:
                 self._before_export()
                 try:
                     self._do_export_game(patch_data, export_params, progress_update)
-
-                except (AbortBackgroundTask, UnableToExportError):
+                    scope.set_tag("exception", None)
+                except (AbortBackgroundTask, UnableToExportError) as e:
+                    scope.set_tag("exception", type(e).__name__)
                     raise
 
                 except Exception as e:
+                    scope.set_tag("exception", type(e).__name__)
                     input_hash = export_params.calculate_input_hash()
                     scope.capture_exception(
                         e,
