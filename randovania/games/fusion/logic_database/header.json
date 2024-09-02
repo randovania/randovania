@@ -614,6 +614,14 @@
             "OpenHatchLockRando": {
                 "long_name": "Open Hatch Lock Rando",
                 "extra": {}
+            },
+            "AntiSoftlock": {
+                "long_name": "Softlock Patches Enabled",
+                "extra": {}
+            },
+            "BomblessPBs": {
+                "long_name": "Power Bombs Without Bombs",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -651,7 +659,7 @@
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": "TODO: May or may not get a patch later down the line where it hard requires bombs.",
+                        "comment": null,
                         "items": [
                             {
                                 "type": "resource",
@@ -669,6 +677,32 @@
                                     "name": "PowerBombs",
                                     "amount": 1,
                                     "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBallBombData",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "BomblessPBs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         ]
