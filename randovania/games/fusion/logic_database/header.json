@@ -659,7 +659,7 @@
                 "requirement": {
                     "type": "and",
                     "data": {
-                        "comment": "TODO: May or may not get a patch later down the line where it hard requires bombs.",
+                        "comment": null,
                         "items": [
                             {
                                 "type": "resource",
@@ -677,6 +677,32 @@
                                     "name": "PowerBombs",
                                     "amount": 1,
                                     "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBallBombData",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "BomblessPBs",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         ]
