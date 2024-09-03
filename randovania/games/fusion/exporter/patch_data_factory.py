@@ -2,10 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
 from randovania.games.game import RandovaniaGame
@@ -13,6 +12,7 @@ from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
     from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
 
@@ -33,10 +33,10 @@ class FusionPatchDataFactory(PatchDataFactory):
             is_major = False
             if "source" in node.extra:
                 is_major = True
-
-            resource = (
-                pickup.conditional_resources[0].resources[-1][0].extra["item"] if not pickup.other_player else "None"
-            )
+            if not pickup.other_player and pickup.conditional_resources[0].resources:
+                resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
+            else:
+                resource = "None"
             if is_major:
                 major_pickup_list.append({"Source": node.extra["source"], "Item": resource})
             else:
@@ -75,7 +75,9 @@ class FusionPatchDataFactory(PatchDataFactory):
             for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
             if defi.name == "Missile Launcher Data"
         )
+        # Fusion always starts with launchers ammo, even if launcher is not a starting item
         starting_dict["Missiles"] = missile_launcher.included_ammo[0]
+
         pb_launcher = next(
             state
             for defi, state in self.configuration.standard_pickup_configuration.pickups_state.items()
@@ -86,15 +88,13 @@ class FusionPatchDataFactory(PatchDataFactory):
         for item in self.patches.starting_equipment:
             if "Metroid" in item.name:
                 continue
-            pickup_def = next(
-                value for key, value in self.pickup_db.standard_pickups.items() if value.name == item.name
-            )
-            category = pickup_def.extra["StartingItemCategory"]
+            category = item.progression[0][0].extra["StartingItemCategory"]
             # Special Case for E-Tanks
             if category == "Energy":
                 starting_dict[category] += self.configuration.energy_per_tank
                 continue
-            starting_dict[category].append(pickup_def.extra["StartingItemName"])
+            elif category in ["Abilities", "SecurityLevels"]:
+                starting_dict[category].append(item.progression[0][0].extra["item"])
         return starting_dict
 
     def _create_tank_increments(self) -> dict:
@@ -120,26 +120,22 @@ class FusionPatchDataFactory(PatchDataFactory):
     def _create_palette(self) -> dict:
         cosmetics = self.cosmetic_patches
         palettes = {}
-        # TODO make this cleaner
-        if cosmetics.enable_suit_palette:
-            palettes["Samus"] = {
-                "HueMin": cosmetics.suit_hue_min,
-                "HueMax": cosmetics.suit_hue_max,
-            }
-        if cosmetics.enable_beam_palette:
-            palettes["Beams"] = {
-                "HueMin": cosmetics.beam_hue_min,
-                "HueMax": cosmetics.beam_hue_max,
-            }
-        if cosmetics.enable_enemy_palette:
-            palettes["Enemies"] = {"HueMin": cosmetics.enemy_hue_min, "HueMax": cosmetics.enemy_hue_max}
-        if cosmetics.enable_tileset_palette:
-            palettes["Tilesets"] = {
-                "HueMin": cosmetics.tileset_hue_min,
-                "HueMax": cosmetics.tileset_hue_max,
-            }
 
+        new = {
+            "suit": "Samus",
+            "beam": "Beams",
+            "enemy": "Enemies",
+            "tileset": "Tilesets",
+        }
+
+        for attr_name, palettes_key in new.items():
+            if getattr(cosmetics, f"enable_{attr_name}_palette"):
+                palettes[palettes_key] = {
+                    "HueMin": getattr(cosmetics, f"{attr_name}_hue_min"),
+                    "HueMax": getattr(cosmetics, f"{attr_name}_hue_max"),
+                }
         palette_dict = {
+            "Seed": self.description.get_seed_for_player(self.players_config.player_index),
             "Randomize": palettes,
             "ColorSpace": cosmetics.color_space.long_name,
         }
@@ -166,23 +162,28 @@ class FusionPatchDataFactory(PatchDataFactory):
             self.description.all_patches,
             self.players_config,
             FusionHintNamer(self.description.all_patches, self.players_config),
-            True,
+            True,  # TODO: make this depending on hint settings later:tm:
             [self.game.resource_database.get_item("ChargeBeam")],
             True,
         )
 
         hints = {}
+
         for node in self.game.region_list.iterate_nodes():
             if not isinstance(node, HintNode):
                 continue
-            if node.extra["hint_name"] == "AuxiliaryPower":
-                hints[node.extra["hint_name"]] = " ".join(
+
+            hint_location = node.extra["hint_name"]
+            if hint_location == "AuxiliaryPower":
+                hints[hint_location] = " ".join(
                     [text for _, text in charge_hint_mapping.items() if "has no need to be located" not in text]
                 )
-            if node.extra["hint_name"] == "RestrictedLabs":
-                hints[node.extra["hint_name"]] = " ".join(
+            elif hint_location == "RestrictedLabs":
+                hints[hint_location] = " ".join(
                     [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
                 )
+            else:
+                hints[hint_location] = " ".join(["Hint system still in development, we appreciate your patience."])
 
         starting_items_list = item_names.additional_starting_equipment(
             self.patches.configuration, self.patches.game, self.patches
@@ -214,25 +215,19 @@ class FusionPatchDataFactory(PatchDataFactory):
             }
         return nav_text_json
 
+    def create_useless_pickup(self) -> PickupEntry:
+        """Used for any location with no PickupEntry assigned to it."""
+        return pickup_creator.create_nothing_pickup(
+            self.game.resource_database,
+            model_name="Empty",
+        )
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Empty")
+
     def create_game_specific_data(self) -> dict:
-        db = self.game
-
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(db.resource_database, "Empty"), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(
-                pickup_exporter.GenericAcquiredMemo(), self.players_config, self.game_enum()
-            ),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Anonymous"),
-        )
+        pickup_list = self.export_pickup_list()
 
         mars_data = {
             "SeedHash": self.description.shareable_hash,
@@ -246,8 +241,9 @@ class FusionPatchDataFactory(PatchDataFactory):
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
         }
+
         import json
 
-        foo = json.dumps(mars_data)
-        print(foo)
+        print(json.dumps(mars_data))
+
         return {}
