@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import guaranteed_item_hint
-from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
@@ -149,8 +148,8 @@ class FusionPatchDataFactory(PatchDataFactory):
     def _create_nav_text(self) -> dict:
         nav_text_json = {}
         hint_lang_list = ["JapaneseKanji", "JapaneseHiragana", "English", "German", "French", "Italian", "Spanish"]
-        namer = FusionHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        # namer = FusionHintNamer(self.description.all_patches, self.players_config)
+        # exporter = HintExporter(namer, self.rng, ["A joke hint."])
 
         artifacts = [self.game.resource_database.get_item(f"Infant Metroid {i + 1}") for i in range(20)]
 
@@ -163,16 +162,23 @@ class FusionPatchDataFactory(PatchDataFactory):
             True,
         )
 
+        charge_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+            self.description.all_patches,
+            self.players_config,
+            FusionHintNamer(self.description.all_patches, self.players_config),
+            True,
+            [self.game.resource_database.get_item("ChargeBeam")],
+            True,
+        )
+
         hints = {}
         for node in self.game.region_list.iterate_nodes():
             if not isinstance(node, HintNode):
                 continue
-            hints[node.extra["hint_name"]] = exporter.create_message_for_hint(
-                self.patches.hints[self.game.region_list.identifier_for_node(node)],
-                self.description.all_patches,
-                self.players_config,
-                True,
-            ).strip()
+            if node.extra["hint_name"] == "AuxiliaryPower":
+                hints[node.extra["hint_name"]] = " ".join(
+                    [text for _, text in charge_hint_mapping.items() if "has no need to be located" not in text]
+                )
             if node.extra["hint_name"] == "RestrictedLabs":
                 hints[node.extra["hint_name"]] = " ".join(
                     [text for _, text in metroid_hint_mapping.items() if "has no need to be located" not in text]
@@ -208,7 +214,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             }
         return nav_text_json
 
-    def create_data(self) -> dict:
+    def create_game_specific_data(self) -> dict:
         db = self.game
 
         useless_target = PickupTarget(
