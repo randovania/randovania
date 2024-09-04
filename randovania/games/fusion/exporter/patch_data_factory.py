@@ -86,15 +86,18 @@ class FusionPatchDataFactory(PatchDataFactory):
         starting_dict["PowerBombs"] = pb_launcher.included_ammo[0]
 
         for item in self.patches.starting_equipment:
+            # Special Case for Metroids
             if "Metroid" in item.name:
                 continue
             category = item.progression[0][0].extra["StartingItemCategory"]
-            # Special Case for E-Tanks
-            if category == "Energy":
+            # Special Case for Ammo and E-Tanks
+            if category in ["Missiles", "PowerBombs"]:
+                continue
+            elif category == "Energy":
                 starting_dict[category] += self.configuration.energy_per_tank
                 continue
-            elif category in ["Abilities", "SecurityLevels"]:
-                starting_dict[category].append(item.progression[0][0].extra["item"])
+            # Normal Case
+            starting_dict[category].append(item.progression[0][0].extra["item"])
         return starting_dict
 
     def _create_tank_increments(self) -> dict:
@@ -121,14 +124,14 @@ class FusionPatchDataFactory(PatchDataFactory):
         cosmetics = self.cosmetic_patches
         palettes = {}
 
-        new = {
+        palette_type_dict = {
             "suit": "Samus",
             "beam": "Beams",
             "enemy": "Enemies",
             "tileset": "Tilesets",
         }
 
-        for attr_name, palettes_key in new.items():
+        for attr_name, palettes_key in palette_type_dict.items():
             if getattr(cosmetics, f"enable_{attr_name}_palette"):
                 palettes[palettes_key] = {
                     "HueMin": getattr(cosmetics, f"{attr_name}_hue_min"),
@@ -229,6 +232,7 @@ class FusionPatchDataFactory(PatchDataFactory):
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
 
+        # TODO: add credits, sound options, demos, missile limit, unexplored map
         mars_data = {
             "SeedHash": self.description.shareable_hash,
             "StartingLocation": self._create_starting_location(),
