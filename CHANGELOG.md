@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The preset settings have been reordered to be more sensible.
 - Changed: Flipping the game horizontally/vertically is not an unsupported option anymore.
 - Fixed: Damage Reduction now functions correctly when more than 1 copy of a suit or more than 2 progressive suits are shuffled in the pool.
+- Fixed: The seed hash on the ending screen will not clip anymore
+
+### Cave Story
+
+- Fixed: The explanation text in the objective tab no longer refers to a 100% objective that does not exist.
 
 ### Metroid Dread
 
@@ -48,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Option to have more Metroid DNA placed than required.
 - Changed: Area 6 - The Door to Chozo Seal West Intersection Terminal from Crumbling Stairwell is excluded from Door Lock Rando.
 - Changed: The Gullugg next to the DNA Chozo Seal in Area 6 - Crumbling Stairwell has been removed.
+- Fixed: The spawn point in Area 1 - Spider Ball chamber not working correctly.
 
 #### Area 3 Metroid Caverns
 
