@@ -250,4 +250,4 @@ class FusionPatchDataFactory(PatchDataFactory):
 
         print(json.dumps(mars_data))
 
-        return {}
+        return mars_data
