@@ -560,7 +560,7 @@ jobs:
 
       - name: Upload binaries to GitHub Release
         uses: svenstaro/upload-release-action@2.9.0
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/stable') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: packages/Randovania**
@@ -568,6 +568,7 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           prerelease: true
+          draft: ${{ startsWith(github.ref, 'refs/heads/stable') }}
           body: "Release executable"
 
       - name: Publish 📦 to TestPyPI
