@@ -251,6 +251,9 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
             "resolver_attempts": database.dock_rando_config.resolver_attempts,
             "to_shuffle_proportion": database.dock_rando_config.to_shuffle_proportion,
         },
+        "teleporter_rando": {
+            group: [dock.short_name for dock in docks] for group, docks in database.teleporter_rando_params.items()
+        },
     }
 
 

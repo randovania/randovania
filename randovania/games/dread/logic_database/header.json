@@ -1,5 +1,5 @@
 {
-    "schema_version": 26,
+    "schema_version": 27,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -6432,7 +6432,6 @@
             "elevator": {
                 "name": "Elevator",
                 "extra": {
-                    "is_teleporter": true,
                     "ignore_for_hints": true
                 },
                 "items": {
@@ -6453,7 +6452,6 @@
             "shuttle": {
                 "name": "Shuttle",
                 "extra": {
-                    "is_teleporter": true,
                     "ignore_for_hints": true
                 },
                 "items": {
@@ -6480,6 +6478,12 @@
             "force_change_two_way": true,
             "resolver_attempts": 250,
             "to_shuffle_proportion": 0.6
+        },
+        "teleporter_rando": {
+            "default": [
+                "elevator",
+                "shuttle"
+            ]
         }
     },
     "used_trick_levels": {
