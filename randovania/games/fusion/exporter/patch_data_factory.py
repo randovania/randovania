@@ -85,19 +85,17 @@ class FusionPatchDataFactory(PatchDataFactory):
         )
         starting_dict["PowerBombs"] = pb_launcher.included_ammo[0]
 
-        for item in self.patches.starting_equipment:
-            # Special Case for Metroids
-            if "Metroid" in item.name:
+        for item, quantity in self.patches.starting_resources().as_resource_gain():
+            category = item.extra["StartingItemCategory"]
+            # Special Case for Ammo and Metroids
+            if category in ["Missiles", "PowerBombs", "Metroid"]:
                 continue
-            category = item.progression[0][0].extra["StartingItemCategory"]
-            # Special Case for Ammo and E-Tanks
-            if category in ["Missiles", "PowerBombs"]:
-                continue
+            # Special Case for E-Tanks
             elif category == "Energy":
                 starting_dict[category] += self.configuration.energy_per_tank
                 continue
             # Normal Case
-            starting_dict[category].append(item.progression[0][0].extra["item"])
+            starting_dict[category].append(item.extra["item"])
         return starting_dict
 
     def _create_tank_increments(self) -> dict:
