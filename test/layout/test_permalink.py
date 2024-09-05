@@ -13,7 +13,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
-@pytest.fixture()
+@pytest.fixture
 def fake_generator_parameters() -> GeneratorParameters:
     parameters = MagicMock(spec=GeneratorParameters)
     parameters.as_bytes = b"\xa0\xb0\xc0"

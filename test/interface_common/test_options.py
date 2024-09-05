@@ -16,7 +16,7 @@ from randovania.interface_common.options import DecodeFailedException, InfoAlert
 from randovania.lib import migration_lib
 
 
-@pytest.fixture()
+@pytest.fixture
 def option() -> Options:
     return Options(MagicMock())
 

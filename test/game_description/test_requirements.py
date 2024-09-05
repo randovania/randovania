@@ -29,7 +29,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo
 
 
-@pytest.fixture()
+@pytest.fixture
 def database() -> ResourceDatabase:
     return ResourceDatabase(
         game_enum=RandovaniaGame.METROID_PRIME_ECHOES,

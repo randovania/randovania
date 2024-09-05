@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PresetAM2RPatches</class>
- <widget class="QMainWindow" name="PresetAM2RPatches">
+ <class>PresetAM2RRoomDesign</class>
+ <widget class="QMainWindow" name="PresetAM2RRoomDesign">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -22,16 +22,16 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
-     <number>0</number>
+     <number>6</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>6</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>6</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>6</number>
     </property>
     <item>
      <widget class="QScrollArea" name="scroll_area">
@@ -43,39 +43,23 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>745</width>
-         <height>1066</height>
+         <width>758</width>
+         <height>648</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
         <property name="leftMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="topMargin">
-         <number>2</number>
+         <number>6</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>6</number>
         </property>
-        <item>
-         <spacer name="top_spacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>8</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item>
          <widget class="QGroupBox" name="room_group">
           <property name="title">
@@ -195,135 +179,6 @@
             <widget class="QLabel" name="nest_pipes_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adds new Teleporter Pipes to make the final areas less cumbersome to traverse.&lt;br/&gt;The Pipes will be located &amp;quot;Hideout Hub Access East&amp;quot;, &amp;quot;Shinespark Cave East&amp;quot;, &amp;quot;Depths Omega Nest South West Access&amp;quot; and &amp;quot;Waterfall Passage Top&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="blue_save_doors_check">
-             <property name="text">
-              <string>Unlock Save Station Doors</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="blue_save_doors_label">
-             <property name="text">
-              <string>Ensures all Save Station doors are normal (blue) doors, even with door lock rando enabled.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="force_blue_labs_check">
-             <property name="text">
-              <string>Unlock Genetics Laboratory Doors</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="force_blue_labs_check_2">
-             <property name="text">
-              <string>Ensures that the doors in the later parts of Genetics Laboratory are normal (blue) doors, even with door lock rando enabled.
-To be more precise, all rooms after &quot;Hatchling Room Underside&quot; will have their doors changed.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="misc_group">
-          <property name="title">
-           <string>Miscellaneous</string>
-          </property>
-          <layout class="QVBoxLayout" name="raven_beak_damage_table_handling_layout">
-           <item>
-            <widget class="QCheckBox" name="skip_cutscenes_check">
-             <property name="text">
-              <string>Skip gameplay cutscenes</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="skip_cutscenes_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enabling this will skip most gameplay related cutscenes, such as the Drill Sequence, the cutscenes you'll see when viewing a Metroid for the first time and similar.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="skip_save_cutscene_check">
-             <property name="text">
-              <string>Skip Save Station cutscene</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="skip_save_cutscene_label">
-             <property name="text">
-              <string>Enabling this will skip the short cutscene that appears when saving at a Save Station.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="skip_item_cutscenes_check">
-             <property name="text">
-              <string>Skip item acquisition cutscenes</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="skip_item_cutscenes_label">
-             <property name="text">
-              <string>Enabling this will skip item related cutscenes, such as the pause when collecting an item or the cutscene that plays when collecting a suit.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="supers_on_missile_doors_check">
-             <property name="text">
-              <string>Open Missile Doors with Super Missiles</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="supers_on_missile_doors_label">
-             <property name="text">
-              <string>Determines whether Super Missiles can be used to open Missile Doors.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="fusion_mode_check">
-             <property name="text">
-              <string>Enable Fusion Mode</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="fusion_mode_label">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fusion Mode enables the Fusion Suit for Samus, makes organic enemies drop X, makes bosses spawn Core-X and makes Metroids move faster.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

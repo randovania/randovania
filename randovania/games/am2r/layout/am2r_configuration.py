@@ -89,9 +89,6 @@ class AM2RConfiguration(BaseConfiguration):
         if self.artifacts.required_artifacts > self.artifacts.placed_artifacts:
             result.append("The amount of required DNA cannot be higher than the total amount of placed DNA.")
 
-        if self.horizontally_flip_gameplay or self.vertically_flip_gameplay:
-            result.append("Gameplay is flipped horizontally or vertically.")
-
         if self.darkness_min > self.darkness_max:
             result.append("The minimum darkness value cannot be higher than the maximum darkness value.")
 

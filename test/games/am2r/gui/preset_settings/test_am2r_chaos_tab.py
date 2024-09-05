@@ -5,8 +5,6 @@ import uuid
 from typing import TYPE_CHECKING
 from unittest.mock import MagicMock
 
-from PySide6 import QtCore
-
 from randovania.games.am2r.gui.preset_settings.am2r_chaos_tab import PresetAM2RChaos
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
 from randovania.interface_common.preset_editor import PresetEditor
@@ -16,28 +14,6 @@ if TYPE_CHECKING:
 
     from randovania.game_description.game_description import GameDescription
     from randovania.interface_common.preset_manager import PresetManager
-
-
-def test_flip_checks(skip_qtbot: QtBot, am2r_game_description: GameDescription, preset_manager: PresetManager) -> None:
-    game = am2r_game_description.game
-    base = preset_manager.default_preset_for_game(game).get_preset()
-    preset = dataclasses.replace(base, uuid=uuid.UUID("b41fde84-1f57-4b79-8cd6-3e5a78077fa6"))
-    base_configuration = preset.configuration
-    options = MagicMock()
-    assert isinstance(base_configuration, AM2RConfiguration)
-
-    tab = PresetAM2RChaos(PresetEditor(preset, options), am2r_game_description, MagicMock())
-    skip_qtbot.addWidget(tab)
-    tab.on_preset_changed(preset)
-
-    assert not tab.vertically_flip_check.isChecked()
-    assert not tab.horizontally_flip_check.isChecked()
-
-    skip_qtbot.mouseClick(tab.vertically_flip_check, QtCore.Qt.MouseButton.LeftButton)
-    skip_qtbot.mouseClick(tab.horizontally_flip_check, QtCore.Qt.MouseButton.LeftButton)
-
-    assert tab.vertically_flip_check.isChecked()
-    assert tab.horizontally_flip_check.isChecked()
 
 
 def test_darkness_spins(

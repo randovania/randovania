@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     import pytest_mock
 
 
-@pytest.fixture()
+@pytest.fixture
 def tab(skip_qtbot, preset_manager, game_enum):
     window_manager = MagicMock()
     window_manager.preset_manager = preset_manager

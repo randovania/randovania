@@ -9,6 +9,7 @@ import sentry_sdk
 
 from randovania.lib import status_update_lib
 from randovania.lib.background_task import AbortBackgroundTask
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from randovania.exporter.patch_data_factory import PatcherDataMeta
@@ -81,13 +82,20 @@ class GameExporter:
                 self._before_export()
                 try:
                     self._do_export_game(patch_data, export_params, progress_update)
-
-                except AbortBackgroundTask:
+                    scope.set_tag("exception", None)
+                except (AbortBackgroundTask, UnableToExportError) as e:
+                    scope.set_tag("exception", type(e).__name__)
                     raise
 
                 except Exception as e:
+                    scope.set_tag("exception", type(e).__name__)
                     input_hash = export_params.calculate_input_hash()
-                    scope.capture_exception(e, contexts=input_hash)
+                    scope.capture_exception(
+                        e,
+                        contexts={
+                            "input_hash": input_hash,
+                        },
+                    )
                     # TODO: compare `input_hash` with known good values and if different,
                     # wrap into a "User Error" exception
                     raise

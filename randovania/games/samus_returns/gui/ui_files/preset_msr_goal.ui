@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1196</width>
-    <height>313</height>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,21 +22,21 @@
    </property>
    <layout class="QVBoxLayout" name="goal_layout">
     <property name="leftMargin">
-     <number>4</number>
+     <number>6</number>
     </property>
     <property name="topMargin">
-     <number>8</number>
+     <number>6</number>
     </property>
     <property name="rightMargin">
-     <number>4</number>
+     <number>6</number>
     </property>
     <property name="bottomMargin">
-     <number>8</number>
+     <number>6</number>
     </property>
     <item>
      <widget class="QLabel" name="description_label">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it is now necessary to collect Metroid DNA in order to reach Ridley. The minimum and maximum are limited to 0 and 39 DNA respectively. You start with 39 DNA minus the shuffled amount.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In addition to just collecting the Baby, it is now necessary to collect Metroid DNA in order to reach Ridley. The minimum and maximum are limited to 0 and 39 DNA respectively. You can choose to have more DNA in the Pool than what is required to collect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
@@ -44,9 +44,28 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="dna_slider_layout">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Controls how much Metroid DNA is obtainable.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="placed_slider_layout">
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
       <item>
-       <widget class="QSlider" name="dna_slider">
+       <widget class="QSlider" name="placed_slider">
         <property name="maximum">
          <number>39</number>
         </property>
@@ -62,16 +81,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="dna_slider_label">
+       <widget class="QLabel" name="placed_slider_label">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>20</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
@@ -86,6 +105,52 @@
      </layout>
     </item>
     <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Controls how much Metroid DNA is required to be collected.</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="required_slider_layout">
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QSlider" name="required_slider">
+        <property name="maximum">
+         <number>39</number>
+        </property>
+        <property name="pageStep">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksBelow</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="required_slider_label">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <widget class="QGroupBox" name="placement_group">
       <property name="title">
        <string>Placement</string>
@@ -93,6 +158,12 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QRadioButton" name="restrict_placement_radiobutton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Restricted Placement</string>
          </property>
@@ -100,6 +171,9 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>6</number>
+         </property>
          <property name="leftMargin">
           <number>20</number>
          </property>
@@ -115,6 +189,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="prefer_metroids_check">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Prefer Standard Metroids (10 Alphas, 9 Gammas, 3 Zetas, 3 Omegas)</string>
            </property>
@@ -122,6 +202,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="prefer_stronger_metroids_check">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Prefer Stronger Metroids (7 Alpha+, 5 Gamma+, 1 Zeta+, 1 Omega+)</string>
            </property>
@@ -129,6 +215,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="prefer_bosses_check">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Prefer Bosses (Arachnus, Diggernaut Chase Reward, Diggernaut, Queen Metroid)</string>
            </property>
@@ -138,6 +230,12 @@
        </item>
        <item>
         <widget class="QRadioButton" name="free_placement_radiobutton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Free Placement</string>
          </property>
@@ -159,19 +257,6 @@
        </item>
       </layout>
      </widget>
-    </item>
-    <item>
-     <spacer name="spacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>

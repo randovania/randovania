@@ -9,7 +9,7 @@ from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.lib.background_task import AbortBackgroundTask
 
 
-@pytest.fixture()
+@pytest.fixture
 def force_sync_mixin():
     mixin = BackgroundTaskMixin()
 

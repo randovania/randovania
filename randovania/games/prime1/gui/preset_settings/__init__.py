@@ -24,16 +24,16 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel,
-        PresetPatcherEnergy,
-        PresetTeleportersPrime1,
-        PresetMetroidStartingArea,
         PresetPrimeGeneration,
         PresetPrimeGoal,
         PresetPrimeHints,
+        PresetLocationPool,
+        MetroidPresetItemPool,
+        PresetPatcherEnergy,
+        PresetTeleportersPrime1,
+        PresetMetroidStartingArea,
         PresetDockRando,
         PresetPrimeQol,
         PresetEnemyAttributeRandomizer,
         PresetPrimeChaos,
-        PresetLocationPool,
-        MetroidPresetItemPool,
     ]
