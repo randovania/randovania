@@ -560,14 +560,15 @@ jobs:
 
       - name: Upload binaries to GitHub Release
         uses: svenstaro/upload-release-action@2.9.0
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/stable') }}
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: packages/Randovania**
+          file: packages/Randovania*/**
           file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
           prerelease: true
+          draft: ${{ startsWith(github.ref, 'refs/heads/stable') }}
           body: "Release executable"
 
       - name: Publish 📦 to TestPyPI
@@ -655,7 +656,7 @@ jobs:
           cd website
           sed -i s/${{ steps.line.outputs.LINE_TO_REPLACE }}/randovania_version=${{ steps.new_version.outputs.NEW_VERSION }}/g ./ci.sh
           git config user.name Website-Version-Updater
-          git config user.email <>
+          git config user.email invalid@example.com
           git add ./ci.sh
           git commit -m "Update version to ${{ steps.new_version.outputs.NEW_VERSION }}"
           git push

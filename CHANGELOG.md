@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.4.x] - 2024-08-??
+## [8.5.x] - 2024-10-??
+
+- Nothing yet.
+
+## [8.4.0] - 2024-09-04
 
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
 
@@ -59,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: The Grapple block between Letum Shrine and Gravitt Garden can now be removed from both sides.
 
-## [8.3.x] - 2024-08-??
+## [8.3.0] - 2024-08-02
 
 - Changed: Reduced some visual noise in the main window and customize preset window.
 - Changed: Don't show unnecessary lines on Door Lock and Teleporter rando customization tabs.
