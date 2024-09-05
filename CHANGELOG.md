@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Artaria
+
+- Added: Various individual means of using Speed Booster to climb EMMI Zone Spinner from the Tunnel to White EMMI Area, using Speed Booster Conservation, and a choice between Normal Bombs, Cross Bombs and Spin Boost.
+- Fixed: Logic now accounts for the need to escape through the doors after pulling open the EMMI Zone Spinner with Grapple Beam.
+- Removed: Using Speed Booster to climb the EMMI Zone Spinner Room from the Door to White EMMI Arena (Power).
+
 ## [8.4.0] - 2024-09-04
 
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
@@ -32,10 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
-- Added: Various individual means of using Speed Booster to climb EMMI Zone Spinner from the Tunnel to White EMMI Area, using Speed Booster Conservation, and a choice between Normal Bombs, Cross Bombs and Spin Boost.
 - Changed: The door that is locked by both Super Missile and Charge Beam is now using lock overrides. This ensures that the requirements of these locks are both respected by logic when randomizing Doors and this door is unchanged.
-- Fixed: Logic now accounts for the need to escape through the doors after pulling open the EMMI Zone Spinner with Grapple Beam.
-- Removed: Using Speed Booster to climb the EMMI Zone Spinner Room from the Door to White EMMI Arena (Power).
 
 ##### Cataris
 
