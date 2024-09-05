@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.5.x] - 2024-10-??
 
-- Nothing yet.
+- Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 
 ## [8.4.0] - 2024-09-04
 
