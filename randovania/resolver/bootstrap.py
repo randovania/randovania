@@ -121,10 +121,6 @@ class Bootstrap:
                 ),
             )
 
-        initial_game_state = game.initial_states.get("Default")
-        if initial_game_state is not None:
-            initial_resources.add_resource_gain(initial_game_state)
-
         starting_state = State(
             initial_resources,
             (),

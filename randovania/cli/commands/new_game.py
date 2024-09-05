@@ -223,7 +223,6 @@ def create_new_database(game_enum: RandovaniaGame, output_path: Path) -> GameDes
         layers=("default",),
         victory_condition=ResourceRequirement.simple(items[1]),
         starting_location=intro_node.identifier,
-        initial_states={},
         minimal_logic=None,
         region_list=RegionList(
             [
