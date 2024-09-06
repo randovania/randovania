@@ -1409,7 +1409,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Navigate the room Damageless: TODO: video",
+                                            "comment": "Navigate the room Damageless: https://youtu.be/u40B3GpSIsA",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3156,74 +3156,91 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Intended",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Get up SJ-less by freezing the pirates",
                                                         "items": [
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Wall Jump reqs",
+                                                                    "comment": "Get up",
                                                                     "items": [
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Single Wall Jump",
+                                                                                "comment": "SWJ up, freeze topmost pirate: https://youtu.be/6ha7hZ0iW1I",
                                                                                 "items": [
                                                                                     {
-                                                                                        "type": "and",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": null,
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "template",
-                                                                                                    "data": "Can Screw Single Walljump"
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "WallJump",
-                                                                                                        "amount": 3,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Screw Single Walljump"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandOnFrozenEnemies",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Jump on every single pirate with HJ: https://youtu.be/T_aded4xYeU",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
                                                                                         "type": "or",
                                                                                         "data": {
-                                                                                            "comment": "NHJ no SWJ",
+                                                                                            "comment": null,
                                                                                             "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "tricks",
-                                                                                                        "name": "WallJump",
-                                                                                                        "amount": 4,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
                                                                                                 {
                                                                                                     "type": "and",
                                                                                                     "data": {
-                                                                                                        "comment": "HJ no SWJ",
+                                                                                                        "comment": null,
                                                                                                         "items": [
                                                                                                             {
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Hi-Jump",
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "WallJump",
                                                                                                                     "amount": 1,
                                                                                                                     "negate": false
                                                                                                                 }
@@ -3232,12 +3249,21 @@
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
                                                                                                                     "type": "tricks",
-                                                                                                                    "name": "WallJump",
+                                                                                                                    "name": "StandOnFrozenEnemies",
                                                                                                                     "amount": 2,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             }
                                                                                                         ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "StandOnFrozenEnemies",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -3249,23 +3275,23 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "Or just stand on all the pirates I guess https://youtu.be/T_aded4xYeU",
+                                                                                "comment": "Jump on every single pirate with NHJ: https://youtu.be/rpQG_ZFJ2Wg",
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "tricks",
-                                                                                            "name": "StandOnFrozenEnemies",
-                                                                                            "amount": 5,
+                                                                                            "name": "WallJump",
+                                                                                            "amount": 2,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Hi-Jump",
-                                                                                            "amount": 1,
+                                                                                            "type": "tricks",
+                                                                                            "name": "StandOnFrozenEnemies",
+                                                                                            "amount": 5,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -3278,8 +3304,17 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Ice req",
+                                                                    "comment": "Freezing requirements",
                                                                     "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "IceBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
@@ -3288,53 +3323,19 @@
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "StandOnFrozenEnemies",
-                                                                                            "amount": 4,
+                                                                                            "type": "items",
+                                                                                            "name": "IceMissileData",
+                                                                                            "amount": 1,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "or",
+                                                                                        "type": "resource",
                                                                                         "data": {
-                                                                                            "comment": "https://youtu.be/6ha7hZ0iW1I",
-                                                                                            "items": [
-                                                                                                {
-                                                                                                    "type": "resource",
-                                                                                                    "data": {
-                                                                                                        "type": "items",
-                                                                                                        "name": "IceBeam",
-                                                                                                        "amount": 1,
-                                                                                                        "negate": false
-                                                                                                    }
-                                                                                                },
-                                                                                                {
-                                                                                                    "type": "and",
-                                                                                                    "data": {
-                                                                                                        "comment": null,
-                                                                                                        "items": [
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "IceMissileData",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            },
-                                                                                                            {
-                                                                                                                "type": "resource",
-                                                                                                                "data": {
-                                                                                                                    "type": "items",
-                                                                                                                    "name": "Missiles",
-                                                                                                                    "amount": 1,
-                                                                                                                    "negate": false
-                                                                                                                }
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                }
-                                                                                            ]
+                                                                                            "type": "items",
+                                                                                            "name": "Missiles",
+                                                                                            "amount": 10,
+                                                                                            "negate": false
                                                                                         }
                                                                                     }
                                                                                 ]
@@ -3343,7 +3344,7 @@
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
-                                                                                "comment": "https://youtu.be/o91JwaZoFTg",
+                                                                                "comment": null,
                                                                                 "items": [
                                                                                     {
                                                                                         "type": "resource",
@@ -3357,24 +3358,57 @@
                                                                                     {
                                                                                         "type": "resource",
                                                                                         "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "StandOnFrozenEnemies",
-                                                                                            "amount": 5,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
                                                                                             "type": "items",
                                                                                             "name": "Missiles",
-                                                                                            "amount": 5,
+                                                                                            "amount": 20,
                                                                                             "negate": false
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "template",
-                                                                                        "data": "Can Freeze Enemies"
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "Diffusion is way easier if you only have to freeze one pirate: https://youtu.be/o91JwaZoFTg",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "template",
+                                                                                                                "data": "Can Screw Single Walljump"
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "StandOnFrozenEnemies",
+                                                                                                                    "amount": 4,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": "Very hard to stand on all pirates: https://www.youtube.com/watch?v=A4Zw5Rt28kI",
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "StandOnFrozenEnemies",
+                                                                                                                    "amount": 5,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
                                                                                     }
                                                                                 ]
                                                                             }
@@ -9284,7 +9318,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Navigate the room Damageless: TODO: video",
+                                            "comment": "Navigate the room Damageless: https://youtu.be/buJ-41TyuNo",
                                             "items": [
                                                 {
                                                     "type": "resource",
