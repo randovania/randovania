@@ -50,7 +50,7 @@
     <item row="1" column="0">
      <spacer name="verticalSpacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -68,7 +68,7 @@
      <x>0</x>
      <y>0</y>
      <width>243</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_options">
@@ -77,7 +77,7 @@
     </property>
     <widget class="QMenu" name="menu_tracker">
      <property name="title">
-      <string>Theme</string>
+      <string>Layout</string>
      </property>
     </widget>
     <widget class="QMenu" name="menu_default_game">
@@ -85,6 +85,14 @@
       <string>Default Game</string>
      </property>
     </widget>
+    <widget class="QMenu" name="menuLayout">
+     <property name="title">
+      <string>Theme</string>
+     </property>
+     <addaction name="actionGame_Art"/>
+     <addaction name="actionPixel_Art"/>
+    </widget>
+    <addaction name="menuLayout"/>
     <addaction name="menu_tracker"/>
     <addaction name="menu_default_game"/>
    </widget>
@@ -93,6 +101,16 @@
   <action name="actions">
    <property name="text">
     <string>s</string>
+   </property>
+  </action>
+  <action name="actionGame_Art">
+   <property name="text">
+    <string>Game Art</string>
+   </property>
+  </action>
+  <action name="actionPixel_Art">
+   <property name="text">
+    <string>Pixel Art</string>
    </property>
   </action>
  </widget>
