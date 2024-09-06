@@ -167,8 +167,8 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
             self.boss_info_label.setText("The Grapple block in Area 6 - Transport to Area 7 will be moved by default.")
         elif final_boss == FinalBossConfiguration.QUEEN:
             self.boss_info_label.setText(
-                "The wall behind the Queen will be removed by default.\n"
-                "To fight the Queen, you must also collect Ice Beam and defeat all 10 Larva Metroids."
+                "To fight the Queen, you must also collect Ice Beam and defeat all 10 Larva Metroids.\n"
+                "The wall behind the Queen will be removed by default."
             )
         elif final_boss == FinalBossConfiguration.RIDLEY:
             self.boss_info_label.setText("You must also collect the Baby Metroid.")
