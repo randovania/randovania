@@ -65,9 +65,15 @@ class MSRConfiguration(BaseConfiguration):
 
     def active_layers(self) -> set[str]:
         result = super().active_layers()
+        _bosses = ["arachnus", "diggernaut", "queen", "ridley"]
+        lower_boss = self.final_boss.value.lower()
 
-        # Enable final boss layer
-        result.add(f"final-boss-{self.final_boss.value.lower()}")
+        # Enable final boss layers
+        result.add(f"final-boss-{lower_boss}")
+        for boss in _bosses:
+            if lower_boss == boss:
+                continue
+            result.add(f"final-boss-not-{boss}")
 
         return result
 
