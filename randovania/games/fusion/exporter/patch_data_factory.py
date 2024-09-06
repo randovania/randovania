@@ -243,6 +243,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "NavigationText": self._create_nav_text(),
             "DisableDemos": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
+            "UnexploredMap": self.cosmetic_patches.starting_map,
             "StereoDefault": self.cosmetic_patches.stereo_default,
             "DisableMusic": self.cosmetic_patches.disable_music,
             "DisableSoundEffects": self.cosmetic_patches.disable_sfx,
