@@ -230,7 +230,7 @@ class FusionPatchDataFactory(PatchDataFactory):
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
 
-        # TODO: add credits, missile limit, unexplored map
+        # TODO: add credits, missile limit
         mars_data = {
             "SeedHash": self.description.shareable_hash,
             "StartingLocation": self._create_starting_location(),
