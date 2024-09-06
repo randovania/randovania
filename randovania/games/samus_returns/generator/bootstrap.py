@@ -40,7 +40,7 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     elif artifact_config.prefer_bosses:
         for boss, index in _boss_mapping:
             if config.final_boss.value == boss:
-                _boss_indices.pop(index)
+                _boss_indices.pop(index)  # type: ignore
         if pickup_index in _boss_indices:
             return True
 
