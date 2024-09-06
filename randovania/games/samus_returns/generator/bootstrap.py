@@ -22,8 +22,9 @@ if TYPE_CHECKING:
 def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     assert isinstance(config, MSRConfiguration)
     artifact_config = config.artifacts
-    _boss_indices = [37, 99, 139, 171, 211]
     _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
+    _boss_indices = [37, 99, 139, 171, 211]
+    _boss_mapping = [{"Arachnus", 0}, {"Diggernaut", 2}, {"Queen", 3}, {"Ridley", 4}]
 
     pickup_type = node.extra.get("pickup_type")
     pickup_index = node.pickup_index.index
@@ -37,14 +38,9 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
             return True
     # Boss pickups/locations
     elif artifact_config.prefer_bosses:
-        if config.final_boss == FinalBossConfiguration.ARACHNUS:
-            _boss_indices.pop(0)
-        elif config.final_boss == FinalBossConfiguration.DIGGERNAUT:
-            _boss_indices.pop(2)
-        elif config.final_boss == FinalBossConfiguration.QUEEN:
-            _boss_indices.pop(3)
-        elif config.final_boss == FinalBossConfiguration.RIDLEY:
-            _boss_indices.pop(4)
+        for boss, index in _boss_mapping:
+            if config.final_boss.value == boss:
+                _boss_indices.pop(index)
         if pickup_index in _boss_indices:
             return True
 

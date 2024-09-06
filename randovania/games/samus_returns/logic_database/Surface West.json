@@ -473,7 +473,7 @@
                     "valid_starting_location": false,
                     "event_name": "Proteus Ridley",
                     "connections": {
-                        "Event - Credits": {
+                        "Event - Credits (Proteus Ridley Final Boss)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -527,7 +527,7 @@
                         }
                     }
                 },
-                "Event - Credits": {
+                "Event - Credits (Proteus Ridley Final Boss)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1567,26 +1567,34 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Proteus Ridley",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "misc",
-                                                        "name": "FinalBossRidley",
-                                                        "amount": 1,
-                                                        "negate": true
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "FinalBossRidley",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "Proteus Ridley",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
