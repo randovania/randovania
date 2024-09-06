@@ -164,9 +164,12 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
         if final_boss == FinalBossConfiguration.ARACHNUS:
             self.boss_info_label.setText("After defeating Arachnus, you must re-enter Dam Exterior to finish.")
         elif final_boss == FinalBossConfiguration.DIGGERNAUT:
-            self.boss_info_label.setText("")
+            self.boss_info_label.setText("The Grapple block in Area 6 - Transport to Area 7 will be moved by default.")
         elif final_boss == FinalBossConfiguration.QUEEN:
-            self.boss_info_label.setText("You must also collect Ice Beam and defeat all 10 Larva Metroids.")
+            self.boss_info_label.setText(
+                "The wall behind the Queen will be removed by default.\n"
+                "To fight the Queen, you must also collect Ice Beam and defeat all 10 Larva Metroids."
+            )
         elif final_boss == FinalBossConfiguration.RIDLEY:
             self.boss_info_label.setText("You must also collect the Baby Metroid.")
         else:
