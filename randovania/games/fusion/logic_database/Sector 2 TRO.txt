@@ -254,9 +254,12 @@ Extra - room_id: [9]
       All of the following:
           Morph Ball
           Any of the following:
-              Can Activate Pillar or Can Climb High Jump Wall
-              # Stand on Frozen Reo
-              Combat (Beginner) and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+              # Activate both pillars
+              Can Activate Pillar
+              # Wall jump up to shot blocks then stand on frozen Reo
+              Stand On Frozen Enemies (Beginner) and Wall Jump (Beginner) and Can Freeze Enemies
+              # Simply climb up to item
+              Can Climb High Jump Wall
   > Door to Maintenance Annex
       After Sector 2 Zoro Zig-Zag Bomb Blocks Broken and Can Bounce in Ball
   > Event - Break Bomb Blocks
@@ -397,10 +400,11 @@ Extra - room_id: [13, 46]
       Any of the following:
           Space Jump
           All of the following:
+              # Walljump of stand on Zoro Cocoons
               Hi-Jump
               After Boss Zazabi Defeated or Wall Jump (Beginner)
-          # Freeze Zoros
-          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+          # Hatch and Freeze Kihunters
+          After Boss Nettori Defeated and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
           # JBJ then buffer wall jump https://clips.twitch.tv/GrotesqueYummyGerbilChefFrank-5OKlWbe3ooKrkuFE
           Jump Bombjump (Hypermode) and Wall Jump (Hypermode) and Can Use Bombs
           Wall Jump (Beginner) and Can Single Walljump
@@ -460,7 +464,13 @@ Extra - room_id: [13, 46]
       Trivial
   > Door to Reo Room
       All of the following:
-          Can Use Any Bombs
+          Any of the following:
+              # Break bomb blocks
+              Can Use Power Bombs
+              All of the following:
+                  Can Use Bombs
+                  Mid-Air Morph (Beginner) or Can Use Springball
+          # Climb
           Wall Jump (Beginner) or Can Climb High Jump Wall
   > Door to Ripper Tower
       Morph Ball
@@ -596,6 +606,7 @@ Extra - room_id: [18]
           Screw Attack and After Boss Zazabi Defeated
           Any of the following:
               Space Jump
+              # Wall jump around and barely grab outer ledge: https://youtu.be/GxPt-v_Kj_U
               Wall Jump (Advanced) and Can Single Walljump
   > Event - Zazabi
       All of the following:
@@ -791,8 +802,8 @@ Extra - room_id: [23]
   * Extra - door_idx: (52,)
   > Other to Entrance Lobby
       Any of the following:
-          Combat (Advanced) or Can Kill Tough Beam-Weak Enemy
-          Damage Boosts (Beginner) and Normal Damage ≥ 200
+          Can Kill Tough Beam-Weak Enemy
+          Damage Boosts (Beginner) and Normal Damage ≥ 180
 
 > Other to Entrance Lobby; Heals? False
   * Layers: default
@@ -800,8 +811,8 @@ Extra - room_id: [23]
   * Extra - door_idx: (53,)
   > Door to Eastern Shaft
       Any of the following:
-          Combat (Advanced) or Can Kill Tough Beam-Weak Enemy
-          Damage Boosts (Beginner) and Normal Damage ≥ 200
+          Can Kill Tough Beam-Weak Enemy
+          Damage Boosts (Beginner) and Normal Damage ≥ 180
 
 ----------------
 Overgrown Entrance
@@ -825,7 +836,6 @@ Extra - room_id: [24, 36]
               Space Jump
               # Shinespark up
               Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
-              Hi-Jump and Wall Jump (Intermediate)
               # Freeze the Ki Hunters - https://youtu.be/Zdyr1CPJCr4
               Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
 
@@ -851,12 +861,18 @@ Extra - room_id: [25]
       Any of the following:
           Can Use Power Bombs
           All of the following:
-              Can Use Bombs
+              Can Activate Pillar and Can Use Bombs
+              # TODO: vid
+              Mid-Air Morph (Expert) or Can Use Springball
+          All of the following:
+              Gravity Suit
               Any of the following:
+                  # Activate Pillar
+                  Can Use Any Bombs
                   All of the following:
-                      Can Activate Pillar
-                      Mid-Air Morph (Advanced) or Can Use Springball
-                  Mid-Air Morph (Advanced) and Underwater Wall Jump (Expert)
+                      # Break block with screw w/o pillar
+                      Screw Attack and Knowledge (Beginner)
+                      Wall Jump (Beginner) or Can Climb High Jump Wall
 
 ----------------
 Level 1 Security Room
@@ -950,8 +966,9 @@ Extra - room_id: [27]
   * Extra - door_idx: (63,)
   > Pickup (Missile Tank)
       All of the following:
-          # Currently logically useless but looks pretty frickin sweet https://youtu.be/jkn5df7GKwo
+          # Speedboost to Central Shaft and wrap back around https://youtu.be/jkn5df7GKwo
           Level 0 Locks and Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
+          # Avoid or Kill Dessgeega and Zoros
           Combat (Intermediate) or Can Kill Tough Beam-Weak Enemy
   > Other to Entrance Lobby
       Trivial
@@ -1086,7 +1103,7 @@ Extra - room_id: [32, 35]
   > Door to Owtch Cache B
       Trivial
   > Other to Hidden Recharge Room
-      Morph Ball and Knowledge (Beginner)
+      Morph Ball
   > Door to Nettori Save Room
       Can Kill Tough Beam-Weak Enemy
 
@@ -1135,12 +1152,14 @@ Extra - room_id: [32, 35]
               Space Jump
               All of the following:
                   Hi-Jump
-                  Any of the following:
-                      Wall Jump (Beginner)
-                      # https://youtu.be/roSeFDbWr1s
-                      Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+                  # Climb using vine blocks: https://youtu.be/sQdvfgu3fKA
+                  Wall Jump (Beginner)
+                  # SWJ
+                  Wall Jump (Intermediate) and Can Single Walljump
+                  # Freeze kihunter: https://youtu.be/roSeFDbWr1s
+                  Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
               # Climb using vine blocks: https://youtu.be/sQdvfgu3fKA
-              Movement (Intermediate) and Wall Jump (Beginner)
+              Movement (Beginner) and Wall Jump (Beginner)
           # Weapon Requirements
           Can Kill Tough Beam-Weak Enemy
   > Door to Collapsed Shaft
@@ -1360,6 +1379,7 @@ Extra - room_id: [43]
   > Door to Zoro Zig-Zag
       Any of the following:
           Space Jump
+          # https://youtu.be/8gjeZTK98_8
           Hi-Jump and Jump Extends (Advanced) and Wall Jump (Advanced)
 
 ----------------
@@ -1401,7 +1421,8 @@ Extra - room_id: [47]
   > Pickup (Power Bomb Tank)
       Space Jump or Movement (Intermediate)
   > Door to Collapsed Shaft
-      Speed Booster and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
+      # Jump out of shinespark bonk by holding A https://youtu.be/XqUE9Di2MTU
+      Speed Booster and Knowledge (Advanced) and Movement (Beginner) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Central Shaft
       Trivial
 
@@ -1485,7 +1506,7 @@ Extra - room_id: [50]
       Any of the following:
           Morph Ball and Can Freeze Enemies
           # Crumble jumps: https://youtu.be/TBeE7JbT6OA
-          Movement (Expert)
+          Movement (Hypermode)
           # Respin after touching crumble blocks
           Space Jump and Movement (Advanced)
 
@@ -1536,7 +1557,7 @@ Extra - room_id: [54]
   * Extra - room: 54
   * Extra - blockx: 4
   * Extra - blocky: 5
-  > Beside Pickups
+  > Inside Puzzle
       Trivial
 
 > Pickup (Power Bomb Tank); Heals? False
@@ -1546,23 +1567,25 @@ Extra - room_id: [54]
   * Extra - room: 54
   * Extra - blockx: 9
   * Extra - blocky: 14
-  > Beside Pickups
+  > Inside Puzzle
       Trivial
 
 > Door to Level 1 Security Room; Heals? False
   * Layers: default
   * L0 Hatch to Level 1 Security Room/Door to Crumble City
   * Extra - door_idx: (132,)
-  > Beside Pickups
+  > Inside Puzzle
       Any of the following:
           Space Jump
           All of the following:
               Hi-Jump and Wall Jump (Advanced)
               Any of the following:
+                  # Wall jump off of crumble blocks: https://youtu.be/CzN5mAyRkLc
                   Movement (Hypermode)
+                  # Shinespark across and skip a major portion of the puzzle: https://youtu.be/nQ6gOgd2lrY
                   Speed Booster and Movement (Expert) and Shinespark Tricks (Expert)
 
-> Beside Pickups; Heals? False
+> Inside Puzzle; Heals? False
   * Layers: default
   > Pickup (Energy Tank)
       Trivial
@@ -1570,7 +1593,7 @@ Extra - room_id: [54]
       Trivial
   > Door to Level 1 Security Room
       Any of the following:
-          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Space Jump or Wall Jump (Beginner)
           Speed Booster and Shinespark Tricks (Beginner)
 
 ----------------
