@@ -15,6 +15,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
+from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -415,13 +416,13 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         final_boss_text = ""
         ridley_text = "If you haven't defeated Proteus Ridley, you can either fight him or continue to your ship."
-        if self.configuration.final_boss.value == "Arachnus":
+        if self.configuration.final_boss == FinalBossConfiguration.ARACHNUS:
             final_boss_text = " and then fight Arachnus"
-        elif self.configuration.final_boss.value == "Diggernaut":
+        elif self.configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
             final_boss_text = " and then fight Diggernaut"
-        elif self.configuration.final_boss.value == "Queen":
+        elif self.configuration.final_boss == FinalBossConfiguration.QUEEN:
             final_boss_text = ", collect Ice Beam, defeat all 10 Larva Metroids, and then fight the Metroid Queen"
-        elif self.configuration.final_boss.value == "Ridley":
+        elif self.configuration.final_boss == FinalBossConfiguration.RIDLEY:
             final_boss_text = ", find the Baby, and then fight Proteus Ridley at your ship"
             ridley_text = (
                 "Once you have collected all the required DNA, "
