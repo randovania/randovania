@@ -230,7 +230,7 @@ class FusionPatchDataFactory(PatchDataFactory):
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
 
-        # TODO: add credits, missile limit, unexplored map
+        # TODO: add credits, missile limit
         mars_data = {
             "SeedHash": self.description.shareable_hash,
             "StartingLocation": self._create_starting_location(),
@@ -243,6 +243,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "NavigationText": self._create_nav_text(),
             "DisableDemos": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
+            "UnexploredMap": self.cosmetic_patches.starting_map,
             "StereoDefault": self.cosmetic_patches.stereo_default,
             "DisableMusic": self.cosmetic_patches.disable_music,
             "DisableSoundEffects": self.cosmetic_patches.disable_sfx,

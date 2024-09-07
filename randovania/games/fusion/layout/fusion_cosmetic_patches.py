@@ -46,6 +46,8 @@ class FusionCosmeticPatches(BaseCosmeticPatches):
     stereo_default: bool = True
     disable_music: bool = False
     disable_sfx: bool = False
+    # Misc Options
+    starting_map: bool = True
 
     @classmethod
     def default(cls) -> FusionCosmeticPatches:

@@ -10,6 +10,7 @@ from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, F
 @pytest.mark.parametrize(
     ("field_name", "widget_field"),
     [
+        ("starting_map", "map_check"),
         ("enable_suit_palette", "suit_palette_check"),
         ("enable_beam_palette", "beam_palette_check"),
         ("enable_enemy_palette", "enemy_palette_check"),
