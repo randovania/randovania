@@ -88,14 +88,14 @@ class FusionPatchDataFactory(PatchDataFactory):
         for item, quantity in self.patches.starting_resources().as_resource_gain():
             category = item.extra["StartingItemCategory"]
             # Special Case for Ammo and Metroids
-            if category in ["Missiles", "PowerBombs", "Metroid"]:
+            if category in ["Missiles", "PowerBombs", "Metroids"]:
                 continue
             # Special Case for E-Tanks
             elif category == "Energy":
                 starting_dict[category] += self.configuration.energy_per_tank
                 continue
             # Normal Case
-            starting_dict[category].append(item.extra["item"])
+            starting_dict[category].append(item.extra["StartingItemName"])
         return starting_dict
 
     def _create_tank_increments(self) -> dict:
@@ -230,7 +230,7 @@ class FusionPatchDataFactory(PatchDataFactory):
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
 
-        # TODO: add credits, sound options, demos, missile limit, unexplored map
+        # TODO: add credits, missile limit
         mars_data = {
             "SeedHash": self.description.shareable_hash,
             "StartingLocation": self._create_starting_location(),
@@ -239,9 +239,14 @@ class FusionPatchDataFactory(PatchDataFactory):
             "RequiredMetroidCount": self.configuration.artifacts.required_artifacts,
             "TankIncrements": self._create_tank_increments(),
             "DoorLocks": self._create_door_locks(),
-            "SkipDoorTransitions": self.configuration.instant_transitions,
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
+            "DisableDemos": True,
+            "SkipDoorTransitions": self.configuration.instant_transitions,
+            "UnexploredMap": self.cosmetic_patches.starting_map,
+            "StereoDefault": self.cosmetic_patches.stereo_default,
+            "DisableMusic": self.cosmetic_patches.disable_music,
+            "DisableSoundEffects": self.cosmetic_patches.disable_sfx,
         }
 
         import json

@@ -9,6 +9,7 @@ from randovania.games.samus_returns.layout.msr_configuration import (
     MSRArtifactConfig,
     MSRConfiguration,
 )
+from randovania.games.samus_returns.layout.preset_describer import _BOSS_NAME
 from randovania.interface_common.preset_manager import PresetManager
 
 
@@ -48,8 +49,8 @@ def test_msr_format_params(artifacts) -> None:
         dna_where = "Prefers Stronger Metroids"
     elif artifacts.prefer_bosses:
         dna_where = "Prefers Bosses"
-    else:
-        dna_where = "Defeat Proteus Ridley"
+
+    final_boss = "Defeat " + _BOSS_NAME[configuration.final_boss]
 
     # Assert
     assert dict(result) == {
@@ -63,9 +64,9 @@ def test_msr_format_params(artifacts) -> None:
         "Gameplay": ["Starts at Surface East - Landing Site"],
         "Difficulty": [],
         "Goal": (
-            [f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}", dna_where]
+            [f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA", dna_where, final_boss]
             if artifacts.required_artifacts
-            else [dna_where]
+            else [final_boss]
         ),
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",

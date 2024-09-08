@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 
+### AM2R
+
+- Added: 1 more joke hint
+- Fixed: A joke hint showing as two joke hints.
+
 ### Metroid Dread
 
 #### Logic Database
@@ -18,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Various individual means of using Speed Booster to climb EMMI Zone Spinner from the Tunnel to White EMMI Area, using Speed Booster Conservation, and a choice between Normal Bombs, Cross Bombs and Spin Boost.
 - Fixed: Logic now accounts for the need to escape through the doors after pulling open the EMMI Zone Spinner with Grapple Beam.
 - Removed: Using Speed Booster to climb the EMMI Zone Spinner Room from the Door to White EMMI Arena (Power).
+
+### Metroid: Samus Returns
+
+- Added: Option to change the final boss to be Arachnus, Diggernaut, Metroid Queen, or Proteus Ridley (default).
 
 ## [8.4.0] - 2024-09-04
 

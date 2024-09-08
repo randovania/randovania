@@ -16,7 +16,7 @@ Extra - room_id: [0]
           Any of the following:
               # Get up to the screw blocks
               Space Jump
-              Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando
+              Level 0 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando
               # Single Wall Jump from below - https://youtu.be/BfqjAd4Mq6Q
               Hi-Jump and Wall Jump (Intermediate) and Can Single Walljump
   > Door to Monkey Bars of Fire
@@ -125,6 +125,7 @@ Extra - room_id: [3]
   * Open Hatch to Entrance Lobby/Door to Security Access
   * Extra - door_idx: (8,)
   > Behind Wall
+      # Is safe in DLR
       Speed Booster and Disabled Entrance Rando
 
 > Door to Level 2 Security Room; Heals? False
@@ -209,7 +210,7 @@ Extra - room_id: [5]
           # Get past wall enemy. For simplicity's sake, we assume the enemies are always there.
           Charge Beam or Missiles ≥ 5 or Morph Ball or Screw Attack or Wave Beam or Normal Damage ≥ 80
           # Shinespark from adjacent room: https://youtu.be/3sm2XhRsRRI
-          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Bob's Abode; Heals? False
   * Layers: default
@@ -236,6 +237,10 @@ Extra - room_id: [6, 24]
   * Extra - room: 6
   * Extra - blockx: 5
   * Extra - blocky: 17
+  > Door to B.O.X. Access
+      Any of the following:
+          Can Use Bombs
+          Can Use Power Bombs and Can Use Springball
   > Door to Red Tower
       Can Use Any Bombs
 
@@ -247,7 +252,7 @@ Extra - room_id: [6, 24]
       Any of the following:
           Can Kill Super Geron
           # Old BOB skip
-          Hi-Jump and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Hi-Jump and Level 0 Locks and Level 2 Locks and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to B.O.X. Access; Heals? False
   * Layers: default
@@ -269,11 +274,8 @@ Extra - room_id: [6, 24]
           Morph Ball and Can Break Single Bomb Blocks
           Mid-Air Morph (Beginner) or Can Bounce in Ball
   > Door to B.O.X. Access
-      Any of the following:
-          Can Use Bombs
-          Can Use Power Bombs and Can Use Springball
-          # New Bob Skip (Wall Clip) - https://youtu.be/aC3VHjplUQw
-          Movement (Hypermode) and Can Use Bombs and Can Use Springball
+      # New Bob Skip (Wall Clip) - https://youtu.be/aC3VHjplUQw
+      Movement (Hypermode) and Can Use Bombs and Can Use Springball
   > Other to Namihe's Lair
       Morph Ball and Can Break Single Bomb Blocks
 
@@ -322,9 +324,9 @@ Extra - room_id: [8]
   * L0 Hatch to Deserted Runway/Door to Alcove
   * Extra - door_idx: (18,)
   > Above E-Tank
-      Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Below E-Tank
-      Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Level 0 Locks and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Bottom Right
       Trivial
 
@@ -343,9 +345,14 @@ Extra - room_id: [8]
               # Use Pillar to Morph Ball Jump and place a Bomb
               Can Activate Pillar
               Any of the following:
-                  Can Use Springball
-                  # Bomb Jump and place a bomb - https://youtu.be/zOmdb38qpkk
-                  Movement (Beginner) and Can Use Bombs
+                  Can Use Power Bombs
+                  All of the following:
+                      # With Bombs
+                      Can Use Bombs
+                      Any of the following:
+                          Can Use Springball
+                          # Bomb Jump and place a bomb - https://youtu.be/zOmdb38qpkk
+                          Movement (Beginner)
           # Alternate - Screw Attack and some extra Jump height (knowledge)
           Screw Attack and Knowledge (Beginner) and Can Climb High Jump Wall
   > Other to Entrance Lobby
@@ -741,7 +748,10 @@ Extra - room_id: [19]
   > Beside Pickups
       All of the following:
           Morph Ball
-          Space Jump or Movement (Hypermode) or Can Freeze Enemies
+          Any of the following:
+              Space Jump or Can Freeze Enemies
+              # Frame perfect crumble jumps: https://youtu.be/AzL1VbN6qxk
+              Movement (Hypermode)
           Any of the following:
               Varia Suit
               Damage Runs (Intermediate) and Heat Damage ≥ 85
@@ -1336,7 +1346,12 @@ Extra - room_id: [37]
   > Pickup (Hidden Power Bomb Tank)
       Any of the following:
           Can Use Power Bombs
-          Can Use Bombs and Can Use Springball
+          All of the following:
+              Can Use Bombs
+              Any of the following:
+                  Can Use Springball
+                  # JBJ: https://youtu.be/xyR9PAwAMYM
+                  Jump Bombjump (Expert)
           Screw Attack and Knowledge (Beginner)
   > Area Transition to Sector 5 (ARC)
       Trivial

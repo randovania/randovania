@@ -4,7 +4,7 @@ JOKE_HINTS = [
     "*This Wisdom Septogg does not seem very wise.*",
     "*How many Ridley's have you found so far in this game?*",
     "*Movement in Morph Ball is faster than unmorphed, except for Speedboosting.*",
-    "*Samus Aran... You must exterminate the Metroids once and for all!*"
+    "*Samus Aran... You must exterminate the Metroids once and for all!*",
     "*Posture check! Stretch your wrists, flex your fingers, and straighten your back.*",
     "*Ma'am, thou'rt mistaken, I'm not a pet, I'm a Septogg and master bug eater.*",
     "*Why so Serris?*",
@@ -29,6 +29,7 @@ JOKE_HINTS = [
     "*Metroid DNA!? Never heard of it.*",
     "*Ash was here! Gary is a Looser!*",
     "*Don't worry, one Metroid kill doesn't make you a serial killer.*",
+    "*A Controller is recommended*",
     # Multi line hints here, for easier viewing
     (
         "*According to all known laws of aviation, there is no way that a Septogg should be able to fly. "
