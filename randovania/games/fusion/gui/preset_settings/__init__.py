@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
+from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
 
 if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
@@ -29,7 +29,7 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[typ
         PresetLocationPool,
         MetroidPresetItemPool,
         PresetPatcherEnergy,
-        PresetStartingArea,
+        PresetMetroidStartingArea,
         PresetDockRando,
         PresetFusionPatches,
     ]

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 
+### AM2R
+
+- Added: 1 more joke hint
+- Fixed: A joke hint showing as two joke hints.
+
 ### Metroid: Samus Returns
 
 - Added: Option to change the final boss to be Arachnus, Diggernaut, Metroid Queen, or Proteus Ridley (default).
