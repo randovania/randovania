@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.0] - 2024-09-04
 
+- Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
+- Changed: In the game details window, add a tooltip mentioning when the export of a game cannot be stopped.
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
 
 ### AM2R

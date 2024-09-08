@@ -37,7 +37,16 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
     }
         """
 
-    style += "QScrollArea { border: default; }"
+    style += """
+    QScrollArea { border: default; }
+
+    QStatusBar QLabel:hover {
+        background: transparent;
+    }
+    QStatusBar QProgressBar:hover {
+        background: transparent;
+    }
+    """
 
     if active:
         new_palette.setColor(QtGui.QPalette.Link, Qt.cyan)
