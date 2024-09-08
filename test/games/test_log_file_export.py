@@ -125,7 +125,7 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         "samus_returns/door_lock_access_open.rdvgame",  # door lock + access open doors
         "samus_returns/custom_required_dna.rdvgame",  # custom required dna 20/30
-        "samus_returns/custom_final_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 13 dna anywhere
+        "samus_returns/custom_final_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]
