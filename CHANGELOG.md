@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: 1 more joke hint
 - Fixed: A joke hint showing as two joke hints.
 
+### Metroid: Samus Returns
+
+- Added: Option to change the final boss to be Arachnus, Diggernaut, Metroid Queen, or Proteus Ridley (default).
+
 ## [8.4.0] - 2024-09-04
 
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.

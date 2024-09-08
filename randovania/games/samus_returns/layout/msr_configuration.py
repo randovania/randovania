@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import dataclasses
+from enum import Enum
 
-from randovania.bitpacking.bitpacking import BitPackDataclass
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.layout.hint_configuration import HintConfiguration
@@ -18,6 +19,18 @@ class MSRArtifactConfig(BitPackDataclass, JsonDataclass):
     prefer_anywhere: bool
     required_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
     placed_artifacts: int = dataclasses.field(metadata={"min": 0, "max": 39, "precision": 1})
+
+
+class FinalBossConfiguration(BitPackEnum, Enum):
+    ARACHNUS = "Arachnus"
+    DIGGERNAUT = "Diggernaut"
+    QUEEN = "Queen"
+    RIDLEY = "Ridley"
+    RANDOM = "Random"
+
+    @classmethod
+    def default(cls) -> FinalBossConfiguration:
+        return cls.RIDLEY
 
 
 @dataclasses.dataclass(frozen=True)
@@ -44,10 +57,25 @@ class MSRConfiguration(BaseConfiguration):
     hints: HintConfiguration
     constant_heat_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
     constant_lava_damage: int | None = dataclasses.field(metadata={"min": 0, "max": 1000, "precision": 1})
+    final_boss: FinalBossConfiguration  # TODO: Add support to use random option
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
+
+    def active_layers(self) -> set[str]:
+        result = super().active_layers()
+        _bosses = ["arachnus", "diggernaut", "queen", "ridley"]
+        lower_boss = self.final_boss.value.lower()
+
+        # Enable final boss layers
+        result.add(f"final-boss-{lower_boss}")
+        for boss in _bosses:
+            if lower_boss == boss:
+                continue
+            result.add(f"final-boss-not-{boss}")
+
+        return result
 
     def unsupported_features(self) -> list[str]:
         result = super().unsupported_features()

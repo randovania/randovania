@@ -15,6 +15,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
+from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -413,6 +414,21 @@ class MSRPatchDataFactory(PatchDataFactory):
                 ", ".join(restricted_text[:-1]), " and " if len(restricted_text) > 1 else "", restricted_text[-1]
             )
 
+        final_boss_text = ""
+        ridley_text = "If you haven't defeated Proteus Ridley, you can either fight him or continue to your ship."
+        if self.configuration.final_boss == FinalBossConfiguration.ARACHNUS:
+            final_boss_text = " and then fight Arachnus"
+        elif self.configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            final_boss_text = " and then fight Diggernaut"
+        elif self.configuration.final_boss == FinalBossConfiguration.QUEEN:
+            final_boss_text = ", collect Ice Beam, defeat all 10 Larva Metroids, and then fight the Metroid Queen"
+        elif self.configuration.final_boss == FinalBossConfiguration.RIDLEY:
+            final_boss_text = ", find the Baby, and then fight Proteus Ridley at your ship"
+            ridley_text = (
+                "Once you have collected all the required DNA, "
+                "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
+            )
+
         # Intro Text
         text["GUI_CUTSCENE_OPENING_1"] = (
             "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
@@ -422,18 +438,13 @@ class MSRPatchDataFactory(PatchDataFactory):
             "Metroids now also drop items."
         )
         text["GUI_CUTSCENE_OPENING_3"] = (
-            "In this randomizer, you need to collect all Metroid DNA, find the Baby, "
-            "and then fight Proteus Ridley at your ship to leave the planet."
+            f"In this randomizer, you need to collect all Metroid DNA{final_boss_text} to leave the planet."
         )
         text["GUI_CUTSCENE_OPENING_4"] = (
             f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
             f"It can be found {location_text}."
         )
-        text["GUI_CUTSCENE_OPENING_5"] = (
-            "You may freely travel between Surface and Area 8.|"
-            "Once you have collected all the required DNA, "
-            "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
-        )
+        text["GUI_CUTSCENE_OPENING_5"] = f"You may freely travel between Surface and Area 8.|{ridley_text}"
         text["GUI_CUTSCENE_OPENING_6"] = (
             "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
             "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
@@ -621,7 +632,7 @@ class MSRPatchDataFactory(PatchDataFactory):
     def _objective(self, config: MSRConfiguration) -> dict:
         return {
             "required_dna": config.artifacts.required_artifacts,
-            "final_boss": "Ridley",
+            "final_boss": config.final_boss.value,
         }
 
     def create_memo_data(self) -> dict:

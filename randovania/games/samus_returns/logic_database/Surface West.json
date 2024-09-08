@@ -461,8 +461,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -7912.531113559391,
-                        "y": 3585.9121883543467,
+                        "x": -8070.22,
+                        "y": 3200.52,
                         "z": 0.0
                     },
                     "description": "",
@@ -473,11 +473,20 @@
                     "valid_starting_location": false,
                     "event_name": "Proteus Ridley",
                     "connections": {
-                        "Top of Mountain": {
+                        "Event - Credits (Proteus Ridley Final Boss)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Dock to Surface East": {
+                            "type": "resource",
+                            "data": {
+                                "type": "misc",
+                                "name": "FinalBossRidley",
+                                "amount": 1,
+                                "negate": true
                             }
                         }
                     }
@@ -517,6 +526,59 @@
                             }
                         }
                     }
+                },
+                "Event - Credits (Proteus Ridley Final Boss)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6370.02,
+                        "y": 4065.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "final-boss-ridley"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Credits",
+                    "connections": {
+                        "Top of Mountain": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Surface East": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9350.5,
+                        "y": 2500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "final-boss-not-ridley"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface East",
+                        "area": "Landing Site",
+                        "node": "Dock from Surface West"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {}
                 }
             }
         },
@@ -1505,8 +1567,59 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "All DNA"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "FinalBossRidley",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "Proteus Ridley",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "All DNA"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "FinalBossRidley",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
