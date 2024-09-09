@@ -19,7 +19,6 @@ if typing.TYPE_CHECKING:
 _FIELDS = [
     "instant_transitions",
     "anti_softlock",
-    "pb_without_bombs",
 ]
 
 

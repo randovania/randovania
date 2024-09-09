@@ -20,7 +20,6 @@ class FusionArtifactConfig(BitPackDataclass, JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class FusionConfiguration(BaseConfiguration):
     anti_softlock: bool
-    pb_without_bombs: bool
     instant_transitions: bool
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifacts: FusionArtifactConfig
