@@ -4358,7 +4358,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get to the ledge at Field Access, then return https://youtu.be/I5LtCOvlR80",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4370,12 +4370,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Get to the ledge at Field Access, then return https://youtu.be/I5LtCOvlR80",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntrRand",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
