@@ -81,13 +81,28 @@
           <property name="title">
            <string>Room Design</string>
           </property>
-          <layout class="QVBoxLayout" name="unlock_layout"/>
+          <layout class="QVBoxLayout" name="unlock_layout">
+           <item>
+            <widget class="QCheckBox" name="anti_softlock_check">
+             <property name="text">
+              <string>Enable Anti-Softlock Room Edits</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="anti_softlock_label">
+             <property name="text">
+              <string>Enabling this will modify certain rooms to prevent potential softlocks for the player.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="misc_group">
+         <widget class="QGroupBox" name="gameplay_group">
           <property name="title">
-           <string>Miscellaneous</string>
+           <string>Gameplay</string>
           </property>
           <layout class="QVBoxLayout" name="instant_transitions_layout">
            <item>

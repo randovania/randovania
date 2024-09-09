@@ -31,6 +31,7 @@ class FusionBootstrap(MetroidBootstrap):
         enabled_resources = set()
         if configuration.dock_rando.is_enabled():
             enabled_resources.add("DoorLockRando")
+        enabled_resources.add("BomblessPBs")
         return enabled_resources
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:

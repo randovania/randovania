@@ -242,6 +242,8 @@ class FusionPatchDataFactory(PatchDataFactory):
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
             "DisableDemos": True,
+            "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
+            "PowerBombsWithoutBombs": True,
             "SkipDoorTransitions": self.configuration.instant_transitions,
             "UnexploredMap": self.cosmetic_patches.starting_map,
             "StereoDefault": self.cosmetic_patches.stereo_default,
