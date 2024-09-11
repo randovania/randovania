@@ -3071,7 +3071,7 @@
                         "Door to Lava Maze": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: add damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3080,6 +3080,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "HeatDamage",
+                                                        "amount": 120,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3121,7 +3147,7 @@
                         "Door to Red Tower": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: add damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3130,6 +3156,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "HeatDamage",
+                                                        "amount": 120,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3213,28 +3265,158 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Can damage run this with varia (about 500 energy)",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "GravitySuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Get through the lava",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Intended",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "GravitySuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "VariaSuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Suitless",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "HeatDamage",
+                                                                    "amount": 260,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "LavaDamage",
+                                                                    "amount": 400,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Grav only",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "GravitySuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "HeatDamage",
+                                                                    "amount": 135,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "LavaDamage",
+                                                                    "amount": 225,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Varia only",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "VariaSuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "LavaDamage",
+                                                                    "amount": 225,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3248,7 +3430,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Heat resistence - TODO: Add damage reqs",
+                                            "comment": "Heat resistence",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3257,6 +3439,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "HeatDamage",
+                                                                    "amount": 105,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3827,7 +4035,7 @@
                         "Door to Boiler Access": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Heat DMG",
+                                "comment": "Heat DMG",
                                 "items": [
                                     {
                                         "type": "or",
@@ -3841,6 +4049,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "HeatDamage",
+                                                                    "amount": 160,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3943,7 +4177,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Heat DMG - TODO: heat run?",
+                                            "comment": "Heat DMG",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3952,6 +4186,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "HeatDamage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4419,7 +4679,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "HeatDamage",
-                                                                    "amount": 5,
+                                                                    "amount": 10,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -4507,7 +4767,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "HeatDamage",
-                                                        "amount": 5,
+                                                        "amount": 10,
                                                         "negate": false
                                                     }
                                                 }
@@ -4663,7 +4923,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage run",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4672,6 +4932,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "HeatDamage",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4728,7 +5014,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "HeatDamage",
-                                                        "amount": 5,
+                                                        "amount": 10,
                                                         "negate": false
                                                     }
                                                 },
@@ -4771,7 +5057,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "HeatDamage",
-                                                        "amount": 5,
+                                                        "amount": 20,
                                                         "negate": false
                                                     }
                                                 },
@@ -4828,7 +5114,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "LavaDamage",
-                                                                    "amount": 110,
+                                                                    "amount": 140,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4934,7 +5220,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "HeatDamage",
-                                                                    "amount": 85,
+                                                                    "amount": 80,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -6448,7 +6734,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Lava Run",
+                                            "comment": "Lava Run - TODO: exact damage run numbers",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -8253,7 +8539,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "HeatDamage",
-                                                                    "amount": 40,
+                                                                    "amount": 10,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8380,7 +8666,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "HeatDamage",
-                                                                    "amount": 40,
+                                                                    "amount": 50,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8500,7 +8786,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "LavaDamage",
-                                                                    "amount": 75,
+                                                                    "amount": 50,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8609,7 +8895,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "HeatDamage",
-                                                                    "amount": 40,
+                                                                    "amount": 10,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -8655,7 +8941,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "HeatDamage",
-                                                        "amount": 40,
+                                                        "amount": 35,
                                                         "negate": false
                                                     }
                                                 }
@@ -8698,7 +8984,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "HeatDamage",
-                                                        "amount": 30,
+                                                        "amount": 45,
                                                         "negate": false
                                                     }
                                                 }
