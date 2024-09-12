@@ -142,7 +142,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 }
                                             ]
                                         }
@@ -644,7 +644,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     },
                                     {
                                         "type": "and",
@@ -1309,7 +1309,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     },
                                     {
                                         "type": "resource",
@@ -1517,7 +1517,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1596,7 +1596,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            27
+                            53
                         ]
                     },
                     "valid_starting_location": false,
@@ -1918,7 +1918,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "and",
@@ -3416,7 +3416,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     },
                                     {
                                         "type": "and",
@@ -3643,7 +3643,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Kill Eye Door"
+                                        "data": "Can Kill Gadora"
                                     },
                                     {
                                         "type": "or",
@@ -4261,7 +4261,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -6542,33 +6542,41 @@
                                                                 "data": "Can Use Bombs"
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Use Springball"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Floor must be intact or you'll have to reload the room: https://youtu.be/T-MYy-tZVU0",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "JBJ",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Springball"
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Floor must be intact or you'll have to reload the room: https://youtu.be/T-MYy-tZVU0",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "JBJ",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -7051,7 +7059,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Can Climb High Jump Wall"
+                                                                            "data": "Have Any Jump Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -7337,7 +7345,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     },
                                     {
                                         "type": "resource",

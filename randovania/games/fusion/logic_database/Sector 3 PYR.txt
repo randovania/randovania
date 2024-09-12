@@ -144,13 +144,9 @@ Extra - room_id: [3]
   * Layers: default
   > Pickup (Hidden Missile Tank)
       Any of the following:
-          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Wall Jump (Beginner) or Have Any Jump Upgrade
           Speed Booster and Shinespark Tricks (Beginner)
-          All of the following:
-              After Level 2 Locks Released
-              Any of the following:
-                  Can Kill Tough Beam-Resistant Enemy
-                  Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+          After Level 2 Locks Released and Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Entrance Lobby
       Speed Booster
   > Door to Level 2 Security Room
@@ -330,7 +326,6 @@ Extra - room_id: [8]
   > Above E-Tank
       Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Below E-Tank
-      # Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs
       Level 0 Locks and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Bottom Right
       Trivial
@@ -359,7 +354,7 @@ Extra - room_id: [8]
                           # Bomb Jump and place a bomb - https://youtu.be/zOmdb38qpkk
                           Movement (Beginner)
           # Alternate - Screw Attack and some extra Jump height (knowledge)
-          Screw Attack and Knowledge (Beginner) and Can Climb High Jump Wall
+          Screw Attack and Knowledge (Beginner) and Have Any Jump Upgrade
   > Other to Entrance Lobby
       Any of the following:
           Can Use Power Bombs
@@ -388,8 +383,6 @@ Extra - room_id: [8]
                   Wall Jump (Beginner)
           # HJ and Wall Jumps: https://youtu.be/vIQJEjCc5n0
           Hi-Jump and Wall Jump (Intermediate)
-          # Single Wall Jump: https://youtu.be/Ge8yZuaVguo
-          Wall Jump (Beginner) and Can Single Walljump
   > Below E-Tank
       Can Break Single Bomb Blocks
 
@@ -412,70 +405,39 @@ Extra - room_id: [9]
   * L0 Hatch to Alcove/Door to Deserted Runway
   * Extra - door_idx: (19,)
   > Pickup (Missile Tank)
-      All of the following:
-          Speed Booster
-          Any of the following:
-              # Get past enemies
-              Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Intermediate) and Normal Damage ≥ 150
+      Speed Booster
   > Other to B.O.X. Arena
-      Any of the following:
-          # Get past enemies
-          Speed Booster or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-          Damage Boosts (Intermediate) and Normal Damage ≥ 150
+      Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
   > Door to Chute Access
-      All of the following:
-          Screw Attack
-          Any of the following:
-              # Get past enemies
-              Speed Booster or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Intermediate) and Normal Damage ≥ 150
+      Screw Attack
   > Door to Glass Tube to Sector 1 (SRX)
       All of the following:
           Screw Attack
           Any of the following:
-              # Get up to the screw blocks
-              Speed Booster or Can Climb High Jump Wall
+              Speed Booster or Have Any Jump Upgrade
               # https://youtu.be/7dIXfR4dkTA
               Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies
-          Any of the following:
-              # Get past enemies
-              Speed Booster or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Intermediate) and Normal Damage ≥ 150
 
 > Other to B.O.X. Arena; Heals? False
   * Layers: default
   * Open Passage to B.O.X. Arena/Other to Deserted Runway
   * Extra - door_idx: (38,)
   > Door to Alcove
-      Any of the following:
-          # Get past enemies
-          Speed Booster or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-          Damage Boosts (Intermediate) and Normal Damage ≥ 150
+      Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
 
 > Door to Chute Access; Heals? False
   * Layers: default
   * Open Hatch to Chute Access/Other to Deserted Runway
   * Extra - door_idx: (83,)
   > Door to Alcove
-      All of the following:
-          Screw Attack
-          Any of the following:
-              # Get past enemies
-              Speed Booster or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Intermediate) and Normal Damage ≥ 150
+      Screw Attack
 
 > Door to Glass Tube to Sector 1 (SRX); Heals? False
   * Layers: default
   * L0 Hatch to Glass Tube to Sector 1 (SRX)/Door to Deserted Runway
   * Extra - door_idx: (84,)
   > Door to Alcove
-      All of the following:
-          Screw Attack
-          Any of the following:
-              # Get past enemies
-              Speed Booster or Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Intermediate) and Normal Damage ≥ 150
+      Screw Attack
 
 ----------------
 Red Tower
@@ -522,16 +484,18 @@ Extra - room_id: [11]
   * L2 Hatch to Red Tower/Door to Lava Reservoirs
   * Extra - door_idx: (22,)
   > Door to Lava Maze
-      # TODO: add damage reqs
-      Varia Suit
+      All of the following:
+          Varia Suit
+          Damage Runs (Intermediate) or Heat Damage ≥ 120
 
 > Door to Lava Maze; Heals? False
   * Layers: default
   * L0 Hatch to Lava Maze/Door to Lava Reservoirs
   * Extra - door_idx: (23,)
   > Door to Red Tower
-      # TODO: add damage reqs
-      Varia Suit
+      All of the following:
+          Varia Suit
+          Damage Runs (Intermediate) or Heat Damage ≥ 120
 
 ----------------
 Lava Maze
@@ -552,12 +516,24 @@ Extra - room_id: [12]
   * L0 Hatch to Lava Reservoirs/Door to Lava Maze
   * Extra - door_idx: (24,)
   > Pickup (Power Bomb Tank)
-      # TODO: Can damage run this with varia (about 500 energy)
-      Gravity Suit and Varia Suit and Can Use Power Bombs
+      All of the following:
+          Can Use Power Bombs
+          Any of the following:
+              # Get through the lava
+              # Intended
+              Gravity Suit and Varia Suit
+              # Suitless
+              Damage Runs (Advanced) and Heat Damage ≥ 260 and Lava Damage ≥ 400
+              # Grav only
+              Gravity Suit and Damage Runs (Advanced) and Heat Damage ≥ 135 and Lava Damage ≥ 225
+              # Varia only
+              Varia Suit and Damage Runs (Advanced) and Lava Damage ≥ 225
   > Door to Sova Suite
       All of the following:
-          # Heat resistence - TODO: Add damage reqs
-          Varia Suit
+          Any of the following:
+              # Heat resistence
+              Varia Suit
+              Damage Runs (Intermediate) and Heat Damage ≥ 105
           Any of the following:
               Space Jump
               # You do not need HJ or Jump Extends
@@ -639,12 +615,12 @@ Extra - room_id: [15]
   * Extra - door_idx: (30,)
   > Door to Boiler Access
       All of the following:
-          # TODO: Heat DMG
-          Varia Suit
+          # Heat DMG
           Any of the following:
-              # Get around Namihe
-              Movement (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Beginner) and Normal Damage ≥ 75
+              Varia Suit
+              Damage Runs (Intermediate) and Heat Damage ≥ 160
+          # Get around enemy
+          Charge Beam or Missiles ≥ 10 or Screw Attack or Movement (Intermediate) or Normal Damage ≥ 75
 
 > Door to Boiler Access; Heals? False
   * Layers: default
@@ -652,12 +628,12 @@ Extra - room_id: [15]
   * Extra - door_idx: (31,)
   > Door to Pyrochamber Access
       All of the following:
-          # Heat DMG - TODO: heat run?
-          Varia Suit
           Any of the following:
-              # Get around Namihe
-              Movement (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-              Damage Boosts (Beginner) and Normal Damage ≥ 75
+              # Heat DMG
+              Varia Suit
+              Damage Runs (Intermediate) and Heat Damage ≥ 150
+          # Get around the enemy
+          Charge Beam or Missiles ≥ 10 or Screw Attack or Movement (Intermediate) or Normal Damage ≥ 75
 
 ----------------
 Boiler Access
@@ -692,7 +668,7 @@ Extra - room_id: [17, 29]
   * L0 Hatch to Boiler Access/Door to Main Boiler
   * Extra - door_idx: (34, 72)
   > Door to Main Boiler Control Room
-      Can Kill Eye Door
+      Can Kill Gadora
 
 > Door to Main Boiler Control Room; Heals? False
   * Layers: default
@@ -734,7 +710,7 @@ Extra - room_id: [19]
           Wave Beam
           Any of the following:
               Varia Suit
-              Damage Runs (Beginner) and Heat Damage ≥ 5
+              Damage Runs (Beginner) and Heat Damage ≥ 10
 
 > Door to Processing Access (Upper); Heals? False
   * Layers: default
@@ -743,7 +719,7 @@ Extra - room_id: [19]
   > Beside Lava
       Any of the following:
           Varia Suit
-          Damage Runs (Beginner) and Heat Damage ≥ 5
+          Damage Runs (Beginner) and Heat Damage ≥ 10
 
 > Door to Garbage Chute; Heals? False
   * Layers: default
@@ -764,7 +740,12 @@ Extra - room_id: [19]
   > Pickup (Energy Tank)
       Trivial
   > Pickup (Missile Tank)
-      Varia Suit and Can Bounce in Ball
+      All of the following:
+          Can Bounce in Ball
+          Any of the following:
+              # Damage run
+              Varia Suit
+              Damage Runs (Beginner) and Heat Damage ≥ 30
   > Beside Lava
       Trivial
 
@@ -773,18 +754,18 @@ Extra - room_id: [19]
   > Door to Processing Access (Lower)
       Any of the following:
           Varia Suit
-          Damage Runs (Beginner) and Heat Damage ≥ 5
+          Damage Runs (Beginner) and Heat Damage ≥ 10
   > Door to Processing Access (Upper)
       Any of the following:
           Varia Suit
-          Damage Runs (Beginner) and Heat Damage ≥ 5
+          Damage Runs (Beginner) and Heat Damage ≥ 20
   > Door to Garbage Chute
       All of the following:
           Gravity Suit and Screw Attack
           Any of the following:
               # Heat Run logic (need Gravity to do Screw Attack in the lava)
               # Gravity - Lava and Heat Damage
-              Damage Runs (Intermediate) and Lava Damage ≥ 110
+              Damage Runs (Intermediate) and Lava Damage ≥ 140
               # Varia and Gravity - No Damage
               Varia Suit
   > Beside Pickups
@@ -796,7 +777,7 @@ Extra - room_id: [19]
               Movement (Hypermode)
           Any of the following:
               Varia Suit
-              Damage Runs (Intermediate) and Heat Damage ≥ 85
+              Damage Runs (Intermediate) and Heat Damage ≥ 80
 
 ----------------
 Elevator to Main Deck
@@ -910,15 +891,13 @@ Extra - room_id: [23, 18]
               Missiles ≥ 45 and Combat (Beginner) and 10 DMG Missiles
           Any of the following:
               # Health Requirements
-              Normal Damage ≥ 500
-              # Fight Boss Damageless: https://youtu.be/ejVViu60J_o
-              Combat (Expert)
+              Combat (Expert) or Normal Damage ≥ 500
               Combat (Beginner) and Normal Damage ≥ 400
               Combat (Intermediate) and Normal Damage ≥ 300
               Combat (Advanced) and Normal Damage ≥ 100
           Any of the following:
               # Dodging Requirements
-              Combat (Advanced) or Normal Damage ≥ 200 or Can Climb High Jump Wall
+              Combat (Advanced) or Normal Damage ≥ 200 or Have Any Jump Upgrade
               Screw Attack and Combat (Intermediate)
   > Door to Data Room
       After Boss B.O.X. Defeated
@@ -940,9 +919,7 @@ Extra - room_id: [25]
           Combat (Beginner) or 20 DMG Missiles
           Any of the following:
               # Normal DMG
-              Normal Damage ≥ 200
-              # Fight Boss Damageless: https://youtu.be/WdEd1majcTU
-              Damage Boosts (Intermediate)
+              Combat (Intermediate) or Normal Damage ≥ 200
               Combat (Beginner) and Normal Damage ≥ 100
 
 > Event - Cooling Unit; Heals? False
@@ -1002,47 +979,28 @@ Extra - room_id: [27]
   > Door to Fiery Storage
       Any of the following:
           All of the following:
-              # Climb on bars: https://youtu.be/xEiqL9Vmaj4
+              # Climb on bars
+              Charge Beam or Missiles ≥ 10
               Any of the following:
-                  # Get past sidehoppers
-                  Charge Beam or Missiles ≥ 10
-                  Damage Boosts (Advanced) and Normal Damage ≥ 150
-              Any of the following:
-                  # Heat Reqs
                   Varia Suit
-                  Damage Runs (Intermediate) and Heat Damage ≥ 100
+                  Damage Runs (Intermediate) and Heat Damage ≥ 200
           All of the following:
-              # Shinespark Across
-              Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Shinespark
+              Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
-                  # HJ: https://youtu.be/2wW4_8pO65U
-                  Hi-Jump and Shinespark Tricks (Beginner)
-                  # NHJ: https://youtu.be/3Ua3Z44EpUY
-                  Shinespark Tricks (Intermediate)
-              Any of the following:
-                  # Heat Reqs
-                  Varia Suit
-                  Damage Runs (Beginner) and Heat Damage ≥ 25
-          All of the following:
-              # Space Jump Across
-              Space Jump
-              Any of the following:
-                  Screw Attack
-                  # Avoid Sidehoppers and Lava Flares: https://youtu.be/z9RxZEpREJI
-                  Combat (Expert)
-                  Damage Boosts (Advanced) and Normal Damage ≥ 120
-              Any of the following:
-                  # Heat Reqs
                   Varia Suit
                   Damage Runs (Beginner) and Heat Damage ≥ 50
+          All of the following:
+              # Space Jump
+              Space Jump
+              Screw Attack or Movement (Beginner)
+              Any of the following:
+                  Varia Suit
+                  Damage Runs (Beginner) and Heat Damage ≥ 100
           Any of the following:
-              # Lava Run
+              # Lava Run - TODO: exact damage run numbers
               Gravity Suit and Varia Suit
-              All of the following:
-                  # Damage Reqs: https://youtu.be/9PTVfHAc1C8
-                  Damage Runs (Advanced) and Heat Damage ≥ 90 and Lava Damage ≥ 250
-                  # Get past lava flares
-                  Movement (Advanced) or Normal Damage ≥ 150
+              Damage Runs (Advanced) and Heat Damage ≥ 100 and Lava Damage ≥ 200
 
 > Door to Fiery Storage; Heals? False
   * Layers: default
@@ -1051,42 +1009,28 @@ Extra - room_id: [27]
   > Door to Entrance Lobby
       Any of the following:
           All of the following:
-              # Climb on bars: https://youtu.be/xEiqL9Vmaj4
+              # Climb on bars
+              Charge Beam or Missiles ≥ 10
               Any of the following:
-                  # Get past sidehoppers
-                  Charge Beam or Missiles ≥ 10
-                  Damage Boosts (Advanced) and Normal Damage ≥ 150
-              Any of the following:
-                  # Heat Reqs
                   Varia Suit
-                  Damage Runs (Intermediate) and Heat Damage ≥ 100
+                  Damage Runs (Intermediate) and Heat Damage ≥ 200
           All of the following:
-              # Shinespark Across https://youtu.be/QASI5KxDmj8
-              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
+              # Shinespark
+              Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               Any of the following:
-                  # Heat Reqs
-                  Varia Suit
-                  Damage Runs (Beginner) and Heat Damage ≥ 25
-          All of the following:
-              # Space Jump Across
-              Space Jump
-              Any of the following:
-                  Screw Attack
-                  # Avoid Sidehoppers and Lava Flares: https://youtu.be/z9RxZEpREJI
-                  Combat (Expert)
-                  Damage Boosts (Advanced) and Normal Damage ≥ 120
-              Any of the following:
-                  # Heat Reqs
                   Varia Suit
                   Damage Runs (Beginner) and Heat Damage ≥ 50
+          All of the following:
+              # Space Jump
+              Space Jump
+              Screw Attack or Movement (Beginner)
+              Any of the following:
+                  Varia Suit
+                  Damage Runs (Beginner) and Heat Damage ≥ 100
           Any of the following:
               # Lava Run
               Gravity Suit and Varia Suit
-              All of the following:
-                  # Damage Reqs: https://youtu.be/9PTVfHAc1C8
-                  Damage Runs (Advanced) and Heat Damage ≥ 90 and Lava Damage ≥ 250
-                  # Get past lava flares
-                  Movement (Advanced) or Normal Damage ≥ 150
+              Damage Runs (Advanced) and Heat Damage ≥ 100 and Lava Damage ≥ 200
 
 ----------------
 Fiery Storage
@@ -1128,7 +1072,7 @@ Extra - room_id: [28]
   > Behind Wall
       All of the following:
           Screw Attack
-          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Wall Jump (Beginner) or Have Any Jump Upgrade
 
 > Behind Wall; Heals? False
   * Layers: default
@@ -1163,8 +1107,7 @@ Extra - room_id: [30]
       All of the following:
           Can Use Power Bombs
           Any of the following:
-              Can Climb High Jump Wall
-              # Same height as grabbing item: https://youtu.be/T8CZbxC6r6Y
+              Have Any Jump Upgrade
               Jump Bombjump (Expert) and Can Use Bombs
 
 > Door to Red Tower; Heals? False
@@ -1175,9 +1118,8 @@ Extra - room_id: [30]
       All of the following:
           Can Use Power Bombs
           Any of the following:
-              Can Climb High Jump Wall or Can Freeze Enemies
-              # Kill Namihe then JBJ to ledge: https://youtu.be/T8CZbxC6r6Y
-              Jump Bombjump (Expert) and Can Kill Tough Beam-Resistant Enemy and Can Use Bombs
+              Can Freeze Enemies or Have Any Jump Upgrade
+              Jump Bombjump (Expert) and Can Use Bombs
 
 > Other to Bob's Abode; Heals? False
   * Layers: default
@@ -1308,13 +1250,8 @@ Extra - room_id: [34]
       All of the following:
           # Shinespark from adjacent room: https://youtu.be/0ILTTSV-Uc4
           Level 2 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
-          Any of the following:
-              # Need beams to kill the Owtches
-              Charge Beam
-              All of the following:
-                  Combat (Beginner)
-                  Plasma Beam or Wide Beam
-              Wave Beam and Combat (Intermediate)
+          # Need beams to kill the Owtches
+          Charge Beam and Ice Beam and Plasma Beam and Wide Beam
 
 > Door to Sova Processing (Upper); Heals? False
   * Layers: default
@@ -1339,7 +1276,7 @@ Extra - room_id: [35]
           Screw Attack
           Any of the following:
               Varia Suit
-              Damage Runs (Beginner) and Heat Damage ≥ 40
+              Damage Runs (Beginner) and Heat Damage ≥ 10
 
 > Pickup (Power Bomb Tank in Shaft); Heals? False
   * Layers: default
@@ -1357,7 +1294,7 @@ Extra - room_id: [35]
           Speed Booster
           Any of the following:
               Varia Suit
-              Damage Runs (Beginner) and Heat Damage ≥ 40
+              Damage Runs (Beginner) and Heat Damage ≥ 50
 
 > Door to Sova Processing; Heals? False
   * Layers: default
@@ -1369,7 +1306,7 @@ Extra - room_id: [35]
           Gravity Suit and Screw Attack and Speed Booster and Disabled Entrance Rando
           Any of the following:
               Varia Suit
-              Damage Runs (Intermediate) and Lava Damage ≥ 75
+              Damage Runs (Intermediate) and Lava Damage ≥ 50
 
 > Door to Chute Access; Heals? False
   * Layers: default
@@ -1383,15 +1320,15 @@ Extra - room_id: [35]
           Screw Attack
           Any of the following:
               Varia Suit
-              Damage Runs (Beginner) and Heat Damage ≥ 40
+              Damage Runs (Beginner) and Heat Damage ≥ 10
   > Pickup (Power Bomb Tank in Shaft)
       Any of the following:
           Varia Suit
-          Damage Runs (Beginner) and Heat Damage ≥ 40
+          Damage Runs (Beginner) and Heat Damage ≥ 35
   > Door to Chute Access
       Any of the following:
           Varia Suit
-          Damage Runs (Beginner) and Heat Damage ≥ 30
+          Damage Runs (Beginner) and Heat Damage ≥ 45
 
 ----------------
 Chute Access
@@ -1402,18 +1339,14 @@ Extra - room_id: [36]
   * L0 Hatch to Garbage Chute/Door to Chute Access
   * Extra - door_idx: (81,)
   > Other to Deserted Runway
-      Any of the following:
-          Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-          Damage Boosts (Beginner) and Normal Damage ≥ 110
+      Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
 
 > Other to Deserted Runway; Heals? False
   * Layers: default
   * Open Passage to Deserted Runway/Door to Chute Access
   * Extra - door_idx: (82,)
   > Door to Garbage Chute
-      Any of the following:
-          Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
-          Damage Boosts (Beginner) and Normal Damage ≥ 110
+      Combat (Intermediate) or Can Kill Tough Beam-Resistant Enemy
 
 ----------------
 Glass Tube to Sector 5 (ARC)
