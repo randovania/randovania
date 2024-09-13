@@ -10758,10 +10758,12 @@
                                 "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "misc",
+                                            "name": "GeneratorHack",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -10848,15 +10850,17 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Habitation Deck Entrance (Upper)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "misc",
+                                            "name": "GeneratorHack",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -10879,7 +10883,7 @@
                         "y": 410.23,
                         "z": 0.0
                     },
-                    "description": "TODO: Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
+                    "description": "FIXME: Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
                     "layers": [
                         "default"
                     ],
