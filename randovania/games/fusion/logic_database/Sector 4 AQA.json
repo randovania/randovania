@@ -1820,12 +1820,8 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Destroy bomb blocks with SJ: https://youtu.be/3taYvq79AmA",
+                                            "comment": "Destroy bomb blocks and go up with SJ",
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Any Bombs"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -1836,12 +1832,36 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Destroy via mid air morph: https://youtu.be/3taYvq79AmA",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "MidAirMorph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Bombs"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -9203,7 +9223,7 @@
                         "y": 188.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "FIXME: Collecting the pump event is by the generator definition not considered\nsafe. The generator workaround is assuming here that if you reach this PonR,\nthat you were able to collect the event.",
                     "layers": [
                         "default"
                     ],
@@ -9262,6 +9282,15 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "GeneratorHack",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -9311,6 +9340,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "GeneratorHack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -9351,6 +9389,15 @@
                                                                 "data": {
                                                                     "type": "events",
                                                                     "name": "LowerWaterLevel",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "GeneratorHack",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
