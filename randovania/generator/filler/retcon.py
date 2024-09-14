@@ -159,11 +159,16 @@ def weighted_potential_actions(
     :return:
     """
     evaluated_actions: dict[Action, EvaluatedAction] = {}
+    actions = player_state.potential_actions(locations_weighted)
+
+    if len(actions) == 1:
+        debug.debug_print(f"{actions[0]}")
+        debug.debug_print("Only one action, weighting skipped")
+        return {action: 1.0 for action in actions}
 
     current_uncollected = UncollectedState.from_reach(player_state.reach)
     action_weights = player_state.game.game.generator.action_weights
 
-    actions = player_state.potential_actions(locations_weighted)
     options_considered = 0
 
     def update_for_option() -> None:
