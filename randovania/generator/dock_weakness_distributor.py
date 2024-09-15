@@ -164,12 +164,14 @@ class DockRandoLogic(Logic):
         return cls(logic.game, logic.configuration, dock, target)
 
     def victory_condition(self, state: State) -> Requirement:
-        return RequirementOr(
-            [
-                ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context())),
-                ResourceRequirement.simple(NodeResourceInfo.from_node(self.target, state.node_context())),
-            ]
-        )
+        if self.configuration.two_sided_door_lock_search:
+            return RequirementOr(
+                [
+                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context())),
+                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.target, state.node_context())),
+                ]
+            )
+        return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context()))
 
     @staticmethod
     @lru_cache
