@@ -1846,7 +1846,8 @@ Extra - room_id: [69]
   > Door to Habitation Deck Entrance (Middle)
       Trivial
   > Other to Habitation Ventilation (Upper)
-      Impossible
+      # Animals causes issues in generation with DLR, removed as an event for now
+      Disabled Generator Workaround
   > Above Pickup
       Trivial
 
@@ -1862,13 +1863,14 @@ Extra - room_id: [69]
   * Open Passage to Habitation Ventilation/Other to Habitation Deck (Upper)
   * Extra - door_idx: (163,)
   > Door to Habitation Deck Entrance (Upper)
-      Trivial
+      # Animals causes issues in generation with DLR, removed as an event for now
+      Enabled Generator Workaround
   > Save the Animals
       Trivial
 
 > Save the Animals; Heals? False
   * Layers: default
-  * TODO: Causes issues with door lock rando.
+  * FIXME: Causes issues with door lock rando.
 
 Generation gets stuck after giving SJ and speed and trying to reach this event.
   > Other to Habitation Ventilation (Upper)
