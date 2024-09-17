@@ -2759,7 +2759,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "This can safely not have Door Lock Rando check",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2768,15 +2768,6 @@
                                                         "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "EntranceRando",
-                                                        "amount": 1,
-                                                        "negate": true
                                                     }
                                                 },
                                                 {
@@ -2828,19 +2819,18 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "L0Locks",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
+                                            "comment": "These blocks disappear after defeating Mega Core",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "VariaCore-X",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
