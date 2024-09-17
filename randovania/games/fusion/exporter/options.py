@@ -10,10 +10,9 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class FusionPerGameOptions(PerGameOptions):
-    """ """
-
     input_path: Path | None = None
     output_path: Path | None = None
+    output_format: str = "gba"
 
     @property
     def as_json(self) -> dict:
