@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from randovania.lib import status_update_lib
 
 
+# TODO
 @dataclasses.dataclass(frozen=True)
 class FusionGameExportParams(GameExportParams):
     input_path: Path
@@ -46,15 +47,4 @@ class FusionGameExporter(GameExporter):
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
         assert isinstance(export_params, FusionGameExportParams)
-        input_file = export_params.input_path
-        output_file = export_params.output_path
-
-        import mars_patcher
-
-        mars_patcher.patching.apply_patch()
-
-        mars_patcher.patcher.patch(
-            input_path=input_file,
-            output_path=output_file,
-            patch_data_path=patch_data,
-        )
+        raise RuntimeError("Needs to be implemented")
