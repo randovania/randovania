@@ -813,12 +813,28 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Genocide Route",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "or",
                                                                 "data": {
                                                                     "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies"
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "TODO: vid",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -828,6 +844,10 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Have Any Jump Upgrade"
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -854,17 +874,9 @@
                                                                                     }
                                                                                 ]
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Have Any Jump Upgrade"
                                                                         }
                                                                     ]
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Kill Tough Beam-Resistant Enemy"
                                                             }
                                                         ]
                                                     }
@@ -872,7 +884,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Pacifist Route",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2637,32 +2649,6 @@
                                                         "name": "Combat",
                                                         "amount": 2,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 150,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 },
                                                 {
