@@ -46,7 +46,7 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
             self.input_file_edit.setText(str(per_game.input_path))
 
         if per_game.output_path is not None:
-            output_path = per_game.output_path.joinpath(self.default_output_name)
+            output_path = per_game.output_path.joinpath(self._base_output_name)
             self.output_file_edit.setText(str(output_path))
 
         add_field_validation(
