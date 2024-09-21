@@ -40,7 +40,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, expected_default_name + ".gba", window.valid_output_file_types)
+    mock_prompt.assert_called_once_with(window, expected_default_name + ".gba", [window.valid_file_type])
     assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.gba"))
     assert tmp_path.joinpath("foo").is_dir()
 
@@ -62,7 +62,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmp_path, mocker):
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.MouseButton.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, "MARS - MyHash.gba", window.valid_output_file_types)
+    mock_prompt.assert_called_once_with(window, "MARS - MyHash.gba", [window.valid_file_type])
     assert window.output_file_edit.text() == ""
 
 

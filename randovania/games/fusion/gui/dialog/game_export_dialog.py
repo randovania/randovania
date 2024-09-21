@@ -58,11 +58,7 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
         )
 
     @property
-    def valid_input_file_types(self) -> list[str]:
-        return ["gba"]
-
-    @property
-    def valid_output_file_types(self) -> list[str]:
+    def valid_file_type(self) -> list[str]:
         return ["gba"]
 
     @property
@@ -79,14 +75,14 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
 
     # Input file
     def _on_input_file_button(self):
-        input_file = prompt_for_input_file(self, self.input_file_edit, self.valid_input_file_types)
+        input_file = prompt_for_input_file(self, self.input_file_edit, [self.valid_file_type])
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
 
     # Output File
     def _on_output_file_button(self):
         output_file = prompt_for_output_file(
-            self, self.valid_output_file_types, self._base_output_name, self.output_file_edit
+            self, [self.valid_file_type], self._base_output_name, self.output_file_edit
         )
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
