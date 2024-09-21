@@ -26,12 +26,11 @@ if TYPE_CHECKING:
 def is_fusion_validator(path: Path | None) -> bool:
     """Validates if the given path is a proper input for Fusion.
     - If input doesn't exist, returns True.
-    - If input is GBA, return False if it's Fusion otherwise True.
-    - If input is not GBA, returns False.
+    - If input MD5 matches the vanilla MD5, returns False.
     """
 
-    # Expected hash for vanilla "Metroid Fusion (USA).gba"
-    expected = "af5040fc0f579800151ee2a683e2e5b5"
+    # Expected MD5 hash for vanilla "Metroid Fusion (USA).gba"
+    md5_expected = "af5040fc0f579800151ee2a683e2e5b5"
 
     if is_file_validator(path):
         return True
@@ -39,7 +38,7 @@ def is_fusion_validator(path: Path | None) -> bool:
     with path.open("rb") as file:
         data = file.read()
         md5_returned = hashlib.md5(data).hexdigest()
-    if expected == md5_returned:
+    if md5_expected == md5_returned:
         return False
     else:
         return True
