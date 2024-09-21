@@ -58,8 +58,8 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
         )
 
     @property
-    def valid_file_type(self) -> list[str]:
-        return ["gba"]
+    def valid_file_type(self) -> str:
+        return "gba"
 
     @property
     def input_file(self) -> Path:
