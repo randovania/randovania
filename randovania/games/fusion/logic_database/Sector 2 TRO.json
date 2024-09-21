@@ -5385,8 +5385,77 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Bombs"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Activate Pillar",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WaveBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "DiffusionMissileData",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "or",
@@ -5445,7 +5514,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Activate Pillar",
+                                                        "comment": "Break block and activate pillar simultaneously",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -5454,7 +5523,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Break block with screw w/o pillar",
+                                                                    "comment": "Break block with screw",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -5499,6 +5568,75 @@
                                                                                                         "name": "WallJump",
                                                                                                         "amount": 1,
                                                                                                         "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "or",
+                                                                                        "data": {
+                                                                                            "comment": "Activate and jump from pillar",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Knowledge",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "WaveBeam",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "and",
+                                                                                                    "data": {
+                                                                                                        "comment": null,
+                                                                                                        "items": [
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "Knowledge",
+                                                                                                                    "amount": 2,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "DiffusionMissileData",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "items",
+                                                                                                                    "name": "Missiles",
+                                                                                                                    "amount": 1,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            }
+                                                                                                        ]
                                                                                                     }
                                                                                                 }
                                                                                             ]
@@ -5673,15 +5811,6 @@
                                                                                 "type": "tricks",
                                                                                 "name": "ShinesparkTrick",
                                                                                 "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Movement",
-                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -7620,7 +7749,7 @@
                     "pickup_index": 33,
                     "location_category": "minor",
                     "connections": {
-                        "Beside missile tank": {
+                        "Beside Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7660,7 +7789,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Beside missile tank": {
+                        "Beside Pickup": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7871,7 +8000,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Beside missile tank": {
+                        "Beside Pickup": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7890,12 +8019,12 @@
                         }
                     }
                 },
-                "Beside missile tank": {
+                "Beside Pickup": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 381.8234683281412,
-                        "y": 131.3354101765317,
+                        "x": 381.82,
+                        "y": 131.34,
                         "z": 0.0
                     },
                     "description": "",
@@ -9245,15 +9374,6 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
                                             "name": "Knowledge",
                                             "amount": 3,
                                             "negate": false
@@ -10529,7 +10649,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to The Perfect Hiding Spot": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -10538,6 +10658,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Nettori",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -10630,6 +10759,15 @@
                                         "data": {
                                             "type": "items",
                                             "name": "Missiles",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Nettori",
                                             "amount": 1,
                                             "negate": false
                                         }
