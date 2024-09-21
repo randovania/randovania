@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import hashlib
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -11,6 +12,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
+    is_file_validator,
+    output_file_validator,
     prompt_for_input_file,
     prompt_for_output_file,
     spoiler_path_for,
@@ -18,6 +21,28 @@ from randovania.gui.dialog.game_export_dialog import (
 
 if TYPE_CHECKING:
     from randovania.interface_common.options import Options
+
+
+def is_fusion_validator(path: Path | None) -> bool:
+    """Validates if the given path is a proper input for Fusion.
+    - If input doesn't exist, returns True.
+    - If input is GBA, return False if it's Fusion otherwise True.
+    - If input is not GBA, returns False.
+    """
+
+    # Expected hash for vanilla "Metroid Fusion (USA).gba"
+    expected = "af5040fc0f579800151ee2a683e2e5b5"
+
+    if is_file_validator(path):
+        return True
+    assert path is not None
+    with path.open("rb") as file:
+        data = file.read()
+        md5_returned = hashlib.md5(data).hexdigest()
+    if expected == md5_returned:
+        return False
+    else:
+        return True
 
 
 class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
@@ -32,7 +57,7 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
-        self._base_output_name = f"MARS - {word_hash}.gba"
+        self._base_output_name = f"MARS - {word_hash}." + self.valid_file_type
         per_game = options.options_for_game(self.game_enum())
         assert isinstance(per_game, FusionPerGameOptions)
 
@@ -52,8 +77,8 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.input_file_edit: lambda: False,
-                self.output_file_edit: lambda: False,
+                self.input_file_edit: lambda: is_fusion_validator(self.input_file),
+                self.output_file_edit: lambda: output_file_validator(self.output_file),
             },
         )
 
