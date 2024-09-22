@@ -56,9 +56,9 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
-        self._base_output_name = f"MARS - {word_hash}." + self.valid_file_type
-        per_game = options.options_for_game(self.game_enum())
-        assert isinstance(per_game, FusionPerGameOptions)
+        self._base_output_name = f"MARS - {word_hash}.{self.valid_file_type}"
+        fusion_options = options.options_for_game(self.game_enum())
+        assert isinstance(fusion_options, FusionPerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
@@ -66,11 +66,11 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)
 
-        if per_game.input_path is not None:
-            self.input_file_edit.setText(str(per_game.input_path))
+        if fusion_options.input_path is not None:
+            self.input_file_edit.setText(str(fusion_options.input_path))
 
-        if per_game.output_path is not None:
-            output_path = per_game.output_path.joinpath(self._base_output_name)
+        if fusion_options.output_path is not None:
+            output_path = fusion_options.output_path.joinpath(self._base_output_name)
             self.output_file_edit.setText(str(output_path))
 
         add_field_validation(
@@ -111,10 +111,10 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
-    def update_per_game_options(self, per_game: FusionPerGameOptions) -> FusionPerGameOptions:
-        assert isinstance(per_game, FusionPerGameOptions)
+    def update_per_game_options(self, fusion_options: FusionPerGameOptions) -> FusionPerGameOptions:
+        assert isinstance(fusion_options, FusionPerGameOptions)
         return dataclasses.replace(
-            per_game,
+            fusion_options,
             input_path=self.input_file,
             output_path=self.output_file,
         )
