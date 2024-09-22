@@ -1,6 +1,9 @@
 function RL.GetInventoryAndSend()
     local r={}
     local playerName = Game.GetPlayerName()
+    local collected_dna = Init.iRequiredDNA - Game.GetItemAmount(playerName, "ITEM_ADN")
+    Game.SetItemAmount(playerName, "ITEM_REQUIRED_DNA", Init.iRequiredDNA)
+    Game.SetItemAmount(playerName, "ITEM_COLLECTED_DNA", collected_dna)
     for i,n in ipairs(RL.InventoryItems) do
         r[i]=Game.GetItemAmount(playerName, n)
     end

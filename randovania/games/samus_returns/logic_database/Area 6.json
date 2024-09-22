@@ -6146,7 +6146,7 @@
                     },
                     "description": "",
                     "layers": [
-                        "final-boss-not-diggernaut"
+                        "default"
                     ],
                     "extra": {
                         "actor_name": "LE_Item_004",
@@ -6272,10 +6272,41 @@
                             }
                         },
                         "Door to Diggernaut Arena": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossDiggernaut",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "FinalBossDiggernaut",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "All DNA"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Top Platform": {
