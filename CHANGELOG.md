@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Added: Option to change the final boss to be Arachnus, Diggernaut, Metroid Queen, or Proteus Ridley (default).
+- Changed: The DNA counter on the HUD now counts down to 0 from the amount DNA that is required to access the final boss instead of counting up to 39.
 
 ## [8.4.0] - 2024-09-04
 

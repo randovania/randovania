@@ -115,12 +115,13 @@ class MSRBootstrap(MetroidBootstrap):
                 1,
             )
 
-        # If Diggernaut is the final boss, move the Grapple Block by the elevator
-        if configuration.final_boss == FinalBossConfiguration.DIGGERNAUT and not configuration.elevator_grapple_blocks:
-            yield (
-                resource_database.get_event("Area 6 - Transport to Area 7 Grapple Block Pull"),
-                1,
-            )
+        # If Diggernaut is the final boss, remove the Grapple Blocks by the elevator
+        if configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            for name in [
+                "Area 6 - Transport to Area 7 Grapple Block Pull",
+                "Area 6 - Transport to Area 7 Grapple Block Top",
+            ]:
+                yield resource_database.get_event(name), 1
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, MSRConfiguration)
