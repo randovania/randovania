@@ -16,7 +16,7 @@ class ScrollProtectedSlider(QtWidgets.QSlider):
     def focusOutEvent(self, event: QEvent):
         self.setFocusPolicy(Qt.StrongFocus)
 
-    def eventFilter(self, obj: QtWidgets.QSluider, event: QEvent) -> bool:
+    def eventFilter(self, obj: QtWidgets.QSlider, event: QEvent) -> bool:
         if event.type() == QEvent.Wheel and isinstance(obj, QtWidgets.QSlider):
             if obj.focusPolicy() == Qt.WheelFocus:
                 event.accept()

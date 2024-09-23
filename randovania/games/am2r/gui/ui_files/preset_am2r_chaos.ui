@@ -101,7 +101,7 @@
               <number>6</number>
              </property>
              <item>
-              <widget class="QSlider" name="darkness_slider">
+              <widget class="ScrollProtectedSlider" name="darkness_slider">
                <property name="maximum">
                 <number>1000</number>
                </property>
@@ -265,7 +265,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="submerged_water_slider">
+              <widget class="ScrollProtectedSlider" name="submerged_water_slider">
                <property name="maximum">
                 <number>1000</number>
                </property>
@@ -326,7 +326,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="submerged_lava_slider">
+              <widget class="ScrollProtectedSlider" name="submerged_lava_slider">
                <property name="maximum">
                 <number>1000</number>
                </property>
@@ -374,6 +374,13 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+  <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>Qslider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

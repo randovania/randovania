@@ -718,7 +718,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QSlider" name="helmet_alpha_slider">
+              <widget class="ScrollProtectedSlider" name="helmet_alpha_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -749,7 +749,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QSlider" name="hud_alpha_slider">
+              <widget class="ScrollProtectedSlider" name="hud_alpha_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -834,7 +834,7 @@
               <widget class="QComboBox" name="sound_mode_combo"/>
              </item>
              <item row="1" column="1">
-              <widget class="QSlider" name="sfx_volume_slider">
+              <widget class="ScrollProtectedSlider" name="sfx_volume_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -844,7 +844,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QSlider" name="music_volume_slider">
+              <widget class="ScrollProtectedSlider" name="music_volume_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -891,7 +891,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QSlider" name="screen_brightness_slider">
+              <widget class="ScrollProtectedSlider" name="screen_brightness_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -901,7 +901,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QSlider" name="screen_y_offset_slider">
+              <widget class="ScrollProtectedSlider" name="screen_y_offset_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -918,7 +918,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QSlider" name="screen_x_offset_slider">
+              <widget class="ScrollProtectedSlider" name="screen_x_offset_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -928,7 +928,7 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QSlider" name="screen_stretch_slider">
+              <widget class="ScrollProtectedSlider" name="screen_stretch_slider">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1004,6 +1004,11 @@
    <extends>QWidget</extends>
    <header>randovania/gui/lib/foldable.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>Qslider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
