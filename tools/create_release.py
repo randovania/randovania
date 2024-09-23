@@ -116,6 +116,49 @@ secret = b"".join(
     )
 
 
+def remove_unnecessary_dotnet_deps(package_folder: Path) -> None:
+    """
+    Some wheels ship dependencies for a lot of OS' and arches.
+    Since the randovania executable here for a specific OS+arch, we want to remove everything else for spaces sake.
+    """
+
+    dotnet_os = "unknown"
+    dotnet_arch = "unknown"
+    system = platform.system()
+    if system == "Windows":
+        dotnet_os = "win"
+    elif system == "Darwin":
+        dotnet_os = "osx"
+    elif system == "Linux":
+        dotnet_os = "linux"  # Might break for musl, I dont care.
+    else:
+        raise ValueError("Couldn't determine the OS handle for dotnet cleanup!")
+
+    dotnet_arch = "unknown"
+    arch = platform.machine()
+    if arch == "AMD64" or arch == "x86_64":
+        dotnet_arch = "x64"
+    elif arch == "arm64" or arch == "aarch64":
+        dotnet_arch = "arm64"
+    else:
+        raise ValueError("Couldn't determine the architecture handle for dotnet cleanup!")
+
+    dotnet_rid = f"{dotnet_os}-{dotnet_arch}"
+
+    dotnet_paths_to_clean = [
+        "am2r_yams/yams/runtimes",
+    ]
+
+    internal = package_folder.joinpath("_internal")
+    for dotnet_lib_path in dotnet_paths_to_clean:
+        for subdir in internal.joinpath(dotnet_lib_path).iterdir():
+            if not subdir.is_dir():
+                continue
+            name = subdir.name
+            if name.endswith(("64", "x86")) and "-" in name and name != dotnet_rid:
+                shutil.rmtree(subdir)
+
+
 def write_frozen_file_list(package_folder: Path) -> None:
     internal = package_folder.joinpath("_internal")
     json_lib.write_path(
@@ -176,6 +219,8 @@ async def main():
     compat_path.write_text(compat_text)
 
     subprocess.run([sys.executable, "-m", "PyInstaller", "randovania.spec"], check=True)
+
+    remove_unnecessary_dotnet_deps(package_folder)
 
     if platform.system() == "Windows":
         create_windows_zip(package_folder)
