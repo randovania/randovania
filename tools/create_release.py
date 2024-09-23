@@ -155,7 +155,7 @@ def remove_unnecessary_dotnet_deps(package_folder: Path) -> None:
             if not subdir.is_dir():
                 continue
             name = subdir.name
-            if name.endswith(("x64", "x86")) and "-" in name and name != dotnet_rid:
+            if name.endswith(("64", "x86")) and "-" in name and name != dotnet_rid:
                 shutil.rmtree(subdir)
 
 
