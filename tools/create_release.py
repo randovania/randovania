@@ -134,7 +134,6 @@ def remove_unnecessary_dotnet_deps(package_folder: Path) -> None:
     else:
         raise ValueError("Couldn't determine the OS handle for dotnet cleanup!")
 
-    dotnet_arch = "unknown"
     arch = platform.machine()
     if arch == "AMD64" or arch == "x86_64":
         dotnet_arch = "x64"
@@ -151,7 +150,7 @@ def remove_unnecessary_dotnet_deps(package_folder: Path) -> None:
 
     internal = package_folder.joinpath("_internal")
     for dotnet_lib_path in dotnet_paths_to_clean:
-        for subdir in internal.joinpath(dotnet_lib_path).iterdir():
+        for subdir in list(internal.joinpath(dotnet_lib_path).iterdir()):
             if not subdir.is_dir():
                 continue
             name = subdir.name
