@@ -138,15 +138,11 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             self.citra_radio.setChecked(True)
 
         # Check for auto tracker and/or multiworld
-        if patch_data.get("enable_remote_lua", False):
-            self.citra_radio.setChecked(True)
-            self.luma_radio.setDisabled(True)
-        else:
+        if not patch_data.get("enable_remote_lua", False):
             self.input_exheader_edit.has_error = False
             self.input_exheader_button.hide()
             self.input_exheader_edit.hide()
             self.input_exheader_label.hide()
-            self.input_exheader_warning_label.hide()
 
         self.luma_radio.toggled.connect(self._on_update_target_platform)
         self.citra_radio.toggled.connect(self._on_update_target_platform)
