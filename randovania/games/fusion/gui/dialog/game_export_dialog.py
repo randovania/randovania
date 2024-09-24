@@ -56,7 +56,7 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
-        self._base_output_name = f"MARS - {word_hash}.{self.valid_file_type}"
+        self._base_output_name = f"Fusion - {word_hash}.{self.valid_file_type}"
         fusion_options = options.options_for_game(self.game_enum())
         assert isinstance(fusion_options, FusionPerGameOptions)
 
