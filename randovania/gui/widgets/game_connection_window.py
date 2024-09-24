@@ -16,8 +16,8 @@ from randovania.game_connection.builder.nintendont_connector_builder import Nint
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector.remote_connector import ImportantStatusMessage, RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
+from randovania.games.cave_story.gui.dialog.cs_connector_prompt_dialog import CSConnectorPromptDialog
 from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import (
-    CSConnectorPromptDialog,
     DreadConnectorPromptDialog,
 )
 from randovania.games.game import RandovaniaGame
@@ -70,13 +70,13 @@ class BuilderUi:
 
         self.status = QtWidgets.QLabel(self.group)
         self.status.setWordWrap(True)
-        self.status.setTextFormat(Qt.MarkdownText)
+        self.status.setTextFormat(Qt.TextFormat.MarkdownText)
 
         self.layout.addWidget(self.button)
         self.layout.addWidget(self.description, 0, 1)
         self.layout.addWidget(self.status, 1, 0, 1, 2)
 
-    def update_for_disconnected_builder(self, builder: ConnectorBuilder):
+    def update_for_disconnected_builder(self, builder: ConnectorBuilder) -> None:
         message = "Not Connected."
         if (status := builder.get_status_message()) is not None:
             message += f" {status}"
@@ -84,7 +84,7 @@ class BuilderUi:
         self.status.setText(message)
         self.open_session_action.setEnabled(False)
 
-    def update_for_remote_connector(self, connector: RemoteConnector, multiworld_client: MultiworldClient):
+    def update_for_remote_connector(self, connector: RemoteConnector, multiworld_client: MultiworldClient) -> None:
         self.connector = connector
         world_uid = connector.layout_uuid
         has_session = False
@@ -116,12 +116,12 @@ class BuilderUi:
         self.status.setText("\n".join(lines))
 
     @asyncSlot()
-    async def _send_important_message(self, status_message: ImportantStatusMessage):
+    async def _send_important_message(self, status_message: ImportantStatusMessage) -> None:
         if self.connector is not None:
             await self.connector.display_important_message(status_message)
 
     @asyncSlot()
-    async def _send_arbitrary_message(self):
+    async def _send_arbitrary_message(self) -> None:
         if self.connector is None:
             return
 
@@ -132,9 +132,10 @@ class BuilderUi:
             is_modal=True,
             max_length=50,
         )
-        await self.connector.display_arbitrary_message(message)
+        if message:
+            await self.connector.display_arbitrary_message(message)
 
-    def add_send_message_actions(self):
+    def add_send_message_actions(self) -> None:
         self.menu.addSeparator()
 
         self.important_message_menu = self.menu.addMenu("Display important message")
@@ -146,13 +147,14 @@ class BuilderUi:
         self.send_arbitrary_message_action = self.menu.addAction("Display arbitrary message")
         self.send_arbitrary_message_action.triggered.connect(self._send_arbitrary_message)
 
-    def update_send_message_actions(self):
+    def update_send_message_actions(self) -> None:
         if self.important_message_menu is None:
             return
 
         self.important_message_menu.setEnabled(self.connector is not None)
         can_arbitrary_send = self.connector is not None and self.connector.can_display_arbitrary_messages()
-        self.send_arbitrary_message_action.setEnabled(can_arbitrary_send)
+        if self.send_arbitrary_message_action:
+            self.send_arbitrary_message_action.setEnabled(can_arbitrary_send)
 
 
 class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
@@ -222,7 +224,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         return games_by_name[new_text]
 
     @asyncSlot()
-    async def _add_connector_builder(self, choice: ConnectorBuilderChoice):
+    async def _add_connector_builder(self, choice: ConnectorBuilderChoice) -> None:
         args = {}
 
         if choice == ConnectorBuilderChoice.NINTENDONT:
@@ -273,7 +275,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
 
         self.game_connection.add_connection_builder(ConnectorBuilderOption(choice, args).create_builder())
 
-    def setup_builder_ui(self):
+    def setup_builder_ui(self) -> None:
         for child in self.builders_content.findChildren(QtWidgets.QWidget):
             child.deleteLater()
 
@@ -296,7 +298,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
 
     @asyncSlot()
     @handle_network_errors
-    async def _attempt_join(self, builder: ConnectorBuilder):
+    async def _attempt_join(self, builder: ConnectorBuilder) -> None:
         connector = self.game_connection.get_connector_for_builder(builder)
         if connector is None:
             return
@@ -309,11 +311,14 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             return
 
         session_id = self._check_session_data(layout_uuid)
-        try:
-            await self.network_client.listen_to_session(session_id, True)
-            await self.window_manager.ensure_multiplayer_session_window(self.network_client, session_id, self.options)
-        except error.NotAuthorizedForActionError:
-            await async_dialog.warning(self, "Unauthorized", "You're not a member of this session.")
+        if session_id:
+            try:
+                await self.network_client.listen_to_session(session_id, True)
+                await self.window_manager.ensure_multiplayer_session_window(
+                    self.network_client, session_id, self.options
+                )
+            except error.NotAuthorizedForActionError:
+                await async_dialog.warning(self, "Unauthorized", "You're not a member of this session.")
 
     def _check_session_data(self, layout_uuid: uuid.UUID) -> int | None:
         world_data = self.world_database.get_data_for(layout_uuid)
@@ -322,7 +327,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             return server_data.session_id
         return None
 
-    def update_builder_ui(self):
+    def update_builder_ui(self) -> None:
         for builder, ui in self.ui_for_builder.items():
             connector = self.game_connection.get_connector_for_builder(builder)
             if connector is None:
@@ -331,7 +336,7 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 ui.update_for_remote_connector(connector, self.window_manager.multiworld_client)
             ui.update_send_message_actions()
 
-    def add_ui_for_builder(self, builder: ConnectorBuilder):
+    def add_ui_for_builder(self, builder: ConnectorBuilder) -> None:
         ui = BuilderUi(self.builders_content)
         ui.menu.addAction("Remove").triggered.connect(
             functools.partial(self.game_connection.remove_connection_builder, builder)
@@ -368,10 +373,11 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         self.builders_layout.addWidget(ui.group)
 
     @asyncSlot()
-    async def on_upload_nintendont_action(self, builder: NintendontConnectorBuilder):
+    async def on_upload_nintendont_action(self, builder: NintendontConnectorBuilder) -> None:
         nintendont_file = randovania.get_data_path().joinpath("nintendont", "boot.dol")
         if not nintendont_file.is_file():
-            return await async_dialog.warning(self, "Missing Nintendont", "Unable to find a Nintendont executable.")
+            await async_dialog.warning(self, "Missing Nintendont", "Unable to find a Nintendont executable.")
+            return
 
         text = f"Uploading Nintendont to the Wii at {builder.ip}..."
         box = QtWidgets.QMessageBox(
@@ -393,9 +399,10 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
         finally:
             box.button(QtWidgets.QMessageBox.StandardButton.Ok).setEnabled(True)
 
-    def open_debug_connector_window(self, builder: DebugConnectorBuilder):
+    def open_debug_connector_window(self, builder: DebugConnectorBuilder) -> None:
         connector = self.game_connection.get_connector_for_builder(builder)
         if connector is not None:
             assert isinstance(connector, DebugRemoteConnector)
-            builder.connector_window = DebugConnectorWindow(connector)
+            if builder.connector_window is None:
+                builder.connector_window = DebugConnectorWindow(connector)
             builder.connector_window.show()
