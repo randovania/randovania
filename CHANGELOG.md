@@ -34,10 +34,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Tallon Overworld
 
-- Added: In Tallon Canyon: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump to climb to top of half-pipe.
+- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump.
 - Added: In Tallon Canyon: Beginner Knowledge to break blocks with Power Bombs.
-- Added: In Tallon Canyon: Advanced Wall Boost to climb room from Gully.
-- Added: In Gully: Beginner Standables to climb room.
+- Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
+- Added: In Gully: Beginner Standables to climb the room.
 
 ### Metroid: Samus Returns
 
