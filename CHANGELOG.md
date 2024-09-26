@@ -28,6 +28,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: In Super Missile Room: Intermediate Single-wall Wall Jump to reach Tunnel to Super Missile Room Access. 
 
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: In Tallon Canyon: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump to climb to top of half-pipe.
+- Added: In Tallon Canyon: Beginner Knowledge to break blocks with Power Bombs.
+- Added: In Tallon Canyon: Advanced Wall Boost to climb room from Gully.
+- Added: In Gully: Beginner Standables to climb room.
+
 ### Metroid: Samus Returns
 
 - Added: Option to change the final boss to be Arachnus, Diggernaut, Metroid Queen, or Proteus Ridley (default).
