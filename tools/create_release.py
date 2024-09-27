@@ -121,7 +121,7 @@ def remove_unnecessary_dotnet_deps(package_folder: Path) -> None:
     Some wheels ship dependencies for a lot of OS' and arches.
     Since the randovania executable here for a specific OS+arch, we want to remove everything else for spaces sake.
     """
-
+    return
     dotnet_os = "unknown"
     dotnet_arch = "unknown"
     system = platform.system()
