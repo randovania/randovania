@@ -163,21 +163,26 @@ Extra - room_id: [3]
       All of the following:
           Morph Ball
           Any of the following:
+              # Freeze Powamp by shooting through wall
               Ice Beam and Wave Beam
               All of the following:
                   Missiles
                   Any of the following:
+                      # Freeze Powamp with Diffusion
                       Diffusion Missile Data
                       All of the following:
-                          # Freeze bottom Powamp
+                          # Freeze Powamp by bending shot
                           Knowledge (Advanced)
                           Any of the following:
+                              # Freeze Requirements
                               # w/ Ice Missiles: https://youtu.be/zdGZBI3tKAw
                               Ice Missile Data and Missiles
                               # w/ Ice Beam: https://youtu.be/LtBms_eox-E&t=88
                               Ice Beam
+                          # Deal with water
                           Gravity Suit or After Sector 4 Water Level Lowered
                           Any of the following:
+                              # Movement Requirements
                               # NHJ: https://youtu.be/DJHGcspkPhM
                               Movement (Advanced) and Wall Jump (Advanced)
                               Movement (Intermediate) and Have Any Jump Upgrade
@@ -267,6 +272,10 @@ Extra - room_id: [6]
               After Sector 4 Water Level Lowered
               # Damage Reqs
               Gravity Suit and Damage Runs (Beginner) and Damage Runs (Intermediate) and Electrified Water Damage ≥ 20 and Electrified Water Damage ≥ 80
+          Any of the following:
+              Power Bombs ≥ 3 or Can Use Bombs
+              # Get back before blocks respawn
+              Power Bombs ≥ 2 and Movement (Advanced)
   > Room Center
       Can Use Any Bombs
 
@@ -677,7 +686,7 @@ Extra - room_id: [16]
               Any of the following:
                   Space Jump
                   # With WJ: https://youtu.be/-g0hi1wELtI
-                  Wall Jump (Advanced)
+                  Wall Jump (Intermediate)
                   All of the following:
                       # Freeze Evir and jump off it
                       Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
@@ -686,8 +695,6 @@ Extra - room_id: [16]
                           Wall Jump (Beginner)
                           # With HJ: https://youtu.be/M6cyTUajA1s
                           Hi-Jump
-                  # With HJ + WJ: https://youtu.be/E-9GLV0t_sE
-                  Hi-Jump and Wall Jump (Intermediate)
           # Jump off of frozen Evir and perform many underwater WJs TODO: video
           Stand On Frozen Enemies (Beginner) and Underwater Wall Jump (Expert) and Can Freeze Enemies
 
@@ -845,17 +852,6 @@ Extra - room_id: [20]
   * Layers: default
   * L0 Hatch to Skultera Sanctuary/Door to Reservoir West
   * Extra - door_idx: (17,)
-  > Door to Pump Control Access
-      All of the following:
-          Gravity Suit and Morph Ball
-          Any of the following:
-              After Sector 4 Water Level Lowered
-              # TODO: damage values
-              Damage Runs (Beginner)
-          Any of the following:
-              Have Any Jump Upgrade
-              # Shinespark up
-              Speed Booster and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Other to Breeding Tank Access
       Can Use Any Bombs
   > Bottom of Room
@@ -872,17 +868,11 @@ Extra - room_id: [20]
   * Layers: default
   * L0 Hatch to Pump Control Access/Door to Reservoir West
   * Extra - door_idx: (43,)
-  > Door to Skultera Sanctuary
-      All of the following:
-          Morph Ball
-          Any of the following:
-              After Sector 4 Water Level Lowered
-              # TODO: damage values
-              Damage Runs (Beginner)
-          # Way to get out of water
-          Gravity Suit or After Sector 4 Water Level Lowered or Have Any Jump Upgrade
   > Other to Breeding Tank Access
-      Can Break Single Bomb Blocks
+      Any of the following:
+          Can Break Single Bomb Blocks
+          # https://youtu.be/GukqyHY3bHM
+          Level 0 Locks and Level 1 Locks and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Beginner) and Enabled Door Lock Rando and Enabled Entrance Rando
   > Bottom of Room
       All of the following:
           Morph Ball
@@ -1104,7 +1094,17 @@ Extra - room_id: [23]
               # Mid-Air Morph: https://youtu.be/zyazrYLRuSk
               Mid-Air Morph (Intermediate)
   > Room Center
-      Gravity Suit and Screw Attack
+      All of the following:
+          Screw Attack
+          Any of the following:
+              All of the following:
+                  Gravity Suit
+                  Wall Jump (Beginner) or Have Any Jump Upgrade
+              Any of the following:
+                  # https://youtu.be/-klqiYLzGBk
+                  Underwater Wall Jump (Advanced)
+                  # https://youtu.be/RuVEALHs1lI
+                  Hi-Jump and Underwater Wall Jump (Beginner)
 
 ----------------
 Cheddar Bay
@@ -1571,15 +1571,14 @@ Extra - room_id: [35]
   * Layers: default
   * L0 Hatch to Owtch Atrium/Door to Powamp Shaft
   * Extra - door_idx: (28,)
-  > Other to Diffusion Connection Access
-      All of the following:
-          Diffusion Missile Data and Missiles and Morph Ball
-          Any of the following:
-              Can Bounce in Ball
-              # Mid-Air Morph: https://youtu.be/kxyotciTTXM
-              Mid-Air Morph (Beginner)
   > Upper Ladder
-      Diffusion Missile Data and Missiles and Morph Ball
+      All of the following:
+          Missiles and Morph Ball
+          Diffusion Missile Data or After Powamp Shaft Diffusion Blocks Destroyed
+  > Top Alcove
+      Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
+  > Event - Break Missile Blocks from Hatch
+      Diffusion Missile Data and Missiles
 
 > Door to Aquarium Speedway; Heals? False
   * Layers: default
@@ -1590,7 +1589,7 @@ Extra - room_id: [35]
   > Upper Ladder
       Any of the following:
           All of the following:
-              # Gravityless method - Need SJ to get out of "air" section
+              # Gravityless method
               Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
               Hi-Jump or Movement (Advanced)
           All of the following:
@@ -1608,18 +1607,14 @@ Extra - room_id: [35]
   > Door to Aquarium Speedway
       All of the following:
           Gravity Suit and Screw Attack
-          Any of the following:
-              Space Jump or Wall Jump (Advanced)
-              Hi-Jump and Wall Jump (Intermediate)
+          Space Jump or Wall Jump (Intermediate)
 
 > Other to Diffusion Connection Access; Heals? False
   * Layers: default
   * Tunnel to Diffusion Connection Access/Other to Powamp Shaft
   * Extra - door_idx: (112,)
-  > Door to Owtch Atrium
-      Missiles and Morph Ball
-  > Upper Ladder
-      Missiles ≥ 2 and Morph Ball
+  > Top Alcove
+      Trivial
 
 > Upper Ladder; Heals? False
   * Layers: default
@@ -1627,21 +1622,47 @@ Extra - room_id: [35]
       Missiles and Morph Ball
   > Door to Aquarium Speedway
       Trivial
+  > Top Alcove
+      Missiles and After Powamp Shaft Diffusion Blocks Destroyed
+  > Event - Break Missile Blocks from Below
+      All of the following:
+          Missiles ≥ 2
+          Any of the following:
+              Diffusion Missile Data
+              # Shoot missile diagonally
+              Movement (Beginner)
+
+> Top Alcove; Heals? False
+  * Layers: default
+  > Door to Owtch Atrium
+      Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
   > Other to Diffusion Connection Access
       All of the following:
           Morph Ball
-          Any of the following:
-              # Get into tunnel
-              Can Bounce in Ball
-              # Mid-Air Morph: https://youtu.be/kxyotciTTXM&t=6
-              Mid-Air Morph (Beginner)
-          All of the following:
-              # Destroying the Missile Blocks
-              Missiles ≥ 2
-              Any of the following:
-                  Diffusion Missile Data
-                  # Shoot missile diagonally
-                  Movement (Intermediate)
+          # https://youtu.be/kxyotciTTXM
+          Mid-Air Morph (Beginner) or Can Bounce in Ball
+  > Upper Ladder
+      Missiles and Morph Ball and After Powamp Shaft Diffusion Blocks Destroyed
+  > Event - Break Missile Blocks from Above
+      Missiles
+
+> Event - Break Missile Blocks from Below; Heals? False
+  * Layers: default
+  * Event Powamp Shaft Diffusion Blocks Destroyed
+  > Upper Ladder
+      Trivial
+
+> Event - Break Missile Blocks from Hatch; Heals? False
+  * Layers: default
+  * Event Powamp Shaft Diffusion Blocks Destroyed
+  > Door to Owtch Atrium
+      Trivial
+
+> Event - Break Missile Blocks from Above; Heals? False
+  * Layers: default
+  * Event Powamp Shaft Diffusion Blocks Destroyed
+  > Top Alcove
+      Trivial
 
 ----------------
 Drain Pipe
