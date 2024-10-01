@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.6.x] - 2024-11-??
+
+### Metroid Prime
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump.
+- Added: In Tallon Canyon: Beginner Knowledge to break blocks with Power Bombs.
+- Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
+- Added: In Gully: Beginner Standables to climb the room.
+
 ## [8.5.x] - 2024-10-??
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
@@ -27,17 +40,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Added: In Super Missile Room: Intermediate Single-wall Wall Jump to reach Tunnel to Super Missile Room Access. 
-
-### Metroid Prime
-
-#### Logic Database
-
-##### Tallon Overworld
-
-- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump.
-- Added: In Tallon Canyon: Beginner Knowledge to break blocks with Power Bombs.
-- Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
-- Added: In Gully: Beginner Standables to climb the room.
 
 ### Metroid: Samus Returns
 
