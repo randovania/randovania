@@ -13,6 +13,11 @@ from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.weighted_locations import WeightedLocations
+from randovania.generator.filler.weights import (
+    _ADDITIONAL_NODES_WEIGHT_MULTIPLIER,
+    _DANGEROUS_ACTION_MULTIPLIER,
+    _VICTORY_WEIGHT,
+)
 from randovania.lib.random_lib import select_element_with_weight
 from randovania.resolver import debug
 
@@ -27,13 +32,6 @@ if TYPE_CHECKING:
     from randovania.generator.filler.action import Action
     from randovania.generator.filler.player_state import PlayerState
     from randovania.generator.generator_reach import GeneratorReach
-
-_DANGEROUS_ACTION_MULTIPLIER = 0.75
-_EVENTS_WEIGHT_MULTIPLIER = 0.5
-_INDICES_WEIGHT_MULTIPLIER = 1
-_HINTS_WEIGHT_MULTIPLIER = 1
-_ADDITIONAL_NODES_WEIGHT_MULTIPLIER = 0.01
-_VICTORY_WEIGHT = 1000
 
 
 def _calculate_uncollected_index_weights(
@@ -474,21 +472,23 @@ def _calculate_weights_for(
         return _VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
-    if debug.debug_level() > 2:
+    if debug.debug_level() > 1:
         nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
 
         print(f">>> {action}")
         print(f"indices: {potential_uncollected.indices}")
-        print(f"hints: {[hint.as_string for hint in potential_uncollected.hints]}")
         print(f"events: {[event.long_name for event in potential_uncollected.events]}")
+        print(f"hints: {[hint.as_string for hint in potential_uncollected.hints]}")
         print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
         print()
 
+    generator = potential_reach.game.game.generator
+
     return sum(
         (
-            _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
-            _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
-            _HINTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.hints)),
+            generator.indices_weight * int(bool(potential_uncollected.indices)),
+            generator.events_weight * int(bool(potential_uncollected.events)),
+            generator.hints_weight * int(bool(potential_uncollected.hints)),
         )
     )
 
