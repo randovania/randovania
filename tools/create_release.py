@@ -183,7 +183,7 @@ async def main():
     icon_path = randovania.get_icon_path()
     shutil.copyfile(icon_path, icon_path.with_name("executable_icon.ico"))
 
-    if (secret := os.environ.get("OBFUSCATOR_SECRET")) is not None:
+    if (secret := os.environ.get("OBFUSCATOR_SECRET")) is not None and len(secret) >= 1 and not secret.isspace():
         write_obfuscator_secret(
             _ROOT_FOLDER.joinpath("randovania", "lib", "obfuscator_secret.py"),
             secret.encode("ascii"),
