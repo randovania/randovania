@@ -26,8 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### The Tower
 
 - Fixed: Tower Exterior South East: Getting to the upper Gamma Nest ledge with Shinesparking and Morph Ball now requires a Beginner Morph Glide instead of an Intermediate Mid Air Morph and also requires Morph Ball.
-- Fixed: Tower Exterior North East: Getting to the Plasma Beam Chamber Access door from below with Mid Air Morph now requires Morph Ball.
-- Fixed: Tower Exterior North East: Getting to the Save Station from the Zeta tunnel with Mid Air Morph now requires Morph Ball.
+- Fixed: Tower Exterior North East: Getting to the Plasma Beam Chamber Access door from below with Morph is now correctly classified as a Morph Glide instead of a Mid Air Morph and also requires Morph Ball.
+- Fixed: Tower Exterior North East: Getting to the Save Station from the Zeta tunnel with Morph is now correctly classified as a Morph Glide instead of a Mid Air Morph and also requires Morph Ball.
 - Fixed: Exterior Zeta Nest East Access: IBJing to the ceiling to get across from the Zeta Nest to the Exterior requires Infinite Bomb Propulsion.
 
 ##### Distribution Center
