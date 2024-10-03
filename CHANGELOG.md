@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Fixed: The Hideout<->Bubble lair Depths pipes being on the wrong layer.
+
 ##### Golden Temple
 
 - Fixed: Guardian Arena: IBJing up to Guardian Storage now requires Morph Ball.
