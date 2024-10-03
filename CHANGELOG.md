@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Fixed: An error appearing when going to the Pipe rando preset page with the Depths pipes disabled.
+
 #### Logic Database
 
 ##### Golden Temple

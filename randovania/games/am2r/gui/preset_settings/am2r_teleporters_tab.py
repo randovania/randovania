@@ -4,6 +4,7 @@ import copy
 import typing
 from typing import TYPE_CHECKING
 
+from randovania.game_description import default_database
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.gui.generated.preset_teleporters_am2r_ui import Ui_PresetTeleportersAM2R
 from randovania.games.am2r.layout.am2r_configuration import AM2RConfiguration
@@ -64,6 +65,16 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         region_list = self.game_description.region_list
 
         locations = TeleporterList.nodes_list(self.game_enum)
+        am2r_config = self._editor.configuration
+        assert isinstance(am2r_config, AM2RConfiguration)
+        default_game_description = default_database.game_description_for(self.game_enum)
+        if not am2r_config.nest_pipes:
+            locations = [
+                loc
+                for loc in locations
+                if "new-pipes" not in default_game_description.region_list.node_by_identifier(loc).layers
+            ]
+
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
         }
