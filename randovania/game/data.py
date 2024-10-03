@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.game.web_info import GameWebInfo
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Iterator
 
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import PatchDataFactory
@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     from randovania.game.generator import GameGenerator
     from randovania.game.gui import GameGui
     from randovania.game.layout import GameLayout
+    from randovania.game_description.game_description import GameDescription
     from randovania.interface_common.options import PerGameOptions
 
 
@@ -70,3 +71,6 @@ class GameData:
 
     web_info: GameWebInfo = GameWebInfo()
     """Contains a handful of fields displayed primarily on the website."""
+
+    logic_db_integrity: Callable[[GameDescription], Iterator[str]] = lambda game: iter(())
+    """A function checking for game specific database integrity errors."""
