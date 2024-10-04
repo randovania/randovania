@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True)
 class GameExportParams:
-    """Contains necessary paramters for the exporting process itself."""
+    """Contains necessary parameters for the exporting process itself."""
 
     spoiler_output: Path | None
     """The path where the spoiler file should be saved to."""
