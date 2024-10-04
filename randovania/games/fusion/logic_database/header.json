@@ -967,10 +967,10 @@
                     }
                 }
             },
-            "Can Freeze Enemies": {
-                "display_name": "Can Freeze Enemies",
+            "Can Freeze With Ice Beam": {
+                "display_name": "Can Freeze With Ice Beam",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
                         "items": [
@@ -984,47 +984,112 @@
                                 }
                             },
                             {
-                                "type": "and",
+                                "type": "resource",
                                 "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "IceMissileData",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "DiffusionMissileData",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
+                                    "type": "misc",
+                                    "name": "EnemyRando",
+                                    "amount": 1,
+                                    "negate": true
                                 }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Freeze With Ice Missiles": {
+                "display_name": "Can Freeze With Ice Missiles",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "IceMissileData",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "EnemyRando",
+                                    "amount": 1,
+                                    "negate": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Freeze With Diffusion": {
+                "display_name": "Can Freeze With Diffusion",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DiffusionMissileData",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "EnemyRando",
+                                    "amount": 1,
+                                    "negate": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Freeze With Any Weapon": {
+                "display_name": "Can Freeze With Any Weapon",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Freeze With Diffusion"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Freeze With Ice Beam"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Freeze With Ice Missiles"
                             }
                         ]
                     }
@@ -1828,7 +1893,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "Can Freeze Enemies"
+                                "data": "Can Freeze With Any Weapon"
                             }
                         ]
                     }
