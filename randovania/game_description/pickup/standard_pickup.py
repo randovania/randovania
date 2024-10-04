@@ -20,26 +20,86 @@ EXCLUDE_DEFAULT = {"exclude_if_default": True}
 @dataclass(frozen=True)
 class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     game: RandovaniaGame = dataclasses.field(metadata={"init_from_extra": True})
+    """The game this pickup comes from."""
+
     name: str = dataclasses.field(metadata={"init_from_extra": True})
+    """The name of the pickup."""
+
     pickup_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
+    """The precise category for this pickup."""
+
     broad_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
+    """The broad category for this pickup."""
+
     model_name: str
+    """The name of the model that should be used by default for this pickup."""
+
     offworld_models: frozendict[RandovaniaGame, str]
+    """A dictionary defining the name of the model for other games if this pickup is in their world."""
+
     progression: tuple[str, ...]
+    """
+    Defines item resources (as short names) that collecting this pickup provides.
+    If this tuple contains only one resource, then every collection will give that resource.
+    If it contains more than one, then every time the pickup will be collected, it will give the Nth resource.
+    """
+
     preferred_location_category: LocationCategory
+    """The category for the preferred location."""
+
     expected_case_for_describer: StandardPickupStateCase = dataclasses.field(default=StandardPickupStateCase.SHUFFLED)
+    """What the expected case for the Preset Describer should be."""
+
     custom_count_for_shuffled_case: int | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    """
+    Defines how often the pickup is shuffled, if the pickup is set to StandardPickupStateCase.SHUFFLED.
+    If not specified, will use the length of progression.
+    """
+
     custom_count_for_starting_case: int | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    """
+    Defines with how many pickups will be given as a starting item, if the pickup is set to
+    StandardPickupStateCase.STARTING_ITEM. If not specified, will use the length of progression.
+    """
+
     ammo: tuple[str, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
+    """
+    Defines item resources (as short names) which all will be provided when the pickup is collected.
+    A user is able to customize how much of each ammo is given upon collection.
+    """
+
     unlocks_ammo: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """Determines whether collecting the pickup allows to immediately use all ammo defined in the 'ammo' field."""
+
     additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
+    """Defines item resources (as short names) which all will be additionally provided when the pickup is collected."""
+
     hide_from_gui: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """Whether this pickup should be hidden in the GUI."""
+
     must_be_starting: bool = dataclasses.field(default=False, metadata=EXCLUDE_DEFAULT)
+    """Whether the pickup is required be a starting item."""
+
     original_locations: tuple[PickupIndex, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
+    """
+    The index of the pickup (defined in the database) on where this pickup should be located if
+    it's set to be at the original location.
+    """
+
     probability_offset: float = dataclasses.field(default=0.0, metadata=EXCLUDE_DEFAULT)
+    """During generation, determines how much the weight when placing the pickup will be offset."""
+
     probability_multiplier: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
+    """During generation, determines by how much the weight when placing the pickup will be multiplied."""
+
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    """An extra description of the pickup. Will be used in the GUI for more info."""
+
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
+    """
+    A dictionary that can contain any arbitrary game-specific extra information.
+    Developers can use the game-specific however they need to.
+    """
 
     def __post_init__(self) -> None:
         super().__post_init__()
