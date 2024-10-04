@@ -54,7 +54,7 @@ class PickupCategory:
 
 
 USELESS_PICKUP_CATEGORY = PickupCategory(
-    name="useless", long_name="Useless", hint_details=("an ", "Energy Transfer Module"), hinted_as_major=False
+    name="useless", long_name="Useless", hint_details=("a ", "useless item"), hinted_as_major=False
 )
 
 GENERIC_KEY_CATEGORY = PickupCategory(name="key", long_name="Key", hint_details=("a ", "key"), hinted_as_major=False)
