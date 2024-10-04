@@ -20,7 +20,7 @@ class PlanetsZebethGameExporter(GameExporter):
     _busy: bool = False
 
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the exporter is busy right now
         """

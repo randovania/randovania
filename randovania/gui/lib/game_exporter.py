@@ -28,8 +28,7 @@ async def export_game(
     progress_update_signal: Signal(str, int),
 ):
     export_params = export_dialog.get_game_export_params()
-
-    if exporter.is_busy:
+    if exporter.can_start_new_export:
         return await async_dialog.message_box(
             None,
             QtWidgets.QMessageBox.Icon.Critical,

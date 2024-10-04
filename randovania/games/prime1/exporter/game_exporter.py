@@ -142,7 +142,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
 
 class PrimeGameExporter(GameExporter):
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the patcher is busy right now
         """
