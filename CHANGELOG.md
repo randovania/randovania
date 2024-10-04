@@ -60,6 +60,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
 - Added: In Gully: Beginner Standables to climb the room.
 
+### Metroid: Samus Returns
+
+- Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
+
 ## [8.5.x] - 2024-10-??
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
