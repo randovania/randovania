@@ -64,7 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
 
-## [8.5.x] - 2024-10-??
+## [8.5.0] - 2024-10-01
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 
