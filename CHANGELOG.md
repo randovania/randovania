@@ -60,7 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
 - Added: In Gully: Beginner Standables to climb the room.
 
-## [8.5.x] - 2024-10-??
+## [8.5.0] - 2024-10-01
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 
