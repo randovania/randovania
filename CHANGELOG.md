@@ -53,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+##### Impact Crater
+
+- Added: In Metroid Prime Lair: Require combat visor for Essence fight.
+
 ##### Tallon Overworld
 
 - Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump.
