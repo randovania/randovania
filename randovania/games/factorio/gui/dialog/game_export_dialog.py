@@ -4,10 +4,10 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.factorio.exporter.game_exporter import FactorioGameExportParams
 from randovania.games.factorio.exporter.options import FactorioPerGameOptions
 from randovania.games.factorio.gui.generated.factorio_game_export_dialog_ui import Ui_FactorioGameExportDialog
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,

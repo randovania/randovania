@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.super_metroid.layout.super_metroid_patch_configuration import SuperPatchConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 

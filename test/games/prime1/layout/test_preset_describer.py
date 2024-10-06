@@ -4,7 +4,7 @@ import dataclasses
 
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer, PrimeConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 

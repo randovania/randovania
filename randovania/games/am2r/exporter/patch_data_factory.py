@@ -8,12 +8,12 @@ from randovania import monitoring
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib, random_lib

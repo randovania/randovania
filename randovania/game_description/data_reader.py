@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from typing import TYPE_CHECKING, TypeVar
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_migration
 from randovania.game_description.db import event_pickup
 from randovania.game_description.db.area import Area
@@ -42,7 +43,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.lib import frozen_lib, json_lib
 
 if TYPE_CHECKING:

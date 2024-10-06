@@ -12,8 +12,8 @@ import cachetools
 import peewee
 from sentry_sdk.tracing_utils import record_sql_queries
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error, multiplayer_session

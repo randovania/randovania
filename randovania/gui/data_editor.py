@@ -12,6 +12,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QFileDialog, QInputDialog, QMainWindow, QMessageBox, QRadioButton
 from qasync import asyncSlot  # type: ignore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import (
     data_reader,
     data_writer,
@@ -34,7 +35,6 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games import default_data
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 from randovania.gui.docks.connection_filtering_widget import ConnectionFilteringWidget

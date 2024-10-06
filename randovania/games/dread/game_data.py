@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-from randovania.games import game
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.dread.layout.preset_describer import DreadPresetDescriber
@@ -12,11 +17,11 @@ def _options():
     return DreadPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.dread import gui
     from randovania.games.dread.pickup_database import progressive_items
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         tab_provider=gui.dread_preset_tabs,
         cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
         export_dialog=gui.DreadGameExportDialog,
@@ -38,13 +43,13 @@ def _exporter():
     return DreadGameExporter()
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
     from randovania.games.dread.generator.bootstrap import DreadBootstrap
     from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
     from randovania.games.dread.generator.pool_creator import pool_creator
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
         bootstrap=DreadBootstrap(),
@@ -58,10 +63,10 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
-    development_state=game.DevelopmentState.STABLE,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "april_fools_2023.rdvpreset"},
@@ -118,7 +123,7 @@ game_data: game.GameData = game.GameData(
             "Your checkpoint was saved after killing the E.M.M.I., so you will not lose progress.",
         ),
     ],
-    web_info=game.GameWebInfo(
+    web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=[
             "All items",
             "Elevator and shuttle destinations",
@@ -132,7 +137,7 @@ game_data: game.GameData = game.GameData(
         ],
     ),
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=DreadConfiguration, cosmetic_patches=DreadCosmeticPatches, preset_describer=DreadPresetDescriber()
     ),
     options=_options,

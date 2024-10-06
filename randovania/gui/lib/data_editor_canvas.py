@@ -16,8 +16,8 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.requirements.base import Requirement
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region import Region
-    from randovania.games.game import RandovaniaGame
     from randovania.resolver.state import State
 
 _color_for_node: dict[type[Node], int] = {

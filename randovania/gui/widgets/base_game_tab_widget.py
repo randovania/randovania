@@ -10,7 +10,7 @@ from randovania import monitoring
 from randovania.gui.lib import faq_lib, hints_text
 
 if TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.widgets.generate_game_widget import GenerateGameWidget

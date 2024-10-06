@@ -5,6 +5,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.requirements import fast_as_set
@@ -23,7 +24,6 @@ from randovania.game_description.resources.resource_database import NamedRequire
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo

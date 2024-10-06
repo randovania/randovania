@@ -20,8 +20,8 @@ import socketio.exceptions
 
 import randovania
 from randovania.bitpacking import bitpacking, construct_pack
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.games.game import RandovaniaGame
 from randovania.lib import container_lib
 from randovania.network_common import (
     admin_actions,

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
 
 
 def test_extra_resources_maximum(generic_pickup_category, default_generator_params):

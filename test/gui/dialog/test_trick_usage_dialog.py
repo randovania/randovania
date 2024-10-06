@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 from PySide6.QtWidgets import QWidget
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.dialog import trick_usage_popup
 
 

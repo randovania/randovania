@@ -28,7 +28,7 @@ from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 
 if typing.TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.layout.layout_description import LayoutDescription

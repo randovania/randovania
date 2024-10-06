@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 class BlankPatchDataFactory(PatchDataFactory):

@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-from randovania.games import game
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.preset_describer import EchoesPresetDescriber
@@ -12,14 +17,14 @@ def _options():
     return EchoesPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
         PrimeTrilogyTeleporterDetailsTab,
     )
     from randovania.games.prime2 import gui
     from randovania.games.prime2.pickup_database import progressive_items
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         tab_provider=gui.prime2_preset_tabs,
         cosmetic_dialog=gui.EchoesCosmeticPatchesDialog,
         export_dialog=gui.EchoesGameExportDialog,
@@ -34,13 +39,13 @@ def _gui() -> game.GameGui:
     )
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
     from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
     from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
     from randovania.games.prime2.generator.pickup_pool.pool_creator import echoes_specific_pool
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=echoes_specific_pool,
         bootstrap=EchoesBootstrap(),
         base_patches_factory=EchoesBasePatchesFactory(),
@@ -68,10 +73,10 @@ def _hash_words() -> list[str]:
 
 # ruff: noqa: E501
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Echoes",
     long_name="Metroid Prime 2: Echoes",
-    development_state=game.DevelopmentState.STABLE,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "darkszero_deluxe.rdvpreset"},
@@ -121,7 +126,7 @@ This means you need Boost Ball to fight Spider Guardian.""",
             "The morph cannon will only be active once the scan post has been scanned and the room has been reloaded.",
         ),
     ],
-    web_info=game.GameWebInfo(
+    web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=[
             "All items including Temple Keys",
             "Elevator destinations",
@@ -135,7 +140,7 @@ This means you need Boost Ball to fight Spider Guardian.""",
         ],
     ),
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,
         preset_describer=EchoesPresetDescriber(),

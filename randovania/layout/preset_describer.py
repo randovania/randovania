@@ -14,7 +14,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState, St
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-    from randovania.games.game import ProgressiveItemTuples
+    from randovania.game.gui import ProgressiveItemTuples
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration

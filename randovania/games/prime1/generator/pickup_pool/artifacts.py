@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.patcher import prime_items
 from randovania.generator.pickup_pool import PoolResults
 

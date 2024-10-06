@@ -5,10 +5,10 @@ import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.am2r.exporter.game_exporter import AM2RGameExportParams
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
 from randovania.games.am2r.gui.generated.am2r_game_export_dialog_ui import Ui_AM2RGameExportDialog
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,

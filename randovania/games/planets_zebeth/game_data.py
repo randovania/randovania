@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games import game
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
 from randovania.games.planets_zebeth import layout
 
 if TYPE_CHECKING:
@@ -17,10 +21,10 @@ def _options() -> type[PlanetsZebethPerGameOptions]:
     return PlanetsZebethPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.planets_zebeth import gui
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         game_tab=gui.PlanetsZebethGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.PlanetsZebethCosmeticPatchesDialog,
@@ -30,11 +34,11 @@ def _gui() -> game.GameGui:
     )
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.planets_zebeth import generator
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.PlanetsZebethBootstrap(),
         base_patches_factory=generator.PlanetsZebethBasePatchesFactory(),
@@ -60,10 +64,10 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Planets Zebeth",
     long_name="Metroid Planets (Zebeth)",
-    development_state=game.DevelopmentState.DEVELOPMENT,
+    development_state=randovania.game.development_state.DevelopmentState.DEVELOPMENT,
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "starter_preset_shuffle_keys.rdvpreset"},
@@ -75,7 +79,7 @@ game_data: game.GameData = game.GameData(
         )
     ],
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=layout.PlanetsZebethConfiguration,
         cosmetic_patches=layout.PlanetsZebethCosmeticPatches,
         preset_describer=layout.PlanetsZebethPresetDescriber(),

@@ -7,10 +7,10 @@ from typing import TYPE_CHECKING, Self
 from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.pickup_entry import ResourceLock
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase

@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtWidgets import QComboBox
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.configurable_node import ConfigurableNode
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration

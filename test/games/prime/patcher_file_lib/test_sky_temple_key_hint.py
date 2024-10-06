@@ -5,10 +5,10 @@ import dataclasses
 import pytest
 
 import randovania.games.prime2.exporter.hints
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.interface_common.players_configuration import PlayersConfiguration

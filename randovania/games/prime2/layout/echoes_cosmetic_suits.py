@@ -5,7 +5,7 @@ from random import Random
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import enum_lib
 
 

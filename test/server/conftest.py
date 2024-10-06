@@ -7,7 +7,7 @@ import flask
 import pytest
 from peewee import SqliteDatabase
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.server import database
 
 

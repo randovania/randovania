@@ -12,7 +12,7 @@ from random import Random
 import construct  # type: ignore[import-untyped]
 
 import randovania
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import description_migration, game_patches_serializer
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink

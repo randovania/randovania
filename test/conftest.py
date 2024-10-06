@@ -11,6 +11,7 @@ from unittest.mock import MagicMock, PropertyMock
 import pytest
 from frozendict import frozendict
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_category import PickupCategory
@@ -20,7 +21,6 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.games import default_data
 from randovania.games.blank.layout import BlankConfiguration
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration

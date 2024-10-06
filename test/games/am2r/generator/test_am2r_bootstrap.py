@@ -6,13 +6,13 @@ from random import Random
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games.am2r.generator import AM2RBootstrap
 from randovania.games.am2r.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pool_creator
 
 _boss_indices = [111, 3, 6, 14, 11, 50]

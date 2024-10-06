@@ -9,7 +9,7 @@ from caver.patcher import CSPlatform
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import json_lib, status_update_lib
 
 

@@ -9,7 +9,7 @@ from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
 
 if TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
 
 
 @dataclass(frozen=True)

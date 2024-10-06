@@ -4,11 +4,11 @@ from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import PoolResults
 
 if TYPE_CHECKING:
