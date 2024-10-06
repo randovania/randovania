@@ -318,18 +318,12 @@ Extra - room_id: [9]
               # Vanilla - Morph Ball to cross to the other side of the tunnel and use Missiles or Charge Beam
               Morph Ball
               Charge Beam or Missiles
+          # Missiles can be used for damage by bumping into Geron: https://youtu.be/Mp9YwFW3dLM
+          Damage Boosts (Intermediate) and Knowledge (Intermediate) and Normal Damage ≥ 30 and 10 DMG Missiles
           All of the following:
-              Any of the following:
-                  # Missiles can be used to damage the Geron from the wrong side, but only by getting too close
-                  All of the following:
-                      Knowledge (Intermediate) and Normal Damage ≥ 30
-                      Any of the following:
-                          Damage Boosts (Intermediate) and 10 DMG Missiles
-                          Damage Boosts (Beginner) and 30 DMG Missiles
-              All of the following:
-                  # Alternate methods of defeating the Geron
-                  Knowledge (Beginner)
-                  Screw Attack or Can Use Power Bombs
+              # Alternate methods of defeating the Geron
+              Knowledge (Beginner)
+              Screw Attack or Can Use Power Bombs
 
 > Event - Stabilizer 5 Online; Heals? False
   * Layers: default
@@ -1393,7 +1387,9 @@ Extra - room_id: [37]
   * L0 Hatch to Sciser Playground/Door to Charge Core Arena Access
   * Extra - door_idx: (25,)
   > Door to Hornoad Housing
-      Morph Ball or Can Break Single Bomb Blocks
+      Morph Ball
+  > Event - Bomb Blocks
+      Can Break Single Bomb Blocks
 
 > Door to Hornoad Housing; Heals? False
   * Layers: default
@@ -1402,15 +1398,12 @@ Extra - room_id: [37]
   > Door to Charge Core Arena
       Can Kill Gadora
   > Other to Watering Hole
+      After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
+  > Event - Bomb Blocks
       Any of the following:
           Can Break Single Bomb Blocks
-          All of the following:
-              # Speed Boosting from Hornoad Housing
-              Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
-              # Need Any Beam except Normal to kill the Hornoads fast enough
-              Have Any Beam Upgrade
-              # Knowledge because breaking Bomb Blocks with Speed Booster is a bit obscure
-              Knowledge (Intermediate)
+          # Speed Boosting from Hornoad Housing
+          Level 0 Locks and Speed Booster and Knowledge (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Charge Core Arena; Heals? False
   * Layers: default
@@ -1424,7 +1417,15 @@ Extra - room_id: [37]
   * Open Passage to Watering Hole/Other to Charge Core Arena Access
   * Extra - door_idx: (100,)
   > Door to Hornoad Housing
-      Can Use Any Bombs
+      After Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
+  > Event - Bomb Blocks
+      Can Break Single Bomb Blocks
+
+> Event - Bomb Blocks; Heals? False
+  * Layers: default
+  * Event Sector 1 Charge Core Arena Access Bomb Blocks Destroyed
+  > Door to Hornoad Housing
+      Trivial
 
 ----------------
 Sciser Playground
@@ -1542,8 +1543,6 @@ Extra - room_id: [40]
                   Hi-Jump and After Boss Charge Core-X Defeated
                   # Pre-fight, No Hi-Jump: https://youtu.be/Fo8-jjuPdik
                   Shinespark Tricks (Advanced)
-              # Any Beam except Normal required to defeat the Hornoads fast enough
-              Have Any Beam Upgrade
           All of the following:
               # Alternate - Shinespark from Central Stabilizer -> Escape (Morph Ball is not required for this): https://youtu.be/BsW39UKOYVw
               Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
