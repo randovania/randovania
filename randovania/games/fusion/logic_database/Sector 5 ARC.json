@@ -1930,15 +1930,6 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "tricks",
                                                                     "name": "DamageRuns",
                                                                     "amount": 4,
@@ -1946,12 +1937,46 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 600,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "ColdDamage",
+                                                                                "amount": 800,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "ColdDamage",
+                                                                                            "amount": 600,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -2552,7 +2577,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "ColdDamage",
-                                                        "amount": 319,
+                                                        "amount": 265,
                                                         "negate": false
                                                     }
                                                 }
@@ -2866,7 +2891,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "ColdDamage",
-                                                        "amount": 150,
+                                                        "amount": 299,
                                                         "negate": false
                                                     }
                                                 }
@@ -2929,15 +2954,6 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 521,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "items",
                                                                     "name": "SpaceJump",
                                                                     "amount": 1,
@@ -2947,9 +2963,9 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 333,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4852,7 +4868,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "ColdDamage",
-                                                                    "amount": 86,
+                                                                    "amount": 78,
                                                                     "negate": false
                                                                 }
                                                             }
