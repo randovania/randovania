@@ -6710,7 +6710,7 @@
                         "Event - Arachnus": {
                             "type": "and",
                             "data": {
-                                "comment": "FIXME: add health requirements once these dont prevent missile start",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -6723,6 +6723,40 @@
                                                         "type": "items",
                                                         "name": "Missiles",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Health Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Hitless: https://youtu.be/WCQdKVWgcXo?t=17",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 60,
                                                         "negate": false
                                                     }
                                                 }
