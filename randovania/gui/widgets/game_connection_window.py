@@ -311,14 +311,12 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             return
 
         session_id = self._check_session_data(layout_uuid)
-        if session_id:
-            try:
-                await self.network_client.listen_to_session(session_id, True)
-                await self.window_manager.ensure_multiplayer_session_window(
-                    self.network_client, session_id, self.options
-                )
-            except error.NotAuthorizedForActionError:
-                await async_dialog.warning(self, "Unauthorized", "You're not a member of this session.")
+        assert session_id is not None
+        try:
+            await self.network_client.listen_to_session(session_id, True)
+            await self.window_manager.ensure_multiplayer_session_window(self.network_client, session_id, self.options)
+        except error.NotAuthorizedForActionError:
+            await async_dialog.warning(self, "Unauthorized", "You're not a member of this session.")
 
     def _check_session_data(self, layout_uuid: uuid.UUID) -> int | None:
         world_data = self.world_database.get_data_for(layout_uuid)

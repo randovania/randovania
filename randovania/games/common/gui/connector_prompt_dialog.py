@@ -22,11 +22,11 @@ class ConnectorPromptDialog(TextPromptDialog):
         self.gridLayout.addWidget(self.description_label, 4, 0, 1, 3)
         self.gridLayout.addWidget(self.error_label, 6, 1, 1, 1)
 
-        self.top_radio.toggled.connect(self._select_left)
+        self.top_radio.toggled.connect(self._select_top)
         self.ip_radio.toggled.connect(self._select_ip)
         self.top_radio.setChecked(True)
 
-    def _select_left(self) -> None:
+    def _select_top(self) -> None:
         self.prompt_edit.setEnabled(False)
         self.accept_button.setEnabled(True)
 
