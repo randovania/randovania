@@ -55,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Impact Crater
 
-- Added: In Metroid Prime Lair: Require combat visor for Essence fight.
+- Added: In Metroid Prime Lair: Require Combat Visor for Essence fight.
 
 ##### Tallon Overworld
 
