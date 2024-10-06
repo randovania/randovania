@@ -259,6 +259,9 @@ def retcon_playthrough_filler(
 
     while True:
         all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
+        if debug.debug_level() > 1:
+            player_health = {player_state: player_state.reach.state.maximum_energy for player_state in player_states}
+            print(f">>>> Player Health: {player_health}")
         current_player = _get_next_player(rng, player_states, all_locations_weighted)
         if current_player is None:
             break
