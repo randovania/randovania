@@ -852,7 +852,7 @@ async def test_game_export_listener(
     window.network_client.session_admin_player = AsyncMock()
 
     patch_data = MagicMock()
-    game.exporter.is_busy = False
+    game.exporter.can_start_new_export = False
 
     # Run
     await window.game_export_listener(world.id, patch_data)

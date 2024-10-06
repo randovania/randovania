@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.6.x] - 2024-11-??
 
+### AM2R
+
+#### Logic Database
+
+- Fixed: The Hideout<->Bubble lair Depths pipes being on the wrong layer.
+
+##### Golden Temple
+
+- Fixed: Guardian Arena: IBJing up to Guardian Storage now requires Morph Ball.
+
+##### Hydro Station
+
+- Fixed: Breeding Grounds Entrance: Using Mid Air Morph to get to the upper part now requires Morph Ball.
+
+##### Industrial Complex
+
+- Fixed: Senjoo Settlement: Using Morph Glides to go from the Gamma Nest to the exterior now requires Morph Ball.
+
+##### The Tower
+
+- Fixed: Tower Exterior South East: Getting to the upper Gamma Nest ledge with Shinesparking and Morph Ball now requires a Beginner Morph Glide instead of an Intermediate Mid Air Morph and also requires Morph Ball.
+- Fixed: Tower Exterior North East: Getting to the Plasma Beam Chamber Access door from below with Morph is now correctly classified as a Morph Glide instead of a Mid Air Morph and also requires Morph Ball.
+- Fixed: Tower Exterior North East: Getting to the Save Station from the Zeta tunnel with Morph is now correctly classified as a Morph Glide instead of a Mid Air Morph and also requires Morph Ball.
+- Fixed: Exterior Zeta Nest East Access: IBJing to the ceiling to get across from the Zeta Nest to the Exterior requires Infinite Bomb Propulsion.
+
+##### Distribution Center
+
+- Fixed: Distribution Center Exterior East: Climbing the room with High Jump and Morph Gliding now requires Morph Ball.
+- Fixed: Distribution Facility Tower East: Morph Gliding over the little gap at the top now requires Morph Ball.
+- Fixed: Distribution Facility Tower East: Walljumping and Morph Gliding from the bottom pipe to the middle pipe now requires Morph Ball.
+- Fixed: Ice Beam Chamber Access: Mid Aid Morphing into the pipe now requires Morph Ball.
+
+##### The Depths
+
+- Fixed: Bubble Lair Shinespark Cave: Climbing the upper part of the room with Walljumps and Morph Glides now requires Morph Ball.
+
+##### Genetics Laboratory
+
+- Fixed: Laboratory Entrance: Climbing the room with Walljumps and Morph Glides now requires Morph Ball.
+- Fixed: Laboratory Spiked Hall: Morph Gliding across the room now requires Morph Ball.
+
+
 ### Metroid Prime
 
 #### Logic Database
@@ -18,7 +60,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
 - Added: In Gully: Beginner Standables to climb the room.
 
-## [8.5.x] - 2024-10-??
+### Metroid: Samus Returns
+
+- Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
+
+## [8.5.0] - 2024-10-01
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 

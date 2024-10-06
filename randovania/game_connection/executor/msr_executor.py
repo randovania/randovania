@@ -184,7 +184,7 @@ class MSRExecutor:
             ValueError,
         ) as e:
             # UnicodeError is for some invalid ip addresses
-            self._socket = None
+            self.disconnect()
             message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
             self._socket_error = e
             return message

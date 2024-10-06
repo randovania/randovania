@@ -730,6 +730,10 @@
                 "extra": {
                     "description": "A resource for working around current shortcomings in the generator"
                 }
+            },
+            "MenuMod": {
+                "long_name": "Equipment Manipulation",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -1083,6 +1087,15 @@
                                                 "type": "tricks",
                                                 "name": "Knowledge",
                                                 "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         }
@@ -1507,7 +1520,7 @@
             "10 DMG Missiles": {
                 "display_name": "10 DMG Missiles",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
                         "items": [
@@ -1515,50 +1528,13 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "MissileData",
+                                    "name": "Missiles",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "IceMissileData",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "20 DMG Missiles": {
-                "display_name": "20 DMG Missiles",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
+                                "type": "or",
                                 "data": {
                                     "comment": null,
                                     "items": [
@@ -1582,9 +1558,29 @@
                                         }
                                     ]
                                 }
+                            }
+                        ]
+                    }
+                }
+            },
+            "20 DMG Missiles": {
+                "display_name": "20 DMG Missiles",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             },
                             {
-                                "type": "and",
+                                "type": "or",
                                 "data": {
                                     "comment": null,
                                     "items": [
@@ -1592,18 +1588,35 @@
                                             "type": "resource",
                                             "data": {
                                                 "type": "items",
-                                                "name": "Missiles",
+                                                "name": "SuperMissileData",
                                                 "amount": 1,
                                                 "negate": false
                                             }
                                         },
                                         {
-                                            "type": "resource",
+                                            "type": "and",
                                             "data": {
-                                                "type": "items",
-                                                "name": "SuperMissileData",
-                                                "amount": 1,
-                                                "negate": false
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "IceMissileData",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "MissileData",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         }
                                     ]
@@ -1635,29 +1648,12 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "and",
+                                            "type": "resource",
                                             "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "IceMissileData",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
+                                                "type": "items",
+                                                "name": "IceMissileData",
+                                                "amount": 1,
+                                                "negate": false
                                             }
                                         },
                                         {
@@ -1670,6 +1666,15 @@
                                             }
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
@@ -1715,6 +1720,15 @@
                                 "data": {
                                     "type": "items",
                                     "name": "DiffusionMissileData",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
                                     "amount": 1,
                                     "negate": false
                                 }
