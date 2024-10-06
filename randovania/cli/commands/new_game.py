@@ -52,7 +52,9 @@ short_name_re = re.compile(r"^[A-Z][A-Za-z0-9]+$")
 
 
 def update_game_py(enum_name: str, enum_value: str) -> None:
-    with _GAMES_PATH.joinpath("game.py").open() as f:
+    game_py_path = _ROOT_PATH.joinpath("game", "game_enum.py")
+
+    with game_py_path.open() as f:
         game_py = list(f)
 
     enum_entry = f'    {enum_name} = "{enum_value}"\n'
@@ -71,7 +73,7 @@ def update_game_py(enum_name: str, enum_value: str) -> None:
     game_py.insert(import_index - 1, f"        elif self == RandovaniaGame.{enum_name}:\n")
     game_py.insert(import_index, f"            import randovania.games.{enum_value}.game_data as game_module\n")
 
-    with _GAMES_PATH.joinpath("game.py").open("w") as f:
+    with game_py_path.open("w") as f:
         f.writelines(game_py)
 
 
