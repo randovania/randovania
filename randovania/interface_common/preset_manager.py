@@ -12,7 +12,7 @@ import dulwich.repo
 from dulwich.objects import Blob
 
 import randovania
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.lib import enum_lib
 

@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.gui.dialog.trick_details_popup import BaseResourceDetailsPopup, ResourceDetailsPopup, TrickDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel

@@ -7,11 +7,11 @@ from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode

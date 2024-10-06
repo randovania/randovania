@@ -6,11 +6,11 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.fusion.exporter.game_exporter import FusionGameExportParams
 from randovania.games.fusion.exporter.options import FusionPerGameOptions
 from randovania.games.fusion.gui.dialog.game_export_dialog import FusionGameExportDialog
 from randovania.games.fusion.layout.fusion_cosmetic_patches import FusionCosmeticPatches
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 
 

@@ -11,6 +11,7 @@ import sentry_sdk
 from frozendict import frozendict
 
 from randovania.bitpacking import bitpacking
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -18,7 +19,6 @@ from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.network_common import error, remote_inventory, signals
 from randovania.network_common.game_connection_status import GameConnectionStatus

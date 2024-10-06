@@ -6,6 +6,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.exporter import pickup_exporter
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -15,7 +16,6 @@ from randovania.games.dread.exporter.patch_data_factory import (
     get_resources_for_details,
 )
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle

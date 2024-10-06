@@ -6,7 +6,7 @@ from argparse import ArgumentParser, Namespace, _SubParsersAction
 from pathlib import Path
 
 from randovania import get_readme_section
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 def export_videos_yaml_command_logic(args: Namespace) -> None:

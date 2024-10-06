@@ -4,9 +4,9 @@ from unittest.mock import MagicMock
 from caver.patcher import CSPlatform
 
 from randovania.cli.commands import export_game
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
-from randovania.games.game import RandovaniaGame
 
 
 def test_add_parser_arguments_for(game_enum: RandovaniaGame) -> None:

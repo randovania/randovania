@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_writer, default_database, pretty_print
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.dock import DockRandoConfig, DockType, DockWeakness, DockWeaknessDatabase
@@ -30,7 +31,6 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase, default_base_damage_reduction
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode, DockTypeState

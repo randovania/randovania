@@ -3,9 +3,9 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.blank.exporter.game_exporter import BlankGameExportParams
 from randovania.games.blank.exporter.options import BlankPerGameOptions
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for
 
 if TYPE_CHECKING:

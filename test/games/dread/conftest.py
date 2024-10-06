@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.game import RandovaniaGame
 
 
 @pytest.fixture

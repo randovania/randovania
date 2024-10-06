@@ -15,8 +15,8 @@ if TYPE_CHECKING:
 
     from PySide6 import QtWidgets
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
-    from randovania.games.game import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset

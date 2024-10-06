@@ -6,6 +6,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.hint_node import HintNode
@@ -23,7 +24,6 @@ from randovania.game_description.hint import (
 )
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool

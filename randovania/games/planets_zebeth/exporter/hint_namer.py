@@ -4,13 +4,13 @@ from randovania.exporter.hints.hint_formatters import LocationFormatter, Relativ
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 

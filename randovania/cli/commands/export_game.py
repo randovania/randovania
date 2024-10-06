@@ -7,7 +7,7 @@ from pathlib import Path
 
 from randovania.cli.cli_lib import EnumAction
 from randovania.exporter.game_exporter import GameExportParams
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import json_lib, type_lib
 
 

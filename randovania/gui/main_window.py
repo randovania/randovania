@@ -17,7 +17,7 @@ from qasync import asyncSlot
 
 import randovania
 from randovania import VERSION, get_readme_section, monitoring
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin

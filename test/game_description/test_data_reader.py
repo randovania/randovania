@@ -4,10 +4,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.data_reader import RegionReader
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.search import MissingResource
-from randovania.games.game import RandovaniaGame
 
 
 def test_invalid_node_type():

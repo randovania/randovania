@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import dataclasses
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.fusion.layout.fusion_configuration import FusionArtifactConfig, FusionConfiguration
-from randovania.games.game import RandovaniaGame
 
 
 def test_has_unsupported_features(preset_manager):

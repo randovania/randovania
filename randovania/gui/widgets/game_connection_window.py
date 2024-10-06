@@ -10,6 +10,7 @@ from PySide6.QtCore import Qt
 from qasync import asyncSlot
 
 import randovania
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
@@ -20,7 +21,6 @@ from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import (
     CSConnectorPromptDialog,
     DreadConnectorPromptDialog,
 )
-from randovania.games.game import RandovaniaGame
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow

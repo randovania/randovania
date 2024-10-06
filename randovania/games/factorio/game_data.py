@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import typing
 
-from randovania.games import game
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
 from randovania.games.factorio import layout
 from randovania.layout.preset_describer import GamePresetDescriber
 
@@ -18,10 +22,10 @@ def _options() -> type[PerGameOptions]:
     return FactorioPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.factorio import gui
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         game_tab=gui.FactorioGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=None,
@@ -31,11 +35,11 @@ def _gui() -> game.GameGui:
     )
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.factorio import generator
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FactorioBootstrap(),
         base_patches_factory=generator.FactorioBasePatchesFactory(),
@@ -61,16 +65,16 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Factorio",
     long_name="Factorio",
-    development_state=game.DevelopmentState.EXPERIMENTAL,
+    development_state=randovania.game.development_state.DevelopmentState.EXPERIMENTAL,
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
     faq=[],
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=layout.FactorioConfiguration,
         cosmetic_patches=layout.FactorioCosmeticPatches,
         preset_describer=GamePresetDescriber(),

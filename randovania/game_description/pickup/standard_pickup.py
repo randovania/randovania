@@ -8,10 +8,10 @@ from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.standard_pickup_state import StandardPickupStateCase
 
 EXCLUDE_DEFAULT = {"exclude_if_default": True}

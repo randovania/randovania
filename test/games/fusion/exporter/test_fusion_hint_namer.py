@@ -5,11 +5,11 @@ import pytest
 from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, PrecisionPair
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 

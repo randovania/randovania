@@ -19,6 +19,7 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.dock import DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
@@ -26,7 +27,6 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
-    from randovania.games.game import RandovaniaGame
 
 
 def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:

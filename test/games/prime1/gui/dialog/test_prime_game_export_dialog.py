@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, call
 import pytest
 from PySide6 import QtCore
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.gui.dialog.game_export_dialog import PrimeGameExportDialog

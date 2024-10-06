@@ -8,8 +8,8 @@ from functools import cached_property
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility

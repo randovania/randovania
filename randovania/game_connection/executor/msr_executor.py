@@ -9,11 +9,11 @@ import typing
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from pathlib import Path

@@ -12,7 +12,7 @@ from PySide6 import QtCore, QtWidgets
 
 import randovania
 from randovania import monitoring
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:

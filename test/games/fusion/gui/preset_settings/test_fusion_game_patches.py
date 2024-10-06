@@ -6,10 +6,10 @@ from unittest.mock import MagicMock
 
 from PySide6 import QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.games.fusion.gui.preset_settings.fusion_patches_tab import _FIELDS, PresetFusionPatches
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_editor import PresetEditor
 
 

@@ -4,7 +4,7 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
 from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
 from randovania.games.super_metroid.gui.generated.super_metroid_game_export_dialog_ui import (

@@ -7,8 +7,8 @@ from distutils.version import StrictVersion
 from enum import Enum
 from typing import TYPE_CHECKING, Any, TypeVar
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common import persisted_options, update_checker
 from randovania.lib import migration_lib
 

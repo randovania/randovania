@@ -4,11 +4,11 @@ import dataclasses
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.fusion.layout.fusion_configuration import (
     FusionArtifactConfig,
     FusionConfiguration,
 )
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 
 

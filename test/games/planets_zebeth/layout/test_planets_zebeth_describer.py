@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.planets_zebeth.layout.planets_zebeth_configuration import PlanetsZebethConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 

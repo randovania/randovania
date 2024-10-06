@@ -7,12 +7,12 @@ from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 

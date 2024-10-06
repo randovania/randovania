@@ -13,7 +13,7 @@ from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common import sleep_inhibitor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
