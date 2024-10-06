@@ -44,6 +44,8 @@ def _generator() -> randovania.game.generator.GameGenerator:
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
         hint_distributor=FusionHintDistributor(),
+        events_weight=0.75,
+        hints_weight=0.5,
     )
 
 
