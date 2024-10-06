@@ -29,6 +29,13 @@ class PatcherDataMeta(typing.TypedDict):
 
 
 class PatchDataFactory:
+    """
+    Class with the purpose of creating a JSON-serializable dictionary from a randomized game.
+    The resulting dictionary-data will later be passed to the patcher.
+    Since every patcher needs their data laid out differently, it's up to
+    each game to define the exact layout of the dictionary.
+    """
+
     description: LayoutDescription
     players_config: PlayersConfiguration
     game: GameDescription
@@ -58,12 +65,16 @@ class PatchDataFactory:
         self.memo_data = self.create_memo_data()
 
     def game_enum(self) -> RandovaniaGame:
+        """Returns the game for which this PatchDataFactory is for."""
         raise NotImplementedError
 
     def create_game_specific_data(self) -> dict:
+        """Creates the game specific data. Should be overwritten by individual games."""
         raise NotImplementedError
 
     def create_data(self) -> dict:
+        """Creates the patcher specific data. Applies custom patcher data on top if they exist."""
+
         game_data = self.create_game_specific_data()
         json_delta.patch(game_data, self.patches.custom_patcher_data)
         game_data["_randovania_meta"] = {

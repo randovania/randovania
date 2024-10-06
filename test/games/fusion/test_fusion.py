@@ -12,7 +12,6 @@ resource_list = [
     ("Jump Bombjump", "Can Use Bombs"),
     ("Mid-Air Morph", "Morph Ball"),
     ("Shinesparking Tricks", "SpeedBooster"),
-    ("Stand On Frozen Enemies", "Can Freeze Enemies"),
     # Items
     ("Morph Ball Bomb Data", "Morph Ball"),
     ("Power Bomb Data", "Morph Ball"),

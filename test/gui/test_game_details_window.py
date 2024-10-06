@@ -30,7 +30,7 @@ async def test_export_iso(skip_qtbot, mocker):
     window.layout_description = MagicMock()
     window._player_names = {}
     game = window.layout_description.get_preset.return_value.game
-    game.exporter.is_busy = False
+    game.exporter.can_start_new_export = False
     window.layout_description.all_games = [game]
     patch_data = game.patch_data_factory.return_value.create_data.return_value
 

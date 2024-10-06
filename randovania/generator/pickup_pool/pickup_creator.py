@@ -99,7 +99,8 @@ def create_ammo_pickup(
         resource_lock=ammo.create_resource_lock(resource_database),
         generator_params=PickupGeneratorParams(
             preferred_location_category=ammo.preferred_location_category,
-            probability_multiplier=2,
+            probability_offset=ammo.probability_offset,
+            probability_multiplier=ammo.probability_multiplier,
         ),
     )
 
