@@ -4,9 +4,9 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from randovania.generator.filler.weights import (
-    DEFAULT_INDICES_WEIGHT_MULTIPLIER,
     DEFAULT_EVENTS_WEIGHT_MULTIPLIER,
     DEFAULT_HINTS_WEIGHT_MULTIPLIER,
+    DEFAULT_INDICES_WEIGHT_MULTIPLIER,
 )
 
 if TYPE_CHECKING:
@@ -34,7 +34,6 @@ class GameGenerator:
 
     hint_distributor: HintDistributor
     """Use AllJokesDistributor if not using hints."""
-
 
     indices_weight: float = DEFAULT_INDICES_WEIGHT_MULTIPLIER
     """
