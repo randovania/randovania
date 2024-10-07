@@ -30,6 +30,8 @@ class AmmoPickupDefinition(JsonDataclass):
     additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
     unlocked_by: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     temporary: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    probability_offset: float = dataclasses.field(default=0.0, metadata=EXCLUDE_DEFAULT)
+    probability_multiplier: float = dataclasses.field(default=2.0, metadata=EXCLUDE_DEFAULT)
     allows_negative: bool | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     include_expected_counts: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
