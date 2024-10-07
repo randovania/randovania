@@ -116,7 +116,7 @@ class FusionGameExportDialog(GameExportDialog, Ui_FusionGameExportDialog):
         return dataclasses.replace(
             fusion_options,
             input_path=self.input_file,
-            output_path=self.output_file,
+            output_path=Path(self.output_file).parent,
         )
 
     def get_game_export_params(self) -> FusionGameExportParams:

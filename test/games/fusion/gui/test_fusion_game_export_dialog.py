@@ -76,7 +76,7 @@ def test_save_options(skip_qtbot, tmp_path):
     window.save_options()
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.FUSION).output_path == Path("somewhere/foo")
+    assert options.options_for_game(RandovaniaGame.FUSION).output_path == Path("somewhere")
 
 
 @pytest.mark.parametrize("save_spoiler", [False, True])
