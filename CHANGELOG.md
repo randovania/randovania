@@ -55,6 +55,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: Videos added to the logic database.
+
+##### Chozo Ruins
+
+- Added: In Furnace: Add comments that the standable climb up the spider track does not work on PAL.
+- Added: In Furnace: Add Bomb Space Jump method for climbing the spider track on the West Furnace side.
+
 ##### Impact Crater
 
 - Added: In Metroid Prime Lair: Require Combat Visor for Essence fight.
