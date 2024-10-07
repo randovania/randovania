@@ -2521,7 +2521,7 @@
                         "Door to Data Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2533,55 +2533,21 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Damage Reqs",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 238,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "DamageRuns",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "ColdDamage",
+                                            "amount": 280,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -2816,62 +2782,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Mimic Storage": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Damage Reqs",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "ColdDamage",
-                                                                    "amount": 59,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
                                     {
                                         "type": "and",
                                         "data": {
@@ -2892,6 +2806,50 @@
                                                         "type": "tricks",
                                                         "name": "Movement",
                                                         "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 59,
                                                         "negate": false
                                                     }
                                                 }
@@ -3217,7 +3175,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "ColdDamage",
-                                                                    "amount": 692,
+                                                                    "amount": 600,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4911,7 +4869,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "ColdDamage",
-                                                                    "amount": 78,
+                                                                    "amount": 62,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -10691,7 +10649,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "ColdDamage",
-                                                                    "amount": 203,
+                                                                    "amount": 280,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -10700,15 +10658,6 @@
                                                                 "data": {
                                                                     "type": "items",
                                                                     "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
