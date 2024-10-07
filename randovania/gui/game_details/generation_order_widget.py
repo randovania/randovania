@@ -34,6 +34,7 @@ class GenerationOrderWidget(QtWidgets.QWidget):
             self.item_model.appendRow(QtGui.QStandardItem(item_order))
 
         self.proxy_model = QtCore.QSortFilterProxyModel(self)
+        self.proxy_model.setFilterCaseSensitivity(QtCore.Qt.CaseSensitivity.CaseInsensitive)
         self.proxy_model.setSourceModel(self.item_model)
         self.filter_edit.textChanged.connect(self.proxy_model.setFilterRegularExpression)
         self.list_view.setModel(self.proxy_model)
