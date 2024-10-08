@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.super_metroid.gui.generated.games_tab_supermetroid_widget_ui import Ui_SuperMetroidGameTabWidget
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 

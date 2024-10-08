@@ -4,8 +4,8 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import MusicMode, SuperMetroidCosmeticPatches
 from randovania.generator.pickup_pool import pickup_creator
 

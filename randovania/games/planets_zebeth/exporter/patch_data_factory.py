@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.planets_zebeth.exporter.hint_namer import PlanetsZebethHintNamer
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.lib import json_lib

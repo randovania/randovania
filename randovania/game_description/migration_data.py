@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import functools
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import json_lib
 
 

@@ -10,9 +10,9 @@ from typing import TYPE_CHECKING
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams, input_hash_for_file
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupModel
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.patchers.exceptions import UnableToExportError

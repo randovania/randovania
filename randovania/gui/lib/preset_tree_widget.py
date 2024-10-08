@@ -11,7 +11,7 @@ from randovania import monitoring
 if TYPE_CHECKING:
     import uuid
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
     from randovania.layout.versioned_preset import VersionedPreset

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
-from randovania.games.game import RandovaniaGame
 
 
 def test_round_trip(tmp_path):

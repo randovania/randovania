@@ -5,9 +5,9 @@ from typing import TYPE_CHECKING
 from randovania.exporter import item_names
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:

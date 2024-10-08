@@ -3,6 +3,7 @@ from uuid import UUID
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.cs_remote_connector import (
     ITEM_RECEIVED_FLAG,
     ITEM_SENT_FLAG,
@@ -12,7 +13,6 @@ from randovania.game_connection.connector.remote_connector import PlayerLocation
 from randovania.game_connection.executor.cs_executor import CSExecutor, CSServerInfo, GameState, TSCError, WeaponData
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import INVALID_UUID
 
 

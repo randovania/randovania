@@ -7,8 +7,8 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6.QtCore import Qt
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.gui.preset_settings.prime_enemy_stat_randomizer import PresetEnemyAttributeRandomizer
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.interface_common.preset_editor import PresetEditor

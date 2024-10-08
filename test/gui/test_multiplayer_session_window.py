@@ -11,8 +11,8 @@ from unittest.mock import ANY, AsyncMock, MagicMock, call
 import pytest
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.game_connection import GameConnection
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import model_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow

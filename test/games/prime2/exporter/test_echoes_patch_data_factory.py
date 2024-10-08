@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.echoes_cosmetic_suits import EchoesSuitPreferences, SuitColor

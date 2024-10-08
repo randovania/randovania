@@ -4,7 +4,7 @@ import dataclasses
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 # TODO: add door rando and elevator rando

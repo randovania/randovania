@@ -4,13 +4,13 @@ from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
 from randovania.game_connection.executor.dread_executor import DreadExecutor
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 
 
 @pytest.fixture(name="connector")

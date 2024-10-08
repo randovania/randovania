@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
 from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
 from randovania.games.super_metroid.gui.dialog.game_export_dialog import SuperMetroidGameExportDialog

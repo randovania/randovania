@@ -19,9 +19,9 @@ from construct import (
     VarInt,
 )
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
-from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
 
 if TYPE_CHECKING:

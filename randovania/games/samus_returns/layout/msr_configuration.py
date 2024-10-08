@@ -5,7 +5,7 @@ from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.layout.hint_configuration import HintConfiguration
 from randovania.games.samus_returns.layout.msr_teleporters import MSRTeleporterConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration

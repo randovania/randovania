@@ -5,12 +5,12 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 import randovania
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, pretty_print
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.games.game import RandovaniaGame
 
 
 @pytest.mark.skipif(randovania.is_frozen(), reason="frozen executable doesn't have JSON files")

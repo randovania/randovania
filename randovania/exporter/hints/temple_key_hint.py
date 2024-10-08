@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.exporter.hints import guaranteed_item_hint
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.hint import HintDarkTemple
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_items
 
 if TYPE_CHECKING:

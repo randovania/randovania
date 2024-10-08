@@ -13,11 +13,11 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.games.game import RandovaniaGame
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches

@@ -8,9 +8,9 @@ from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:

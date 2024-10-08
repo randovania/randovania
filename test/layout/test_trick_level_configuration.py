@@ -4,7 +4,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 

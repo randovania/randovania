@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackFloat
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
@@ -13,7 +14,6 @@ from randovania.game_description.pickup.pickup_entry import (
     ResourceLock,
 )
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from collections.abc import Iterator

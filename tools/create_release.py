@@ -17,8 +17,8 @@ import tenacity
 import randovania
 from randovania import VERSION
 from randovania.cli import database
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games import default_data
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common import installation_check
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum

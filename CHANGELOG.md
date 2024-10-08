@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.6.x] - 2024-11-??
 
+- Changed: Filtering in the Generation Order tab is now case-insensitive.
+
 ### AM2R
 
 #### Logic Database
@@ -53,6 +55,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
+- Added: 3 Videos added to the logic database.
+
+##### Chozo Ruins
+
+- Added: In Furnace: Add comments that the standable climb up the spider track does not work on PAL.
+- Added: In Furnace: Add Bomb Space Jump method for climbing the spider track on the West Furnace side.
+
 ##### Impact Crater
 
 - Added: In Metroid Prime Lair: Require Combat Visor for Essence fight.
@@ -89,7 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Ghavoran
 
-- Added: In Super Missile Room: Intermediate Single-wall Wall Jump to reach Tunnel to Super Missile Room Access. 
+- Added: In Super Missile Room: Intermediate Single-wall Wall Jump to reach Tunnel to Super Missile Room Access.
 
 ### Metroid: Samus Returns
 

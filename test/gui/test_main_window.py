@@ -10,7 +10,7 @@ import pytest
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.main_window import MainWindow
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow

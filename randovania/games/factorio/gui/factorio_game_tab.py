@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.factorio.gui.generated.games_tab_factorio_widget_ui import Ui_FactorioGameTabWidget
-from randovania.games.game import RandovaniaGame
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 
 

@@ -13,12 +13,12 @@ from discord import Embed
 from discord.ext.commands import Context, Converter
 from PIL import ImageDraw
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, pretty_print
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.node import Node, NodeLocation
 from randovania.game_description.db.region import Region
 from randovania.game_description.game_description import GameDescription
-from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog

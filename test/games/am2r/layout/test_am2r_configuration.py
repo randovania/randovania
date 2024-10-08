@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.am2r.layout.am2r_configuration import AM2RArtifactConfig, AM2RConfiguration
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.interface_common.preset_manager import PresetManager

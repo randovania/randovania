@@ -4,7 +4,7 @@ import dataclasses
 
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.layout.msr_configuration import (
     MSRArtifactConfig,
     MSRConfiguration,

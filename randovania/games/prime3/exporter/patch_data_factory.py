@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 from randovania.games.prime3.patcher import gollop_corruption_patcher

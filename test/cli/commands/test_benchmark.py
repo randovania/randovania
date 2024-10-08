@@ -6,7 +6,7 @@ import pytest
 import pytest_mock
 
 from randovania.cli.commands import benchmark
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 def test_generate_helper_success(mocker: pytest_mock.MockerFixture) -> None:

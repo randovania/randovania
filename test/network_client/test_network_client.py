@@ -10,10 +10,10 @@ import aiohttp.client_exceptions
 import pytest
 import socketio.exceptions
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction

@@ -11,7 +11,7 @@ import aiohttp
 import discord
 
 import randovania
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 class TrickDocumentation(typing.NamedTuple):

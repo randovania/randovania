@@ -5,9 +5,9 @@ from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.games.dread.layout.dread_teleporters import DreadTeleporterConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib import enum_lib

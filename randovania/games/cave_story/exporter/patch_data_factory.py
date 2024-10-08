@@ -10,6 +10,7 @@ from tsc_utils.numbers import num_to_tsc_value
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -20,7 +21,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier

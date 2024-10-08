@@ -11,9 +11,9 @@ from randovania.game_description.db.node_identifier import NodeIdentifier
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.node import Node
-    from randovania.games.game import RandovaniaGame
 
 
 def _sorted_node_identifiers(elements: Iterable[NodeIdentifier]) -> list[NodeIdentifier]:
