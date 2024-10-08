@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from PySide6 import QtCore
 
-from randovania.games.common.gui.connector_prompt_dialog import ConnectorPromptDialog
+from randovania.gui.dialog.connector_prompt_dialog import ConnectorPromptDialog
 
 
 async def test_connector_prompt_dialog(skip_qtbot, mocker):

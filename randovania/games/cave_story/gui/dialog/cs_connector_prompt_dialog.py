@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from randovania.games.common.gui.connector_prompt_dialog import ConnectorPromptDialog
+from randovania.gui.dialog.connector_prompt_dialog import ConnectorPromptDialog
 
 
 class CSConnectorPromptDialog(ConnectorPromptDialog):
