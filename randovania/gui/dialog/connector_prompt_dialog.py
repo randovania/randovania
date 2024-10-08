@@ -8,7 +8,7 @@ from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
 class ConnectorPromptDialog(TextPromptDialog):
-    def __init__(self, **kwargs: dict[str, Any]):
+    def __init__(self, **kwargs: Any):
         super().__init__(**kwargs)
 
         self.top_radio = QtWidgets.QRadioButton("Top", self)
