@@ -100,6 +100,43 @@ def _get_next_player(
             )
 
 
+class EvaluatedAction(typing.NamedTuple):
+    reach: GeneratorReach
+    multiplier: float
+    offset: float
+
+    def apply_to(self, base: float) -> float:
+        """Applies the multiplier and offset to the given weight."""
+        return base * self.multiplier + self.offset
+
+
+def _evaluate_action(base_reach: GeneratorReach, action: Action) -> EvaluatedAction:
+    """
+    Evaluates the weight offsets and multipliers for the given action,
+    plus the basic reach advancement if get the given resources.
+    :param base_reach:
+    :param action:
+    :return:
+    """
+    state = base_reach.state
+    multiplier = 1.0
+    offset = 0.0
+
+    resources, pickups = action.split_pickups()
+
+    if resources:
+        for resource in resources:
+            state = state.act_on_node(resource)
+        multiplier *= _DANGEROUS_ACTION_MULTIPLIER
+
+    if pickups:
+        state = state.assign_pickups_resources(pickups)
+        multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
+        offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
+
+    return EvaluatedAction(reach_lib.advance_to_with_reach_copy(base_reach, state), multiplier, offset)
+
+
 def weighted_potential_actions(
     player_state: PlayerState, status_update: Callable[[str], None], locations_weighted: WeightedLocations
 ) -> dict[Action, float]:
@@ -110,11 +147,15 @@ def weighted_potential_actions(
     :param locations_weighted: Which locations are available and their weight.
     :return:
     """
-    actions_weights: dict[Action, float] = {}
-    potential_reaches: dict[Action, GeneratorReach] = {}
-    current_uncollected = UncollectedState.from_reach(player_state.reach)
-
+    evaluated_actions: dict[Action, EvaluatedAction] = {}
     actions = player_state.potential_actions(locations_weighted)
+
+    if len(actions) == 1:
+        debug.debug_print(f"{actions[0]}")
+        debug.debug_print("Only one action, weighting skipped")
+        return {action: 1.0 for action in actions}
+
+    current_uncollected = UncollectedState.from_reach(player_state.reach)
     options_considered = 0
 
     def update_for_option() -> None:
@@ -122,38 +163,42 @@ def weighted_potential_actions(
         options_considered += 1
         status_update(f"Checked {options_considered} of {len(actions)} options.")
 
+    options_considered = 0
     for action in actions:
-        state = player_state.reach.state
-        multiplier = 1.0
-        offset = 0.0
-
-        resources, pickups = action.split_pickups()
-
-        if resources:
-            for resource in resources:
-                state = state.act_on_node(resource)
-            multiplier *= _DANGEROUS_ACTION_MULTIPLIER
-
-        if pickups:
-            state = state.assign_pickups_resources(pickups)
-            multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
-            offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
-
-        potential_reach = reach_lib.advance_to_with_reach_copy(player_state.reach, state)
-        potential_reaches[action] = potential_reach
-        base_weight = _calculate_weights_for(potential_reach, current_uncollected, action)
-        actions_weights[action] = base_weight * multiplier + offset
+        evaluated_actions[action] = _evaluate_action(player_state.reach, action)
         update_for_option()
+
+    actions_weights = {
+        action: _calculate_weights_for(action, evaluation, current_uncollected)
+        for action, evaluation in evaluated_actions.items()
+    }
+
+    # Everything has weight 0, so try collecting potentially unsafe resources
+    if sum(actions_weights.values()) == 0:
+        debug.debug_print("Re-weighting with possible unsafe")
+        options_considered = 0
+        for action, evaluation in evaluated_actions.items():
+            potential_reach = reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach)
+            evaluated_actions[action] = EvaluatedAction(potential_reach, evaluation.multiplier, evaluation.offset)
+            update_for_option()
+
+        actions_weights = {
+            action: _calculate_weights_for(action, evaluation, current_uncollected)
+            for action, evaluation in evaluated_actions.items()
+        }
 
     if sum(actions_weights.values()) == 0:
         debug.debug_print("Using backup weights")
-        final_weights = {
+        actions_weights = {
             action: _ADDITIONAL_NODES_WEIGHT_MULTIPLIER
-            * len((UncollectedState.from_reach(potential_reach) - current_uncollected).nodes)
-            for action, potential_reach in potential_reaches.items()
+            * len((UncollectedState.from_reach(evaluation.reach) - current_uncollected).nodes)
+            for action, evaluation in evaluated_actions.items()
         }
-    else:
-        final_weights = actions_weights
+
+    # Apply offset only at the end in order to preserve when all actions are weight 0
+    final_weights = {
+        action: evaluated_actions[action].apply_to(base_weight) for action, base_weight in actions_weights.items()
+    }
 
     if debug.debug_level() > 1:
         for action, weight in final_weights.items():
@@ -463,13 +508,14 @@ def _calculate_hint_location_for_action(
 
 
 def _calculate_weights_for(
-    potential_reach: GeneratorReach,
-    current_uncollected: UncollectedState,
     action: Action,
+    evaluation: EvaluatedAction,
+    current_uncollected: UncollectedState,
 ) -> float:
     """
     Calculate a weight to be used for this action, based on what's collected in the reach.
     """
+    potential_reach = evaluation.reach
     if potential_reach.victory_condition_satisfied():
         return _VICTORY_WEIGHT
 

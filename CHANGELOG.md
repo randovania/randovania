@@ -79,6 +79,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.5.0] - 2024-10-01
 
+- Changed: During generation, improved how actions are weighted, especially the situations where they're all considered worthless.
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
 
 ### AM2R
