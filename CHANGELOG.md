@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Distribution Center Exterior East: Climbing the room with High Jump and Morph Gliding now requires Morph Ball.
 - Fixed: Distribution Facility Tower East: Morph Gliding over the little gap at the top now requires Morph Ball.
 - Fixed: Distribution Facility Tower East: Walljumping and Morph Gliding from the bottom pipe to the middle pipe now requires Morph Ball.
-- Fixed: Ice Beam Chamber Access: Mid Aid Morphing into the pipe now requires Morph Ball.
+- Fixed: Ice Beam Chamber Access: Mid Air Morphing into the pipe now requires Morph Ball.
 
 ##### The Depths
 
