@@ -41,7 +41,6 @@ class PresetTabRoot(QtWidgets.QWidget):
             self.current_tab.on_preset_changed(editor.create_custom_preset_with())
             self.owner.set_visible_tab(self)
             self.current_tab.update_experimental_visibility()
-            self.owner.update_experimental_visibility()
 
         return super().showEvent(arg)
 
@@ -51,8 +50,6 @@ class PresetTabRoot(QtWidgets.QWidget):
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
-    _tab_types: list[type[PresetTab]]
-    _tabs: dict[type[PresetTab], PresetTabRoot]
     _editor: PresetEditor
     _current_tab: PresetTabRoot | None
 
@@ -63,38 +60,72 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
 
         self._editor = editor
         self.window_manager = window_manager
-        self._tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
-        self._tabs = {}
+        _tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
         self._current_tab = None
+        self.listToWidget = {}
+        header_entry_counts = []
 
-        for extra_tab in self._tab_types:
-            if extra_tab.uses_patches_tab():
-                parent_tab = self.patches_tab_widget
+        index_for_headers = []
+        # Maybe instead of hardcoding the headers like this, we have some kind of enum? Then we could also
+        # change the presetTabs to instead of having "uses patches" to directly indicate which header they should be
+        # displayed under. Future stuff tho.
+        for header_name in [
+            "Randomizer Logic",
+            "Game Modifications",
+            "Preset Info",
+        ]:
+            # Add headers
+            header_entry = QtWidgets.QListWidgetItem(header_name)
+            font = header_entry.font()
+            font.setBold(True)
+            font.setUnderline(True)
+            font.setPointSizeF(font.pointSize() * 1.2)
+            header_entry.setFont(font)
+            header_entry.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
+            self.listWidget.addItem(header_entry)
+            index_for_headers.append(self.listWidget.count())
+            header_entry_counts.append(0)
+
+        first_selection = None
+        # Add child tabs, will be positioned under their corresponding headers
+        for extra_tab in _tab_types:
+            if not self.editor._options.experimental_settings and extra_tab.is_experimental():
+                continue
+
+            tab = PresetTabRoot(self, extra_tab)
+            list_item = QtWidgets.QListWidgetItem(tab.tab_type.tab_title())
+
+            self.listToWidget[list_item.text()] = tab
+            self.stackedWidget.addWidget(tab)
+            if extra_tab.tab_title() == "Preset Description":
+                index = 2
+            elif extra_tab.uses_patches_tab():
+                index = 1
             else:
-                parent_tab = self.logic_tab_widget
+                index = 0
 
-            tab = self._tabs[extra_tab] = PresetTabRoot(self, extra_tab)
-            parent_tab.addTab(tab, extra_tab.tab_title())
+            self.listWidget.insertItem(index_for_headers[index], list_item)
+            header_entry_counts[index] += 1
+            for i, indexAdjust in enumerate(index_for_headers):
+                if i < index:
+                    continue
+                index_for_headers[i] += 1
 
-        for i in range(self.main_tab_widget.count()):
-            tab_widget = self.main_tab_widget.widget(i)
-            if isinstance(tab_widget, QtWidgets.QTabWidget):
-                self.main_tab_widget.setTabVisible(i, tab_widget.count() > 0)
+            if first_selection is None:
+                first_selection = list_item
+
+        # Remove headers that don't have children.
+        for index, count in zip(index_for_headers, header_entry_counts):
+            if count == 0:
+                self.listWidget.takeItem(index - 1)
+
+        self.listWidget.setCurrentItem(first_selection)
+        self.listWidget.currentItemChanged.connect(self.changed_list_item_selection)
+        self.listWidget.setMaximumWidth(self.listWidget.sizeHintForColumn(0) * 1.1)
 
         self.name_edit.textEdited.connect(self._edit_name)
-        self.description_edit.textChanged.connect(self._edit_description)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
-
-    def update_experimental_visibility(self):
-        for parent, tabs in [
-            (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]),
-            (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]),
-        ]:
-            for i in range(parent.count()):
-                tab = tabs[i]
-                visible = self.editor._options.experimental_settings or not tab.is_experimental()
-                parent.setTabVisible(i, visible)
 
     def set_visible_tab(self, tab: PresetTabRoot):
         if tab != self._current_tab:
@@ -102,20 +133,19 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
                 self._current_tab.release_widget()
             self._current_tab = tab
 
+    def changed_list_item_selection(self, item: QtWidgets.QListWidgetItem):
+        widget = self.listToWidget[item.text()]
+        self.stackedWidget.setCurrentWidget(widget)
+
     # Options
     def on_preset_changed(self, preset: Preset):
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
-        common_qt_lib.set_edit_if_different_text(self.description_edit, preset.description)
         if (tab := self.current_preset_tab) is not None:
             tab.on_preset_changed(preset)
 
     def _edit_name(self, value: str):
         with self._editor as editor:
             editor.name = value
-
-    def _edit_description(self):
-        with self._editor as editor:
-            editor.description = self.description_edit.toPlainText()
 
     @property
     def editor(self):
