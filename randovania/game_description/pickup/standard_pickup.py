@@ -26,10 +26,13 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     """The name of the pickup."""
 
     pickup_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
-    """The precise category for this pickup."""
+    """
+    The precise category for this pickup. Used in the GUI for visually grouping pickups with the same precise
+    category, and for when this pickup is referenced by a precise hint.
+    """
 
     broad_category: PickupCategory = dataclasses.field(metadata={"init_from_extra": True})
-    """The broad category for this pickup."""
+    """The broad category for this pickup. Used for when this pickup is referenced by a broad hint."""
 
     model_name: str
     """The name of the model that should be used by default for this pickup."""
@@ -45,7 +48,10 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     """
 
     preferred_location_category: LocationCategory
-    """The category for the preferred location."""
+    """
+    The category for the preferred location. Used to determine where to place this Pickup when Major/Minor placement
+    is enabled, and for when this pickup is referenced by a major/minor hint.
+    """
 
     expected_case_for_describer: StandardPickupStateCase = dataclasses.field(default=StandardPickupStateCase.SHUFFLED)
     """What the expected case for the Preset Describer should be."""
@@ -82,7 +88,7 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
 
     original_locations: tuple[PickupIndex, ...] = dataclasses.field(default_factory=tuple, metadata=EXCLUDE_DEFAULT)
     """
-    The index of the pickup (defined in the database) on where this pickup should be located if
+    The indices of the pickup locations (defined in the database) on where the pickup(s) should be located if
     it's set to be at the original location.
     """
 
