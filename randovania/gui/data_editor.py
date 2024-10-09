@@ -202,7 +202,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.connection_filters.FiltersUpdated.connect(self._on_filters_changed)
 
         if self.game_description.game in {
-            RandovaniaGame.METROID_PRIME,
             RandovaniaGame.METROID_PRIME_ECHOES,
             RandovaniaGame.METROID_PRIME_CORRUPTION,
         }:

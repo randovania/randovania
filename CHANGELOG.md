@@ -54,6 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Added: The Data Visualizer now shows an Area View.
+
 #### Logic Database
 
 - Added: 3 Videos added to the logic database.
