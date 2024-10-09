@@ -38,14 +38,14 @@ def _gui() -> randovania.game.gui.GameGui:
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.fusion import generator
     from randovania.games.fusion.generator.hint_distributor import FusionHintDistributor
+    from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.FusionBootstrap(),
         base_patches_factory=generator.FusionBasePatchesFactory(),
         hint_distributor=FusionHintDistributor(),
-        events_weight=0.75,
-        hints_weight=0.5,
+        action_weights=ActionWeights(events_weight=0.75, hints_weight=0.5),
     )
 
 
