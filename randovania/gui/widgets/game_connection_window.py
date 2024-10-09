@@ -4,10 +4,10 @@ import collections
 import functools
 from typing import TYPE_CHECKING
 
-import wiiload
+import wiiload  # type: ignore
 from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import Qt
-from qasync import asyncSlot
+from qasync import asyncSlot  # type: ignore
 
 import randovania
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
