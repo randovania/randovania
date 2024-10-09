@@ -412,8 +412,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._update_scale_variables()
 
         painter = QtGui.QPainter(self)
+        painter.setPen(QtGui.Qt.transparent)
+        painter.setBrush(QtGui.QColor(45, 45, 45))
+        painter.drawRect(0, 0, 32767, 32767)
+
         painter.setRenderHint(QtGui.QPainter.Antialiasing)
         painter.setPen(QtGui.Qt.white)
+        painter.setBrush(QtGui.Qt.black)
         painter.setFont(QtGui.QFont("Arial", 10))
 
         # Center what we're drawing

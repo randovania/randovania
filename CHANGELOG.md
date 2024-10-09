@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.6.x] - 2024-11-??
 
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
+- Changed: The Area View of the Data Visualizer now always has a dark gray background to help with readability.
 
 ### AM2R
 
