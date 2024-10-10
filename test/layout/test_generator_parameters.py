@@ -88,9 +88,9 @@ def test_decode(default_blank_preset, mocker, development, extra_data):
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
     if development:
-        encoded = b" \x00\x00\x0f\xa3\x00\x06\x00"
+        encoded = b" \x00\x00\x0f\xa3\x00\x03\x00"
     else:
-        encoded = b" \x00\x00\x0f\xa2\x00\x06<\x00"
+        encoded = b" \x00\x00\x0f\xa2\x00\x03\x1e\x00"
     if extra_data:
         encoded += b"="
 
