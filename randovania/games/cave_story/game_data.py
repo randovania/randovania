@@ -39,12 +39,14 @@ def _generator():
     from randovania.games.cave_story.generator.hint_distributor import CSHintDistributor
     from randovania.games.cave_story.generator.pool_creator import pool_creator
     from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=CSHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 

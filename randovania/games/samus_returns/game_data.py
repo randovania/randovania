@@ -53,12 +53,14 @@ def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.samus_returns import generator
     from randovania.games.samus_returns.generator.bootstrap import MSRBootstrap
     from randovania.games.samus_returns.generator.hint_distributor import MSRHintDistributor
+    from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=MSRBootstrap(),
         base_patches_factory=generator.MSRBasePatchesFactory(),
         hint_distributor=MSRHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
