@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from PySide6 import QtWidgets
 
 
-class DreadConnectorPromptDialog(ConnectorPromptDialog):
+class CSConnectorPromptDialog(ConnectorPromptDialog):
     def __init__(
         self,
         parent: QtWidgets.QWidget | None,
@@ -32,7 +32,7 @@ class DreadConnectorPromptDialog(ConnectorPromptDialog):
             check_re=check_re,
         )
 
-        self.top_radio.setText("Ryujinx")
-        self.top_label.setText("Connects to a Ryujinx running on this computer.")
+        self.top_radio.setText("Standard")
+        self.top_label.setText("Connects to a copy of Cave Story running on this computer.")
 
-        self.ip_radio.setText("Switch")
+        self.ip_radio.setText("Custom IP Address")

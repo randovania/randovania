@@ -11,11 +11,13 @@ from randovania.interface_common.players_configuration import INVALID_UUID
 
 if TYPE_CHECKING:
     from randovania.game_connection.connector.remote_connector import RemoteConnector
+    from randovania.gui.debug_backend_window import DebugConnectorWindow
 
 
 class DebugConnectorBuilder(ConnectorBuilder):
     target_game: RandovaniaGame
     layout_uuid: uuid.UUID
+    connector_window: DebugConnectorWindow | None = None
 
     def __init__(self, game: str, layout_uuid: str = str(INVALID_UUID)):
         super().__init__()
