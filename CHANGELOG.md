@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The "Customize Preset" window has been given a visual overhaul.
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
 - Changed: The Area View of the Data Visualizer now always has a dark gray background to help with readability.
+- Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
+
+### Resolver
+
+- Fixed: Some seeds being considered impossible when finding a progressive item in an area where a later item in the progressive chain is required to leave.
 
 ### AM2R
 
@@ -112,6 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.0] - 2024-09-04
 
+- Changed: When replacing a preset in a multiworld session, the user playing the world will now be unmarked from being ready.
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
 
 ### AM2R
