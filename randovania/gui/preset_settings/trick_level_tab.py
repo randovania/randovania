@@ -110,7 +110,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
     @classmethod
     def header_name(cls) -> str | None:
-        return None
+        return cls.RANDOMIZER_LOGIC_HEADER
 
     @property
     def game_enum(self) -> RandovaniaGame:

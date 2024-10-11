@@ -64,9 +64,6 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self._current_tab = None
         self.item_to_widget = {}
 
-        header_indices = []
-        max_title_characters = 0
-
         first_selection = None
 
         # Add entries
@@ -83,22 +80,22 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
 
             # Add placeholder header entry, that gets proper text later
             if extra_tab.header_name():
-                header_indices.append(self.listWidget.count())
-                seperator = QtWidgets.QListWidgetItem("")
-                seperator.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
-                self.listWidget.addItem(seperator)
+                if self.listWidget.count() > 0:
+                    seperator = QtWidgets.QListWidgetItem("")
+                    seperator.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
+                    self.listWidget.addItem(seperator)
+                header = QtWidgets.QListWidgetItem(extra_tab.header_name())
+                font = header.font()
+                font.setBold(True)
+                font.setPointSizeF(font.pointSize() * 1.2)
+                header.setFont(font)
+                header.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
+                self.listWidget.addItem(header)
 
             self.listWidget.addItem(list_item)
 
-            if len(extra_tab.tab_title()) > max_title_characters:
-                max_title_characters = len(extra_tab.tab_title())
-
             if first_selection is None:
                 first_selection = list_item
-
-        # Change seperator placeholders to have proper text
-        for index in header_indices:
-            self.listWidget.item(index).setText("─" * max_title_characters)
 
         self.listWidget.setCurrentItem(first_selection)
         self.listWidget.currentItemChanged.connect(self.changed_list_item_selection)
