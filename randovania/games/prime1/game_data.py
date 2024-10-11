@@ -43,12 +43,14 @@ def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.prime1.generator.pickup_pool.pool_creator import (
         prime1_specific_pool,
     )
+    from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=prime1_specific_pool,
         bootstrap=PrimeBootstrap(),
         base_patches_factory=PrimeBasePatchesFactory(),
         hint_distributor=PrimeHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 

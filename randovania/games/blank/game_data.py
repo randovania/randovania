@@ -40,6 +40,7 @@ def _gui() -> randovania.game.gui.GameGui:
 
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.blank import generator
+    from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return randovania.game.generator.GameGenerator(
@@ -47,6 +48,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
         bootstrap=generator.BlankBootstrap(),
         base_patches_factory=generator.BlankBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 

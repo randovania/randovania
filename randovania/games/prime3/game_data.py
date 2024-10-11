@@ -39,6 +39,7 @@ def _gui() -> randovania.game.gui.GameGui:
 def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.prime3.generator.pickup_pool.pool_creator import corruption_specific_pool
     from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.hint_distributor import AllJokesHintDistributor
     from randovania.resolver.bootstrap import MetroidBootstrap
 
@@ -47,6 +48,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
         bootstrap=MetroidBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
