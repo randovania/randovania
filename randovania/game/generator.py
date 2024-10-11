@@ -3,17 +3,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from randovania.generator.filler.weights import (
-    DEFAULT_EVENTS_WEIGHT_MULTIPLIER,
-    DEFAULT_HINTS_WEIGHT_MULTIPLIER,
-    DEFAULT_INDICES_WEIGHT_MULTIPLIER,
-)
-
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from randovania.game_description.game_description import GameDescription
     from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -35,20 +30,5 @@ class GameGenerator:
     hint_distributor: HintDistributor
     """Use AllJokesDistributor if not using hints."""
 
-    indices_weight: float = DEFAULT_INDICES_WEIGHT_MULTIPLIER
-    """
-    While weighting an action during generation, indicates the weight that will be added if
-    the action unlocks Pickup nodes.
-    """
-
-    events_weight: float = DEFAULT_EVENTS_WEIGHT_MULTIPLIER
-    """
-    While weighting an action during generation, indicates the weight that will be added if
-    the action unlocks Event nodes.
-    """
-
-    hints_weight: float = DEFAULT_HINTS_WEIGHT_MULTIPLIER
-    """
-    While weighting an action during generation, indicates the weight that will be added if
-    the action unlocks Hint nodes.
-    """
+    action_weights: ActionWeights
+    """Contains weights related to weighting actions."""

@@ -13,11 +13,6 @@ from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.weighted_locations import WeightedLocations
-from randovania.generator.filler.weights import (
-    _ADDITIONAL_NODES_WEIGHT_MULTIPLIER,
-    _DANGEROUS_ACTION_MULTIPLIER,
-    _VICTORY_WEIGHT,
-)
 from randovania.lib.random_lib import select_element_with_weight
 from randovania.resolver import debug
 
@@ -111,6 +106,7 @@ def weighted_potential_actions(
     actions_weights: dict[Action, float] = {}
     potential_reaches: dict[Action, GeneratorReach] = {}
     current_uncollected = UncollectedState.from_reach(player_state.reach)
+    action_weights = player_state.game.game.generator.action_weights
 
     actions = player_state.potential_actions(locations_weighted)
     options_considered = 0
@@ -130,7 +126,7 @@ def weighted_potential_actions(
         if resources:
             for resource in resources:
                 state = state.act_on_node(resource)
-            multiplier *= _DANGEROUS_ACTION_MULTIPLIER
+            multiplier *= action_weights.DANGEROUS_ACTION_MULTIPLIER
 
         if pickups:
             state = state.assign_pickups_resources(pickups)
@@ -146,7 +142,7 @@ def weighted_potential_actions(
     if sum(actions_weights.values()) == 0:
         debug.debug_print("Using backup weights")
         final_weights = {
-            action: _ADDITIONAL_NODES_WEIGHT_MULTIPLIER
+            action: action_weights.ADDITIONAL_NODES_WEIGHT_MULTIPLIER
             * len((UncollectedState.from_reach(potential_reach) - current_uncollected).nodes)
             for action, potential_reach in potential_reaches.items()
         }
@@ -468,11 +464,13 @@ def _calculate_weights_for(
     """
     Calculate a weight to be used for this action, based on what's collected in the reach.
     """
+    action_weights = potential_reach.game.game.generator.action_weights
+
     if potential_reach.victory_condition_satisfied():
-        return _VICTORY_WEIGHT
+        return action_weights.VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
-    if debug.debug_level() > 1:
+    if debug.debug_level() > 2:
         nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
 
         print(f">>> {action}")
@@ -482,13 +480,11 @@ def _calculate_weights_for(
         print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
         print()
 
-    generator = potential_reach.game.game.generator
-
     return sum(
         (
-            generator.indices_weight * int(bool(potential_uncollected.indices)),
-            generator.events_weight * int(bool(potential_uncollected.events)),
-            generator.hints_weight * int(bool(potential_uncollected.hints)),
+            action_weights.indices_weight * int(bool(potential_uncollected.indices)),
+            action_weights.events_weight * int(bool(potential_uncollected.events)),
+            action_weights.hints_weight * int(bool(potential_uncollected.hints)),
         )
     )
 

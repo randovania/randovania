@@ -31,6 +31,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.super_metroid.generator.bootstrap import SuperMetroidBootstrap
     from randovania.games.super_metroid.generator.item_pool.pool_creator import super_metroid_specific_pool
     from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return randovania.game.generator.GameGenerator(
@@ -38,6 +39,7 @@ def _generator() -> randovania.game.generator.GameGenerator:
         bootstrap=SuperMetroidBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 

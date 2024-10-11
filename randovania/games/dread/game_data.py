@@ -48,12 +48,14 @@ def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.dread.generator.bootstrap import DreadBootstrap
     from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
     from randovania.games.dread.generator.pool_creator import pool_creator
+    from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
         bootstrap=DreadBootstrap(),
         hint_distributor=DreadHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 

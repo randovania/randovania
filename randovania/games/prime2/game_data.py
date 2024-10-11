@@ -44,12 +44,14 @@ def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
     from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
     from randovania.games.prime2.generator.pickup_pool.pool_creator import echoes_specific_pool
+    from randovania.generator.filler.weights import ActionWeights
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=echoes_specific_pool,
         bootstrap=EchoesBootstrap(),
         base_patches_factory=EchoesBasePatchesFactory(),
         hint_distributor=EchoesHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
