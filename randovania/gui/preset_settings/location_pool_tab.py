@@ -94,8 +94,8 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
         return "Location Pool"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     @property
     def game_enum(self) -> RandovaniaGame:

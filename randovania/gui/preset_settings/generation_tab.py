@@ -92,8 +92,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         return "Generation"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     @property
     def game_enum(self) -> RandovaniaGame:

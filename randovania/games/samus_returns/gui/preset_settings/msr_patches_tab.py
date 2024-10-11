@@ -43,8 +43,8 @@ class PresetMSRPatches(PresetTab, Ui_PresetMSRPatches):
         return "Optional Patches"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:

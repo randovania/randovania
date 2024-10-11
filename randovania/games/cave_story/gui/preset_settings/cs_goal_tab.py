@@ -38,8 +38,8 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
         return "Objective"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_objective_changed(self):
         combo_enum = self.goal_combo.currentData()

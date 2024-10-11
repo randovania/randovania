@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from randovania.games.cave_story.gui.generated.preset_cs_hp_ui import Ui_PresetCSHP
+from randovania.gui.generated.preset_customize_description_ui import Ui_PresetCustomizeDescription
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -12,24 +12,24 @@ if TYPE_CHECKING:
     from randovania.layout.preset import Preset
 
 
-class PresetCSHP(PresetTab, Ui_PresetCSHP):
+class PresetCustomizeDescription(PresetTab, Ui_PresetCustomizeDescription):
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
-        self.starting_hp_spin_box.valueChanged.connect(self._on_starting_hp_changed)
+        self.description_edit.textChanged.connect(self._edit_description)
 
     @classmethod
     def tab_title(cls) -> str:
-        return "HP"
+        return "Preset Description"
 
     @classmethod
     def header_name(cls) -> str | None:
-        return None
-
-    def _on_starting_hp_changed(self):
-        with self._editor as editor:
-            editor.set_configuration_field("starting_hp", int(self.starting_hp_spin_box.value()))
+        return "Preset Info"
 
     def on_preset_changed(self, preset: Preset):
-        self.starting_hp_spin_box.setValue(preset.configuration.starting_hp)
+        self.description_edit.setText(preset.description)
+
+    def _edit_description(self):
+        with self._editor as editor:
+            editor.description = self.description_edit.toPlainText()

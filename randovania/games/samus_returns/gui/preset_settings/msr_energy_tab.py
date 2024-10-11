@@ -43,8 +43,8 @@ class PresetMSREnergy(PresetTab, Ui_PresetMSREnergy):
         return "Energy"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration

@@ -39,8 +39,8 @@ class PresetDreadChaos(PresetTab, Ui_PresetDreadChaos):
         return True
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
         def persist(value: bool):

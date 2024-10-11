@@ -116,8 +116,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         return "Item Pool"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration

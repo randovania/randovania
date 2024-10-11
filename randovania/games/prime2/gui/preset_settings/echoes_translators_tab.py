@@ -82,8 +82,8 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
         return "Translators Gate"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_randomize_all_gates_pressed(self):
         with self._editor as editor:

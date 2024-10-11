@@ -49,8 +49,8 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider_max(self) -> None:
         self.placed_slider.setMaximum(self.num_preferred_locations)
