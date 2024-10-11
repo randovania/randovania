@@ -115,6 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.4.0] - 2024-09-04
 
+- Changed: When replacing a preset in a multiworld session, the user playing the world will now be unmarked from being ready.
 - Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
 
 ### AM2R
