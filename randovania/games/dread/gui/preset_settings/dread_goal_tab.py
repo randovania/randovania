@@ -35,8 +35,8 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
         return "Goal"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider_max(self):
         self.dna_slider.setMaximum(self.num_preferred_locations)

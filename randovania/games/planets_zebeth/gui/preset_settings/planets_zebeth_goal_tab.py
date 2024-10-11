@@ -36,8 +36,8 @@ class PresetPlanetsZebethGoal(PresetTab, Ui_PresetPlanetsZebethGoal):
         return "Goal"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider(self) -> None:
         if self.vanilla_tourian_keys_check.isChecked():

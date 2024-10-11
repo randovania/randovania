@@ -6,8 +6,8 @@ from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
 
 class PresetCSStartingArea(PresetStartingArea):
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return cls.GAME_MODIFICATIONS_HEADER
 
     def create_quick_fill_buttons(self):
         super().create_quick_fill_buttons()

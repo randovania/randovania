@@ -3,5 +3,5 @@ from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStarti
 
 class PresetMSRStartingArea(PresetMetroidStartingArea):
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return cls.GAME_MODIFICATIONS_HEADER

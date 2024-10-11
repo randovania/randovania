@@ -42,8 +42,8 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         return "Enemy Attributes"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     @classmethod
     def is_experimental(cls) -> bool:

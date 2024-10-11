@@ -13,6 +13,9 @@ if typing.TYPE_CHECKING:
 
 
 class PresetTab(QtWidgets.QMainWindow):
+    RANDOMIZER_LOGIC_HEADER = "Randomizer Logic"
+    GAME_MODIFICATIONS_HEADER = "Game Modifications"
+
     def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
         super().__init__()
         self._editor = editor
@@ -36,7 +39,8 @@ class PresetTab(QtWidgets.QMainWindow):
         raise NotImplementedError
 
     @classmethod
-    def starts_new_header(cls) -> bool:
+    def header_name(cls) -> str | None:
+        """If this tab starts a new header, returns the name of the header. If it doesn't, returns None."""
         raise NotImplementedError
 
     def on_preset_changed(self, preset: Preset):

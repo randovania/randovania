@@ -37,8 +37,8 @@ class PresetPrimeHints(PresetTab, Ui_PresetPrimeHints):
         return "Hints"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_art_combo_changed(self, new_index: int):
         with self._editor as editor:

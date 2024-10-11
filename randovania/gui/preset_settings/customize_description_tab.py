@@ -24,8 +24,8 @@ class PresetCustomizeDescription(PresetTab, Ui_PresetCustomizeDescription):
         return "Preset Description"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return "Preset Info"
 
     def on_preset_changed(self, preset: Preset):
         self.description_edit.setText(preset.description)

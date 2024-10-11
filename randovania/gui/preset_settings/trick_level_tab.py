@@ -109,8 +109,8 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         return "Trick Level"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     @property
     def game_enum(self) -> RandovaniaGame:

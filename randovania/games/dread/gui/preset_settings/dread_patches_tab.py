@@ -43,8 +43,8 @@ class PresetDreadPatches(PresetTab, Ui_PresetDreadPatches):
         return "Other"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
         def persist(value: bool):

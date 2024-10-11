@@ -38,8 +38,8 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         return "Goal"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider_max(self) -> None:
         self.placed_slider.setMaximum(self.num_preferred_locations)

@@ -79,8 +79,8 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         return "Energy"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return cls.GAME_MODIFICATIONS_HEADER
 
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration

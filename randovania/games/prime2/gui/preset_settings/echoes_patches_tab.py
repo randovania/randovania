@@ -44,8 +44,8 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         return "Other"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration

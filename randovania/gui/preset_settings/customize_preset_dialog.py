@@ -82,7 +82,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
             self.stackedWidget.addWidget(tab)
 
             # Add placeholder header entry, that gets proper text later
-            if extra_tab.starts_new_header():
+            if extra_tab.header_name():
                 header_indices.append(self.listWidget.count())
                 seperator = QtWidgets.QListWidgetItem("")
                 seperator.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)

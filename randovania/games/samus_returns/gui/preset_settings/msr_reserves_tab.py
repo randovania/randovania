@@ -28,8 +28,8 @@ class PresetMSRReserves(PresetTab, Ui_PresetMSRReserves):
         return "Reserve Tanks"
 
     @classmethod
-    def starts_new_header(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
