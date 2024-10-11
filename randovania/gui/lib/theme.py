@@ -49,7 +49,7 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
     QStatusBar QLabel:hover {
         background: transparent;
     }
-    
+
     QStatusBar QProgressBar:hover {
         background: transparent;
     }
