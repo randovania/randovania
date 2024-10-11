@@ -210,9 +210,14 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
     with database.db.atomic():
         if world_order:
             session.generation_in_progress = sa.get_current_user()
+            objects_to_save = []
             for i, world_uuid in enumerate(world_order):
-                world_objects[world_uuid].order = i
-                world_objects[world_uuid].save()
+                world_obj = world_objects[world_uuid]
+                world_obj.order = i
+                objects_to_save.append(world_obj)
+
+            World.bulk_update(objects_to_save, fields=[World.order], batch_size=50)
+
         else:
             session.generation_in_progress = None
 

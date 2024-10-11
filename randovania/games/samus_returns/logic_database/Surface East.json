@@ -297,6 +297,32 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Ridley)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Proteus Ridley",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossRidley",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -516,6 +542,71 @@
                             }
                         },
                         "Dock to Surface Crumble Block Challenge (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Ridley)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8000.0,
+                        "y": 1900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "final-boss-not-ridley"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_Ridley",
+                        "actor_type": "item_energytank"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 211,
+                    "location_category": "major",
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock from Surface West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10658.46,
+                        "y": 2813.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface West",
+                        "area": "Landing Site",
+                        "node": "Dock to Surface East"
+                    },
+                    "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Ship": {
                             "type": "and",
                             "data": {
                                 "comment": null,

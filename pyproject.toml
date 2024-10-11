@@ -69,7 +69,7 @@ dependencies = [
 [project.optional-dependencies]
 exporters = [
     # AM2R
-    "am2r-yams>=2.7.0",
+    "am2r-yams>=2.8.1",
 
     # Cave Story
     "cave-story-randomizer>=2.3.3",
@@ -82,7 +82,7 @@ exporters = [
     "open-dread-rando>=2.11.0",
 
     # Metroid Prime 1
-    "py_randomprime>=1.26.0",
+    "py_randomprime>=1.27.0",
     "random-enemy-attributes>=1.0.3",
 
     # Metroid Prime 1/2
@@ -94,7 +94,7 @@ exporters = [
     "mp2hudcolor>=1.0.10",
 
     # Metroid: Samus Returns
-    "open-samus-returns-rando>=2.4.2",
+    "open-samus-returns-rando>=2.6.1",
 
     # Super Metroid
     "SuperDuperMetroid>=1.2.0",
@@ -231,6 +231,7 @@ runtime-evaluated-base-classes = [
 files = [
     "randovania/bitpacking/",
     "randovania/cli/",
+    "randovania/game_connection/builder/debug_connector_builder.py",
     "randovania/game_connection/connector/dread_remote_connector.py",
     "randovania/game_connection/connector/mercury_remote_connector.py",
     "randovania/game_connection/connector/msr_remote_connector.py",
@@ -239,7 +240,9 @@ files = [
     "randovania/game_description/",
     "randovania/games/am2r/gui/dialog/cosmetic_patches_dialog.py",
     "randovania/games/blank/",
+    "randovania/games/cave_story/gui/dialog/cs_connector_prompt_dialog.py",
     "randovania/games/cave_story/gui/dialog/cs_cosmetic_patches_dialog.py",
+    "randovania/games/dread/gui/dialog/dread_connector_prompt_dialog.py",
     "randovania/games/dread/gui/dialog/dread_cosmetic_patches_dialog.py",
     "randovania/games/prime1/gui/dialog/prime_cosmetic_patches_dialog.py",
     "randovania/games/prime2/exporter/patch_data_factory.py",
@@ -253,8 +256,10 @@ files = [
     "randovania/gui/docks/resource_database_editor.py",
     "randovania/gui/dialog/base_cosmetic_patches_dialog.py",
     "randovania/gui/dialog/connections_editor.py",
+    "randovania/gui/dialog/connector_prompt_dialog.py",
     "randovania/gui/preset_settings/trick_level_tab.py",
     "randovania/gui/lib/signal_handling.py",
+    "randovania/gui/widgets/game_connection_window.py",
     "randovania/gui/widgets/node_selector_widget.py",
     "randovania/lib/",
     "test/bitpacking/",

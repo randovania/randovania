@@ -7,8 +7,8 @@ from typing import TYPE_CHECKING
 from PySide6 import QtGui, QtWidgets
 
 from randovania import get_data_path
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.inventory import Inventory
-from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.auto_tracker_window_ui import Ui_AutoTrackerWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget

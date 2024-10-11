@@ -1,0 +1,516 @@
+{
+    "schema_version": 29,
+    "info": {
+        "randovania_version": "8.5.0.dev157-dirty",
+        "randovania_version_git": "4d293fd2",
+        "permalink": "DfrLVDHSX00pP9IJrfxwgxDcXFGCAHhY",
+        "has_spoiler": true,
+        "seed": 1107338987,
+        "hash": "ZNKDDUS7",
+        "word_hash": "Zeela Boiler Data",
+        "presets": [
+            {
+                "schema_version": 91,
+                "base_preset_uuid": null,
+                "name": "Starter Preset",
+                "uuid": "bb84005f-b0f1-4e7e-8057-f4275ff4b2a3",
+                "description": "A basic preset with no tricks enabled. The default settings.",
+                "game": "fusion",
+                "configuration": {
+                    "trick_level": {
+                        "minimal_logic": false,
+                        "specific_levels": {}
+                    },
+                    "starting_location": [
+                        {
+                            "region": "Main Deck",
+                            "area": "Docking Bay Hangar",
+                            "node": "Ship"
+                        }
+                    ],
+                    "available_locations": {
+                        "randomization_mode": "full",
+                        "excluded_indices": []
+                    },
+                    "standard_pickup_configuration": {
+                        "pickups_state": {
+                            "Charge Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Wide Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Plasma Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Wave Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Ice Beam": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Missile Launcher Data": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Super Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Ice Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Diffusion Missile Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Morph Ball": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Morph Ball Bomb Data": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Power Bomb Data": {
+                                "num_shuffled_pickups": 1,
+                                "included_ammo": [
+                                    10
+                                ]
+                            },
+                            "Hi-Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Space Jump": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Speed Booster": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Screw Attack": {
+                                "num_shuffled_pickups": 1,
+                                "priority": 0.5
+                            },
+                            "Varia Suit": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Gravity Suit": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Energy Tank": {
+                                "num_shuffled_pickups": 20
+                            },
+                            "Level 0 Locks": {
+                                "num_included_in_starting_pickups": 1
+                            },
+                            "Level 1 Locks": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 2 Locks": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 3 Locks": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Level 4 Locks": {
+                                "num_shuffled_pickups": 1
+                            }
+                        },
+                        "default_pickups": {},
+                        "minimum_random_starting_pickups": 0,
+                        "maximum_random_starting_pickups": 0
+                    },
+                    "ammo_pickup_configuration": {
+                        "pickups_state": {
+                            "Missile Tank": {
+                                "ammo_count": [
+                                    5
+                                ],
+                                "pickup_count": 48,
+                                "requires_main_item": true
+                            },
+                            "Power Bomb Tank": {
+                                "ammo_count": [
+                                    2
+                                ],
+                                "pickup_count": 25,
+                                "requires_main_item": true
+                            }
+                        }
+                    },
+                    "damage_strictness": 1.5,
+                    "pickup_model_style": "all-visible",
+                    "pickup_model_data_source": "etm",
+                    "logical_resource_action": "randomly",
+                    "first_progression_must_be_local": false,
+                    "minimum_available_locations_for_hint_placement": 5,
+                    "minimum_location_weight_for_hint_placement": 0.1,
+                    "dock_rando": {
+                        "mode": "vanilla",
+                        "types_state": {
+                            "Door": {
+                                "can_change_from": [
+                                    "L0 Hatch",
+                                    "L1 Hatch",
+                                    "L2 Hatch",
+                                    "L3 Hatch",
+                                    "L4 Hatch"
+                                ],
+                                "can_change_to": [
+                                    "L0 Hatch",
+                                    "L1 Hatch",
+                                    "L2 Hatch",
+                                    "L3 Hatch",
+                                    "L4 Hatch",
+                                    "Open Hatch"
+                                ]
+                            }
+                        }
+                    },
+                    "single_set_for_pickups_that_solve": true,
+                    "staggered_multi_pickup_placement": true,
+                    "check_if_beatable_after_base_patches": false,
+                    "anti_softlock": true,
+                    "instant_transitions": false,
+                    "energy_per_tank": 100,
+                    "artifacts": {
+                        "prefer_bosses": true,
+                        "prefer_anywhere": false,
+                        "required_artifacts": 3,
+                        "placed_artifacts": 5
+                    },
+                    "hints": {
+                        "artifacts": "precise",
+                        "charge_beam": "hide-area"
+                    }
+                }
+            }
+        ]
+    },
+    "game_modifications": [
+        {
+            "game": "fusion",
+            "starting_equipment": {
+                "pickups": [
+                    "Level 0 Locks",
+                    "Infant Metroid 6",
+                    "Infant Metroid 7",
+                    "Infant Metroid 8",
+                    "Infant Metroid 9",
+                    "Infant Metroid 10",
+                    "Infant Metroid 11",
+                    "Infant Metroid 12",
+                    "Infant Metroid 13",
+                    "Infant Metroid 14",
+                    "Infant Metroid 15",
+                    "Infant Metroid 16",
+                    "Infant Metroid 17",
+                    "Infant Metroid 18",
+                    "Infant Metroid 19",
+                    "Infant Metroid 20"
+                ]
+            },
+            "starting_location": "Main Deck/Docking Bay Hangar/Ship",
+            "dock_connections": {},
+            "dock_weakness": {},
+            "locations": {
+                "Main Deck": {
+                    "Arachnus Arena/Pickup (Energy Tank)": "Energy Tank",
+                    "Arachnus Arena/Pickup (Morph Ball)": "Missile Tank",
+                    "Cubby Hole/Pickup (Missile Tank)": "Morph Ball Bomb Data",
+                    "Habitation Deck/Pickup (Missile Tank)": "Wide Beam",
+                    "Habitation Storage/Pickup (Power Bomb Tank)": "Super Missile Data",
+                    "Main Elevator Cache/Pickup (Missile Tank)": "Energy Tank",
+                    "Operations Deck Data Room/Pickup (Missile Launcher)": "Morph Ball",
+                    "Operations Maintenance Shaft/Pickup (Missile Tank)": "Missile Tank",
+                    "Operations Maintenance Storage/Pickup (Hidden Missile Tank)": "Missile Tank",
+                    "Restricted Airlock/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Scaffolding Access/Pickup (Energy Tank)": "Energy Tank",
+                    "Silo Scaffolding/Pickup (Missile Tank)": "Missile Tank",
+                    "Spitter Speedway/Pickup (Hidden Power Bomb Tank)": "Ice Missile Data",
+                    "Station Entrance/Pickup (Hidden Missile Tank)": "Energy Tank",
+                    "The Attic/Pickup (Energy Tank)": "Missile Tank",
+                    "Yakuza Arena/Pickup (Space Jump)": "Infant Metroid 2"
+                },
+                "Sector 1 (SRX)": {
+                    "Animorphs Cache/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Antechamber/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Charge Core Arena/Pickup (Charge Beam)": "Energy Tank",
+                    "Charge Core Arena/Pickup (Energy Tank)": "Energy Tank",
+                    "Crab Rave/Pickup (Missile Tank)": "Missile Tank",
+                    "Hornoad Hole/Pickup (Energy Tank)": "Energy Tank",
+                    "Lava Lake/Pickup (Missile Tank in Lava)": "Missile Tank",
+                    "Lava Lake/Pickup (Missile Tank on Cliffside)": "Power Bomb Tank",
+                    "Lava Lake/Pickup (Missile Tank on Platform)": "Energy Tank",
+                    "Ridley Arena/Pickup (Screw Attack)": "Infant Metroid 4",
+                    "Ripper Maze/Pickup (Hidden Energy Tank)": "Power Bomb Tank",
+                    "Sciser Storage/Pickup (Missile Tank)": "Missile Tank",
+                    "Wall Jump Tutorial/Pickup (Missile Tank)": "Charge Beam",
+                    "Watering Hole/Pickup (Hidden Power Bomb Tank)": "Missile Tank"
+                },
+                "Sector 2 (TRO)": {
+                    "Crumble City/Pickup (Energy Tank)": "Missile Tank",
+                    "Crumble City/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Cultivation Station/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Data Hub/Pickup (Missile Tank)": "Space Jump",
+                    "Data Room/Pickup (Morph Ball Bombs)": "Power Bomb Tank",
+                    "Entrance Lobby Underside/Pickup (Missile Tank)": "Missile Tank",
+                    "Kago Room/Pickup (Missile Tank)": "Level 1 Locks",
+                    "Level 1 Security Room/Pickup (L1 Locks)": "Speed Booster",
+                    "Nettori Arena/Pickup (Plasma Beam)": "Power Bomb Tank",
+                    "Oasis Storage/Pickup (Missile Tank)": "Varia Suit",
+                    "Oasis/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Owtch Cache A/Pickup (Missile Tank)": "Missile Tank",
+                    "Owtch Cache B/Pickup (Hidden Energy Tank)": "Missile Tank",
+                    "Puyo Palace/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Ripper Tower/Pickup (Hidden Power Bomb Tank)": "Missile Tank",
+                    "Ripper Tower/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Zazabi Access/Pickup (Energy Tank)": "Energy Tank",
+                    "Zazabi Arena/Pickup (High Jump)": "Missile Tank",
+                    "Zazabi Speedway/Pickup (Hidden Missile Tank)": "Power Bomb Tank",
+                    "Zazabi Speedway/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Zoro Zig-Zag/Pickup (Missile Tank)": "Missile Tank"
+                },
+                "Sector 3 (PYR)": {
+                    "Alcove/Pickup (Hidden Energy Tank)": "Missile Tank",
+                    "Alcove/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Bob's Abode/Pickup (Missile Tank)": "Missile Tank",
+                    "Data Room/Pickup (Super Missiles)": "Missile Tank",
+                    "Data Storage/Pickup (Missile Tank)": "Energy Tank",
+                    "Deserted Runway/Pickup (Missile Tank)": "Energy Tank",
+                    "Fiery Storage/Pickup (Energy Tank)": "Screw Attack",
+                    "Fiery Storage/Pickup (Missile Tank)": "Missile Tank",
+                    "Garbage Chute/Pickup (Power Bomb Tank in Cave)": "Missile Tank",
+                    "Garbage Chute/Pickup (Power Bomb Tank in Shaft)": "Missile Tank",
+                    "Glass Tube to Sector 5 (ARC)/Pickup (Hidden Power Bomb Tank)": "Missile Tank",
+                    "Lava Maze/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Level 2 Security Room/Pickup (L2 Locks)": "Gravity Suit",
+                    "Main Boiler Control Room/Pickup (Wide Beam)": "Infant Metroid 5",
+                    "Namihe's Lair/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Processing Access/Pickup (Hidden Missile Tank)": "Level 3 Locks",
+                    "Security Access/Pickup (Hidden Missile Tank)": "Power Bomb Tank",
+                    "Sova Processing/Pickup (Energy Tank)": "Missile Launcher Data",
+                    "Sova Processing/Pickup (Missile Tank)": "Missile Tank"
+                },
+                "Sector 4 (AQA)": {
+                    "Aquarium Storage/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Aquarium Storage/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Aquarium Tank/Pickup (Missile Tank)": "Energy Tank",
+                    "Broken Bridge/Pickup (Energy Tank)": "Missile Tank",
+                    "C-Cache/Pickup (Underwater Missile Tank)": "Level 2 Locks",
+                    "Cargo Hold to Sector 5 (ARC)/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Cheddar Bay/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Data Room/Pickup (Diffusion Missiles)": "Power Bomb Tank",
+                    "Drain Pipe/Pickup (Hidden Missile Tank)": "Power Bomb Data",
+                    "Level 4 Security Room/Pickup (L4 Locks)": "Power Bomb Tank",
+                    "Pump Control Unit/Pickup (Missile Tank)": "Missile Tank",
+                    "Reservoir East/Pickup (Hidden Power Bomb Tank)": "Energy Tank",
+                    "Sanctuary Cache/Pickup (Hidden Energy Tank)": "Missile Tank",
+                    "Serris Arena/Pickup (Speed Booster)": "Diffusion Missile Data",
+                    "Serris Escape/Pickup (Lower Missile Tank)": "Energy Tank",
+                    "Serris Escape/Pickup (Upper Missile Tank)": "Power Bomb Tank",
+                    "Waterway/Pickup (Underwater Missile Tank)": "Level 4 Locks",
+                    "Worst Room in the Game/Pickup (Missile Tank)": "Power Bomb Tank"
+                },
+                "Sector 5 (ARC)": {
+                    "Crow's Nest/Pickup (Hidden Power Bomb Tank)": "Missile Tank",
+                    "Data Room/Pickup (Power Bomb Data)": "Power Bomb Tank",
+                    "Flooded Airlock to Sector 4 (AQA)/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Gerubus Gully/Pickup (Hidden Missile Tank)": "Power Bomb Tank",
+                    "Level 3 Security Room/Pickup (L3 Locks)": "Wave Beam",
+                    "Magic Box/Pickup (Missile Tank)": "Hi-Jump",
+                    "Mimic Storage/Pickup (Hidden Energy Tank)": "Ice Beam",
+                    "Mini-Fridge/Pickup (Energy Tank)": "Energy Tank",
+                    "Nightmare Arena/Pickup (Gravity Suit)": "Missile Tank",
+                    "Nightmare Hub West/Pickup (Hidden Power Bomb Tank)": "Energy Tank",
+                    "Nightmare Nook/Pickup (Energy Tank)": "Plasma Beam",
+                    "Ripper Road/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Ruined Break Room/Pickup (Hidden Power Bomb Tank)": "Missile Tank",
+                    "Security Cache/Pickup (Power Bomb Tank)": "Energy Tank",
+                    "Security Shaft East/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Training Aerie/Pickup (Missile Tank)": "Missile Tank",
+                    "Training Aerie/Pickup (Power Bomb Tank)": "Missile Tank",
+                    "Transmutation Trial/Pickup (Hidden Missile Tank)": "Missile Tank"
+                },
+                "Sector 6 (NOC)": {
+                    "Entrance Lobby/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Mimic Storage/Pickup (Missile Tank)": "Energy Tank",
+                    "Pillar Puzzle/Pickup (Energy Tank)": "Missile Tank",
+                    "Shell Access/Pickup (Energy Tank)": "Missile Tank",
+                    "Spaceboost Alley/Pickup (Power Bomb Tank 2)": "Energy Tank",
+                    "Spaceboost Alley/Pickup (Power Bomb Tank)": "Power Bomb Tank",
+                    "Twin Caverns West/Pickup (Hidden Missile Tank)": "Power Bomb Tank",
+                    "Twin Caverns West/Pickup (Missile Tank)": "Energy Tank",
+                    "Varia Core-X Arena/Pickup (Varia Suit)": "Infant Metroid 3",
+                    "Vault/Pickup (Energy Tank)": "Missile Tank",
+                    "X-B.O.X. Arena/Pickup (Wave Beam)": "Infant Metroid 1",
+                    "X-B.O.X. Garage/Pickup (Hidden Power Bomb Tank)": "Missile Tank",
+                    "X-B.O.X. Garage/Pickup (Missile Tank)": "Power Bomb Tank",
+                    "Zozoro Wine Cellar/Pickup (Hidden Missile Tank)": "Missile Tank"
+                }
+            },
+            "hints": {
+                "Main Deck/Operations Deck Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 72,
+                    "dark_temple": null
+                },
+                "Main Deck/Main Deck Navigation Room East/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 66,
+                    "dark_temple": null
+                },
+                "Sector 3 (PYR)/Entrance Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 54,
+                    "dark_temple": null
+                },
+                "Sector 1 (SRX)/Entrance Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 81,
+                    "dark_temple": null
+                },
+                "Sector 6 (NOC)/Entrance Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 30,
+                    "dark_temple": null
+                },
+                "Sector 2 (TRO)/Entrance Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 118,
+                    "dark_temple": null
+                },
+                "Sector 4 (AQA)/Entrance Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 117,
+                    "dark_temple": null
+                },
+                "Sector 5 (ARC)/Entrance Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 23,
+                    "dark_temple": null
+                },
+                "Main Deck/Main Deck Navigation Room West/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "precise-category",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 68,
+                    "dark_temple": null
+                },
+                "Main Deck/Auxiliary Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "region-only",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 50,
+                    "dark_temple": null
+                },
+                "Main Deck/Restricted Navigation Room/Navigation Terminal": {
+                    "hint_type": "location",
+                    "precision": {
+                        "location": "detailed",
+                        "item": "detailed",
+                        "include_owner": true,
+                        "relative": null
+                    },
+                    "target": 5,
+                    "dark_temple": null
+                }
+            },
+            "game_specific": {}
+        }
+    ],
+    "item_order": [
+        "Morph Ball at Main Deck/Operations Deck Data Room/Pickup (Missile Launcher)",
+        "Morph Ball Bomb Data at Main Deck/Cubby Hole/Pickup (Missile Tank)",
+        "Space Jump at Sector 2 (TRO)/Data Hub/Pickup (Missile Tank)",
+        "Speed Booster at Sector 2 (TRO)/Level 1 Security Room/Pickup (L1 Locks)",
+        "Level 1 Locks at Sector 2 (TRO)/Kago Room/Pickup (Missile Tank)",
+        "Level 2 Locks at Sector 4 (AQA)/C-Cache/Pickup (Underwater Missile Tank) with hint at Main Deck/Operations Deck Navigation Room/Navigation Terminal",
+        "Level 4 Locks at Sector 4 (AQA)/Waterway/Pickup (Underwater Missile Tank) with hint at Main Deck/Main Deck Navigation Room East/Navigation Terminal",
+        "Level 3 Locks at Sector 3 (PYR)/Processing Access/Pickup (Hidden Missile Tank) with hint at Sector 3 (PYR)/Entrance Navigation Room/Navigation Terminal",
+        "Hi-Jump at Sector 5 (ARC)/Magic Box/Pickup (Missile Tank) with hint at Sector 1 (SRX)/Entrance Navigation Room/Navigation Terminal",
+        "Varia Suit at Sector 2 (TRO)/Oasis Storage/Pickup (Missile Tank) with hint at Sector 6 (NOC)/Entrance Navigation Room/Navigation Terminal",
+        "Wave Beam at Sector 5 (ARC)/Level 3 Security Room/Pickup (L3 Locks) with hint at Sector 2 (TRO)/Entrance Navigation Room/Navigation Terminal",
+        "Gravity Suit at Sector 3 (PYR)/Level 2 Security Room/Pickup (L2 Locks) with hint at Sector 4 (AQA)/Entrance Navigation Room/Navigation Terminal",
+        "Charge Beam at Sector 1 (SRX)/Wall Jump Tutorial/Pickup (Missile Tank) with hint at Sector 5 (ARC)/Entrance Navigation Room/Navigation Terminal",
+        "Power Bomb Data at Sector 4 (AQA)/Drain Pipe/Pickup (Hidden Missile Tank) with hint at Main Deck/Main Deck Navigation Room West/Navigation Terminal",
+        "Screw Attack at Sector 3 (PYR)/Fiery Storage/Pickup (Energy Tank) with hint at Main Deck/Auxiliary Navigation Room/Navigation Terminal",
+        "Energy Tank at Sector 1 (SRX)/Lava Lake/Pickup (Missile Tank on Platform)",
+        "Ice Beam at Sector 5 (ARC)/Mimic Storage/Pickup (Hidden Energy Tank)",
+        "Missile Launcher Data at Sector 3 (PYR)/Sova Processing/Pickup (Energy Tank)",
+        "Energy Tank at Sector 2 (TRO)/Zazabi Access/Pickup (Energy Tank)",
+        "Energy Tank at Sector 3 (PYR)/Deserted Runway/Pickup (Missile Tank)",
+        "Energy Tank at Sector 1 (SRX)/Charge Core Arena/Pickup (Energy Tank)",
+        "Energy Tank at Sector 4 (AQA)/Reservoir East/Pickup (Hidden Power Bomb Tank)",
+        "Super Missile Data at Main Deck/Habitation Storage/Pickup (Power Bomb Tank)",
+        "Energy Tank at Main Deck/Station Entrance/Pickup (Hidden Missile Tank)",
+        "Ice Missile Data at Main Deck/Spitter Speedway/Pickup (Hidden Power Bomb Tank)",
+        "Energy Tank at Sector 6 (NOC)/Twin Caverns West/Pickup (Missile Tank)",
+        "Diffusion Missile Data at Sector 4 (AQA)/Serris Arena/Pickup (Speed Booster)",
+        "Energy Tank at Sector 3 (PYR)/Data Storage/Pickup (Missile Tank)",
+        "Energy Tank at Sector 5 (ARC)/Nightmare Hub West/Pickup (Hidden Power Bomb Tank)",
+        "Energy Tank at Sector 4 (AQA)/Serris Escape/Pickup (Lower Missile Tank)",
+        "Energy Tank at Sector 6 (NOC)/Spaceboost Alley/Pickup (Power Bomb Tank 2)",
+        "Energy Tank at Sector 4 (AQA)/Aquarium Tank/Pickup (Missile Tank)",
+        "Wide Beam at Main Deck/Habitation Deck/Pickup (Missile Tank)",
+        "Energy Tank at Main Deck/Main Elevator Cache/Pickup (Missile Tank)",
+        "Energy Tank at Sector 5 (ARC)/Mini-Fridge/Pickup (Energy Tank)",
+        "Energy Tank at Sector 1 (SRX)/Charge Core Arena/Pickup (Charge Beam)",
+        "Plasma Beam at Sector 5 (ARC)/Nightmare Nook/Pickup (Energy Tank)"
+    ],
+    "checksum": "852841c259cf546313c9b6b2566f57b6741dac0f63d2698001b77d71de1446d59c25cec409b4c6212e70ea2026289ac2bd93e40882df098501d2f31a00b75ebc"
+}

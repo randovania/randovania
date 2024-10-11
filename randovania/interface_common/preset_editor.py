@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     import uuid
     from collections.abc import Callable
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
     from randovania.layout.base.available_locations import AvailableLocationsConfiguration

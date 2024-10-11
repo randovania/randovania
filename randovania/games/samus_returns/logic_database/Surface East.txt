@@ -47,6 +47,8 @@ Extra - asset_id: collision_camera_000
           Space Jump or Single-wall Wall Jump (Advanced) or Use Spider Ball
           # IBJ
           Infinite Bomb Jump (Intermediate) and Lay Bomb
+  > Pickup (Ridley)
+      After Surface (West) - Proteus Ridley and Disabled Final Boss Proteus Ridley
 
 > Top of Mountain; Heals? False
   * Layers: default
@@ -86,6 +88,20 @@ Extra - asset_id: collision_camera_000
   > Dock to Surface Crumble Block Challenge (Top)
       Lay Power Bomb
   > Dock to Surface Crumble Block Challenge (Bottom)
+      Trivial
+
+> Pickup (Ridley); Heals? False
+  * Layers: final-boss-not-ridley
+  * Pickup 211; Category? Major
+  * Extra - actor_name: LE_Item_Ridley
+  * Extra - actor_type: item_energytank
+  > Ship
+      Trivial
+
+> Dock from Surface West; Heals? False
+  * Layers: default
+  * Blocked Passage to Landing Site/Dock to Surface East
+  > Ship
       Trivial
 
 ----------------

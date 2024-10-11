@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 def test_dangerous_settings(preset_manager):

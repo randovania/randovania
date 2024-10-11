@@ -88,16 +88,86 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Break Single Bomb Blocks"
-                                    },
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
                                             "name": "ScrewAttack",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Single Bomb Blocks"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Currently logically useless: but maybe if we have an option to remove screw blocks https://youtu.be/Ifde8nknvYk",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "L0Locks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -219,7 +289,7 @@
                         "Door to Entrance Recharge Room": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: revisit after proper SWJ implementation",
                                 "items": [
                                     {
                                         "type": "or",
@@ -255,7 +325,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "TODO: vid of this",
+                                                        "comment": "Jump Bomb Jump to break the blocks: https://youtu.be/mZe9Ht3o19w",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -283,8 +353,16 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Use Power Bombs"
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Break the blocks with Power Bombs",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Power Bombs"
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -296,7 +374,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -310,7 +388,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Shinespark straight up: https://youtu.be/PR0XnnUh-0A",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -336,22 +414,13 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Break only the top 2 rows of Screw Blocks and jump to ledge",
+                                                        "comment": "Break only the top 2 rows of Screw Blocks and jump to ledge: https://youtu.be/iAHhW0NjQtk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Movement",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -694,7 +763,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Shinespark from Nav Room: TODO: video with Geron https://youtu.be/4vs0MvX4oew",
+                                                        "comment": "Shinespark from Nav Room: https://youtu.be/u7c-Kq7AaXk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -801,7 +870,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Store a Shinespark using Entrance Lobby Room",
+                                                        "comment": "Store a Shinespark using Entrance Lobby Room: https://youtu.be/2MqrUSwKQU0",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -939,8 +1008,25 @@
                                             "comment": "Bottom way",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Kill Purple Geron"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Kill Purple Geron"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "VariaCore-X",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "or",
@@ -949,7 +1035,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Climb High Jump Wall"
+                                                                "data": "Have Any Jump Upgrade"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -1093,7 +1179,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -1675,7 +1761,7 @@
                         "Door to Nocturnal Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Without Breaking Blocks: https://youtu.be/o43xM3s5YdE",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1688,7 +1774,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     }
                                 ]
                             }
@@ -1901,22 +1987,13 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Wave and Plasma can stop the last 3 X",
+                                            "comment": "Wave beam can stop the last 3 X: https://youtu.be/DEvvMkPch0A",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
                                                         "name": "WaveBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PlasmaBeam",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2021,22 +2098,13 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Wave and Plasma can stop the last 3 X",
+                                            "comment": "Wave beam can stop the last 3 X: https://youtu.be/SfUb582mYF8",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
                                                         "name": "WaveBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PlasmaBeam",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -2633,10 +2701,55 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Nocturnal Shaft": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Stun the Ice X: https://youtu.be/gWr0prPkpiI",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Tank one Ice-X: https://youtu.be/OPhU8BH0FYU",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 69,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2673,7 +2786,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Nocturnal Shaft": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -2684,6 +2797,124 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Avoid aggroing Blue X",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With Springball: https://youtu.be/Dda82QOpWcY",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Use Springball"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With Single Wall Jumps: https://youtu.be/xJ3ouhpX3ns",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Screw Single Walljump"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Get past Blue X",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "https://youtu.be/JsdPO-DjDwE",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DamageBoosts",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "NormalDamage",
+                                                                                "amount": 138,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "VariaSuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2734,10 +2965,10 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Cavern Save Access": {
-                            "type": "and",
+                        "Door to Shell Access": {
+                            "type": "or",
                             "data": {
-                                "comment": "This can safely not have Door Lock Rando check",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2749,12 +2980,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
+                                            "comment": "These blocks disappear after defeating Mega Core",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "VariaCore-X",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2794,6 +3033,84 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Nocturnal Playground": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Shinespark: https://youtu.be/8j_pwpvapbw",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "L0Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Wall disappears after Mega Core",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "VariaCore-X",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Cavern Save Access": {
                             "type": "and",
                             "data": {
@@ -2835,59 +3152,6 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Nocturnal Playground": {
-                            "type": "and",
-                            "data": {
-                                "comment": "https://youtu.be/8j_pwpvapbw",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "ShinesparkTrick",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "EntranceRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "misc",
-                                            "name": "DoorLockRando",
-                                            "amount": 1,
-                                            "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "L0Locks",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Shell Access": {
                             "type": "and",
                             "data": {
@@ -3002,8 +3266,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -3251,7 +3520,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Kill Eye Door"
+                                        "data": "Can Kill Gadora"
                                     }
                                 ]
                             }
@@ -3576,12 +3845,20 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 4,
-                                                        "negate": false
+                                                        "comment": "Fight Boss Damageless: https://youtu.be/CfgKTcobo0s",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -3936,6 +4213,15 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L4Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -3976,7 +4262,7 @@
                         "Door to Forbidden Entrance": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Wall jump to the top: https://youtu.be/D8a57K7PwZ0",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3988,27 +4274,31 @@
                                         }
                                     },
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze the Menus: https://youtu.be/_HmPed89A7E",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Hi-Jump",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 }
                                             ]
                                         }
@@ -4016,20 +4306,70 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Shinespark from X-B.O.X. Arena: https://youtu.be/BHmNhsne3hw",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "StandOnFrozenEnemies",
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "ShinesparkTrick",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "L0Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "ScrewAttack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "X-B.O.X.",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4087,17 +4427,8 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Shinespark from Spaceboost Alley: https://youtu.be/r71Z7nR9eRY",
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -4235,11 +4566,11 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Freeze Zozoro: https://youtu.be/wu8pKLvrAMw",
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Freeze Enemies"
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4254,18 +4585,10 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
-                                                },
-                                                {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "JBJ: https://youtu.be/oXu_rBiyO6E",
                                                         "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Bombs"
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -4274,9 +4597,17 @@
                                                                     "amount": 4,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Jump Upgrade"
                                                 }
                                             ]
                                         }
@@ -4747,7 +5078,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://youtu.be/tN0oMbbUW5I",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -4807,7 +5138,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "https://youtu.be/fcWSo6UD5lE",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -5047,32 +5378,80 @@
                                             "comment": "Arena Requirements (destroy blocks covering monkey bars)",
                                             "items": [
                                                 {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                },
+                                                {
                                                     "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Break blocks while falling down crumble blocks",
                                                                     "items": [
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Power Bombs"
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "TODO: vid, also check if you can do this w/o grav",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "JBJ",
+                                                                                            "amount": 5,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "GravitySuit",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -5311,7 +5690,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     }
                                 ]
                             }
@@ -5367,16 +5746,11 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "Template not used because normal Ice Missiles can't hit the Owtch to freeze it in the right spot",
+                                                                    "comment": "Template not used because normal Ice Missiles can't hit the Owtch to freeze it in the right spot https://youtu.be/4y7ohyL0zkE&t=14s",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "DiffusionMissileData",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Diffusion"
                                                                         },
                                                                         {
                                                                             "type": "and",
@@ -5393,13 +5767,8 @@
                                                                                         }
                                                                                     },
                                                                                     {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "IceBeam",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies With Ice Beam"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -5413,7 +5782,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Alternate Method - Jump off the Crumble Blocks morphed (frame perfect)",
+                                                        "comment": "Alternate Method - Jump off the Crumble Blocks morphed (frame perfect) https://youtu.be/4y7ohyL0zkE&t=14",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5434,7 +5803,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Alternate Method - Jump off the Crumble Blocks without Jumpball by unmorphing first (also frame perfect)",
+                                                        "comment": "Alternate Method - Jump off the Crumble Blocks without Jumpball by unmorphing first (also frame perfect) https://youtu.be/4y7ohyL0zkE&t=24",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5444,6 +5813,27 @@
                                                                     "amount": 4,
                                                                     "negate": false
                                                                 }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Spam bombs to hover across: https://youtu.be/4y7ohyL0zkE&t=37",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
                                                             }
                                                         ]
                                                     }
@@ -5675,7 +6065,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Freeze Enemies"
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -5683,6 +6073,49 @@
                                                         "type": "tricks",
                                                         "name": "StandOnFrozenEnemies",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Wall Jump with No Upgrades: https://youtu.be/cB_xiz5mbr8?t=20",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -5732,6 +6165,68 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Bull Bend": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Shinespark from adjacent room: https://youtu.be/D3sd1AoU-q8",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "ShinesparkTrick",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L4Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "DoorLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "EntranceRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "JumpExtends",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Neglected Save Room": {
                             "type": "or",
                             "data": {
@@ -5752,14 +6247,26 @@
                                             "comment": null,
                                             "items": [
                                                 {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Any Weapon"
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Hi-Jump",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
-                                                },
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Break the blocks in a certain way and Wall Jump: https://youtu.be/cB_xiz5mbr8",
+                                            "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -5775,18 +6282,23 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Break blocks in a certain way to ledge grab: https://youtu.be/OqSeGCS_jwI",
                                             "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies"
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "StandOnFrozenEnemies",
+                                                        "name": "Movement",
                                                         "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -6398,7 +6910,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "and",
@@ -6887,15 +7399,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Movement",
-                                            "amount": 3,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -6928,51 +7431,51 @@
                                                             }
                                                         ]
                                                     }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "With SJ: https://youtu.be/ai9uskBbhUY",
-                                            "items": [
+                                                },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "With SJ: https://youtu.be/ai9uskBbhUY",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Ledge Grab: https://youtu.be/LcvWRxDgZew",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": "Crumble Jump: TODO: video",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 3,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -7106,7 +7609,7 @@
                                 "items": []
                             }
                         },
-                        "Ledge": {
+                        "Below Ledge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7114,49 +7617,40 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 2,
                                             "negate": false
                                         }
                                     },
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze Zozoro https://youtu.be/JDSabpkP9qo",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Hi-Jump",
-                                                        "amount": 1,
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Use Bombs"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "JBJ",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -7247,7 +7741,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "and",
@@ -7272,11 +7766,150 @@
                                 ]
                             }
                         },
+                        "Below Ledge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Below Ledge": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 421.2,
+                        "y": 243.38,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "connections": {
                         "Door to Twin Caverns East (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Ledge": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "JBJ: https://youtu.be/M_bad6jxMRk",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "JBJ",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Bombs"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Freeze Bull: https://youtu.be/JDSabpkP9qo&t=43",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Any Weapon"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "StandOnFrozenEnemies",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage boost off of bull: https://youtu.be/o3SWYYDnbe4",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 61,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "SWJ",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7427,7 +8060,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Assume average of taking 3 X (due to movement pattern)",
+                                            "comment": "Assume average of taking 3 X (due to movement pattern): https://youtu.be/7Y5HMk8jxS0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7536,7 +8169,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Adept movement could avoid some",
+                                            "comment": "Adept movement could avoid some: https://youtu.be/U85aWphpi5s",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7589,7 +8222,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Really adept movement could avoid them all",
+                                            "comment": "Really adept movement could avoid them all: https://youtu.be/js56iAuSsV8",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7614,7 +8247,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Movement",
-                                                        "amount": 4,
+                                                        "amount": 5,
                                                         "negate": false
                                                     }
                                                 }
@@ -8168,7 +8801,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Wave Beam is difficult to control, but can solve the puzzle (Wide Beam could be turned off if also collected)",
+                                                        "comment": "Wave Beam is difficult to control, but can solve the puzzle (Wide Beam could be turned off if also collected): https://youtu.be/7EqFwO03BAs",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8331,16 +8964,8 @@
                         "Bottom of Room": {
                             "type": "and",
                             "data": {
-                                "comment": "Wall jump or shinespark up the left side, wall jump to grab the top ledge, then walk across the top to leave",
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": []
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8389,8 +9014,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 875.7327565183276,
-                        "y": 140.07901517320357,
+                        "x": 792.8495699490959,
+                        "y": 170.8941548183255,
                         "z": 0.0
                     },
                     "description": "",
@@ -8401,9 +9026,9 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://youtu.be/uVPnKswaeOY&t=77s",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8413,6 +9038,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Have Any Jump Upgrade"
                                     }
                                 ]
                             }
@@ -8465,7 +9094,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "No High Jump: https://youtu.be/lcOsHzfPVDI",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8495,10 +9124,45 @@
                             }
                         },
                         "Door to X-B.O.X. Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Have Any Jump Upgrade"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

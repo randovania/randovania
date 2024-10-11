@@ -46,6 +46,29 @@ def test_change_music_option(
     assert dialog.cosmetic_patches == MSRCosmeticPatches(music=music_end_value)
 
 
+@pytest.mark.parametrize(
+    ("slider_name", "label_name", "field_name"),
+    [
+        ("music_slider", "music_label", "music_volume"),
+        ("ambience_slider", "ambience_label", "ambience_volume"),
+    ],
+)
+def test_certain_slider(skip_qtbot: pytestqt.qtbot.QtBot, slider_name: str, label_name: str, field_name: str) -> None:
+    cosmetic_patches = MSRCosmeticPatches(**{field_name: 0})  # type: ignore[arg-type]
+
+    dialog = MSRCosmeticPatchesDialog(None, cosmetic_patches)
+    label = getattr(dialog, label_name)
+    skip_qtbot.addWidget(dialog)
+    assert label.text() == "  0%"
+
+    slider = getattr(dialog, slider_name)
+    slider.setValue(80)
+
+    assert dialog.cosmetic_patches == MSRCosmeticPatches(**{field_name: 80})  # type: ignore[arg-type]
+    assert label.text() == " 80%"
+    assert slider.value() == 80
+
+
 def test_custom_laser_color(skip_qtbot: pytestqt.qtbot.QtBot) -> None:
     cosmetic_patches = MSRCosmeticPatches(use_laser_color=False)
 

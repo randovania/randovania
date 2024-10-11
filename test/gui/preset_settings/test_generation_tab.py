@@ -7,10 +7,10 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.games.cave_story.gui.preset_settings.cs_generation_tab import PresetCSGeneration
 from randovania.games.dread.gui.preset_settings.dread_generation_tab import PresetDreadGeneration
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor

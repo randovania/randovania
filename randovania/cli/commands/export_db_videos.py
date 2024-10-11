@@ -15,8 +15,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
     from pathlib import Path
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.requirements.base import Requirement
-    from randovania.games.game import RandovaniaGame
 
 # ruff: noqa: E731
 

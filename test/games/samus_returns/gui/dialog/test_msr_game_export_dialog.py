@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, call
 import pytest
 from PySide6 import QtCore
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 from randovania.games.samus_returns.gui.dialog.game_export_dialog import MSRGameExportDialog, serialize_path

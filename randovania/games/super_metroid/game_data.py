@@ -1,6 +1,10 @@
 from __future__ import annotations
 
-from randovania.games import game
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 from randovania.layout.preset_describer import GamePresetDescriber
@@ -12,10 +16,10 @@ def _options():
     return SuperMetroidPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.super_metroid import gui
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         tab_provider=gui.super_metroid_preset_tabs,
         cosmetic_dialog=gui.SuperCosmeticPatchesDialog,
         export_dialog=gui.SuperMetroidGameExportDialog,
@@ -23,17 +27,19 @@ def _gui() -> game.GameGui:
     )
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.super_metroid.generator.bootstrap import SuperMetroidBootstrap
     from randovania.games.super_metroid.generator.item_pool.pool_creator import super_metroid_specific_pool
     from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=super_metroid_specific_pool,
         bootstrap=SuperMetroidBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
@@ -55,10 +61,10 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="SM",
     long_name="Super Metroid",
-    development_state=game.DevelopmentState.DEVELOPMENT,
+    development_state=randovania.game.development_state.DevelopmentState.DEVELOPMENT,
     presets=[{"path": "starter_preset.rdvpreset"}],
     faq=[
         (
@@ -100,7 +106,7 @@ game_data: game.GameData = game.GameData(
         ("Will you support SMZ3?", "No."),
     ],
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=SuperMetroidConfiguration,
         cosmetic_patches=SuperMetroidCosmeticPatches,
         preset_describer=GamePresetDescriber(),

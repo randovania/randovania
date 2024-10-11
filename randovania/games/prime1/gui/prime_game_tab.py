@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.gui.generated.games_tab_prime_widget_ui import Ui_PrimeGameTabWidget
 from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
 

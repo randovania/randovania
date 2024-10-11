@@ -17,7 +17,7 @@ from qasync import asyncSlot
 
 import randovania
 from randovania import VERSION, get_readme_section, monitoring
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -763,7 +763,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
     def _on_menu_action_show_multiworld_banner(self) -> None:
         banner_val = self.menu_action_show_multiworld_banner.isChecked()
-        monitoring.metrics.incr(f"gui_multiworld_banner_option_{"checked" if banner_val else "unchecked"}")
+        monitoring.metrics.incr("gui_multiworld_banner_option_" + ("checked" if banner_val else "unchecked"))
         with self._options as options:
             options.show_multiworld_banner = banner_val
 

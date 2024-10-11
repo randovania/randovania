@@ -18,9 +18,9 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> l
 
     return [
         PresetTrickLevel,
-        PresetPatcherEnergy,
-        PresetCorruptionStartingArea,
         PresetGeneration,
         PresetLocationPool,
         MetroidPresetItemPool,
+        PresetPatcherEnergy,
+        PresetCorruptionStartingArea,
     ]

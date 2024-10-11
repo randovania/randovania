@@ -9,11 +9,11 @@ from randovania.game_description.resources.location_category import LocationCate
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.game import RandovaniaGame
     from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
@@ -99,7 +99,8 @@ def create_ammo_pickup(
         resource_lock=ammo.create_resource_lock(resource_database),
         generator_params=PickupGeneratorParams(
             preferred_location_category=ammo.preferred_location_category,
-            probability_multiplier=2,
+            probability_offset=ammo.probability_offset,
+            probability_multiplier=ammo.probability_multiplier,
         ),
     )
 

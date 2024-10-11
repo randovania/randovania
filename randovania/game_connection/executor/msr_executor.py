@@ -9,11 +9,11 @@ import typing
 from enum import IntEnum
 from typing import TYPE_CHECKING, Any
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.executor.common_socket_holder import CommonSocketHolder
 from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description import default_database
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -184,7 +184,7 @@ class MSRExecutor:
             ValueError,
         ) as e:
             # UnicodeError is for some invalid ip addresses
-            self._socket = None
+            self.disconnect()
             message = f"Unable to connect to {self._ip}:{self._port} - ({type(e).__name__}) {e}"
             self._socket_error = e
             return message

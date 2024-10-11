@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.samus_returns.layout import MSRConfiguration
+from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.resolver.bootstrap import MetroidBootstrap
 
@@ -21,8 +22,14 @@ if TYPE_CHECKING:
 def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     assert isinstance(config, MSRConfiguration)
     artifact_config = config.artifacts
-    _boss_indices = [37, 99, 139, 171]
     _stronger_metroid_indices = [177, 178, 181, 185, 186, 187, 188, 192, 193, 199, 200, 202, 205, 209]
+    _boss_indices = [37, 99, 139, 171, 211]
+    _boss_mapping = {
+        FinalBossConfiguration.ARACHNUS: 0,
+        FinalBossConfiguration.DIGGERNAUT: 2,
+        FinalBossConfiguration.QUEEN: 3,
+        FinalBossConfiguration.RIDLEY: 4,
+    }
 
     pickup_type = node.extra.get("pickup_type")
     pickup_index = node.pickup_index.index
@@ -35,8 +42,11 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
         elif artifact_config.prefer_stronger_metroids and pickup_index in _stronger_metroid_indices:
             return True
     # Boss pickups/locations
-    elif artifact_config.prefer_bosses and pickup_index in _boss_indices:
-        return True
+    elif artifact_config.prefer_bosses:
+        index = _boss_mapping.get(config.final_boss, 4)
+        _boss_indices.pop(index)
+        if pickup_index in _boss_indices:
+            return True
 
     return False
 
@@ -68,6 +78,17 @@ class MSRBootstrap(MetroidBootstrap):
         if configuration.dock_rando.mode == DockRandoMode.WEAKNESSES:
             enabled_resources.add("DoorLockRandoTypes")
 
+        if configuration.final_boss == FinalBossConfiguration.ARACHNUS:
+            enabled_resources.add("FinalBossArachnus")
+        elif configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            enabled_resources.add("FinalBossDiggernaut")
+        # If Queen is the final boss, remove the wall next to the arena
+        elif configuration.final_boss == FinalBossConfiguration.QUEEN:
+            enabled_resources.add("FinalBossQueen")
+            enabled_resources.add("ReverseArea8")
+        elif configuration.final_boss == FinalBossConfiguration.RIDLEY:
+            enabled_resources.add("FinalBossRidley")
+
         return enabled_resources
 
     def event_resources_for_configuration(
@@ -93,6 +114,14 @@ class MSRBootstrap(MetroidBootstrap):
                 ),
                 1,
             )
+
+        # If Diggernaut is the final boss, remove the Grapple Blocks by the elevator
+        if configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            for name in [
+                "Area 6 - Transport to Area 7 Grapple Block Pull",
+                "Area 6 - Transport to Area 7 Grapple Block Top",
+            ]:
+                yield resource_database.get_event(name), 1
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, MSRConfiguration)

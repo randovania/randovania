@@ -56,12 +56,7 @@ Extra - asset_id: collision_camera_034
   * Charge Beam Door to Diggernaut Arena/Door from Transport to Area 7
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
-  > Left of Plant Tunnels
-      All of the following:
-          Lay Any Bomb
-          # Deal with the Electric Gulluggs
-          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Weak Enemies
-  > Start Point
+  > Next to Diggernaut Arena
       Trivial
 
 > Event - Grapple Block Top; Heals? False
@@ -77,7 +72,7 @@ Extra - asset_id: collision_camera_034
           Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
           # Deal with the Electric Gulluggs and Autoad
           Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
-  > Door to Diggernaut Arena
+  > Next to Diggernaut Arena
       All of the following:
           Lay Any Bomb
           # Deal with the Electric Gulluggs
@@ -136,11 +131,18 @@ Extra - asset_id: collision_camera_034
                           High Jump Boots
                           Super Jump (Advanced) or Unmorph Extend (Advanced)
 
-> Start Point; Heals? False; Spawn Point
+> Next to Diggernaut Arena; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_ManicMiner
   > Door to Diggernaut Arena
-      Trivial
+      Any of the following:
+          Disabled Final Boss Diggernaut
+          Enabled Final Boss Diggernaut and All DNA
+  > Left of Plant Tunnels
+      All of the following:
+          Lay Any Bomb
+          # Deal with the Electric Gulluggs
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Weak Enemies
 
 > Event - Grapple Block Pull; Heals? False
   * Layers: default
@@ -693,7 +695,7 @@ Extra - total_boundings: {'x1': -21150.0, 'x2': -17850.0, 'y1': -7800.0, 'y2': -
 Extra - polygon: [[-21150.0, -6400.0], [-21150.0, -7800.0], [-17850.0, -7800.0], [-17850.0, -6400.0]]
 Extra - asset_id: collision_camera_043
 > Pickup (Power Bomb); Heals? False
-  * Layers: default
+  * Layers: final-boss-not-diggernaut
   * Pickup 139; Category? Major
   * Extra - actor_name: LE_PowerUp_Powerbomb
   * Extra - actor_type: itemsphere_powerbomb
@@ -719,12 +721,14 @@ Extra - asset_id: collision_camera_043
 > Event - Diggernaut; Heals? False
   * Layers: default
   * Event Area 6 - Diggernaut
-  > Pickup (Power Bomb)
+  > Room Center
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_009
+  > Pickup (Power Bomb)
+      After Area 6 - Diggernaut and Disabled Final Boss Diggernaut
   > Door to Electric Escalade
       After Area 6 - Diggernaut and Lay Power Bomb
   > Event - Diggernaut
@@ -765,6 +769,14 @@ Extra - asset_id: collision_camera_043
               Spider Ball
               # Lay a bomb near a weak point when its on the right or top only
               Mid-Air Morph (Advanced) or Infinite Bomb Jump (Advanced)
+  > Event - Credits (Diggernaut Final Boss)
+      After Area 6 - Diggernaut
+
+> Event - Credits (Diggernaut Final Boss); Heals? False
+  * Layers: final-boss-diggernaut
+  * Event Credits
+  > Room Center
+      Trivial
 
 ----------------
 Swarm Square
@@ -813,14 +825,18 @@ Extra - asset_id: collision_camera_045
   * Extra - actor_name: LE_Platform_AmmoCharge_002
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Power Bomb Tank)
-      Any of the following:
-          Spider Boost (Beginner) and Can Spider Boost
-          All of the following:
-              Infinite Bomb Jump (Advanced) and Lay Bomb
-              # Defeat the Gulluggs
-              Combat (Advanced) or Defeat Weak Enemies
+      All of the following:
+          Disabled Final Boss Diggernaut
+          Any of the following:
+              Spider Boost (Beginner) and Can Spider Boost
+              All of the following:
+                  Infinite Bomb Jump (Intermediate) and Lay Bomb
+                  # Defeat the Gulluggs
+                  Combat (Advanced) or Defeat Weak Enemies
   > Door to Diggernaut Arena
-      Trivial
+      Any of the following:
+          Disabled Final Boss Diggernaut
+          Enabled Final Boss Diggernaut and All DNA
   > Top Platform
       Any of the following:
           Single-wall Wall Jump (Expert)

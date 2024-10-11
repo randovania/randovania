@@ -20,7 +20,7 @@ from randovania.lib.construct_lib import is_path_not_equals_to
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
 
 _CURRENT_SCHEMA_VERSION = 13
 _PERMALINK_MAX_VERSION = 256

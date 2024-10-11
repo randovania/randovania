@@ -10,13 +10,13 @@ from randovania.game_description.resources.resource_type import ResourceType
 if typing.TYPE_CHECKING:
     from collections.abc import Callable
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.damage_reduction import DamageReduction
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-    from randovania.games.game import RandovaniaGame
 
 
 def default_base_damage_reduction(db: ResourceDatabase, current_resources: ResourceCollection) -> float:

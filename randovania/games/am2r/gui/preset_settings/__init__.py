@@ -11,12 +11,12 @@ if TYPE_CHECKING:
 
 def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.games.am2r.gui.preset_settings.am2r_chaos_tab import PresetAM2RChaos
-    from randovania.games.am2r.gui.preset_settings.am2r_energy_tab import PresetAM2REnergy
+    from randovania.games.am2r.gui.preset_settings.am2r_dock_tab import PresetAM2RDoors
+    from randovania.games.am2r.gui.preset_settings.am2r_gameplay_tab import PresetAM2RGameplay
     from randovania.games.am2r.gui.preset_settings.am2r_goal_tab import PresetAM2RGoal
     from randovania.games.am2r.gui.preset_settings.am2r_hints_tab import PresetAM2RHints
-    from randovania.games.am2r.gui.preset_settings.am2r_patches_tab import PresetAM2RPatches
+    from randovania.games.am2r.gui.preset_settings.am2r_room_design_tab import PresetAM2RRoomDesign
     from randovania.games.am2r.gui.preset_settings.am2r_teleporters_tab import PresetTeleportersAM2R
-    from randovania.gui.preset_settings.dock_rando_tab import PresetDockRando
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
@@ -29,10 +29,10 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetLocationPool,
         PresetAM2RGoal,
         MetroidPresetItemPool,
-        PresetAM2REnergy,
         PresetMetroidStartingArea,
-        PresetDockRando,
+        PresetAM2RDoors,
         PresetTeleportersAM2R,
-        PresetAM2RPatches,
+        PresetAM2RGameplay,
+        PresetAM2RRoomDesign,
         PresetAM2RChaos,
     ]

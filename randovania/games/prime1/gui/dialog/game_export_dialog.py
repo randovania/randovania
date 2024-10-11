@@ -4,8 +4,8 @@ import dataclasses
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog

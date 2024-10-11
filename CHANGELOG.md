@@ -5,11 +5,90 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.4.x] - 2024-08-??
+## [8.6.x] - 2024-11-??
 
+- Changed: Filtering in the Generation Order tab is now case-insensitive.
+- Changed: The Area View of the Data Visualizer now always has a dark gray background to help with readability.
 - Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
-- Changed: In the game details window, add a tooltip mentioning when the export of a game cannot be stopped.
-- Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
+
+### AM2R
+
+#### Logic Database
+
+- Fixed: The Hideout<->Bubble lair Depths pipes being on the wrong layer.
+
+##### Golden Temple
+
+- Fixed: Guardian Arena: IBJing up to Guardian Storage now requires Morph Ball.
+
+##### Hydro Station
+
+- Fixed: Breeding Grounds Entrance: Using Mid Air Morph to get to the upper part now requires Morph Ball.
+
+##### Industrial Complex
+
+- Fixed: Senjoo Settlement: Using Morph Glides to go from the Gamma Nest to the exterior now requires Morph Ball.
+
+##### The Tower
+
+- Fixed: Tower Exterior South East: Getting to the upper Gamma Nest ledge with Shinesparking and Morph Ball now requires a Beginner Morph Glide instead of an Intermediate Mid Air Morph and also requires Morph Ball.
+- Fixed: Tower Exterior North East: Getting to the Plasma Beam Chamber Access door from below with Morph is now correctly classified as a Morph Glide instead of a Mid Air Morph and also requires Morph Ball.
+- Fixed: Tower Exterior North East: Getting to the Save Station from the Zeta tunnel with Morph is now correctly classified as a Morph Glide instead of a Mid Air Morph and also requires Morph Ball.
+- Fixed: Exterior Zeta Nest East Access: IBJing to the ceiling to get across from the Zeta Nest to the Exterior requires Infinite Bomb Propulsion.
+
+##### Distribution Center
+
+- Fixed: Distribution Center Exterior East: Climbing the room with High Jump and Morph Gliding now requires Morph Ball.
+- Fixed: Distribution Facility Tower East: Morph Gliding over the little gap at the top now requires Morph Ball.
+- Fixed: Distribution Facility Tower East: Walljumping and Morph Gliding from the bottom pipe to the middle pipe now requires Morph Ball.
+- Fixed: Ice Beam Chamber Access: Mid Air Morphing into the pipe now requires Morph Ball.
+
+##### The Depths
+
+- Fixed: Bubble Lair Shinespark Cave: Climbing the upper part of the room with Walljumps and Morph Glides now requires Morph Ball.
+
+##### Genetics Laboratory
+
+- Fixed: Laboratory Entrance: Climbing the room with Walljumps and Morph Glides now requires Morph Ball.
+- Fixed: Laboratory Spiked Hall: Morph Gliding across the room now requires Morph Ball.
+
+
+### Metroid Prime
+
+- Added: The Data Visualizer now shows an Area View.
+
+#### Logic Database
+
+- Added: 3 Videos added to the logic database.
+
+##### Chozo Ruins
+
+- Added: In Furnace: Add comments that the standable climb up the spider track does not work on PAL.
+- Added: In Furnace: Add Bomb Space Jump method for climbing the spider track on the West Furnace side.
+
+##### Impact Crater
+
+- Added: In Metroid Prime Lair: Require Combat Visor for Essence fight.
+
+##### Tallon Overworld
+
+- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump.
+- Added: In Tallon Canyon: Beginner Knowledge to break blocks with Power Bombs.
+- Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
+- Added: In Gully: Beginner Standables to climb the room.
+
+### Metroid: Samus Returns
+
+- Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
+
+## [8.5.0] - 2024-10-01
+
+- Fixed: Improved server performance when importing/generating games with a huge number of worlds.
+
+### AM2R
+
+- Added: 1 more joke hint
+- Fixed: A joke hint showing as two joke hints.
 
 ### Metroid Dread
 
@@ -17,7 +96,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Artaria
 
+- Added: Various individual means of using Speed Booster to climb EMMI Zone Spinner from the Tunnel to White EMMI Area, using Speed Booster Conservation, and a choice between Normal Bombs, Cross Bombs and Spin Boost.
+- Fixed: Logic now accounts for the need to escape through the doors after pulling open the EMMI Zone Spinner with Grapple Beam.
+- Removed: Using Speed Booster to climb the EMMI Zone Spinner Room from the Door to White EMMI Arena (Power).
+
+##### Ghavoran
+
+- Added: In Super Missile Room: Intermediate Single-wall Wall Jump to reach Tunnel to Super Missile Room Access.
+
+### Metroid: Samus Returns
+
+- Added: Option to change the final boss to be Arachnus, Diggernaut, Metroid Queen, or Proteus Ridley (default).
+- Changed: The DNA counter on the HUD now counts down to 0 from the amount DNA that is required to access the final boss instead of counting up to 39.
+- Changed: The automatic item tracker now shows the collected DNA out of the required DNA.
+
+## [8.4.0] - 2024-09-04
+
+- Fixed: The "Last Activity" text on the Multiplayer Session window is not aligned properly.
+
+### AM2R
+
+- Changed: The preset settings have been reordered to be more sensible.
+- Changed: Flipping the game horizontally/vertically is not an unsupported option anymore.
+- Fixed: Damage Reduction now functions correctly when more than 1 copy of a suit or more than 2 progressive suits are shuffled in the pool.
+- Fixed: The seed hash on the ending screen will not clip anymore
+
+### Cave Story
+
+- Fixed: The explanation text in the objective tab no longer refers to a 100% objective that does not exist.
+
+### Metroid Dread
+
+- Added: Freesink can be enabled in a preset's Game Modifications -> Other tab. A more detailed description of this change can be found in the description. This option is **not** accounted for in logic.
+
+#### Logic Database
+
+##### Artaria
+
 - Changed: The door that is locked by both Super Missile and Charge Beam is now using lock overrides. This ensures that the requirements of these locks are both respected by logic when randomizing Doors and this door is unchanged.
+
+##### Cataris
+
+- Added: Pseudo Wave Beam (Intermediate) to break the Blob above Blue Teleportal with Diffusion Beam.
+- Added: Breaking the Blob above Blue Teleportal from the bottom of the lava, Knowledge (Beginner)
+- Fixed: The Power Bomb requirement to reach the Blue Teleportal from above was circumvented when breaking the Blob from the left side of the wall.
 
 ##### Ferenia
 
@@ -25,13 +147,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Underwater screen effect persisting after traversing backwards through Biotech Research Area 1
+- Fixed: [JP/PAL] Reverse Lower Mines setting impassible at Metroid Quarantine B
 - Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
+- Changed: Cosmetic improvements to Impact Crater's dead bosses 2nd pass layer
 
 ### Metroid: Samus Returns
 
+- Added: Changing the volume of the music and background ambience is now possible via cosmetic options.
+- Added: Option to have more Metroid DNA placed than required.
 - Changed: Area 6 - The Door to Chozo Seal West Intersection Terminal from Crumbling Stairwell is excluded from Door Lock Rando.
+- Changed: The Gullugg next to the DNA Chozo Seal in Area 6 - Crumbling Stairwell has been removed.
+- Fixed: The spawn point in Area 1 - Spider Ball chamber not working correctly.
 
-## [8.3.x] - 2024-08-??
+#### Area 3 Metroid Caverns
+
+- Fixed: The Grapple block between Letum Shrine and Gravitt Garden can now be removed from both sides.
+
+## [8.3.0] - 2024-08-02
 
 - Changed: Reduced some visual noise in the main window and customize preset window.
 - Changed: Don't show unnecessary lines on Door Lock and Teleporter rando customization tabs.

@@ -11,7 +11,7 @@ from randovania.layout.preset_describer import (
 )
 
 if TYPE_CHECKING:
-    from randovania.games.game import ProgressiveItemTuples
+    from randovania.game.gui import ProgressiveItemTuples
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 

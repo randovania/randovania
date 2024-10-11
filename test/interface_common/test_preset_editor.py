@@ -9,7 +9,7 @@ from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleK
 from randovania.interface_common.preset_editor import PresetEditor
 
 
-@pytest.fixture()
+@pytest.fixture
 def editor() -> PresetEditor:
     return PresetEditor(MagicMock(), MagicMock())
 

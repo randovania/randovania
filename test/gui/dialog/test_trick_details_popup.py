@@ -5,8 +5,8 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6.QtWidgets import QWidget
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog import trick_details_popup
 from randovania.layout.base.trick_level import LayoutTrickLevel
 

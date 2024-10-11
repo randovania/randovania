@@ -10,7 +10,7 @@ import pytest
 
 from randovania.bitpacking.construct_pack import construct_for_type
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 class A(Enum):

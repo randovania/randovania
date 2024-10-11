@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.mercury_remote_connector import MercuryConnector
 from randovania.games.dread.exporter.patch_data_factory import get_resources_for_details
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_connection.executor.dread_executor import DreadExecutor

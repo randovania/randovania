@@ -21,7 +21,7 @@ def test_pickle_trick_level(value: LayoutTrickLevel) -> None:
     assert pickle.loads(pickle.dumps(value)) == value
 
 
-@pytest.fixture()
+@pytest.fixture
 def multiworld_rdvgame(test_files_dir: TestFilesDir) -> dict:
     return test_files_dir.read_json("log_files", "multi-oldechoes.rdvgame")
 

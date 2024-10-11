@@ -9,14 +9,14 @@ from unittest.mock import MagicMock, call, patch
 import pytest
 
 import randovania.interface_common.options
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.interface_common import persisted_options, update_checker
 from randovania.interface_common.options import DecodeFailedException, InfoAlert, Options
 from randovania.lib import migration_lib
 
 
-@pytest.fixture()
+@pytest.fixture
 def option() -> Options:
     return Options(MagicMock())
 

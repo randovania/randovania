@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.layout import preset_describer
 from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration, BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode

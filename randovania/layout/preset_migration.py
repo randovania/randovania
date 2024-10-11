@@ -4,8 +4,8 @@ import copy
 import math
 import uuid
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
-from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
 
@@ -1187,6 +1187,29 @@ def _migrate_v87(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v88(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        config = preset["configuration"]
+        config["freesink"] = False
+
+    return preset
+
+
+def _migrate_v89(preset: dict) -> dict:
+    if preset["game"] == "samus_returns":
+        artifacts = preset["configuration"]["artifacts"]
+        artifacts["placed_artifacts"] = artifacts["required_artifacts"]
+
+    return preset
+
+
+def _migrate_v90(preset: dict) -> dict:
+    if preset["game"] == "samus_returns":
+        preset["configuration"]["final_boss"] = "Ridley"
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1275,6 +1298,9 @@ _MIGRATIONS = [
     _migrate_v85,  # am2r configurable DR
     _migrate_v86,
     _migrate_v87,
+    _migrate_v88,  # dread freesink
+    _migrate_v89,  # msr configurable required dna
+    _migrate_v90,  # msr configurable final boss
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

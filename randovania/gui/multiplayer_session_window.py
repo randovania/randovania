@@ -47,7 +47,7 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 if TYPE_CHECKING:
     import uuid
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
     from randovania.interface_common.options import Options

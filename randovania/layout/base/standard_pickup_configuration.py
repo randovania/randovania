@@ -12,9 +12,9 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
-    from randovania.games.game import RandovaniaGame
 
 T = TypeVar("T")
 

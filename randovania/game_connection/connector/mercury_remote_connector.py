@@ -20,10 +20,10 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.game import RandovaniaGame
 
 
 class MercuryConnector(RemoteConnector):
