@@ -17,6 +17,12 @@ def main() -> None:
 
     logging.debug("Starting Randovania...")
 
+    if randovania.VERSION == randovania.UNKNOWN_VERSION or randovania.GIT_HASH == randovania.UNKNOWN_GIT_HASH:
+        logging.warning(
+            "Couldn't determine the current version. If you're running from source, "
+            "do you have a git repository and tags present?"
+        )
+
     # Add our local dotnet to path if it exists, which it only does for portable ones.
     dotnet_path = randovania.get_data_path().joinpath("dotnet_runtime")
     if randovania.is_frozen() and dotnet_path.exists():

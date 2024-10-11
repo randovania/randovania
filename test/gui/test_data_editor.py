@@ -7,6 +7,7 @@ from unittest.mock import ANY, AsyncMock, MagicMock
 import pytest
 from PySide6 import QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader, pretty_print
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node import NodeContext, NodeLocation
@@ -17,7 +18,6 @@ from randovania.game_description.requirements.requirement_template import Requir
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.games import default_data
-from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow, _ui_patch_and_simplify
 
 if TYPE_CHECKING:

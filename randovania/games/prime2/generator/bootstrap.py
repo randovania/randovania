@@ -45,6 +45,12 @@ class EchoesBootstrap(MetroidBootstrap):
         resource_database: ResourceDatabase,
     ) -> ResourceGain:
         assert isinstance(configuration, EchoesConfiguration)
+
+        yield resource_database.get_event("Event2"), 1  # Hive Tunnel Web
+        yield resource_database.get_event("Event4"), 1  # Command Chamber Gate
+        yield resource_database.get_event("Event71"), 1  # Landing Site Webs
+        yield resource_database.get_event("Event78"), 1  # Hive Chamber A Gates
+
         if configuration.use_new_patcher:
             yield resource_database.get_event("Event73"), 1  # Dynamo Chamber Gates
             yield resource_database.get_event("Event75"), 1  # Trooper Security Station Gate

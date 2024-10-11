@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, MagicMock, call
 import pytest
 
 import randovania
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 async def test_on_message_from_bot(mocker):

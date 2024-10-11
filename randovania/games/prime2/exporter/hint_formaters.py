@@ -9,8 +9,8 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.hint import Hint
-    from randovania.games.game import RandovaniaGame
 
 
 class GuardianFormatter(LocationFormatter):

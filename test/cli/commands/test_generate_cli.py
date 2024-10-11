@@ -7,7 +7,7 @@ from unittest.mock import ANY, MagicMock, call
 import pytest
 
 import randovania.cli.commands.generate
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.generator import generator
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.versioned_preset import VersionedPreset

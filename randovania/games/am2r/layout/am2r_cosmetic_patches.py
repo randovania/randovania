@@ -4,7 +4,7 @@ import dataclasses
 from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackEnum
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import enum_lib
 

@@ -13,9 +13,9 @@ from randovania.lib import enum_lib
 if typing.TYPE_CHECKING:
     import uuid
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
-    from randovania.games.game import RandovaniaGame
 
 PickupEntryWithOwner = tuple[str, PickupEntry]
 

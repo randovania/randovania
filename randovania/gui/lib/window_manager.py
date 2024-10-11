@@ -5,7 +5,7 @@ import typing
 from PySide6 import QtWidgets
 
 if typing.TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.close_event_widget import CloseEventWidget
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     from randovania.gui.multiworld_client import MultiworldClient

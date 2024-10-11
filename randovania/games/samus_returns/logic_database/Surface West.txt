@@ -50,14 +50,26 @@ Extra - asset_id: collision_camera_000
 > Event - Proteus Ridley; Heals? False
   * Layers: default
   * Event Surface (West) - Proteus Ridley
-  > Top of Mountain
+  > Event - Credits (Proteus Ridley Final Boss)
       Trivial
+  > Dock to Surface East
+      Disabled Final Boss Proteus Ridley
 
 > Dock to Transport to Area 8; Heals? False
   * Layers: default
   * Open Passage to Transport to Area 8/Dock to Landing Site
   > Save Station
       Trivial
+
+> Event - Credits (Proteus Ridley Final Boss); Heals? False
+  * Layers: final-boss-ridley
+  * Event Credits
+  > Top of Mountain
+      Trivial
+
+> Dock to Surface East; Heals? False
+  * Layers: final-boss-not-ridley
+  * Open Passage to Landing Site/Dock from Surface West
 
 ----------------
 Transport to Area 8
@@ -197,7 +209,11 @@ Extra - asset_id: collision_camera_017
   > Teleporter
       Baby Metroid
   > Dock to Landing Site
-      Baby Metroid and All DNA
+      All of the following:
+          Baby Metroid
+          Any of the following:
+              Before Surface (West) - Proteus Ridley and Disabled Final Boss Proteus Ridley
+              Enabled Final Boss Proteus Ridley and All DNA
   > Event - Teleporter Unlocked
       Baby Metroid
   > Dock to Surface East

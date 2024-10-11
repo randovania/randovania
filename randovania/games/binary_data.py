@@ -19,9 +19,9 @@ from construct import (
     VarInt,
 )
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
-from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
 
 if TYPE_CHECKING:
@@ -35,7 +35,6 @@ _EXPECTED_FIELDS = [
     "resource_database",
     "layers",
     "starting_location",
-    "initial_states",
     "minimal_logic",
     "victory_condition",
     "dock_weakness_database",
@@ -332,7 +331,6 @@ ConstructGame = Struct(
             resource_database=ConstructResourceDatabase,
             layers=PrefixedArray(VarInt, String),
             starting_location=ConstructNodeIdentifier,
-            initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
             minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
             victory_condition=ConstructRequirement,
             dock_weakness_database=ConstructDockWeaknessDatabase,

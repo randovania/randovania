@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.resources.resource_database import NamedRequirementTemplate
 from randovania.games import default_data
-from randovania.games.game import RandovaniaGame
 
 
 @pytest.mark.parametrize("game_enum", RandovaniaGame)

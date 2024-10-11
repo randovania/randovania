@@ -3,12 +3,12 @@ from __future__ import annotations
 import typing
 
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
 from randovania.games.factorio.generator.item_cost import item_is_fluid
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
 if typing.TYPE_CHECKING:

@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 from pathlib import Path
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRGameVersion, MSRModPlatform
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
 

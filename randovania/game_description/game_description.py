@@ -19,14 +19,14 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.dock import DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
     from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
-    from randovania.games.game import RandovaniaGame
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:
@@ -75,7 +75,6 @@ class GameDescription:
     layers: tuple[str, ...]
     victory_condition: Requirement
     starting_location: NodeIdentifier
-    initial_states: dict[str, ResourceGainTuple]
     minimal_logic: MinimalLogicData | None
     _dangerous_resources: frozenset[ResourceInfo] | None = None
     region_list: RegionList
@@ -92,7 +91,6 @@ class GameDescription:
             region_list=copy.deepcopy(self.region_list, memodict),
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,
-            initial_states=copy.copy(self.initial_states),
             minimal_logic=self.minimal_logic,
         )
         new_game._dangerous_resources = self._dangerous_resources
@@ -106,7 +104,6 @@ class GameDescription:
         layers: tuple[str, ...],
         victory_condition: Requirement,
         starting_location: NodeIdentifier,
-        initial_states: dict[str, ResourceGainTuple],
         minimal_logic: MinimalLogicData | None,
         region_list: RegionList,
         used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None,
@@ -118,7 +115,6 @@ class GameDescription:
         self.layers = layers
         self.victory_condition = victory_condition
         self.starting_location = starting_location
-        self.initial_states = initial_states
         self.minimal_logic = minimal_logic
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
@@ -218,7 +214,6 @@ class GameDescription:
                 ),
                 victory_condition=self.victory_condition,
                 starting_location=self.starting_location,
-                initial_states=copy.copy(self.initial_states),
                 minimal_logic=self.minimal_logic,
             )
             result.mutable = True

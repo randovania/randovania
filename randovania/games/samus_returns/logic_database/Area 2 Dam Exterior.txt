@@ -85,11 +85,7 @@ Extra - asset_id: collision_camera_005
   * Missile Door to Arachnus Arena/Door from Dam Exterior
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Door from Maintenance Tunnel
-      Trivial
-  > Top of Wall
-      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-  > Start Point (Bottom)
+  > Next to Arachnus Arena
       Trivial
 
 > Door to Metroid Caverns Entrance (Bottom); Heals? False
@@ -178,12 +174,12 @@ Extra - asset_id: collision_camera_005
   * Layers: default
   > Elevator to Area 2 Dam Entryway
       Trivial
-  > Door to Arachnus Arena
-      Trivial
   > Door to Rock Icicle Corridor
       Trivial
   > Door to Exterior Alpha+ Arena
       Diagonal Bomb Jump (Advanced) and Lay Bomb
+  > Next to Arachnus Arena
+      Trivial
 
 > Start Point (Top); Heals? False; Spawn Point
   * Layers: default
@@ -191,10 +187,24 @@ Extra - asset_id: collision_camera_005
   > Door to Exterior Alpha+ Arena
       Trivial
 
-> Start Point (Bottom); Heals? False; Spawn Point
+> Next to Arachnus Arena; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Arachnus
   > Door to Arachnus Arena
+      Any of the following:
+          Disabled Final Boss Arachnus
+          Enabled Final Boss Arachnus and All DNA
+  > Door from Maintenance Tunnel
+      Trivial
+  > Top of Wall
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > Event - Credits (Arachnus Final Boss)
+      After Area 2 (Dam Exterior) - Arachnus
+
+> Event - Credits (Arachnus Final Boss); Heals? False
+  * Layers: final-boss-arachnus
+  * Event Credits
+  > Next to Arachnus Arena
       Trivial
 
 ----------------
@@ -203,7 +213,7 @@ Extra - total_boundings: {'x1': -3100.0, 'x2': -900.0, 'y1': 4500.0, 'y2': 5600.
 Extra - polygon: [[-3100.0, 5600.0], [-3100.0, 4500.0], [-850.0, 4500.0], [-850.0, 5600.0]]
 Extra - asset_id: collision_camera_006
 > Pickup (Spring Ball); Heals? False
-  * Layers: default
+  * Layers: final-boss-not-arachnus
   * Pickup 37; Category? Major
   * Extra - actor_name: LE_PowerUp_Springball
   * Extra - actor_type: powerup_springball
@@ -227,12 +237,14 @@ Extra - asset_id: collision_camera_006
 > Event - Arachnus; Heals? False
   * Layers: default
   * Event Area 2 (Dam Exterior) - Arachnus
-  > Pickup (Spring Ball)
+  > Room Center
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_007
+  > Pickup (Spring Ball)
+      After Area 2 (Dam Exterior) - Arachnus and Disabled Final Boss Arachnus
   > Door from Dam Exterior
       Trivial
   > Tunnel to Fan Funnel
@@ -261,7 +273,11 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Tunnel with Bomb Block to Maintenance Tunnel/Tunnel to Fan Funnel
   > Tunnel to Arachnus Arena
-      Lay Any Bomb
+      All of the following:
+          Lay Any Bomb
+          Any of the following:
+              Disabled Final Boss Arachnus
+              Enabled Final Boss Arachnus and All DNA
 
 ----------------
 Critter Playground

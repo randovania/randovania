@@ -3,6 +3,7 @@ import struct
 
 from caver.patcher import wrap_msg_text
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
     PickupEntryWithOwner,
     PlayerLocationEvent,
@@ -12,7 +13,6 @@ from randovania.game_connection.executor.cs_executor import CSExecutor, GameStat
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.cave_story.exporter.patch_data_factory import NOTHING_ITEM_SCRIPT
-from randovania.games.game import RandovaniaGame
 from randovania.lib.infinite_timer import InfiniteTimer
 
 INDICES_FLAGS_START = 7300

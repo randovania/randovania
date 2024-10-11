@@ -7,11 +7,11 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.am2r.exporter.game_exporter import AM2RGameExportParams
 from randovania.games.am2r.exporter.options import AM2RPerGameOptions
 from randovania.games.am2r.gui.dialog.game_export_dialog import AM2RGameExportDialog, _is_valid_input_dir
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 
 if TYPE_CHECKING:

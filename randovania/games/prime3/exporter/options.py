@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 from typing import Self
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions
 
 

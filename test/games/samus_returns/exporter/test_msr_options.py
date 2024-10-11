@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.exporter.game_exporter import MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 

@@ -101,6 +101,8 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "blank/issue-3717.rdvgame",
         # Factorio
         "factorio/starter_preset.rdvgame",
+        # Fusion
+        "fusion/starter_preset.rdvgame",
         # Dread
         "dread/starter_preset.rdvgame",  # starter preset
         "dread/crazy_settings.rdvgame",  # crazy settings
@@ -110,6 +112,9 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "dread/custom_patcher_data.rdvgame",  # custom patcher data
         "dread/all_settings.rdvgame",  # all settings enabled
         "dread/hide_all_with_nothing.rdvgame",  # Model+scan+name hidden with nothing data
+        # Planets (Zebeth)
+        "planets_zebeth/starter_preset.rdvgame",  # starter preset (vanilla keys)
+        "planets_zebeth/starter_preset_shuffle_keys.rdvgame",  # starter preset (shuffled keys)
         # Prime 1
         "prime1_crazy_seed.rdvgame",  # chaos features
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
@@ -119,6 +124,8 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
         "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         "samus_returns/door_lock_access_open.rdvgame",  # door lock + access open doors
+        "samus_returns/custom_required_dna.rdvgame",  # custom required dna 20/30
+        "samus_returns/custom_final_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]

@@ -132,7 +132,7 @@ Extra - room_id: [7]
           # Skip collecting the item. Break PB blocks first, then reload the room: https://www.youtube.com/watch?v=2WbnkPhd7tk
           Disabled Entrance Rando and Can Bounce in Ball and Can Use Power Bombs
           # Shinespark and spam jump at the ceiling: https://www.youtube.com/watch?v=QpbgjolExgE
-          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
+          Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
 
 > Door to Central Hub; Heals? False
   * Layers: default
@@ -219,7 +219,7 @@ Extra - room_id: [10]
   > Door to Crew Quarters Save Room
       Trivial
   > Door to Arachnus Arena
-      Can Kill Eye Door
+      Can Kill Gadora
 
 > Door to Crew Quarters Save Room; Heals? False
   * Layers: default
@@ -290,6 +290,9 @@ Extra - room_id: [13, 74, 85]
   * Extra - door_idx: (22, 175)
   > Door to Operations Deck Navigation Room
       After Main Deck Operations Deck Missile Shield
+  > Event - Missile Shield
+      # Kill the Shield from the reverse side
+      Missiles
 
 > Door to Operations Deck Navigation Room; Heals? False
   * Layers: default
@@ -321,7 +324,7 @@ Extra - room_id: [13, 74, 85]
       All of the following:
           All Infants Collected
           Any of the following:
-              Can Climb High Jump Wall
+              Have Any Jump Upgrade
               # Shinespark from adjacent room: https://www.youtube.com/watch?v=GX6K70StdeY
               Level 0 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
               # Single Wall Jump
@@ -369,7 +372,7 @@ Extra - room_id: [13, 74, 85]
           All of the following:
               # Dodging Requirements
               Screw Attack or Combat (Advanced)
-              Combat (Intermediate) or Can Freeze Enemies
+              Combat (Intermediate) or Can Freeze Enemies With Any Weapon
 
 > Event - Missile Shield; Heals? False
   * Layers: default
@@ -393,7 +396,10 @@ Extra - room_id: [14]
   * Open Passage to Eastern Hub/Other to Maintenance Corridor
   * Extra - door_idx: (35,)
   > Other to Arachnus Arena
-      Morph Ball
+      All of the following:
+          Morph Ball
+          # Climb up wall
+          Wall Jump (Beginner) or Have Any Jump Upgrade
 
 ----------------
 Habitation Deck Entrance
@@ -409,12 +415,14 @@ Extra - room_id: [15]
       Any of the following:
           Space Jump
           All of the following:
-              Can Freeze Enemies
+              Hi-Jump
               Any of the following:
-                  # Intended method
-                  Hi-Jump
-                  # HJ-Less: https://www.youtube.com/watch?v=AUkhZE_5CbE
-                  Movement (Intermediate) and Wall Jump (Intermediate)
+                  # Freeze Fune
+                  Can Freeze Enemies With Any Weapon
+                  # https://youtu.be/C56BsRG_eKY
+                  Jump Extends (Advanced) and Wall Jump (Advanced)
+          # NHJ: https://youtu.be/AUkhZE_5CbE
+          Movement (Intermediate) and Wall Jump (Intermediate) and Can Freeze Enemies With Any Weapon
 
 > Door to Habitation Deck (Lower); Heals? False
   * Layers: default
@@ -430,7 +438,7 @@ Extra - room_id: [15]
   > Door to Elevator to Central Hub
       Trivial
   > Door to Habitation Deck (Upper)
-      Space Jump or Can Freeze Enemies
+      Space Jump or Can Freeze Enemies With Any Weapon
 
 > Door to Habitation Deck (Upper); Heals? False
   * Layers: default
@@ -491,7 +499,7 @@ Extra - room_id: [17, 77]
               # Shinespark into the corner
               Shinespark Tricks (Intermediate)
               # Jump mid-speedboost: https://www.youtube.com/watch?v=u3xzqtz6Gro
-              Movement (Intermediate)
+              Movement (Beginner)
           # Get to the item while in the cage
           Space Jump or Wall Jump (Intermediate)
 
@@ -684,7 +692,10 @@ Extra - room_id: [22]
   * Open Passage to Habitation Deck/Other to Habitation Ventilation (Lower)
   * Extra - door_idx: (47,)
   > Other to Habitation Deck (Upper)
-      Space Jump or Can Freeze Enemies
+      Any of the following:
+          Space Jump or Can Freeze Enemies With Any Weapon
+          # TODO: check if you can do this with jump extneds
+          Wall Jump (Beginner) and Can Single Walljump
 
 ----------------
 Quarantine Access
@@ -698,7 +709,7 @@ Extra - room_id: [23]
       Any of the following:
           Morph Ball
           # Shinespark from the Navigation Station: https://www.youtube.com/watch?v=QcD2-t9UDrg
-          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Entrance Rando
+          Speed Booster and Shinespark Tricks (Intermediate) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
   > Door to Quarantine Bay
       Trivial
 
@@ -997,7 +1008,7 @@ Extra - room_id: [35]
       Any of the following:
           Can Kill Missile Geron
           # Shinespark from Operations Deck: https://www.youtube.com/watch?v=Y3k5lGKTX4Y
-          Level 0 Locks and Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Locks and Speed Booster and After Main Deck Operations Deck Missile Shield and Knowledge (Beginner) and Shinespark Tricks (Advanced) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Other to Operations Maintenance Storage; Heals? False
   * Layers: default
@@ -1069,12 +1080,14 @@ Extra - room_id: [38]
   * Extra - blockx: 53
   * Extra - blocky: 10
   > Beside Door
-      Trivial
+      Wall Jump (Beginner) or Enabled Generator Workaround
 
 > Door to Crew Quarters East; Heals? False
   * Layers: default
   * L0 Hatch to Crew Quarters East/Door to Arachnus Arena
   * Extra - door_idx: (88,)
+  > Arena
+      Enabled Generator Workaround
   > Beside Door
       Trivial
 
@@ -1087,15 +1100,20 @@ Extra - room_id: [38]
   > Beside Door
       All of the following:
           Morph Ball and Screw Attack
-          # Get up
-          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Any of the following:
+              # Get up
+              Wall Jump (Beginner) or Have Any Jump Upgrade
+              # With Screw Attack Only - https://youtu.be/ycp5oCd5-9I
+              Movement (Expert)
 
 > Other to The Attic; Heals? False
   * Layers: default
   * Open Passage to The Attic/Other to Arachnus Arena
   * Extra - door_idx: (200,)
   > Beside Door
-      Missiles
+      All of the following:
+          Missiles
+          Wall Jump (Beginner) or Enabled Generator Workaround
 
 > Event - Arachnus; Heals? False
   * Layers: default
@@ -1118,9 +1136,13 @@ Extra - room_id: [38]
       Morph Ball
   > Event - Arachnus
       All of the following:
-          # FIXME: add health requirements once these dont prevent missile start
           # Core-X Requirements
           Missiles
+          Any of the following:
+              # Health Requirements
+              Normal Damage ≥ 60
+              # Hitless: https://youtu.be/WCQdKVWgcXo?t=17
+              Combat (Beginner)
 
 > Beside Door; Heals? False
   * Layers: default
@@ -1264,7 +1286,7 @@ Extra - room_id: [47]
   > Other to Station Entrance
       All of the following:
           Morph Ball
-          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Wall Jump (Beginner) or Have Any Jump Upgrade
 
 > Other to Station Entrance; Heals? False
   * Layers: default
@@ -1278,7 +1300,7 @@ Extra - room_id: [47]
               Can Use Power Bombs
               # PBs only requires two because one doesn't destroy all of them.
               Power Bombs ≥ 2 or Can Use Bombs
-          Wall Jump (Beginner) or Can Climb High Jump Wall
+          Wall Jump (Beginner) or Have Any Jump Upgrade
 
 ----------------
 Silo Entry
@@ -1296,7 +1318,7 @@ Extra - room_id: [48, 83]
   * Open Passage to Docking Bay Shaft/Other to Silo Entry
   * Extra - door_idx: (110,)
   > Door to Docking Bay Shaft
-      Wall Jump (Beginner) or Can Climb High Jump Wall
+      Wall Jump (Beginner) or Have Any Jump Upgrade
   > Door to Central Reactor Core
       # The cocoon has been moved
       Morph Ball
@@ -1317,6 +1339,8 @@ Extra - room_id: [49, 59]
   * Layers: default
   * Open Hatch to Silo Entry/Door to Central Reactor Core
   * Extra - door_idx: (112, 134)
+  > Door to Scaffolding Access
+      Movement (Beginner)
   > Door to Silo Save Room
       Trivial
 
@@ -1324,6 +1348,8 @@ Extra - room_id: [49, 59]
   * Layers: default
   * Open Hatch to Scaffolding Access/Door to Central Reactor Core
   * Extra - door_idx: (113, 136)
+  > Door to Silo Entry
+      Movement (Beginner)
   > Door to Silo Save Room
       Trivial
 
@@ -1334,11 +1360,7 @@ Extra - room_id: [49, 59]
   > Other to Silo Tunnel
       All of the following:
           # Charge shinespark from Auxilary Power Station: https://www.youtube.com/watch?v=vVG5YNwzGjw
-          Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando
-          Any of the following:
-              # Open the gate. Without Charge, the shot must be precisely timed. With Charge, just let go of beam while in the transition.
-              Charge Beam or Movement (Advanced)
-              Wide Beam and Movement (Intermediate)
+          Charge Beam and Morph Ball and Speed Booster and Shinespark Tricks (Advanced) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
           # Get high enough to spark
           Hi-Jump or Wall Jump (Intermediate)
           Any of the following:
@@ -1346,6 +1368,8 @@ Extra - room_id: [49, 59]
               After Boss Nettori Defeated or Mid-Air Morph (Advanced) or Can Bounce in Ball
               # Jump, then shoot vine below so you can grab the ledge
               Movement (Intermediate)
+          # Without Wave Beam, you have only one attempt.
+          Wave Beam or Shinespark Tricks (Expert)
   > Door to Silo Save Room
       Trivial
 
@@ -1364,9 +1388,9 @@ Extra - room_id: [49, 59]
       Any of the following:
           Space Jump
           # Shinespark from Save Station: https://www.youtube.com/watch?v=x7CqxW4JyJ4
-          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando
+          Speed Booster and Shinespark Tricks (Beginner) and Disabled Entrance Rando and Disabled Open Hatch Lock Rando
   > Door to Scaffolding Access
-      Wall Jump (Beginner) or Can Climb High Jump Wall
+      Wall Jump (Beginner) or Have Any Jump Upgrade
   > Door to Silo Checkpoint
       Trivial
   > Other to Silo Tunnel
@@ -1394,9 +1418,11 @@ Extra - room_id: [50]
   * Extra - door_idx: (114,)
   > Beside Pickup
       Any of the following:
-          Can Kill Tough Beam-Resistant Enemy
+          Space Jump or Can Kill Tough Beam-Resistant Enemy
           # Dodge Pirates: https://www.youtube.com/watch?v=QAffTKp5seU
-          Space Jump or Combat (Intermediate)
+          Combat (Intermediate)
+          # Damage Boost
+          Damage Boosts (Beginner) and Normal Damage ≥ 158
 
 > Other to Silo Scaffolding; Heals? False
   * Layers: default
@@ -1414,9 +1440,11 @@ Extra - room_id: [50]
       Trivial
   > Door to Central Reactor Core
       Any of the following:
-          Can Kill Tough Beam-Resistant Enemy
+          Space Jump or Can Kill Tough Beam-Resistant Enemy
           # Dodge Pirates: https://www.youtube.com/watch?v=u8_gclW4-gQ
-          Space Jump and Combat (Intermediate)
+          Combat (Intermediate)
+          # Damage boost
+          Damage Boosts (Beginner) and Normal Damage ≥ 94
   > Other to Silo Scaffolding
       # Jump over the item
       Movement (Intermediate)
@@ -1469,7 +1497,7 @@ Extra - room_id: [51]
   > Other to Scaffolding Access
       All of the following:
           # Get up
-          Wall Jump (Advanced) or Can Climb High Jump Wall
+          Wall Jump (Advanced) or Have Any Jump Upgrade
           Any of the following:
               # Get past pirates
               Any of the following:
@@ -1485,7 +1513,7 @@ Extra - room_id: [51]
               Combat (Advanced)
   > Door to Yakuza Arena
       All of the following:
-          Morph Ball and Can Kill Eye Door
+          Morph Ball and Can Kill Gadora
           Any of the following:
               # Destroy shot block before eye door
               Wave Beam or Can Use Any Bombs
@@ -1611,7 +1639,7 @@ Extra - room_id: [57]
           All of the following:
               # Don't fall down the crumble block: https://www.youtube.com/watch?v=7T5fVhUYQ4g
               Movement (Beginner)
-              Wall Jump (Beginner) or Can Climb High Jump Wall
+              Wall Jump (Beginner) or Have Any Jump Upgrade
 
 > Door to Central Hub; Heals? False
   * Layers: default
@@ -1694,7 +1722,7 @@ Extra - room_id: [62]
           Screw Attack
           Any of the following:
               Space Jump
-              # SWJ
+              # SWJ - TODO: revisit with HJ only after SWJ is patched
               Wall Jump (Beginner) and Can Single Walljump
 
 ----------------
@@ -1826,7 +1854,8 @@ Extra - room_id: [69]
   > Door to Habitation Deck Entrance (Middle)
       Trivial
   > Other to Habitation Ventilation (Upper)
-      Impossible
+      # Animals causes issues in generation with DLR, removed as an event for now
+      Disabled Generator Workaround
   > Above Pickup
       Trivial
 
@@ -1842,13 +1871,14 @@ Extra - room_id: [69]
   * Open Passage to Habitation Ventilation/Other to Habitation Deck (Upper)
   * Extra - door_idx: (163,)
   > Door to Habitation Deck Entrance (Upper)
-      Trivial
+      # Animals causes issues in generation with DLR, removed as an event for now
+      Enabled Generator Workaround
   > Save the Animals
       Trivial
 
 > Save the Animals; Heals? False
   * Layers: default
-  * TODO: Causes issues with door lock rando.
+  * FIXME: Causes issues with door lock rando.
 
 Generation gets stuck after giving SJ and speed and trying to reach this event.
   > Other to Habitation Ventilation (Upper)
@@ -1856,6 +1886,8 @@ Generation gets stuck after giving SJ and speed and trying to reach this event.
 
 > Above Pickup; Heals? False
   * Layers: default
+  > Door to Habitation Deck Entrance (Middle)
+      Trivial
   > Other to Habitation Ventilation (Lower)
       Speed Booster
   > Beside Pickup

@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 
 from frozendict import frozendict
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
 from randovania.generator.pickup_pool import PoolResults
 from randovania.layout.exceptions import InvalidConfiguration
@@ -51,19 +51,17 @@ def artifact_pool(game: GameDescription, config: MSRArtifactConfig) -> PoolResul
     max_artifacts = 0
     if config.prefer_anywhere:
         max_artifacts = 39
-    elif config.prefer_metroids and config.prefer_stronger_metroids:
-        max_artifacts = 39
-    elif config.prefer_metroids:
-        max_artifacts = 25
-    elif config.prefer_stronger_metroids:
-        max_artifacts = 14
-    elif config.prefer_bosses and max_artifacts < 36:
+    if config.prefer_metroids:
+        max_artifacts += 25
+    if config.prefer_stronger_metroids:
+        max_artifacts += 14
+    if config.prefer_bosses and max_artifacts < 36:
         max_artifacts += 4
     if config.required_artifacts > max_artifacts:
         raise InvalidConfiguration("More Metroid DNA than allowed!")
 
     keys: list[PickupEntry] = [create_msr_artifact(i, game.resource_database) for i in range(39)]
-    keys_to_shuffle = keys[: config.required_artifacts]
-    starting_keys = keys[config.required_artifacts :]
+    keys_to_shuffle = keys[: config.placed_artifacts]
+    starting_keys = keys[config.placed_artifacts :]
 
     return PoolResults(keys_to_shuffle, {}, starting_keys)

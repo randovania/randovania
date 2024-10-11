@@ -7,9 +7,9 @@ from unittest.mock import ANY, MagicMock, call, patch
 import pytest
 
 from randovania.cli import database
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from pathlib import Path

@@ -2756,6 +2756,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -2777,6 +2786,31 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Alpha+ Arena North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Grapple Block": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5699.31,
+                        "y": -1339.2,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Area 3 (Metroid Caverns) - Letum Shrine Grapple Block",
+                    "connections": {
+                        "Below Grapple Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,

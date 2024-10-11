@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>485</width>
-         <height>702</height>
+         <width>506</width>
+         <height>675</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -68,39 +68,6 @@
           <property name="wordWrap">
            <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="gameplay_group">
-          <property name="title">
-           <string>Gameplay</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>These flip the gameplay horizontally, to achieve a mirrored game effect, or vertically, to achieve an upside down effect. They can be combined together.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="horizontally_flip_check">
-             <property name="text">
-              <string>Horizontally flip gameplay</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="vertically_flip_check">
-             <property name="text">
-              <string>Vertically flip gameplay</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
         <item>
@@ -134,7 +101,7 @@
               <number>6</number>
              </property>
              <item>
-              <widget class="QSlider" name="darkness_slider">
+              <widget class="ScrollProtectedSlider" name="darkness_slider">
                <property name="maximum">
                 <number>1000</number>
                </property>
@@ -298,7 +265,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="submerged_water_slider">
+              <widget class="ScrollProtectedSlider" name="submerged_water_slider">
                <property name="maximum">
                 <number>1000</number>
                </property>
@@ -359,7 +326,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="submerged_lava_slider">
+              <widget class="ScrollProtectedSlider" name="submerged_lava_slider">
                <property name="maximum">
                 <number>1000</number>
                </property>
@@ -407,6 +374,13 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>Qslider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

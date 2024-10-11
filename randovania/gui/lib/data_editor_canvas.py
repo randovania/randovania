@@ -16,8 +16,8 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.requirements.base import Requirement
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region import Region
-    from randovania.games.game import RandovaniaGame
     from randovania.resolver.state import State
 
 _color_for_node: dict[type[Node], int] = {
@@ -412,8 +412,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._update_scale_variables()
 
         painter = QtGui.QPainter(self)
+        painter.setPen(QtGui.Qt.transparent)
+        painter.setBrush(QtGui.QColor(45, 45, 45))
+        painter.drawRect(0, 0, 32767, 32767)
+
         painter.setRenderHint(QtGui.QPainter.Antialiasing)
         painter.setPen(QtGui.Qt.white)
+        painter.setBrush(QtGui.Qt.black)
         painter.setFont(QtGui.QFont("Arial", 10))
 
         # Center what we're drawing

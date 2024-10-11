@@ -62,6 +62,10 @@ def batch_distribute_command_logic(args: Namespace) -> None:
     from randovania.layout.permalink import Permalink
 
     finished_count = 0
+    impossible_count = 0
+    impossible_seeds = []
+    failure_count = 0
+    failure_seeds = []
 
     timeout: int = args.timeout
     validate: bool = args.validate
@@ -91,8 +95,16 @@ def batch_distribute_command_logic(args: Namespace) -> None:
             report_update(seed, f"Finished seed in {r.result()} seconds.")
         except ImpossibleForSolver as e:
             report_update(seed, f"Failed to generate seed: {e}")
+            nonlocal impossible_count
+            impossible_count += 1
+            nonlocal impossible_seeds
+            impossible_seeds.append(get_permalink_text(seed))
         except GenerationFailure as e:
             report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
+            nonlocal failure_count
+            failure_count += 1
+            nonlocal failure_seeds
+            failure_seeds.append(get_permalink_text(seed))
         except CancelledError:
             nonlocal finished_count
             finished_count += 1
@@ -117,8 +129,12 @@ def batch_distribute_command_logic(args: Namespace) -> None:
                     )
                     result.add_done_callback(functools.partial(with_result, seed_number))
                     all_futures.append(result)
+
     except KeyboardInterrupt:
         pass
+
+    print("Generation Failed: " + str(failure_count) + " " + str(failure_seeds))
+    print("Impossible for Solver: " + str(impossible_count) + " " + str(impossible_seeds))
 
 
 def add_batch_distribute_command(sub_parsers: _SubParsersAction) -> None:

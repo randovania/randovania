@@ -7,14 +7,15 @@ from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
+from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
@@ -413,6 +414,21 @@ class MSRPatchDataFactory(PatchDataFactory):
                 ", ".join(restricted_text[:-1]), " and " if len(restricted_text) > 1 else "", restricted_text[-1]
             )
 
+        final_boss_text = ""
+        ridley_text = "If you haven't defeated Proteus Ridley, you can either fight him or continue to your ship."
+        if self.configuration.final_boss == FinalBossConfiguration.ARACHNUS:
+            final_boss_text = " and then fight Arachnus"
+        elif self.configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            final_boss_text = " and then fight Diggernaut"
+        elif self.configuration.final_boss == FinalBossConfiguration.QUEEN:
+            final_boss_text = ", collect Ice Beam, defeat all 10 Larva Metroids, and then fight the Metroid Queen"
+        elif self.configuration.final_boss == FinalBossConfiguration.RIDLEY:
+            final_boss_text = ", find the Baby, and then fight Proteus Ridley at your ship"
+            ridley_text = (
+                "Once you have collected all the required DNA, "
+                "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
+            )
+
         # Intro Text
         text["GUI_CUTSCENE_OPENING_1"] = (
             "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
@@ -422,18 +438,13 @@ class MSRPatchDataFactory(PatchDataFactory):
             "Metroids now also drop items."
         )
         text["GUI_CUTSCENE_OPENING_3"] = (
-            "In this randomizer, you need to collect all Metroid DNA, find the Baby, "
-            "and then fight Proteus Ridley at your ship to leave the planet."
+            f"In this randomizer, you need to collect all Metroid DNA{final_boss_text} to leave the planet."
         )
         text["GUI_CUTSCENE_OPENING_4"] = (
             f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
             f"It can be found {location_text}."
         )
-        text["GUI_CUTSCENE_OPENING_5"] = (
-            "You may freely travel between Surface and Area 8.|"
-            "Once you have collected all the required DNA, "
-            "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
-        )
+        text["GUI_CUTSCENE_OPENING_5"] = f"You may freely travel between Surface and Area 8.|{ridley_text}"
         text["GUI_CUTSCENE_OPENING_6"] = (
             "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
             "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
@@ -514,6 +525,11 @@ class MSRPatchDataFactory(PatchDataFactory):
         cosmetic_patches["camera_names_dict"] = self._build_area_name_dict()
 
         cosmetic_patches["music_shuffle_dict"] = _construct_music_shuffle_dict(c.music, Random(seed_number))
+
+        cosmetic_patches["volume_adjustments"] = {
+            "music": c.music_volume / 100,
+            "environment_sfx": c.ambience_volume / 100,
+        }
 
         return cosmetic_patches
 
@@ -613,6 +629,12 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return result
 
+    def _objective(self, config: MSRConfiguration) -> dict:
+        return {
+            "required_dna": config.artifacts.required_artifacts,
+            "final_boss": config.final_boss.value,
+        }
+
     def create_memo_data(self) -> dict:
         """Used to generate pickup collection messages."""
         self.memo_data = MSRAcquiredMemo.with_expansion_text()
@@ -677,6 +699,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 "heat": self.configuration.constant_heat_damage,
                 "lava": self.configuration.constant_lava_damage,
             },
+            "objective": self._objective(self.configuration),
             "layout_uuid": str(self.players_config.get_own_uuid()),
             "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
         }

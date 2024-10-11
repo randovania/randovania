@@ -9,7 +9,7 @@ import aiofiles
 import construct  # type: ignore[import-untyped]
 import slugify
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import preset_migration
 from randovania.layout.preset import Preset
 from randovania.lib import json_lib

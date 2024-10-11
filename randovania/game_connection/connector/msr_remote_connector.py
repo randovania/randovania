@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.mercury_remote_connector import MercuryConnector
-from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.patch_data_factory import get_resources_for_details
 
 if TYPE_CHECKING:

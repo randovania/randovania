@@ -5,7 +5,7 @@ import uuid as uuid_module
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 if TYPE_CHECKING:
     from collections.abc import Iterator

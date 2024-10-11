@@ -584,35 +584,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door from Maintenance Tunnel": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Top of Wall": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Climb Rooms Vertically (No High Jump)"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "SWJ",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Start Point (Bottom)": {
+                        "Next to Arachnus Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1124,13 +1096,6 @@
                                 "items": []
                             }
                         },
-                        "Door to Arachnus Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Rock Icicle Corridor": {
                             "type": "and",
                             "data": {
@@ -1157,6 +1122,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Next to Arachnus Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1187,7 +1159,7 @@
                         }
                     }
                 },
-                "Start Point (Bottom)": {
+                "Next to Arachnus Arena": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1205,6 +1177,99 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Arachnus Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossArachnus",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "All DNA"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "FinalBossArachnus",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door from Maintenance Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Top of Wall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SWJ",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Credits (Arachnus Final Boss)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Arachnus",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Credits (Arachnus Final Boss)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 66.09,
+                        "y": 5926.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "final-boss-arachnus"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Credits",
+                    "connections": {
+                        "Next to Arachnus Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1249,13 +1314,13 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -2357.3573573573576,
-                        "y": 4758.708708708708,
+                        "x": -2357.36,
+                        "y": 4758.71,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
-                        "default"
+                        "final-boss-not-arachnus"
                     ],
                     "extra": {
                         "actor_name": "LE_PowerUp_Springball",
@@ -1365,7 +1430,7 @@
                     "valid_starting_location": false,
                     "event_name": "Arachnus",
                     "connections": {
-                        "Pickup (Spring Ball)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1391,6 +1456,32 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Spring Ball)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Arachnus",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossArachnus",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door from Dam Exterior": {
                             "type": "and",
                             "data": {
@@ -1604,8 +1695,54 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Arachnus Arena": {
-                            "type": "template",
-                            "data": "Lay Any Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "FinalBossArachnus",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "All DNA"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "FinalBossArachnus",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }

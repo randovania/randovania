@@ -32,7 +32,7 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
     from randovania.game_description.resources.resource_type import ResourceType
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -395,10 +395,6 @@ def write_region_list(region_list: RegionList) -> list:
 # Game Description
 
 
-def write_initial_states(initial_states: dict[str, ResourceGainTuple]) -> dict:
-    return {name: write_resource_gain(initial_state) for name, initial_state in initial_states.items()}
-
-
 def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
     if db is None:
         return None
@@ -427,7 +423,6 @@ def write_game_description(game: GameDescription) -> dict:
         "resource_database": write_resource_database(game.resource_database),
         "layers": frozen_lib.unwrap(game.layers),
         "starting_location": game.starting_location.as_json,
-        "initial_states": write_initial_states(game.initial_states),
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),

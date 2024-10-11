@@ -9,6 +9,7 @@ import sentry_sdk
 
 from randovania.lib import status_update_lib
 from randovania.lib.background_task import AbortBackgroundTask
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from randovania.exporter.patch_data_factory import PatcherDataMeta
@@ -16,7 +17,10 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True)
 class GameExportParams:
+    """Contains necessary parameters for the exporting process itself."""
+
     spoiler_output: Path | None
+    """The path where the spoiler file should be saved to."""
 
     def calculate_input_hash(self) -> dict[str, str | None]:
         """
@@ -26,17 +30,21 @@ class GameExportParams:
 
 
 class GameExporter:
+    """
+    Class that handles exporting a randomized game, so that a user can play it.
+    """
+
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
-        Checks if the exporter is busy right now
+        Returns whether a new export can be started.
         """
         raise NotImplementedError
 
     @property
     def export_can_be_aborted(self) -> bool:
         """
-        Checks if export_game can be aborted
+        Returns whether the current exporting process can be aborted.
         """
         raise NotImplementedError
 
@@ -46,8 +54,8 @@ class GameExporter:
         """
         raise NotImplementedError
 
-    def _before_export(self):
-        pass
+    def _before_export(self) -> None:
+        """Preparation that should be done before exporting."""
 
     def _do_export_game(
         self,
@@ -55,17 +63,20 @@ class GameExporter:
         export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
+        """The main exporting process. Should be overwritten by individual games."""
         raise NotImplementedError
 
-    def _after_export(self):
-        pass
+    def _after_export(self) -> None:
+        """Cleanup that should be done after an exporting attempt, regardless of success or failure."""
 
     def export_game(
         self,
         patch_data: dict,
         export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
-    ):
+    ) -> None:
+        """Starts exporting a game."""
+
         meta_data: PatcherDataMeta = patch_data.pop("_randovania_meta")
         with sentry_sdk.isolation_scope() as scope:
             scope.add_attachment(
@@ -81,13 +92,20 @@ class GameExporter:
                 self._before_export()
                 try:
                     self._do_export_game(patch_data, export_params, progress_update)
-
-                except AbortBackgroundTask:
+                    scope.set_tag("exception", None)
+                except (AbortBackgroundTask, UnableToExportError) as e:
+                    scope.set_tag("exception", type(e).__name__)
                     raise
 
                 except Exception as e:
+                    scope.set_tag("exception", type(e).__name__)
                     input_hash = export_params.calculate_input_hash()
-                    scope.capture_exception(e, contexts=input_hash)
+                    scope.capture_exception(
+                        e,
+                        contexts={
+                            "input_hash": input_hash,
+                        },
+                    )
                     # TODO: compare `input_hash` with known good values and if different,
                     # wrap into a "User Error" exception
                     raise

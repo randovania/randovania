@@ -8,12 +8,12 @@ from randovania import monitoring
 from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.games.am2r.exporter.hint_namer import AM2RHintNamer
 from randovania.games.am2r.exporter.joke_hints import JOKE_HINTS
 from randovania.games.am2r.layout.am2r_cosmetic_patches import AM2RCosmeticPatches, MusicMode
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib, random_lib
@@ -329,7 +329,11 @@ class AM2RPatchDataFactory(PatchDataFactory):
 
     def _create_door_locks(self) -> dict:
         return {
-            str(node.extra["instance_id"]): {
+            str(
+                node.extra["door_instance_id"]
+                if node.default_dock_weakness.name != "Open Transition"
+                else node.extra["instance_id"]
+            ): {
                 "lock": weakness.extra.get("door_name", weakness.long_name),
                 "is_dock": True if node.default_dock_weakness.extra.get("is_dock", None) is not None else False,
                 "facing_direction": node.extra["facing"] if node.extra.get("facing", None) is not None else "invalid",

@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING, NamedTuple
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.hint import Hint
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.games.game import RandovaniaGame
 
 
 class PickupLocation(NamedTuple):

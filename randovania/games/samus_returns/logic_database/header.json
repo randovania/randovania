@@ -1,5 +1,5 @@
 {
-    "schema_version": 26,
+    "schema_version": 27,
     "game": "samus_returns",
     "resource_database": {
         "items": {
@@ -242,6 +242,20 @@
                 "extra": {
                     "item_id": "ITEM_CURRENT_SPECIAL_ENERGY",
                     "item_capacity_id": "ITEM_MAX_SPECIAL_ENERGY"
+                }
+            },
+            "Required Metroid DNA": {
+                "long_name": "Required Metroid DNA",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": "ITEM_REQUIRED_DNA"
+                }
+            },
+            "Collected Metroid DNA": {
+                "long_name": "Collected Metroid DNA",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": "ITEM_COLLECTED_DNA"
                 }
             },
             "Metroid DNA 1": {
@@ -1043,6 +1057,10 @@
             "Area 4 (Central Caves) - Caves Intersection Terminal Grapple Block": {
                 "long_name": "Area 4 (Central Caves) - Caves Intersection Terminal Grapple Block",
                 "extra": {}
+            },
+            "Credits": {
+                "long_name": "Credits",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1280,6 +1298,22 @@
             },
             "EntranceRando": {
                 "long_name": "Entrance Rando",
+                "extra": {}
+            },
+            "FinalBossDiggernaut": {
+                "long_name": "Final Boss Diggernaut",
+                "extra": {}
+            },
+            "FinalBossArachnus": {
+                "long_name": "Final Boss Arachnus",
+                "extra": {}
+            },
+            "FinalBossQueen": {
+                "long_name": "Final Boss Metroid Queen",
+                "extra": {}
+            },
+            "FinalBossRidley": {
+                "long_name": "Final Boss Proteus Ridley",
                 "extra": {}
             }
         },
@@ -4836,6 +4870,107 @@
                         ]
                     }
                 }
+            },
+            "All Metroid Larva Defeated": {
+                "display_name": "All Metroid Larva Defeated",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 1",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 2",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 3",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 4",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 5",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 6",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 7",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 8",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 9",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Larva 10",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [
@@ -4908,14 +5043,21 @@
         "energy_tank_item_index": "ETank"
     },
     "layers": [
-        "default"
+        "default",
+        "final-boss-arachnus",
+        "final-boss-diggernaut",
+        "final-boss-queen",
+        "final-boss-ridley",
+        "final-boss-not-arachnus",
+        "final-boss-not-diggernaut",
+        "final-boss-not-queen",
+        "final-boss-not-ridley"
     ],
     "starting_location": {
         "region": "Surface East",
         "area": "Landing Site",
         "node": "Ship"
     },
-    "initial_states": {},
     "minimal_logic": {
         "items_to_exclude": [
             {
@@ -5115,7 +5257,23 @@
         ],
         "events_to_exclude": [
             {
+                "name": "Arachnus",
+                "reason": "Potential Final Boss"
+            },
+            {
+                "name": "Diggernaut",
+                "reason": "Potential Final Boss"
+            },
+            {
+                "name": "Queen Metroid",
+                "reason": "Potential Final Boss"
+            },
+            {
                 "name": "Proteus Ridley",
+                "reason": "Potential Final Boss"
+            },
+            {
+                "name": "Credits",
                 "reason": "Victory Condition"
             }
         ],
@@ -5125,7 +5283,7 @@
         "type": "resource",
         "data": {
             "type": "events",
-            "name": "Proteus Ridley",
+            "name": "Credits",
             "amount": 1,
             "negate": false
         }

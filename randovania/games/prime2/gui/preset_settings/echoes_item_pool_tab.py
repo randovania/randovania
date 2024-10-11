@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
 from randovania.gui.preset_settings.split_ammo_widget import SplitAmmoWidget
 

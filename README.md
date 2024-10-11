@@ -191,7 +191,7 @@ Integration written by [Thanatos](https://github.com/ThanatosGit).
 ## Setup
 
 Getting started:
-   1. Clone this repository. (downloading the zip is *not* supported and will not work)
+   1. Clone this repository. If you want to clone your fork, make sure that during the forking process you **uncheck** the `Copy main branch only` checkbox. Because the git history is needed, downloading the zip is *not* supported and will not work.
    2. Open a terminal in the repository root
    3. Run the following file:
       1. Windows: `tools/prepare_virtual_env.bat`

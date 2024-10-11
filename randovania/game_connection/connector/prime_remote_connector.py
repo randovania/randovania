@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 from open_prime_rando.dol_patching import all_prime_dol_patches
 from retro_data_structures.game_check import Game as RDSGame
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
     PickupEntryWithOwner,
     PlayerLocationEvent,
@@ -24,7 +25,6 @@ from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_collection import ResourceCollection
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
 
