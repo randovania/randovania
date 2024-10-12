@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### AM2R
 
+- Changed: Adjusted the spacing of the Hints and Goal entries to be more consistent with other entries.
+
 #### Logic Database
 
 - Fixed: The Hideout<->Bubble lair Depths pipes being on the wrong layer.
