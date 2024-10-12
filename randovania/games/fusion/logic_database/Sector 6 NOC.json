@@ -2807,7 +2807,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Avoid aggroing Blue X",
+                                                        "comment": "Avoid aggroing Blue X (right side)",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -2833,7 +2833,7 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "With Single Wall Jumps: https://youtu.be/xJ3ouhpX3ns",
+                                                                    "comment": "With Wall Jumps",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -2845,10 +2845,44 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "template",
-                                                                            "data": "Can Screw Single Walljump"
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "SWJ: https://youtu.be/xJ3ouhpX3ns",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "template",
+                                                                                                    "data": "Can Screw Single Walljump"
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
                                                                         }
                                                                     ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -2857,7 +2891,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Get past Blue X",
+                                                        "comment": "Get past Blue X (left side)",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -2971,12 +3005,55 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "SpeedBooster",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "GeneratorHack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Generator traps itself and doesn't know how to get out",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ChargeBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
