@@ -91,6 +91,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid: Samus Returns
 
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
+- Changed: The preset entry for Aeion and Energy are now combined into one.
+- Changed: Adjust spacing on the Elevator preset entry.
 
 ## [8.5.0] - 2024-10-01
 
