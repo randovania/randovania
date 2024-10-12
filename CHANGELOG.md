@@ -84,6 +84,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
 - Added: In Gully: Beginner Standables to climb the room.
 
+### Metroid Prime 2: Echoes
+
+- Added: Colorblind-friendly textures for main gyro.
+
 ### Metroid: Samus Returns
 
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
