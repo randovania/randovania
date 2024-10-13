@@ -188,9 +188,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
-        input_exheader=None,
         target_platform=MSRModPlatform.LUMA,
-        target_version=MSRGameVersion.NTSC,
         output_preference=json.dumps(
             {
                 "selected_tab": "sd",
@@ -213,11 +211,9 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
 
     assert result == MSRGameExportParams(
         spoiler_output=output_path.joinpath("spoiler.rdvgame"),
-        input_path=tmp_path.joinpath("input"),
-        input_exheader=None,
+        input_file=tmp_path.joinpath("input"),
         output_path=output_path,
         target_platform=MSRModPlatform.LUMA,
-        target_version=MSRGameVersion.NTSC,
         clean_output_path=False,
         post_export=None,
     )
@@ -246,11 +242,9 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
     # Assert
     assert result == MSRGameExportParams(
         spoiler_output=citra_path.joinpath("spoiler.rdvgame"),
-        input_path=tmp_path.joinpath("input"),
-        input_exheader=None,
+        input_file=tmp_path.joinpath("input"),
         output_path=citra_path,
         target_platform=MSRModPlatform.CITRA,
-        target_version=MSRGameVersion.NTSC,
         clean_output_path=False,
         post_export=None,
     )
@@ -264,9 +258,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
-        input_exheader=None,
         target_platform=MSRModPlatform.LUMA,
-        target_version=MSRGameVersion.PAL,
         output_preference=json.dumps(
             {
                 "selected_tab": "ftp",
@@ -290,11 +282,9 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
     # Assert
     assert result == MSRGameExportParams(
         spoiler_output=tmp_path.joinpath("internal", "msr", "contents", "spoiler.rdvgame"),
-        input_path=tmp_path.joinpath("input"),
-        input_exheader=None,
+        input_file=tmp_path.joinpath("input"),
         output_path=tmp_path.joinpath("internal", "msr", "contents"),
         target_platform=MSRModPlatform.LUMA,
-        target_version=MSRGameVersion.PAL,
         clean_output_path=True,
         post_export=FtpUploader(
             auth=("admin", "1234"),
@@ -312,7 +302,6 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
-        input_exheader=None,
         output_preference=json.dumps(
             {
                 "selected_tab": "custom",
@@ -332,8 +321,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     # Assert
     assert result == MSRGameExportParams(
         spoiler_output=tmp_path.joinpath("output", "spoiler.rdvgame"),
-        input_path=tmp_path.joinpath("input"),
-        input_exheader=None,
+        input_file=tmp_path.joinpath("input"),
         output_path=tmp_path.joinpath("output"),
         target_platform=MSRModPlatform.CITRA,
         target_version=MSRGameVersion.NTSC,
@@ -353,7 +341,6 @@ def test_export_button_without_remote(skip_qtbot, tmp_path, mocker):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_exheader=None,
     )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
@@ -381,7 +368,6 @@ def test_export_button_with_remote(skip_qtbot, tmp_path, mocker):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_exheader=None,
     )
     window = MSRGameExportDialog(options, {"enable_remote_lua": True}, "MyHash", True, [])
 
@@ -392,8 +378,5 @@ def test_export_button_with_remote(skip_qtbot, tmp_path, mocker):
     # export button is disabled because no valid input_exheader
     assert not window.accept_button.isEnabled()
 
-    window.input_exheader_edit.setText(str(exheader_path))
     assert window.accept_button.isEnabled()
-
-    window.input_exheader_edit.setText(str(exheader_wrong_file_path))
     assert not window.accept_button.isEnabled()
