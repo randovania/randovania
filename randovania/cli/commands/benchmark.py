@@ -108,18 +108,29 @@ class Report:
 
 
 def print_report(header: str, reports: dict[RandovaniaGame, Report]) -> None:
-    print("{:>30} |{:>6} |{:>9} |{:>9} |{:>9} |{:>9}".format(header, "Fixes", "Failures", "Mean", "Stdev", "Median"))
+    print(
+        "{:>30} |{:>6} |{:>9} |{:>9} |{:>9} |{:>9} |{:>9} |{:>9}".format(
+            header, "Fixes", "Failures", "Mean", "Stdev", "Median", "Minimum", "Maximum"
+        )
+    )
     for game, report in reports.items():
         mean = 0.0
         stdev = 0.0
         median = 0.0
+        min_val = 0.0
+        max_val = 0.0
         if report.times:
             mean = statistics.mean(report.times)
             stdev = statistics.stdev(report.times)
             median = statistics.median(report.times)
+            min_val = min(report.times)
+            max_val = max(report.times)
 
         name = game.long_name
-        print(f"{name:>30} |{report.fixes:> 6} |{report.failures:> 9} |{mean: 9.3f} |{stdev: 9.3f} |{median: 9.3f}")
+        print(
+            f"{name:>30} |{report.fixes:> 6} |{report.failures:> 9} |{mean: 9.3f} |{stdev: 9.3f} "
+            f"|{median: 9.3f} |{min_val: 9.3f} |{max_val: 9.3f}"
+        )
 
 
 def compare_reports(
