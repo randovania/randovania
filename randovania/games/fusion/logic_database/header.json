@@ -828,44 +828,17 @@
             "Can Use Any Bombs": {
                 "display_name": "Can Use Any Bombs",
                 "requirement": {
-                    "type": "and",
+                    "type": "or",
                     "data": {
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MorphBall",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Can Use Bombs"
                             },
                             {
-                                "type": "or",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "MorphBallBombData",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "PowerBombs",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
+                                "type": "template",
+                                "data": "Can Use Power Bombs"
                             }
                         ]
                     }
@@ -1373,51 +1346,71 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 5,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": {
                                                 "comment": null,
                                                 "items": [
                                                     {
-                                                        "type": "template",
-                                                        "data": "30 DMG Missiles"
-                                                    },
-                                                    {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 3,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "20 DMG Missiles"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missiles",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "template",
-                                                        "data": "45 DMG Missiles"
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 2,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "30 DMG Missiles"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missiles",
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "and",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "45 DMG Missiles"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missiles",
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -1621,6 +1614,15 @@
                                             "data": {
                                                 "type": "items",
                                                 "name": "IceMissileData",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "SuperMissileData",
                                                 "amount": 1,
                                                 "negate": false
                                             }
@@ -1950,8 +1952,25 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Power Bombs"
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Use Power Bombs"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "PowerBombs",
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         ]
                     }
