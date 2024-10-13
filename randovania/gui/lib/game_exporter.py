@@ -55,10 +55,12 @@ async def export_game(
 
     except UnableToExportError as e:
         logging.warning(e.reason)
+        progress_update_signal.emit(f"Unable to export game: {e.reason}", 0.0)
         await export_dialog.handle_unable_to_export(e)
 
     except Exception as e:
         logging.exception("Unable to export game")
+        progress_update_signal.emit("Fatal error, unable to export game", 0.0)
 
         box = error_message_box.create_box_for_exception(e)
         await async_dialog.execute_dialog(box)
