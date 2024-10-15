@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
 - Changed: The Area View of the Data Visualizer now always has a dark gray background to help with readability.
 - Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
+- Fixed: When an error during exporting occurs, the progress bar will now reset.
 
 ### Resolver
 
