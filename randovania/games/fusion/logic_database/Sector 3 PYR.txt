@@ -149,7 +149,7 @@ Extra - room_id: [3]
               Any of the following:
                   # TODO: vid
                   Wall Jump (Beginner) or Have Any Jump Upgrade
-                  Speed Booster and Shinespark Tricks (Beginner)
+                  Speed Booster and Shinespark Tricks (Intermediate)
           Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
   > Door to Entrance Lobby
       Speed Booster
@@ -211,9 +211,13 @@ Extra - room_id: [5]
       Trivial
   > Other to Namihe's Lair
       Any of the following:
-          # Get past wall enemy. For simplicity's sake, we assume the enemies are always there.
-          Charge Beam or Missiles ≥ 5 or Morph Ball or Screw Attack or Wave Beam or Normal Damage ≥ 80
-          # Shinespark from adjacent room: https://youtu.be/3sm2XhRsRRI
+          # Evade Fune
+          Morph Ball or Wave Beam
+          # Tank damage from Fune
+          Normal Damage ≥ 80
+          # Kill Fune
+          Charge Beam or Missiles ≥ 5 or Screw Attack
+          # Charge shinespark from Entrance Lobby and kill Fune: https://youtu.be/3sm2XhRsRRI
           Level 0 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Bob's Abode; Heals? False
@@ -321,7 +325,7 @@ Extra - room_id: [8]
   * Tunnel to Entrance Lobby/Other to Alcove
   * Extra - door_idx: (17,)
   > Below E-Tank
-      Can Break Single Bomb Blocks
+      Can Break Single Bomb Blocks and Can Kill Tough Beam-Resistant Enemy
 
 > Door to Deserted Runway; Heals? False
   * Layers: default
@@ -331,7 +335,7 @@ Extra - room_id: [8]
       Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Below E-Tank
       # Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs
-      Level 0 Locks and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+      Level 0 Locks and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Tough Beam-Resistant Enemy
   > Bottom Right
       Trivial
 
@@ -366,17 +370,19 @@ Extra - room_id: [8]
                   # Enable screw after wall jump: https://youtu.be/mP4l-moOtMc
                   Wall Jump (Intermediate) and Enabled Equipment Manipulation
   > Other to Entrance Lobby
-      Any of the following:
-          Can Use Power Bombs
-          Morph Ball and Screw Attack and Knowledge (Beginner)
-          All of the following:
-              Can Use Bombs
-              Any of the following:
-                  Can Use Springball
-                  # Mid-Air Morph: https://youtu.be/UBvgvEpVc-Q
-                  Mid-Air Morph (Intermediate)
+      All of the following:
+          Can Kill Tough Beam-Resistant Enemy
+          Any of the following:
+              Can Use Power Bombs
+              Morph Ball and Screw Attack and Knowledge (Beginner)
+              All of the following:
+                  Can Use Bombs
+                  Any of the following:
+                      Can Use Springball
+                      # Mid-Air Morph: https://youtu.be/UBvgvEpVc-Q
+                      Mid-Air Morph (Intermediate)
   > Bottom Right
-      Can Use Any Bombs
+      Can Kill Tough Beam-Resistant Enemy and Can Use Any Bombs
 
 > Bottom Right; Heals? False
   * Layers: default
@@ -396,7 +402,7 @@ Extra - room_id: [8]
           # Single Wall Jump: https://youtu.be/Ge8yZuaVguo&t=21
           Wall Jump (Beginner) and Can Single Walljump
   > Below E-Tank
-      Can Break Single Bomb Blocks
+      Can Break Single Bomb Blocks and Can Kill Tough Beam-Resistant Enemy
 
 ----------------
 Deserted Runway
@@ -562,6 +568,8 @@ Extra - room_id: [12]
               Can Kill Tough Beam-Resistant Enemy
               # Stand on the frozen Namihe - https://www.youtube.com/watch?v=43O9kAxPwmY
               Can Freeze Enemies With Any Weapon
+              # SWJ around Namihes
+              Hi-Jump and Wall Jump (Intermediate) and Can Single Walljump
 
 > Door to Sova Suite; Heals? False
   * Layers: default
@@ -615,7 +623,7 @@ Extra - room_id: [14]
                   Wall Jump (Beginner)
           All of the following:
               # Jump Extend SWJ Method
-              Jump Extends (Advanced) and Can Kill Tough Beam-Resistant Enemy
+              Jump Extends (Advanced) and Can Kill Tough Beam-Resistant Enemy and Can Single Walljump
               Any of the following:
                   Wall Jump (Advanced)
                   Hi-Jump and Wall Jump (Intermediate)
@@ -801,7 +809,24 @@ Extra - room_id: [19]
               Space Jump or Can Freeze Enemies With Any Weapon
               # Frame perfect crumble jumps: https://youtu.be/AzL1VbN6qxk
               Movement (Hypermode)
+              All of the following:
+                  # Change spark in revious room and diagonally Shinespark from first crumble platform
+                  Speed Booster and Shinespark Tricks (Advanced)
+                  Any of the following:
+                      All of the following:
+                          # From Lava: https://youtu.be/7x2j8QRAnCw
+                          Gravity Suit
+                          Any of the following:
+                              # Damage Reqs
+                              Varia Suit
+                              Heat Damage ≥ 80 and Lava Damage ≥ 80
+                      All of the following:
+                          # From Red Tower: https://youtu.be/tyMisiNDQuA
+                          Level 0 Locks and Level 2 Locks and Wave Beam and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
+                          # Kill Owtch in previous room
+                          Charge Beam or Plasma Beam or Wide Beam
           Any of the following:
+              # Heat DMG Reqs
               Varia Suit
               Damage Runs (Intermediate) and Heat Damage ≥ 80
 
@@ -1178,6 +1203,7 @@ Extra - room_id: [30]
               Have Any Jump Upgrade
               # Same height as grabbing item: https://youtu.be/T8CZbxC6r6Y
               Jump Bombjump (Expert) and Can Use Bombs
+              Wall Jump (Beginner) and Can Single Walljump
 
 > Door to Red Tower; Heals? False
   * Layers: default
@@ -1190,6 +1216,8 @@ Extra - room_id: [30]
               Can Freeze Enemies With Any Weapon or Have Any Jump Upgrade
               # Kill Namihe then JBJ to ledge: https://youtu.be/T8CZbxC6r6Y
               Jump Bombjump (Expert) and Can Kill Tough Beam-Resistant Enemy and Can Use Bombs
+              # Grab ledge with SWJ
+              Wall Jump (Intermediate) and Can Single Walljump
 
 > Other to Bob's Abode; Heals? False
   * Layers: default
@@ -1323,10 +1351,10 @@ Extra - room_id: [34]
           Any of the following:
               # Need beams to kill the Owtches
               Charge Beam
+              Plasma Beam and Wide Beam
               All of the following:
-                  Combat (Beginner)
-                  Plasma Beam or Wide Beam
-              Wave Beam and Combat (Intermediate)
+                  Combat (Intermediate)
+                  Plasma Beam or Wave Beam or Wide Beam
 
 > Door to Sova Processing (Upper); Heals? False
   * Layers: default
