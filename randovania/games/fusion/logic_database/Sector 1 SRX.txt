@@ -365,8 +365,6 @@ Extra - room_id: [10]
   * Event Sector 1 Charge Core Escape Missile Block Destroyed
   > Door to Atmospheric Stabilizer Central
       Trivial
-  > Other to Crab Rave
-      Morph Ball
 
 ----------------
 Entrance Recharge Room
@@ -800,7 +798,9 @@ Extra - room_id: [21]
   > Left Ladder
       Any of the following:
           Space Jump or Wall Jump (Intermediate)
-          Hi-Jump and Wall Jump (Beginner)
+          All of the following:
+              Wall Jump (Beginner)
+              Hi-Jump or Can Single Walljump
 
 > Door to Tourian Save Room East; Heals? False
   * Layers: default
@@ -829,6 +829,9 @@ Extra - room_id: [21]
               Diffusion Missile Data and Missiles
   > Door to Ripper Maze Access
       Trivial
+
+> Event- Break Missile Blocks; Heals? False
+  * Layers: default
 
 ----------------
 Gold Pirate Crossing
@@ -1296,6 +1299,8 @@ Extra - room_id: [34]
   * Extra - door_idx: (108,)
   > Door to Checkpoint Intersection
       After Sector 1 Save Room East Shot Block Destroyed
+  > Event - Shot Block
+      Can Use Any Bombs
 
 > Save Station; Heals? False; Spawn Point
   * Layers: default
@@ -1309,10 +1314,6 @@ Extra - room_id: [34]
   * Event Sector 1 Save Room East Shot Block Destroyed
   > Door to Checkpoint Intersection
       Trivial
-  > Other to Wall Jump Tutorial
-      All of the following:
-          Morph Ball
-          Mid-Air Morph (Beginner) or Can Bounce in Ball
 
 ----------------
 Zebesian Zag
@@ -1358,12 +1359,13 @@ Extra - room_id: [36]
   * Extra - door_idx: (7,)
   > Door to Tourian Shaft East
       All of the following:
-          Morph Ball and Screw Attack and Can Bounce in Ball
+          Morph Ball and Screw Attack
           Any of the following:
               # Get past Rippers - TODO: health for damage runs
               Space Jump or Damage Runs (Intermediate)
               # Navigate room with an ice weapon https://youtu.be/3gxkQTbymVQ
               Stand On Frozen Enemies (Advanced) and Can Freeze Enemies With Any Weapon
+          Mid-Air Morph (Beginner) or Can Bounce in Ball
 
 > Door to Tourian Shaft East; Heals? False
   * Layers: default
