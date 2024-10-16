@@ -14,6 +14,7 @@ from randovania.game_description.db.dock import DockLock, DockLockType, DockRand
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
@@ -151,16 +152,25 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
 
 class DockRandoLogic(Logic):
     dock: DockNode
+    target: DockNode
 
-    def __init__(self, game: GameDescription, configuration: BaseConfiguration, dock: DockNode):
+    def __init__(self, game: GameDescription, configuration: BaseConfiguration, dock: DockNode, target: DockNode):
         super().__init__(game, configuration)
         self.dock = dock
+        self.target = target
 
     @classmethod
-    def from_logic(cls, logic: Logic, dock: DockNode) -> Self:
-        return cls(logic.game, logic.configuration, dock)
+    def from_logic(cls, logic: Logic, dock: DockNode, target: DockNode) -> Self:
+        return cls(logic.game, logic.configuration, dock, target)
 
     def victory_condition(self, state: State) -> Requirement:
+        if self.configuration.two_sided_door_lock_search:
+            return RequirementOr(
+                [
+                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context())),
+                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.target, state.node_context())),
+                ]
+            )
         return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context()))
 
     @staticmethod
@@ -233,7 +243,7 @@ async def _run_dock_resolver(
 
     state = setup[0].copy()
     state.patches = state.patches.assign_dock_weakness(locks)
-    logic = DockRandoLogic.from_logic(setup[1], dock)
+    logic = DockRandoLogic.from_logic(setup[1], dock, target)
 
     debug.debug_print(f"{dock.identifier}")
     try:
@@ -269,6 +279,8 @@ def _determine_valid_weaknesses(
 
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
+        if state.node == target:
+            target, dock = dock, target
         ctx = state.node_context()
 
         exclusions: set[DockWeakness] = set()
