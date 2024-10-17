@@ -168,6 +168,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: [Experimental] Item Position Rando fixes: Scan visibility through walls and Artifact Temple/Burn Dome positions
 - Changed: Cosmetic improvements to Impact Crater's dead bosses 2nd pass layer
 
+### Metroid Prime 2: Echoes
+
+- Removed: The "Fewest Changes" preset was removed.
+
 ### Metroid: Samus Returns
 
 - Added: Changing the volume of the music and background ambience is now possible via cosmetic options.
