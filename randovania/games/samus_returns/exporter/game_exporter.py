@@ -16,18 +16,11 @@ class MSRModPlatform(Enum):
     LUMA = "luma"
 
 
-class MSRGameVersion(Enum):
-    NTSC = "ntsc"
-    PAL = "pal"
-
-
 @dataclasses.dataclass(frozen=True)
 class MSRGameExportParams(GameExportParams):
-    input_path: Path
-    input_exheader: Path | None
+    input_file: Path
     output_path: Path
     target_platform: MSRModPlatform
-    target_version: MSRGameVersion
     clean_output_path: bool
     post_export: Callable[[status_update_lib.ProgressUpdateCallable], None] | None
 
@@ -72,7 +65,6 @@ class MSRGameExporter(GameExporter):
         export_params.output_path.mkdir(parents=True, exist_ok=True)
 
         monitoring.set_tag("msr_target_platform", export_params.target_platform.value)
-        monitoring.set_tag("msr_target_version", export_params.target_version.value)
 
         from open_samus_returns_rando.version import version as open_samus_returns_rando_version
 
@@ -81,7 +73,6 @@ class MSRGameExporter(GameExporter):
             "<version>",
             f"OSRR v{open_samus_returns_rando_version}",
         )
-        patch_data["region"] = export_params.target_version.value
 
         json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
@@ -100,8 +91,7 @@ class MSRGameExporter(GameExporter):
             import open_samus_returns_rando
 
             open_samus_returns_rando.patch_with_status_update(
-                export_params.input_path,
-                export_params.input_exheader if patch_data.get("enable_remote_lua", False) else None,
+                export_params.input_file,
                 export_params.output_path,
                 patch_data,
                 lambda progress, msg: patcher_update(msg, progress),
