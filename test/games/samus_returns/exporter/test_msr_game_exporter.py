@@ -48,7 +48,6 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Assert
     mock_patch.assert_called_with(
         tmp_path.joinpath("input_path"),
-        None,
         tmp_path.joinpath("output", "path"),
         ANY,
         ANY,

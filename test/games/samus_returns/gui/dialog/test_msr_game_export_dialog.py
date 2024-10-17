@@ -7,7 +7,7 @@ import pytest
 from PySide6 import QtCore
 
 from randovania.game.game_enum import RandovaniaGame
-from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
+from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 from randovania.games.samus_returns.gui.dialog.game_export_dialog import MSRGameExportDialog, serialize_path
 from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmeticPatches
@@ -105,15 +105,6 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     tmp_path.joinpath("existing-folder").mkdir()
 
-    for p in [
-        ("system", "files.toc"),
-        ("packs", "system", "system_discardables.pkg"),
-        ("packs", "maps", "s000_surface", "s000_surface.pkg"),
-        ("packs", "maps", "s010_area1", "s010_area1.pkg"),
-    ]:
-        tmp_path.joinpath("existing-folder", *p).parent.mkdir(parents=True, exist_ok=True)
-        tmp_path.joinpath("existing-folder", *p).touch()
-
     mock_prompt = mocker.patch(
         "randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file",
         autospec=True,
@@ -121,15 +112,15 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
             None,
             tmp_path.joinpath("missing-folder"),
             tmp_path.joinpath("existing.iso"),
+            tmp_path.joinpath("missing-file.3ds"),
             tmp_path.joinpath("existing-folder"),
-            tmp_path.joinpath("missing2-folder"),
         ],
     )
 
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_directory=None,
+        input_file=None,
     )
 
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
@@ -152,23 +143,23 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     assert window.input_file_edit.text() == str(tmp_path.joinpath("existing.iso"))
     assert window.input_file_edit.has_error
 
-    # A valid path!
+    # Another invalid path
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
+    assert window.input_file_edit.text() == str(tmp_path.joinpath("missing-file.3ds"))
+    assert window.input_file_edit.has_error
+
+    # A valid file
+    window.rom_validation = MagicMock()
+    window.rom_validation.side_effect = [False]
     skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
     assert window.input_file_edit.text() == str(tmp_path.joinpath("existing-folder"))
     assert not window.input_file_edit.has_error
 
-    # Another invalid path
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.MouseButton.LeftButton)
-    assert window.input_file_edit.text() == str(tmp_path.joinpath("missing2-folder"))
-    assert window.input_file_edit.has_error
-
     mock_prompt.assert_has_calls(
         [
-            call(window, [""], existing_file=None),
-            call(window, [""], existing_file=None),
-            call(window, [""], existing_file=None),
-            call(window, [""], existing_file=None),
-            call(window, [""], existing_file=tmp_path.joinpath("existing-folder")),
+            call(window, ["3ds", "cia", "cxi", "app"], existing_file=None),
+            call(window, ["3ds", "cia", "cxi", "app"], existing_file=tmp_path),
+            call(window, ["3ds", "cia", "cxi", "app"], existing_file=tmp_path.joinpath("existing.iso")),
         ]
     )
 
@@ -187,7 +178,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input"),
         target_platform=MSRModPlatform.LUMA,
         output_preference=json.dumps(
             {
@@ -202,6 +193,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
         ),
     )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window.title_id = "00040000001BB200"
 
     # Run
     result = window.get_game_export_params()
@@ -230,7 +222,7 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input"),
         target_platform=MSRModPlatform.CITRA,
         output_preference=json.dumps({"selected_tab": "citra", "tab_options": {}}),
     )
@@ -257,7 +249,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
 
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input"),
         target_platform=MSRModPlatform.LUMA,
         output_preference=json.dumps(
             {
@@ -275,6 +267,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
         ),
     )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
+    window.title_id = "00040000001BFB00"
 
     # Run
     result = window.get_game_export_params()
@@ -301,7 +294,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input"),
         output_preference=json.dumps(
             {
                 "selected_tab": "custom",
@@ -324,7 +317,6 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
         input_file=tmp_path.joinpath("input"),
         output_path=tmp_path.joinpath("output"),
         target_platform=MSRModPlatform.CITRA,
-        target_version=MSRGameVersion.NTSC,
         clean_output_path=False,
         post_export=None,
     )
@@ -350,33 +342,3 @@ def test_export_button_without_remote(skip_qtbot, tmp_path, mocker):
 
     # export button is enabled because no "enable_remote_lua"
     assert window.accept_button.isEnabled()
-
-
-def test_export_button_with_remote(skip_qtbot, tmp_path, mocker):
-    # Setup
-    mocker.patch("platform.system", return_value="Windows")
-    citra_path = tmp_path.joinpath("citra_mod")
-    mocker.patch(
-        "randovania.games.samus_returns.gui.dialog.game_export_dialog.get_path_to_citra", return_value=citra_path
-    )
-
-    exheader_path = tmp_path.joinpath("exheader.bin")
-    exheader_path.write_bytes(b"MATADORA")
-    exheader_wrong_file_path = tmp_path.joinpath("wrong_exheader.bin")
-    exheader_wrong_file_path.write_bytes(b"FOO")
-
-    options = MagicMock()
-    options.options_for_game.return_value = MSRPerGameOptions(
-        cosmetic_patches=MSRCosmeticPatches.default(),
-    )
-    window = MSRGameExportDialog(options, {"enable_remote_lua": True}, "MyHash", True, [])
-
-    # force that input_file_edit is valid to only test input_exheader behaviour
-    window.input_file_edit.has_error = False
-    window.update_accept_validation()
-
-    # export button is disabled because no valid input_exheader
-    assert not window.accept_button.isEnabled()
-
-    assert window.accept_button.isEnabled()
-    assert not window.accept_button.isEnabled()

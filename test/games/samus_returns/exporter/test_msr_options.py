@@ -8,7 +8,7 @@ from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 def test_round_trip(tmp_path):
     reference = MSRPerGameOptions(
         cosmetic_patches=RandovaniaGame.METROID_SAMUS_RETURNS.data.layout.cosmetic_patches.default(),
-        input_directory=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input"),
         target_platform=MSRModPlatform.LUMA,
         output_preference="{}",
     )

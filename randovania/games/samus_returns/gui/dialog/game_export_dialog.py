@@ -1,7 +1,3 @@
-# TODO: Add new guides, remove old ones
-# TODO: Clean UI
-# TODO: Fix, change and add tests
-
 from __future__ import annotations
 
 import json
