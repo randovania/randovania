@@ -17,7 +17,7 @@ def _options():
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.am2r import gui
-    from randovania.games.am2r.pickup_database import progressive_items
+    from randovania.games.am2r.layout import progressive_items
 
     return randovania.game.gui.GameGui(
         game_tab=gui.AM2RGameTabWidget,

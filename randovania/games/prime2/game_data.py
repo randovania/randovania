@@ -22,7 +22,7 @@ def _gui() -> randovania.game.gui.GameGui:
         PrimeTrilogyTeleporterDetailsTab,
     )
     from randovania.games.prime2 import gui
-    from randovania.games.prime2.pickup_database import progressive_items
+    from randovania.games.prime2.layout import progressive_items
 
     return randovania.game.gui.GameGui(
         tab_provider=gui.prime2_preset_tabs,
