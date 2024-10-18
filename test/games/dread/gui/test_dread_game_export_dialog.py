@@ -113,6 +113,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     tmp_path.joinpath("existing-folder").mkdir()
 
     for p in [
+        ("config.ini"),
         ("system", "files.toc"),
         ("packs", "system", "system.pkg"),
         ("packs", "maps", "s010_cave", "s010_cave.pkg"),
