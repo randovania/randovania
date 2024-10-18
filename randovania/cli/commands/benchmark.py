@@ -155,8 +155,10 @@ def run_logic(args: Namespace) -> None:
     if args.game is not None:
         games = [RandovaniaGame(args.game)]
 
+    count = args.seed_count
+
     for game in games:
-        for i in range(100):
+        for i in range(count):
             permalink = Permalink.from_parameters(
                 GeneratorParameters(
                     seed_number=base_seed + i,
@@ -165,6 +167,8 @@ def run_logic(args: Namespace) -> None:
                     presets=[preset_manager.default_preset_for_game(game).get_preset()],
                 )
             )
+            if i % 1000 == 0 and i > 0:
+                print(f"Generated Permalink {i}...")
             link_str_for_param.append(permalink.as_base64_str)
             reference_params.append(permalink.parameters)
 
@@ -260,6 +264,9 @@ def add_commands(sub_parsers: typing.Any) -> None:
     )
     create_parser.add_argument("--no-data", action="store_true", help="Do not include any data in the report.")
     create_parser.add_argument("--output-file", type=Path, help="Saves the results to a file, to compare later on.")
+    create_parser.add_argument(
+        "--seed-count", type=int, default=100, help="How many seeds should be genned for the benchmark."
+    )
     create_parser.set_defaults(func=run_logic)
 
     repeat_parser: ArgumentParser = sub_parsers.add_parser("repeat", help="Repeats a benchmark session")
