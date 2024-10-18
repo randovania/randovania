@@ -33,12 +33,18 @@ If a feature changes multiple times in development, the existing entry should be
 - Code refactoring
 - Dependency changes (except for patcher dependencies, since these can change the results!)
 
-## How to write a good Changelog Entry
+### How to write a good Changelog Entry
 
 - Use the full name of areas
 - Mention all new tricks/difficulty pair and in which areas.
 - It should be discernable which areas are affected when reading the Changelog alone.
 It is acceptable if users need to open the Data Visualizer to understand the exact details of what changed in those areas, however.
+
+## Best practices for static typing
+- avoid using `isinstance` to resolve typing errors whenever possible. exception to this is for game-specific subclasses in function arguments
+- start requiring use of `TypedDict` when doing substantial work with `extra` dicts in the database
+- avoid heavily nested collections. instead use type aliases, dataclasses, namedtuples, typeddicts, etc.
+- encourage using semantic type aliases instead of primitive types where appropriate (e.g. a semantic `JsonObject` type alias instead of just `dict`)
 
 ## Need some help?
 
