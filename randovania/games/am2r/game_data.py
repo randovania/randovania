@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import randovania.game.data
 import randovania.game.development_state
 import randovania.game.generator
@@ -8,8 +10,13 @@ import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.am2r import layout
 
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.games.am2r.exporter.options import AM2RPerGameOptions
 
     return AM2RPerGameOptions
@@ -43,13 +50,13 @@ def _generator() -> randovania.game.generator.GameGenerator:
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory
 
     return AM2RPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.am2r.exporter.game_exporter import AM2RGameExporter
 
     return AM2RGameExporter()

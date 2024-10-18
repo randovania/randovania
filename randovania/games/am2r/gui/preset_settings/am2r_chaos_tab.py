@@ -33,7 +33,7 @@ class PresetAM2RChaos(PresetTab, Ui_PresetAM2RChaos):
             editor.set_configuration_field("darkness_min", self.darkness_min_spin.value())
             editor.set_configuration_field("darkness_max", self.darkness_max_spin.value())
 
-    def _on_slider_changed(self):
+    def _on_slider_changed(self) -> None:
         self._change_sliders()
         self._update_editor()
 

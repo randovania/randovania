@@ -50,9 +50,11 @@ class AM2RGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: AM2RGameExportParams,
+        export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
+        assert isinstance(export_params, AM2RGameExportParams)
+
         # Check if dotnet is available
         dotnet_ran_fine = False
         try:

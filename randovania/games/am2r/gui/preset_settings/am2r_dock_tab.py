@@ -70,14 +70,14 @@ class PresetAM2RDoors(PresetDockRando):
         for f in _CHECKBOX_FIELDS:
             self._add_checkbox_persist_option(getattr(self, f"{f}_check"), f)
 
-    def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
-        def persist(value: bool):
+    def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
+        def persist(value: bool) -> None:
             with self._editor as editor:
                 editor.set_configuration_field(attribute_name, value)
 
         signal_handling.on_checked(check, persist)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         super().on_preset_changed(preset)
         config = preset.configuration
         assert isinstance(config, AM2RConfiguration)

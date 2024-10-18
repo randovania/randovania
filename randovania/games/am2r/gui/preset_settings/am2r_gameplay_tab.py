@@ -47,7 +47,7 @@ class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
     def header_name(cls) -> str | None:
         return None
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration
         assert isinstance(config, AM2RConfiguration)
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
@@ -56,23 +56,23 @@ class PresetAM2RGameplay(PresetTab, Ui_PresetAM2RGameplay):
         for f in self._CHECKBOX_FIELDS:
             typing.cast(QtWidgets.QCheckBox, getattr(self, f"{f}_check")).setChecked(getattr(config, f))
 
-    def _persist_tank_capacity(self):
+    def _persist_tank_capacity(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field("energy_per_tank", int(self.energy_tank_capacity_spin_box.value()))
 
-    def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
-        def persist(value: bool):
+    def _add_checkbox_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
+        def persist(value: bool) -> None:
             with self._editor as editor:
                 editor.set_configuration_field(attribute_name, value)
 
         signal_handling.on_checked(check, persist)
 
-    def _persist_first_suit_dr(self):
+    def _persist_first_suit_dr(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field("first_suit_dr", int(self.first_suit_spin_box.value()))
         self.second_suit_spin_box.setMinimum(self.first_suit_spin_box.value())
 
-    def _persist_second_suit_dr(self):
+    def _persist_second_suit_dr(self) -> None:
         with self._editor as editor:
             editor.set_configuration_field("second_suit_dr", int(self.second_suit_spin_box.value()))
         self.first_suit_spin_box.setMaximum(self.second_suit_spin_box.value())
