@@ -105,7 +105,7 @@ class FusionPatchDataFactory(PatchDataFactory):
         tank_dict["EnergyTank"] = self.configuration.energy_per_tank
         return tank_dict
 
-    def _create_door_locks(self):
+    def _create_door_locks(self) -> list[dict]:
         result = []
         for node, weakness in self.patches.all_dock_weaknesses():
             for id in node.extra["door_idx"]:
@@ -202,10 +202,10 @@ class FusionPatchDataFactory(PatchDataFactory):
                     "InitialText": (
                         f"{starting_items_text}Your objective is as follows: the [COLOR=3]SA-X[/COLOR] "
                         f"has discovered and destroyed a top secret [COLOR=3]Metroid[/COLOR] breeding facility. "
-                        f"It released {self.patches.configuration.artifacts.placed_artifacts} "
+                        f"It released {self.configuration.artifacts.placed_artifacts} "
                         "infant Metroids into the station. "
                         f"Initial scans indicate that they are hiding {metroid_location_text}. "
-                        f"Find and capture {self.patches.configuration.artifacts.required_artifacts} of them, "
+                        f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
                         "to lure out the SA-X. "
                         "Then initiate the station's self-destruct sequence. "
                         "Uplink at [COLOR=2]Navigation Rooms[/COLOR] along the way. "
