@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Changed: Adjusted the spacing of the Hints and Goal entries to be more consistent with other entries.
+- Fixed: An error appearing when going to the Pipe rando preset page with the Depths pipes disabled.
 
 #### Logic Database
 

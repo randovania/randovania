@@ -69,6 +69,11 @@ class NodeProvider:
             return node
         raise ValueError(f"No node with name {identifier.node} found in {area}")
 
+    def does_node_identifier_exist(self, identifier: NodeIdentifier) -> bool:
+        area = self.area_by_area_location(identifier.area_identifier)
+        node = area.node_with_name(identifier.node)
+        return node is not None
+
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.region_and_area_by_area_identifier(location)[1]
 
