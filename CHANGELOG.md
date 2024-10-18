@@ -60,6 +60,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Laboratory Entrance: Climbing the room with Walljumps and Morph Glides now requires Morph Ball.
 - Fixed: Laboratory Spiked Hall: Morph Gliding across the room now requires Morph Ball.
 
+### Cave Story
+
+- Changed: The Objective preset entry don't enforce a minimum size anymore.
+- Changed: Adjust spacing on the HP preset entry.
 
 ### Metroid Prime
 
