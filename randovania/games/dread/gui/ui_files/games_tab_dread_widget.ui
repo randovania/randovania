@@ -34,7 +34,7 @@
    </attribute>
    <layout class="QVBoxLayout" name="intro_layout">
     <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
+     <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
     </property>
     <item>
      <layout class="QHBoxLayout" name="intro_cover_layout">
@@ -73,7 +73,7 @@
     <item>
      <spacer name="intro_spacer">
       <property name="orientation">
-       <enum>Qt::Vertical</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
@@ -117,8 +117,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>633</width>
-         <height>461</height>
+         <width>635</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -128,7 +128,7 @@
            <string># updated from code</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -159,7 +159,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>637</width>
+      <width>635</width>
       <height>465</height>
      </rect>
     </property>
@@ -170,7 +170,7 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania makes some changes to the original game in order to improve the game experience or to simply fix bugs in the original game.&lt;/p&gt;&lt;p&gt;Many of these changes are optional and can be disabled in the many options Randovania provides, but the following are &lt;span style=&quot; font-weight:600;&quot;&gt;always&lt;/span&gt; there:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;White and Yellow EMMis are patrolling their zones by default, with no cutscene based first encounter. Please note this makes where you would first encounter them significantly harder to navigate.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Blue and Purple EMMIs do not require the X to be released (Quiet Robe does nothing in the original game!).&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Checkpoints for collecting items in major locations, such as Charge Beam room, were removed in order to avoid softlocks.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Raven Beak takes damage consistently between all beams and missiles, in order to not incentivize players to avoid picking an upgrade.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The water in First Tutorial that appears after using the water device and the water in Early Cloak Room that appears after breaking the blob have been removed to prevent softlocks.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -192,8 +192,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>616</width>
-      <height>756</height>
+      <width>621</width>
+      <height>758</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="known_crashes_layout">
@@ -265,7 +265,7 @@ Save in the Save Station immediately west of Red Teleportal.
 </string>
        </property>
        <property name="textFormat">
-        <enum>Qt::MarkdownText</enum>
+        <enum>Qt::TextFormat::MarkdownText</enum>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -305,7 +305,7 @@ Save in the Save Station immediately west of Red Teleportal.
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>637</width>
+         <width>635</width>
          <height>465</height>
         </rect>
        </property>
@@ -316,7 +316,7 @@ Save in the Save Station immediately west of Red Teleportal.
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;In Metroid Dread, you can find hints from the following sources:&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Network Station&lt;/span&gt;: Contains one unique item hint per station. A single item can't be hinted twice by two network stations.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dairon - Navigation Station North&lt;/span&gt;: ADAM will provide a hint to the locations of all Metroid DNA.&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Itorash&lt;/span&gt;: A new Navigation Station has been added to the elevator room. ADAM will provide a hint to the locations of all Metroid DNA.&lt;/p&gt;&lt;hr/&gt;&lt;p align=&quot;justify&quot;&gt;For more details with how hints are assigned, check Metroid Prime 2: Echoes page. Hints assigned to Network Stations follow the same logic as item hints assigned to Luminoth Lore.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -355,14 +355,14 @@ Save in the Save Station immediately west of Red Teleportal.
        <bool>true</bool>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
       </property>
       <widget class="QWidget" name="hint_item_names_scroll_contents">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>637</width>
+         <width>635</width>
          <height>465</height>
         </rect>
        </property>
@@ -380,7 +380,7 @@ Save in the Save Station immediately west of Red Teleportal.
         <item>
          <widget class="QTableWidget" name="hint_item_names_tree_widget">
           <property name="editTriggers">
-           <set>QAbstractItemView::NoEditTriggers</set>
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
           </property>
           <property name="sortingEnabled">
            <bool>true</bool>
@@ -440,7 +440,7 @@ Save in the Save Station immediately west of Red Teleportal.
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>637</width>
+         <width>635</width>
          <height>465</height>
         </rect>
        </property>
