@@ -76,15 +76,11 @@ class AM2RBootstrap(MetroidBootstrap):
         num_suits = sum(
             (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
         )
-        dr = -1.0
-        if num_suits <= 0:
-            dr = 0.0
-        elif num_suits == 1:
+        dr = 0.0
+        if num_suits == 1:
             dr = configuration.first_suit_dr
         elif num_suits >= 2:
             dr = configuration.second_suit_dr
-        else:
-            raise ValueError("Unknown configuration that doesn't properly set damage reduction!")
 
         damage_reduction = 1 - (dr / 100)
         return damage_reduction
