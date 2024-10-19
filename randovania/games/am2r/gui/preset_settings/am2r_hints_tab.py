@@ -4,6 +4,7 @@ from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
 from randovania.games.am2r.gui.generated.preset_am2r_hints_ui import Ui_PresetAM2RHints
+from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.games.am2r.layout.hint_configuration import ItemHintMode
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager
@@ -34,20 +35,26 @@ class PresetAM2RHints(PresetTab, Ui_PresetAM2RHints):
     def header_name(cls) -> str | None:
         return None
 
-    def _on_art_combo_changed(self, new_index: int):
+    def _on_art_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
+            config = editor.configuration
+            assert isinstance(config, AM2RConfiguration)
             editor.set_configuration_field(
                 "hints",
-                dataclasses.replace(editor.configuration.hints, artifacts=self.hint_artifact_combo.currentData()),
+                dataclasses.replace(config.hints, artifacts=self.hint_artifact_combo.currentData()),
             )
 
-    def _on_ibeam_combo_changed(self, new_index: int):
+    def _on_ibeam_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:
+            config = editor.configuration
+            assert isinstance(config, AM2RConfiguration)
             editor.set_configuration_field(
                 "hints",
-                dataclasses.replace(editor.configuration.hints, ice_beam=self.ice_beam_hint_combo.currentData()),
+                dataclasses.replace(config.hints, ice_beam=self.ice_beam_hint_combo.currentData()),
             )
 
-    def on_preset_changed(self, preset: Preset):
-        set_combo_with_value(self.hint_artifact_combo, preset.configuration.hints.artifacts)
-        set_combo_with_value(self.ice_beam_hint_combo, preset.configuration.hints.ice_beam)
+    def on_preset_changed(self, preset: Preset) -> None:
+        config = preset.configuration
+        assert isinstance(config, AM2RConfiguration)
+        set_combo_with_value(self.hint_artifact_combo, config.hints.artifacts)
+        set_combo_with_value(self.ice_beam_hint_combo, config.hints.ice_beam)
