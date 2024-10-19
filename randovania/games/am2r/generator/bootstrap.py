@@ -83,8 +83,7 @@ class AM2RBootstrap(MetroidBootstrap):
             dr = configuration.first_suit_dr
         elif num_suits >= 2:
             dr = configuration.second_suit_dr
-
-        if dr < 0:
+        else:
             raise ValueError("Unknown configuration that doesn't properly set damage reduction!")
 
         damage_reduction = 1 - (dr / 100)
