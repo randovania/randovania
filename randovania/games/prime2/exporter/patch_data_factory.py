@@ -456,6 +456,7 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
 def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
     raw_champs = [
+        {"title": "2024 Champion", "name": "Naii the Baf"},
         {"title": "CGC 2023 Champions", "name": "TheGingerChris and BajaBlood"},
         {"title": "2022 Champion", "name": "Cestrion"},
         {"title": "CGC 2022 Champions", "name": "Cosmonawt and Cestrion"},
