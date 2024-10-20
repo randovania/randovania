@@ -90,6 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Changed: Updated tournament winners scan text for Echoes 2024.
 - Added: Colorblind-friendly textures for main gyro.
 
 ### Metroid: Samus Returns
