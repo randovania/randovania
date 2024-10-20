@@ -2426,7 +2426,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "ShinesparkTrick",
-                                            "amount": 2,
+                                            "amount": 3,
                                             "negate": false
                                         }
                                     },
@@ -9667,6 +9667,27 @@
                                     {
                                         "type": "or",
                                         "data": {
+                                            "comment": "Get into Tunnel",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
                                             "comment": "Get past Rippers - TODO: health for damage runs",
                                             "items": [
                                                 {
@@ -9706,27 +9727,6 @@
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Bounce in Ball"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 1,
-                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -10745,32 +10745,6 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
                                                                     "comment": "After Fight, Trickless: https://youtu.be/Z6_miH4qoQY",
                                                                     "items": [
                                                                         {
@@ -10788,6 +10762,32 @@
                                                                                 "type": "events",
                                                                                 "name": "ChargeCore-X",
                                                                                 "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -10829,7 +10829,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Alternate - Shinespark from Central Stabilizer -> Escape (Morph Ball is not required for this): https://youtu.be/BsW39UKOYVw",
+                                            "comment": "Alternate - Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10906,6 +10906,15 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "L0Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Stabilizer5",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
