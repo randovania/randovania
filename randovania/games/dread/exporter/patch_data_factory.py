@@ -163,11 +163,15 @@ class DreadPatchDataFactory(PatchDataFactory):
 
     def _teleporter_ref_for(self, node: Node, actor_key: str = "actor_name") -> dict:
         try:
-            return {
+            actor_reference = {
                 "scenario": self._level_name_for(node),
-                "layer": node.extra.get("actor_layer", "default"),
                 "actor": node.extra[actor_key],
             }
+
+            if "actor_sublayer" in node.extra:
+                actor_reference["sublayer"] = node.extra["actor_sublayer"]
+
+            return actor_reference
         except KeyError as e:
             raise self._key_error_for_node(node, e)
 
@@ -475,7 +479,7 @@ class DreadPatchDataFactory(PatchDataFactory):
         return [
             # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
             {
-                "actor": {"scenario": "s010_cave", "layer": "breakables", "actor": "breakabletilegroup_060"},
+                "actor": {"scenario": "s010_cave", "sublayer": "breakables", "actor": "breakabletilegroup_060"},
                 "tiletype": "SPEEDBOOST",
             }
         ]
