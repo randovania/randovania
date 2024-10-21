@@ -91,6 +91,7 @@ def test_run_logic(mocker: pytest_mock.MockerFixture, no_data: bool) -> None:
     args.game = None
     args.no_data = no_data
     args.output_file = None
+    args.seed_count = 100
 
     benchmark.run_logic(args)
 
