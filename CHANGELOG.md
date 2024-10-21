@@ -70,6 +70,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Common case where an invalid input RomFS was considered valid.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Power Bombs to break the Bomb Blocks has been upgraded to Movement (Intermediate).
+- Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Normal Bombs to break the Bomb Blocks has been upgraded to Movement (Advanced).
+
 ### Metroid Prime
 
 - Added: The Data Visualizer now shows an Area View.
