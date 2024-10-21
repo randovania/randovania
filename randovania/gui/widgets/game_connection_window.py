@@ -21,6 +21,7 @@ from randovania.games.cave_story.gui.dialog.cs_connector_prompt_dialog import CS
 from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import (
     DreadConnectorPromptDialog,
 )
+from randovania.games.samus_returns.gui.dialog.msr_connector_prompt_dialog import MSRConnectorPromptDialog
 from randovania.gui.debug_backend_window import DebugConnectorWindow
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.game_connection_window_ui import Ui_GameConnectionWindow
@@ -264,9 +265,15 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             args["ip"] = "localhost"
 
         if choice == ConnectorBuilderChoice.MSR:
-            # TODO: Add a GUI for the IP whenever we support Luma
-            args["ip"] = "localhost"
-
+            new_ip = await MSRConnectorPromptDialog.prompt(
+                parent=self,
+                is_modal=True,
+                title="Select Citra or Luma3DS to connect to",
+                description="Enter the IP address of your 3DS. It can be found in the system settings.",
+            )
+            if new_ip is None:
+                return
+            args["ip"] = new_ip
         if choice == ConnectorBuilderChoice.DEBUG:
             new_game = await self._prompt_for_game("Choose Game", "Select the game to use for the debug connection.")
             if new_game is None:
