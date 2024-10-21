@@ -98,7 +98,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Shinespark from Recharge Room",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -132,7 +132,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
-                                                                    "amount": 2,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -818,7 +818,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Deal with Sidehoppers",
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
@@ -834,7 +834,7 @@
                                                             {
                                                                 "type": "or",
                                                                 "data": {
-                                                                    "comment": "TODO: vid",
+                                                                    "comment": "Get up TODO: vid",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -884,7 +884,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Freeze Sidehoppers and use them to get up",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -961,37 +961,17 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
                                                         "comment": "No shinespark trick to create a morph tunnel across the top.",
                                                         "items": [
                                                             {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Bombs"
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Use Any Bombs"
                                                             },
                                                             {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Bounce in Ball"
-                                                                        },
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Any Bombs"
-                                                                        }
-                                                                    ]
-                                                                }
+                                                                "type": "template",
+                                                                "data": "Can Bounce in Ball"
                                                             }
                                                         ]
                                                     }
@@ -1274,31 +1254,8 @@
                                             "comment": "Kill Fune",
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missiles",
-                                                        "amount": 5,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ScrewAttack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
                                                 }
                                             ]
                                         }
@@ -1476,29 +1433,17 @@
                     "location_category": "minor",
                     "connections": {
                         "Door to B.O.X. Access": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Use Bombs"
+                                        "data": "Can Use Any Bombs"
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Power Bombs"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Use Springball"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -1560,7 +1505,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Old BOB skip",
+                                            "comment": "Old BOB skip: https://youtu.be/Kqb60S6Kr0w",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1953,8 +1898,16 @@
                         "Above E-Tank": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "TODO: redo after remote activation nodes",
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Below E-Tank": {
@@ -2007,8 +1960,42 @@
                                         "data": "Can Break Single Bomb Blocks"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Kill Tough Beam-Resistant Enemy"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get past Sidehoppers",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2294,7 +2281,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Alternate - Screw Attack and some extra Jump height (knowledge)",
+                                            "comment": "Alternate - Screw Attack and some extra height",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2333,7 +2320,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "WallJump",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -2366,7 +2353,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Destroy Bomb Blocks",
                                             "items": [
                                                 {
                                                     "type": "and",
@@ -2431,7 +2418,7 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "MidAirMorph",
-                                                                                            "amount": 2,
+                                                                                            "amount": 3,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -2452,8 +2439,42 @@
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Kill Tough Beam-Resistant Enemy"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get past Sidehoppers",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2468,8 +2489,42 @@
                                         "data": "Can Use Any Bombs"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Kill Tough Beam-Resistant Enemy"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get past Sidehoppers",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2628,8 +2683,42 @@
                                         "data": "Can Break Single Bomb Blocks"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Kill Tough Beam-Resistant Enemy"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Get through Sidehoppers",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageBoosts",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2726,7 +2815,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get past enemies TODO: vid for enemy manips?",
+                                            "comment": "Get past enemies: https://youtu.be/4bupElY6Mjg",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3516,8 +3605,17 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Suitless",
+                                                        "comment": "Varia only",
                                                         "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "VariaSuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -3531,17 +3629,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "HeatDamage",
-                                                                    "amount": 260,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
                                                                     "name": "LavaDamage",
-                                                                    "amount": 400,
+                                                                    "amount": 225,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -3595,17 +3684,8 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Varia only",
+                                                        "comment": "Suitless",
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -3619,8 +3699,17 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
+                                                                    "name": "HeatDamage",
+                                                                    "amount": 260,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
                                                                     "name": "LavaDamage",
-                                                                    "amount": 225,
+                                                                    "amount": 400,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -3684,7 +3773,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Get up",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -3698,7 +3787,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "You do not need HJ or Jump Extends",
+                                                        "comment": "Kill Namihes, then jump from ladder",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -3710,7 +3799,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Stand on the frozen Namihe - https://www.youtube.com/watch?v=43O9kAxPwmY",
+                                                        "comment": "Stand on the frozen Namihe: https://youtu.be/43O9kAxPwmY",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -3812,7 +3901,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -3899,7 +3988,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -3975,7 +4064,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -4121,59 +4210,17 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "JumpExtends",
-                                                                    "amount": 3,
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "items",
-                                                                                            "name": "Hi-Jump",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "WallJump",
-                                                                                            "amount": 2,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "WallJump",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
                                                                 }
                                                             },
                                                             {
@@ -4280,12 +4327,12 @@
                         "Door to Boiler Access": {
                             "type": "and",
                             "data": {
-                                "comment": "Heat DMG",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Heat DMG",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4338,7 +4385,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Movement",
+                                                        "name": "Combat",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -4415,12 +4462,12 @@
                         "Door to Pyrochamber Access": {
                             "type": "and",
                             "data": {
-                                "comment": "Heat DMG",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Heat DMG",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4499,7 +4546,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Movement",
+                                                        "name": "Combat",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -5437,7 +5484,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Change spark in revious room and diagonally Shinespark from first crumble platform",
+                                                        "comment": "Change a spark and diagonally Shinespark from first crumble platform",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -5510,6 +5557,15 @@
                                                                                                                     "type": "damage",
                                                                                                                     "name": "LavaDamage",
                                                                                                                     "amount": 80,
+                                                                                                                    "negate": false
+                                                                                                                }
+                                                                                                            },
+                                                                                                            {
+                                                                                                                "type": "resource",
+                                                                                                                "data": {
+                                                                                                                    "type": "tricks",
+                                                                                                                    "name": "DamageRuns",
+                                                                                                                    "amount": 3,
                                                                                                                     "negate": false
                                                                                                                 }
                                                                                                             }
@@ -5605,6 +5661,15 @@
                                                                                                         "type": "items",
                                                                                                         "name": "PlasmaBeam",
                                                                                                         "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Combat",
+                                                                                                        "amount": 2,
                                                                                                         "negate": false
                                                                                                     }
                                                                                                 }
@@ -6034,21 +6099,11 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to B.O.X. Access": {
+                        "Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "B.O.X.",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6097,8 +6152,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 315.40005802146794,
-                        "y": 102.83260806498413,
+                        "x": 404.8233320428442,
+                        "y": 140.33088140405215,
                         "z": 0.0
                     },
                     "description": "",
@@ -7273,7 +7328,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "DamageRuns",
-                                                                                "amount": 1,
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -7723,7 +7778,7 @@
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "DamageRuns",
-                                                                                "amount": 1,
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -8045,8 +8100,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 201.6348096348096,
-                        "y": 255.29448329448326,
+                        "x": 202.00457247370827,
+                        "y": 287.4732510288066,
                         "z": 0.0
                     },
                     "description": "",
@@ -9273,60 +9328,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "ScrewAttack",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageRuns",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "HeatDamage",
-                                                                    "amount": 10,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -9663,7 +9665,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DamageRuns",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -9672,7 +9674,7 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "HeatDamage",
-                                                                    "amount": 10,
+                                                                    "amount": 20,
                                                                     "negate": false
                                                                 }
                                                             }

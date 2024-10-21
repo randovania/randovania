@@ -176,6 +176,6 @@ class MSRPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.samus_returns.pickup_database import progressive_items
+        from randovania.games.samus_returns.layout import progressive_items
 
         return progressive_items.tuples()

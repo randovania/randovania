@@ -39,6 +39,6 @@ class CorruptionPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.prime3.pickup_database import progressive_items
+        from randovania.games.prime3.layout import progressive_items
 
         return progressive_items.tuples()

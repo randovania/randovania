@@ -22,7 +22,7 @@ def _options():
 
 def _gui():
     from randovania.games.cave_story import gui
-    from randovania.games.cave_story.pickup_database import progressive_items
+    from randovania.games.cave_story.layout import progressive_items
 
     return randovania.game.gui.GameGui(
         tab_provider=gui.cs_preset_tabs,

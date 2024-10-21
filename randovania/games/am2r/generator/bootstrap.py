@@ -70,16 +70,18 @@ class AM2RBootstrap(MetroidBootstrap):
 
     def _damage_reduction(
         self, configuration: BaseConfiguration, db: ResourceDatabase, current_resources: ResourceCollection
-    ):
+    ) -> float:
+        assert isinstance(configuration, AM2RConfiguration)
+
         num_suits = sum(
             (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
         )
-        if num_suits <= 0:
-            dr = 0
+        dr = 0.0
         if num_suits == 1:
             dr = configuration.first_suit_dr
-        if num_suits >= 2:
+        elif num_suits >= 2:
             dr = configuration.second_suit_dr
+
         damage_reduction = 1 - (dr / 100)
         return damage_reduction
 

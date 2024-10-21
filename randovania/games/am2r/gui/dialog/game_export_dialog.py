@@ -18,7 +18,7 @@ from randovania.gui.dialog.game_export_dialog import (
 )
 
 if TYPE_CHECKING:
-    from randovania.interface_common.options import Options
+    from randovania.interface_common.options import Options, PerGameOptions
 
 
 def _is_valid_input_dir(path: Path) -> bool:
@@ -45,7 +45,7 @@ def _is_valid_input_dir(path: Path) -> bool:
 
 class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
     @classmethod
-    def game_enum(cls):
+    def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.AM2R
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
@@ -87,18 +87,19 @@ class AM2RGameExportDialog(GameExportDialog, Ui_AM2RGameExportDialog):
         return self.auto_save_spoiler_check.isChecked()
 
     # Input file
-    def _on_input_file_button(self):
+    def _on_input_file_button(self) -> None:
         input_dir = prompt_for_input_directory(self, self.input_file_edit)
         if input_dir is not None:
             self.input_file_edit.setText(str(input_dir.absolute()))
 
     # Output File
-    def _on_output_file_button(self):
+    def _on_output_file_button(self) -> None:
         output_dir = prompt_for_output_directory(self, "AM2R Randomizer", self.output_file_edit)
         if output_dir is not None:
             self.output_file_edit.setText(str(output_dir))
 
-    def update_per_game_options(self, per_game: AM2RPerGameOptions) -> AM2RPerGameOptions:
+    def update_per_game_options(self, per_game: PerGameOptions) -> AM2RPerGameOptions:
+        assert isinstance(per_game, AM2RPerGameOptions)
         return dataclasses.replace(
             per_game,
             input_path=self.input_file,

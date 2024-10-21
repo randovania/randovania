@@ -34,7 +34,7 @@
    </attribute>
    <layout class="QVBoxLayout" name="intro_layout">
     <property name="sizeConstraint">
-     <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
+     <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
     </property>
     <item>
      <layout class="QHBoxLayout" name="intro_cover_layout">
@@ -48,7 +48,7 @@
       <item>
        <widget class="QLabel" name="intro_label">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -77,8 +77,8 @@
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>20</width>
-        <height>40</height>
+        <width>40</width>
+        <height>20</height>
        </size>
       </property>
      </spacer>
@@ -117,8 +117,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>629</width>
-         <height>466</height>
+         <width>635</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_8">
@@ -142,6 +142,12 @@
    </layout>
   </widget>
   <widget class="QScrollArea" name="differences_tab">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="widgetResizable">
     <bool>true</bool>
    </property>
@@ -153,8 +159,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>629</width>
-      <height>466</height>
+      <width>635</width>
+      <height>465</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -186,8 +192,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>612</width>
-      <height>684</height>
+      <width>621</width>
+      <height>758</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="known_crashes_layout">
@@ -261,9 +267,6 @@ Save in the Save Station immediately west of Red Teleportal.
        <property name="textFormat">
         <enum>Qt::TextFormat::MarkdownText</enum>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-       </property>
        <property name="wordWrap">
         <bool>true</bool>
        </property>
@@ -302,8 +305,8 @@ Save in the Save Station immediately west of Red Teleportal.
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>629</width>
-         <height>466</height>
+         <width>635</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hints_scroll_layout">
@@ -359,8 +362,8 @@ Save in the Save Station immediately west of Red Teleportal.
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>629</width>
-         <height>466</height>
+         <width>635</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
@@ -368,9 +371,6 @@ Save in the Save Station immediately west of Red Teleportal.
          <widget class="QLabel" name="hint_item_names_label">
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When items are referenced in a hint, multiple names can be used depending on how precise the hint is. These additional names are not used by hints in Metroid Dread, but can be used if hinted by another game such as Metroid Prime 2: Echoes.&lt;/p&gt;&lt;p&gt;The names each item can use are the following: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -435,16 +435,13 @@ Save in the Save Station immediately west of Red Teleportal.
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-      </property>
       <widget class="QWidget" name="hint_locations_scroll_contents">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>629</width>
-         <height>466</height>
+         <width>635</width>
+         <height>465</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="hint_scroll_layout">
@@ -452,9 +449,6 @@ Save in the Save Station immediately west of Red Teleportal.
          <widget class="QLabel" name="hint_locations_label">
           <property name="text">
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hints are placed in the game by replacing the ADAM briefings in the Navigation Stations. The following are the areas that have a hint added to them: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
