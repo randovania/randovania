@@ -433,7 +433,17 @@
                         "type": "and",
                         "data": {
                             "comment": null,
-                            "items": []
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "L1Locks",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     },
                     "connections": {
@@ -2133,8 +2143,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 87.32,
-                        "y": 296.44,
+                        "x": 86.55496842907615,
+                        "y": 284.3745660929308,
                         "z": 0.0
                     },
                     "description": "",
@@ -2150,15 +2160,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Other to Crab Rave": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "MorphBall",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -2435,7 +2436,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "ShinesparkTrick",
-                                            "amount": 2,
+                                            "amount": 3,
                                             "negate": false
                                         }
                                     },
@@ -5627,7 +5628,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AnimorphsOpen",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Left Ladder": {
@@ -5650,12 +5661,24 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Hi-Jump",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Screw Single Walljump"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -5680,6 +5703,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Open Animorphs": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5759,7 +5789,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "AnimorphsOpen",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5851,6 +5891,31 @@
                                 ]
                             }
                         },
+                        "Door to Ripper Maze Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Open Animorphs": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 78.43,
+                        "y": 68.12,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "AnimorphsOpen",
+                    "connections": {
                         "Door to Ripper Maze Access": {
                             "type": "and",
                             "data": {
@@ -9155,12 +9220,20 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Checkpoint Intersection": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "events",
-                                "name": "S1SaveShotBlock",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "S1SaveShotBlock",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9196,8 +9269,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 247.29,
-                        "y": 87.6,
+                        "x": 245.62710258232647,
+                        "y": 112.31313412234893,
                         "z": 0.0
                     },
                     "description": "",
@@ -9213,44 +9286,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Other to Wall Jump Tutorial": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Bounce in Ball"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "MidAirMorph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -9642,6 +9677,27 @@
                                     {
                                         "type": "or",
                                         "data": {
+                                            "comment": "Get into Tunnel",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Bounce in Ball"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "MidAirMorph",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
                                             "comment": "Get past Rippers - TODO: health for damage runs",
                                             "items": [
                                                 {
@@ -9685,10 +9741,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Bounce in Ball"
                                     }
                                 ]
                             }
@@ -10703,32 +10755,6 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "ShinesparkTrick",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
                                                                     "comment": "After Fight, Trickless: https://youtu.be/Z6_miH4qoQY",
                                                                     "items": [
                                                                         {
@@ -10746,6 +10772,32 @@
                                                                                 "type": "events",
                                                                                 "name": "ChargeCore-X",
                                                                                 "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Pre-Fight, with Hi-Jump: https://youtu.be/q7HKdMt4v3g",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 2,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -10787,7 +10839,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Alternate - Shinespark from Central Stabilizer -> Escape (Morph Ball is not required for this): https://youtu.be/BsW39UKOYVw",
+                                            "comment": "Alternate - Shinespark from Central Stabilizer -> Escape: https://youtu.be/BsW39UKOYVw",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -10864,6 +10916,15 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "L0Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Stabilizer5",
                                                         "amount": 1,
                                                         "negate": false
                                                     }

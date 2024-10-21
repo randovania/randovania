@@ -28,7 +28,9 @@ def test_export_game_raises_without_dotnet(mocker):
     exporter = AM2RGameExporter()
 
     with pytest.raises(UnableToExportError):
-        exporter._do_export_game(MagicMock(), MagicMock(), MagicMock())
+        exporter._do_export_game(
+            MagicMock(), AM2RGameExportParams(spoiler_output=None, input_path=None, output_path=None), MagicMock()
+        )
 
 
 def test_export_game_raises_with_wrong_dotnet_exit_code(mocker):
@@ -38,7 +40,9 @@ def test_export_game_raises_with_wrong_dotnet_exit_code(mocker):
     exporter = AM2RGameExporter()
 
     with pytest.raises(UnableToExportError):
-        exporter._do_export_game(MagicMock(), MagicMock(), MagicMock())
+        exporter._do_export_game(
+            MagicMock(), AM2RGameExportParams(spoiler_output=None, input_path=None, output_path=None), MagicMock()
+        )
 
 
 @pytest.mark.parametrize("patch_data_name", ["starter_preset", "door_lock"])

@@ -112,6 +112,6 @@ class DreadPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.dread.pickup_database import progressive_items
+        from randovania.games.dread.layout import progressive_items
 
         return progressive_items.tuples()

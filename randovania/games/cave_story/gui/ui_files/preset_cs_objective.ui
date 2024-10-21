@@ -22,91 +22,128 @@
    </property>
    <layout class="QVBoxLayout" name="goal_layout">
     <property name="leftMargin">
-     <number>4</number>
+     <number>6</number>
     </property>
     <property name="topMargin">
-     <number>8</number>
+     <number>6</number>
     </property>
     <property name="rightMargin">
-     <number>4</number>
+     <number>6</number>
     </property>
     <property name="bottomMargin">
-     <number>8</number>
+     <number>6</number>
     </property>
     <item>
-     <widget class="QLabel" name="goal_description">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls the requirements needed to complete the game.&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bad Ending&lt;/span&gt;: Collect the Charcoal, Gum Base, and Jellyfish Juice for MALCO to build the Bomb, and destroy the Core to leave the island with Kazuma.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Normal Ending&lt;/span&gt;: Collect the ID Card and save Sue in the Egg Corridor to enter the Throne Room and defeat the Undead Core.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Best Ending&lt;/span&gt;: Collect the Booster 2.0 and Iron Bond, and complete the Normal Ending requirements to enter the Throne Room and eventually defeat Ballos.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;All Bosses&lt;/span&gt;: Complete the Best Ending requirements and defeat every other boss in the game before entering the Throne Room and eventually defeat Ballos.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="wordWrap">
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
        <bool>true</bool>
       </property>
+      <widget class="QWidget" name="scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>550</width>
+         <height>447</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_area_layout">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="goal_description">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Controls the requirements needed to complete the game.&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Bad Ending&lt;/span&gt;: Collect the Charcoal, Gum Base, and Jellyfish Juice for MALCO to build the Bomb, and destroy the Core to leave the island with Kazuma.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Normal Ending&lt;/span&gt;: Collect the ID Card and save Sue in the Egg Corridor to enter the Throne Room and defeat the Undead Core.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Best Ending&lt;/span&gt;: Collect the Booster 2.0 and Iron Bond, and complete the Normal Ending requirements to enter the Throne Room and eventually defeat Ballos.&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;All Bosses&lt;/span&gt;: Complete the Best Ending requirements and defeat every other boss in the game before entering the Throne Room and eventually defeat Ballos.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="goal_combo">
+          <property name="editable">
+           <bool>false</bool>
+          </property>
+          <property name="currentText">
+           <string>Bad Ending</string>
+          </property>
+          <property name="placeholderText">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Bad Ending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Normal Ending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Best Ending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>All Bosses</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="b2_check">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Remove falling blocks in B2</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="goal_combo">
-      <property name="editable">
-       <bool>false</bool>
-      </property>
-      <property name="currentText">
-       <string>Bad Ending</string>
-      </property>
-      <property name="placeholderText">
-       <string/>
-      </property>
-      <item>
-       <property name="text">
-        <string>Bad Ending</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Normal Ending</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Best Ending</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>All Bosses</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="b2_check">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>45</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Remove falling blocks in B2</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>

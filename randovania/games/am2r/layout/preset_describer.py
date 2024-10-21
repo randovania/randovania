@@ -123,6 +123,6 @@ class AM2RPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.am2r.pickup_database import progressive_items
+        from randovania.games.am2r.layout import progressive_items
 
         return progressive_items.tuples()

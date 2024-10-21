@@ -69,14 +69,18 @@ def romfs_validation(line: QtWidgets.QLineEdit):
         return True
 
     path = Path(line.text())
-    return not all(
-        p.is_file()
-        for p in [
-            path.joinpath("system", "files.toc"),
-            path.joinpath("packs", "system", "system.pkg"),
-            path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
-            path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
-        ]
+    return not (
+        all(
+            p.is_file()
+            for p in [
+                path.joinpath("config.ini"),
+                path.joinpath("system", "files.toc"),
+                path.joinpath("packs", "system", "system.pkg"),
+                path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
+                path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
+            ]
+        )
+        and not all(p.is_file() for p in [path.joinpath("custom_names.json")])
     )
 
 

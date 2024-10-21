@@ -26,7 +26,7 @@ def _options() -> type[PerGameOptions]:
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.blank import gui
-    from randovania.games.blank.pickup_database import progressive_items
+    from randovania.games.blank.layout import progressive_items
 
     return randovania.game.gui.GameGui(
         game_tab=gui.BlankGameTabWidget,

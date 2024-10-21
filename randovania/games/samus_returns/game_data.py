@@ -9,8 +9,8 @@ import randovania.game.gui
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.samus_returns import layout
+from randovania.games.samus_returns.layout import progressive_items
 from randovania.games.samus_returns.layout.preset_describer import MSRPresetDescriber
-from randovania.games.samus_returns.pickup_database import progressive_items
 
 if TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter

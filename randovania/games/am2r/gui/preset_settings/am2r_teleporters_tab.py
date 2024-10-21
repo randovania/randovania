@@ -64,6 +64,11 @@ class PresetTeleportersAM2R(PresetTeleporterTab, Ui_PresetTeleportersAM2R, NodeL
         region_list = self.game_description.region_list
 
         locations = TeleporterList.nodes_list(self.game_enum)
+        am2r_config = self._editor.configuration
+        assert isinstance(am2r_config, AM2RConfiguration)
+        if not am2r_config.nest_pipes:
+            locations = [loc for loc in locations if region_list.does_node_identifier_exist(loc)]
+
         checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_teleporters(loc) for loc in locations
         }

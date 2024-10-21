@@ -238,12 +238,17 @@ files = [
     "randovania/game_connection/executor/dread_executor.py",
     "randovania/game_connection/executor/msr_executor.py",
     "randovania/game_description/",
-    "randovania/games/am2r/gui/dialog/cosmetic_patches_dialog.py",
+    "randovania/games/am2r/gui/",
+    "randovania/games/am2r/generator/",
+    "randovania/games/am2r/layout/",
     "randovania/games/blank/",
     "randovania/games/cave_story/gui/dialog/cs_connector_prompt_dialog.py",
     "randovania/games/cave_story/gui/dialog/cs_cosmetic_patches_dialog.py",
     "randovania/games/dread/gui/dialog/dread_connector_prompt_dialog.py",
     "randovania/games/dread/gui/dialog/dread_cosmetic_patches_dialog.py",
+    "randovania/games/fusion/gui/",
+    "randovania/games/fusion/generator/",
+    "randovania/games/fusion/layout/",
     "randovania/games/prime1/gui/dialog/prime_cosmetic_patches_dialog.py",
     "randovania/games/prime2/exporter/patch_data_factory.py",
     "randovania/games/prime2/gui/dialog/echoes_cosmetic_patches_dialog.py",
@@ -287,4 +292,8 @@ disable_error_code = "method-assign"
 
 [[tool.mypy.overrides]]
 module = "randovania.games.*.gui.generated.*"
+disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "randovania.gui.generated.*"
 disallow_untyped_defs = false
