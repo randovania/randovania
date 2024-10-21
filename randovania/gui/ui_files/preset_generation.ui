@@ -123,6 +123,44 @@
          </widget>
         </item>
         <item>
+         <widget class="QGroupBox" name="door_lock_group">
+          <property name="title">
+           <string>Door Lock Settings</string>
+          </property>
+          <layout class="QVBoxLayout" name="door_lock_grops">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item>
+            <widget class="QCheckBox" name="two_sided_door_search_check">
+             <property name="text">
+              <string>[Experimental] Search for both sides of door</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="two_sided_door_search_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When randomizing doors using Door Lock Randimizer, search for either side of each door instead of a fixed one. In cases where only the other side of the door is accesible, this leads to more types of locks being used. In cases where there exists a path to the other side of the door, that path is less likely to be required. Placement of door locks is expected to be faster.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
          <widget class="QGroupBox" name="logic_group">
           <property name="title">
            <string>Logic Settings</string>
