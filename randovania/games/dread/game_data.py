@@ -19,7 +19,7 @@ def _options():
 
 def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.dread import gui
-    from randovania.games.dread.pickup_database import progressive_items
+    from randovania.games.dread.layout import progressive_items
 
     return randovania.game.gui.GameGui(
         tab_provider=gui.dread_preset_tabs,

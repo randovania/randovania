@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
 - Changed: The Area View of the Data Visualizer now always has a dark gray background to help with readability.
 - Changed: The progress bar in the Main Window and Game Details window is now in a status bar and only displayed when relevant.
+- Fixed: When an error during exporting occurs, the progress bar will now reset.
 
 ### Resolver
 
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Changed: Adjusted the spacing of the Hints and Goal entries to be more consistent with other entries.
+- Fixed: An error appearing when going to the Pipe rando preset page with the Depths pipes disabled.
 
 #### Logic Database
 
@@ -59,6 +61,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Laboratory Entrance: Climbing the room with Walljumps and Morph Glides now requires Morph Ball.
 - Fixed: Laboratory Spiked Hall: Morph Gliding across the room now requires Morph Ball.
 
+### Cave Story
+
+- Changed: The Objective preset entry don't enforce a minimum size anymore.
+- Changed: Adjust spacing on the HP preset entry.
+
+### Metroid Dread
+
+- Fixed: Common case where an invalid input RomFS was considered valid.
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Power Bombs to break the Bomb Blocks has been upgraded to Movement (Intermediate).
+- Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Normal Bombs to break the Bomb Blocks has been upgraded to Movement (Advanced).
 
 ### Metroid Prime
 
@@ -86,12 +105,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Changed: Updated tournament winners scan text for Echoes 2024.
 - Added: Colorblind-friendly textures for main gyro.
 
 ### Metroid: Samus Returns
 
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
+- Fixed: Speed Booster offworld not displaying correctly for Metroid Dread.
+- Fixed: Map tracker could not be opened if the final boss is Ridley.
 - Changed: The preset entry for Aeion and Energy are now combined into one.
+- Changed: The preset entries for the Goal and Hints don't enforce a minimum size anymore.
 - Changed: Adjust spacing on the Elevator preset entry.
 
 ## [8.5.0] - 2024-10-01

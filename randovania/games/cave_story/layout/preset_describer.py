@@ -44,7 +44,7 @@ class CSPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.cave_story.pickup_database import progressive_items
+        from randovania.games.cave_story.layout import progressive_items
 
         return progressive_items.tuples()
 
