@@ -41,7 +41,7 @@ class PrimeBasePatchesFactory(BasePatchesFactory):
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door (Forced)")
 
-        if configuration.main_plaza_door and not configuration.dock_rando.is_enabled():
+        if configuration.main_plaza_door:
             dock_weakness.append(
                 (get_node(nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), DockNode), power_weak),
             )
