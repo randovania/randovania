@@ -73,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: The Data Visualizer now shows an Area View.
-- Changed: Artifact, Phazon Suit, and Missile Expansion weighting adjusted to improve distribution of Artifacts away from certain high probability locations.
+- Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 
 #### Logic Database
 
