@@ -38,6 +38,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Fixed: Main Plaza vault ledge door is now affected by door lock rando
+- Fixed: Chaos option export error when submerging rooms
+
 #### Logic Database
 
 - Fixed: Fix the Door Lock Rando misc resource being called Dock Rando.

@@ -999,6 +999,11 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
         else:
             boss_sizes = {}
 
+        if self.configuration.spring_ball:
+            spring_ball_item = "Morph Ball Bomb"
+        else:
+            spring_ball_item = "Spring Ball"
+
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
             "seed": self.description.get_seed_for_world(self.players_config.player_index),
@@ -1024,7 +1029,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
                 "noDoors": self.configuration.no_doors,
                 "startingRoom": starting_room,
                 "warpToStart": self.configuration.warp_to_start,
-                "springBall": self.configuration.spring_ball,
+                "springBallItem": spring_ball_item,
                 "incineratorDroneConfig": idrone_config,
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,
