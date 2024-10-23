@@ -7,6 +7,7 @@ import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from construct import StreamError  # type: ignore
 from PySide6 import QtGui, QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame
@@ -88,6 +89,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         # Input
         self.input_file_edit.textChanged.connect(self._on_input_file_change)
         self.input_file_button.clicked.connect(self._on_input_file_button)
+        # self.encrypted_hint.setVisible(False)
 
         # Target Platform
         if per_game.target_platform == MSRModPlatform.LUMA:
@@ -252,6 +254,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
     # Input file
     def rom_validation(self, line: QtWidgets.QLineEdit) -> bool:
+        self.encrypted_hint.setVisible(False)
         input_path = Path(line.text())
         if is_file_validator(input_path):
             return True
@@ -263,6 +266,11 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             parsed_rom = Rom3DS(parse_rom_file(input_path, file_stream), file_stream)
             self.title_id = parsed_rom.get_title_id()
         except ValueError:
+            # very likely happens if file is encrypted
+            self.encrypted_hint.setVisible(True)
+            return True
+        except StreamError:
+            # very likely happens if using totally wrong file
             return True
         finally:
             file_stream.close()
