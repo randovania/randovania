@@ -6,6 +6,7 @@ from randovania.exporter import item_names
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
 from randovania.generator.pickup_pool import pickup_creator
@@ -216,6 +217,43 @@ class FusionPatchDataFactory(PatchDataFactory):
             }
         return nav_text_json
 
+    def _create_credits_text(self) -> dict:
+        credits_array = []
+        spoiler_dict = []
+        for player_index, patches in self.description.all_patches.items():
+            for pickup_index, target in patches.pickup_assignment.items():
+                if target.player != self.players_config.player_index:
+                    continue
+                region_list = default_database.game_description_for(patches.configuration.game).region_list
+                pickup_category = target.pickup.pickup_category
+                if pickup_category.hinted_as_major or pickup_category.is_key:
+                    player_name = None
+                    if self.players_config.is_multiworld:
+                        player_name = self.players_config.player_names[player_index]
+                    spoiler_dict.append(
+                        {
+                            "Item": target.pickup.name,
+                            "Location": {
+                                "World": player_name,
+                                "Region": region_list.region_name_from_node(
+                                    region_list.node_from_pickup_index(pickup_index), True
+                                ),
+                                "Area": region_list.nodes_to_area(
+                                    region_list.node_from_pickup_index(pickup_index)
+                                ).name,
+                            },
+                        }
+                    )
+        for item in spoiler_dict:
+            credits_array.append({"LineType": "Red", "Text": item["Item"], "BlankLines": 1})
+            if item["Location"]["World"] is not None:
+                credits_array.append({"LineType": "Blue", "Text": item["Location"]["World"], "BlankLines": 0})
+            credits_array.append({"LineType": "White1", "Text": item["Location"]["Region"], "BlankLines": 0})
+            credits_array.append({"LineType": "White1", "Text": item["Location"]["Area"], "BlankLines": 1})
+        print(str(credits_array))
+        print("\n -------------------")
+        return credits_array
+
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
@@ -238,9 +276,11 @@ class FusionPatchDataFactory(PatchDataFactory):
             "Locations": self._create_pickup_dict(pickup_list),
             "RequiredMetroidCount": self.configuration.artifacts.required_artifacts,
             "TankIncrements": self._create_tank_increments(),
+            "MissileLimit": 3,
             "DoorLocks": self._create_door_locks(),
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
+            "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
             "PowerBombsWithoutBombs": True,
