@@ -110,12 +110,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
+- Added: Multiworld and item tracker support for console.
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
 - Fixed: Speed Booster offworld not displaying correctly for Metroid Dread.
 - Fixed: Map tracker could not be opened if the final boss is Ridley.
 - Changed: The preset entry for Aeion and Energy are now combined into one.
 - Changed: The preset entries for the Goal and Hints don't enforce a minimum size anymore.
 - Changed: Adjust spacing on the Elevator preset entry.
+- Changed: Instead of a path to the RomFS, you now need to provide a decrypted 3ds, cia, cxi or app rom file.
+- Removed: Requirement to provide the ExHeader for multiworld.
+- Removed: Selection of PAL or NTSC region. This is automatically determined by the provided rom file.
 
 ## [8.5.0] - 2024-10-01
 
