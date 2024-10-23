@@ -455,6 +455,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == DockNode:
             connection_node: Node = self.dock_connection_node_combo.currentData()
+            override_open_req = None
+            override_lock_req = None
+            if isinstance(self.node, DockNode):
+                override_open_req = self.node.override_default_open_requirement
+                override_lock_req = self.node.override_default_lock_requirement
 
             return DockNode(
                 identifier,
@@ -468,8 +473,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 self.dock_type_combo.currentData(),
                 connection_node.identifier,
                 self.dock_weakness_combo.currentData(),
-                None,
-                None,
+                override_open_req,
+                override_lock_req,
                 self.dock_exclude_lock_rando_check.isChecked(),
                 tuple(self.dock_incompatible_model.items),
                 None if len(self.ui_name_edit.text()) == 0 else self.ui_name_edit.text(),
