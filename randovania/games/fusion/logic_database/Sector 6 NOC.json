@@ -289,7 +289,7 @@
                         "Door to Entrance Recharge Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: revisit after proper SWJ implementation",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -4456,7 +4456,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "ShinesparkTrick",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -4703,16 +4703,57 @@
                                                         "comment": "Freeze Zozoro: https://youtu.be/wu8pKLvrAMw",
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Any Weapon"
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Freeze without Diffusion",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies With Ice Beam"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies With Ice Missiles"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "StandOnFrozenEnemies",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Freeze with Diffusion",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Diffusion"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -5961,7 +6002,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Movement",
-                                                                    "amount": 4,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -7184,7 +7225,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Possible with Single Wall Jumping Physics going up the left side.",
+                                                        "comment": "Possible with Single Wall Jumping the left side.",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -7530,79 +7571,8 @@
                         "Door to Twin Caverns East (Upper)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Hold right after getting item: https://youtu.be/LcvWRxDgZew",
                                 "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With WJ: https://youtu.be/FVO9oTKMA3c",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With Springball https://youtu.be/zIZTb7Y3Q9o",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Springball"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With SJ: https://youtu.be/ai9uskBbhUY",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Ledge Grab: https://youtu.be/LcvWRxDgZew",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -7760,7 +7730,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze Zozoro https://youtu.be/JDSabpkP9qo",
+                                            "comment": "Freeze Zozoro while it's at the door: https://youtu.be/JDSabpkP9qo",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7774,6 +7744,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Freeze Enemies With Any Weapon"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -7785,6 +7764,27 @@
                                             "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "SWJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7953,6 +7953,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8016,6 +8025,15 @@
                                                         "type": "damage",
                                                         "name": "NormalDamage",
                                                         "amount": 61,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -8131,10 +8149,55 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Maintenance Annex": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 69,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8171,10 +8234,55 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Twin Caverns West (Upper)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 69,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Twin Cavern Save Room": {
@@ -8200,7 +8308,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "DamageRuns",
+                                                        "name": "DamageBoosts",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -9162,7 +9270,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/uVPnKswaeOY&t=77s",
+                                "comment": "Charge at the top and shinespark in mid-air, or shinespark from below: https://youtu.be/uVPnKswaeOY&t=77s",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9172,10 +9280,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Have Any Jump Upgrade"
                                     }
                                 ]
                             }
