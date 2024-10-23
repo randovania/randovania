@@ -178,7 +178,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         target_platform=MSRModPlatform.LUMA,
         output_preference=json.dumps(
             {
@@ -203,7 +203,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker):
 
     assert result == MSRGameExportParams(
         spoiler_output=output_path.joinpath("spoiler.rdvgame"),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         output_path=output_path,
         target_platform=MSRModPlatform.LUMA,
         clean_output_path=False,
@@ -222,7 +222,7 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         target_platform=MSRModPlatform.CITRA,
         output_preference=json.dumps({"selected_tab": "citra", "tab_options": {}}),
     )
@@ -234,7 +234,7 @@ def test_get_game_export_params_citra(skip_qtbot, tmp_path, mocker):
     # Assert
     assert result == MSRGameExportParams(
         spoiler_output=citra_path.joinpath("spoiler.rdvgame"),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         output_path=citra_path,
         target_platform=MSRModPlatform.CITRA,
         clean_output_path=False,
@@ -249,7 +249,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
 
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         target_platform=MSRModPlatform.LUMA,
         output_preference=json.dumps(
             {
@@ -275,7 +275,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
     # Assert
     assert result == MSRGameExportParams(
         spoiler_output=tmp_path.joinpath("internal", "msr", "contents", "spoiler.rdvgame"),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         output_path=tmp_path.joinpath("internal", "msr", "contents"),
         target_platform=MSRModPlatform.LUMA,
         clean_output_path=True,
@@ -294,7 +294,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     options = MagicMock()
     options.options_for_game.return_value = MSRPerGameOptions(
         cosmetic_patches=MSRCosmeticPatches.default(),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         output_preference=json.dumps(
             {
                 "selected_tab": "custom",
@@ -314,7 +314,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     # Assert
     assert result == MSRGameExportParams(
         spoiler_output=tmp_path.joinpath("output", "spoiler.rdvgame"),
-        input_file=tmp_path.joinpath("input"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         output_path=tmp_path.joinpath("output"),
         target_platform=MSRModPlatform.CITRA,
         clean_output_path=False,
@@ -322,7 +322,7 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
     )
 
 
-def test_export_button_without_remote(skip_qtbot, tmp_path, mocker):
+def test_export_button(skip_qtbot, tmp_path, mocker):
     # Setup
     mocker.patch("platform.system", return_value="Windows")
     citra_path = tmp_path.joinpath("citra_mod")
@@ -336,9 +336,9 @@ def test_export_button_without_remote(skip_qtbot, tmp_path, mocker):
     )
     window = MSRGameExportDialog(options, {}, "MyHash", True, [])
 
-    # force that input_file_edit is valid to only test input_exheader behaviour
+    # force that input_file_edit is valid
     window.input_file_edit.has_error = False
     window.update_accept_validation()
 
-    # export button is enabled because no "enable_remote_lua"
+    # export button is enabled
     assert window.accept_button.isEnabled()

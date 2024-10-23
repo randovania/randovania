@@ -89,7 +89,6 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         # Input
         self.input_file_edit.textChanged.connect(self._on_input_file_change)
         self.input_file_button.clicked.connect(self._on_input_file_button)
-        # self.encrypted_hint.setVisible(False)
 
         # Target Platform
         if per_game.target_platform == MSRModPlatform.LUMA:
