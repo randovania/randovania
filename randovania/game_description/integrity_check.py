@@ -293,5 +293,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_invalid_strongly_connected_components(game))
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
+    result.extend(game.game.data.logic_db_integrity(game))
 
     return result
