@@ -110,7 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
-- Added: Multiworld and item tracker support for Luma3DS.
+- Added: Multiworld and item tracker support for console.
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
 - Fixed: Speed Booster offworld not displaying correctly for Metroid Dread.
 - Fixed: Map tracker could not be opened if the final boss is Ridley.
