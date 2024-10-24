@@ -243,7 +243,7 @@ _custom_shuffled_count = {
     "Refined Flammables": 0,
     "Regular Inserter Capacity Bonus": 3,
     "Research Speed": 5,
-    "Stack Inserter Capacity Bonus": 4,
+    "Bulk Inserter Capacity Bonus": 4,
     "Stronger Explosives": 0,
     "Research Productivity": 5,
     "Toolbelt": 3,
