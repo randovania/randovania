@@ -26,7 +26,6 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     exporter = FactorioGameExporter()
     export_params = FactorioGameExportParams(
         spoiler_output=None,
-        input_path=tmp_path.joinpath("input_path"),
         output_path=tmp_path.joinpath("output", "path"),
     )
     progress_update = MagicMock()
@@ -36,7 +35,6 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
 
     # Assert
     mock_patch.assert_called_with(
-        factorio_path=tmp_path.joinpath("input_path"),
         patch_data=json_data,
         output_folder=tmp_path.joinpath("output", "path"),
     )
