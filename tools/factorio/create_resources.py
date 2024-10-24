@@ -81,6 +81,7 @@ _k_miner_for_resource = {
         [
             template_req("use-electric-mining-drill"),
             template_req("craft-sulfuric-acid"),
+            tech_req("uranium-mining"),
         ]
     ),
     "crude-oil": template_req("use-pumpjack"),
@@ -235,7 +236,7 @@ def read_tech_csv(csv_path: Path) -> dict:
 
 
 _custom_shuffled_count = {
-    "Energy Weapons Damage": 0,
+    "Laser Weapons Damage": 0,
     "Follower Robot Count": 0,
     "Laser Shooting Speed": 0,
     "Mining Productivity": 4,
@@ -336,6 +337,8 @@ def main():
 
     with header_path.open() as f:
         header = json.load(f)
+
+    header["resource_database"]["requirement_template"] = {}
 
     with pickup_db_path.open() as f:
         pickup_db = json.load(f)
