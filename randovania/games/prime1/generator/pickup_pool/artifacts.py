@@ -68,6 +68,7 @@ def create_artifact(
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,
             probability_offset=0.25,
+            probability_multiplier=1.2,
             required_progression=minimum_progression,
         ),
     )
