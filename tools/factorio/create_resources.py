@@ -289,6 +289,7 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
                 else:
                     result[pickup_name]["custom_count_for_shuffled_case"] = _custom_shuffled_count[pickup_name]
 
+    result["Uranium Mining"]["expected_case_for_describer"] = "starting_item"
     result["Rocket Silo"]["expected_case_for_describer"] = "vanilla"
     result["Rocket Silo"]["hide_from_gui"] = True
 
