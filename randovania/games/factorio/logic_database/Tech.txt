@@ -9,13 +9,13 @@ Tech Tree
   > Connection to Tier 3
       Craft Transport belt
   > Connection to Tier 4
-      Craft Assembling machine 1 and Craft Inserter and Has Electricity
+      Craft Assembling machine 1 and Craft Electric mining drill and Craft Inserter and Has Electricity
   > Connection to Tier 5
       Railway and Craft Fast inserter and Craft Fast transport belt
   > Connection to Tier 6
       Construction robotics and Craft Assembling machine 2
   > Connection to Tier 7
-      Craft Stack inserter
+      Craft Bulk inserter
   > Connection to Tier 8
       Lab research speed 6 and Craft Assembling machine 3
   > Connection to Tier 9
@@ -88,22 +88,49 @@ Tier 1
 > Connection to Tech Tree; Heals? False
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 1
-  > Pickup (Automation)
-      Craft Automation science pack
-  > Pickup (Gun turret)
-      Craft Automation science pack
-  > Pickup (Wall)
-      Craft Automation science pack
-  > Pickup (Inserter)
-      Trivial
   > Pickup (Steam power)
-      Trivial
+      Craft Iron plate
+  > Pickup (Electronics)
+      Craft Copper plate
   > Pickup (Automation science pack)
+      Tech/Tier 1/Pickup (Steam power) and Tech/Tier 1/Pickup (Electronics) and Craft Burner lab
+  > Pickup (Automation)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Gun turret)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Wall)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+
+> Pickup (Steam power); Heals? False
+  * Layers: default
+  * Pickup 0; Category? Major
+  * Extra - original_tech: steam-power
+  * Extra - tech_name: randovania-steam-power
+  * Extra - research_trigger: frozendict.frozendict({'type': 'craft-item', 'item': 'iron-plate', 'count': 50})
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Electronics); Heals? False
+  * Layers: default
+  * Pickup 1; Category? Major
+  * Extra - original_tech: electronics
+  * Extra - tech_name: randovania-electronics
+  * Extra - research_trigger: frozendict.frozendict({'type': 'craft-item', 'item': 'copper-plate', 'count': 10})
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Automation science pack); Heals? False
+  * Layers: default
+  * Pickup 2; Category? Major
+  * Extra - original_tech: automation-science-pack
+  * Extra - tech_name: randovania-automation-science-pack
+  * Extra - research_trigger: frozendict.frozendict({'type': 'craft-item', 'item': 'burner-lab'})
+  > Connection to Tech Tree
       Trivial
 
 > Pickup (Automation); Heals? False
   * Layers: default
-  * Pickup 1; Category? Major
+  * Pickup 6; Category? Major
   * Extra - original_tech: automation
   * Extra - tech_name: randovania-automation
   * Extra - count: 10
@@ -114,7 +141,7 @@ Tier 1
 
 > Pickup (Gun turret); Heals? False
   * Layers: default
-  * Pickup 6; Category? Major
+  * Pickup 13; Category? Major
   * Extra - original_tech: gun-turret
   * Extra - tech_name: randovania-gun-turret
   * Extra - count: 10
@@ -125,7 +152,7 @@ Tier 1
 
 > Pickup (Wall); Heals? False
   * Layers: default
-  * Pickup 7; Category? Major
+  * Pickup 14; Category? Major
   * Extra - original_tech: stone-wall
   * Extra - tech_name: randovania-stone-wall
   * Extra - count: 10
@@ -134,80 +161,66 @@ Tier 1
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Inserter); Heals? False
-  * Layers: default
-  * Pickup 186; Category? Major
-  * Extra - original_tech: inserter
-  * Extra - tech_name: randovania-inserter
-  * Extra - count: 20
-  * Extra - time: 10
-  * Extra - ingredients: ()
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Steam power); Heals? False
-  * Layers: default
-  * Pickup 185; Category? Major
-  * Extra - original_tech: steam-power
-  * Extra - tech_name: randovania-steam-power
-  * Extra - count: 50
-  * Extra - time: 20
-  * Extra - ingredients: ()
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Automation science pack); Heals? False
-  * Layers: default
-  * Pickup 184; Category? Major
-  * Extra - original_tech: automation-science-pack
-  * Extra - tech_name: randovania-automation-science-pack
-  * Extra - count: 10
-  * Extra - time: 10
-  * Extra - ingredients: ()
-  > Connection to Tech Tree
-      Trivial
-
 ----------------
 Tier 2
 > Connection to Tech Tree; Heals? False
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 2
-  > Pickup (Military)
-      Craft Automation science pack
-  > Pickup (Steel processing)
-      Craft Automation science pack
+  > Pickup (Electric mining drill)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Repair pack)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Radar)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
   > Pickup (Logistic science pack)
-      Craft Automation science pack
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Steel processing)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Military)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
   > Pickup (Logistics)
-      Craft Automation science pack
-  > Pickup (Optics)
-      Craft Automation science pack
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Lamp)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Steel axe)
+      Tech/Tier 2/Pickup (Steel processing) and Craft Steel plate
 
-> Pickup (Military); Heals? False
+> Pickup (Electric mining drill); Heals? False
   * Layers: default
-  * Pickup 0; Category? Major
-  * Extra - original_tech: military
-  * Extra - tech_name: randovania-military
-  * Extra - count: 10
-  * Extra - time: 15
+  * Pickup 3; Category? Major
+  * Extra - original_tech: electric-mining-drill
+  * Extra - tech_name: randovania-electric-mining-drill
+  * Extra - count: 25
+  * Extra - time: 10
   * Extra - ingredients: ('automation-science-pack',)
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Steel processing); Heals? False
+> Pickup (Repair pack); Heals? False
   * Layers: default
-  * Pickup 2; Category? Major
-  * Extra - original_tech: steel-processing
-  * Extra - tech_name: randovania-steel-processing
-  * Extra - count: 50
-  * Extra - time: 5
+  * Pickup 4; Category? Major
+  * Extra - original_tech: repair-pack
+  * Extra - tech_name: randovania-repair-pack
+  * Extra - count: 25
+  * Extra - time: 10
+  * Extra - ingredients: ('automation-science-pack',)
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Radar); Heals? False
+  * Layers: default
+  * Pickup 5; Category? Major
+  * Extra - original_tech: radar
+  * Extra - tech_name: randovania-radar
+  * Extra - count: 20
+  * Extra - time: 10
   * Extra - ingredients: ('automation-science-pack',)
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Logistic science pack); Heals? False
   * Layers: default
-  * Pickup 3; Category? Major
+  * Pickup 7; Category? Major
   * Extra - original_tech: logistic-science-pack
   * Extra - tech_name: randovania-logistic-science-pack
   * Extra - count: 75
@@ -216,9 +229,31 @@ Tier 2
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Steel processing); Heals? False
+  * Layers: default
+  * Pickup 8; Category? Major
+  * Extra - original_tech: steel-processing
+  * Extra - tech_name: randovania-steel-processing
+  * Extra - count: 50
+  * Extra - time: 5
+  * Extra - ingredients: ('automation-science-pack',)
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Military); Heals? False
+  * Layers: default
+  * Pickup 9; Category? Major
+  * Extra - original_tech: military
+  * Extra - tech_name: randovania-military
+  * Extra - count: 10
+  * Extra - time: 15
+  * Extra - ingredients: ('automation-science-pack',)
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Logistics); Heals? False
   * Layers: default
-  * Pickup 4; Category? Major
+  * Pickup 11; Category? Major
   * Extra - original_tech: logistics
   * Extra - tech_name: randovania-logistics
   * Extra - count: 20
@@ -227,14 +262,23 @@ Tier 2
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Optics); Heals? False
+> Pickup (Lamp); Heals? False
   * Layers: default
-  * Pickup 5; Category? Major
-  * Extra - original_tech: optics
-  * Extra - tech_name: randovania-optics
+  * Pickup 12; Category? Major
+  * Extra - original_tech: lamp
+  * Extra - tech_name: randovania-lamp
   * Extra - count: 10
   * Extra - time: 15
   * Extra - ingredients: ('automation-science-pack',)
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Steel axe); Heals? False
+  * Layers: default
+  * Pickup 19; Category? Major
+  * Extra - original_tech: steel-axe
+  * Extra - tech_name: randovania-steel-axe
+  * Extra - research_trigger: frozendict.frozendict({'type': 'craft-item', 'item': 'steel-plate', 'count': 50})
   > Connection to Tech Tree
       Trivial
 
@@ -243,24 +287,20 @@ Tier 3
 > Connection to Tech Tree; Heals? False
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 3
-  > Pickup (Electronics)
-      Tech/Tier 1/Pickup (Automation) and Craft Automation science pack
-  > Pickup (Heavy armor)
-      Tech/Tier 2/Pickup (Military) and Tech/Tier 2/Pickup (Steel processing) and Craft Automation science pack
+  > Pickup (Fast inserter)
+      Tech/Tier 1/Pickup (Automation science pack) and Craft Automation science pack
+  > Pickup (Automation 2)
+      Tech/Tier 1/Pickup (Automation) and Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Military 2)
       Tech/Tier 2/Pickup (Military) and Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Automation 2)
-      Tech/Tier 3/Pickup (Electronics) and Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Fast inserter)
-      Tech/Tier 3/Pickup (Electronics) and Craft Automation science pack
-  > Pickup (Military science pack)
-      Tech/Tier 3/Pickup (Military 2) and Tech/Tier 1/Pickup (Wall) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Heavy armor)
+      Tech/Tier 2/Pickup (Military) and Tech/Tier 2/Pickup (Steel processing) and Craft Automation science pack
   > Pickup (Barrel handling)
       Tech/Tier 3/Pickup (Automation 2) and Tech/Tier 4/Pickup (Engine) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Fluid storage)
-      Tech/Tier 3/Pickup (Barrel handling) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Military science pack)
+      Tech/Tier 3/Pickup (Military 2) and Tech/Tier 1/Pickup (Wall) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Chemical science pack)
-      Tech/Tier 5/Pickup (Advanced electronics) and Tech/Tier 5/Pickup (Sulfur processing) and Craft Automation science pack and Craft Logistic science pack
+      Tech/Tier 5/Pickup (Advanced circuit) and Tech/Tier 5/Pickup (Sulfur processing) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Nightvision)
       Tech/Tier 4/Pickup (Portable solar panel) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Belt immunity equipment)
@@ -268,53 +308,9 @@ Tier 3
   > Pickup (Personal battery)
       Tech/Tier 5/Pickup (Battery) and Tech/Tier 4/Pickup (Portable solar panel) and Craft Automation science pack and Craft Logistic science pack
 
-> Pickup (Electronics); Heals? False
-  * Layers: default
-  * Pickup 10; Category? Major
-  * Extra - original_tech: electronics
-  * Extra - tech_name: randovania-electronics
-  * Extra - count: 30
-  * Extra - time: 15
-  * Extra - ingredients: ('automation-science-pack',)
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Heavy armor); Heals? False
-  * Layers: default
-  * Pickup 12; Category? Major
-  * Extra - original_tech: heavy-armor
-  * Extra - tech_name: randovania-heavy-armor
-  * Extra - count: 30
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack',)
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Military 2); Heals? False
-  * Layers: default
-  * Pickup 13; Category? Major
-  * Extra - original_tech: military-2
-  * Extra - tech_name: randovania-military-c
-  * Extra - count: 20
-  * Extra - time: 15
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Automation 2); Heals? False
-  * Layers: default
-  * Pickup 21; Category? Major
-  * Extra - original_tech: automation-2
-  * Extra - tech_name: randovania-automation-c
-  * Extra - count: 40
-  * Extra - time: 15
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Fast inserter); Heals? False
   * Layers: default
-  * Pickup 22; Category? Major
+  * Pickup 10; Category? Major
   * Extra - original_tech: fast-inserter
   * Extra - tech_name: randovania-fast-inserter
   * Extra - count: 30
@@ -323,20 +319,42 @@ Tier 3
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Military science pack); Heals? False
+> Pickup (Automation 2); Heals? False
   * Layers: default
-  * Pickup 28; Category? Major
-  * Extra - original_tech: military-science-pack
-  * Extra - tech_name: randovania-military-science-pack
-  * Extra - count: 30
+  * Pickup 18; Category? Major
+  * Extra - original_tech: automation-2
+  * Extra - tech_name: randovania-automation-c
+  * Extra - count: 40
   * Extra - time: 15
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Military 2); Heals? False
+  * Layers: default
+  * Pickup 26; Category? Major
+  * Extra - original_tech: military-2
+  * Extra - tech_name: randovania-military-c
+  * Extra - count: 20
+  * Extra - time: 15
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Heavy armor); Heals? False
+  * Layers: default
+  * Pickup 27; Category? Major
+  * Extra - original_tech: heavy-armor
+  * Extra - tech_name: randovania-heavy-armor
+  * Extra - count: 30
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack',)
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Barrel handling); Heals? False
   * Layers: default
-  * Pickup 33; Category? Major
+  * Pickup 31; Category? Major
   * Extra - original_tech: fluid-handling
   * Extra - tech_name: randovania-fluid-handling
   * Extra - count: 50
@@ -345,12 +363,12 @@ Tier 3
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Fluid storage); Heals? False
+> Pickup (Military science pack); Heals? False
   * Layers: default
-  * Pickup 183; Category? Major
-  * Extra - original_tech: fluid-storage
-  * Extra - tech_name: randovania-fluid-storage
-  * Extra - count: 50
+  * Pickup 36; Category? Major
+  * Extra - original_tech: military-science-pack
+  * Extra - tech_name: randovania-military-science-pack
+  * Extra - count: 30
   * Extra - time: 15
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
   > Connection to Tech Tree
@@ -358,7 +376,7 @@ Tier 3
 
 > Pickup (Chemical science pack); Heals? False
   * Layers: default
-  * Pickup 59; Category? Major
+  * Pickup 65; Category? Major
   * Extra - original_tech: chemical-science-pack
   * Extra - tech_name: randovania-chemical-science-pack
   * Extra - count: 75
@@ -369,7 +387,7 @@ Tier 3
 
 > Pickup (Nightvision); Heals? False
   * Layers: default
-  * Pickup 92; Category? Major
+  * Pickup 105; Category? Major
   * Extra - original_tech: night-vision-equipment
   * Extra - tech_name: randovania-night-vision-equipment
   * Extra - count: 50
@@ -380,7 +398,7 @@ Tier 3
 
 > Pickup (Belt immunity equipment); Heals? False
   * Layers: default
-  * Pickup 93; Category? Major
+  * Pickup 106; Category? Major
   * Extra - original_tech: belt-immunity-equipment
   * Extra - tech_name: randovania-belt-immunity-equipment
   * Extra - count: 50
@@ -391,7 +409,7 @@ Tier 3
 
 > Pickup (Personal battery); Heals? False
   * Layers: default
-  * Pickup 94; Category? Major
+  * Pickup 107; Category? Major
   * Extra - original_tech: battery-equipment
   * Extra - tech_name: randovania-battery-equipment
   * Extra - count: 50
@@ -405,20 +423,20 @@ Tier 4
 > Connection to Tech Tree; Heals? False
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 4
-  > Pickup (Steel axe)
-      Tech/Tier 2/Pickup (Steel processing) and Craft Automation science pack
-  > Pickup (Engine)
-      Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Landfill)
       Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Circuit network)
-      Tech/Tier 3/Pickup (Electronics) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
+      Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Engine)
+      Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Flammables)
       Tech/Tier 5/Pickup (Oil processing) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Flamethrower)
       Tech/Tier 4/Pickup (Flammables) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Explosives)
       Tech/Tier 5/Pickup (Sulfur processing) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Advanced combinators)
+      Tech/Tier 4/Pickup (Circuit network) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Portable solar panel)
       Tech/Tier 5/Pickup (Modular armor) and Tech/Tier 6/Pickup (Solar energy) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Speed module)
@@ -432,37 +450,15 @@ Tier 4
   > Pickup (Electric engine)
       Tech/Tier 4/Pickup (Lubricant) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Exoskeleton)
-      Tech/Tier 6/Pickup (Advanced electronics 2) and Tech/Tier 4/Pickup (Electric engine) and Tech/Tier 4/Pickup (Portable solar panel) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+      Tech/Tier 6/Pickup (Processing unit) and Tech/Tier 4/Pickup (Electric engine) and Tech/Tier 4/Pickup (Portable solar panel) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Worker robot speed 1)
       Tech/Tier 5/Pickup (Robotics) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Personal roboport)
       Tech/Tier 5/Pickup (Construction robotics) and Tech/Tier 4/Pickup (Portable solar panel) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
 
-> Pickup (Steel axe); Heals? False
-  * Layers: default
-  * Pickup 11; Category? Major
-  * Extra - original_tech: steel-axe
-  * Extra - tech_name: randovania-steel-axe
-  * Extra - count: 50
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack',)
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Engine); Heals? False
-  * Layers: default
-  * Pickup 15; Category? Major
-  * Extra - original_tech: engine
-  * Extra - tech_name: randovania-engine
-  * Extra - count: 100
-  * Extra - time: 15
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Landfill); Heals? False
   * Layers: default
-  * Pickup 16; Category? Major
+  * Pickup 15; Category? Major
   * Extra - original_tech: landfill
   * Extra - tech_name: randovania-landfill
   * Extra - count: 50
@@ -473,7 +469,7 @@ Tier 4
 
 > Pickup (Circuit network); Heals? False
   * Layers: default
-  * Pickup 25; Category? Major
+  * Pickup 17; Category? Major
   * Extra - original_tech: circuit-network
   * Extra - tech_name: randovania-circuit-network
   * Extra - count: 100
@@ -482,9 +478,20 @@ Tier 4
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Engine); Heals? False
+  * Layers: default
+  * Pickup 23; Category? Major
+  * Extra - original_tech: engine
+  * Extra - tech_name: randovania-engine
+  * Extra - count: 100
+  * Extra - time: 15
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Flammables); Heals? False
   * Layers: default
-  * Pickup 43; Category? Major
+  * Pickup 51; Category? Major
   * Extra - original_tech: flammables
   * Extra - tech_name: randovania-flammables
   * Extra - count: 50
@@ -495,7 +502,7 @@ Tier 4
 
 > Pickup (Flamethrower); Heals? False
   * Layers: default
-  * Pickup 48; Category? Major
+  * Pickup 55; Category? Major
   * Extra - original_tech: flamethrower
   * Extra - tech_name: randovania-flamethrower
   * Extra - count: 50
@@ -506,7 +513,7 @@ Tier 4
 
 > Pickup (Explosives); Heals? False
   * Layers: default
-  * Pickup 49; Category? Major
+  * Pickup 56; Category? Major
   * Extra - original_tech: explosives
   * Extra - tech_name: randovania-explosives
   * Extra - count: 100
@@ -515,9 +522,20 @@ Tier 4
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Advanced combinators); Heals? False
+  * Layers: default
+  * Pickup 85; Category? Major
+  * Extra - original_tech: advanced-combinators
+  * Extra - tech_name: randovania-advanced-combinators
+  * Extra - count: 50
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Portable solar panel); Heals? False
   * Layers: default
-  * Pickup 75; Category? Major
+  * Pickup 86; Category? Major
   * Extra - original_tech: solar-panel-equipment
   * Extra - tech_name: randovania-solar-panel-equipment
   * Extra - count: 100
@@ -528,7 +546,7 @@ Tier 4
 
 > Pickup (Speed module); Heals? False
   * Layers: default
-  * Pickup 76; Category? Major
+  * Pickup 87; Category? Major
   * Extra - original_tech: speed-module
   * Extra - tech_name: randovania-speed-module
   * Extra - count: 50
@@ -539,7 +557,7 @@ Tier 4
 
 > Pickup (Productivity module); Heals? False
   * Layers: default
-  * Pickup 77; Category? Major
+  * Pickup 88; Category? Major
   * Extra - original_tech: productivity-module
   * Extra - tech_name: randovania-productivity-module
   * Extra - count: 50
@@ -550,9 +568,9 @@ Tier 4
 
 > Pickup (Efficiency module); Heals? False
   * Layers: default
-  * Pickup 78; Category? Major
-  * Extra - original_tech: effectivity-module
-  * Extra - tech_name: randovania-effectivity-module
+  * Pickup 89; Category? Major
+  * Extra - original_tech: efficiency-module
+  * Extra - tech_name: randovania-efficiency-module
   * Extra - count: 50
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
@@ -561,7 +579,7 @@ Tier 4
 
 > Pickup (Lubricant); Heals? False
   * Layers: default
-  * Pickup 89; Category? Major
+  * Pickup 102; Category? Major
   * Extra - original_tech: lubricant
   * Extra - tech_name: randovania-lubricant
   * Extra - count: 50
@@ -572,7 +590,7 @@ Tier 4
 
 > Pickup (Electric engine); Heals? False
   * Layers: default
-  * Pickup 102; Category? Major
+  * Pickup 115; Category? Major
   * Extra - original_tech: electric-engine
   * Extra - tech_name: randovania-electric-engine
   * Extra - count: 50
@@ -583,7 +601,7 @@ Tier 4
 
 > Pickup (Exoskeleton); Heals? False
   * Layers: default
-  * Pickup 114; Category? Major
+  * Pickup 132; Category? Major
   * Extra - original_tech: exoskeleton-equipment
   * Extra - tech_name: randovania-exoskeleton-equipment
   * Extra - count: 50
@@ -594,7 +612,7 @@ Tier 4
 
 > Pickup (Worker robot speed 1); Heals? False
   * Layers: default
-  * Pickup 122; Category? Major
+  * Pickup 145; Category? Major
   * Extra - original_tech: worker-robots-speed-1
   * Extra - tech_name: randovania-worker-robots-speed-b
   * Extra - count: 50
@@ -605,7 +623,7 @@ Tier 4
 
 > Pickup (Personal roboport); Heals? False
   * Layers: default
-  * Pickup 127; Category? Major
+  * Pickup 160; Category? Major
   * Extra - original_tech: personal-roboport-equipment
   * Extra - tech_name: randovania-personal-roboport-equipment
   * Extra - count: 50
@@ -619,16 +637,18 @@ Tier 5
 > Connection to Tech Tree; Heals? False
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 5
+  > Pickup (Toolbelt)
+      Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Electric energy distribution 1)
+      Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Advanced material processing)
+      Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Physical projectile damage 1)
       Tech/Tier 2/Pickup (Military) and Craft Automation science pack
   > Pickup (Weapon shooting speed 1)
       Tech/Tier 2/Pickup (Military) and Craft Automation science pack
-  > Pickup (Advanced material processing)
-      Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Toolbelt)
-      Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Electric energy distribution 1)
-      Tech/Tier 3/Pickup (Electronics) and Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Lab research speed 1)
+      Tech/Tier 3/Pickup (Automation 2) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Stronger explosives 1)
       Tech/Tier 3/Pickup (Military 2) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Gate)
@@ -637,21 +657,19 @@ Tier 5
       Tech/Tier 6/Pickup (Logistics 2) and Tech/Tier 4/Pickup (Engine) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Automobilism)
       Tech/Tier 6/Pickup (Logistics 2) and Tech/Tier 4/Pickup (Engine) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Lab research speed 1)
-      Tech/Tier 3/Pickup (Automation 2) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Oil gathering)
+      Tech/Tier 3/Pickup (Barrel handling) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Defender)
       Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
-  > Pickup (Automated rail transportation)
-      Tech/Tier 5/Pickup (Railway) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Oil processing)
-      Tech/Tier 3/Pickup (Barrel handling) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Rail signals)
-      Tech/Tier 5/Pickup (Automated rail transportation) and Craft Automation science pack and Craft Logistic science pack
+      Tech/Tier 5/Pickup (Oil gathering) and Mine Crude oil
+  > Pickup (Follower robot count 1)
+      Tech/Tier 5/Pickup (Defender) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Sulfur processing)
       Tech/Tier 5/Pickup (Oil processing) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Battery)
       Tech/Tier 5/Pickup (Sulfur processing) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Advanced electronics)
+  > Pickup (Advanced circuit)
       Tech/Tier 6/Pickup (Plastics) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Refined flammables 1)
       Tech/Tier 4/Pickup (Flamethrower) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
@@ -663,46 +681,50 @@ Tier 5
       Tech/Tier 4/Pickup (Explosives) and Tech/Tier 4/Pickup (Flammables) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Electric energy accumulators)
       Tech/Tier 5/Pickup (Electric energy distribution 1) and Tech/Tier 5/Pickup (Battery) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Stack inserter)
-      Tech/Tier 3/Pickup (Fast inserter) and Tech/Tier 6/Pickup (Logistics 2) and Tech/Tier 5/Pickup (Advanced electronics) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Bulk inserter)
+      Tech/Tier 3/Pickup (Fast inserter) and Tech/Tier 6/Pickup (Logistics 2) and Tech/Tier 5/Pickup (Advanced circuit) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Modular armor)
-      Tech/Tier 3/Pickup (Heavy armor) and Tech/Tier 5/Pickup (Advanced electronics) and Craft Automation science pack and Craft Logistic science pack
+      Tech/Tier 3/Pickup (Heavy armor) and Tech/Tier 5/Pickup (Advanced circuit) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Modules)
-      Tech/Tier 5/Pickup (Advanced electronics) and Craft Automation science pack and Craft Logistic science pack
+      Tech/Tier 5/Pickup (Advanced circuit) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Military 3)
       Tech/Tier 3/Pickup (Chemical science pack) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Braking force 1)
       Tech/Tier 5/Pickup (Railway) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Laser)
-      Tech/Tier 2/Pickup (Optics) and Tech/Tier 5/Pickup (Battery) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+      Tech/Tier 5/Pickup (Battery) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Electric energy distribution 2)
       Tech/Tier 5/Pickup (Electric energy distribution 1) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Advanced oil processing)
       Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+  > Pickup (Uranium mining)
+      Tech/Tier 3/Pickup (Chemical science pack) and Tech/Tier 6/Pickup (Concrete) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Explosive rocketry)
       Tech/Tier 5/Pickup (Rocketry) and Tech/Tier 5/Pickup (Military 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Energy weapons damage 1)
       Tech/Tier 5/Pickup (Laser) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Laser shooting speed 1)
       Tech/Tier 5/Pickup (Laser) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+  > Pickup (Uranium processing)
+      Tech/Tier 5/Pickup (Uranium mining) and Mine Uranium ore
   > Pickup (Energy shield)
       Tech/Tier 4/Pickup (Portable solar panel) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Speed module 2)
-      Tech/Tier 4/Pickup (Speed module) and Tech/Tier 6/Pickup (Advanced electronics 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+      Tech/Tier 4/Pickup (Speed module) and Tech/Tier 6/Pickup (Processing unit) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Production science pack)
       Tech/Tier 4/Pickup (Productivity module) and Tech/Tier 6/Pickup (Advanced material processing 2) and Tech/Tier 5/Pickup (Railway) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Productivity module 2)
-      Tech/Tier 4/Pickup (Productivity module) and Tech/Tier 6/Pickup (Advanced electronics 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+      Tech/Tier 4/Pickup (Productivity module) and Tech/Tier 6/Pickup (Processing unit) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Efficiency module 2)
-      Tech/Tier 4/Pickup (Efficiency module) and Tech/Tier 6/Pickup (Advanced electronics 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+      Tech/Tier 4/Pickup (Efficiency module) and Tech/Tier 6/Pickup (Processing unit) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Laser shooting speed 2)
       Tech/Tier 5/Pickup (Laser shooting speed 1) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Effect transmission)
-      Tech/Tier 6/Pickup (Advanced electronics 2) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
-  > Pickup (Nuclear fuel reprocessing)
-      Tech/Tier 7/Pickup (Nuclear power) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+      Tech/Tier 6/Pickup (Processing unit) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Robotics)
       Tech/Tier 4/Pickup (Electric engine) and Tech/Tier 5/Pickup (Battery) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+  > Pickup (Nuclear fuel reprocessing)
+      Tech/Tier 7/Pickup (Nuclear power) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Personal battery MK2)
       Tech/Tier 3/Pickup (Personal battery) and Tech/Tier 7/Pickup (Low density structure) and Tech/Tier 6/Pickup (Power armor) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Personal laser defense)
@@ -710,48 +732,15 @@ Tier 5
   > Pickup (Discharge defense)
       Tech/Tier 6/Pickup (Laser turret) and Tech/Tier 5/Pickup (Military 3) and Tech/Tier 6/Pickup (Power armor) and Tech/Tier 4/Pickup (Portable solar panel) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Utility science pack)
-      Tech/Tier 5/Pickup (Robotics) and Tech/Tier 6/Pickup (Advanced electronics 2) and Tech/Tier 7/Pickup (Low density structure) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+      Tech/Tier 5/Pickup (Robotics) and Tech/Tier 6/Pickup (Processing unit) and Tech/Tier 7/Pickup (Low density structure) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Construction robotics)
       Tech/Tier 5/Pickup (Robotics) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Worker robot speed 2)
       Tech/Tier 4/Pickup (Worker robot speed 1) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
 
-> Pickup (Physical projectile damage 1); Heals? False
-  * Layers: default
-  * Pickup 8; Category? Major
-  * Extra - original_tech: physical-projectile-damage-1
-  * Extra - tech_name: randovania-physical-projectile-damage-b
-  * Extra - count: 100
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack',)
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Weapon shooting speed 1); Heals? False
-  * Layers: default
-  * Pickup 9; Category? Major
-  * Extra - original_tech: weapon-shooting-speed-1
-  * Extra - tech_name: randovania-weapon-shooting-speed-b
-  * Extra - count: 100
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack',)
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Advanced material processing); Heals? False
-  * Layers: default
-  * Pickup 14; Category? Major
-  * Extra - original_tech: advanced-material-processing
-  * Extra - tech_name: randovania-advanced-material-processing
-  * Extra - count: 75
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Toolbelt); Heals? False
   * Layers: default
-  * Pickup 17; Category? Major
+  * Pickup 16; Category? Major
   * Extra - original_tech: toolbelt
   * Extra - tech_name: randovania-toolbelt
   * Extra - count: 100
@@ -762,7 +751,7 @@ Tier 5
 
 > Pickup (Electric energy distribution 1); Heals? False
   * Layers: default
-  * Pickup 24; Category? Major
+  * Pickup 21; Category? Major
   * Extra - original_tech: electric-energy-distribution-1
   * Extra - tech_name: randovania-electric-energy-distribution-b
   * Extra - count: 120
@@ -771,9 +760,53 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Advanced material processing); Heals? False
+  * Layers: default
+  * Pickup 22; Category? Major
+  * Extra - original_tech: advanced-material-processing
+  * Extra - tech_name: randovania-advanced-material-processing
+  * Extra - count: 75
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Physical projectile damage 1); Heals? False
+  * Layers: default
+  * Pickup 24; Category? Major
+  * Extra - original_tech: physical-projectile-damage-1
+  * Extra - tech_name: randovania-physical-projectile-damage-b
+  * Extra - count: 100
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack',)
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Weapon shooting speed 1); Heals? False
+  * Layers: default
+  * Pickup 25; Category? Major
+  * Extra - original_tech: weapon-shooting-speed-1
+  * Extra - tech_name: randovania-weapon-shooting-speed-b
+  * Extra - count: 100
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack',)
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Lab research speed 1); Heals? False
+  * Layers: default
+  * Pickup 29; Category? Major
+  * Extra - original_tech: research-speed-1
+  * Extra - tech_name: randovania-research-speed-b
+  * Extra - count: 100
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Stronger explosives 1); Heals? False
   * Layers: default
-  * Pickup 26; Category? Major
+  * Pickup 34; Category? Major
   * Extra - original_tech: stronger-explosives-1
   * Extra - tech_name: randovania-stronger-explosives-b
   * Extra - count: 100
@@ -784,7 +817,7 @@ Tier 5
 
 > Pickup (Gate); Heals? False
   * Layers: default
-  * Pickup 27; Category? Major
+  * Pickup 35; Category? Major
   * Extra - original_tech: gate
   * Extra - tech_name: randovania-gate
   * Extra - count: 100
@@ -795,7 +828,7 @@ Tier 5
 
 > Pickup (Railway); Heals? False
   * Layers: default
-  * Pickup 29; Category? Major
+  * Pickup 37; Category? Major
   * Extra - original_tech: railway
   * Extra - tech_name: randovania-railway
   * Extra - count: 75
@@ -806,7 +839,7 @@ Tier 5
 
 > Pickup (Automobilism); Heals? False
   * Layers: default
-  * Pickup 30; Category? Major
+  * Pickup 38; Category? Major
   * Extra - original_tech: automobilism
   * Extra - tech_name: randovania-automobilism
   * Extra - count: 100
@@ -815,11 +848,11 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Lab research speed 1); Heals? False
+> Pickup (Oil gathering); Heals? False
   * Layers: default
-  * Pickup 31; Category? Major
-  * Extra - original_tech: research-speed-1
-  * Extra - tech_name: randovania-research-speed-b
+  * Pickup 40; Category? Major
+  * Extra - original_tech: oil-gathering
+  * Extra - tech_name: randovania-oil-gathering
   * Extra - count: 100
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
@@ -828,7 +861,7 @@ Tier 5
 
 > Pickup (Defender); Heals? False
   * Layers: default
-  * Pickup 35; Category? Major
+  * Pickup 44; Category? Major
   * Extra - original_tech: defender
   * Extra - tech_name: randovania-defender
   * Extra - count: 100
@@ -837,42 +870,29 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Automated rail transportation); Heals? False
-  * Layers: default
-  * Pickup 36; Category? Major
-  * Extra - original_tech: automated-rail-transportation
-  * Extra - tech_name: randovania-automated-rail-transportation
-  * Extra - count: 75
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Oil processing); Heals? False
   * Layers: default
-  * Pickup 39; Category? Major
+  * Pickup 47; Category? Major
   * Extra - original_tech: oil-processing
   * Extra - tech_name: randovania-oil-processing
-  * Extra - count: 100
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  * Extra - research_trigger: frozendict.frozendict({'type': 'mine-entity', 'entity': 'crude-oil'})
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Rail signals); Heals? False
+> Pickup (Follower robot count 1); Heals? False
   * Layers: default
-  * Pickup 41; Category? Major
-  * Extra - original_tech: rail-signals
-  * Extra - tech_name: randovania-rail-signals
+  * Pickup 50; Category? Major
+  * Extra - original_tech: follower-robot-count-1
+  * Extra - tech_name: randovania-follower-robot-count-b
   * Extra - count: 100
   * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack', 'military-science-pack')
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Sulfur processing); Heals? False
   * Layers: default
-  * Pickup 44; Category? Major
+  * Pickup 52; Category? Major
   * Extra - original_tech: sulfur-processing
   * Extra - tech_name: randovania-sulfur-processing
   * Extra - count: 150
@@ -883,7 +903,7 @@ Tier 5
 
 > Pickup (Battery); Heals? False
   * Layers: default
-  * Pickup 50; Category? Major
+  * Pickup 57; Category? Major
   * Extra - original_tech: battery
   * Extra - tech_name: randovania-battery
   * Extra - count: 150
@@ -892,11 +912,11 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Advanced electronics); Heals? False
+> Pickup (Advanced circuit); Heals? False
   * Layers: default
-  * Pickup 51; Category? Major
-  * Extra - original_tech: advanced-electronics
-  * Extra - tech_name: randovania-advanced-electronics
+  * Pickup 58; Category? Major
+  * Extra - original_tech: advanced-circuit
+  * Extra - tech_name: randovania-advanced-circuit
   * Extra - count: 200
   * Extra - time: 15
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
@@ -905,7 +925,7 @@ Tier 5
 
 > Pickup (Refined flammables 1); Heals? False
   * Layers: default
-  * Pickup 53; Category? Major
+  * Pickup 59; Category? Major
   * Extra - original_tech: refined-flammables-1
   * Extra - tech_name: randovania-refined-flammables-b
   * Extra - count: 100
@@ -916,7 +936,7 @@ Tier 5
 
 > Pickup (Cliff explosives); Heals? False
   * Layers: default
-  * Pickup 54; Category? Major
+  * Pickup 60; Category? Major
   * Extra - original_tech: cliff-explosives
   * Extra - tech_name: randovania-cliff-explosives
   * Extra - count: 200
@@ -927,7 +947,7 @@ Tier 5
 
 > Pickup (Land mine); Heals? False
   * Layers: default
-  * Pickup 55; Category? Major
+  * Pickup 61; Category? Major
   * Extra - original_tech: land-mine
   * Extra - tech_name: randovania-land-mine
   * Extra - count: 100
@@ -938,7 +958,7 @@ Tier 5
 
 > Pickup (Rocketry); Heals? False
   * Layers: default
-  * Pickup 56; Category? Major
+  * Pickup 62; Category? Major
   * Extra - original_tech: rocketry
   * Extra - tech_name: randovania-rocketry
   * Extra - count: 120
@@ -949,7 +969,7 @@ Tier 5
 
 > Pickup (Electric energy accumulators); Heals? False
   * Layers: default
-  * Pickup 57; Category? Major
+  * Pickup 63; Category? Major
   * Extra - original_tech: electric-energy-accumulators
   * Extra - tech_name: randovania-electric-energy-accumulators
   * Extra - count: 150
@@ -958,11 +978,11 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Stack inserter); Heals? False
+> Pickup (Bulk inserter); Heals? False
   * Layers: default
-  * Pickup 58; Category? Major
-  * Extra - original_tech: stack-inserter
-  * Extra - tech_name: randovania-stack-inserter
+  * Pickup 64; Category? Major
+  * Extra - original_tech: bulk-inserter
+  * Extra - tech_name: randovania-bulk-inserter
   * Extra - count: 150
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
@@ -971,7 +991,7 @@ Tier 5
 
 > Pickup (Modular armor); Heals? False
   * Layers: default
-  * Pickup 60; Category? Major
+  * Pickup 66; Category? Major
   * Extra - original_tech: modular-armor
   * Extra - tech_name: randovania-modular-armor
   * Extra - count: 100
@@ -982,7 +1002,7 @@ Tier 5
 
 > Pickup (Modules); Heals? False
   * Layers: default
-  * Pickup 61; Category? Major
+  * Pickup 67; Category? Major
   * Extra - original_tech: modules
   * Extra - tech_name: randovania-modules
   * Extra - count: 100
@@ -993,7 +1013,7 @@ Tier 5
 
 > Pickup (Military 3); Heals? False
   * Layers: default
-  * Pickup 66; Category? Major
+  * Pickup 75; Category? Major
   * Extra - original_tech: military-3
   * Extra - tech_name: randovania-military-d
   * Extra - count: 100
@@ -1004,7 +1024,7 @@ Tier 5
 
 > Pickup (Braking force 1); Heals? False
   * Layers: default
-  * Pickup 68; Category? Major
+  * Pickup 77; Category? Major
   * Extra - original_tech: braking-force-1
   * Extra - tech_name: randovania-braking-force-b
   * Extra - count: 100
@@ -1015,7 +1035,7 @@ Tier 5
 
 > Pickup (Laser); Heals? False
   * Layers: default
-  * Pickup 69; Category? Major
+  * Pickup 78; Category? Major
   * Extra - original_tech: laser
   * Extra - tech_name: randovania-laser
   * Extra - count: 100
@@ -1026,7 +1046,7 @@ Tier 5
 
 > Pickup (Electric energy distribution 2); Heals? False
   * Layers: default
-  * Pickup 71; Category? Major
+  * Pickup 81; Category? Major
   * Extra - original_tech: electric-energy-distribution-2
   * Extra - tech_name: randovania-electric-energy-distribution-c
   * Extra - count: 100
@@ -1037,7 +1057,7 @@ Tier 5
 
 > Pickup (Advanced oil processing); Heals? False
   * Layers: default
-  * Pickup 73; Category? Major
+  * Pickup 83; Category? Major
   * Extra - original_tech: advanced-oil-processing
   * Extra - tech_name: randovania-advanced-oil-processing
   * Extra - count: 75
@@ -1046,9 +1066,20 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Uranium mining); Heals? False
+  * Layers: default
+  * Pickup 84; Category? Major
+  * Extra - original_tech: uranium-mining
+  * Extra - tech_name: randovania-uranium-mining
+  * Extra - count: 100
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Explosive rocketry); Heals? False
   * Layers: default
-  * Pickup 82; Category? Major
+  * Pickup 94; Category? Major
   * Extra - original_tech: explosive-rocketry
   * Extra - tech_name: randovania-explosive-rocketry
   * Extra - count: 100
@@ -1059,9 +1090,9 @@ Tier 5
 
 > Pickup (Energy weapons damage 1); Heals? False
   * Layers: default
-  * Pickup 84; Category? Major
-  * Extra - original_tech: energy-weapons-damage-1
-  * Extra - tech_name: randovania-energy-weapons-damage-b
+  * Pickup 96; Category? Major
+  * Extra - original_tech: laser-weapons-damage-1
+  * Extra - tech_name: randovania-laser-weapons-damage-b
   * Extra - count: 100
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
@@ -1070,7 +1101,7 @@ Tier 5
 
 > Pickup (Laser shooting speed 1); Heals? False
   * Layers: default
-  * Pickup 85; Category? Major
+  * Pickup 97; Category? Major
   * Extra - original_tech: laser-shooting-speed-1
   * Extra - tech_name: randovania-laser-shooting-speed-b
   * Extra - count: 50
@@ -1079,9 +1110,18 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Uranium processing); Heals? False
+  * Layers: default
+  * Pickup 103; Category? Major
+  * Extra - original_tech: uranium-processing
+  * Extra - tech_name: randovania-uranium-processing
+  * Extra - research_trigger: frozendict.frozendict({'type': 'mine-entity', 'entity': 'uranium-ore'})
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Energy shield); Heals? False
   * Layers: default
-  * Pickup 91; Category? Major
+  * Pickup 104; Category? Major
   * Extra - original_tech: energy-shield-equipment
   * Extra - tech_name: randovania-energy-shield-equipment
   * Extra - count: 150
@@ -1092,7 +1132,7 @@ Tier 5
 
 > Pickup (Speed module 2); Heals? False
   * Layers: default
-  * Pickup 95; Category? Major
+  * Pickup 108; Category? Major
   * Extra - original_tech: speed-module-2
   * Extra - tech_name: randovania-speed-module-c
   * Extra - count: 75
@@ -1103,7 +1143,7 @@ Tier 5
 
 > Pickup (Production science pack); Heals? False
   * Layers: default
-  * Pickup 96; Category? Major
+  * Pickup 109; Category? Major
   * Extra - original_tech: production-science-pack
   * Extra - tech_name: randovania-production-science-pack
   * Extra - count: 100
@@ -1114,7 +1154,7 @@ Tier 5
 
 > Pickup (Productivity module 2); Heals? False
   * Layers: default
-  * Pickup 97; Category? Major
+  * Pickup 110; Category? Major
   * Extra - original_tech: productivity-module-2
   * Extra - tech_name: randovania-productivity-module-c
   * Extra - count: 75
@@ -1125,9 +1165,9 @@ Tier 5
 
 > Pickup (Efficiency module 2); Heals? False
   * Layers: default
-  * Pickup 98; Category? Major
-  * Extra - original_tech: effectivity-module-2
-  * Extra - tech_name: randovania-effectivity-module-c
+  * Pickup 111; Category? Major
+  * Extra - original_tech: efficiency-module-2
+  * Extra - tech_name: randovania-efficiency-module-c
   * Extra - count: 75
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
@@ -1136,7 +1176,7 @@ Tier 5
 
 > Pickup (Laser shooting speed 2); Heals? False
   * Layers: default
-  * Pickup 101; Category? Major
+  * Pickup 114; Category? Major
   * Extra - original_tech: laser-shooting-speed-2
   * Extra - tech_name: randovania-laser-shooting-speed-c
   * Extra - count: 100
@@ -1147,7 +1187,7 @@ Tier 5
 
 > Pickup (Effect transmission); Heals? False
   * Layers: default
-  * Pickup 105; Category? Major
+  * Pickup 120; Category? Major
   * Extra - original_tech: effect-transmission
   * Extra - tech_name: randovania-effect-transmission
   * Extra - count: 75
@@ -1156,20 +1196,9 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Nuclear fuel reprocessing); Heals? False
-  * Layers: default
-  * Pickup 109; Category? Major
-  * Extra - original_tech: nuclear-fuel-reprocessing
-  * Extra - tech_name: randovania-nuclear-fuel-reprocessing
-  * Extra - count: 50
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Robotics); Heals? False
   * Layers: default
-  * Pickup 113; Category? Major
+  * Pickup 131; Category? Major
   * Extra - original_tech: robotics
   * Extra - tech_name: randovania-robotics
   * Extra - count: 75
@@ -1178,9 +1207,20 @@ Tier 5
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Nuclear fuel reprocessing); Heals? False
+  * Layers: default
+  * Pickup 133; Category? Major
+  * Extra - original_tech: nuclear-fuel-reprocessing
+  * Extra - tech_name: randovania-nuclear-fuel-reprocessing
+  * Extra - count: 50
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Personal battery MK2); Heals? False
   * Layers: default
-  * Pickup 116; Category? Major
+  * Pickup 139; Category? Major
   * Extra - original_tech: battery-mk2-equipment
   * Extra - tech_name: randovania-battery-mk2-equipment
   * Extra - count: 100
@@ -1191,7 +1231,7 @@ Tier 5
 
 > Pickup (Personal laser defense); Heals? False
   * Layers: default
-  * Pickup 117; Category? Major
+  * Pickup 140; Category? Major
   * Extra - original_tech: personal-laser-defense-equipment
   * Extra - tech_name: randovania-personal-laser-defense-equipment
   * Extra - count: 100
@@ -1202,7 +1242,7 @@ Tier 5
 
 > Pickup (Discharge defense); Heals? False
   * Layers: default
-  * Pickup 118; Category? Major
+  * Pickup 141; Category? Major
   * Extra - original_tech: discharge-defense-equipment
   * Extra - tech_name: randovania-discharge-defense-equipment
   * Extra - count: 100
@@ -1213,7 +1253,7 @@ Tier 5
 
 > Pickup (Utility science pack); Heals? False
   * Layers: default
-  * Pickup 119; Category? Major
+  * Pickup 142; Category? Major
   * Extra - original_tech: utility-science-pack
   * Extra - tech_name: randovania-utility-science-pack
   * Extra - count: 100
@@ -1224,7 +1264,7 @@ Tier 5
 
 > Pickup (Construction robotics); Heals? False
   * Layers: default
-  * Pickup 120; Category? Major
+  * Pickup 143; Category? Major
   * Extra - original_tech: construction-robotics
   * Extra - tech_name: randovania-construction-robotics
   * Extra - count: 100
@@ -1235,7 +1275,7 @@ Tier 5
 
 > Pickup (Worker robot speed 2); Heals? False
   * Layers: default
-  * Pickup 129; Category? Major
+  * Pickup 162; Category? Major
   * Extra - original_tech: worker-robots-speed-2
   * Extra - tech_name: randovania-worker-robots-speed-c
   * Extra - count: 100
@@ -1249,42 +1289,42 @@ Tier 6
 > Connection to Tech Tree; Heals? False
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 6
+  > Pickup (Solar energy)
+      Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Logistics 2)
       Tech/Tier 2/Pickup (Logistics) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Physical projectile damage 2)
-      Tech/Tier 5/Pickup (Physical projectile damage 1) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Weapon shooting speed 2)
-      Tech/Tier 5/Pickup (Weapon shooting speed 1) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Solar energy)
-      Tech/Tier 2/Pickup (Optics) and Tech/Tier 3/Pickup (Electronics) and Tech/Tier 2/Pickup (Steel processing) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Concrete)
       Tech/Tier 5/Pickup (Advanced material processing) and Tech/Tier 3/Pickup (Automation 2) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Stronger explosives 2)
-      Tech/Tier 5/Pickup (Stronger explosives 1) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
+  > Pickup (Physical projectile damage 2)
+      Tech/Tier 5/Pickup (Physical projectile damage 1) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Weapon shooting speed 2)
+      Tech/Tier 5/Pickup (Weapon shooting speed 1) and Tech/Tier 2/Pickup (Logistic science pack) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Lab research speed 2)
       Tech/Tier 5/Pickup (Lab research speed 1) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Stronger explosives 2)
+      Tech/Tier 5/Pickup (Stronger explosives 1) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
+  > Pickup (Automated rail transportation)
+      Tech/Tier 5/Pickup (Railway) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Fluid wagon)
       Tech/Tier 5/Pickup (Railway) and Tech/Tier 3/Pickup (Barrel handling) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Follower robot count 1)
-      Tech/Tier 5/Pickup (Defender) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
-  > Pickup (Lab research speed 3)
-      Tech/Tier 6/Pickup (Lab research speed 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Plastics)
       Tech/Tier 5/Pickup (Oil processing) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Follower robot count 2)
-      Tech/Tier 6/Pickup (Follower robot count 1) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
+      Tech/Tier 5/Pickup (Follower robot count 1) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Mining productivity 1)
-      Tech/Tier 5/Pickup (Advanced electronics) and Craft Automation science pack and Craft Logistic science pack
+      Tech/Tier 5/Pickup (Advanced circuit) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Refined flammables 2)
       Tech/Tier 5/Pickup (Refined flammables 1) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Inserter capacity bonus 1)
-      Tech/Tier 5/Pickup (Stack inserter) and Craft Automation science pack and Craft Logistic science pack
-  > Pickup (Advanced electronics 2)
+      Tech/Tier 5/Pickup (Bulk inserter) and Craft Automation science pack and Craft Logistic science pack
+  > Pickup (Follower robot count 3)
+      Tech/Tier 6/Pickup (Follower robot count 2) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+  > Pickup (Processing unit)
       Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+  > Pickup (Lab research speed 3)
+      Tech/Tier 6/Pickup (Lab research speed 2) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Advanced material processing 2)
       Tech/Tier 5/Pickup (Advanced material processing) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
-  > Pickup (Uranium processing)
-      Tech/Tier 3/Pickup (Chemical science pack) and Tech/Tier 6/Pickup (Concrete) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Inserter capacity bonus 2)
       Tech/Tier 6/Pickup (Inserter capacity bonus 1) and Craft Automation science pack and Craft Logistic science pack
   > Pickup (Tank)
@@ -1296,23 +1336,23 @@ Tier 6
   > Pickup (Distractor)
       Tech/Tier 5/Pickup (Defender) and Tech/Tier 5/Pickup (Military 3) and Tech/Tier 5/Pickup (Laser) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Inserter capacity bonus 3)
-      Tech/Tier 6/Pickup (Inserter capacity bonus 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
-  > Pickup (Braking force 3)
-      Tech/Tier 6/Pickup (Braking force 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+      Tech/Tier 6/Pickup (Inserter capacity bonus 2) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Energy weapons damage 2)
       Tech/Tier 5/Pickup (Energy weapons damage 1) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
-  > Pickup (Automation 3)
-      Tech/Tier 4/Pickup (Speed module) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+  > Pickup (Braking force 3)
+      Tech/Tier 6/Pickup (Braking force 2) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Logistics 3)
       Tech/Tier 5/Pickup (Production science pack) and Tech/Tier 4/Pickup (Lubricant) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Coal liquefaction)
       Tech/Tier 5/Pickup (Advanced oil processing) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Inserter capacity bonus 4)
-      Tech/Tier 6/Pickup (Inserter capacity bonus 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+      Tech/Tier 6/Pickup (Inserter capacity bonus 3) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+  > Pickup (Automation 3)
+      Tech/Tier 4/Pickup (Speed module) and Tech/Tier 5/Pickup (Production science pack) and Tech/Tier 4/Pickup (Electric engine) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+  > Pickup (Power armor)
+      Tech/Tier 5/Pickup (Modular armor) and Tech/Tier 4/Pickup (Electric engine) and Tech/Tier 6/Pickup (Processing unit) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Braking force 4)
       Tech/Tier 6/Pickup (Braking force 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
-  > Pickup (Power armor)
-      Tech/Tier 5/Pickup (Modular armor) and Tech/Tier 4/Pickup (Electric engine) and Tech/Tier 6/Pickup (Advanced electronics 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Inserter capacity bonus 5)
       Tech/Tier 6/Pickup (Inserter capacity bonus 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Energy shield MK2)
@@ -1323,18 +1363,29 @@ Tier 6
       Tech/Tier 5/Pickup (Robotics) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Military 4)
       Tech/Tier 5/Pickup (Military 3) and Tech/Tier 5/Pickup (Utility science pack) and Tech/Tier 4/Pickup (Explosives) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Portable fusion reactor)
-      Tech/Tier 5/Pickup (Utility science pack) and Tech/Tier 6/Pickup (Power armor) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Portable fission reactor)
+      Tech/Tier 5/Pickup (Utility science pack) and Tech/Tier 6/Pickup (Power armor) and Tech/Tier 3/Pickup (Military science pack) and Tech/Tier 7/Pickup (Nuclear power) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Destroyer)
       Tech/Tier 6/Pickup (Military 4) and Tech/Tier 6/Pickup (Distractor) and Tech/Tier 4/Pickup (Speed module) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Personal roboport MK2)
       Tech/Tier 4/Pickup (Personal roboport) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Utility science pack
   > Pickup (Worker robot speed 3)
-      Tech/Tier 5/Pickup (Worker robot speed 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Utility science pack
+      Tech/Tier 5/Pickup (Worker robot speed 2) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Utility science pack
+
+> Pickup (Solar energy); Heals? False
+  * Layers: default
+  * Pickup 20; Category? Major
+  * Extra - original_tech: solar-energy
+  * Extra - tech_name: randovania-solar-energy
+  * Extra - count: 250
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
 
 > Pickup (Logistics 2); Heals? False
   * Layers: default
-  * Pickup 18; Category? Major
+  * Pickup 28; Category? Major
   * Extra - original_tech: logistics-2
   * Extra - tech_name: randovania-logistics-c
   * Extra - count: 200
@@ -1343,9 +1394,20 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Concrete); Heals? False
+  * Layers: default
+  * Pickup 30; Category? Major
+  * Extra - original_tech: concrete
+  * Extra - tech_name: randovania-concrete
+  * Extra - count: 250
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Physical projectile damage 2); Heals? False
   * Layers: default
-  * Pickup 19; Category? Major
+  * Pickup 32; Category? Major
   * Extra - original_tech: physical-projectile-damage-2
   * Extra - tech_name: randovania-physical-projectile-damage-c
   * Extra - count: 200
@@ -1356,7 +1418,7 @@ Tier 6
 
 > Pickup (Weapon shooting speed 2); Heals? False
   * Layers: default
-  * Pickup 20; Category? Major
+  * Pickup 33; Category? Major
   * Extra - original_tech: weapon-shooting-speed-2
   * Extra - tech_name: randovania-weapon-shooting-speed-c
   * Extra - count: 200
@@ -1365,42 +1427,9 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Solar energy); Heals? False
-  * Layers: default
-  * Pickup 23; Category? Major
-  * Extra - original_tech: solar-energy
-  * Extra - tech_name: randovania-solar-energy
-  * Extra - count: 250
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Concrete); Heals? False
-  * Layers: default
-  * Pickup 32; Category? Major
-  * Extra - original_tech: concrete
-  * Extra - tech_name: randovania-concrete
-  * Extra - count: 250
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Stronger explosives 2); Heals? False
-  * Layers: default
-  * Pickup 34; Category? Major
-  * Extra - original_tech: stronger-explosives-2
-  * Extra - tech_name: randovania-stronger-explosives-c
-  * Extra - count: 200
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack', 'military-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Lab research speed 2); Heals? False
   * Layers: default
-  * Pickup 37; Category? Major
+  * Pickup 39; Category? Major
   * Extra - original_tech: research-speed-2
   * Extra - tech_name: randovania-research-speed-c
   * Extra - count: 200
@@ -1409,9 +1438,31 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Stronger explosives 2); Heals? False
+  * Layers: default
+  * Pickup 42; Category? Major
+  * Extra - original_tech: stronger-explosives-2
+  * Extra - tech_name: randovania-stronger-explosives-c
+  * Extra - count: 200
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack', 'military-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Automated rail transportation); Heals? False
+  * Layers: default
+  * Pickup 45; Category? Major
+  * Extra - original_tech: automated-rail-transportation
+  * Extra - tech_name: randovania-automated-rail-transportation
+  * Extra - count: 200
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Fluid wagon); Heals? False
   * Layers: default
-  * Pickup 38; Category? Major
+  * Pickup 46; Category? Major
   * Extra - original_tech: fluid-wagon
   * Extra - tech_name: randovania-fluid-wagon
   * Extra - count: 200
@@ -1420,31 +1471,9 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Follower robot count 1); Heals? False
-  * Layers: default
-  * Pickup 40; Category? Major
-  * Extra - original_tech: follower-robot-count-1
-  * Extra - tech_name: randovania-follower-robot-count-b
-  * Extra - count: 200
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack', 'military-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Lab research speed 3); Heals? False
-  * Layers: default
-  * Pickup 42; Category? Major
-  * Extra - original_tech: research-speed-3
-  * Extra - tech_name: randovania-research-speed-d
-  * Extra - count: 250
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Plastics); Heals? False
   * Layers: default
-  * Pickup 45; Category? Major
+  * Pickup 53; Category? Major
   * Extra - original_tech: plastics
   * Extra - tech_name: randovania-plastics
   * Extra - count: 200
@@ -1455,10 +1484,10 @@ Tier 6
 
 > Pickup (Follower robot count 2); Heals? False
   * Layers: default
-  * Pickup 46; Category? Major
+  * Pickup 54; Category? Major
   * Extra - original_tech: follower-robot-count-2
   * Extra - tech_name: randovania-follower-robot-count-c
-  * Extra - count: 300
+  * Extra - count: 200
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'logistic-science-pack', 'military-science-pack')
   > Connection to Tech Tree
@@ -1466,7 +1495,7 @@ Tier 6
 
 > Pickup (Mining productivity 1); Heals? False
   * Layers: default
-  * Pickup 62; Category? Major
+  * Pickup 68; Category? Major
   * Extra - original_tech: mining-productivity-1
   * Extra - tech_name: randovania-mining-productivity-b
   * Extra - count: 250
@@ -1477,7 +1506,7 @@ Tier 6
 
 > Pickup (Refined flammables 2); Heals? False
   * Layers: default
-  * Pickup 64; Category? Major
+  * Pickup 69; Category? Major
   * Extra - original_tech: refined-flammables-2
   * Extra - tech_name: randovania-refined-flammables-c
   * Extra - count: 200
@@ -1488,7 +1517,7 @@ Tier 6
 
 > Pickup (Inserter capacity bonus 1); Heals? False
   * Layers: default
-  * Pickup 65; Category? Major
+  * Pickup 70; Category? Major
   * Extra - original_tech: inserter-capacity-bonus-1
   * Extra - tech_name: randovania-inserter-capacity-bonus-b
   * Extra - count: 200
@@ -1497,12 +1526,34 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Advanced electronics 2); Heals? False
-  * Layers: default
-  * Pickup 67; Category? Major
-  * Extra - original_tech: advanced-electronics-2
-  * Extra - tech_name: randovania-advanced-electronics-c
+> Pickup (Follower robot count 3); Heals? False
+  * Layers: full_tree
+  * Pickup 74; Category? Major
+  * Extra - original_tech: follower-robot-count-3
+  * Extra - tech_name: randovania-follower-robot-count-d
   * Extra - count: 300
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Processing unit); Heals? False
+  * Layers: default
+  * Pickup 76; Category? Major
+  * Extra - original_tech: processing-unit
+  * Extra - tech_name: randovania-processing-unit
+  * Extra - count: 300
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Lab research speed 3); Heals? False
+  * Layers: default
+  * Pickup 80; Category? Major
+  * Extra - original_tech: research-speed-3
+  * Extra - tech_name: randovania-research-speed-d
+  * Extra - count: 250
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
   > Connection to Tech Tree
@@ -1510,7 +1561,7 @@ Tier 6
 
 > Pickup (Advanced material processing 2); Heals? False
   * Layers: default
-  * Pickup 72; Category? Major
+  * Pickup 82; Category? Major
   * Extra - original_tech: advanced-material-processing-2
   * Extra - tech_name: randovania-advanced-material-processing-c
   * Extra - count: 250
@@ -1519,20 +1570,9 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Uranium processing); Heals? False
-  * Layers: default
-  * Pickup 74; Category? Major
-  * Extra - original_tech: uranium-processing
-  * Extra - tech_name: randovania-uranium-processing
-  * Extra - count: 200
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Inserter capacity bonus 2); Heals? False
   * Layers: default
-  * Pickup 80; Category? Major
+  * Pickup 92; Category? Major
   * Extra - original_tech: inserter-capacity-bonus-2
   * Extra - tech_name: randovania-inserter-capacity-bonus-c
   * Extra - count: 250
@@ -1543,7 +1583,7 @@ Tier 6
 
 > Pickup (Tank); Heals? False
   * Layers: default
-  * Pickup 81; Category? Major
+  * Pickup 93; Category? Major
   * Extra - original_tech: tank
   * Extra - tech_name: randovania-tank
   * Extra - count: 250
@@ -1554,7 +1594,7 @@ Tier 6
 
 > Pickup (Braking force 2); Heals? False
   * Layers: default
-  * Pickup 83; Category? Major
+  * Pickup 95; Category? Major
   * Extra - original_tech: braking-force-2
   * Extra - tech_name: randovania-braking-force-c
   * Extra - count: 200
@@ -1565,7 +1605,7 @@ Tier 6
 
 > Pickup (Laser turret); Heals? False
   * Layers: default
-  * Pickup 86; Category? Major
+  * Pickup 98; Category? Major
   * Extra - original_tech: laser-turret
   * Extra - tech_name: randovania-laser-turret
   * Extra - count: 150
@@ -1576,7 +1616,7 @@ Tier 6
 
 > Pickup (Distractor); Heals? False
   * Layers: default
-  * Pickup 87; Category? Major
+  * Pickup 99; Category? Major
   * Extra - original_tech: distractor
   * Extra - tech_name: randovania-distractor
   * Extra - count: 200
@@ -1587,7 +1627,7 @@ Tier 6
 
 > Pickup (Inserter capacity bonus 3); Heals? False
   * Layers: full_tree
-  * Pickup 160; Category? Major
+  * Pickup 112; Category? Major
   * Extra - original_tech: inserter-capacity-bonus-3
   * Extra - tech_name: randovania-inserter-capacity-bonus-d
   * Extra - count: 250
@@ -1596,9 +1636,20 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Energy weapons damage 2); Heals? False
+  * Layers: default
+  * Pickup 113; Category? Major
+  * Extra - original_tech: laser-weapons-damage-2
+  * Extra - tech_name: randovania-laser-weapons-damage-c
+  * Extra - count: 200
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Braking force 3); Heals? False
   * Layers: full_tree
-  * Pickup 161; Category? Major
+  * Pickup 117; Category? Major
   * Extra - original_tech: braking-force-3
   * Extra - tech_name: randovania-braking-force-d
   * Extra - count: 250
@@ -1607,31 +1658,9 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Energy weapons damage 2); Heals? False
-  * Layers: default
-  * Pickup 100; Category? Major
-  * Extra - original_tech: energy-weapons-damage-2
-  * Extra - tech_name: randovania-energy-weapons-damage-c
-  * Extra - count: 200
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Automation 3); Heals? False
-  * Layers: default
-  * Pickup 103; Category? Major
-  * Extra - original_tech: automation-3
-  * Extra - tech_name: randovania-automation-d
-  * Extra - count: 150
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Logistics 3); Heals? False
   * Layers: default
-  * Pickup 104; Category? Major
+  * Pickup 118; Category? Major
   * Extra - original_tech: logistics-3
   * Extra - tech_name: randovania-logistics-d
   * Extra - count: 300
@@ -1642,7 +1671,7 @@ Tier 6
 
 > Pickup (Coal liquefaction); Heals? False
   * Layers: default
-  * Pickup 106; Category? Major
+  * Pickup 121; Category? Major
   * Extra - original_tech: coal-liquefaction
   * Extra - tech_name: randovania-coal-liquefaction
   * Extra - count: 200
@@ -1653,7 +1682,7 @@ Tier 6
 
 > Pickup (Inserter capacity bonus 4); Heals? False
   * Layers: full_tree
-  * Pickup 163; Category? Major
+  * Pickup 126; Category? Major
   * Extra - original_tech: inserter-capacity-bonus-4
   * Extra - tech_name: randovania-inserter-capacity-bonus-e
   * Extra - count: 250
@@ -1662,20 +1691,20 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Braking force 4); Heals? False
-  * Layers: full_tree
-  * Pickup 164; Category? Major
-  * Extra - original_tech: braking-force-4
-  * Extra - tech_name: randovania-braking-force-e
-  * Extra - count: 350
-  * Extra - time: 30
+> Pickup (Automation 3); Heals? False
+  * Layers: default
+  * Pickup 129; Category? Major
+  * Extra - original_tech: automation-3
+  * Extra - tech_name: randovania-automation-d
+  * Extra - count: 150
+  * Extra - time: 60
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Power armor); Heals? False
   * Layers: default
-  * Pickup 112; Category? Major
+  * Pickup 130; Category? Major
   * Extra - original_tech: power-armor
   * Extra - tech_name: randovania-power-armor
   * Extra - count: 200
@@ -1684,9 +1713,20 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Braking force 4); Heals? False
+  * Layers: full_tree
+  * Pickup 134; Category? Major
+  * Extra - original_tech: braking-force-4
+  * Extra - tech_name: randovania-braking-force-e
+  * Extra - count: 350
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Inserter capacity bonus 5); Heals? False
   * Layers: full_tree
-  * Pickup 168; Category? Major
+  * Pickup 135; Category? Major
   * Extra - original_tech: inserter-capacity-bonus-5
   * Extra - tech_name: randovania-inserter-capacity-bonus-f
   * Extra - count: 300
@@ -1697,7 +1737,7 @@ Tier 6
 
 > Pickup (Energy shield MK2); Heals? False
   * Layers: default
-  * Pickup 115; Category? Major
+  * Pickup 138; Category? Major
   * Extra - original_tech: energy-shield-mk2-equipment
   * Extra - tech_name: randovania-energy-shield-mk2-equipment
   * Extra - count: 200
@@ -1708,7 +1748,7 @@ Tier 6
 
 > Pickup (Logistic robotics); Heals? False
   * Layers: default
-  * Pickup 121; Category? Major
+  * Pickup 144; Category? Major
   * Extra - original_tech: logistic-robotics
   * Extra - tech_name: randovania-logistic-robotics
   * Extra - count: 250
@@ -1719,7 +1759,7 @@ Tier 6
 
 > Pickup (Worker robot cargo size 1); Heals? False
   * Layers: default
-  * Pickup 123; Category? Major
+  * Pickup 146; Category? Major
   * Extra - original_tech: worker-robots-storage-1
   * Extra - tech_name: randovania-worker-robots-storage-b
   * Extra - count: 200
@@ -1730,7 +1770,7 @@ Tier 6
 
 > Pickup (Military 4); Heals? False
   * Layers: default
-  * Pickup 124; Category? Major
+  * Pickup 155; Category? Major
   * Extra - original_tech: military-4
   * Extra - tech_name: randovania-military-e
   * Extra - count: 150
@@ -1739,11 +1779,11 @@ Tier 6
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Portable fusion reactor); Heals? False
+> Pickup (Portable fission reactor); Heals? False
   * Layers: default
-  * Pickup 126; Category? Major
-  * Extra - original_tech: fusion-reactor-equipment
-  * Extra - tech_name: randovania-fusion-reactor-equipment
+  * Pickup 158; Category? Major
+  * Extra - original_tech: fission-reactor-equipment
+  * Extra - tech_name: randovania-fission-reactor-equipment
   * Extra - count: 200
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
@@ -1752,7 +1792,7 @@ Tier 6
 
 > Pickup (Destroyer); Heals? False
   * Layers: default
-  * Pickup 133; Category? Major
+  * Pickup 173; Category? Major
   * Extra - original_tech: destroyer
   * Extra - tech_name: randovania-destroyer
   * Extra - count: 300
@@ -1763,7 +1803,7 @@ Tier 6
 
 > Pickup (Personal roboport MK2); Heals? False
   * Layers: default
-  * Pickup 138; Category? Major
+  * Pickup 177; Category? Major
   * Extra - original_tech: personal-roboport-mk2-equipment
   * Extra - tech_name: randovania-personal-roboport-mk2-equipment
   * Extra - count: 250
@@ -1774,7 +1814,7 @@ Tier 6
 
 > Pickup (Worker robot speed 3); Heals? False
   * Layers: default
-  * Pickup 139; Category? Major
+  * Pickup 178; Category? Major
   * Extra - original_tech: worker-robots-speed-3
   * Extra - tech_name: randovania-worker-robots-speed-d
   * Extra - count: 150
@@ -1789,39 +1829,29 @@ Tier 7
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 7
   > Pickup (Physical projectile damage 3)
-      Tech/Tier 6/Pickup (Physical projectile damage 2) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
+      Tech/Tier 6/Pickup (Physical projectile damage 2) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Weapon shooting speed 3)
-      Tech/Tier 6/Pickup (Weapon shooting speed 2) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
+      Tech/Tier 6/Pickup (Weapon shooting speed 2) and Tech/Tier 3/Pickup (Military science pack) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Physical projectile damage 4)
       Tech/Tier 7/Pickup (Physical projectile damage 3) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Weapon shooting speed 4)
       Tech/Tier 7/Pickup (Weapon shooting speed 3) and Craft Automation science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Stronger explosives 3)
-      Tech/Tier 6/Pickup (Stronger explosives 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
-  > Pickup (Stronger explosives 4)
-      Tech/Tier 7/Pickup (Stronger explosives 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Lab research speed 4)
-      Tech/Tier 6/Pickup (Lab research speed 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
-  > Pickup (Follower robot count 3)
-      Tech/Tier 6/Pickup (Follower robot count 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
-  > Pickup (Lab research speed 5)
-      Tech/Tier 7/Pickup (Lab research speed 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
-  > Pickup (Follower robot count 4)
-      Tech/Tier 7/Pickup (Follower robot count 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
-  > Pickup (Lab research speed 6)
-      Tech/Tier 7/Pickup (Lab research speed 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+      Tech/Tier 6/Pickup (Stronger explosives 2) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Low density structure)
       Tech/Tier 5/Pickup (Advanced material processing) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Mining productivity 2)
-      Tech/Tier 6/Pickup (Mining productivity 1) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+      Tech/Tier 6/Pickup (Mining productivity 1) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Refined flammables 3)
-      Tech/Tier 6/Pickup (Refined flammables 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+      Tech/Tier 6/Pickup (Refined flammables 2) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+  > Pickup (Lab research speed 4)
+      Tech/Tier 6/Pickup (Lab research speed 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Rocket fuel)
       Tech/Tier 4/Pickup (Flammables) and Tech/Tier 5/Pickup (Advanced oil processing) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
   > Pickup (Nuclear power)
-      Tech/Tier 6/Pickup (Uranium processing) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
-  > Pickup (Refined flammables 4)
-      Tech/Tier 7/Pickup (Refined flammables 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+      Tech/Tier 5/Pickup (Uranium processing) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack
+  > Pickup (Lab research speed 5)
+      Tech/Tier 7/Pickup (Lab research speed 4) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Speed module 3)
       Tech/Tier 5/Pickup (Speed module 2) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Productivity module 3)
@@ -1832,38 +1862,42 @@ Tier 7
       Tech/Tier 6/Pickup (Energy weapons damage 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Laser shooting speed 3)
       Tech/Tier 5/Pickup (Laser shooting speed 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
-  > Pickup (Braking force 5)
-      Tech/Tier 6/Pickup (Braking force 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Energy weapons damage 4)
       Tech/Tier 7/Pickup (Energy weapons damage 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Laser shooting speed 4)
       Tech/Tier 7/Pickup (Laser shooting speed 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+  > Pickup (Braking force 5)
+      Tech/Tier 6/Pickup (Braking force 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Inserter capacity bonus 6)
       Tech/Tier 6/Pickup (Inserter capacity bonus 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
-  > Pickup (Braking force 6)
-      Tech/Tier 7/Pickup (Braking force 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+  > Pickup (Stronger explosives 4)
+      Tech/Tier 7/Pickup (Stronger explosives 3) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Refined flammables 4)
+      Tech/Tier 7/Pickup (Refined flammables 3) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Laser shooting speed 5)
-      Tech/Tier 7/Pickup (Laser shooting speed 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Rocket control unit)
-      Tech/Tier 5/Pickup (Utility science pack) and Tech/Tier 4/Pickup (Speed module) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Utility science pack
+      Tech/Tier 7/Pickup (Laser shooting speed 4) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Lab research speed 6)
+      Tech/Tier 7/Pickup (Lab research speed 5) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
   > Pickup (Logistic system)
       Tech/Tier 5/Pickup (Utility science pack) and Tech/Tier 6/Pickup (Logistic robotics) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Utility science pack
   > Pickup (Worker robot cargo size 2)
-      Tech/Tier 6/Pickup (Worker robot cargo size 1) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+      Tech/Tier 6/Pickup (Worker robot cargo size 1) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
+  > Pickup (Braking force 6)
+      Tech/Tier 7/Pickup (Braking force 5) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
   > Pickup (Inserter capacity bonus 7)
-      Tech/Tier 7/Pickup (Inserter capacity bonus 6) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+      Tech/Tier 7/Pickup (Inserter capacity bonus 6) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
   > Pickup (Laser shooting speed 6)
       Tech/Tier 7/Pickup (Laser shooting speed 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Power armor MK2)
       Tech/Tier 6/Pickup (Power armor) and Tech/Tier 6/Pickup (Military 4) and Tech/Tier 5/Pickup (Speed module 2) and Tech/Tier 5/Pickup (Efficiency module 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Follower robot count 5)
-      Tech/Tier 7/Pickup (Follower robot count 4) and Tech/Tier 6/Pickup (Destroyer) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Follower robot count 4)
+      Tech/Tier 6/Pickup (Follower robot count 3) and Tech/Tier 6/Pickup (Destroyer) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Worker robot speed 4)
       Tech/Tier 6/Pickup (Worker robot speed 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Utility science pack
 
 > Pickup (Physical projectile damage 3); Heals? False
   * Layers: full_tree
-  * Pickup 144; Category? Major
+  * Pickup 41; Category? Major
   * Extra - original_tech: physical-projectile-damage-3
   * Extra - tech_name: randovania-physical-projectile-damage-d
   * Extra - count: 300
@@ -1874,7 +1908,7 @@ Tier 7
 
 > Pickup (Weapon shooting speed 3); Heals? False
   * Layers: full_tree
-  * Pickup 145; Category? Major
+  * Pickup 43; Category? Major
   * Extra - original_tech: weapon-shooting-speed-3
   * Extra - tech_name: randovania-weapon-shooting-speed-d
   * Extra - count: 300
@@ -1885,7 +1919,7 @@ Tier 7
 
 > Pickup (Physical projectile damage 4); Heals? False
   * Layers: full_tree
-  * Pickup 146; Category? Major
+  * Pickup 48; Category? Major
   * Extra - original_tech: physical-projectile-damage-4
   * Extra - tech_name: randovania-physical-projectile-damage-e
   * Extra - count: 400
@@ -1896,7 +1930,7 @@ Tier 7
 
 > Pickup (Weapon shooting speed 4); Heals? False
   * Layers: full_tree
-  * Pickup 147; Category? Major
+  * Pickup 49; Category? Major
   * Extra - original_tech: weapon-shooting-speed-4
   * Extra - tech_name: randovania-weapon-shooting-speed-e
   * Extra - count: 400
@@ -1907,7 +1941,7 @@ Tier 7
 
 > Pickup (Stronger explosives 3); Heals? False
   * Layers: full_tree
-  * Pickup 148; Category? Major
+  * Pickup 72; Category? Major
   * Extra - original_tech: stronger-explosives-3
   * Extra - tech_name: randovania-stronger-explosives-d
   * Extra - count: 300
@@ -1916,75 +1950,9 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Stronger explosives 4); Heals? False
-  * Layers: full_tree
-  * Pickup 151; Category? Major
-  * Extra - original_tech: stronger-explosives-4
-  * Extra - tech_name: randovania-stronger-explosives-e
-  * Extra - count: 400
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Lab research speed 4); Heals? False
-  * Layers: default
-  * Pickup 47; Category? Major
-  * Extra - original_tech: research-speed-4
-  * Extra - tech_name: randovania-research-speed-e
-  * Extra - count: 500
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Follower robot count 3); Heals? False
-  * Layers: full_tree
-  * Pickup 155; Category? Major
-  * Extra - original_tech: follower-robot-count-3
-  * Extra - tech_name: randovania-follower-robot-count-d
-  * Extra - count: 400
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Lab research speed 5); Heals? False
-  * Layers: default
-  * Pickup 52; Category? Major
-  * Extra - original_tech: research-speed-5
-  * Extra - tech_name: randovania-research-speed-f
-  * Extra - count: 500
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Follower robot count 4); Heals? False
-  * Layers: full_tree
-  * Pickup 157; Category? Major
-  * Extra - original_tech: follower-robot-count-4
-  * Extra - tech_name: randovania-follower-robot-count-e
-  * Extra - count: 600
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Lab research speed 6); Heals? False
-  * Layers: default
-  * Pickup 63; Category? Major
-  * Extra - original_tech: research-speed-6
-  * Extra - tech_name: randovania-research-speed-g
-  * Extra - count: 500
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Low density structure); Heals? False
   * Layers: default
-  * Pickup 70; Category? Major
+  * Pickup 79; Category? Major
   * Extra - original_tech: low-density-structure
   * Extra - tech_name: randovania-low-density-structure
   * Extra - count: 300
@@ -1995,7 +1963,7 @@ Tier 7
 
 > Pickup (Mining productivity 2); Heals? False
   * Layers: default
-  * Pickup 79; Category? Major
+  * Pickup 90; Category? Major
   * Extra - original_tech: mining-productivity-2
   * Extra - tech_name: randovania-mining-productivity-c
   * Extra - count: 500
@@ -2006,7 +1974,7 @@ Tier 7
 
 > Pickup (Refined flammables 3); Heals? False
   * Layers: full_tree
-  * Pickup 158; Category? Major
+  * Pickup 91; Category? Major
   * Extra - original_tech: refined-flammables-3
   * Extra - tech_name: randovania-refined-flammables-d
   * Extra - count: 300
@@ -2015,9 +1983,20 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Lab research speed 4); Heals? False
+  * Layers: default
+  * Pickup 100; Category? Major
+  * Extra - original_tech: research-speed-4
+  * Extra - tech_name: randovania-research-speed-e
+  * Extra - count: 500
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Rocket fuel); Heals? False
   * Layers: default
-  * Pickup 88; Category? Major
+  * Pickup 101; Category? Major
   * Extra - original_tech: rocket-fuel
   * Extra - tech_name: randovania-rocket-fuel
   * Extra - count: 300
@@ -2028,7 +2007,7 @@ Tier 7
 
 > Pickup (Nuclear power); Heals? False
   * Layers: default
-  * Pickup 90; Category? Major
+  * Pickup 116; Category? Major
   * Extra - original_tech: nuclear-power
   * Extra - tech_name: randovania-nuclear-power
   * Extra - count: 800
@@ -2037,20 +2016,20 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Refined flammables 4); Heals? False
-  * Layers: full_tree
-  * Pickup 159; Category? Major
-  * Extra - original_tech: refined-flammables-4
-  * Extra - tech_name: randovania-refined-flammables-e
-  * Extra - count: 400
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
+> Pickup (Lab research speed 5); Heals? False
+  * Layers: default
+  * Pickup 119; Category? Major
+  * Extra - original_tech: research-speed-5
+  * Extra - tech_name: randovania-research-speed-f
+  * Extra - count: 500
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Speed module 3); Heals? False
   * Layers: default
-  * Pickup 107; Category? Major
+  * Pickup 122; Category? Major
   * Extra - original_tech: speed-module-3
   * Extra - tech_name: randovania-speed-module-d
   * Extra - count: 300
@@ -2061,7 +2040,7 @@ Tier 7
 
 > Pickup (Productivity module 3); Heals? False
   * Layers: default
-  * Pickup 110; Category? Major
+  * Pickup 124; Category? Major
   * Extra - original_tech: productivity-module-3
   * Extra - tech_name: randovania-productivity-module-d
   * Extra - count: 300
@@ -2072,9 +2051,9 @@ Tier 7
 
 > Pickup (Efficiency module 3); Heals? False
   * Layers: default
-  * Pickup 111; Category? Major
-  * Extra - original_tech: effectivity-module-3
-  * Extra - tech_name: randovania-effectivity-module-d
+  * Pickup 125; Category? Major
+  * Extra - original_tech: efficiency-module-3
+  * Extra - tech_name: randovania-efficiency-module-d
   * Extra - count: 300
   * Extra - time: 60
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
@@ -2083,9 +2062,9 @@ Tier 7
 
 > Pickup (Energy weapons damage 3); Heals? False
   * Layers: full_tree
-  * Pickup 165; Category? Major
-  * Extra - original_tech: energy-weapons-damage-3
-  * Extra - tech_name: randovania-energy-weapons-damage-d
+  * Pickup 127; Category? Major
+  * Extra - original_tech: laser-weapons-damage-3
+  * Extra - tech_name: randovania-laser-weapons-damage-d
   * Extra - count: 300
   * Extra - time: 60
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
@@ -2094,7 +2073,7 @@ Tier 7
 
 > Pickup (Laser shooting speed 3); Heals? False
   * Layers: full_tree
-  * Pickup 166; Category? Major
+  * Pickup 128; Category? Major
   * Extra - original_tech: laser-shooting-speed-3
   * Extra - tech_name: randovania-laser-shooting-speed-d
   * Extra - count: 200
@@ -2103,22 +2082,11 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Braking force 5); Heals? False
-  * Layers: full_tree
-  * Pickup 169; Category? Major
-  * Extra - original_tech: braking-force-5
-  * Extra - tech_name: randovania-braking-force-f
-  * Extra - count: 450
-  * Extra - time: 35
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Energy weapons damage 4); Heals? False
   * Layers: full_tree
-  * Pickup 170; Category? Major
-  * Extra - original_tech: energy-weapons-damage-4
-  * Extra - tech_name: randovania-energy-weapons-damage-e
+  * Pickup 136; Category? Major
+  * Extra - original_tech: laser-weapons-damage-4
+  * Extra - tech_name: randovania-laser-weapons-damage-e
   * Extra - count: 400
   * Extra - time: 60
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack')
@@ -2127,7 +2095,7 @@ Tier 7
 
 > Pickup (Laser shooting speed 4); Heals? False
   * Layers: full_tree
-  * Pickup 171; Category? Major
+  * Pickup 137; Category? Major
   * Extra - original_tech: laser-shooting-speed-4
   * Extra - tech_name: randovania-laser-shooting-speed-e
   * Extra - count: 200
@@ -2136,9 +2104,20 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Braking force 5); Heals? False
+  * Layers: full_tree
+  * Pickup 147; Category? Major
+  * Extra - original_tech: braking-force-5
+  * Extra - tech_name: randovania-braking-force-f
+  * Extra - count: 450
+  * Extra - time: 35
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Inserter capacity bonus 6); Heals? False
   * Layers: full_tree
-  * Pickup 172; Category? Major
+  * Pickup 148; Category? Major
   * Extra - original_tech: inserter-capacity-bonus-6
   * Extra - tech_name: randovania-inserter-capacity-bonus-g
   * Extra - count: 400
@@ -2147,20 +2126,31 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Braking force 6); Heals? False
+> Pickup (Stronger explosives 4); Heals? False
   * Layers: full_tree
-  * Pickup 173; Category? Major
-  * Extra - original_tech: braking-force-6
-  * Extra - tech_name: randovania-braking-force-g
-  * Extra - count: 550
-  * Extra - time: 45
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
+  * Pickup 150; Category? Major
+  * Extra - original_tech: stronger-explosives-4
+  * Extra - tech_name: randovania-stronger-explosives-e
+  * Extra - count: 400
+  * Extra - time: 60
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Refined flammables 4); Heals? False
+  * Layers: full_tree
+  * Pickup 151; Category? Major
+  * Extra - original_tech: refined-flammables-4
+  * Extra - tech_name: randovania-refined-flammables-e
+  * Extra - count: 400
+  * Extra - time: 60
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Laser shooting speed 5); Heals? False
   * Layers: full_tree
-  * Pickup 175; Category? Major
+  * Pickup 154; Category? Major
   * Extra - original_tech: laser-shooting-speed-5
   * Extra - tech_name: randovania-laser-shooting-speed-f
   * Extra - count: 200
@@ -2169,20 +2159,20 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Rocket control unit); Heals? False
+> Pickup (Lab research speed 6); Heals? False
   * Layers: default
-  * Pickup 125; Category? Major
-  * Extra - original_tech: rocket-control-unit
-  * Extra - tech_name: randovania-rocket-control-unit
-  * Extra - count: 300
-  * Extra - time: 45
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'utility-science-pack')
+  * Pickup 157; Category? Major
+  * Extra - original_tech: research-speed-6
+  * Extra - tech_name: randovania-research-speed-g
+  * Extra - count: 500
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Logistic system); Heals? False
   * Layers: default
-  * Pickup 128; Category? Major
+  * Pickup 161; Category? Major
   * Extra - original_tech: logistic-system
   * Extra - tech_name: randovania-logistic-system
   * Extra - count: 500
@@ -2193,7 +2183,7 @@ Tier 7
 
 > Pickup (Worker robot cargo size 2); Heals? False
   * Layers: default
-  * Pickup 130; Category? Major
+  * Pickup 163; Category? Major
   * Extra - original_tech: worker-robots-storage-2
   * Extra - tech_name: randovania-worker-robots-storage-c
   * Extra - count: 300
@@ -2202,9 +2192,20 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Braking force 6); Heals? False
+  * Layers: full_tree
+  * Pickup 164; Category? Major
+  * Extra - original_tech: braking-force-6
+  * Extra - tech_name: randovania-braking-force-g
+  * Extra - count: 550
+  * Extra - time: 45
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Inserter capacity bonus 7); Heals? False
   * Layers: full_tree
-  * Pickup 176; Category? Major
+  * Pickup 165; Category? Major
   * Extra - original_tech: inserter-capacity-bonus-7
   * Extra - tech_name: randovania-inserter-capacity-bonus-h
   * Extra - count: 600
@@ -2215,7 +2216,7 @@ Tier 7
 
 > Pickup (Laser shooting speed 6); Heals? False
   * Layers: full_tree
-  * Pickup 179; Category? Major
+  * Pickup 169; Category? Major
   * Extra - original_tech: laser-shooting-speed-6
   * Extra - tech_name: randovania-laser-shooting-speed-g
   * Extra - count: 350
@@ -2226,7 +2227,7 @@ Tier 7
 
 > Pickup (Power armor MK2); Heals? False
   * Layers: default
-  * Pickup 132; Category? Major
+  * Pickup 172; Category? Major
   * Extra - original_tech: power-armor-mk2
   * Extra - tech_name: randovania-power-armor-mk2
   * Extra - count: 400
@@ -2235,12 +2236,12 @@ Tier 7
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Follower robot count 5); Heals? False
+> Pickup (Follower robot count 4); Heals? False
   * Layers: full_tree
-  * Pickup 181; Category? Major
-  * Extra - original_tech: follower-robot-count-5
-  * Extra - tech_name: randovania-follower-robot-count-f
-  * Extra - count: 800
+  * Pickup 184; Category? Major
+  * Extra - original_tech: follower-robot-count-4
+  * Extra - tech_name: randovania-follower-robot-count-e
+  * Extra - count: 400
   * Extra - time: 30
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
   > Connection to Tech Tree
@@ -2248,7 +2249,7 @@ Tier 7
 
 > Pickup (Worker robot speed 4); Heals? False
   * Layers: default
-  * Pickup 142; Category? Major
+  * Pickup 185; Category? Major
   * Extra - original_tech: worker-robots-speed-4
   * Extra - tech_name: randovania-worker-robots-speed-e
   * Extra - count: 250
@@ -2263,51 +2264,49 @@ Tier 8
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 8
   > Pickup (Physical projectile damage 5)
-      Tech/Tier 7/Pickup (Physical projectile damage 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+      Tech/Tier 7/Pickup (Physical projectile damage 4) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
   > Pickup (Weapon shooting speed 5)
-      Tech/Tier 7/Pickup (Weapon shooting speed 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+      Tech/Tier 7/Pickup (Weapon shooting speed 4) and Tech/Tier 3/Pickup (Chemical science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack
+  > Pickup (Kovarex enrichment process)
+      Tech/Tier 5/Pickup (Production science pack) and Tech/Tier 5/Pickup (Uranium processing) and Tech/Tier 7/Pickup (Rocket fuel) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Physical projectile damage 6)
-      Tech/Tier 8/Pickup (Physical projectile damage 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+      Tech/Tier 8/Pickup (Physical projectile damage 5) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Energy weapons damage 5)
+      Tech/Tier 7/Pickup (Energy weapons damage 4) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Weapon shooting speed 6)
-      Tech/Tier 8/Pickup (Weapon shooting speed 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+      Tech/Tier 8/Pickup (Weapon shooting speed 5) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Rocket silo)
+      Tech/Tier 6/Pickup (Concrete) and Tech/Tier 7/Pickup (Rocket fuel) and Tech/Tier 5/Pickup (Electric energy accumulators) and Tech/Tier 6/Pickup (Solar energy) and Tech/Tier 5/Pickup (Utility science pack) and Tech/Tier 7/Pickup (Speed module 3) and Tech/Tier 7/Pickup (Productivity module 3) and Tech/Tier 2/Pickup (Radar) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+  > Pickup (Mining productivity 3)
+      Tech/Tier 7/Pickup (Mining productivity 2) and Tech/Tier 5/Pickup (Production science pack) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
   > Pickup (Stronger explosives 5)
       Tech/Tier 7/Pickup (Stronger explosives 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Stronger explosives 6)
-      Tech/Tier 8/Pickup (Stronger explosives 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Mining productivity 3)
-      Tech/Tier 7/Pickup (Mining productivity 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
-  > Pickup (Kovarex enrichment process)
-      Tech/Tier 5/Pickup (Production science pack) and Tech/Tier 6/Pickup (Uranium processing) and Tech/Tier 7/Pickup (Rocket fuel) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack
   > Pickup (Refined flammables 5)
       Tech/Tier 7/Pickup (Refined flammables 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Refined flammables 6)
-      Tech/Tier 8/Pickup (Refined flammables 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Energy weapons damage 5)
-      Tech/Tier 7/Pickup (Energy weapons damage 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Braking force 7)
-      Tech/Tier 7/Pickup (Braking force 6) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
   > Pickup (Energy weapons damage 6)
       Tech/Tier 8/Pickup (Energy weapons damage 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Uranium ammo)
-      Tech/Tier 6/Pickup (Uranium processing) and Tech/Tier 6/Pickup (Military 4) and Tech/Tier 6/Pickup (Tank) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+      Tech/Tier 5/Pickup (Uranium processing) and Tech/Tier 6/Pickup (Military 4) and Tech/Tier 6/Pickup (Tank) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Artillery)
-      Tech/Tier 6/Pickup (Military 4) and Tech/Tier 6/Pickup (Tank) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Rocket silo)
-      Tech/Tier 6/Pickup (Concrete) and Tech/Tier 7/Pickup (Speed module 3) and Tech/Tier 7/Pickup (Productivity module 3) and Tech/Tier 7/Pickup (Rocket fuel) and Tech/Tier 7/Pickup (Rocket control unit) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+      Tech/Tier 6/Pickup (Military 4) and Tech/Tier 6/Pickup (Tank) and Tech/Tier 6/Pickup (Concrete) and Tech/Tier 2/Pickup (Radar) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Space science pack)
+      Tech/Tier 8/Pickup (Rocket silo) and Craft Rocket part and Craft Satellite
   > Pickup (Worker robot cargo size 3)
-      Tech/Tier 7/Pickup (Worker robot cargo size 2) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+      Tech/Tier 7/Pickup (Worker robot cargo size 2) and Tech/Tier 5/Pickup (Utility science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+  > Pickup (Braking force 7)
+      Tech/Tier 7/Pickup (Braking force 6) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+  > Pickup (Stronger explosives 6)
+      Tech/Tier 8/Pickup (Stronger explosives 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
+  > Pickup (Refined flammables 6)
+      Tech/Tier 8/Pickup (Refined flammables 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Laser shooting speed 7)
       Tech/Tier 7/Pickup (Laser shooting speed 6) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
-  > Pickup (Space science pack)
-      Tech/Tier 8/Pickup (Rocket silo) and Tech/Tier 5/Pickup (Electric energy accumulators) and Tech/Tier 6/Pickup (Solar energy) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
-  > Pickup (Follower robot count 6)
-      Tech/Tier 7/Pickup (Follower robot count 5) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Utility science pack
   > Pickup (Worker robot speed 5)
-      Tech/Tier 7/Pickup (Worker robot speed 4) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
+      Tech/Tier 7/Pickup (Worker robot speed 4) and Tech/Tier 5/Pickup (Production science pack) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Production science pack and Craft Utility science pack
 
 > Pickup (Physical projectile damage 5); Heals? False
   * Layers: full_tree
-  * Pickup 149; Category? Major
+  * Pickup 71; Category? Major
   * Extra - original_tech: physical-projectile-damage-5
   * Extra - tech_name: randovania-physical-projectile-damage-f
   * Extra - count: 500
@@ -2318,7 +2317,7 @@ Tier 8
 
 > Pickup (Weapon shooting speed 5); Heals? False
   * Layers: full_tree
-  * Pickup 150; Category? Major
+  * Pickup 73; Category? Major
   * Extra - original_tech: weapon-shooting-speed-5
   * Extra - tech_name: randovania-weapon-shooting-speed-f
   * Extra - count: 500
@@ -2327,12 +2326,34 @@ Tier 8
   > Connection to Tech Tree
       Trivial
 
+> Pickup (Kovarex enrichment process); Heals? False
+  * Layers: default
+  * Pickup 123; Category? Major
+  * Extra - original_tech: kovarex-enrichment-process
+  * Extra - tech_name: randovania-kovarex-enrichment-process
+  * Extra - count: 1500
+  * Extra - time: 30
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
 > Pickup (Physical projectile damage 6); Heals? False
   * Layers: full_tree
-  * Pickup 152; Category? Major
+  * Pickup 149; Category? Major
   * Extra - original_tech: physical-projectile-damage-6
   * Extra - tech_name: randovania-physical-projectile-damage-g
   * Extra - count: 600
+  * Extra - time: 60
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Energy weapons damage 5); Heals? False
+  * Layers: full_tree
+  * Pickup 152; Category? Major
+  * Extra - original_tech: laser-weapons-damage-5
+  * Extra - tech_name: randovania-laser-weapons-damage-f
+  * Extra - count: 500
   * Extra - time: 60
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
   > Connection to Tech Tree
@@ -2349,31 +2370,20 @@ Tier 8
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Stronger explosives 5); Heals? False
-  * Layers: full_tree
-  * Pickup 154; Category? Major
-  * Extra - original_tech: stronger-explosives-5
-  * Extra - tech_name: randovania-stronger-explosives-f
-  * Extra - count: 500
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Stronger explosives 6); Heals? False
-  * Layers: full_tree
+> Pickup (Rocket silo); Heals? False
+  * Layers: default
   * Pickup 156; Category? Major
-  * Extra - original_tech: stronger-explosives-6
-  * Extra - tech_name: randovania-stronger-explosives-g
-  * Extra - count: 600
+  * Extra - original_tech: rocket-silo
+  * Extra - tech_name: randovania-rocket-silo
+  * Extra - count: 1000
   * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Mining productivity 3); Heals? False
   * Layers: default
-  * Pickup 99; Category? Major
+  * Pickup 159; Category? Major
   * Extra - original_tech: mining-productivity-3
   * Extra - tech_name: randovania-mining-productivity-d
   * Extra - count: 1000
@@ -2382,20 +2392,20 @@ Tier 8
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Kovarex enrichment process); Heals? False
-  * Layers: default
-  * Pickup 108; Category? Major
-  * Extra - original_tech: kovarex-enrichment-process
-  * Extra - tech_name: randovania-kovarex-enrichment-process
-  * Extra - count: 1500
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack')
+> Pickup (Stronger explosives 5); Heals? False
+  * Layers: full_tree
+  * Pickup 166; Category? Major
+  * Extra - original_tech: stronger-explosives-5
+  * Extra - tech_name: randovania-stronger-explosives-f
+  * Extra - count: 500
+  * Extra - time: 60
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Refined flammables 5); Heals? False
   * Layers: full_tree
-  * Pickup 162; Category? Major
+  * Pickup 167; Category? Major
   * Extra - original_tech: refined-flammables-5
   * Extra - tech_name: randovania-refined-flammables-f
   * Extra - count: 500
@@ -2404,44 +2414,11 @@ Tier 8
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Refined flammables 6); Heals? False
-  * Layers: full_tree
-  * Pickup 167; Category? Major
-  * Extra - original_tech: refined-flammables-6
-  * Extra - tech_name: randovania-refined-flammables-g
-  * Extra - count: 600
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Energy weapons damage 5); Heals? False
-  * Layers: full_tree
-  * Pickup 174; Category? Major
-  * Extra - original_tech: energy-weapons-damage-5
-  * Extra - tech_name: randovania-energy-weapons-damage-f
-  * Extra - count: 500
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Braking force 7); Heals? False
-  * Layers: full_tree
-  * Pickup 177; Category? Major
-  * Extra - original_tech: braking-force-7
-  * Extra - tech_name: randovania-braking-force-h
-  * Extra - count: 650
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Energy weapons damage 6); Heals? False
   * Layers: full_tree
-  * Pickup 178; Category? Major
-  * Extra - original_tech: energy-weapons-damage-6
-  * Extra - tech_name: randovania-energy-weapons-damage-g
+  * Pickup 168; Category? Major
+  * Extra - original_tech: laser-weapons-damage-6
+  * Extra - tech_name: randovania-laser-weapons-damage-g
   * Extra - count: 600
   * Extra - time: 60
   * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
@@ -2450,7 +2427,7 @@ Tier 8
 
 > Pickup (Uranium ammo); Heals? False
   * Layers: default
-  * Pickup 131; Category? Major
+  * Pickup 170; Category? Major
   * Extra - original_tech: uranium-ammo
   * Extra - tech_name: randovania-uranium-ammo
   * Extra - count: 1000
@@ -2461,7 +2438,7 @@ Tier 8
 
 > Pickup (Artillery); Heals? False
   * Layers: default
-  * Pickup 134; Category? Major
+  * Pickup 174; Category? Major
   * Extra - original_tech: artillery
   * Extra - tech_name: randovania-artillery
   * Extra - count: 2000
@@ -2470,20 +2447,18 @@ Tier 8
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Rocket silo); Heals? False
+> Pickup (Space science pack); Heals? False
   * Layers: default
-  * Pickup 136; Category? Major
-  * Extra - original_tech: rocket-silo
-  * Extra - tech_name: randovania-rocket-silo
-  * Extra - count: 1000
-  * Extra - time: 60
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
+  * Pickup 175; Category? Major
+  * Extra - original_tech: space-science-pack
+  * Extra - tech_name: randovania-space-science-pack
+  * Extra - research_trigger: frozendict.frozendict({'type': 'send-item-to-orbit', 'item': 'satellite'})
   > Connection to Tech Tree
       Trivial
 
 > Pickup (Worker robot cargo size 3); Heals? False
   * Layers: default
-  * Pickup 140; Category? Major
+  * Pickup 179; Category? Major
   * Extra - original_tech: worker-robots-storage-3
   * Extra - tech_name: randovania-worker-robots-storage-d
   * Extra - count: 450
@@ -2492,9 +2467,42 @@ Tier 8
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Laser shooting speed 7); Heals? False
+> Pickup (Braking force 7); Heals? False
   * Layers: full_tree
   * Pickup 180; Category? Major
+  * Extra - original_tech: braking-force-7
+  * Extra - tech_name: randovania-braking-force-h
+  * Extra - count: 650
+  * Extra - time: 60
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Stronger explosives 6); Heals? False
+  * Layers: full_tree
+  * Pickup 181; Category? Major
+  * Extra - original_tech: stronger-explosives-6
+  * Extra - tech_name: randovania-stronger-explosives-g
+  * Extra - count: 600
+  * Extra - time: 60
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Refined flammables 6); Heals? False
+  * Layers: full_tree
+  * Pickup 182; Category? Major
+  * Extra - original_tech: refined-flammables-6
+  * Extra - tech_name: randovania-refined-flammables-g
+  * Extra - count: 600
+  * Extra - time: 60
+  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
+  > Connection to Tech Tree
+      Trivial
+
+> Pickup (Laser shooting speed 7); Heals? False
+  * Layers: full_tree
+  * Pickup 183; Category? Major
   * Extra - original_tech: laser-shooting-speed-7
   * Extra - tech_name: randovania-laser-shooting-speed-h
   * Extra - count: 450
@@ -2503,31 +2511,9 @@ Tier 8
   > Connection to Tech Tree
       Trivial
 
-> Pickup (Space science pack); Heals? False
-  * Layers: default
-  * Pickup 141; Category? Major
-  * Extra - original_tech: space-science-pack
-  * Extra - tech_name: randovania-space-science-pack
-  * Extra - count: 2000
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'production-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
-> Pickup (Follower robot count 6); Heals? False
-  * Layers: full_tree
-  * Pickup 182; Category? Major
-  * Extra - original_tech: follower-robot-count-6
-  * Extra - tech_name: randovania-follower-robot-count-g
-  * Extra - count: 1000
-  * Extra - time: 30
-  * Extra - ingredients: ('automation-science-pack', 'chemical-science-pack', 'logistic-science-pack', 'military-science-pack', 'utility-science-pack')
-  > Connection to Tech Tree
-      Trivial
-
 > Pickup (Worker robot speed 5); Heals? False
   * Layers: default
-  * Pickup 143; Category? Major
+  * Pickup 186; Category? Major
   * Extra - original_tech: worker-robots-speed-5
   * Extra - tech_name: randovania-worker-robots-speed-f
   * Extra - count: 500
@@ -2542,11 +2528,11 @@ Tier 9
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 9
   > Pickup (Spidertron)
-      Tech/Tier 6/Pickup (Military 4) and Tech/Tier 4/Pickup (Exoskeleton) and Tech/Tier 6/Pickup (Portable fusion reactor) and Tech/Tier 5/Pickup (Rocketry) and Tech/Tier 7/Pickup (Rocket control unit) and Tech/Tier 7/Pickup (Efficiency module 3) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Production science pack and Craft Utility science pack
+      Tech/Tier 6/Pickup (Military 4) and Tech/Tier 4/Pickup (Exoskeleton) and Tech/Tier 6/Pickup (Portable fission reactor) and Tech/Tier 5/Pickup (Rocketry) and Tech/Tier 7/Pickup (Efficiency module 3) and Tech/Tier 2/Pickup (Radar) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Production science pack and Craft Utility science pack
 
 > Pickup (Spidertron); Heals? False
   * Layers: default
-  * Pickup 137; Category? Major
+  * Pickup 176; Category? Major
   * Extra - original_tech: spidertron
   * Extra - tech_name: randovania-spidertron
   * Extra - count: 2500
@@ -2561,11 +2547,11 @@ Tier 10
   * Layers: default
   * Standard to Tech Tree/Connection to Tier 10
   > Pickup (Atomic bomb)
-      Tech/Tier 6/Pickup (Military 4) and Tech/Tier 8/Pickup (Kovarex enrichment process) and Tech/Tier 7/Pickup (Rocket control unit) and Tech/Tier 5/Pickup (Rocketry) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Production science pack and Craft Utility science pack
+      Tech/Tier 6/Pickup (Military 4) and Tech/Tier 8/Pickup (Kovarex enrichment process) and Tech/Tier 5/Pickup (Rocketry) and Craft Automation science pack and Craft Chemical science pack and Craft Logistic science pack and Craft Military science pack and Craft Production science pack and Craft Utility science pack
 
 > Pickup (Atomic bomb); Heals? False
   * Layers: default
-  * Pickup 135; Category? Major
+  * Pickup 171; Category? Major
   * Extra - original_tech: atomic-bomb
   * Extra - tech_name: randovania-atomic-bomb
   * Extra - count: 5000
