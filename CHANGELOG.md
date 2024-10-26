@@ -63,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Cave Story
 
-- Changed: The Objective preset entry don't enforce a minimum size anymore.
+- Changed: The Objective preset entry doesn't enforce a minimum size anymore.
 - Changed: Adjust spacing on the HP preset entry.
 
 ### Metroid Dread
@@ -97,19 +97,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Impact Crater
 
-- Added: In Metroid Prime Lair: Require Combat Visor for Essence fight.
+- Added: In Metroid Prime Lair: Require Combat Visor for Essence fight unless Invisible Objects is set to Advanced.
 
 ##### Tallon Overworld
 
-- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump.
+- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, or Intermediate Slope Jump.
 - Added: In Tallon Canyon: Beginner Knowledge to break blocks with Power Bombs.
 - Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
 - Added: In Gully: Beginner Standables to climb the room.
 
 ### Metroid Prime 2: Echoes
 
+- Added: Colorblind-friendly textures for Main Gyro Chamber.
 - Changed: Updated tournament winners scan text for Echoes 2024.
-- Added: Colorblind-friendly textures for main gyro.
 
 ### Metroid: Samus Returns
 
