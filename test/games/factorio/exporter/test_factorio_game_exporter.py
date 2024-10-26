@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 @pytest.mark.parametrize("patch_data_name", ["starter_preset"])
 def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     # Setup
-    def validate_schema(factorio_path: Path, patch_data: dict, output_folder: Path):
+    def validate_schema(patch_data: dict, output_folder: Path):
         factorio_randovania_mod.schema.validate(patch_data)
 
     mock_patch: MagicMock = mocker.patch("factorio_randovania_mod.create", side_effect=validate_schema)
