@@ -670,6 +670,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
             ),
             "teleporter_sounds": should_keep_elevator_sounds(self.configuration),
             "dangerous_energy_tank": self.configuration.dangerous_energy_tank,
+            "widescreen_hack": self.cosmetic_patches.widescreen_aspect_ratio
         }
 
         # Add Spawn Point
@@ -887,6 +888,13 @@ class EchoesPatchDataFactory(PatchDataFactory):
             },
             "inverted": self.configuration.inverted_mode,
             "cosmetics": self.add_new_patcher_cosmetics(),
+            "widescreen_hud": self.cosmetic_patches.widescreen_aspect_ratio,
+            "tweaks": {
+                "TweakGui": {
+                    "misc.unknown_0xeeb7839b": 0.0  # Remove black bars in Morph Ball HUD
+                }
+            } if self.cosmetic_patches.widescreen_aspect_ratio
+            else {}
         }
 
     def create_logbook_patches(self) -> list[dict[str, typing.Any]]:

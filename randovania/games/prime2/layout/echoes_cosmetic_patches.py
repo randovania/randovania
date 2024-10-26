@@ -22,6 +22,7 @@ class EchoesCosmeticPatches(BaseCosmeticPatches):
     use_hud_color: bool = False
     hud_color: tuple[int, int, int] = DEFAULT_HUD_COLOR
     suit_colors: EchoesSuitPreferences = EchoesSuitPreferences()
+    widescreen_aspect_ratio: bool = False
 
     @classmethod
     def default(cls) -> EchoesCosmeticPatches:
