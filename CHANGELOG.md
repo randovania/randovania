@@ -70,8 +70,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Common case where an invalid input RomFS was considered valid.
 
-### Metroid Dread
-
 #### Logic Database
 
 ##### Ferenia
@@ -85,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Chaos option export error when submerging rooms
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
+- Changed: When importing Metroid Prime 2 game models for multiworld, certain bad ISOs are no longer compatible.
 
 #### Logic Database
 
@@ -110,6 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Colorblind-friendly textures for Main Gyro Chamber.
 - Changed: Updated tournament winners scan text for Echoes 2024.
+- Changed: When importing Metroid Prime game models for multiworld or using the new patcher, certain bad ISOs are no longer compatible.
 
 ### Metroid: Samus Returns
 

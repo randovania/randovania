@@ -7,6 +7,7 @@ import shutil
 import time
 from typing import TYPE_CHECKING, NamedTuple
 
+import construct
 import open_prime_rando.echoes.custom_assets
 from retro_data_structures.asset_manager import AssetManager, IsoFileProvider
 from retro_data_structures.conversion import conversions
@@ -23,6 +24,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import json_lib, status_update_lib
+from randovania.patching.patchers.exceptions import UnableToExportError
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -47,11 +49,17 @@ def get_asset_cache_version(assets_dir: Path) -> int:
 
 
 def prime_asset_manager(input_iso: Path) -> AssetManager:
-    return AssetManager(IsoFileProvider(input_iso), RDSGame.PRIME)
+    try:
+        return AssetManager(IsoFileProvider(input_iso), RDSGame.PRIME)
+    except construct.ConstructError:
+        raise UnableToExportError(f"Unable to parse {input_iso}. Please check if it's a known good ISO.")
 
 
 def echoes_asset_manager(input_path: Path) -> AssetManager:
-    return AssetManager(IsoFileProvider(input_path), RDSGame.ECHOES)
+    try:
+        return AssetManager(IsoFileProvider(input_path), RDSGame.ECHOES)
+    except construct.ConstructError:
+        raise UnableToExportError(f"Unable to parse {input_path}. Please check if it's a known good ISO.")
 
 
 class Asset(NamedTuple):
