@@ -83,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Main Plaza vault ledge door now can now be shuffled via door lock rando
 - Fixed: Chaos option export error when submerging rooms
+- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 
