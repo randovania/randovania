@@ -7,7 +7,12 @@ from open_prime_rando.dol_patching import all_prime_dol_patches
 from open_prime_rando.dol_patching.prime1 import dol_patches
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
-from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
+from randovania.game_connection.executor.memory_operation import (
+    MemoryOperation,
+    MemoryOperationException,
+    MemoryOperationExecutor,
+)
+from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.games.prime1.patcher import prime_items
 
 if TYPE_CHECKING:
@@ -16,7 +21,6 @@ if TYPE_CHECKING:
     from randovania.game_connection.connector.prime_remote_connector import PatchInstructions, PickupPatches
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.game_description.resources.inventory import Inventory
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 
 
@@ -54,6 +58,35 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
     @property
     def multiworld_magic_item(self) -> ItemResourceInfo:
         return self.game.resource_database.get_item(prime_items.MULTIWORLD_ITEM)
+
+    async def get_inventory(self) -> Inventory:
+        """Fetches the inventory represented by the given game memory."""
+
+        memory_ops = await self._memory_op_for_items(
+            [
+                item
+                for item in self.game.resource_database.item
+                if item.extra["item_id"] < 1000 and not item.extra.get("exclude_from_remote_connector")
+            ]
+        )
+        ops_result = await self.executor.perform_memory_operations(memory_ops)
+
+        inventory = {}
+        for item, memory_op in zip(self.game.resource_database.item, memory_ops):
+            inv = InventoryItem(*struct.unpack(">II", ops_result[memory_op]))
+            if (inv.amount > inv.capacity or inv.capacity > item.max_capacity) and (item != self.multiworld_magic_item):
+                raise MemoryOperationException(f"Received {inv} for {item.long_name}, which is an invalid state.")
+            inventory[item] = inv
+
+        for item in self.game.resource_database.item:
+            if item.extra.get("custom_value"):
+                unknown2 = inventory.get(self.game.resource_database.get_item("Unknown2"))
+                if unknown2:
+                    item_value = (unknown2.capacity & item.extra["custom_value"]) >= 1
+                    new_item = InventoryItem(item_value, item_value)
+                    inventory[item] = new_item
+
+        return Inventory(inventory)
 
     async def current_game_status(self) -> tuple[bool, Region | None]:
         """
@@ -111,6 +144,16 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         for item, delta in resources_to_give.as_resource_gain():
             if delta == 0:
                 continue
+
+            if item.extra.get("custom_value"):
+                patches.append(
+                    all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
+                        self.version.powerup_functions,
+                        self.version.game,
+                        self.game.resource_database.get_item("Unknown2").extra["item_id"],
+                        item.extra["custom_value"],
+                    )
+                )
 
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
                 if item.extra.get("max_increase", None) == 0:
