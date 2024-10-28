@@ -290,19 +290,22 @@
                     "item_id": 1004
                 }
             },
-            "MainPB": {
-                "long_name": "Main Power Bomb",
+            "UnlimitedMissiles": {
+                "long_name": "Unlimited Missiles",
                 "max_capacity": 1,
                 "extra": {
-                    "item_id": 44,
-                    "launcher_type": "Main Power Bomb"
+                    "item_id": 41,
+                    "exclude_from_remote_connector": true,
+                    "custom_value": 1
                 }
             },
-            "LockedPB": {
-                "long_name": "Locked Power Bomb",
-                "max_capacity": 99,
+            "UnlimitedPowerBombs": {
+                "long_name": "Unlimited Power Bombs",
+                "max_capacity": 1,
                 "extra": {
-                    "item_id": 1006
+                    "item_id": 42,
+                    "exclude_from_remote_connector": true,
+                    "custom_value": 2
                 }
             },
             "MissileLauncher": {
@@ -310,7 +313,26 @@
                 "max_capacity": 1,
                 "extra": {
                     "item_id": 43,
-                    "launcher_type": "Missile Launcher"
+                    "launcher_type": "Missile Launcher",
+                    "exclude_from_remote_connector": true,
+                    "custom_value": 4
+                }
+            },
+            "MainPB": {
+                "long_name": "Main Power Bomb",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 44,
+                    "launcher_type": "Main Power Bomb",
+                    "exclude_from_remote_connector": true,
+                    "custom_value": 8
+                }
+            },
+            "LockedPB": {
+                "long_name": "Locked Power Bomb",
+                "max_capacity": 99,
+                "extra": {
+                    "item_id": 1006
                 }
             },
             "LockedMissile": {
@@ -351,20 +373,6 @@
                     "max_increase": 0,
                     "is_refill": true,
                     "refill_id": 7
-                }
-            },
-            "UnlimitedMissiles": {
-                "long_name": "Unlimited Missiles",
-                "max_capacity": 1,
-                "extra": {
-                    "item_id": 41
-                }
-            },
-            "UnlimitedPowerBombs": {
-                "long_name": "Unlimited Power Bombs",
-                "max_capacity": 1,
-                "extra": {
-                    "item_id": 42
                 }
             }
         },
