@@ -43,6 +43,8 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "wave": "Wave",
     "plasma": "Plasma",
     "missiles": "Missile",
+    "missileLauncher": "MissileLauncher",
+    "unlimitedMissiles": "UnlimitedMissiles",
     "scanVisor": "Scan",
     "bombs": "Bombs",
     "powerBombs": "PowerBomb",
@@ -125,12 +127,15 @@ def prime1_pickup_details_to_patcher(
                 count = quantity
                 max_count = 0
                 break
+            elif resource.extra.get("launcher_type"):
+                pickup_type = resource.long_name
+                break
             # Regular items
             elif resource.extra["item_id"] < 1000:
                 pickup_type = resource.long_name
                 count = quantity
                 max_count = count
-                break
+                # break
 
     if (
         model["name"] == "Missile"
@@ -142,6 +147,8 @@ def prime1_pickup_details_to_patcher(
         collection_text = collection_text.replace("Missile Expansion", "Shiny Missile Expansion")
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
         original_model = model
+
+    # if (model["name"] == "UnlimitedMissiles"):
 
     result = {
         "type": pickup_type,
