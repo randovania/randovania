@@ -703,7 +703,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         permalink = Permalink.from_parameters(
             GeneratorParameters(
-                seed_number=random.randint(0, 2 ** 31),
+                seed_number=random.randint(0, 2**31),
                 spoiler=spoiler,
                 presets=[VersionedPreset.from_str(world.preset_raw).get_preset() for world in self._session.worlds],
             )
