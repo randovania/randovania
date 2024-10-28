@@ -448,6 +448,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             else:
                 self.export_game_button.setEnabled(False)
 
+            QtWidgets.QApplication.alert(self)
+
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
         try:
@@ -701,7 +703,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
         permalink = Permalink.from_parameters(
             GeneratorParameters(
-                seed_number=random.randint(0, 2**31),
+                seed_number=random.randint(0, 2 ** 31),
                 spoiler=spoiler,
                 presets=[VersionedPreset.from_str(world.preset_raw).get_preset() for world in self._session.worlds],
             )
@@ -750,6 +752,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except AnyNetworkError:
                 # We're interested in catching generation failures.
                 # Let network errors be handled by who called us, which will be captured by handle_network_errors
+                QtWidgets.QApplication.alert(self)  # Alert the person who generates on errors since update_game_tab
+                # doesn't generation errors
                 raise
 
             except Exception as e:
@@ -757,6 +761,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     e,
                     self.update_progress,
                 )
+                QtWidgets.QApplication.alert(self)  # Alert the person who generates on errors, since update_game_tab
+                # doesn't generation errors
 
             finally:
                 self._generating_game = False
