@@ -219,7 +219,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         result = await async_dialog.warning(
             self,
             "Delete world?",
-            f"Are you sure you want to delete world {self._session.get_world(world_uid).name}?",
+            f"Are you sure you want to delete world '{self._session.get_world(world_uid).name}'?",
             buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
             default_button=async_dialog.StandardButton.No,
         )
