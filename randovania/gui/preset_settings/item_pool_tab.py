@@ -9,7 +9,6 @@ from PySide6 import QtCore, QtWidgets
 
 import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
-from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.generator.pickup_pool import pool_creator
@@ -26,6 +25,7 @@ from randovania.layout.base.standard_pickup_state import StandardPickupState
 from randovania.layout.exceptions import InvalidConfiguration
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.pickup_category import PickupCategory
@@ -169,8 +169,6 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             if widgets.require_main_item_check is not None:
                 widgets.require_main_item_check.setChecked(state.requires_main_item)
-                if self.game == RandovaniaGame.METROID_PRIME:
-                    widgets.require_main_item_check.setChecked(False)
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
@@ -394,13 +392,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             add_column(pickup_spinbox)
             current_row += 1
 
-            # FIXME: hardcoded check to hide required mains for Prime 1
             if ammo.temporary:
                 require_main_item_check = QtWidgets.QCheckBox(pickup_box)
                 require_main_item_check.setText("Requires the main item to work?")
                 require_main_item_check.stateChanged.connect(partial(self._on_update_ammo_require_main_item, ammo))
-                if self.game == RandovaniaGame.METROID_PRIME:
-                    require_main_item_check.setVisible(False)
                 layout.addWidget(require_main_item_check, current_row, 0, 1, -1)
                 current_row += 1
             else:
