@@ -20,6 +20,7 @@ from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
+from randovania.gui.lib.common_qt_lib import alert_user
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import AnyNetworkError, QtNetworkClient, handle_network_errors
@@ -448,7 +449,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             else:
                 self.export_game_button.setEnabled(False)
 
-            QtWidgets.QApplication.alert(self)
+            alert_user(self, self._options)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
@@ -752,7 +753,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except AnyNetworkError:
                 # We're interested in catching generation failures.
                 # Let network errors be handled by who called us, which will be captured by handle_network_errors
-                QtWidgets.QApplication.alert(self)  # Alert the person who generates on errors since update_game_tab
+                alert_user(self, self._options)
+                # Alert the person who generates on errors since update_game_tab
                 # doesn't generation errors
                 raise
 
@@ -761,7 +763,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     e,
                     self.update_progress,
                 )
-                QtWidgets.QApplication.alert(self)  # Alert the person who generates on errors, since update_game_tab
+                alert_user(self, self._options)
+                # Alert the person who generates on errors, since update_game_tab
                 # doesn't generation errors
 
             finally:
