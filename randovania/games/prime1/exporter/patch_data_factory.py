@@ -47,6 +47,8 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "scanVisor": "Scan",
     "bombs": "Bombs",
     "powerBombs": "PowerBomb",
+    "powerBombLauncher": "MainPB",
+    "unlimitedPowerBombs": "UnlimitedPowerBombs",
     "flamethrower": "Flamethrower",
     "thermalVisor": "Thermal",
     "charge": "Charge",
@@ -126,7 +128,7 @@ def prime1_pickup_details_to_patcher(
                 count = quantity
                 max_count = 0
                 break
-            elif resource.extra.get("launcher_type"):
+            elif resource.extra.get("custom_value"):
                 pickup_type = resource.long_name
                 break
             # Regular items
@@ -134,7 +136,6 @@ def prime1_pickup_details_to_patcher(
                 pickup_type = resource.long_name
                 count = quantity
                 max_count = count
-                # break
 
     if (
         model["name"] == "Missile"
@@ -147,7 +148,7 @@ def prime1_pickup_details_to_patcher(
         name = name.replace("Missile Expansion", "Shiny Missile Expansion")
         original_model = model
 
-    # if (model["name"] == "UnlimitedMissiles"):
+    # TODO: Model for custom items.
 
     result = {
         "type": pickup_type,
@@ -657,18 +658,6 @@ class PrimePatchDataFactory(PatchDataFactory):
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
 
-        ammo_with_mains = [
-            ammo.name
-            for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items()
-            if state.requires_main_item
-        ]
-        if ammo_with_mains:
-            raise ValueError(
-                "Preset has {} with required mains enabled. This is currently not supported.".format(
-                    " and ".join(ammo_with_mains)
-                )
-            )
-
         scan_visor = self.game.resource_database.get_item_by_name("Scan Visor")
         pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
@@ -896,12 +885,14 @@ class PrimePatchDataFactory(PatchDataFactory):
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
-        # Check if mains are required. If not, force Missile Launcher to be a starting item. Right?
+        # Check if mains are required. If not, force Missile Launcher or Main Power Bombs to be a starting item.
         for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
             if ammo.name == "Missile Expansion":
                 if not state.requires_main_item:
                     starting_items["missileLauncher"] = True
-                break
+            elif ammo.name == "Power Bomb Expansion":
+                if not state.requires_main_item:
+                    starting_items["powerBombLauncher"] = True
 
         if not self.configuration.legacy_mode:
             idrone_config = {
