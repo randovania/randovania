@@ -129,7 +129,7 @@ def prime1_pickup_details_to_patcher(
                 count = quantity
                 max_count = 0
                 break
-            elif resource.extra.get("custom_value"):
+            elif resource.extra.get("unk2_bitmask_value"):
                 pickup_type = resource.long_name
                 break
             # Regular items
@@ -928,7 +928,7 @@ class PrimePatchDataFactory(PatchDataFactory[PrimeConfiguration, PrimeCosmeticPa
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
-        # Check if mains are required. If not, force Missile Launcher or Main Power Bombs to be a starting item.
+        # Check if mains are required. If not, force the respective main to be a starting item.
         for ammo, state in self.configuration.ammo_pickup_configuration.pickups_state.items():
             if ammo.name == "Missile Expansion":
                 if not state.requires_main_item:
