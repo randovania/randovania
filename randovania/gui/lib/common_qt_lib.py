@@ -16,6 +16,8 @@ from randovania import get_data_path
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.interface_common.options import Options
+
 
 def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):
     for checkbox in iterable:
@@ -294,3 +296,9 @@ def set_icon_data_paths(label: QtWidgets.QLabel):
     repl = rf'<img src="{get_data_path().as_posix()}/\g<1>"/>'
     new_text = image_pattern.sub(repl, label.text())
     label.setText(new_text)
+
+
+def alert_user(parent: QtWidgets, options: Options):
+    QtWidgets.QApplication.alert(parent)
+    if parent._options.sound_alerts:
+        QtWidgets.QApplication.beep()

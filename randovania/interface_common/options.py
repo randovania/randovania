@@ -131,6 +131,7 @@ _SERIALIZER_FOR_FIELD = {
     "dark_mode": Serializer(identity, bool),
     "show_multiworld_banner": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
+    "sound_alerts": Serializer(identity, bool),
     "allow_crash_reporting": Serializer(identity, bool),
     "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
@@ -200,6 +201,7 @@ class Options:
     _dark_mode: bool | None = None
     _show_multiworld_banner: bool | None = None
     _experimental_settings: bool | None = None
+    _sound_alerts: bool | None = None
     _allow_crash_reporting: bool | None = None
     _use_user_for_crash_reporting: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
@@ -421,6 +423,14 @@ class Options:
     @experimental_settings.setter
     def experimental_settings(self, value: bool):
         self._edit_field("experimental_settings", value)
+
+    @property
+    def sound_alerts(self) -> bool:
+        return _return_with_default(self._sound_alerts, lambda: False)
+
+    @sound_alerts.setter
+    def sound_alerts(self, value: bool):
+        self._edit_field("sound_alerts", value)
 
     @property
     def allow_crash_reporting(self) -> bool:

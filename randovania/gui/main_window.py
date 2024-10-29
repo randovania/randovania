@@ -294,6 +294,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_show_multiworld_banner.triggered.connect(self._on_menu_action_show_multiworld_banner)
         self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
+        self.menu_action_sound_alerts.triggered.connect(self._on_menu_action_sound_alerts)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
@@ -770,6 +771,10 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def _on_menu_action_experimental_settings(self):
         with self._options as options:
             options.experimental_settings = self.menu_action_experimental_settings.isChecked()
+
+    def _on_menu_action_sound_alerts(self):
+        with self._options as options:
+            options.sound_alerts = self.menu_action_sound_alerts.isChecked()
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow

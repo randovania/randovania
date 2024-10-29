@@ -13,6 +13,7 @@ import randovania
 from randovania import monitoring
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
 from randovania.gui.lib import async_dialog
+from randovania.gui.lib.common_qt_lib import alert_user
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.interface_common import generator_frontend
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -180,7 +181,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 ),
                 default_button=async_dialog.StandardButton.Cancel,
             )
-            QtWidgets.QApplication.alert(self)
+            alert_user(self, self._options)
             if code == async_dialog.StandardButton.Save:
                 layout = e.layout
             elif code == async_dialog.StandardButton.Retry:
@@ -193,11 +194,11 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             return
 
         except Exception as e:
-            QtWidgets.QApplication.alert(self)
+            alert_user(self, self._options)
             return await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
 
         self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
-        QtWidgets.QApplication.alert(self)
+        alert_user(self, self._options)
         persist_layout(self._options.game_history_path, layout)
         self._window_manager.open_game_details(layout)
 
