@@ -63,7 +63,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         """Fetches the inventory represented by the given game memory."""
 
         memory_ops = await self._memory_op_for_items(
-            [item for item in self.game.resource_database.item if not item.extra.get("exclude_from_remote_connector")]
+            [item for item in self.game.resource_database.item if item.extra["item_id"] < 1000]
         )
         ops_result = await self.executor.perform_memory_operations(memory_ops)
 
