@@ -66,7 +66,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             [
                 item
                 for item in self.game.resource_database.item
-                if item.extra["item_id"] < 1000 and not item.extra.get("exclude_from_remote_connector")
+                if not item.extra.get("exclude_from_remote_connector")
             ]
         )
         ops_result = await self.executor.perform_memory_operations(memory_ops)
@@ -79,10 +79,10 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             inventory[item] = inv
 
         for item in self.game.resource_database.item:
-            if item.extra.get("custom_value"):
+            if item.extra.get("unk2_bitmask_value"):
                 unknown2 = inventory.get(self.game.resource_database.get_item("Unknown2"))
                 if unknown2:
-                    item_value = (unknown2.capacity & item.extra["custom_value"]) >= 1
+                    item_value = (unknown2.capacity & item.extra["unk2_bitmask_value"]) >= 1
                     new_item = InventoryItem(item_value, item_value)
                     inventory[item] = new_item
 
@@ -145,13 +145,13 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
             if delta == 0:
                 continue
 
-            if item.extra.get("custom_value"):
+            if item.extra.get("unk2_bitmask_value"):
                 patches.append(
                     all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
                         self.version.powerup_functions,
                         self.version.game,
                         self.game.resource_database.get_item("Unknown2").extra["item_id"],
-                        item.extra["custom_value"],
+                        (item.extra["item_id"] - 1000),
                     )
                 )
 
