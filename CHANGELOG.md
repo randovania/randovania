@@ -81,8 +81,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Fixed: Main Plaza vault ledge door now can now be shuffled via door lock rando
-- Fixed: Chaos option export error when submerging rooms
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 

@@ -955,11 +955,6 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             boss_sizes = {}
 
-        if self.configuration.spring_ball:
-            spring_ball_item = "Morph Ball Bomb"
-        else:
-            spring_ball_item = "Spring Ball"
-
         data: dict = {
             "$schema": "https://randovania.github.io/randomprime/randomprime.schema.json",
             "seed": self.description.get_seed_for_player(self.players_config.player_index),
@@ -985,7 +980,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "noDoors": self.configuration.no_doors,
                 "startingRoom": starting_room,
                 "warpToStart": self.configuration.warp_to_start,
-                "springBallItem": spring_ball_item,
+                "springBall": self.configuration.spring_ball,
                 "incineratorDroneConfig": idrone_config,
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,
