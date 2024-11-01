@@ -264,7 +264,6 @@ class FusionPatchDataFactory(PatchDataFactory):
             pickup.name: index
             for index, pickup in enumerate(self.configuration.standard_pickup_configuration.pickups_state.keys())
         }
-        print(str(major_pickup_name_order))
 
         def sort_pickup(p: PickupEntry):
             return major_pickup_name_order.get(p, math.inf), p
