@@ -334,6 +334,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     def _create_world_item(
         self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem, owner: int | None
     ) -> WorldWidgetEntry:
+        # TODO: finish this and make this nicer
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
         can_change_preset = not has_layout and not in_generation
@@ -372,7 +373,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 )
 
         if self.is_admin() or self._session.allow_everyone_claim_world or self._session.allow_coop:
-            if owner is None or True:
+            print(f"owner: {owner}, for world id {self._session.get_world(world_id).name}")
+            if owner is None:
                 world_menu.addSeparator()
                 connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
@@ -459,10 +461,22 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             self._user_widgets[user.id].update(user)
 
         unclaimed_worlds = set(world_by_id.keys()) - used_worlds
+
+        if self._session.allow_coop:
+            total_world_item = QtWidgets.QTreeWidgetItem(self)
+            total_world_item.setExpanded(True)
+            total_world_item.setText(0, "All Worlds")
+            for world_uid, world in world_by_id.items():
+                if world_uid in used_worlds:
+                    self._create_world_item(world_uid, total_world_item, None).update(
+                        world_by_id[world_uid],
+                        None,
+                    )
+
         if unclaimed_worlds:
             unclaimed_world_item = QtWidgets.QTreeWidgetItem(self)
             unclaimed_world_item.setExpanded(True)
-            unclaimed_world_item.setText(0, "Unclaimed Games")
+            unclaimed_world_item.setText(0, "Unclaimed Worlds")
 
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
