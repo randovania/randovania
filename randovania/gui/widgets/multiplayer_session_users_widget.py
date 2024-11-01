@@ -371,12 +371,12 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                     world_menu.addAction("Connect via debug connector"), self._register_debug_connector, world_id
                 )
 
-        if self.is_admin() or self._session.allow_everyone_claim_world:
-            if owner is None:
+        if self.is_admin() or self._session.allow_everyone_claim_world or self._session.allow_coop:
+            if owner is None or True:
                 world_menu.addSeparator()
                 connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
-                if self.is_admin():
+                if self.is_admin() or self._session.allow_coop:
                     claim_menu = world_menu.addMenu("Claim for")
                     for p in self._session.users.values():
                         connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)

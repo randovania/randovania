@@ -427,6 +427,9 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
     elif action == SessionAdminGlobalAction.CREATE_PATCHER_FILE:
         return _create_patcher_file(sa, session, *args)
 
+    elif action == SessionAdminGlobalAction.SET_ALLOW_COOP:
+        return _set_allow_coop(sa, session, *args)
+
     elif action == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         _set_allow_everyone_claim(sa, session, *args)
 
@@ -542,6 +545,17 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
         session.save()
 
 
+def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool):
+    # TODO: Verification
+    # verify_has_admin(sa, session.id, None)
+
+    with database.db.atomic():
+        session.allow_coop = new_state
+        new_operation = "Allowing" if session.allow_coop else "Disallowing"
+        session_common.add_audit_entry(sa, session, f"{new_operation} coop for the session.")
+        session.save()
+
+
 def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
     player_names = {}
     uuids = {}
@@ -560,10 +574,7 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
 
     layout_description = session.layout_description
     players_config = PlayersConfiguration(
-        player_index=player_index,
-        player_names=player_names,
-        uuids=uuids,
-        session_name=session.name,
+        player_index=player_index, player_names=player_names, uuids=uuids, session_name=session.name, is_coop=True
     )
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)

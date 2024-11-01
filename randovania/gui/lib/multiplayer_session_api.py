@@ -289,6 +289,14 @@ class MultiplayerSessionApi(QtCore.QObject):
         )
 
     @handle_network_errors
+    async def set_allow_coop(self, flag: bool):
+        self.logger.info("Setting whether to allow coop to %s", flag)
+        await self._session_admin_global(
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_COOP,
+            flag,
+        )
+
+    @handle_network_errors
     async def set_everyone_can_claim(self, flag: bool):
         self.logger.info("Setting whether everyone can claim to %s", flag)
         await self._session_admin_global(

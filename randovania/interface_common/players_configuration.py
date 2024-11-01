@@ -13,6 +13,7 @@ class PlayersConfiguration:
     player_names: dict[int, str]
     uuids: dict[int, uuid.UUID] = dataclasses.field(default_factory=dict)
     session_name: str | None = None
+    is_coop: bool = False
 
     def get_own_name(self) -> str:
         return self.player_names[self.player_index]
