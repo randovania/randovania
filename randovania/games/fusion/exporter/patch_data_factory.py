@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
@@ -217,9 +218,8 @@ class FusionPatchDataFactory(PatchDataFactory):
             }
         return nav_text_json
 
-    def _create_credits_text(self) -> dict:
-        credits_array = []
-        spoiler_dict = []
+    def _credits_elements(self) -> dict:
+        elements = {}
         for player_index, patches in self.description.all_patches.items():
             for pickup_index, target in patches.pickup_assignment.items():
                 if target.player != self.players_config.player_index:
@@ -230,10 +230,9 @@ class FusionPatchDataFactory(PatchDataFactory):
                     player_name = None
                     if self.players_config.is_multiworld:
                         player_name = self.players_config.player_names[player_index]
-                    spoiler_dict.append(
-                        {
-                            "Item": target.pickup.name,
-                            "Location": {
+                    if target.pickup.name not in elements:
+                        elements[target.pickup.name] = [
+                            {
                                 "World": player_name,
                                 "Region": region_list.region_name_from_node(
                                     region_list.node_from_pickup_index(pickup_index), True
@@ -241,17 +240,42 @@ class FusionPatchDataFactory(PatchDataFactory):
                                 "Area": region_list.nodes_to_area(
                                     region_list.node_from_pickup_index(pickup_index)
                                 ).name,
-                            },
-                        }
-                    )
-        for item in spoiler_dict:
-            credits_array.append({"LineType": "Red", "Text": item["Item"], "BlankLines": 1})
-            if item["Location"]["World"] is not None:
-                credits_array.append({"LineType": "Blue", "Text": item["Location"]["World"], "BlankLines": 0})
-            credits_array.append({"LineType": "White1", "Text": item["Location"]["Region"], "BlankLines": 0})
-            credits_array.append({"LineType": "White1", "Text": item["Location"]["Area"], "BlankLines": 1})
-        print(str(credits_array))
-        print("\n -------------------")
+                            }
+                        ]
+                    else:
+                        elements[target.pickup.name].append(
+                            {
+                                "World": player_name,
+                                "Region": region_list.region_name_from_node(
+                                    region_list.node_from_pickup_index(pickup_index), True
+                                ),
+                                "Area": region_list.nodes_to_area(
+                                    region_list.node_from_pickup_index(pickup_index)
+                                ).name,
+                            }
+                        )
+        return elements
+
+    def _create_credits_text(self) -> dict:
+        credits_array = []
+        spoiler_dict = self._credits_elements()
+
+        major_pickup_name_order = {
+            pickup.name: index
+            for index, pickup in enumerate(self.configuration.standard_pickup_configuration.pickups_state.keys())
+        }
+        print(str(major_pickup_name_order))
+
+        def sort_pickup(p: PickupEntry):
+            return major_pickup_name_order.get(p, math.inf), p
+
+        for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
+            credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
+            for location in spoiler_dict[pickup]:
+                if location["World"] is not None:
+                    credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
+                credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
+                credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
         return credits_array
 
     def create_useless_pickup(self) -> PickupEntry:
@@ -268,7 +292,6 @@ class FusionPatchDataFactory(PatchDataFactory):
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
 
-        # TODO: add credits, missile limit
         mars_data = {
             "SeedHash": self.description.shareable_hash,
             "StartingLocation": self._create_starting_location(),
