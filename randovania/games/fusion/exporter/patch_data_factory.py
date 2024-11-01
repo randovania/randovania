@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
@@ -219,7 +220,7 @@ class FusionPatchDataFactory(PatchDataFactory):
         return nav_text_json
 
     def _credits_elements(self) -> dict:
-        elements = {}
+        elements = defaultdict(list)
         for player_index, patches in self.description.all_patches.items():
             for pickup_index, target in patches.pickup_assignment.items():
                 if target.player != self.players_config.player_index:
@@ -230,30 +231,15 @@ class FusionPatchDataFactory(PatchDataFactory):
                     player_name = None
                     if self.players_config.is_multiworld:
                         player_name = self.players_config.player_names[player_index]
-                    if target.pickup.name not in elements:
-                        elements[target.pickup.name] = [
-                            {
-                                "World": player_name,
-                                "Region": region_list.region_name_from_node(
-                                    region_list.node_from_pickup_index(pickup_index), True
-                                ),
-                                "Area": region_list.nodes_to_area(
-                                    region_list.node_from_pickup_index(pickup_index)
-                                ).name,
-                            }
-                        ]
-                    else:
-                        elements[target.pickup.name].append(
-                            {
-                                "World": player_name,
-                                "Region": region_list.region_name_from_node(
-                                    region_list.node_from_pickup_index(pickup_index), True
-                                ),
-                                "Area": region_list.nodes_to_area(
-                                    region_list.node_from_pickup_index(pickup_index)
-                                ).name,
-                            }
-                        )
+                    elements[target.pickup.name].append(
+                        {
+                            "World": player_name,
+                            "Region": region_list.region_name_from_node(
+                                region_list.node_from_pickup_index(pickup_index), True
+                            ),
+                            "Area": region_list.nodes_to_area(region_list.node_from_pickup_index(pickup_index)).name,
+                        }
+                    )
         return elements
 
     def _create_credits_text(self) -> dict:
