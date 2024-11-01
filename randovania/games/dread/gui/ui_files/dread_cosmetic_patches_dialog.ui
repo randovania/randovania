@@ -144,7 +144,7 @@
           <item>
            <layout class="QHBoxLayout" name="music_group">
             <item>
-             <widget class="QSlider" name="music_slider">
+             <widget class="ScrollProtectedSlider" name="music_slider">
               <property name="maximum">
                <number>100</number>
               </property>
@@ -175,7 +175,7 @@
           <item>
            <layout class="QHBoxLayout" name="sfx_group">
             <item>
-             <widget class="QSlider" name="sfx_slider">
+             <widget class="ScrollProtectedSlider" name="sfx_slider">
               <property name="maximum">
                <number>100</number>
               </property>
@@ -206,7 +206,7 @@
           <item>
            <layout class="QHBoxLayout" name="ambience_group">
             <item>
-             <widget class="QSlider" name="ambience_slider">
+             <widget class="ScrollProtectedSlider" name="ambience_slider">
               <property name="maximum">
                <number>100</number>
               </property>
@@ -316,6 +316,13 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>QSlider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

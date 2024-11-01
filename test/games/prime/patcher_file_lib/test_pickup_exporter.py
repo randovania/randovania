@@ -7,6 +7,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.exporter import pickup_exporter
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
@@ -21,7 +22,6 @@ from randovania.game_description.pickup.pickup_entry import (
 )
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle

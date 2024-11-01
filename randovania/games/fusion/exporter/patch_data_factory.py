@@ -1,13 +1,16 @@
 from __future__ import annotations
 
+import math
+from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
-from randovania.exporter.hints import guaranteed_item_hint
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 
 if TYPE_CHECKING:
@@ -105,7 +108,7 @@ class FusionPatchDataFactory(PatchDataFactory):
         tank_dict["EnergyTank"] = self.configuration.energy_per_tank
         return tank_dict
 
-    def _create_door_locks(self):
+    def _create_door_locks(self) -> list[dict]:
         result = []
         for node, weakness in self.patches.all_dock_weaknesses():
             for id in node.extra["door_idx"]:
@@ -202,10 +205,10 @@ class FusionPatchDataFactory(PatchDataFactory):
                     "InitialText": (
                         f"{starting_items_text}Your objective is as follows: the [COLOR=3]SA-X[/COLOR] "
                         f"has discovered and destroyed a top secret [COLOR=3]Metroid[/COLOR] breeding facility. "
-                        f"It released {self.patches.configuration.artifacts.placed_artifacts} "
+                        f"It released {self.configuration.artifacts.placed_artifacts} "
                         "infant Metroids into the station. "
                         f"Initial scans indicate that they are hiding {metroid_location_text}. "
-                        f"Find and capture {self.patches.configuration.artifacts.required_artifacts} of them, "
+                        f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
                         "to lure out the SA-X. "
                         "Then initiate the station's self-destruct sequence. "
                         "Uplink at [COLOR=2]Navigation Rooms[/COLOR] along the way. "
@@ -215,6 +218,46 @@ class FusionPatchDataFactory(PatchDataFactory):
                 },
             }
         return nav_text_json
+
+    def _credits_elements(self) -> dict:
+        elements = defaultdict(list)
+        majors = credits_spoiler.get_locations_for_major_pickups_and_keys(
+            self.description.all_patches, self.players_config
+        )
+
+        for pickup, locations in majors.items():
+            for location in locations:
+                region_list = default_database.game_description_for(location.location.game).region_list
+                pickup_node = region_list.node_from_pickup_index(location.location.location)
+                elements[pickup.name].append(
+                    {
+                        "World": location.player_name,
+                        "Region": region_list.region_name_from_node(pickup_node),
+                        "Area": region_list.nodes_to_area(pickup_node).name,
+                    }
+                )
+        return elements
+
+    def _create_credits_text(self) -> dict:
+        credits_array = []
+        spoiler_dict = self._credits_elements()
+
+        major_pickup_name_order = {
+            pickup.name: index
+            for index, pickup in enumerate(self.configuration.standard_pickup_configuration.pickups_state.keys())
+        }
+
+        def sort_pickup(p: PickupEntry):
+            return major_pickup_name_order.get(p, math.inf), p
+
+        for pickup in sorted(spoiler_dict.keys(), key=sort_pickup):
+            credits_array.append({"LineType": "Red", "Text": pickup, "BlankLines": 1})
+            for location in spoiler_dict[pickup]:
+                if location["World"] is not None:
+                    credits_array.append({"LineType": "Blue", "Text": location["World"], "BlankLines": 0})
+                credits_array.append({"LineType": "White1", "Text": location["Region"], "BlankLines": 0})
+                credits_array.append({"LineType": "White1", "Text": location["Area"], "BlankLines": 1})
+        return credits_array
 
     def create_useless_pickup(self) -> PickupEntry:
         """Used for any location with no PickupEntry assigned to it."""
@@ -230,7 +273,6 @@ class FusionPatchDataFactory(PatchDataFactory):
     def create_game_specific_data(self) -> dict:
         pickup_list = self.export_pickup_list()
 
-        # TODO: add credits, missile limit
         mars_data = {
             "SeedHash": self.description.shareable_hash,
             "StartingLocation": self._create_starting_location(),
@@ -238,9 +280,11 @@ class FusionPatchDataFactory(PatchDataFactory):
             "Locations": self._create_pickup_dict(pickup_list),
             "RequiredMetroidCount": self.configuration.artifacts.required_artifacts,
             "TankIncrements": self._create_tank_increments(),
+            "MissileLimit": 3,
             "DoorLocks": self._create_door_locks(),
             "Palettes": self._create_palette(),
             "NavigationText": self._create_nav_text(),
+            "CreditsText": self._create_credits_text(),
             "DisableDemos": True,
             "AntiSoftlockRoomEdits": self.configuration.anti_softlock,
             "PowerBombsWithoutBombs": True,

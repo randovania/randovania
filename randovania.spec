@@ -1,13 +1,9 @@
 # -*- mode: python -*-
-import hashlib
-import json
-import os
 import platform
-import pathlib
 from PyInstaller.utils.hooks import copy_metadata
 
 import randovania
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 block_cipher = None
 

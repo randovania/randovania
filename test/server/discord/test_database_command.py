@@ -7,7 +7,7 @@ from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import discord
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.server.discord.database_command import (
     AreaWidget,
     DatabaseCommandCog,

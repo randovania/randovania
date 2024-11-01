@@ -539,23 +539,23 @@
                 "extra": {}
             },
             "Stabilizer1": {
-                "long_name": "Stabilizer 1 Restored",
+                "long_name": "Stabilizer Northwest Restored",
                 "extra": {}
             },
             "Stabilizer2": {
-                "long_name": "Stabilizer 2 Restored",
+                "long_name": "Stabilizer Northeast Restored",
                 "extra": {}
             },
             "Stabilizer3": {
-                "long_name": "Stabilizer 3 Restored",
+                "long_name": "Stabilizer Southwest Restored",
                 "extra": {}
             },
             "Stabilizer4": {
-                "long_name": "Stabilizer 4 Restored",
+                "long_name": "Stabilizer Southeast Restored",
                 "extra": {}
             },
             "Stabilizer5": {
-                "long_name": "Stabilizer 5 Restored",
+                "long_name": "Stabilizer Central Restored",
                 "extra": {}
             },
             "Cooling": {
@@ -597,6 +597,22 @@
             "MainDeckOperationsMissileShield": {
                 "long_name": "Main Deck Operations Deck Missile Shield",
                 "extra": {}
+            },
+            "AQANOCDiffusionBlocks": {
+                "long_name": "Powamp Shaft Diffusion Blocks Destroyed",
+                "extra": {}
+            },
+            "S1ChargeAccessBombs": {
+                "long_name": "Sector 1 Charge Core Arena Access Bomb Blocks Destroyed",
+                "extra": {}
+            },
+            "AnimorphsOpen": {
+                "long_name": "Sector 1 Animorphs Entrance Uncovered",
+                "extra": {}
+            },
+            "MainDeckHubVisited": {
+                "long_name": "Main Deck Hub Visited",
+                "extra": {}
             }
         },
         "tricks": {
@@ -621,7 +637,7 @@
             "Knowledge": {
                 "long_name": "Knowledge",
                 "description": "The player may be expected to know alternate enemy/block weaknesses or be able to identify potential softlocks risks.",
-                "require_documentation_above": 0,
+                "require_documentation_above": 1,
                 "extra": {}
             },
             "DamageRuns": {
@@ -633,7 +649,7 @@
             "WallJump": {
                 "long_name": "Wall Jump",
                 "description": "The player may be expected to Wall Jump to traverse rooms vertically. All vanilla locations where Wall Jumps are expected are considered trickless.",
-                "require_documentation_above": 0,
+                "require_documentation_above": 2,
                 "extra": {}
             },
             "JBJ": {
@@ -657,7 +673,7 @@
             "MidAirMorph": {
                 "long_name": "Mid-Air Morph",
                 "description": "The player may be expected to morph mid-air to access tunnels without Bombs or Spring Ball.",
-                "require_documentation_above": 0,
+                "require_documentation_above": 1,
                 "extra": {}
             },
             "JumpExtends": {
@@ -726,6 +742,10 @@
                 "extra": {
                     "description": "A resource for working around current shortcomings in the generator"
                 }
+            },
+            "MenuMod": {
+                "long_name": "Equipment Manipulation",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -816,44 +836,17 @@
             "Can Use Any Bombs": {
                 "display_name": "Can Use Any Bombs",
                 "requirement": {
-                    "type": "and",
+                    "type": "or",
                     "data": {
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "MorphBall",
-                                    "amount": 1,
-                                    "negate": false
-                                }
+                                "type": "template",
+                                "data": "Can Use Bombs"
                             },
                             {
-                                "type": "or",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "MorphBallBombData",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "PowerBombs",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
+                                "type": "template",
+                                "data": "Can Use Power Bombs"
                             }
                         ]
                     }
@@ -959,10 +952,10 @@
                     }
                 }
             },
-            "Can Freeze Enemies": {
-                "display_name": "Can Freeze Enemies",
+            "Can Freeze Enemies With Ice Beam": {
+                "display_name": "Can Freeze Enemies With Ice Beam",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
                         "items": [
@@ -976,47 +969,112 @@
                                 }
                             },
                             {
-                                "type": "and",
+                                "type": "resource",
                                 "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "or",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "IceMissileData",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "DiffusionMissileData",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
+                                    "type": "misc",
+                                    "name": "EnemyRando",
+                                    "amount": 1,
+                                    "negate": true
                                 }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Freeze Enemies With Ice Missiles": {
+                "display_name": "Can Freeze Enemies With Ice Missiles",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "IceMissileData",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "EnemyRando",
+                                    "amount": 1,
+                                    "negate": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Freeze Enemies With Diffusion": {
+                "display_name": "Can Freeze Enemies With Diffusion",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DiffusionMissileData",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "misc",
+                                    "name": "EnemyRando",
+                                    "amount": 1,
+                                    "negate": true
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Freeze Enemies With Any Weapon": {
+                "display_name": "Can Freeze Enemies With Any Weapon",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "template",
+                                "data": "Can Freeze Enemies With Diffusion"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Freeze Enemies With Ice Beam"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Can Freeze Enemies With Ice Missiles"
                             }
                         ]
                     }
@@ -1079,6 +1137,15 @@
                                                 "type": "tricks",
                                                 "name": "Knowledge",
                                                 "amount": 2,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missiles",
+                                                "amount": 1,
                                                 "negate": false
                                             }
                                         }
@@ -1146,7 +1213,7 @@
                                                 "items": [
                                                     {
                                                         "type": "template",
-                                                        "data": "10 DMG Missiles"
+                                                        "data": "10+ DMG Missiles"
                                                     },
                                                     {
                                                         "type": "resource",
@@ -1287,51 +1354,71 @@
                                             }
                                         },
                                         {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 5,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
+                                            "type": "or",
                                             "data": {
                                                 "comment": null,
                                                 "items": [
                                                     {
-                                                        "type": "template",
-                                                        "data": "30 DMG Missiles"
-                                                    },
-                                                    {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 3,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "20 DMG Missiles"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missiles",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "type": "and",
-                                            "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "template",
-                                                        "data": "45 DMG Missiles"
                                                     },
                                                     {
-                                                        "type": "resource",
+                                                        "type": "and",
                                                         "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 2,
-                                                            "negate": false
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "30 DMG Missiles"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missiles",
+                                                                        "amount": 3,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "and",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "template",
+                                                                    "data": "45 DMG Missiles"
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missiles",
+                                                                        "amount": 2,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
                                                         }
                                                     }
                                                 ]
@@ -1500,10 +1587,10 @@
                     }
                 }
             },
-            "10 DMG Missiles": {
-                "display_name": "10 DMG Missiles",
+            "10+ DMG Missiles": {
+                "display_name": "10+ DMG Missiles",
                 "requirement": {
-                    "type": "or",
+                    "type": "and",
                     "data": {
                         "comment": null,
                         "items": [
@@ -1511,50 +1598,13 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "MissileData",
+                                    "name": "Missiles",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        },
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "IceMissileData",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "20 DMG Missiles": {
-                "display_name": "20 DMG Missiles",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
+                                "type": "or",
                                 "data": {
                                     "comment": null,
                                     "items": [
@@ -1575,23 +1625,6 @@
                                                 "amount": 1,
                                                 "negate": false
                                             }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "resource",
-                                            "data": {
-                                                "type": "items",
-                                                "name": "Missiles",
-                                                "amount": 1,
-                                                "negate": false
-                                            }
                                         },
                                         {
                                             "type": "resource",
@@ -1600,6 +1633,69 @@
                                                 "name": "SuperMissileData",
                                                 "amount": 1,
                                                 "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "20 DMG Missiles": {
+                "display_name": "20 DMG Missiles",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "SuperMissileData",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "IceMissileData",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "MissileData",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
                                             }
                                         }
                                     ]
@@ -1631,29 +1727,12 @@
                                     "comment": null,
                                     "items": [
                                         {
-                                            "type": "and",
+                                            "type": "resource",
                                             "data": {
-                                                "comment": null,
-                                                "items": [
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "Missiles",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "resource",
-                                                        "data": {
-                                                            "type": "items",
-                                                            "name": "IceMissileData",
-                                                            "amount": 1,
-                                                            "negate": false
-                                                        }
-                                                    }
-                                                ]
+                                                "type": "items",
+                                                "name": "IceMissileData",
+                                                "amount": 1,
+                                                "negate": false
                                             }
                                         },
                                         {
@@ -1666,6 +1745,15 @@
                                             }
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
+                                    "amount": 1,
+                                    "negate": false
                                 }
                             }
                         ]
@@ -1711,6 +1799,15 @@
                                 "data": {
                                     "type": "items",
                                     "name": "DiffusionMissileData",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missiles",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -1810,7 +1907,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "Can Freeze Enemies"
+                                "data": "Can Freeze Enemies With Any Weapon"
                             }
                         ]
                     }
@@ -1863,8 +1960,25 @@
                                 }
                             },
                             {
-                                "type": "template",
-                                "data": "Can Use Power Bombs"
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "template",
+                                            "data": "Can Use Power Bombs"
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "PowerBombs",
+                                                "amount": 4,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         ]
                     }
@@ -2148,7 +2262,159 @@
         "area": "Docking Bay Hangar",
         "node": "Ship"
     },
-    "minimal_logic": null,
+    "minimal_logic": {
+        "items_to_exclude": [
+            {
+                "name": "ChargeBeam",
+                "when_shuffled": null
+            },
+            {
+                "name": "IceBeam",
+                "when_shuffled": null
+            },
+            {
+                "name": "MissileData",
+                "when_shuffled": null
+            },
+            {
+                "name": "MorphBall",
+                "when_shuffled": null
+            },
+            {
+                "name": "MorphBallBombData",
+                "when_shuffled": null
+            },
+            {
+                "name": "L0Locks",
+                "when_shuffled": null
+            },
+            {
+                "name": "L1Locks",
+                "when_shuffled": null
+            },
+            {
+                "name": "L2Locks",
+                "when_shuffled": null
+            },
+            {
+                "name": "L3Locks",
+                "when_shuffled": null
+            },
+            {
+                "name": "L4Locks",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 1",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 2",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 3",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 4",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 5",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 6",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 7",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 8",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 9",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 10",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 11",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 12",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 13",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 14",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 15",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 16",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 17",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 18",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 19",
+                "when_shuffled": null
+            },
+            {
+                "name": "Infant Metroid 20",
+                "when_shuffled": null
+            }
+        ],
+        "custom_item_amount": [
+            {
+                "name": "EnergyTank",
+                "value": 1
+            },
+            {
+                "name": "Missiles",
+                "value": 20
+            },
+            {
+                "name": "PowerBombs",
+                "value": 10
+            }
+        ],
+        "events_to_exclude": [
+            {
+                "name": "SA-X",
+                "reason": "Required to reach victory condition."
+            },
+            {
+                "name": "Controls",
+                "reason": "Required to reach victory condition."
+            },
+            {
+                "name": "VictoryEvent",
+                "reason": "Victory Condition"
+            }
+        ],
+        "description": "Items checked for: Morph Ball, Bomb Data, Missile Data, Ice Beam, Charge Beam, the Security Keys and Infant Metroids."
+    },
     "victory_condition": {
         "type": "resource",
         "data": {
@@ -2394,6 +2660,7 @@
         ],
         "JumpExtends": [
             1,
+            2,
             3,
             4
         ],
@@ -2431,7 +2698,9 @@
         "DamageRuns": [
             1,
             2,
-            3
+            3,
+            4,
+            5
         ],
         "JBJ": [
             2,
@@ -2440,6 +2709,7 @@
             5
         ],
         "UnderwaterWallJump": [
+            1,
             2,
             3,
             4,

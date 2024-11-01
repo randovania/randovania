@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 

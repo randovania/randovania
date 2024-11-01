@@ -37,8 +37,8 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _set_slider_visible(self, visible: bool):
         for w in [self.skytemple_slider, self.skytemple_slider_label]:

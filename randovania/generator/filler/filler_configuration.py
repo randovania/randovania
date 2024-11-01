@@ -1,10 +1,10 @@
 import dataclasses
 
+from randovania.game.generator import GameGenerator
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import GameGenerator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction

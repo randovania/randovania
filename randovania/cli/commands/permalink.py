@@ -5,7 +5,7 @@ import random
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 
 if TYPE_CHECKING:

@@ -49,8 +49,8 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider_max(self) -> None:
         self.placed_slider.setMaximum(self.num_preferred_locations)
@@ -164,7 +164,9 @@ class PresetMSRGoal(PresetTab, Ui_PresetMSRGoal):
         if final_boss == FinalBossConfiguration.ARACHNUS:
             self.boss_info_label.setText("After defeating Arachnus, you must re-enter Dam Exterior to finish.")
         elif final_boss == FinalBossConfiguration.DIGGERNAUT:
-            self.boss_info_label.setText("The Grapple block in Area 6 - Transport to Area 7 will be moved by default.")
+            self.boss_info_label.setText(
+                "The top Grapple blocks in Area 6 - Transport to Area 7 will be moved by default."
+            )
         elif final_boss == FinalBossConfiguration.QUEEN:
             self.boss_info_label.setText(
                 "To fight the Queen, you must also collect Ice Beam and defeat all 10 Larva Metroids.\n"

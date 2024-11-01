@@ -17,7 +17,7 @@ from qasync import asyncSlot
 
 import randovania
 from randovania import VERSION, get_readme_section, monitoring
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -135,6 +135,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
 
         super().__init__()
         self.setupUi(self)
+        self.progress_bar.setVisible(False)
+        self.stop_background_process_button.setVisible(False)
+
+        self.status_bar.addWidget(self.progress_label)
+        self.status_bar.addPermanentWidget(self.progress_bar)
+        self.status_bar.addPermanentWidget(self.stop_background_process_button)
+
         self.setWindowTitle(f"Randovania {VERSION}")
         self._is_preview_mode = preview
         self.setAcceptDrops(True)
@@ -692,9 +699,12 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     # Background Update
 
     def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setVisible(True)
         self.stop_background_process_button.setEnabled(not value)
 
     def update_progress(self, message: str, percentage: int):
+        self.progress_bar.setVisible(True)
+
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0

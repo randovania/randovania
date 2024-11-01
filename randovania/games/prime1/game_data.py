@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-from randovania.games import game
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.prime1.hint_distributor import PrimeHintDistributor
 from randovania.games.prime1.layout.preset_describer import (
     PrimePresetDescriber,
@@ -15,13 +20,13 @@ def _options():
     return PrimePerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.common.prime_family.gui.prime_trilogy_teleporter_details_tab import (
         PrimeTrilogyTeleporterDetailsTab,
     )
     from randovania.games.prime1 import gui
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         tab_provider=gui.prime1_preset_tabs,
         cosmetic_dialog=gui.PrimeCosmeticPatchesDialog,
         export_dialog=gui.PrimeGameExportDialog,
@@ -30,7 +35,7 @@ def _gui() -> game.GameGui:
     )
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.prime1.generator.base_patches_factory import (
         PrimeBasePatchesFactory,
     )
@@ -38,12 +43,14 @@ def _generator() -> game.GameGenerator:
     from randovania.games.prime1.generator.pickup_pool.pool_creator import (
         prime1_specific_pool,
     )
+    from randovania.generator.filler.weights import ActionWeights
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=prime1_specific_pool,
         bootstrap=PrimeBootstrap(),
         base_patches_factory=PrimeBasePatchesFactory(),
         hint_distributor=PrimeHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
@@ -67,10 +74,10 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
-    development_state=game.DevelopmentState.STABLE,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "moderate_challenge.rdvpreset"},
@@ -110,7 +117,7 @@ game_data: game.GameData = game.GameData(
             "- Every room after Twin Fires Tunnel\n",
         ),
     ],
-    web_info=game.GameWebInfo(
+    web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=[
             "All items including Artifacts",
             "Elevator destinations",
@@ -123,7 +130,7 @@ game_data: game.GameData = game.GameData(
         ],
     ),
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,
         preset_describer=PrimePresetDescriber(),

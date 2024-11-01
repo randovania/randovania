@@ -7,10 +7,10 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
-from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea, PresetStartingArea
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.base_configuration import StartingLocationList

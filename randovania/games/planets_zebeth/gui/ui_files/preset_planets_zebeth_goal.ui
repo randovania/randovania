@@ -46,7 +46,7 @@
     <item>
      <layout class="QHBoxLayout" name="keys_slider_layout">
       <item>
-       <widget class="QSlider" name="keys_slider">
+       <widget class="ScrollProtectedSlider" name="keys_slider">
         <property name="maximum">
          <number>9</number>
         </property>
@@ -134,6 +134,13 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>QSlider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

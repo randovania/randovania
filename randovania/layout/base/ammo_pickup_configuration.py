@@ -11,8 +11,8 @@ from randovania.layout.base.ammo_pickup_state import AmmoPickupState
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
-    from randovania.games.game import RandovaniaGame
 
 
 @dataclass(frozen=True)

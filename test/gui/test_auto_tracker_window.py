@@ -5,10 +5,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.game_connection import ConnectedGameState
-from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
 from randovania.gui.widgets.item_tracker_widget import ItemTrackerWidget
 from randovania.network_common.game_connection_status import GameConnectionStatus

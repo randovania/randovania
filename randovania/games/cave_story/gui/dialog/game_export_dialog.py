@@ -6,10 +6,10 @@ from typing import TYPE_CHECKING
 
 from caver.patcher import CSPlatform
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.cave_story.gui.generated.cs_game_export_dialog_ui import Ui_CSGameExportDialog
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,

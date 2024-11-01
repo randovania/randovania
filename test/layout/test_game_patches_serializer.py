@@ -9,6 +9,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -23,7 +24,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import (
     find_resource_info_with_long_name,
 )
-from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.pickup_pool import pickup_creator, pool_creator
 from randovania.layout import game_patches_serializer

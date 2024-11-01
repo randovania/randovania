@@ -9,10 +9,10 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
-from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
@@ -69,14 +69,18 @@ def romfs_validation(line: QtWidgets.QLineEdit):
         return True
 
     path = Path(line.text())
-    return not all(
-        p.is_file()
-        for p in [
-            path.joinpath("system", "files.toc"),
-            path.joinpath("packs", "system", "system.pkg"),
-            path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
-            path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
-        ]
+    return not (
+        all(
+            p.is_file()
+            for p in [
+                path.joinpath("config.ini"),
+                path.joinpath("system", "files.toc"),
+                path.joinpath("packs", "system", "system.pkg"),
+                path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
+                path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
+            ]
+        )
+        and not all(p.is_file() for p in [path.joinpath("custom_names.json")])
     )
 
 

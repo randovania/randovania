@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import dataclasses
 import datetime
 import json
 import uuid
@@ -11,8 +12,8 @@ from unittest.mock import ANY, AsyncMock, MagicMock, call
 import pytest
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.game_connection import GameConnection
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import model_lib
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiplayer_session_window import MultiplayerSessionWindow
@@ -706,6 +707,33 @@ async def test_import_permalink_unsupported_games(window: MultiplayerSessionWind
     )
 
 
+async def test_uncheck_ready_when_replacing_preset(
+    window: MultiplayerSessionWindow, mocker: MockerFixture, sample_session: MultiplayerSessionEntry
+):
+    mock_prompt_preset = mocker.patch(
+        "randovania.gui.widgets.multiplayer_session_users_widget.MultiplayerSessionUsersWidget._prompt_for_preset",
+        new_callable=AsyncMock,
+    )
+
+    window._session = sample_session
+    window.users_widget._session = sample_session
+
+    user = next(iter(window._session.users.values()))
+    assert user.ready
+
+    async def change_user_readiness(_):
+        nonlocal user
+        user = dataclasses.replace(user, ready=not user.ready)
+
+    window.users_widget._session_api = AsyncMock()
+    window.users_widget._session_api.switch_readiness = change_user_readiness
+
+    await window.users_widget._world_replace_preset(next(iter(user.worlds.keys())))
+
+    assert not user.ready
+    mock_prompt_preset.assert_awaited_once()
+
+
 @pytest.mark.parametrize("end_state", ["reject", "wrong_count", "import"])
 async def test_import_layout(
     window: MultiplayerSessionWindow, end_state, mocker: MockerFixture, prepare_to_upload_layout
@@ -852,7 +880,7 @@ async def test_game_export_listener(
     window.network_client.session_admin_player = AsyncMock()
 
     patch_data = MagicMock()
-    game.exporter.is_busy = False
+    game.exporter.can_start_new_export = False
 
     # Run
     await window.game_export_listener(world.id, patch_data)

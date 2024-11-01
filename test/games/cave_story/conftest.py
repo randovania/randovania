@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 
 if TYPE_CHECKING:

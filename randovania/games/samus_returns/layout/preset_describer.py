@@ -16,7 +16,7 @@ from randovania.layout.preset_describer import (
 )
 
 if TYPE_CHECKING:
-    from randovania.games.game import ProgressiveItemTuples
+    from randovania.game.gui import ProgressiveItemTuples
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -176,6 +176,6 @@ class MSRPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.samus_returns.pickup_database import progressive_items
+        from randovania.games.samus_returns.layout import progressive_items
 
         return progressive_items.tuples()

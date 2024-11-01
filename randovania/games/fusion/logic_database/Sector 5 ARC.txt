@@ -16,12 +16,7 @@ Extra - room_id: [0]
   > Door to Entrance Recharge Room
       Trivial
   > Door to Nightmare Training Grounds
-      All of the following:
-          Missiles and Morph Ball
-          Any of the following:
-              # Reach the missile block
-              Have Any Jump Upgrade
-              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+      Missiles and Morph Ball
   > Door to Gerubus Gully
       Trivial
 
@@ -111,11 +106,8 @@ Extra - room_id: [3, 6]
   > Door to Entrance Lobby
       Any of the following:
           Have Any Jump Upgrade
-          All of the following:
-              # Needs to check if DLR in case it becomes an open hatch, making this impossible
-              Disabled Door Lock Rando
-              # https://youtu.be/weMdKWzp31g
-              Wall Jump (Intermediate)
+          # WJ off of door hatch: https://youtu.be/weMdKWzp31g
+          Wall Jump (Intermediate) and Disabled Door Lock Rando
 
 > Door to Training Aerie; Heals? False
   * Layers: default
@@ -141,8 +133,8 @@ Extra - room_id: [3, 6]
       Any of the following:
           Space Jump
           All of the following:
-              Can Freeze Enemies
-              Hi-Jump or Movement (Intermediate)
+              Can Freeze Enemies With Any Weapon
+              Hi-Jump or Stand On Frozen Enemies (Intermediate)
 
 ----------------
 Training Aerie
@@ -186,25 +178,24 @@ Extra - room_id: [7, 15]
   * Layers: default
   * L0 Hatch to Nightmare Training Grounds/Door to Arctic Containment
   * Extra - door_idx: (14,)
-  > Door to Data Checkpoint
-      # TODO: damage run
-      Varia Suit
   > Door to Crow's Nest
-      # TODO: damage run?
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          # Damage Reqs
+          Damage Runs (Advanced) and Cold Damage ≥ 150
 
 > Door to Geron Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Geron Checkpoint/Door to Arctic Containment
   * Extra - door_idx: (15,)
   > Door to Data Checkpoint
-      # dmg runs
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          # Damage Reqs
+          Damage Runs (Advanced) and Cold Damage ≥ 200
   > Door to Arctic Underside
       All of the following:
-          Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
-          # TODO: Damage Run
-          Varia Suit
+          Level 0 Locks and Speed Booster and Varia Suit and Disabled Door Lock Rando and Disabled Entrance Rando
           # Needed for charging in previous room
           Can Kill PB Geron
 
@@ -215,36 +206,56 @@ Extra - room_id: [7, 15]
   > Door to Arctic Underside
       All of the following:
           Can Use Any Bombs
-          # TODO: dmg
-          Varia Suit
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Advanced) and Cold Damage ≥ 180
 
 > Door to Data Checkpoint; Heals? False
   * Layers: default
   * L0 Hatch to Data Checkpoint/Door to Arctic Containment
   * Extra - door_idx: (30,)
-  > Door to Nightmare Training Grounds
-      Any of the following:
-          # TODO: varia/damage runs
-          Wall Jump (Beginner) or Have Any Jump Upgrade
-          Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
   > Door to Geron Checkpoint
-      # TODO: needs varia or damage runs
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          # Damage Reqs
+          Damage Runs (Advanced) and Cold Damage ≥ 150
   > Door to Ripper Road
       All of the following:
           Can Kill PB Geron
           Any of the following:
+              # break blocks
               Can Use Power Bombs
-              All of the following:
-                  Can Use Bombs
-                  Mid-Air Morph (Beginner) or Can Use Springball
+              Screw Attack and Knowledge (Beginner) and Can Use Bombs
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Advanced) and Cold Damage ≥ 200
+  > Door to Crow's Nest
+      All of the following:
+          Any of the following:
+              Wall Jump (Beginner) or Have Any Jump Upgrade
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Advanced) and Cold Damage ≥ 50
 
 > Door to Ripper Road; Heals? False
   * Layers: default
   * Open Hatch to Ripper Road/Door to Arctic Containment
   * Extra - door_idx: (56,)
   > Door to Data Checkpoint
-      Can Kill PB Geron
+      All of the following:
+          Can Kill PB Geron
+          Any of the following:
+              # break blocks
+              Can Use Power Bombs
+              Screw Attack and Knowledge (Beginner) and Can Use Bombs
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Advanced) and Cold Damage ≥ 200
 
 > Door to Arctic Underside; Heals? False
   * Layers: default
@@ -254,21 +265,32 @@ Extra - room_id: [7, 15]
       All of the following:
           Morph Ball
           Wall Jump (Beginner) or Have Any Jump Upgrade
-          # TODO: dmg
-          Varia Suit
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Expert) and Cold Damage ≥ 550
   > Door to Waver Ward
       All of the following:
           Can Use Any Bombs
-          # TODO: dmg
-          Varia Suit
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Advanced) and Cold Damage ≥ 180
 
 > Door to Crow's Nest; Heals? False
   * Layers: default
   * L3 Hatch to Crow's Nest/Door to Arctic Containment
   * Extra - door_idx: (53,)
   > Door to Nightmare Training Grounds
-      # TODO: damage run
-      Varia Suit
+      Any of the following:
+          Varia Suit
+          # Damage Reqs
+          Damage Runs (Advanced) and Cold Damage ≥ 178
+  > Door to Data Checkpoint
+      Any of the following:
+          Varia Suit
+          # Damage Reqs
+          Damage Runs (Intermediate) and Cold Damage ≥ 50
 
 ----------------
 Geron Checkpoint
@@ -279,16 +301,24 @@ Extra - room_id: [8]
   * L0 Hatch to Arctic Containment/Door to Geron Checkpoint
   * Extra - door_idx: (36,)
   > Door to Security Save Room
-      # TODO: varia / damage runs
-      Varia Suit and Wave Beam and Can Kill PB Geron
+      All of the following:
+          Wave Beam and Can Kill PB Geron
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Damage Runs (Advanced) and Cold Damage ≥ 100
 
 > Door to Security Save Room; Heals? False
   * Layers: default
   * L0 Hatch to Security Save Room/Door to Geron Checkpoint
   * Extra - door_idx: (64,)
   > Door to Arctic Containment
-      # TODO: varia / damage runs
-      Varia Suit and Can Kill PB Geron
+      All of the following:
+          Can Kill PB Geron
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Damage Runs (Advanced) and Cold Damage ≥ 130
 
 ----------------
 Security Shaft West
@@ -299,8 +329,10 @@ Extra - room_id: [9]
   * L3 Hatch to Security Save Room/Door to Security Shaft West
   * Extra - door_idx: (18,)
   > Door to Level 3 Security Room
-      # TODO: dmg run
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Expert) and Cold Damage ≥ 366
 
 > Door to Level 3 Security Room; Heals? False
   * Layers: default
@@ -308,13 +340,19 @@ Extra - room_id: [9]
   * Extra - door_idx: (20,)
   > Door to Security Save Room
       All of the following:
-          # TODO:  damage reqs
-          Varia Suit
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              All of the following:
+                  Space Jump and Damage Runs (Expert)
+                  Any of the following:
+                      Cold Damage ≥ 800
+                      Hi-Jump and Cold Damage ≥ 600
           Any of the following:
               Wall Jump (Beginner) or Have Any Jump Upgrade
               # Climb Hidden Ladder
               Can Use Any Bombs
-              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies
+              Stand On Frozen Enemies (Beginner) and Can Freeze Enemies With Any Weapon
 
 ----------------
 Level 3 Security Room
@@ -360,16 +398,24 @@ Extra - room_id: [11]
   * L0 Hatch to Arctic Containment/Door to Waver Ward
   * Extra - door_idx: (21,)
   > Door to Groznyj Shaft
-      # TODO: varia / damage reqs
-      Varia Suit and Can Use Any Bombs
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Advanced) and Cold Damage ≥ 150
 
 > Door to Groznyj Shaft; Heals? False
   * Layers: default
   * L0 Hatch to Groznyj Shaft/Door to Waver Ward
   * Extra - door_idx: (22,)
   > Door to Arctic Containment
-      # TODO: varia / damage reqs
-      Varia Suit and Can Use Any Bombs
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              Varia Suit
+              # Damage Reqs
+              Damage Runs (Advanced) and Cold Damage ≥ 150
 
 ----------------
 Mimic Storage
@@ -400,61 +446,82 @@ Extra - room_id: [13]
   * Layers: default
   * L0 Hatch to Mimic Storage/Door to Frozen Tower
   * Extra - door_idx: (24,)
+  > Door to Data Room
+      # Damage Reqs
+      Space Jump and Damage Runs (Advanced) and Cold Damage ≥ 280
   > Bottom of Room
-      # TODO: dmg
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Advanced) and Cold Damage ≥ 265
 
 > Door to Groznyj Shaft; Heals? False
   * Layers: default
   * L3 Hatch to Groznyj Shaft/Door to Frozen Tower
   * Extra - door_idx: (49,)
   > Bottom of Room
-      # TODO: dam
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Intermediate) and Cold Damage ≥ 16
 
 > Other to Transmutation Trial; Heals? False
   * Layers: default
   * Tunnel to Transmutation Trial/Other to Frozen Tower
   * Extra - door_idx: (79,)
   > Bottom of Room
-      # TODO: dmg
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Intermediate) and Cold Damage ≥ 17
 
 > Door to Data Room; Heals? False
   * Layers: default
   * L3 Hatch to Data Room/Door to Frozen Tower
   * Extra - door_idx: (90,)
   > Door to Mimic Storage
-      All of the following:
-          # TODO: dmg
-          Varia Suit
+      Any of the following:
           # Drop down from ledge above https://youtu.be/lUc4sT4UyQY
-          Jump Extends (Expert) and Movement (Hypermode)
+          Varia Suit and Jump Extends (Expert) and Movement (Hypermode)
+          # Damage Reqs
+          Space Jump and Damage Runs (Advanced) and Cold Damage ≥ 59
   > Bottom of Room
-      # TODO: dmg
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Advanced) and Cold Damage ≥ 299
 
 > Bottom of Room; Heals? False
   * Layers: default
   > Door to Mimic Storage
       All of the following:
-          # TODO: dmg
-          Varia Suit
           Any of the following:
-              Space Jump or Can Freeze Enemies
+              # Damage Reqs
+              Varia Suit
+              Space Jump and Damage Runs (Expert) and Cold Damage ≥ 333
+          Any of the following:
+              Space Jump or Can Freeze Enemies With Any Weapon
               # Wall Jump from right side https://youtu.be/-GGGrkNAvF4
               Jump Extends (Expert) and Wall Jump (Intermediate) and Can Single Walljump
   > Door to Groznyj Shaft
-      # TODO: dmg
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Intermediate) and Cold Damage ≥ 20
   > Other to Transmutation Trial
       All of the following:
           Can Bounce in Ball
-          # TODO: dmg
-          Varia Suit
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Damage Runs (Intermediate) and Cold Damage ≥ 48
   > Door to Data Room
-      # TODO: dmg
-      Space Jump and Varia Suit
+      All of the following:
+          Space Jump
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Damage Runs (Expert) and Cold Damage ≥ 600
 
 ----------------
 Mini-Fridge
@@ -521,7 +588,7 @@ Extra - room_id: [16]
 > Door to Frozen Tower; Heals? False
   * Layers: default
   * L3 Hatch to Frozen Tower/Door to Data Room
-  * Extra - door_idx: (28,)
+  * Extra - door_idx: (89,)
   > Door to Data Checkpoint
       Trivial
 
@@ -629,7 +696,7 @@ Extra - room_id: [19]
           Any of the following:
               Space Jump or Wall Jump (Beginner)
               # Freeze and JBJ off of Zeela: https://youtu.be/P5SrdfcDN9A
-              Hi-Jump and Jump Bombjump (Expert) and Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies and Can Use Bombs
+              Hi-Jump and Jump Bombjump (Expert) and Stand On Frozen Enemies (Intermediate) and Can Freeze Enemies With Any Weapon and Can Use Bombs
 
 > Door to Nightmare Nook; Heals? False
   * Layers: default
@@ -671,14 +738,14 @@ Extra - room_id: [20]
                   Plasma Beam or Wide Beam or Combat (Intermediate)
               Missiles ≥ 80 and 30 DMG Missiles
               Missiles ≥ 120 and Combat (Beginner) and 20 DMG Missiles
-              Missiles ≥ 200 and Combat (Intermediate) and 10 DMG Missiles
+              Missiles ≥ 200 and Combat (Intermediate) and 10+ DMG Missiles
           All of the following:
               # Core-X Requirements
               Missiles
               Any of the following:
                   30 DMG Missiles
                   Combat (Beginner) and 20 DMG Missiles
-                  Combat (Intermediate) and 10 DMG Missiles
+                  Combat (Intermediate) and 10+ DMG Missiles
           Any of the following:
               # Health Requirements
               Combat (Hypermode) or Normal Damage ≥ 1000
@@ -723,53 +790,76 @@ Extra - room_id: [22, 21]
   * L0 Hatch to Level 3 Security Room/Door to Security Shaft East
   * Extra - door_idx: (108, 41)
   > Door to Groznyj Grad
-      # TODO: varia / damage reqs
-      Varia Suit and Can Use Power Bombs
+      All of the following:
+          Can Use Power Bombs
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Damage Runs (Intermediate) and Cold Damage ≥ 62
   > Door to Security Cache
       All of the following:
-          # TODO: varia / damage reqs
-          Varia Suit and Can Use Power Bombs
+          Can Use Power Bombs
           Any of the following:
               # Get up
               Space Jump
               All of the following:
                   # Stand on frozen Rippers
-                  Can Freeze Enemies
+                  Can Freeze Enemies With Any Weapon
                   Any of the following:
                       Hi-Jump
                       # https://youtu.be/a7A00q8XP9M
                       Wall Jump (Intermediate)
               Wall Jump (Intermediate) and Can Single Walljump
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Space Jump and Damage Runs (Expert) and Cold Damage ≥ 273
   > Door to Kago Blockade
-      # TODO: varia / damage reqs
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Beginner) and Cold Damage ≥ 27
 
 > Door to Groznyj Grad; Heals? False
   * Layers: default
   * L0 Hatch to Groznyj Grad/Door to Security Shaft East
   * Extra - door_idx: (109,)
   > Pickup (Power Bomb Tank)
-      # TODO: varia / damage reqs
-      Varia Suit and Can Use Any Bombs
+      All of the following:
+          Can Use Any Bombs
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Damage Runs (Advanced) and Cold Damage ≥ 140
   > Door to Level 3 Security Room
-      # TODO: varia / damage reqs
-      Varia Suit and Can Use Power Bombs
+      All of the following:
+          Can Use Power Bombs
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Space Jump and Damage Runs (Advanced) and Cold Damage ≥ 119
 
 > Door to Security Cache; Heals? False
   * Layers: default
   * L0 Hatch to Security Cache/Door to Security Shaft East
   * Extra - door_idx: (110,)
   > Door to Level 3 Security Room
-      # TODO: varia / damage reqs
-      Varia Suit and Can Use Power Bombs
+      All of the following:
+          Can Use Power Bombs
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Damage Runs (Advanced) and Cold Damage ≥ 128
 
 > Door to Kago Blockade; Heals? False
   * Layers: default
   * L0 Hatch to Kago Blockade/Door to Security Shaft East
   * Extra - door_idx: (42,)
   > Door to Level 3 Security Room
-      # TODO: varia / damage reqs
-      Varia Suit
+      Any of the following:
+          # Damage Reqs
+          Varia Suit
+          Damage Runs (Beginner) and Cold Damage ≥ 27
 
 ----------------
 Security Cache
@@ -873,19 +963,22 @@ Extra - room_id: [26]
   * Extra - door_idx: (55,)
   > Pickup (Power Bomb Tank)
       All of the following:
-          # TODO: varia / damage reqs
           Morph Ball
           Any of the following:
               All of the following:
-                  Can Freeze Enemies
+                  Can Freeze Enemies With Any Weapon
                   Any of the following:
                       Can Use Springball
                       # Use bombs instead of springball https://youtu.be/3OA51_TEXvc
-                      Movement (Intermediate) and Can Use Bombs
+                      Movement (Beginner) and Can Use Bombs
               # Crumble jumps
               Movement (Expert)
-          # Damage Runs
-          Varia Suit
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              # No springball: https://youtu.be/a4urCWRPTNM
+              Damage Runs (Hypermode) and Cold Damage ≥ 733 and Can Use Bombs
+              Damage Runs (Expert) and Cold Damage ≥ 440 and Can Use Springball
 
 ----------------
 Nightmare Access
@@ -921,7 +1014,7 @@ Extra - room_id: [28]
           Damage Boosts (Intermediate) and Normal Damage ≥ 250
           Charge Beam and Have Any Beam Upgrade
           Gravity Suit and Screw Attack
-          Missiles ≥ 10 and 10 DMG Missiles
+          Missiles ≥ 10 and 10+ DMG Missiles
           Missiles ≥ 2 and 45 DMG Missiles
 
 > Door to Zebesian Waters; Heals? False
@@ -934,7 +1027,7 @@ Extra - room_id: [28]
           Damage Boosts (Intermediate) and Normal Damage ≥ 250
           Charge Beam and Have Any Beam Upgrade
           Gravity Suit and Screw Attack
-          Missiles ≥ 10 and 10 DMG Missiles
+          Missiles ≥ 10 and 10+ DMG Missiles
           Missiles ≥ 2 and 45 DMG Missiles
 
 ----------------
@@ -1074,6 +1167,8 @@ Extra - room_id: [33]
                       Can Use Springball
                       # Floor must be intact or you'll have to reload the room: https://youtu.be/T-MYy-tZVU0
                       Jump Bombjump (Intermediate) and Movement (Beginner)
+              # Shinespark into bomb block
+              Level 3 Locks and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Beginner) and Disabled Door Lock Rando and Disabled Entrance Rando
   > Door to Nightmare Training Grounds
       Trivial
 
@@ -1113,10 +1208,6 @@ Extra - room_id: [34]
                   Mid-Air Morph (Advanced) or Can Use Springball
               # 100% strat, crumble block side: https://youtu.be/uUAoOZGU9HI
               Movement (Advanced)
-          All of the following:
-              # FIXME: generator trap, where it goes here and then gets stuck and frantically places items.
-              Enabled Generator Workaround
-              After Boss Nightmare Defeated or Movement (Hypermode)
   > Other to Nightmare Arena
       Morph Ball
 
@@ -1295,16 +1386,21 @@ Extra - room_id: [42]
   * L3 Hatch to Arctic Containment/Door to Arctic Underside
   * Extra - door_idx: (100,)
   > Door to Kago Speedway
-      # TODO: vid and reevalutate trick level
-      Speed Booster and Varia Suit and Shinespark Tricks (Expert) and Disabled Door Lock Rando and Disabled Entrance Rando
+      # Need good waver RNG, also aim for top blocks: https://youtu.be/RgtkGqBW3MU
+      Level 0 Locks and Level 3 Locks and Speed Booster and Varia Suit and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Kago Speedway; Heals? False
   * Layers: default
   * L0 Hatch to Kago Speedway/Door to Arctic Underside
   * Extra - door_idx: (101,)
   > Door to Arctic Containment
-      # Need to charge spark in other room, This can safely not have Door Lock Rando check
-      Level 0 Locks and Speed Booster and Varia Suit and Disabled Entrance Rando and Can Freeze Enemies
+      All of the following:
+          # Need to charge spark in other room, This can safely not have Door Lock Rando check
+          Level 0 Locks and Speed Booster and Disabled Entrance Rando and Can Freeze Enemies With Any Weapon
+          Any of the following:
+              Varia Suit
+              # You can just barely reach the speed block before you get hit by recoil
+              Hi-Jump and Damage Runs (Expert) and Shinespark Tricks (Intermediate) and Cold Damage ≥ 360
 
 ----------------
 Groznyj Grad
@@ -1319,7 +1415,9 @@ Extra - room_id: [43]
           Can Use Power Bombs
           All of the following:
               Can Use Bombs
-              Mid-Air Morph (Beginner) or Can Use Springball
+              Any of the following:
+                  Mid-Air Morph (Beginner) or Can Use Springball
+                  Screw Attack and Knowledge (Beginner)
 
 > Door to Security Shaft East; Heals? False
   * Layers: default
@@ -1336,8 +1434,10 @@ Extra - room_id: [45]
   * Layers: default
   * Open Hatch to Ruined Corridor/Door to Flooded Tower
   * Extra - door_idx: (54,)
-  > Beside Missile Block
+  > Door to Zebesian Waters
       Trivial
+  > Beside Missile Block
+      Movement (Intermediate)
 
 > Other to Mini-Fridge; Heals? False
   * Layers: default
@@ -1355,11 +1455,11 @@ Extra - room_id: [45]
           Underwater Wall Jump (Expert)
           Gravity Suit and Space Jump
           All of the following:
-              Can Freeze Enemies
+              Can Freeze Enemies With Any Weapon
               Any of the following:
                   Hi-Jump
                   # Climb Skulltera NHJ https://youtu.be/kOtV9nNaPNQ
-                  Movement (Intermediate)
+                  Stand On Frozen Enemies (Intermediate)
 
 > Beside Missile Block; Heals? False
   * Layers: default
@@ -1372,6 +1472,7 @@ Extra - room_id: [45]
                   Any of the following:
                       Space Jump
                       Wall Jump (Intermediate) and Can Single Walljump
+              # TODO: vid
               Underwater Wall Jump (Hypermode) and Can Single Walljump
   > Other to Mini-Fridge
       Missiles
@@ -1388,13 +1489,15 @@ Extra - room_id: [46]
   * Extra - door_idx: (113,)
   > Door to Flooded Airlock to Sector 4 (AQA)
       Any of the following:
-          Combat (Advanced) or Can Use Power Bombs
+          Can Use Power Bombs
+          # Upgradeless: https://youtu.be/FdeET1OemYw
+          Combat (Hypermode)
           All of the following:
               Charge Beam and Plasma Beam
               Wave Beam or Wide Beam
           Damage Boosts (Intermediate) and Normal Damage ≥ 190
           Gravity Suit and Screw Attack
-          Missiles ≥ 20 and 10 DMG Missiles
+          Missiles ≥ 20 and 10+ DMG Missiles
           Missiles ≥ 4 and 45 DMG Missiles
 
 > Door to Flooded Airlock to Sector 4 (AQA); Heals? False
@@ -1403,21 +1506,25 @@ Extra - room_id: [46]
   * Extra - door_idx: (114,)
   > Door to Flooded Tower
       Any of the following:
-          Combat (Advanced) or Can Use Power Bombs
+          Can Use Power Bombs
+          # Upgradeless: https://youtu.be/uGBnSMt72Jc?t=13
+          Combat (Hypermode)
           All of the following:
               Charge Beam and Plasma Beam
               Wave Beam or Wide Beam
           Damage Boosts (Intermediate) and Normal Damage ≥ 190
           Gravity Suit and Screw Attack
-          Missiles ≥ 20 and 10 DMG Missiles
+          Missiles ≥ 20 and 10+ DMG Missiles
           Missiles ≥ 4 and 45 DMG Missiles
   > Door to Flooded Access
       Any of the following:
-          Combat (Advanced) or Can Use Power Bombs
+          Can Use Power Bombs
           Gravity Suit and Screw Attack
           Charge Beam and Have Any Beam Upgrade
-          Missiles ≥ 10 and 10 DMG Missiles
+          Missiles ≥ 10 and 10+ DMG Missiles
           Missiles ≥ 2 and 45 DMG Missiles
+          # Upgradeless: https://youtu.be/FdeET1OemYw?t=19
+          Combat (Intermediate)
           Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 > Door to Flooded Access; Heals? False
@@ -1426,11 +1533,13 @@ Extra - room_id: [46]
   * Extra - door_idx: (116,)
   > Door to Flooded Airlock to Sector 4 (AQA)
       Any of the following:
-          Combat (Intermediate) or Can Use Power Bombs
+          Can Use Power Bombs
           Gravity Suit and Screw Attack
           Charge Beam and Have Any Beam Upgrade
-          Missiles ≥ 10 and 10 DMG Missiles
+          Missiles ≥ 10 and 10+ DMG Missiles
           Missiles ≥ 2 and 45 DMG Missiles
+          # Upgradeless: https://youtu.be/uGBnSMt72Jc
+          Combat (Intermediate)
           Damage Boosts (Intermediate) and Normal Damage ≥ 95
 
 ----------------
@@ -1539,8 +1648,7 @@ Extra - room_id: [51]
   * Extra - blockx: 11
   * Extra - blocky: 3
   > Other to Frozen Tower
-      # TODO: varia / damage reqs
-      Varia Suit
+      Trivial
 
 > Other to Frozen Tower; Heals? False
   * Layers: default
@@ -1548,9 +1656,11 @@ Extra - room_id: [51]
   * Extra - door_idx: (47,)
   > Pickup (Hidden Missile Tank)
       All of the following:
-          # TODO: varia / damage reqs
-          Varia Suit
           Any of the following:
               Space Jump
-              Hi-Jump and Can Freeze Enemies
+              Hi-Jump and Can Freeze Enemies With Any Weapon
+          Any of the following:
+              # Damage Reqs
+              Varia Suit
+              Space Jump and Damage Runs (Expert) and Cold Damage ≥ 280
 

@@ -8,7 +8,7 @@ from unittest.mock import ANY, MagicMock, call, patch
 
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset

@@ -7,11 +7,11 @@ from unittest.mock import MagicMock, call
 import pytest
 from PySide6 import QtCore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExportDialog, serialize_path
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 from randovania.lib.ftp_uploader import FtpUploader
 
@@ -113,6 +113,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     tmp_path.joinpath("existing-folder").mkdir()
 
     for p in [
+        (".", "config.ini"),
         ("system", "files.toc"),
         ("packs", "system", "system.pkg"),
         ("packs", "maps", "s010_cave", "s010_cave.pkg"),

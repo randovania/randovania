@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.planets_zebeth.exporter.game_exporter import PlanetsZebethGameExportParams
 from randovania.games.planets_zebeth.exporter.options import PlanetsZebethPerGameOptions
 from randovania.gui.dialog.game_export_dialog import GameExportDialog, spoiler_path_for

@@ -61,8 +61,8 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
         return "Game Patches"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return cls.GAME_MODIFICATIONS_HEADER
 
     def _on_patch_checkbox_changed(self, field_name: str, checkbox: QCheckBox, value: int):
         with self._editor as editor:

@@ -230,7 +230,7 @@ jobs:
       - name: Deploy Advanced Installer
         uses: caphyon/advinst-github-action@v2.0
         with:
-          advinst-version: '21.1'
+          advinst-version: '22.0'
           advinst-license: ${{ secrets.ADVANCED_INSTALLER_LICENSE }}
           advinst-enable-automation: 'true'
 
@@ -464,7 +464,7 @@ jobs:
 
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.6.1
+        uses: docker/setup-buildx-action@v3.7.1
 
       - name: Should Push
         id: decide_push
@@ -484,7 +484,7 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.9.0
         with:
           context: .
           file: ./Dockerfile.server

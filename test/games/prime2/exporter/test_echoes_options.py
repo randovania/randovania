@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 
 

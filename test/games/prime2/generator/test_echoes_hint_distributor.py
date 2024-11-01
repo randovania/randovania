@@ -4,6 +4,7 @@ from unittest.mock import ANY, MagicMock, call
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     Hint,
@@ -14,7 +15,6 @@ from randovania.game_description.hint import (
     PrecisionPair,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.pre_fill_params import PreFillParams
 

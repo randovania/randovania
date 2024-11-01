@@ -7,7 +7,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.bitpacking import bitpacking
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout import generator_parameters
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink, UnsupportedPermalink

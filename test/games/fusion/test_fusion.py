@@ -2,17 +2,16 @@ from __future__ import annotations
 
 from typing import Any
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.games.game import RandovaniaGame
 
 resource_list = [
     # Tricks
     ("Jump Bombjump", "Can Use Bombs"),
     ("Mid-Air Morph", "Morph Ball"),
     ("Shinesparking Tricks", "SpeedBooster"),
-    ("Stand On Frozen Enemies", "Can Freeze Enemies"),
     # Items
     ("Morph Ball Bomb Data", "Morph Ball"),
     ("Power Bomb Data", "Morph Ball"),

@@ -6,6 +6,7 @@ from unittest.mock import ANY, AsyncMock, MagicMock, call
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
@@ -15,7 +16,6 @@ from randovania.game_connection.connector_builder_choice import ConnectorBuilder
 from randovania.game_connection.game_connection import ConnectedGameState, GameConnection
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.network_common.game_connection_status import GameConnectionStatus
 
 if TYPE_CHECKING:

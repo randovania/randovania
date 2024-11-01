@@ -17,7 +17,7 @@ from randovania.layout.base.trick_level_configuration import TrickLevelConfigura
 from randovania.layout.lib import location_list
 
 if TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
 
 
 class StartingLocationList(location_list.LocationList):

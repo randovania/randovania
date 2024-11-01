@@ -37,19 +37,46 @@ def set_dark_theme(active: bool, compact: bool = False, *, app: QtWidgets.QAppli
     }
         """
 
-    style += "QScrollArea { border: default; }"
+    style += """
+    QScrollArea {
+        border: default;
+    }
+
+    QListWidget::item {
+        padding: 6px;
+        border: 0px solid red; /* FIXME: ugly hack to make item not jump around on hover/selection*/
+    }
+
+    QStatusBar QLabel:hover {
+        background: transparent;
+    }
+
+    QStatusBar QProgressBar:hover {
+        background: transparent;
+    }
+    """
 
     if active:
         new_palette.setColor(QtGui.QPalette.Link, Qt.cyan)
         new_palette.setColor(QtGui.QPalette.LinkVisited, Qt.cyan)
         style += """
-    QToolTip {
-        background-color: black;
-        color: white;
-        border: black solid 1px
-    }
+        QToolTip {
+            background-color: black;
+            color: white;
+            border: black solid 1px
+        }
+
+        QListWidget::item::disabled {
+            color: rgba(204, 205, 206, 1.000);
+        }
         """
     else:
+        style += """
+        QListWidget::item::disabled {
+            color: rgba(72, 74, 76, 1.000);
+        }
+        """
+
         new_palette.setColor(QtGui.QPalette.Link, Qt.blue)
 
     _current_dark_theme = active

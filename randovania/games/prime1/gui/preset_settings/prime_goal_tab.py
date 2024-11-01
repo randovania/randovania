@@ -30,8 +30,8 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_editor(self) -> None:
         with self._editor as editor:

@@ -4,9 +4,9 @@ import collections
 
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.hint_node import HintNode
-from randovania.games.game import RandovaniaGame
 
 
 def prime1_hint_text():

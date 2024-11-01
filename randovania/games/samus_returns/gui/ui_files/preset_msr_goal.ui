@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1196</width>
-    <height>606</height>
+    <width>858</width>
+    <height>805</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,302 +34,371 @@
      <number>6</number>
     </property>
     <item>
-     <widget class="QLabel" name="description_label">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is now necessary to collect Metroid DNA in order to reach the final boss. The minimum and maximum are limited to 0 and 39 DNA respectively. You can choose to have more DNA in the Pool than what is required to collect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="wordWrap">
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
        <bool>true</bool>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Controls how much Metroid DNA is obtainable.</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="placed_slider_layout">
-      <property name="leftMargin">
-       <number>6</number>
-      </property>
-      <property name="topMargin">
-       <number>6</number>
-      </property>
-      <property name="rightMargin">
-       <number>6</number>
-      </property>
-      <property name="bottomMargin">
-       <number>6</number>
-      </property>
-      <item>
-       <widget class="QSlider" name="placed_slider">
-        <property name="maximum">
-         <number>39</number>
+      <widget class="QWidget" name="scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>846</width>
+         <height>793</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_area_layout">
+        <property name="spacing">
+         <number>6</number>
         </property>
-        <property name="pageStep">
-         <number>2</number>
+        <property name="leftMargin">
+         <number>6</number>
         </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+        <property name="topMargin">
+         <number>6</number>
         </property>
-        <property name="tickPosition">
-         <enum>QSlider::TicksBelow</enum>
+        <property name="rightMargin">
+         <number>6</number>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="placed_slider_label">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+        <property name="bottomMargin">
+         <number>6</number>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>0</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Controls how much Metroid DNA is required to be collected.</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="required_slider_layout">
-      <property name="leftMargin">
-       <number>6</number>
-      </property>
-      <property name="topMargin">
-       <number>6</number>
-      </property>
-      <property name="rightMargin">
-       <number>6</number>
-      </property>
-      <property name="bottomMargin">
-       <number>6</number>
-      </property>
-      <item>
-       <widget class="QSlider" name="required_slider">
-        <property name="maximum">
-         <number>39</number>
-        </property>
-        <property name="pageStep">
-         <number>2</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="tickPosition">
-         <enum>QSlider::TicksBelow</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="required_slider_label">
-        <property name="text">
-         <string>0</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="placement_group">
-      <property name="title">
-       <string>Placement</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QRadioButton" name="restrict_placement_radiobutton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Restricted Placement</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <property name="spacing">
-          <number>6</number>
-         </property>
-         <property name="leftMargin">
-          <number>20</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="restrict_placement_label">
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following options limit where Metroid DNA will be placed. There can only be as many DNA shuffled as there are preferred locations available. The first option adds 25 preferred locations, the second adds 14, and the third adds 4. In Multiworlds, DNA is guaranteed to be in your World. If &lt;span style=&quot; font-weight:600;&quot;&gt;Prefer Bosses&lt;/span&gt; is selected, DNA will not be placed on the final boss location.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="prefer_metroids_check">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Prefer Standard Metroids (10 Alphas, 9 Gammas, 3 Zetas, 3 Omegas)</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="prefer_stronger_metroids_check">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Prefer Stronger Metroids (7 Alpha+, 5 Gamma+, 1 Zeta+, 1 Omega+)</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="prefer_bosses_check">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Prefer Bosses (Arachnus, Diggernaut Chase Reward, Diggernaut, Queen Metroid, Proteus Ridley)</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="free_placement_radiobutton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Free Placement</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <property name="leftMargin">
-          <number>20</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="free_placement_label">
-           <property name="text">
-            <string>Enables DNA to be placed anywhere. For Multiworlds, this means even other Worlds.</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="final_boss_group">
-      <property name="title">
-       <string>Final Boss</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="QLabel" name="final_boss_label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In vanilla and by default, the final boss is Proteus Ridley. This setting allows any of the three other bosses (Arachnus, Diggernaut, Metroid Queen) to be the final boss instead.&lt;/p&gt;&lt;p&gt;If Ridley is not the final boss, the fight is active right away. You can decide to fight early or continue on to &lt;span style=&quot; font-weight:600;&quot;&gt;Landing Site&lt;/span&gt;. Upon defeat, an item will appear next to the ship.&lt;/p&gt;&lt;p&gt;Besides just collecting Metroid DNA, some bosses have additional requirements that must be completed in order to fight them or have requirements after the fight.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="final_boss_combo">
-         <item>
+        <item>
+         <widget class="QLabel" name="description_label">
           <property name="text">
-           <string>Arachnus</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;It is now necessary to collect Metroid DNA in order to reach the final boss. The minimum and maximum are limited to 0 and 39 DNA respectively. You can choose to have more DNA in the Pool than what is required to collect.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
-         </item>
-         <item>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Diggernaut</string>
+           <string>Controls how much Metroid DNA is obtainable.</string>
           </property>
-         </item>
-         <item>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="placed_slider_layout">
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="ScrollProtectedSlider" name="placed_slider">
+            <property name="maximum">
+             <number>39</number>
+            </property>
+            <property name="pageStep">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="placed_slider_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
           <property name="text">
-           <string>Metroid Queen</string>
+           <string>Controls how much Metroid DNA is required to be collected.</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Proteus Ridley</string>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="boss_info_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;description generated dynamically&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-      <zorder>final_boss_combo</zorder>
-      <zorder>final_boss_label</zorder>
-      <zorder>boss_info_label</zorder>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="required_slider_layout">
+          <property name="leftMargin">
+           <number>6</number>
+          </property>
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <property name="rightMargin">
+           <number>6</number>
+          </property>
+          <property name="bottomMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="ScrollProtectedSlider" name="required_slider">
+            <property name="maximum">
+             <number>39</number>
+            </property>
+            <property name="pageStep">
+             <number>2</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksBelow</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="required_slider_label">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="placement_group">
+          <property name="title">
+           <string>Placement</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QRadioButton" name="restrict_placement_radiobutton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Restricted Placement</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="spacing">
+              <number>6</number>
+             </property>
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="restrict_placement_label">
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The following options limit where Metroid DNA will be placed. There can only be as many DNA shuffled as there are preferred locations available. The first option adds 25 preferred locations, the second adds 14, and the third adds 4. In Multiworlds, DNA is guaranteed to be in your World. If &lt;span style=&quot; font-weight:600;&quot;&gt;Prefer Bosses&lt;/span&gt; is selected, DNA will not be placed on the final boss location.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="prefer_metroids_check">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Prefer Standard Metroids (10 Alphas, 9 Gammas, 3 Zetas, 3 Omegas)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="prefer_stronger_metroids_check">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Prefer Stronger Metroids (7 Alpha+, 5 Gamma+, 1 Zeta+, 1 Omega+)</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="prefer_bosses_check">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Prefer Bosses (Arachnus, Diggernaut Chase Reward, Diggernaut, Queen Metroid, Proteus Ridley)</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="free_placement_radiobutton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Free Placement</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="leftMargin">
+              <number>20</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="free_placement_label">
+               <property name="text">
+                <string>Enables DNA to be placed anywhere. For Multiworlds, this means even other Worlds.</string>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="final_boss_group">
+          <property name="title">
+           <string>Final Boss</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="final_boss_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In vanilla and by default, the final boss is Proteus Ridley. This setting allows any of the three other bosses (Arachnus, Diggernaut, Metroid Queen) to be the final boss instead.&lt;/p&gt;&lt;p&gt;If Ridley is not the final boss, the fight is active right away. You can decide to fight early or continue on to &lt;span style=&quot; font-weight:600;&quot;&gt;Landing Site&lt;/span&gt;. Upon defeat, an item will appear next to the ship.&lt;/p&gt;&lt;p&gt;Besides just collecting Metroid DNA, some bosses have additional requirements that must be completed in order to fight them or have requirements after the fight.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="final_boss_combo">
+             <item>
+              <property name="text">
+               <string>Arachnus</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Diggernaut</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Metroid Queen</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Proteus Ridley</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="boss_info_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;lt;description generated dynamically&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+          <zorder>final_boss_combo</zorder>
+          <zorder>final_boss_label</zorder>
+          <zorder>boss_info_label</zorder>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>QSlider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

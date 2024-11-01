@@ -7,12 +7,12 @@ from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -163,11 +163,15 @@ class DreadPatchDataFactory(PatchDataFactory):
 
     def _teleporter_ref_for(self, node: Node, actor_key: str = "actor_name") -> dict:
         try:
-            return {
+            actor_reference = {
                 "scenario": self._level_name_for(node),
-                "layer": node.extra.get("actor_layer", "default"),
                 "actor": node.extra[actor_key],
             }
+
+            if "actor_sublayer" in node.extra:
+                actor_reference["sublayer"] = node.extra["actor_sublayer"]
+
+            return actor_reference
         except KeyError as e:
             raise self._key_error_for_node(node, e)
 
@@ -475,7 +479,7 @@ class DreadPatchDataFactory(PatchDataFactory):
         return [
             # beam blocks -> speedboost blocks in Artaria EMMI zone Speed Booster puzzle to prevent softlock
             {
-                "actor": {"scenario": "s010_cave", "layer": "breakables", "actor": "breakabletilegroup_060"},
+                "actor": {"scenario": "s010_cave", "sublayer": "breakables", "actor": "breakabletilegroup_060"},
                 "tiletype": "SPEEDBOOST",
             }
         ]

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
-from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
 

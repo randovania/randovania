@@ -38,8 +38,8 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider_max(self) -> None:
         self.placed_slider.setMaximum(self.num_preferred_locations)
@@ -90,14 +90,14 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
         self._update_slider_max()
 
     def _on_prefer_metroids(self, value: bool) -> None:
-        def edit(config: AM2RArtifactConfig):
+        def edit(config: AM2RArtifactConfig) -> AM2RArtifactConfig:
             return dataclasses.replace(config, prefer_metroids=value)
 
         self._edit_config(edit)
         self._update_slider_max()
 
     def _on_prefer_bosses(self, value: bool) -> None:
-        def edit(config: AM2RArtifactConfig):
+        def edit(config: AM2RArtifactConfig) -> AM2RArtifactConfig:
             return dataclasses.replace(config, prefer_bosses=value)
 
         self._edit_config(edit)
@@ -121,7 +121,7 @@ class PresetAM2RGoal(PresetTab, Ui_PresetAM2RGoal):
 
         self._edit_config(edit)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, AM2RConfiguration)
         artifacts = preset.configuration.artifacts
         self.free_placement_radiobutton.setChecked(artifacts.prefer_anywhere)

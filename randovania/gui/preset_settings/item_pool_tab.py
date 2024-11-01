@@ -9,9 +9,9 @@ from PySide6 import QtCore, QtWidgets
 
 import randovania.gui.lib.signal_handling
 from randovania.exporter import item_names
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
 from randovania.gui.lib import common_qt_lib
@@ -116,8 +116,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         return "Item Pool"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration

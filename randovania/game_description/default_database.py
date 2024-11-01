@@ -11,9 +11,9 @@ from randovania.lib import json_lib
 if TYPE_CHECKING:
     from pathlib import Path
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.game import RandovaniaGame
 
 
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:

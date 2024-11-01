@@ -30,7 +30,7 @@ from randovania.network_common.multiplayer_session import (
 )
 
 if TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
     from randovania.gui.lib.window_manager import WindowManager
 
@@ -161,6 +161,12 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     @asyncSlot()
     async def _world_replace_preset(self, world_uid: uuid.UUID):
         game = self._session.get_world(world_uid).preset.game
+
+        for user in self._session.users.values():
+            if world_uid in user.worlds:
+                if user.ready:
+                    await self._session_api.switch_readiness(user.id)
+
         preset = await self._prompt_for_preset(game)
         if preset is not None:
             await self._session_api.replace_preset_for(world_uid, preset)

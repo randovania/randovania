@@ -6,6 +6,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.exporter import pickup_exporter
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -15,7 +16,6 @@ from randovania.games.dread.exporter.patch_data_factory import (
     get_resources_for_details,
 )
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches, DreadMissileCosmeticType
-from randovania.games.game import RandovaniaGame
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
@@ -124,11 +124,11 @@ def test_pickup_data_for_recolored_missiles(
         "pickup_type": "actor",
         "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
         "resources": [[{"item_id": "ITEM_WEAPON_MISSILE_MAX", "quantity": 2}]],
-        "pickup_actor": {"scenario": "s010_cave", "layer": "default", "actor": "ItemSphere_ChargeBeam"},
+        "pickup_actor": {"scenario": "s010_cave", "actor": "ItemSphere_ChargeBeam"},
         "model": ["item_missiletank_green"],
         "map_icon": {
             "icon_id": "item_missiletank",
-            "original_actor": {"actor": "powerup_chargebeam", "layer": "default", "scenario": "s010_cave"},
+            "original_actor": {"actor": "powerup_chargebeam", "scenario": "s010_cave"},
         },
     }
 
@@ -164,10 +164,10 @@ def test_pickup_data_for_a_major(dread_game_description: GameDescription, preset
         "pickup_type": "actor",
         "caption": "Speed Booster acquired.",
         "resources": [[{"item_id": "ITEM_SPEED_BOOSTER", "quantity": 1}]],
-        "pickup_actor": {"scenario": "s010_cave", "layer": "default", "actor": "ItemSphere_ChargeBeam"},
+        "pickup_actor": {"scenario": "s010_cave", "actor": "ItemSphere_ChargeBeam"},
         "model": ["powerup_speedbooster"],
         "map_icon": {
             "icon_id": "powerup_speedbooster",
-            "original_actor": {"actor": "powerup_chargebeam", "layer": "default", "scenario": "s010_cave"},
+            "original_actor": {"actor": "powerup_chargebeam", "scenario": "s010_cave"},
         },
     }

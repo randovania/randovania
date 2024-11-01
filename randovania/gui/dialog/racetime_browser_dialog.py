@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, QPushButton, QTableWidgetItem
 from qasync import asyncSlot
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.racetime_browser_dialog_ui import Ui_RacetimeBrowserDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors

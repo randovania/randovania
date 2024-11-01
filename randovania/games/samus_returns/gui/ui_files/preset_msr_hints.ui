@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>437</height>
+    <width>595</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,79 +34,132 @@
      <number>6</number>
     </property>
     <item>
-     <widget class="QGroupBox" name="hint_artifact_group">
-      <property name="title">
-       <string>Metroid DNA</string>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QLabel" name="hint_artifact_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This controls how precise the Metroid DNA hints for the DNA Chozo Seals are.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No hints&lt;/span&gt;: The hints provide no useful information.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show only the area name&lt;/span&gt;: Each hint says the area name for the corresponding Metroid DNA (&amp;quot;Area 1&amp;quot;, &amp;quot;Area 6&amp;quot;, etc.)&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show area and room name&lt;/span&gt;: Each scan says the area and room name for the corresponding Metroid DNA (&amp;quot;Area 1 - Exterior Alpha Arena&amp;quot;, &amp;quot;Area 6 - Zeta Arena&amp;quot;, etc.). For rooms with more than one item location, there's no way to distinguish which one of them contains the Metroid DNA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="hint_artifact_combo">
-         <item>
-          <property name="text">
-           <string>No hints</string>
+      <widget class="QWidget" name="scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>583</width>
+         <height>568</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_area_layout">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="hint_artifact_group">
+          <property name="title">
+           <string>Metroid DNA</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Show only the area name</string>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="hint_artifact_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This controls how precise the Metroid DNA hints for the DNA Chozo Seals are.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No hints&lt;/span&gt;: The hints provide no useful information.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show only the area name&lt;/span&gt;: Each hint says the area name for the corresponding Metroid DNA (&amp;quot;Area 1&amp;quot;, &amp;quot;Area 6&amp;quot;, etc.)&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show area and room name&lt;/span&gt;: Each scan says the area and room name for the corresponding Metroid DNA (&amp;quot;Area 1 - Exterior Alpha Arena&amp;quot;, &amp;quot;Area 6 - Zeta Arena&amp;quot;, etc.). For rooms with more than one item location, there's no way to distinguish which one of them contains the Metroid DNA.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="hint_artifact_combo">
+             <item>
+              <property name="text">
+               <string>No hints</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Show only the area name</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Show area and room name</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="hint_baby_group">
+          <property name="title">
+           <string>Baby Metroid</string>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Show area and room name</string>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="hint_baby_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This controls how precise the Baby Metroid hint after collecting all Metroid DNA is.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No hint&lt;/span&gt;: No useful information is provided.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show only the area name&lt;/span&gt;: The hint reveals the area in which the Baby Metroid is located (&amp;quot;Area 2&amp;quot;, &amp;quot;Area 7&amp;quot;, etc.)&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show area and room name&lt;/span&gt;: Same as above, but shows the exact room name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="hint_baby_combo">
+             <item>
+              <property name="text">
+               <string>No hints</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Show only the area name</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Show area and room name</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="hint_baby_group">
-      <property name="title">
-       <string>Baby Metroid</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="hint_baby_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This controls how precise the Baby Metroid hint after collecting all Metroid DNA is.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No hint&lt;/span&gt;: No useful information is provided.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show only the area name&lt;/span&gt;: The hint reveals the area in which the Baby Metroid is located (&amp;quot;Area 2&amp;quot;, &amp;quot;Area 7&amp;quot;, etc.)&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Show area and room name&lt;/span&gt;: Same as above, but shows the exact room name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="hint_baby_combo">
-         <item>
-          <property name="text">
-           <string>No hints</string>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Show only the area name</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Show area and room name</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

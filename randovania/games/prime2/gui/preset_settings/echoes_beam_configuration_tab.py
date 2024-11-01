@@ -113,8 +113,8 @@ class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration)
         return "Beam Configuration"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_ammo_type_combo_changed(self, beam: str, combo: QComboBox, is_ammo_b: bool, _):
         with self._editor as editor:

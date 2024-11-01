@@ -113,39 +113,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Reach the missile block",
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "StandOnFrozenEnemies",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Jump Upgrade"
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -504,7 +471,17 @@
                         "type": "and",
                         "data": {
                             "comment": null,
-                            "items": []
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "L3Locks",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     },
                     "connections": {
@@ -649,23 +626,15 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Needs to check if DLR in case it becomes an open hatch, making this impossible",
+                                            "comment": "WJ off of door hatch: https://youtu.be/weMdKWzp31g",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": "https://youtu.be/weMdKWzp31g",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -824,7 +793,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Freeze Enemies"
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 },
                                                 {
                                                     "type": "or",
@@ -835,7 +804,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "StandOnFrozenEnemies",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -1050,10 +1019,10 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Data Checkpoint": {
+                        "Door to Crow's Nest": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: damage run",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1063,22 +1032,31 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Crow's Nest": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: damage run?",
-                                "items": [
+                                    },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 150,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1120,7 +1098,7 @@
                         "Door to Data Checkpoint": {
                             "type": "or",
                             "data": {
-                                "comment": "dmg runs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1129,6 +1107,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 200,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1169,7 +1173,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: Damage Run",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1252,7 +1256,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: dmg",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1261,6 +1265,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 180,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1302,52 +1332,10 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Nightmare Training Grounds": {
-                            "type": "or",
-                            "data": {
-                                "comment": "TODO: varia/damage runs",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Have Any Jump Upgrade"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WallJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "StandOnFrozenEnemies",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Geron Checkpoint": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: needs varia or damage runs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1356,6 +1344,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 150,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1373,7 +1387,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "break blocks",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -1385,28 +1399,161 @@
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Use Bombs"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             },
                                                             {
-                                                                "type": "or",
+                                                                "type": "resource",
                                                                 "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Can Use Springball"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "MidAirMorph",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Crow's Nest": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Jump Upgrade"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "StandOnFrozenEnemies",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Any Weapon"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 50,
+                                                                    "negate": false
                                                                 }
                                                             }
                                                         ]
@@ -1452,13 +1599,98 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Data Checkpoint": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Kill PB Geron"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "break blocks",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Power Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ScrewAttack",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1534,7 +1766,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: dmg",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1543,6 +1775,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 550,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1563,7 +1821,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: dmg",
+                                            "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1572,6 +1830,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 180,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1616,7 +1900,7 @@
                         "Door to Nightmare Training Grounds": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: damage run",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1625,6 +1909,75 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 178,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Data Checkpoint": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1677,7 +2030,7 @@
                         "Door to Security Save Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage runs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1691,7 +2044,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1700,6 +2053,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1748,20 +2127,54 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage runs",
+                                "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "template",
                                         "data": "Can Kill PB Geron"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 130,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1818,7 +2231,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: dmg run",
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1827,6 +2240,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 366,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1871,12 +2310,12 @@
                         "Door to Security Save Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO:  damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1885,6 +2324,75 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "ColdDamage",
+                                                                                "amount": 800,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Hi-Jump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "ColdDamage",
+                                                                                            "amount": 600,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -1936,7 +2444,7 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Freeze Enemies"
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             }
                                                         ]
                                                     }
@@ -2147,7 +2655,7 @@
                         "Door to Groznyj Shaft": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -2165,6 +2673,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2209,7 +2743,7 @@
                         "Door to Arctic Containment": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -2227,6 +2761,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Reqs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 150,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2380,10 +2940,45 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Data Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Damage Reqs",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "DamageRuns",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "ColdDamage",
+                                            "amount": 280,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Bottom of Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: dmg",
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2392,6 +2987,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 265,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2433,7 +3054,7 @@
                         "Bottom of Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: dam",
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2442,6 +3063,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 16,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2483,7 +3130,7 @@
                         "Bottom of Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: dmg",
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2492,6 +3139,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 17,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2531,27 +3204,10 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Mimic Storage": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "TODO: dmg",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "VariaSuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
                                     {
                                         "type": "and",
                                         "data": {
@@ -2574,6 +3230,50 @@
                                                         "amount": 5,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Reqs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 59,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2584,7 +3284,7 @@
                         "Bottom of Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: dmg",
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2593,6 +3293,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 299,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2623,7 +3349,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: dmg",
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2632,6 +3358,41 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 333,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2653,7 +3414,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Freeze Enemies"
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 },
                                                 {
                                                     "type": "and",
@@ -2694,7 +3455,7 @@
                         "Door to Groznyj Shaft": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: dmg",
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2703,6 +3464,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 20,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2720,7 +3507,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "TODO: dmg",
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2729,6 +3516,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 48,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -2740,7 +3553,7 @@
                         "Door to Data Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: dmg",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2754,7 +3567,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2763,6 +3576,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 600,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3085,7 +3924,7 @@
                     ],
                     "extra": {
                         "door_idx": [
-                            28
+                            89
                         ]
                     },
                     "valid_starting_location": false,
@@ -3675,7 +4514,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Freeze Enemies"
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -4024,7 +4863,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "10 DMG Missiles"
+                                                                            "data": "10+ DMG Missiles"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -4104,7 +4943,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "10 DMG Missiles"
+                                                                            "data": "10+ DMG Missiles"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -4413,7 +5252,7 @@
                         "Door to Groznyj Grad": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -4422,7 +5261,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4431,6 +5270,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 62,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4442,7 +5307,7 @@
                         "Door to Security Cache": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -4460,7 +5325,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Freeze Enemies"
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -4535,7 +5400,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4544,6 +5409,41 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 273,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4555,7 +5455,7 @@
                         "Door to Kago Blockade": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4564,6 +5464,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 27,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4605,7 +5531,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -4614,7 +5540,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4623,6 +5549,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 140,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4634,7 +5586,7 @@
                         "Door to Level 3 Security Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -4643,7 +5595,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4652,6 +5604,41 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 119,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4696,7 +5683,7 @@
                         "Door to Level 3 Security Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -4705,7 +5692,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4714,6 +5701,32 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 128,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4758,7 +5771,7 @@
                         "Door to Level 3 Security Room": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": "Damage Reqs",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -4767,6 +5780,32 @@
                                             "name": "VariaSuit",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageRuns",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 27,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -5003,7 +6042,7 @@
                             }
                         },
                         "Door to Groznyj Grad": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -5272,7 +6311,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -5295,7 +6334,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Freeze Enemies"
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             },
                                                             {
                                                                 "type": "or",
@@ -5320,7 +6359,7 @@
                                                                                         "data": {
                                                                                             "type": "tricks",
                                                                                             "name": "Movement",
-                                                                                            "amount": 2,
+                                                                                            "amount": 1,
                                                                                             "negate": false
                                                                                         }
                                                                                     }
@@ -5356,7 +6395,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Damage Runs",
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -5365,6 +6404,66 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "No springball: https://youtu.be/a4urCWRPTNM",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 733,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Bombs"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 440,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Use Springball"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -5667,7 +6766,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "10 DMG Missiles"
+                                                                "data": "10+ DMG Missiles"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -5844,7 +6943,7 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "10 DMG Missiles"
+                                                                "data": "10+ DMG Missiles"
                                                             }
                                                         ]
                                                     }
@@ -6585,6 +7684,68 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Use Power Bombs"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Shinespark into bomb block",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "L3Locks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -6794,49 +7955,6 @@
                                                                     "type": "tricks",
                                                                     "name": "Movement",
                                                                     "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": "FIXME: generator trap, where it goes here and then gets stuck and frantically places items.",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "misc",
-                                                        "name": "GeneratorHack",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "Nightmare",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 5,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -7912,7 +9030,7 @@
                         "Door to Kago Speedway": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: vid and reevalutate trick level",
+                                "comment": "Need good waver RNG, also aim for top blocks: https://youtu.be/RgtkGqBW3MU",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -7928,7 +9046,7 @@
                                         "data": {
                                             "type": "tricks",
                                             "name": "ShinesparkTrick",
-                                            "amount": 4,
+                                            "amount": 5,
                                             "negate": false
                                         }
                                     },
@@ -7955,6 +9073,24 @@
                                         "data": {
                                             "type": "items",
                                             "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L3Locks",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "L0Locks",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8011,7 +9147,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Freeze Enemies"
+                                        "data": "Can Freeze Enemies With Any Weapon"
                                     },
                                     {
                                         "type": "resource",
@@ -8026,18 +9162,70 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "VariaSuit",
+                                            "name": "L0Locks",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "L0Locks",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "VariaSuit",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "You can just barely reach the speed block before you get hit by recoil",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 360,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -8122,6 +9310,32 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Can Use Springball"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Knowledge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "ScrewAttack",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -8221,11 +9435,28 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Beside Missile Block": {
+                        "Door to Zebesian Waters": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Beside Missile Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8339,7 +9570,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Freeze Enemies"
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 },
                                                 {
                                                     "type": "or",
@@ -8364,7 +9595,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Movement",
+                                                                                "name": "StandOnFrozenEnemies",
                                                                                 "amount": 2,
                                                                                 "negate": false
                                                                             }
@@ -8492,7 +9723,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "TODO: vid",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8590,12 +9821,20 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/FdeET1OemYw",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -8723,7 +9962,7 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "10 DMG Missiles"
+                                                                "data": "10+ DMG Missiles"
                                                             }
                                                         ]
                                                     }
@@ -8798,12 +10037,20 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/uGBnSMt72Jc?t=13",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -8922,7 +10169,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "10 DMG Missiles"
+                                                                "data": "10+ DMG Missiles"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -9031,7 +10278,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "10 DMG Missiles"
+                                                                "data": "10+ DMG Missiles"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -9070,12 +10317,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/FdeET1OemYw?t=19",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -9208,7 +10463,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "10 DMG Missiles"
+                                                                "data": "10+ DMG Missiles"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -9251,12 +10506,20 @@
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/uGBnSMt72Jc",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -9819,20 +11082,10 @@
                     "location_category": "minor",
                     "connections": {
                         "Other to Frozen Tower": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -9871,7 +11124,7 @@
                         "Pickup (Hidden Missile Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -9903,7 +11156,7 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Freeze Enemies"
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             }
                                                         ]
                                                     }
@@ -9914,7 +11167,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9923,6 +11176,41 @@
                                                         "name": "VariaSuit",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 280,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
