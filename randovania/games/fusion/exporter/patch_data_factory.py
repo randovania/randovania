@@ -5,7 +5,7 @@ from collections import defaultdict
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
-from randovania.exporter.hints import guaranteed_item_hint
+from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
@@ -221,25 +221,21 @@ class FusionPatchDataFactory(PatchDataFactory):
 
     def _credits_elements(self) -> dict:
         elements = defaultdict(list)
-        for player_index, patches in self.description.all_patches.items():
-            for pickup_index, target in patches.pickup_assignment.items():
-                if target.player != self.players_config.player_index:
-                    continue
-                region_list = default_database.game_description_for(patches.configuration.game).region_list
-                pickup_category = target.pickup.pickup_category
-                if pickup_category.hinted_as_major or pickup_category.is_key:
-                    player_name = None
-                    if self.players_config.is_multiworld:
-                        player_name = self.players_config.player_names[player_index]
-                    elements[target.pickup.name].append(
-                        {
-                            "World": player_name,
-                            "Region": region_list.region_name_from_node(
-                                region_list.node_from_pickup_index(pickup_index), True
-                            ),
-                            "Area": region_list.nodes_to_area(region_list.node_from_pickup_index(pickup_index)).name,
-                        }
-                    )
+        majors = credits_spoiler.get_locations_for_major_pickups_and_keys(
+            self.description.all_patches, self.players_config
+        )
+
+        for pickup, locations in majors.items():
+            for location in locations:
+                region_list = default_database.game_description_for(location.location.game).region_list
+                pickup_node = region_list.node_from_pickup_index(location.location.location)
+                elements[pickup.name].append(
+                    {
+                        "World": location.player_name,
+                        "Region": region_list.region_name_from_node(pickup_node),
+                        "Area": region_list.nodes_to_area(pickup_node).name,
+                    }
+                )
         return elements
 
     def _create_credits_text(self) -> dict:
