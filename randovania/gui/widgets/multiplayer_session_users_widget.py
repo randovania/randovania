@@ -373,8 +373,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 )
 
         if self.is_admin() or self._session.allow_everyone_claim_world or self._session.allow_coop:
-            print(f"owner: {owner}, for world id {self._session.get_world(world_id).name}")
-            if owner is None:
+            if owner is None or True:
                 world_menu.addSeparator()
                 connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
@@ -383,7 +382,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                     for p in self._session.users.values():
                         connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)
 
-            else:
+                # else:
                 world_menu.addSeparator()
                 connect_to(world_menu.addAction("Unclaim"), self._world_unclaim, world_id, owner)
 
