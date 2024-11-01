@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.7.x] - 2024-12-??
 
-- Remove this entry 1
-- Remove this entry 2
+### Door Lock Randomizer
+- Added: Experimental option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.
 
 ## [8.6.x] - 2024-11-??
 
@@ -130,9 +130,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.5.0] - 2024-10-01
 
 - Fixed: Improved server performance when importing/generating games with a huge number of worlds.
-
-### Door Lock Randomizer
-- Added: Option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.
 
 ### AM2R
 
