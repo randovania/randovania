@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.7.x] - 2024-12-??
+
+- Remove this entry 1
+- Remove this entry 2
+
 ## [8.6.x] - 2024-11-??
 
 - Changed: The "Customize Preset" window has been given a visual overhaul.
@@ -63,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Cave Story
 
-- Changed: The Objective preset entry don't enforce a minimum size anymore.
+- Changed: The Objective preset entry doesn't enforce a minimum size anymore.
 - Changed: Adjust spacing on the HP preset entry.
 
 ### Metroid Dread
@@ -85,6 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: The Data Visualizer now shows an Area View.
+- Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 
 #### Logic Database
 
@@ -97,28 +103,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Impact Crater
 
-- Added: In Metroid Prime Lair: Require Combat Visor for Essence fight.
+- Added: In Metroid Prime Lair: Require Combat Visor for Essence fight unless Invisible Objects is set to Advanced.
 
 ##### Tallon Overworld
 
-- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, Intermediate Slope Jump.
+- Added: In Tallon Canyon: Climb to the top of the half-pipe via one of the following: Intermediate Standable, Beginner BSJ, Intermediate Dash, or Intermediate Slope Jump.
 - Added: In Tallon Canyon: Beginner Knowledge to break blocks with Power Bombs.
 - Added: In Tallon Canyon: Advanced Wall Boost to climb the room from Gully.
 - Added: In Gully: Beginner Standables to climb the room.
 
 ### Metroid Prime 2: Echoes
 
+- Added: Colorblind-friendly textures for Main Gyro Chamber.
 - Changed: Updated tournament winners scan text for Echoes 2024.
-- Added: Colorblind-friendly textures for main gyro.
 
 ### Metroid: Samus Returns
 
+- Added: Multiworld and item tracker support for console.
 - Fixed: Rare case of the connector not being able to reconnect until Randovania is restarted.
 - Fixed: Speed Booster offworld not displaying correctly for Metroid Dread.
 - Fixed: Map tracker could not be opened if the final boss is Ridley.
 - Changed: The preset entry for Aeion and Energy are now combined into one.
 - Changed: The preset entries for the Goal and Hints don't enforce a minimum size anymore.
 - Changed: Adjust spacing on the Elevator preset entry.
+- Changed: Instead of a path to the RomFS, you now need to provide a decrypted 3ds, cia, cxi or app rom file.
+- Removed: Requirement to provide the ExHeader for multiworld.
+- Removed: Selection of PAL or NTSC region. This is automatically determined by the provided rom file.
 
 ## [8.5.0] - 2024-10-01
 

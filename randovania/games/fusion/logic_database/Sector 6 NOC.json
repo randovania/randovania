@@ -289,7 +289,7 @@
                         "Door to Entrance Recharge Room": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: revisit after proper SWJ implementation",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -341,12 +341,29 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Hi-Jump",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Jump with HJ for JBJ, or breaking the top 2 Screw blocks",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -422,6 +439,36 @@
                                                                     "type": "tricks",
                                                                     "name": "Movement",
                                                                     "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Make Menus clip through: https://youtu.be/iu21O6E7tCQ",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "StandOnFrozenEnemies",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Any Weapon"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -1577,7 +1624,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
+                                                                    "name": "ColdDamage",
                                                                     "amount": 414,
                                                                     "negate": false
                                                                 }
@@ -1588,7 +1635,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Minimum with plasma - 2 X",
+                                                        "comment": "Minimum with plasma - 3 X: https://youtu.be/aeXRjizm9fU",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1603,66 +1650,10 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 138,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "PlasmaBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Minimum without plasma - 3 X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
+                                                                    "name": "ColdDamage",
                                                                     "amount": 207,
                                                                     "negate": false
                                                                 }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Power Bomb also freezes X - Knowledge lock",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Knowledge",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Power Bombs"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -1672,15 +1663,6 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
                                                             }
                                                         ]
                                                     }
@@ -1688,7 +1670,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Plasma and Wide can stun all the X and avoid all the damage",
+                                                        "comment": "Plasma and Wide can stun all the X and avoid all the damage: https://youtu.be/NWXuyjskVKk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -1712,8 +1694,34 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "Combat",
                                                                     "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Varia Core removes the Blue-X",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "VariaCore-X",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2012,7 +2020,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 207,
                                                         "negate": false
                                                     }
@@ -2047,7 +2055,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 414,
                                                         "negate": false
                                                     }
@@ -2123,7 +2131,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 207,
                                                         "negate": false
                                                     }
@@ -2158,7 +2166,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 414,
                                                         "negate": false
                                                     }
@@ -2254,7 +2262,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
+                                                                    "name": "ColdDamage",
                                                                     "amount": 414,
                                                                     "negate": false
                                                                 }
@@ -2265,7 +2273,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Minimum with plasma - 2 X",
+                                                        "comment": "Minimum with plasma - 3 X: https://youtu.be/ZkMJi-sOhh8",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2280,8 +2288,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 138,
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 207,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -2300,33 +2308,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Minimum without plasma - 3 X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 207,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Power Bomb also freezes X - Knowledge lock",
+                                                        "comment": "Power Bomb also freezes X: https://youtu.be/Anr2464Uz0w",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2341,8 +2323,17 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "Combat",
                                                                     "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBombs",
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2352,7 +2343,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Plasma and Wide can freeze all X and avoid all damage",
+                                                        "comment": "Plasma and Wide can freeze all X and avoid all damage: https://youtu.be/OB0sEEmjurc",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2376,8 +2367,25 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "Combat",
                                                                     "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Varia Core removes the Blue-X",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "VariaCore-X",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2464,7 +2472,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
+                                                                    "name": "ColdDamage",
                                                                     "amount": 414,
                                                                     "negate": false
                                                                 }
@@ -2475,7 +2483,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Minimum with plasma - 2 X",
+                                                        "comment": "Minimum with plasma - 3 X: https://youtu.be/g_pKLsS1vos",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2490,8 +2498,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 138,
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 207,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -2510,33 +2518,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Minimum without plasma - 3 X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 207,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Power Bomb also freezes X - Knowledge lock",
+                                                        "comment": "Power Bomb also freezes X: https://youtu.be/XS5WZciqgOk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2551,8 +2533,17 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "Combat",
                                                                     "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBombs",
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2562,7 +2553,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Plasma and Wide can freeze all X and avoid all the damage",
+                                                        "comment": "Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/cIdt2h_VvhQ",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -2586,8 +2577,25 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "Combat",
                                                                     "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Varia Core removes the Blue-X",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "VariaCore-X",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -2751,7 +2759,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 69,
                                                         "negate": false
                                                     }
@@ -2938,7 +2946,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "damage",
-                                                                                "name": "NormalDamage",
+                                                                                "name": "ColdDamage",
                                                                                 "amount": 138,
                                                                                 "negate": false
                                                                             }
@@ -4226,7 +4234,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Minimum with plasma - 2 X",
+                                                        "comment": "Minimum with plasma - 3 X: https://youtu.be/LX5JjYrUV7Y",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4241,8 +4249,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 138,
+                                                                    "name": "ColdDamage",
+                                                                    "amount": 207,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -4261,33 +4269,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Minimum without plasma - 3 X",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "DamageBoosts",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "NormalDamage",
-                                                                    "amount": 207,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Power Bomb also freezes X - Knowledge lock",
+                                                        "comment": "Power Bomb also freezes X: https://youtu.be/XpAzo40ONxw",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4313,7 +4295,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Plasma and Wide can freeze all X and avoid all the damage",
+                                                        "comment": "Plasma and Wide can freeze all X and avoid all the damage: https://youtu.be/b0RHhbza3mk",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -4339,6 +4321,23 @@
                                                                     "type": "tricks",
                                                                     "name": "Movement",
                                                                     "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Varia Core removes the Blue-X",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "events",
+                                                                    "name": "VariaCore-X",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -4456,7 +4455,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "ShinesparkTrick",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -4703,16 +4702,57 @@
                                                         "comment": "Freeze Zozoro: https://youtu.be/wu8pKLvrAMw",
                                                         "items": [
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Any Weapon"
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Freeze without Diffusion",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies With Ice Beam"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Can Freeze Enemies With Ice Missiles"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "StandOnFrozenEnemies",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "Freeze with Diffusion",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Diffusion"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "StandOnFrozenEnemies",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -5961,7 +6001,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Movement",
-                                                                    "amount": 4,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -6195,7 +6235,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Freeze Menu: https://youtu.be/kMVxXlo5Lmo",
                                             "items": [
                                                 {
                                                     "type": "template",
@@ -6216,7 +6256,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "HJ + WJ: https://youtu.be/8tjcUuCj2pU",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7184,7 +7224,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Possible with Single Wall Jumping Physics going up the left side.",
+                                                        "comment": "Possible with Single Wall Jumping the left side.",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -7530,79 +7570,8 @@
                         "Door to Twin Caverns East (Upper)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Hold right after getting item: https://youtu.be/LcvWRxDgZew",
                                 "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With WJ: https://youtu.be/FVO9oTKMA3c",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With Springball https://youtu.be/zIZTb7Y3Q9o",
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Use Springball"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "With SJ: https://youtu.be/ai9uskBbhUY",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Ledge Grab: https://youtu.be/LcvWRxDgZew",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -7760,7 +7729,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Freeze Zozoro https://youtu.be/JDSabpkP9qo",
+                                            "comment": "Freeze Zozoro while it's at the door: https://youtu.be/JDSabpkP9qo",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -7774,6 +7743,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Freeze Enemies With Any Weapon"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -7785,6 +7763,27 @@
                                             "name": "SpaceJump",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "SWJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7953,6 +7952,15 @@
                                                 {
                                                     "type": "template",
                                                     "data": "Can Use Bombs"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8016,6 +8024,15 @@
                                                         "type": "damage",
                                                         "name": "NormalDamage",
                                                         "amount": 61,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -8131,10 +8148,55 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Maintenance Annex": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 69,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8171,10 +8233,55 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Twin Caverns West (Upper)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "VariaSuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "ColdDamage",
+                                                        "amount": 69,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Twin Cavern Save Room": {
@@ -8200,7 +8307,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "DamageRuns",
+                                                        "name": "DamageBoosts",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -8209,8 +8316,25 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 207,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Pray to RNGesus and don't get hit: https://youtu.be/94GyTFcwIRM",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 }
@@ -8292,7 +8416,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 552,
                                                         "negate": false
                                                     }
@@ -8328,7 +8452,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageBoosts",
-                                                        "amount": 3,
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 },
@@ -8336,17 +8460,8 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
-                                                        "name": "NormalDamage",
+                                                        "name": "ColdDamage",
                                                         "amount": 276,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 }
@@ -8380,7 +8495,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Movement",
+                                                        "name": "Combat",
                                                         "amount": 5,
                                                         "negate": false
                                                     }
@@ -8985,39 +9100,20 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "ScrewAttack",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "DoorLockRando",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "misc",
-                                                                    "name": "EntranceRando",
-                                                                    "amount": 1,
-                                                                    "negate": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "VariaSuit",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": "No DLR needed. Requirements to deal with X are in Forbidden Entrance",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "misc",
+                                                                                "name": "EntranceRando",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -9162,7 +9258,7 @@
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
-                                "comment": "https://youtu.be/uVPnKswaeOY&t=77s",
+                                "comment": "Charge at the top and shinespark in mid-air, or shinespark from below: https://youtu.be/uVPnKswaeOY&t=77s",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9172,10 +9268,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Have Any Jump Upgrade"
                                     }
                                 ]
                             }

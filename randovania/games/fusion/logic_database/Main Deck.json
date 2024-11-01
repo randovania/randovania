@@ -1145,6 +1145,15 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "MainDeckHubVisited",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             ]
                         }
@@ -2863,7 +2872,7 @@
                         "Door to Habitation Deck (Middle)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Hold left: https://youtu.be/1Vx2aVhG4W0",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -3009,6 +3018,15 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "MainDeckHubVisited",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             ]
                         }
@@ -3089,42 +3107,17 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Jump mid-speedboost: https://www.youtube.com/watch?v=u3xzqtz6Gro",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": "Shinespark into the corner",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Jump mid-speedboost: https://www.youtube.com/watch?v=u3xzqtz6Gro",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -4838,6 +4831,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Sector Hub visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4911,6 +4911,31 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Elevator to Main Elevator Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Sector Hub visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 274.92,
+                        "y": 161.27,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MainDeckHubVisited",
                     "connections": {
                         "Elevator to Main Elevator Shaft": {
                             "type": "and",
@@ -8052,7 +8077,7 @@
                         "Door to Scaffolding Access": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Jump on platform, don't fall down: https://youtu.be/tVICpkQOEh0",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -8110,7 +8135,7 @@
                         "Door to Silo Entry": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Jump to platform, don't fall down: https://youtu.be/tVICpkQOEh0?t=18",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -9193,12 +9218,20 @@
                                             "comment": "Get up",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": "WJ through holes: https://youtu.be/0OJgzfwgr5o",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {

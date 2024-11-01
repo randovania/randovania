@@ -124,11 +124,11 @@ def test_pickup_data_for_recolored_missiles(
         "pickup_type": "actor",
         "caption": "Missile Tank acquired.\nMissile capacity increased by 2.",
         "resources": [[{"item_id": "ITEM_WEAPON_MISSILE_MAX", "quantity": 2}]],
-        "pickup_actor": {"scenario": "s010_cave", "layer": "default", "actor": "ItemSphere_ChargeBeam"},
+        "pickup_actor": {"scenario": "s010_cave", "actor": "ItemSphere_ChargeBeam"},
         "model": ["item_missiletank_green"],
         "map_icon": {
             "icon_id": "item_missiletank",
-            "original_actor": {"actor": "powerup_chargebeam", "layer": "default", "scenario": "s010_cave"},
+            "original_actor": {"actor": "powerup_chargebeam", "scenario": "s010_cave"},
         },
     }
 
@@ -164,10 +164,10 @@ def test_pickup_data_for_a_major(dread_game_description: GameDescription, preset
         "pickup_type": "actor",
         "caption": "Speed Booster acquired.",
         "resources": [[{"item_id": "ITEM_SPEED_BOOSTER", "quantity": 1}]],
-        "pickup_actor": {"scenario": "s010_cave", "layer": "default", "actor": "ItemSphere_ChargeBeam"},
+        "pickup_actor": {"scenario": "s010_cave", "actor": "ItemSphere_ChargeBeam"},
         "model": ["powerup_speedbooster"],
         "map_icon": {
             "icon_id": "powerup_speedbooster",
-            "original_actor": {"actor": "powerup_chargebeam", "layer": "default", "scenario": "s010_cave"},
+            "original_actor": {"actor": "powerup_chargebeam", "scenario": "s010_cave"},
         },
     }

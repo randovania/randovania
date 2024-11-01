@@ -113,43 +113,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Reach the missile block",
-                                            "items": [
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Can Freeze Enemies With Any Weapon"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "StandOnFrozenEnemies",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Have Any Jump Upgrade"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Screw Single Walljump"
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -663,23 +626,15 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Needs to check if DLR in case it becomes an open hatch, making this impossible",
+                                            "comment": "WJ off of door hatch: https://youtu.be/weMdKWzp31g",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": "https://youtu.be/weMdKWzp31g",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "WallJump",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
                                                     }
                                                 },
                                                 {
@@ -849,7 +804,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Movement",
+                                                                    "name": "StandOnFrozenEnemies",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
@@ -2009,7 +1964,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -2181,7 +2136,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Damage Reqs",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -2195,7 +2150,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Damage Reqs",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -3120,7 +3075,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -3196,7 +3151,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -3521,7 +3476,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -3573,7 +3528,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DamageRuns",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -5327,7 +5282,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DamageRuns",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -5521,7 +5476,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 3,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -5661,7 +5616,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "DamageRuns",
-                                                                    "amount": 4,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -5837,7 +5792,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "DamageRuns",
-                                                        "amount": 3,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -7770,6 +7725,24 @@
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "EntranceRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -9234,18 +9207,18 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 2,
+                                                                    "type": "items",
+                                                                    "name": "Hi-Jump",
+                                                                    "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -9462,11 +9435,28 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Beside Missile Block": {
+                        "Door to Zebesian Waters": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Beside Missile Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9605,7 +9595,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
-                                                                                "name": "Movement",
+                                                                                "name": "StandOnFrozenEnemies",
                                                                                 "amount": 2,
                                                                                 "negate": false
                                                                             }
@@ -9831,12 +9821,20 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/FdeET1OemYw",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -10039,12 +10037,20 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/uGBnSMt72Jc?t=13",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -10311,12 +10317,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/FdeET1OemYw?t=19",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -10492,12 +10506,20 @@
                                         "data": "Can Use Power Bombs"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": "Upgradeless: https://youtu.be/uGBnSMt72Jc",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -11060,20 +11082,10 @@
                     "location_category": "minor",
                     "connections": {
                         "Other to Frozen Tower": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": "TODO: varia / damage reqs",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "VariaSuit",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
