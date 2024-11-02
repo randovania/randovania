@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Door Lock Randomizer
 - Added: Experimental option that changes Door Lock Rando so that when determining which types a door can be randomized into, the algorithm searches for either side of the door using the resolver. This means some doors are more likely to have locks on them. Generation will also be faster.
 
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Added: Wall Jump (Beginner) to get from Cold Room (Storm Missile Gate) to Wave Beam Tutorial.
+- Changed: Opening the Storm Missile Gate in Cold Room now requires Screw Attack.
+- Changed: Getting back to the door to Energy Recharge Station after opening the Storm missile Gate now accounts for needing two units of Power Bomb ammo.
+
 ## [8.6.x] - 2024-11-??
 
 - Changed: The "Customize Preset" window has been given a visual overhaul.
