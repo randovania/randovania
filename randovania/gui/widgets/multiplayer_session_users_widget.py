@@ -216,7 +216,15 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     @asyncSlot()
     async def _world_delete(self, world_uid: uuid.UUID):
-        await self._session_api.delete_world(world_uid)
+        result = await async_dialog.warning(
+            self,
+            "Delete world?",
+            f"Are you sure you want to delete world '{self._session.get_world(world_uid).name}'?",
+            buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+            default_button=async_dialog.StandardButton.No,
+        )
+        if result == async_dialog.StandardButton.Yes:
+            await self._session_api.delete_world(world_uid)
 
     @asyncSlot()
     async def _preset_view_summary(self, world_uid: uuid.UUID):
