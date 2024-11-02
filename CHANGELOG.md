@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.7.x] - 2024-12-??
 
+- Changed: Add confirmation dialog when deleting a world in Multiworld.
+
 ### Metroid Dread
 
 #### Logic Database
