@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import datetime
 import functools
 import logging
 import uuid
@@ -20,6 +21,7 @@ from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.interface_common.options import InfoAlert, Options
 from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.multiplayer_session import (
     MAX_WORLD_NAME_LENGTH,
     WORLD_NAME_RE,
@@ -72,13 +74,16 @@ class WorldWidgetEntry:
     item: QtWidgets.QTreeWidgetItem
     preset_menu: QtWidgets.QMenu
 
-    def update(self, world_details: MultiplayerWorld, detail: UserWorldDetail | None):
+    def update(self, world_details: MultiplayerWorld, detail: UserWorldDetail):
         self.item.setText(0, world_details.name)
         self.item.setText(1, world_details.preset.game.long_name)
-        self.item.setText(2, detail.connection_state.pretty_text if detail is not None else "Abandoned")
+        self.item.setText(2, detail.connection_state.pretty_text)
         self.preset_menu.setTitle(f"Preset: {world_details.preset.name}")
 
-        if detail is not None:
+        if (
+            detail.connection_state != GameConnectionStatus.Unclaimed
+            and detail.connection_state != GameConnectionStatus.Empty
+        ):
             self.item.setText(4, "Last Activity:")
             self.item.setTextAlignment(4, QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignCenter)
             self.item.setData(
@@ -459,18 +464,18 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
             self._user_widgets[user.id].update(user)
 
-        unclaimed_worlds = set(world_by_id.keys()) - used_worlds
-
         if self._session.allow_coop:
             total_world_item = QtWidgets.QTreeWidgetItem(self)
             total_world_item.setExpanded(True)
             total_world_item.setText(0, "All Worlds")
             for world_uid, world in world_by_id.items():
-                if world_uid in used_worlds:
+                if world_uid in world_by_id.keys():
                     self._create_world_item(world_uid, total_world_item, None).update(
                         world_by_id[world_uid],
-                        None,
+                        UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
+
+        unclaimed_worlds = set(world_by_id.keys()) - used_worlds
 
         if unclaimed_worlds:
             unclaimed_world_item = QtWidgets.QTreeWidgetItem(self)
@@ -481,7 +486,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 if world_uid in unclaimed_worlds:
                     self._create_world_item(world_uid, unclaimed_world_item, None).update(
                         world_by_id[world_uid],
-                        None,
+                        UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
                     )
 
         self.resizeColumnToContents(0)

@@ -11,6 +11,8 @@ class GameConnectionStatus(Enum):
     Disconnected = "disconnected"
     TitleScreen = "title-screen"
     InGame = "in-game"
+    Unclaimed = "unclaimed"
+    Empty = "empty"
 
 
 enum_lib.add_per_enum_field(
@@ -20,5 +22,7 @@ enum_lib.add_per_enum_field(
         GameConnectionStatus.Disconnected: "Disconnected",
         GameConnectionStatus.TitleScreen: "Title screen",
         GameConnectionStatus.InGame: "In-game",
+        GameConnectionStatus.Unclaimed: "Unclaimed",
+        GameConnectionStatus.Empty: "",
     },
 )

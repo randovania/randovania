@@ -23,4 +23,4 @@ class PlayersConfiguration:
 
     @property
     def is_multiworld(self) -> int:
-        return len(self.player_names) > 1
+        return len(self.player_names) > 1 or self.is_coop
