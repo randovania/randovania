@@ -299,6 +299,7 @@ def set_icon_data_paths(label: QtWidgets.QLabel):
 
 
 def alert_user(parent: QtWidgets, options: Options):
-    QtWidgets.QApplication.alert(parent)
-    if parent._options.sound_alerts:
+    if options.visual_taskbar_dock_alerts:
+        QtWidgets.QApplication.alert(parent)
+    if options.sound_alerts:
         QtWidgets.QApplication.beep()
