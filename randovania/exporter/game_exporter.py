@@ -100,18 +100,44 @@ class GameExporter:
                 except Exception as e:
                     scope.set_tag("exception", type(e).__name__)
                     input_hash = export_params.calculate_input_hash()
-                    scope.capture_exception(
-                        e,
-                        contexts={
-                            "input_hash": input_hash,
-                        },
-                    )
-                    # TODO: compare `input_hash` with known good values and if different,
-                    # wrap into a "User Error" exception
-                    raise
+                    incorrect_hashes = self.get_unknown_input_hashes(input_hash)
+                    if incorrect_hashes:
+                        msg = "An error occurred while exporting.\nThe following files have invalid hashes:\n"
+                        msg += "\n".join(f"{key} => {value}" for key, value in incorrect_hashes.items())
+                        raise UnableToExportError(msg) from e
+                    else:
+                        scope.capture_exception(
+                            e,
+                            contexts={
+                                "input_hash": input_hash,
+                            },
+                        )
+                        raise
 
                 finally:
                     self._after_export()
+
+    def known_good_hashes(self) -> dict[str, tuple[str, ...]]:
+        """
+        :return: A dict mapping keys returned by GameExportParams.calculate_input_hash to list of known good hashes.
+        """
+        return {}
+
+    def get_unknown_input_hashes(self, input_hash: dict[str, str | None]) -> dict[str, str]:
+        """
+        Filters the given input_hash to only key/value pairs that are not any known good hash.
+
+        :param input_hash: The result of GameExportParams.calculate_input_hash
+        :return: A subset of input_hash
+        """
+        result = {}
+        good_hashes = self.known_good_hashes()
+
+        for key, value in input_hash.items():
+            if value is not None and key in good_hashes and value not in good_hashes[key]:
+                result[key] = value
+
+        return result
 
 
 def _hash_file_internal(path: Path) -> typing.Any:
