@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.7.x] - 2024-12-??
+
+### Metroid Dread
+
+#### Logic Database
+
+##### Ferenia
+
+- Added: Wall Jump (Beginner) to get from Cold Room (Storm Missile Gate) to Wave Beam Tutorial.
+- Changed: Opening the Storm Missile Gate in Cold Room now requires Screw Attack.
+- Changed: Getting back to the door to Energy Recharge Station after opening the Storm missile Gate now accounts for needing two units of Power Bomb ammo.
+
+### Metroid Prime
+
+- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
+
 ## [8.6.x] - 2024-11-??
 
 - Changed: The "Customize Preset" window has been given a visual overhaul.
@@ -80,10 +96,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Normal Bombs to break the Bomb Blocks has been upgraded to Movement (Advanced).
 
 ### Metroid Prime
-
-- Fixed: Main Plaza vault ledge door now can now be shuffled via door lock rando
-- Fixed: Chaos option export error when submerging rooms
-- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 

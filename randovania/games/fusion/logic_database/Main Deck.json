@@ -1145,6 +1145,15 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "MainDeckHubVisited",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             ]
                         }
@@ -3009,6 +3018,15 @@
                                         "amount": 1,
                                         "negate": false
                                     }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "MainDeckHubVisited",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
                                 }
                             ]
                         }
@@ -4813,6 +4831,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Sector Hub visited": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -4886,6 +4911,31 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Elevator to Main Elevator Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Sector Hub visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 274.92,
+                        "y": 161.27,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MainDeckHubVisited",
                     "connections": {
                         "Elevator to Main Elevator Shaft": {
                             "type": "and",
