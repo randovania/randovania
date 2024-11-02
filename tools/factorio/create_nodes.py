@@ -1,3 +1,4 @@
+import argparse
 import json
 import math
 import re
@@ -9,21 +10,9 @@ import networkx
 from tools.factorio import util
 from tools.factorio.util import and_req, tech_req, template_req
 
-_custom_tech = [
-    # custom tech
-    "long-handed-inserter",
-    "longer-handed-inserter",
-    "oil-cracking",
-    "solid-fuel",
-    "light-armor",
-    "big-electric-pole",
-    "regular-inserter-capacity-bonus",
-    "stack-inserter-capacity-bonus",
-    "research-productivity",
-]
 _upgrade_techs_templates = {
     "refined-flammables-{}": 6,
-    "energy-weapons-damage-{}": 6,
+    "laser-weapons-damage-{}": 6,
     "stronger-explosives-{}": 6,
     "laser-shooting-speed-{}": 7,
     "follower-robot-count-{}": 6,
@@ -46,15 +35,16 @@ _k_tier_requirements = [
     [
         template_req("craft-assembling-machine-1"),
         template_req("craft-inserter"),
+        template_req("craft-electric-mining-drill"),
         template_req("has-electricity"),
-    ],  # TODO: electric lab, drills
+    ],  # TODO: electric lab
     [
         template_req("craft-fast-transport-belt"),
         template_req("craft-fast-inserter"),
         tech_req("railway"),
     ],  # TODO: fast smelting
     [tech_req("construction-robotics"), template_req("craft-assembling-machine-2")],
-    [template_req("craft-stack-inserter")],
+    [template_req("craft-bulk-inserter")],
     [tech_req("research-speed-6"), template_req("craft-assembling-machine-3")],
     [tech_req("logistic-system")],
     [tech_req("productivity-module-3")],
@@ -154,7 +144,11 @@ def make_gen_id(existing_ids: dict[str, int]) -> typing.Callable[[], int]:
 
 
 def main():
-    factorio_path = Path(r"F:/Factorio_1.1.91-rdv-mod")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--factorio", type=Path, help="Path to the Factorio root folder.", required=True)
+    args = parser.parse_args()
+
+    factorio_path: Path = args.factorio
     rdv_factorio_path = Path(__file__).parents[2].joinpath("randovania/games/factorio")
     region_path = rdv_factorio_path.joinpath("logic_database/Tech.json")
 
@@ -175,12 +169,14 @@ def main():
     pickup_nodes = {}
 
     for tech_name, tech in techs_raw.items():
-        if tech_name in _custom_tech:
+        if tech.get("randovania_custom_tech"):
             continue
 
-        packs = tuple(sorted(it[0] for it in tech["unit"]["ingredients"]))
-        if "space-science-pack" in packs:
-            continue
+        packs = None
+        if "unit" in tech:
+            packs = tuple(sorted(it[0] for it in tech["unit"]["ingredients"]))
+            if "space-science-pack" in packs:
+                continue
 
         graph.add_node(tech_name)
 
@@ -191,17 +187,39 @@ def main():
     for tech_name in networkx.topological_sort(graph):
         new_tech = re.sub(r"-(\d+)$", lambda m: f"-{chr(ord('a') + int(m.group(1)))}", tech_name)
 
+        if "unit" in techs_raw[tech_name]:
+            complexity = complexity_for(techs_raw[tech_name])
+        else:
+            complexity = max(
+                [pickup_nodes[it]["complexity"] for it in techs_raw[tech_name].get("prerequisites", [])], default=1
+            )
+
         pickup_nodes[tech_name] = {
             "node_name": f"Pickup ({util.get_localized_name(tech_name)})",
             "tech_name": f"randovania-{new_tech}",
-            "complexity": complexity_for(techs_raw[tech_name]),
+            "complexity": complexity,
         }
 
     def requirement_for_tech(n: str):
         # code = "".join(it[0] for it in pack_for_tech[n]).upper()
         # print(f"{n:40} {cost_complexity:10d} -- {code:>6} x{tech['unit']['count']:<6} @ {tech['unit']['time']}s")
 
-        items = [{"type": "template", "data": f"craft-{pack.lower()}"} for pack in pack_for_tech[n]]
+        if pack_for_tech[n] is not None:
+            items = [{"type": "template", "data": f"craft-{pack.lower()}"} for pack in pack_for_tech[n]]
+        else:
+            trigger = techs_raw[n]["research_trigger"]
+            match trigger["type"]:
+                case "mine-entity":
+                    items = [template_req(f"craft-{trigger['entity']}")]
+                case "craft-item":
+                    items = [template_req(f"craft-{trigger['item']}")]
+                case "send-item-to-orbit":
+                    items = [
+                        template_req("craft-rocket-part"),
+                        template_req(f"craft-{trigger['item']}"),
+                    ]
+                case _:
+                    raise ValueError(f"Unsupported research trigger: {trigger['type']}")
 
         return {
             "type": "and",
@@ -233,9 +251,12 @@ def main():
         node = make_pickup(new_id, is_major=True)
         node["extra"]["original_tech"] = tech_name
         node["extra"]["tech_name"] = node_details["tech_name"]
-        node["extra"]["count"] = techs_raw[tech_name]["unit"]["count"]
-        node["extra"]["time"] = techs_raw[tech_name]["unit"]["time"]
-        node["extra"]["ingredients"] = pack_for_tech[tech_name]
+        if "unit" in techs_raw[tech_name]:
+            node["extra"]["count"] = techs_raw[tech_name]["unit"]["count"]
+            node["extra"]["time"] = techs_raw[tech_name]["unit"]["time"]
+            node["extra"]["ingredients"] = pack_for_tech[tech_name]
+        else:
+            node["extra"]["research_trigger"] = techs_raw[tech_name]["research_trigger"]
         if tech_name in _bonus_upgrade_tech:
             node["layers"] = ["full_tree"]
         areas[f"Tier {node_details['complexity']}"]["nodes"][node_details["node_name"]] = node

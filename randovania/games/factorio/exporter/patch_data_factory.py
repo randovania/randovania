@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import typing
 
 from randovania.exporter.patch_data_factory import PatchDataFactory
@@ -26,7 +27,7 @@ class FactorioPatchDataFactory(PatchDataFactory):
         """Used for any location with no PickupEntry assigned to it."""
         return pickup_creator.create_nothing_pickup(
             self.game.resource_database,
-            model_name="__randovania-layout__/graphics/icons/nothing.png",
+            model_name="__randovania-assets__/graphics/icons/nothing.png",
         )
 
     def create_visual_nothing(self) -> PickupEntry:
@@ -52,26 +53,29 @@ class FactorioPatchDataFactory(PatchDataFactory):
                     other_node = rl.node_by_identifier(req.node_identifier)
                     prerequisites.append(other_node.extra["tech_name"])
 
-            technologies.append(
-                {
-                    "tech_name": node.extra["tech_name"],
-                    "locale_name": exported.name,
-                    "description": exported.description,
-                    "icon": exported.model.name,
-                    "icon_size": 64 if exported.model.name.startswith("__base__/graphics/icons") else 256,
-                    "cost": {
-                        "count": node.extra["count"],
-                        "time": node.extra["time"],
-                        "ingredients": list(node.extra["ingredients"]),
-                    },
-                    "prerequisites": prerequisites,
-                    "unlocks": [
-                        conditional.resources[0][0].short_name
-                        for conditional in exported.conditional_resources
-                        if conditional.resources
-                    ],
+            new_tech = {
+                "tech_name": node.extra["tech_name"],
+                "locale_name": exported.name,
+                "description": exported.description,
+                "icon": exported.model.name,
+                "icon_size": 64 if exported.model.name.startswith("__base__/graphics/icons") else 256,
+                "prerequisites": prerequisites,
+                "unlocks": [
+                    conditional.resources[0][0].short_name
+                    for conditional in exported.conditional_resources
+                    if conditional.resources
+                ],
+            }
+            if "research_trigger" in node.extra:
+                new_tech["research_trigger"] = copy.deepcopy(node.extra["research_trigger"])
+            else:
+                new_tech["cost"] = {
+                    "count": node.extra["count"],
+                    "time": node.extra["time"],
+                    "ingredients": list(node.extra["ingredients"]),
                 }
-            )
+
+            technologies.append(new_tech)
 
         return {
             "configuration_identifier": self.description.shareable_hash,
