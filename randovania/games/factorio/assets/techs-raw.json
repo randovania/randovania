@@ -1,22 +1,157 @@
 {
+    "steam-power": {
+        "type": "technology",
+        "name": "steam-power",
+        "icon": "__base__/graphics/technology/steam-power.png",
+        "icon_size": 256,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "offshore-pump"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "boiler"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "steam-engine"
+            }
+        ],
+        "research_trigger": {
+            "type": "craft-item",
+            "item": "iron-plate",
+            "count": 50
+        }
+    },
+    "electronics": {
+        "type": "technology",
+        "name": "electronics",
+        "icon": "__base__/graphics/technology/electronics.png",
+        "icon_size": 256,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "electronic-circuit"
+            }
+        ],
+        "research_trigger": {
+            "type": "craft-item",
+            "item": "copper-plate",
+            "count": 10
+        }
+    },
+    "automation-science-pack": {
+        "type": "technology",
+        "name": "automation-science-pack",
+        "icon": "__base__/graphics/technology/automation-science-pack.png",
+        "icon_size": 256,
+        "essential": true,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "automation-science-pack"
+            }
+        ],
+        "prerequisites": [
+            "steam-power",
+            "electronics"
+        ],
+        "research_trigger": {
+            "type": "craft-item",
+            "item": "burner-lab"
+        }
+    },
+    "electric-mining-drill": {
+        "type": "technology",
+        "name": "electric-mining-drill",
+        "icon": "__base__/graphics/technology/electric-mining-drill.png",
+        "icon_size": 256,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "electric-mining-drill"
+            }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
+        ],
+        "unit": {
+            "count": 25,
+            "ingredients": [
+                [
+                    "automation-science-pack",
+                    1
+                ]
+            ],
+            "time": 10
+        }
+    },
+    "repair-pack": {
+        "type": "technology",
+        "name": "repair-pack",
+        "icon": "__base__/graphics/technology/repair-pack.png",
+        "icon_size": 256,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "repair-pack"
+            }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
+        ],
+        "unit": {
+            "count": 25,
+            "ingredients": [
+                [
+                    "automation-science-pack",
+                    1
+                ]
+            ],
+            "time": 10
+        }
+    },
+    "radar": {
+        "type": "technology",
+        "name": "radar",
+        "icon": "__base__/graphics/technology/radar.png",
+        "icon_size": 256,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "radar"
+            }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
+        ],
+        "unit": {
+            "count": 20,
+            "ingredients": [
+                [
+                    "automation-science-pack",
+                    1
+                ]
+            ],
+            "time": 10
+        }
+    },
     "physical-projectile-damage-7": {
         "type": "technology",
         "name": "physical-projectile-damage-7",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/physical-projectile-damage-2.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-damage.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -77,28 +212,23 @@
             "time": 60
         },
         "max_level": "infinite",
-        "upgrade": true,
-        "order": "e-l-f",
-        "hidden": true
+        "upgrade": true
     },
     "stronger-explosives-7": {
         "type": "technology",
         "name": "stronger-explosives-7",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/stronger-explosives-3.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-damage.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -154,28 +284,23 @@
             "time": 60
         },
         "max_level": "infinite",
-        "upgrade": true,
-        "order": "e-l-f",
-        "hidden": true
+        "upgrade": true
     },
     "refined-flammables-7": {
         "type": "technology",
         "name": "refined-flammables-7",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/refined-flammables.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-damage.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -226,28 +351,23 @@
             "time": 60
         },
         "max_level": "infinite",
-        "upgrade": true,
-        "order": "e-l-f",
-        "hidden": true
+        "upgrade": true
     },
-    "energy-weapons-damage-7": {
+    "laser-weapons-damage-7": {
         "type": "technology",
-        "name": "energy-weapons-damage-7",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
+        "name": "laser-weapons-damage-7",
         "icons": [
             {
-                "icon": "__base__/graphics/technology/energy-weapons-damage.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon": "__base__/graphics/technology/laser-weapons-damage.png",
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-damage.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -269,7 +389,7 @@
             }
         ],
         "prerequisites": [
-            "energy-weapons-damage-6",
+            "laser-weapons-damage-6",
             "space-science-pack"
         ],
         "unit": {
@@ -303,28 +423,23 @@
             "time": 60
         },
         "max_level": "infinite",
-        "upgrade": true,
-        "order": "e-l-f",
-        "hidden": true
+        "upgrade": true
     },
     "weapon-shooting-speed-6": {
         "type": "technology",
         "name": "weapon-shooting-speed-6",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/weapon-shooting-speed-3.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-speed.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -351,7 +466,8 @@
             }
         ],
         "prerequisites": [
-            "weapon-shooting-speed-5"
+            "weapon-shooting-speed-5",
+            "utility-science-pack"
         ],
         "unit": {
             "count": 600,
@@ -379,28 +495,23 @@
             ],
             "time": 60
         },
-        "upgrade": true,
-        "order": "e-l-f",
-        "hidden": true
+        "upgrade": true
     },
     "laser-shooting-speed-7": {
         "type": "technology",
         "name": "laser-shooting-speed-7",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/laser-shooting-speed.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-speed.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -440,39 +551,34 @@
             ],
             "time": 60
         },
-        "upgrade": true,
-        "order": "e-n-n",
-        "hidden": true
+        "upgrade": true
     },
-    "follower-robot-count-7": {
+    "follower-robot-count-5": {
         "type": "technology",
-        "name": "follower-robot-count-7",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
+        "name": "follower-robot-count-5",
         "icons": [
             {
                 "icon": "__base__/graphics/technology/follower-robots.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-count.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
         "effects": [
             {
                 "type": "maximum-following-robots-count",
-                "modifier": 10
+                "modifier": 25
             }
         ],
         "prerequisites": [
-            "follower-robot-count-6",
+            "follower-robot-count-4",
             "space-science-pack"
         ],
         "unit": {
@@ -507,37 +613,30 @@
                 ]
             ],
             "time": 30,
-            "count_formula": "100(L-6)+900"
+            "count_formula": "1000*(L-4)"
         },
         "max_level": "infinite",
-        "upgrade": true,
-        "order": "e-p-b-c",
-        "hidden": true
+        "upgrade": true
     },
-    "stack-inserter": {
+    "bulk-inserter": {
         "type": "technology",
-        "name": "stack-inserter",
-        "icon": "__base__/graphics/technology/stack-inserter.png",
+        "name": "bulk-inserter",
+        "icon": "__base__/graphics/technology/bulk-inserter.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
         "effects": [
             {
                 "type": "unlock-recipe",
-                "recipe": "stack-inserter"
+                "recipe": "bulk-inserter"
             },
             {
-                "type": "unlock-recipe",
-                "recipe": "stack-filter-inserter"
-            },
-            {
-                "type": "stack-inserter-capacity-bonus",
+                "type": "bulk-inserter-capacity-bonus",
                 "modifier": 1
             }
         ],
         "prerequisites": [
             "fast-inserter",
             "logistics-2",
-            "advanced-electronics"
+            "advanced-circuit"
         ],
         "unit": {
             "count": 150,
@@ -553,81 +652,21 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "c-o-a",
-        "hidden": true
-    },
-    "inserter-capacity-bonus-7": {
-        "type": "technology",
-        "name": "inserter-capacity-bonus-7",
-        "icons": [
-            {
-                "icon": "__base__/graphics/technology/inserter-capacity.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
-            },
-            {
-                "icon": "__core__/graphics/icons/technology/constants/constant-capacity.png",
-                "icon_size": 128,
-                "icon_mipmaps": 3,
-                "shift": [
-                    100,
-                    100
-                ]
-            }
-        ],
-        "icon_size": 256,
-        "icon_mipmaps": 4,
-        "effects": [
-            {
-                "type": "stack-inserter-capacity-bonus",
-                "modifier": 2
-            }
-        ],
-        "prerequisites": [
-            "inserter-capacity-bonus-6"
-        ],
-        "unit": {
-            "count": 600,
-            "ingredients": [
-                [
-                    "automation-science-pack",
-                    1
-                ],
-                [
-                    "logistic-science-pack",
-                    1
-                ],
-                [
-                    "chemical-science-pack",
-                    1
-                ],
-                [
-                    "production-science-pack",
-                    1
-                ],
-                [
-                    "utility-science-pack",
-                    1
-                ]
-            ],
-            "time": 30
-        },
-        "upgrade": true,
-        "order": "c-o-h",
-        "hidden": true
+        "upgrade": true
     },
     "automation": {
         "type": "technology",
         "name": "automation",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/automation-1.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
                 "recipe": "assembling-machine-1"
             }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
         ],
         "unit": {
             "count": 10,
@@ -639,16 +678,13 @@
             ],
             "time": 10
         },
-        "ignore_tech_cost_multiplier": true,
-        "order": "a-b-a",
-        "hidden": true
+        "ignore_tech_cost_multiplier": true
     },
     "automation-2": {
         "type": "technology",
         "name": "automation-2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/automation-2.png",
+        "icon_size": 256,
         "localised_description": [
             "technology-description.automation-2"
         ],
@@ -659,7 +695,7 @@
             }
         ],
         "prerequisites": [
-            "electronics",
+            "automation",
             "steel-processing",
             "logistic-science-pack"
         ],
@@ -676,37 +712,7 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "a-b-b",
-        "hidden": true
-    },
-    "electronics": {
-        "type": "technology",
-        "name": "electronics",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/electronics.png",
-        "prerequisites": [
-            "automation"
-        ],
-        "unit": {
-            "count": 30,
-            "ingredients": [
-                [
-                    "automation-science-pack",
-                    1
-                ]
-            ],
-            "time": 15
-        },
-        "order": "a-d-a",
-        "effects": [
-            {
-                "recipe": "electronic-circuit",
-                "type": "unlock-recipe"
-            }
-        ],
-        "hidden": true
+        }
     },
     "logistic-science-pack": {
         "type": "technology",
@@ -717,14 +723,17 @@
         "localised_description": [
             "technology-description.logistic-science-pack"
         ],
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/logistic-science-pack.png",
+        "icon_size": 256,
+        "essential": true,
         "effects": [
             {
                 "type": "unlock-recipe",
                 "recipe": "logistic-science-pack"
             }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
         ],
         "unit": {
             "count": 75,
@@ -735,16 +744,13 @@
                 ]
             ],
             "time": 5
-        },
-        "order": "c-a",
-        "hidden": true
+        }
     },
     "steel-processing": {
         "type": "technology",
         "name": "steel-processing",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/steel-processing.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -755,6 +761,9 @@
                 "recipe": "steel-chest"
             }
         ],
+        "prerequisites": [
+            "automation-science-pack"
+        ],
         "unit": {
             "count": 50,
             "ingredients": [
@@ -764,16 +773,13 @@
                 ]
             ],
             "time": 5
-        },
-        "order": "c-a",
-        "hidden": true
+        }
     },
     "steel-axe": {
         "type": "technology",
         "name": "steel-axe",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/steel-axe.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "character-mining-speed",
@@ -783,25 +789,17 @@
         "prerequisites": [
             "steel-processing"
         ],
-        "unit": {
-            "count": 50,
-            "ingredients": [
-                [
-                    "automation-science-pack",
-                    1
-                ]
-            ],
-            "time": 30
-        },
-        "order": "c-c-a",
-        "hidden": true
+        "research_trigger": {
+            "type": "craft-item",
+            "item": "steel-plate",
+            "count": 50
+        }
     },
     "military": {
         "type": "technology",
         "name": "military",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/military.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -816,6 +814,9 @@
                 "recipe": "shotgun-shell"
             }
         ],
+        "prerequisites": [
+            "automation-science-pack"
+        ],
         "unit": {
             "count": 10,
             "ingredients": [
@@ -825,16 +826,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "e-a-a",
-        "hidden": true
+        }
     },
     "military-2": {
         "type": "technology",
         "name": "military-2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/military.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -863,28 +861,21 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "e-a-b",
-        "hidden": true
+        }
     },
     "fast-inserter": {
         "type": "technology",
         "name": "fast-inserter",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/fast-inserter.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
                 "recipe": "fast-inserter"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "filter-inserter"
             }
         ],
         "prerequisites": [
-            "electronics"
+            "automation-science-pack"
         ],
         "unit": {
             "count": 30,
@@ -895,16 +886,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "a-d-a",
-        "hidden": true
+        }
     },
     "logistics": {
         "type": "technology",
         "name": "logistics",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/logistics-1.png",
+        "icon_size": 256,
         "effects": [
             {
                 "recipe": "transport-belt",
@@ -919,6 +907,9 @@
                 "recipe": "splitter"
             }
         ],
+        "prerequisites": [
+            "automation-science-pack"
+        ],
         "unit": {
             "count": 20,
             "ingredients": [
@@ -928,16 +919,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "a-f-a",
-        "hidden": true
+        }
     },
     "railway": {
         "type": "technology",
         "name": "railway",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/railway.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -981,16 +969,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-g-a",
-        "hidden": true
+        }
     },
     "automobilism": {
         "type": "technology",
         "name": "automobilism",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/automobilism.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1014,21 +999,21 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-b",
-        "hidden": true
+        }
     },
-    "optics": {
+    "lamp": {
         "type": "technology",
-        "name": "optics",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
+        "name": "lamp",
         "icon": "__base__/graphics/technology/lamp.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
                 "recipe": "small-lamp"
             }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
         ],
         "unit": {
             "count": 10,
@@ -1039,16 +1024,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "a-h-a",
-        "hidden": true
+        }
     },
     "solar-energy": {
         "type": "technology",
         "name": "solar-energy",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/solar-energy.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1056,8 +1038,6 @@
             }
         ],
         "prerequisites": [
-            "optics",
-            "electronics",
             "steel-processing",
             "logistic-science-pack"
         ],
@@ -1074,16 +1054,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "a-h-c",
-        "hidden": true
+        }
     },
     "heavy-armor": {
         "type": "technology",
         "name": "heavy-armor",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/heavy-armor.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1103,21 +1080,21 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-a-b",
-        "hidden": true
+        }
     },
     "gun-turret": {
         "type": "technology",
         "name": "gun-turret",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/gun-turret.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
                 "recipe": "gun-turret"
             }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
         ],
         "unit": {
             "count": 10,
@@ -1128,16 +1105,13 @@
                 ]
             ],
             "time": 10
-        },
-        "order": "a-j-a",
-        "hidden": true
+        }
     },
     "electric-energy-distribution-1": {
         "type": "technology",
         "name": "electric-energy-distribution-1",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/electric-energy-distribution-1.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1145,7 +1119,6 @@
             }
         ],
         "prerequisites": [
-            "electronics",
             "steel-processing",
             "logistic-science-pack"
         ],
@@ -1162,16 +1135,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-e-b",
-        "hidden": true
+        }
     },
     "advanced-material-processing": {
         "type": "technology",
         "name": "advanced-material-processing",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/advanced-material-processing.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1195,16 +1165,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-c-a",
-        "hidden": true
+        }
     },
     "concrete": {
         "type": "technology",
         "name": "concrete",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/concrete.png",
+        "icon_size": 256,
         "prerequisites": [
             "advanced-material-processing",
             "automation-2"
@@ -1240,16 +1207,13 @@
                 "type": "unlock-recipe",
                 "recipe": "refined-hazard-concrete"
             }
-        ],
-        "order": "c-c-c",
-        "hidden": true
+        ]
     },
     "engine": {
         "type": "technology",
         "name": "engine",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/engine.png",
+        "icon_size": 256,
         "prerequisites": [
             "steel-processing",
             "logistic-science-pack"
@@ -1273,16 +1237,13 @@
                 "type": "unlock-recipe",
                 "recipe": "engine-unit"
             }
-        ],
-        "order": "b-a",
-        "hidden": true
+        ]
     },
     "landfill": {
         "type": "technology",
         "name": "landfill",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/landfill.png",
+        "icon_size": 256,
         "prerequisites": [
             "logistic-science-pack"
         ],
@@ -1305,16 +1266,13 @@
                 "type": "unlock-recipe",
                 "recipe": "landfill"
             }
-        ],
-        "order": "b-d",
-        "hidden": true
+        ]
     },
     "logistics-2": {
         "type": "technology",
         "name": "logistics-2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/logistics-2.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1346,28 +1304,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "a-f-b",
-        "hidden": true
+        }
     },
     "toolbelt": {
         "type": "technology",
         "name": "toolbelt",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/toolbelt.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-capacity.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -1393,21 +1346,21 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-k-m",
-        "hidden": true
+        }
     },
     "stone-wall": {
         "type": "technology",
         "name": "stone-wall",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/stone-wall.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
                 "recipe": "stone-wall"
             }
+        ],
+        "prerequisites": [
+            "automation-science-pack"
         ],
         "unit": {
             "count": 10,
@@ -1418,9 +1371,7 @@
                 ]
             ],
             "time": 10
-        },
-        "order": "a-k-a",
-        "hidden": true
+        }
     },
     "gate": {
         "type": "technology",
@@ -1428,9 +1379,8 @@
         "localised_description": [
             "technology-description.gates"
         ],
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/gate.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1454,9 +1404,7 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "a-l-a",
-        "hidden": true
+        }
     },
     "chemical-science-pack": {
         "type": "technology",
@@ -1467,9 +1415,9 @@
         "localised_description": [
             "technology-description.chemical-science-pack"
         ],
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/chemical-science-pack.png",
+        "icon_size": 256,
+        "essential": true,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1491,18 +1439,16 @@
             "time": 10
         },
         "prerequisites": [
-            "advanced-electronics",
+            "advanced-circuit",
             "sulfur-processing"
-        ],
-        "order": "c-a",
-        "hidden": true
+        ]
     },
     "military-science-pack": {
         "type": "technology",
         "name": "military-science-pack",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/military-science-pack.png",
+        "icon_size": 256,
+        "essential": true,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1526,16 +1472,14 @@
         "prerequisites": [
             "military-2",
             "stone-wall"
-        ],
-        "order": "c-a",
-        "hidden": true
+        ]
     },
     "production-science-pack": {
         "type": "technology",
         "name": "production-science-pack",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/production-science-pack.png",
+        "icon_size": 256,
+        "essential": true,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1564,16 +1508,14 @@
             "productivity-module",
             "advanced-material-processing-2",
             "railway"
-        ],
-        "order": "c-a",
-        "hidden": true
+        ]
     },
     "utility-science-pack": {
         "type": "technology",
         "name": "utility-science-pack",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/utility-science-pack.png",
+        "icon_size": 256,
+        "essential": true,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1600,18 +1542,15 @@
         },
         "prerequisites": [
             "robotics",
-            "advanced-electronics-2",
+            "processing-unit",
             "low-density-structure"
-        ],
-        "order": "c-a",
-        "hidden": true
+        ]
     },
     "military-3": {
         "type": "technology",
         "name": "military-3",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/military.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1651,16 +1590,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-a-c",
-        "hidden": true
+        }
     },
     "military-4": {
         "type": "technology",
         "name": "military-4",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/military.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1701,16 +1637,13 @@
                 ]
             ],
             "time": 45
-        },
-        "order": "e-a-e",
-        "hidden": true
+        }
     },
     "uranium-ammo": {
         "type": "technology",
         "name": "uranium-ammo",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/uranium-ammo.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1755,16 +1688,13 @@
                 ]
             ],
             "time": 45
-        },
-        "order": "e-a-b",
-        "hidden": true
+        }
     },
     "atomic-bomb": {
         "type": "technology",
         "name": "atomic-bomb",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/atomic-bomb.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -1774,7 +1704,6 @@
         "prerequisites": [
             "military-4",
             "kovarex-enrichment-process",
-            "rocket-control-unit",
             "rocketry"
         ],
         "unit": {
@@ -1806,16 +1735,13 @@
                 ]
             ],
             "time": 45
-        },
-        "order": "e-a-b",
-        "hidden": true
+        }
     },
     "automation-3": {
         "type": "technology",
         "name": "automation-3",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/automation-3.png",
+        "icon_size": 256,
         "localised_description": [
             "technology-description.automation-3"
         ],
@@ -1827,7 +1753,8 @@
         ],
         "prerequisites": [
             "speed-module",
-            "production-science-pack"
+            "production-science-pack",
+            "electric-engine"
         ],
         "unit": {
             "count": 150,
@@ -1850,16 +1777,13 @@
                 ]
             ],
             "time": 60
-        },
-        "order": "a-b-c",
-        "hidden": true
+        }
     },
     "explosives": {
         "type": "technology",
         "name": "explosives",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/explosives.png",
+        "icon_size": 256,
         "prerequisites": [
             "sulfur-processing"
         ],
@@ -1882,16 +1806,13 @@
                 "type": "unlock-recipe",
                 "recipe": "explosives"
             }
-        ],
-        "order": "a-e-d",
-        "hidden": true
+        ]
     },
     "cliff-explosives": {
         "type": "technology",
         "name": "cliff-explosives",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/cliff-explosives.png",
+        "icon_size": 256,
         "prerequisites": [
             "explosives",
             "military-2"
@@ -1914,17 +1835,18 @@
             {
                 "type": "unlock-recipe",
                 "recipe": "cliff-explosives"
+            },
+            {
+                "type": "cliff-deconstruction-enabled",
+                "modifier": true
             }
-        ],
-        "order": "z-c-d",
-        "hidden": true
+        ]
     },
     "land-mine": {
         "type": "technology",
         "name": "land-mine",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/land-mine.png",
+        "icon_size": 256,
         "localised_description": [
             "technology-description.land-mine"
         ],
@@ -1955,16 +1877,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-e",
-        "hidden": true
+        }
     },
     "flamethrower": {
         "type": "technology",
         "name": "flamethrower",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/flamethrower.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2000,16 +1919,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-c-b",
-        "hidden": true
+        }
     },
-    "advanced-electronics": {
+    "advanced-circuit": {
         "type": "technology",
-        "name": "advanced-electronics",
+        "name": "advanced-circuit",
+        "icon": "__base__/graphics/technology/advanced-circuit.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/advanced-electronics.png",
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2032,16 +1948,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "a-d-b",
-        "hidden": true
+        }
     },
-    "advanced-electronics-2": {
+    "processing-unit": {
         "type": "technology",
-        "name": "advanced-electronics-2",
+        "name": "processing-unit",
+        "icon": "__base__/graphics/technology/processing-unit.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/advanced-electronics-2.png",
         "prerequisites": [
             "chemical-science-pack"
         ],
@@ -2068,16 +1981,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "a-d-c",
-        "hidden": true
+        }
     },
     "fluid-wagon": {
         "type": "technology",
         "name": "fluid-wagon",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/fluid-wagon.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2105,28 +2015,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-g-a-b",
-        "hidden": true
+        }
     },
     "braking-force-7": {
         "type": "technology",
         "name": "braking-force-7",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/braking-force.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-braking-force.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -2165,16 +2070,13 @@
             ],
             "time": 60
         },
-        "upgrade": true,
-        "order": "b-f-g",
-        "hidden": true
+        "upgrade": true
     },
     "tank": {
         "type": "technology",
         "name": "tank",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/tank.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2215,16 +2117,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-c-c",
-        "hidden": true
+        }
     },
     "logistics-3": {
         "type": "technology",
         "name": "logistics-3",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/logistics-3.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2264,16 +2163,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "a-f-c",
-        "hidden": true
+        }
     },
     "rocketry": {
         "type": "technology",
         "name": "rocketry",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/rocketry.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2306,16 +2202,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "e-g",
-        "hidden": true
+        }
     },
     "explosive-rocketry": {
         "type": "technology",
         "name": "explosive-rocketry",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/explosive-rocketry.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2347,16 +2240,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-h",
-        "hidden": true
+        }
     },
     "modular-armor": {
         "type": "technology",
         "name": "modular-armor",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/armor-making.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2365,7 +2255,7 @@
         ],
         "prerequisites": [
             "heavy-armor",
-            "advanced-electronics"
+            "advanced-circuit"
         ],
         "unit": {
             "count": 100,
@@ -2380,16 +2270,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-a-c",
-        "hidden": true
+        }
     },
     "power-armor": {
         "type": "technology",
         "name": "power-armor",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/power-armor.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2399,7 +2286,7 @@
         "prerequisites": [
             "modular-armor",
             "electric-engine",
-            "advanced-electronics-2"
+            "processing-unit"
         ],
         "unit": {
             "count": 200,
@@ -2418,16 +2305,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-c-a",
-        "hidden": true
+        }
     },
     "power-armor-mk2": {
         "type": "technology",
         "name": "power-armor-mk2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/power-armor-mk2.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2438,7 +2322,7 @@
             "power-armor",
             "military-4",
             "speed-module-2",
-            "effectivity-module-2"
+            "efficiency-module-2"
         ],
         "unit": {
             "count": 400,
@@ -2465,16 +2349,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-c-b",
-        "hidden": true
+        }
     },
     "laser-turret": {
         "type": "technology",
         "name": "laser-turret",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/laser-turret.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2506,16 +2387,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "a-j-b",
-        "hidden": true
+        }
     },
     "robotics": {
         "type": "technology",
         "name": "robotics",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/robotics.png",
+        "icon_size": 256,
         "prerequisites": [
             "electric-engine",
             "battery"
@@ -2543,16 +2421,13 @@
                 "type": "unlock-recipe",
                 "recipe": "flying-robot-frame"
             }
-        ],
-        "order": "c-i",
-        "hidden": true
+        ]
     },
     "rocket-fuel": {
         "type": "technology",
         "name": "rocket-fuel",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/rocket-fuel.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2580,16 +2455,13 @@
                 ]
             ],
             "time": 45
-        },
-        "order": "k-a",
-        "hidden": true
+        }
     },
     "low-density-structure": {
         "type": "technology",
         "name": "low-density-structure",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/low-density-structure.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2617,57 +2489,14 @@
                 ]
             ],
             "time": 45
-        },
-        "order": "k-a",
-        "hidden": true
-    },
-    "rocket-control-unit": {
-        "type": "technology",
-        "name": "rocket-control-unit",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/rocket-control-unit.png",
-        "effects": [
-            {
-                "type": "unlock-recipe",
-                "recipe": "rocket-control-unit"
-            }
-        ],
-        "prerequisites": [
-            "utility-science-pack",
-            "speed-module"
-        ],
-        "unit": {
-            "count": 300,
-            "ingredients": [
-                [
-                    "automation-science-pack",
-                    1
-                ],
-                [
-                    "logistic-science-pack",
-                    1
-                ],
-                [
-                    "chemical-science-pack",
-                    1
-                ],
-                [
-                    "utility-science-pack",
-                    1
-                ]
-            ],
-            "time": 45
-        },
-        "order": "k-a",
-        "hidden": true
+        }
     },
     "rocket-silo": {
         "type": "technology",
         "name": "rocket-silo",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/rocket-silo.png",
+        "icon_size": 256,
+        "essential": true,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2676,14 +2505,25 @@
             {
                 "type": "unlock-recipe",
                 "recipe": "rocket-part"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "cargo-landing-pad"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "satellite"
             }
         ],
         "prerequisites": [
             "concrete",
+            "rocket-fuel",
+            "electric-energy-accumulators",
+            "solar-energy",
+            "utility-science-pack",
             "speed-module-3",
             "productivity-module-3",
-            "rocket-fuel",
-            "rocket-control-unit"
+            "radar"
         ],
         "unit": {
             "count": 1000,
@@ -2710,28 +2550,23 @@
                 ]
             ],
             "time": 60
-        },
-        "order": "k-a",
-        "hidden": true
+        }
     },
     "research-speed-6": {
         "type": "technology",
         "name": "research-speed-6",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/research-speed.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-speed.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -2742,7 +2577,8 @@
             }
         ],
         "prerequisites": [
-            "research-speed-5"
+            "research-speed-5",
+            "utility-science-pack"
         ],
         "unit": {
             "count": 500,
@@ -2770,16 +2606,13 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "c-m-d",
-        "hidden": true
+        "upgrade": true
     },
     "electric-energy-distribution-2": {
         "type": "technology",
         "name": "electric-energy-distribution-2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/electric-energy-distribution-2.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2807,16 +2640,13 @@
                 ]
             ],
             "time": 45
-        },
-        "order": "c-e-c",
-        "hidden": true
+        }
     },
     "electric-energy-accumulators": {
         "type": "technology",
         "name": "electric-energy-accumulators",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/electric-energy-acumulators.png",
+        "icon_size": 256,
         "localised_name": [
             "technology-name.electric-energy-accumulators-1"
         ],
@@ -2843,16 +2673,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-e-a",
-        "hidden": true
+        }
     },
     "advanced-material-processing-2": {
         "type": "technology",
         "name": "advanced-material-processing-2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/advanced-material-processing-2.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2880,16 +2707,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-c-b",
-        "hidden": true
+        }
     },
     "effect-transmission": {
         "type": "technology",
         "name": "effect-transmission",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/effect-transmission.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -2897,7 +2721,7 @@
             }
         ],
         "prerequisites": [
-            "advanced-electronics-2",
+            "processing-unit",
             "production-science-pack"
         ],
         "unit": {
@@ -2921,16 +2745,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "i-i",
-        "hidden": true
+        }
     },
     "lubricant": {
         "type": "technology",
         "name": "lubricant",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/lubricant.png",
+        "icon_size": 256,
         "prerequisites": [
             "advanced-oil-processing"
         ],
@@ -2957,16 +2778,13 @@
                 "type": "unlock-recipe",
                 "recipe": "lubricant"
             }
-        ],
-        "order": "b-b",
-        "hidden": true
+        ]
     },
     "electric-engine": {
         "type": "technology",
         "name": "electric-engine",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/electric-engine.png",
+        "icon_size": 256,
         "prerequisites": [
             "lubricant"
         ],
@@ -2993,16 +2811,13 @@
                 "type": "unlock-recipe",
                 "recipe": "electric-engine-unit"
             }
-        ],
-        "order": "b-b",
-        "hidden": true
+        ]
     },
     "battery": {
         "type": "technology",
         "name": "battery",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/battery.png",
+        "icon_size": 256,
         "prerequisites": [
             "sulfur-processing"
         ],
@@ -3025,16 +2840,13 @@
                 "type": "unlock-recipe",
                 "recipe": "battery"
             }
-        ],
-        "order": "b-c",
-        "hidden": true
+        ]
     },
     "construction-robotics": {
         "type": "technology",
         "name": "construction-robotics",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/construction-robotics.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -3042,11 +2854,11 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "logistic-chest-passive-provider"
+                "recipe": "passive-provider-chest"
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "logistic-chest-storage"
+                "recipe": "storage-chest"
             },
             {
                 "type": "unlock-recipe",
@@ -3057,8 +2869,8 @@
                 "type": "unlock-recipe"
             },
             {
-                "type": "ghost-time-to-live",
-                "modifier": 36288000
+                "type": "create-ghost-on-entity-death",
+                "modifier": true
             }
         ],
         "prerequisites": [
@@ -3081,16 +2893,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-k-a",
-        "hidden": true
+        }
     },
     "logistic-robotics": {
         "type": "technology",
         "name": "logistic-robotics",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/logistic-robotics.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -3098,11 +2907,11 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "logistic-chest-passive-provider"
+                "recipe": "passive-provider-chest"
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "logistic-chest-storage"
+                "recipe": "storage-chest"
             },
             {
                 "type": "unlock-recipe",
@@ -3141,28 +2950,29 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-k-c",
-        "hidden": true
+        }
     },
     "logistic-system": {
         "type": "technology",
         "name": "logistic-system",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/logistic-system.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
-                "recipe": "logistic-chest-active-provider"
+                "recipe": "active-provider-chest"
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "logistic-chest-requester"
+                "recipe": "requester-chest"
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "logistic-chest-buffer"
+                "recipe": "buffer-chest"
+            },
+            {
+                "type": "vehicle-logistics",
+                "modifier": true
             }
         ],
         "prerequisites": [
@@ -3190,28 +3000,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-k-d",
-        "hidden": true
+        }
     },
     "worker-robots-speed-6": {
         "type": "technology",
         "name": "worker-robots-speed-6",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/worker-robots-speed.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-movement-speed.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3256,28 +3061,23 @@
             "time": 60
         },
         "max_level": "infinite",
-        "upgrade": true,
-        "order": "c-k-f-e",
-        "hidden": true
+        "upgrade": true
     },
     "worker-robots-storage-3": {
         "type": "technology",
         "name": "worker-robots-storage-3",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/worker-robots-storage.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-capacity.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3288,7 +3088,8 @@
             }
         ],
         "prerequisites": [
-            "worker-robots-storage-2"
+            "worker-robots-storage-2",
+            "utility-science-pack"
         ],
         "unit": {
             "count": 450,
@@ -3316,28 +3117,23 @@
             ],
             "time": 60
         },
-        "upgrade": true,
-        "order": "c-k-g-c",
-        "hidden": true
+        "upgrade": true
     },
     "energy-shield-equipment": {
         "type": "technology",
         "name": "energy-shield-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/energy-shield-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3368,28 +3164,23 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "g-e-a",
-        "hidden": true
+        }
     },
     "night-vision-equipment": {
         "type": "technology",
         "name": "night-vision-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/night-vision-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3415,28 +3206,23 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "g-g",
-        "hidden": true
+        }
     },
     "belt-immunity-equipment": {
         "type": "technology",
         "name": "belt-immunity-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/belt-immunity-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3462,28 +3248,23 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "g-g-g",
-        "hidden": true
+        }
     },
     "energy-shield-mk2-equipment": {
         "type": "technology",
         "name": "energy-shield-mk2-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/energy-shield-mk2-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3520,28 +3301,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-e-b",
-        "hidden": true
+        }
     },
     "battery-equipment": {
         "type": "technology",
         "name": "battery-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/battery-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3568,28 +3344,23 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "g-i-a",
-        "hidden": true
+        }
     },
     "battery-mk2-equipment": {
         "type": "technology",
         "name": "battery-mk2-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/battery-mk2-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3621,28 +3392,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-i-b",
-        "hidden": true
+        }
     },
     "solar-panel-equipment": {
         "type": "technology",
         "name": "solar-panel-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/solar-panel-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3669,28 +3435,23 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "g-k",
-        "hidden": true
+        }
     },
     "personal-laser-defense-equipment": {
         "type": "technology",
         "name": "personal-laser-defense-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/personal-laser-defense-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3728,28 +3489,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-m",
-        "hidden": true
+        }
     },
     "discharge-defense-equipment": {
         "type": "technology",
         "name": "discharge-defense-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/discharge-defense-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3763,10 +3519,6 @@
             {
                 "type": "unlock-recipe",
                 "recipe": "discharge-defense-equipment"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "discharge-defense-remote"
             }
         ],
         "unit": {
@@ -3790,40 +3542,36 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-o",
-        "hidden": true
+        }
     },
-    "fusion-reactor-equipment": {
+    "fission-reactor-equipment": {
         "type": "technology",
-        "name": "fusion-reactor-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
+        "name": "fission-reactor-equipment",
         "icons": [
             {
-                "icon": "__base__/graphics/technology/fusion-reactor-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon": "__base__/graphics/technology/fission-reactor-equipment.png",
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
         "prerequisites": [
             "utility-science-pack",
             "power-armor",
-            "military-science-pack"
+            "military-science-pack",
+            "nuclear-power"
         ],
         "effects": [
             {
                 "type": "unlock-recipe",
-                "recipe": "fusion-reactor-equipment"
+                "recipe": "fission-reactor-equipment"
             }
         ],
         "unit": {
@@ -3851,33 +3599,28 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-l",
-        "hidden": true
+        }
     },
     "exoskeleton-equipment": {
         "type": "technology",
         "name": "exoskeleton-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/exoskeleton-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
         "prerequisites": [
-            "advanced-electronics-2",
+            "processing-unit",
             "electric-engine",
             "solar-panel-equipment"
         ],
@@ -3904,28 +3647,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "g-h",
-        "hidden": true
+        }
     },
     "personal-roboport-equipment": {
         "type": "technology",
         "name": "personal-roboport-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/personal-roboport-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -3956,28 +3694,23 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-k-d-zz",
-        "hidden": true
+        }
     },
     "personal-roboport-mk2-equipment": {
         "type": "technology",
         "name": "personal-roboport-mk2-equipment",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/personal-roboport-mk2-equipment.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-equipment.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -4012,16 +3745,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "c-k-d-zz",
-        "hidden": true
+        }
     },
     "fluid-handling": {
         "type": "technology",
         "name": "fluid-handling",
-        "icon_size": 64,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/icons/fluid/barreling/empty-barrel.png",
+        "icon_size": 64,
         "prerequisites": [
             "automation-2",
             "engine"
@@ -4029,11 +3759,11 @@
         "effects": [
             {
                 "type": "unlock-recipe",
-                "recipe": "empty-barrel"
+                "recipe": "barrel"
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "fill-water-barrel"
+                "recipe": "water-barrel"
             },
             {
                 "type": "unlock-recipe",
@@ -4041,7 +3771,7 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "fill-sulfuric-acid-barrel"
+                "recipe": "sulfuric-acid-barrel"
             },
             {
                 "type": "unlock-recipe",
@@ -4049,7 +3779,7 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "fill-crude-oil-barrel"
+                "recipe": "crude-oil-barrel"
             },
             {
                 "type": "unlock-recipe",
@@ -4057,7 +3787,7 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "fill-heavy-oil-barrel"
+                "recipe": "heavy-oil-barrel"
             },
             {
                 "type": "unlock-recipe",
@@ -4065,7 +3795,7 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "fill-light-oil-barrel"
+                "recipe": "light-oil-barrel"
             },
             {
                 "type": "unlock-recipe",
@@ -4073,7 +3803,7 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "fill-petroleum-gas-barrel"
+                "recipe": "petroleum-gas-barrel"
             },
             {
                 "type": "unlock-recipe",
@@ -4081,7 +3811,7 @@
             },
             {
                 "type": "unlock-recipe",
-                "recipe": "fill-lubricant-barrel"
+                "recipe": "lubricant-barrel"
             },
             {
                 "type": "unlock-recipe",
@@ -4101,16 +3831,13 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "d-a-a",
-        "hidden": true
+        }
     },
-    "oil-processing": {
+    "oil-gathering": {
         "type": "technology",
-        "name": "oil-processing",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
+        "name": "oil-gathering",
         "icon": "__base__/graphics/technology/oil-gathering.png",
+        "icon_size": 256,
         "prerequisites": [
             "fluid-handling"
         ],
@@ -4118,18 +3845,6 @@
             {
                 "type": "unlock-recipe",
                 "recipe": "pumpjack"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "oil-refinery"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "chemical-plant"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "basic-oil-processing"
             }
         ],
         "unit": {
@@ -4145,16 +3860,40 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "d-a",
-        "hidden": true
+        }
+    },
+    "oil-processing": {
+        "type": "technology",
+        "name": "oil-processing",
+        "icon": "__base__/graphics/technology/oil-processing.png",
+        "icon_size": 256,
+        "prerequisites": [
+            "oil-gathering"
+        ],
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "oil-refinery"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "chemical-plant"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "basic-oil-processing"
+            }
+        ],
+        "research_trigger": {
+            "type": "mine-entity",
+            "entity": "crude-oil"
+        }
     },
     "advanced-oil-processing": {
         "type": "technology",
         "name": "advanced-oil-processing",
+        "icon": "__base__/graphics/technology/advanced-oil-processing.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/oil-processing.png",
         "prerequisites": [
             "chemical-science-pack"
         ],
@@ -4181,16 +3920,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "d-b",
-        "hidden": true
+        }
     },
     "coal-liquefaction": {
         "type": "technology",
         "name": "coal-liquefaction",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/coal-liquefaction.png",
+        "icon_size": 256,
         "prerequisites": [
             "advanced-oil-processing",
             "production-science-pack"
@@ -4226,16 +3962,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "d-c",
-        "hidden": true
+        }
     },
     "sulfur-processing": {
         "type": "technology",
         "name": "sulfur-processing",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/sulfur-processing.png",
+        "icon_size": 256,
         "prerequisites": [
             "oil-processing"
         ],
@@ -4262,16 +3995,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "d-d",
-        "hidden": true
+        }
     },
     "plastics": {
         "type": "technology",
         "name": "plastics",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/plastics.png",
+        "icon_size": 256,
         "prerequisites": [
             "oil-processing"
         ],
@@ -4294,16 +4024,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "d-e",
-        "hidden": true
+        }
     },
     "speed-module": {
         "type": "technology",
         "name": "speed-module",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/speed-module-1.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4327,16 +4054,13 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "i-c-a",
-        "hidden": true
+        "upgrade": true
     },
     "speed-module-2": {
         "type": "technology",
         "name": "speed-module-2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/speed-module-2.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4345,7 +4069,7 @@
         ],
         "prerequisites": [
             "speed-module",
-            "advanced-electronics-2"
+            "processing-unit"
         ],
         "unit": {
             "count": 75,
@@ -4365,16 +4089,13 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "i-c-b",
-        "hidden": true
+        "upgrade": true
     },
     "speed-module-3": {
         "type": "technology",
         "name": "speed-module-3",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/speed-module-3.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4407,16 +4128,13 @@
             ],
             "time": 60
         },
-        "upgrade": true,
-        "order": "i-c-c",
-        "hidden": true
+        "upgrade": true
     },
     "productivity-module": {
         "type": "technology",
         "name": "productivity-module",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/productivity-module-1.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4440,16 +4158,13 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "i-e-a",
-        "hidden": true
+        "upgrade": true
     },
     "productivity-module-2": {
         "type": "technology",
         "name": "productivity-module-2",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/productivity-module-2.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4458,7 +4173,7 @@
         ],
         "prerequisites": [
             "productivity-module",
-            "advanced-electronics-2"
+            "processing-unit"
         ],
         "unit": {
             "count": 75,
@@ -4478,16 +4193,13 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "i-e-b",
-        "hidden": true
+        "upgrade": true
     },
     "productivity-module-3": {
         "type": "technology",
         "name": "productivity-module-3",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/productivity-module-3.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4520,20 +4232,17 @@
             ],
             "time": 60
         },
-        "upgrade": true,
-        "order": "i-e-c",
-        "hidden": true
+        "upgrade": true
     },
-    "effectivity-module": {
+    "efficiency-module": {
         "type": "technology",
-        "name": "effectivity-module",
+        "name": "efficiency-module",
+        "icon": "__base__/graphics/technology/efficiency-module-1.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/effectivity-module-1.png",
         "effects": [
             {
                 "type": "unlock-recipe",
-                "recipe": "effectivity-module"
+                "recipe": "efficiency-module"
             }
         ],
         "prerequisites": [
@@ -4553,25 +4262,22 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "i-g-a",
-        "hidden": true
+        "upgrade": true
     },
-    "effectivity-module-2": {
+    "efficiency-module-2": {
         "type": "technology",
-        "name": "effectivity-module-2",
+        "name": "efficiency-module-2",
+        "icon": "__base__/graphics/technology/efficiency-module-2.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/effectivity-module-2.png",
         "effects": [
             {
                 "type": "unlock-recipe",
-                "recipe": "effectivity-module-2"
+                "recipe": "efficiency-module-2"
             }
         ],
         "prerequisites": [
-            "effectivity-module",
-            "advanced-electronics-2"
+            "efficiency-module",
+            "processing-unit"
         ],
         "unit": {
             "count": 75,
@@ -4591,24 +4297,21 @@
             ],
             "time": 30
         },
-        "upgrade": true,
-        "order": "i-g-b",
-        "hidden": true
+        "upgrade": true
     },
-    "effectivity-module-3": {
+    "efficiency-module-3": {
         "type": "technology",
-        "name": "effectivity-module-3",
+        "name": "efficiency-module-3",
+        "icon": "__base__/graphics/technology/efficiency-module-3.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/effectivity-module-3.png",
         "effects": [
             {
                 "type": "unlock-recipe",
-                "recipe": "effectivity-module-3"
+                "recipe": "efficiency-module-3"
             }
         ],
         "prerequisites": [
-            "effectivity-module-2",
+            "efficiency-module-2",
             "production-science-pack"
         ],
         "unit": {
@@ -4633,16 +4336,13 @@
             ],
             "time": 60
         },
-        "upgrade": true,
-        "order": "i-g-c",
-        "hidden": true
+        "upgrade": true
     },
     "defender": {
         "type": "technology",
         "name": "defender",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/defender.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4673,16 +4373,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-p-a",
-        "hidden": true
+        }
     },
     "distractor": {
         "type": "technology",
         "name": "distractor",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/distractor.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4715,16 +4412,13 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-p-b-a",
-        "hidden": true
+        }
     },
     "destroyer": {
         "type": "technology",
         "name": "destroyer",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/destroyer.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4761,28 +4455,17 @@
                 ]
             ],
             "time": 30
-        },
-        "order": "e-p-b-b",
-        "hidden": true
+        }
     },
-    "uranium-processing": {
+    "uranium-mining": {
         "type": "technology",
-        "name": "uranium-processing",
+        "name": "uranium-mining",
+        "icon": "__base__/graphics/technology/uranium-mining.png",
         "icon_size": 256,
-        "icon_mipmaps": 4,
-        "icon": "__base__/graphics/technology/uranium-processing.png",
         "effects": [
             {
-                "type": "unlock-recipe",
-                "recipe": "centrifuge"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "uranium-processing"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "uranium-fuel-cell"
+                "type": "mining-with-fluid",
+                "modifier": true
             }
         ],
         "prerequisites": [
@@ -4790,6 +4473,7 @@
             "concrete"
         ],
         "unit": {
+            "count": 100,
             "ingredients": [
                 [
                     "automation-science-pack",
@@ -4804,18 +4488,37 @@
                     1
                 ]
             ],
-            "time": 30,
-            "count": 200
-        },
-        "order": "e-p-b-c",
-        "hidden": true
+            "time": 30
+        }
+    },
+    "uranium-processing": {
+        "type": "technology",
+        "name": "uranium-processing",
+        "icon": "__base__/graphics/technology/uranium-processing.png",
+        "icon_size": 256,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "centrifuge"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "uranium-processing"
+            }
+        ],
+        "prerequisites": [
+            "uranium-mining"
+        ],
+        "research_trigger": {
+            "type": "mine-entity",
+            "entity": "uranium-ore"
+        }
     },
     "nuclear-power": {
         "type": "technology",
         "name": "nuclear-power",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/nuclear-power.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4832,6 +4535,10 @@
             {
                 "type": "unlock-recipe",
                 "recipe": "steam-turbine"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "uranium-fuel-cell"
             },
             {
                 "recipe": "nuclear-fuel-reprocessing",
@@ -4858,16 +4565,13 @@
             ],
             "time": 30,
             "count": 800
-        },
-        "order": "e-p-b-c",
-        "hidden": true
+        }
     },
     "kovarex-enrichment-process": {
         "type": "technology",
         "name": "kovarex-enrichment-process",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/kovarex-enrichment-process.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4904,28 +4608,23 @@
             ],
             "time": 30,
             "count": 1500
-        },
-        "order": "e-p-b-c",
-        "hidden": true
+        }
     },
     "mining-productivity-4": {
         "type": "technology",
         "name": "mining-productivity-4",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icons": [
             {
                 "icon": "__base__/graphics/technology/mining-productivity.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-mining-productivity.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
@@ -4970,16 +4669,13 @@
             "time": 60
         },
         "max_level": "infinite",
-        "upgrade": true,
-        "order": "c-k-f-e",
-        "hidden": true
+        "upgrade": true
     },
     "artillery": {
         "type": "technology",
         "name": "artillery",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/artillery.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
@@ -4992,15 +4688,13 @@
             {
                 "type": "unlock-recipe",
                 "recipe": "artillery-shell"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "artillery-targeting-remote"
             }
         ],
         "prerequisites": [
             "military-4",
-            "tank"
+            "tank",
+            "concrete",
+            "radar"
         ],
         "unit": {
             "ingredients": [
@@ -5027,33 +4721,26 @@
             ],
             "time": 30,
             "count": 2000
-        },
-        "order": "d-e-f",
-        "hidden": true
+        }
     },
     "spidertron": {
         "type": "technology",
         "name": "spidertron",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/spidertron.png",
+        "icon_size": 256,
         "effects": [
             {
                 "type": "unlock-recipe",
                 "recipe": "spidertron"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "spidertron-remote"
             }
         ],
         "prerequisites": [
             "military-4",
             "exoskeleton-equipment",
-            "fusion-reactor-equipment",
+            "fission-reactor-equipment",
             "rocketry",
-            "rocket-control-unit",
-            "effectivity-module-3"
+            "efficiency-module-3",
+            "radar"
         ],
         "unit": {
             "ingredients": [
@@ -5084,24 +4771,17 @@
             ],
             "time": 30,
             "count": 2500
-        },
-        "order": "d-e-g",
-        "hidden": true
+        }
     },
     "circuit-network": {
         "type": "technology",
         "name": "circuit-network",
-        "icon_size": 256,
-        "icon_mipmaps": 4,
         "icon": "__base__/graphics/technology/circuit-network.png",
+        "icon_size": 256,
         "effects": [
             {
-                "type": "unlock-recipe",
-                "recipe": "red-wire"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "green-wire"
+                "type": "unlock-circuit-network",
+                "modifier": true
             },
             {
                 "type": "unlock-recipe",
@@ -5122,10 +4802,13 @@
             {
                 "type": "unlock-recipe",
                 "recipe": "programmable-speaker"
+            },
+            {
+                "type": "unlock-recipe",
+                "recipe": "display-panel"
             }
         ],
         "prerequisites": [
-            "electronics",
             "logistic-science-pack"
         ],
         "unit": {
@@ -5141,9 +4824,41 @@
                 ]
             ],
             "time": 15
-        },
-        "order": "a-d-d",
-        "hidden": true
+        }
+    },
+    "advanced-combinators": {
+        "type": "technology",
+        "name": "advanced-combinators",
+        "icon": "__base__/graphics/technology/advanced-combinators.png",
+        "icon_size": 256,
+        "effects": [
+            {
+                "type": "unlock-recipe",
+                "recipe": "selector-combinator"
+            }
+        ],
+        "prerequisites": [
+            "circuit-network",
+            "chemical-science-pack"
+        ],
+        "unit": {
+            "count": 50,
+            "ingredients": [
+                [
+                    "automation-science-pack",
+                    1
+                ],
+                [
+                    "logistic-science-pack",
+                    1
+                ],
+                [
+                    "chemical-science-pack",
+                    1
+                ]
+            ],
+            "time": 30
+        }
     },
     "long-handed-inserter": {
         "name": "long-handed-inserter",
@@ -5153,8 +4868,7 @@
                 "type": "unlock-recipe"
             }
         ],
-        "icon": "__randovania-layout__/graphics/technology/long-handed-inserter.png",
-        "icon_mipmaps": 4,
+        "icon": "__randovania-assets__/graphics/technology/long-handed-inserter.png",
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
@@ -5171,7 +4885,7 @@
         "prerequisites": [
             "automation"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
     },
     "longer-handed-inserter": {
         "name": "longer-handed-inserter",
@@ -5181,8 +4895,7 @@
                 "type": "unlock-recipe"
             }
         ],
-        "icon": "__randovania-layout__/graphics/technology/longer-handed-inserter.png",
-        "icon_mipmaps": 4,
+        "icon": "__randovania-assets__/graphics/technology/longer-handed-inserter.png",
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
@@ -5199,7 +4912,7 @@
         "prerequisites": [
             "automation"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
     },
     "oil-cracking": {
         "name": "oil-cracking",
@@ -5218,7 +4931,6 @@
             }
         ],
         "icon": "__base__/graphics/technology/oil-processing.png",
-        "icon_mipmaps": 4,
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
@@ -5243,29 +4955,10 @@
         "prerequisites": [
             "advanced-oil-processing"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
     },
     "solid-fuel": {
         "name": "solid-fuel",
-        "effects": [
-            {
-                "recipe": "solid-fuel-from-heavy-oil",
-                "type": "unlock-recipe"
-            },
-            {
-                "recipe": "solid-fuel-from-light-oil",
-                "type": "unlock-recipe"
-            },
-            {
-                "recipe": "solid-fuel-from-petroleum-gas",
-                "type": "unlock-recipe"
-            }
-        ],
-        "icon": "__base__/graphics/technology/oil-processing.png",
-        "icon_mipmaps": 4,
-        "icon_size": 256,
-        "type": "technology",
-        "order": "d-b",
         "unit": {
             "count": 100,
             "ingredients": [
@@ -5283,7 +4976,25 @@
         "prerequisites": [
             "oil-processing"
         ],
-        "hidden": true
+        "effects": [
+            {
+                "recipe": "solid-fuel-from-heavy-oil",
+                "type": "unlock-recipe"
+            },
+            {
+                "recipe": "solid-fuel-from-light-oil",
+                "type": "unlock-recipe"
+            },
+            {
+                "recipe": "solid-fuel-from-petroleum-gas",
+                "type": "unlock-recipe"
+            }
+        ],
+        "icon": "__base__/graphics/technology/oil-processing.png",
+        "icon_size": 256,
+        "type": "technology",
+        "order": "d-b",
+        "randovania_custom_tech": true
     },
     "light-armor": {
         "name": "light-armor",
@@ -5294,7 +5005,6 @@
             }
         ],
         "icon": "__base__/graphics/technology/heavy-armor.png",
-        "icon_mipmaps": 4,
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
@@ -5311,7 +5021,7 @@
         "prerequisites": [
             "heavy-armor"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
     },
     "big-electric-pole": {
         "name": "big-electric-pole",
@@ -5322,7 +5032,6 @@
             }
         ],
         "icon": "__base__/graphics/technology/electric-energy-distribution-1.png",
-        "icon_mipmaps": 4,
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
@@ -5343,14 +5052,14 @@
         "prerequisites": [
             "electric-energy-distribution-1"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
     },
     "inserter": {
         "name": "inserter",
         "unit": {
             "count": 20,
             "ingredients": {},
-            "time": 10
+            "time": 20
         },
         "effects": [
             {
@@ -5359,59 +5068,10 @@
             }
         ],
         "icon": "__base__/graphics/technology/fast-inserter.png",
-        "icon_mipmaps": 4,
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
-        "hidden": true
-    },
-    "steam-power": {
-        "name": "steam-power",
-        "unit": {
-            "count": 50,
-            "ingredients": {},
-            "time": 20
-        },
-        "effects": [
-            {
-                "type": "unlock-recipe",
-                "recipe": "offshore-pump"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "boiler"
-            },
-            {
-                "type": "unlock-recipe",
-                "recipe": "steam-engine"
-            }
-        ],
-        "icon": "__base__/graphics/icons/steam-engine.png",
-        "icon_mipmaps": 4,
-        "icon_size": 64,
-        "type": "technology",
-        "order": "d-b",
-        "hidden": true
-    },
-    "automation-science-pack": {
-        "name": "automation-science-pack",
-        "unit": {
-            "count": 10,
-            "ingredients": {},
-            "time": 10
-        },
-        "effects": [
-            {
-                "type": "unlock-recipe",
-                "recipe": "automation-science-pack"
-            }
-        ],
-        "icon": "__base__/graphics/technology/automation-science-pack.png",
-        "icon_mipmaps": 4,
-        "icon_size": 256,
-        "type": "technology",
-        "order": "d-b",
-        "hidden": true
+        "randovania_custom_tech": true
     },
     "regular-inserter-capacity-bonus": {
         "name": "regular-inserter-capacity-bonus",
@@ -5422,7 +5082,6 @@
             }
         ],
         "icon": "__base__/graphics/technology/inserter-capacity.png",
-        "icon_mipmaps": 4,
         "icon_size": 256,
         "max_level": "infinite",
         "upgrade": true,
@@ -5445,7 +5104,40 @@
         "prerequisites": [
             "inserter-capacity-bonus-2"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
+    },
+    "bulk-inserter-capacity-bonus": {
+        "name": "bulk-inserter-capacity-bonus",
+        "effects": [
+            {
+                "type": "bulk-inserter-capacity-bonus",
+                "modifier": 2
+            }
+        ],
+        "icon": "__base__/graphics/technology/inserter-capacity.png",
+        "icon_size": 256,
+        "max_level": "infinite",
+        "upgrade": true,
+        "type": "technology",
+        "order": "d-b",
+        "unit": {
+            "count": 200,
+            "ingredients": [
+                [
+                    "automation-science-pack",
+                    1
+                ],
+                [
+                    "logistic-science-pack",
+                    1
+                ]
+            ],
+            "time": 30
+        },
+        "prerequisites": [
+            "inserter-capacity-bonus-1"
+        ],
+        "randovania_custom_tech": true
     },
     "research-productivity": {
         "name": "research-productivity",
@@ -5458,20 +5150,18 @@
         "icons": [
             {
                 "icon": "__base__/graphics/technology/research-speed.png",
-                "icon_size": 256,
-                "icon_mipmaps": 4
+                "icon_size": 256
             },
             {
                 "icon": "__core__/graphics/icons/technology/constants/constant-mining-productivity.png",
                 "icon_size": 128,
-                "icon_mipmaps": 3,
+                "scale": 0.5,
                 "shift": [
-                    100,
-                    100
+                    50,
+                    50
                 ]
             }
         ],
-        "icon_mipmaps": 4,
         "icon_size": 256,
         "max_level": "infinite",
         "upgrade": true,
@@ -5494,7 +5184,7 @@
         "prerequisites": [
             "research-speed-1"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
     },
     "fluid-storage": {
         "name": "fluid-storage",
@@ -5509,7 +5199,6 @@
             }
         ],
         "icon": "__base__/graphics/technology/fluid-handling.png",
-        "icon_mipmaps": 4,
         "icon_size": 256,
         "type": "technology",
         "order": "d-b",
@@ -5530,6 +5219,6 @@
         "prerequisites": [
             "fluid-handling"
         ],
-        "hidden": true
+        "randovania_custom_tech": true
     }
 }
