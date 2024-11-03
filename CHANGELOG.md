@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove this entry 1
 - Remove this entry 2
 
-## [8.6.x] - 2024-11-??
+## [8.6.1] - 2024-11-03
+
+- Fixed: Exporting Metroid Prime 2: Echoes games when the "Coin Chest" model is used now works.
+
+## [8.6.0] - 2024-11-01
 
 - Changed: The "Customize Preset" window has been given a visual overhaul.
 - Changed: Filtering in the Generation Order tab is now case-insensitive.
