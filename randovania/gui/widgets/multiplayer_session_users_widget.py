@@ -510,4 +510,6 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 world_states[world_id] = state
 
         for world in session.worlds:
-            self._world_widgets[world.id].update(world, world_states.get(world.id))
+            self._world_widgets[world.id].update(
+                world, world_states.get(world.id, UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min))
+            )
