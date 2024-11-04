@@ -1210,6 +1210,12 @@ def _migrate_v90(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v91(preset: dict) -> dict:
+    preset["configuration"]["two_sided_door_lock_search"] = False
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1301,6 +1307,7 @@ _MIGRATIONS = [
     _migrate_v88,  # dread freesink
     _migrate_v89,  # msr configurable required dna
     _migrate_v90,  # msr configurable final boss
+    _migrate_v91,  # two sided door search
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
