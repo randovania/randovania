@@ -899,7 +899,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 QtWidgets.QMessageBox.Icon.Information,
                 "Information",
                 (
-                    "Co-op is still *very* experimental and may have issues. For Prime 1 and Echoes in particular, "
+                    "Co-op is still *very* experimental and may have issues.\nFor Prime 1 and Echoes in particular, "
                     "please ensure that Randovania is always connected to the game before you collect items, as "
                     "otherwise they will be lost permanently!"
                 ),

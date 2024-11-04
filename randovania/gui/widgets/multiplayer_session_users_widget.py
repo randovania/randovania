@@ -390,7 +390,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             def create_unclaim_entry() -> None:
                 connect_to(world_menu.addAction("Unclaim"), self._world_unclaim, world_id, owner)
 
-            if owner is None and (self.is_admin() or self._session.allow_everyone_claim_world):
+            if (
+                owner is None
+                and (self.is_admin() or self._session.allow_everyone_claim_world)
+                and not self._session.users[self.your_id].worlds.get(world_id)
+            ):
                 world_menu.addSeparator()
                 create_claim_for_yourself_entry()
 
