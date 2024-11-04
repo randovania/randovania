@@ -357,7 +357,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
         self.allow_coop_check.setChecked(session.allow_coop)
-        self.allow_coop_check.setEnabled(self.users_widget.is_admin())
+        self.allow_coop_check.setEnabled(
+            self.users_widget.is_admin()
+            and self._session.game_details is None
+            and self._session.generation_in_progress is None
+        )
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
