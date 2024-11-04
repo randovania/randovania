@@ -100,7 +100,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     _last_session: MultiplayerSessionEntry | None = None
     _session: MultiplayerSessionEntry
     _user_widgets: dict[int, UserWidgetEntry]
-    _world_widgets: dict[uuid.UUID, WorldWidgetEntry]
+    _world_widgets: dict[tuple[int | None, uuid.UUID], WorldWidgetEntry]  # (user id, world UUID): worldWidgetEntry
 
     def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
         super().__init__()
@@ -340,7 +340,6 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     def _create_world_item(
         self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem, owner: int | None
     ) -> WorldWidgetEntry:
-        # TODO: finish this and make this nicer
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
         can_change_preset = not has_layout and not in_generation
@@ -419,11 +418,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
         self.setItemWidget(world_item, 3, world_tool)
 
-        self._world_widgets[world_id] = WorldWidgetEntry(
+        self._world_widgets[(owner, world_id)] = WorldWidgetEntry(
             item=world_item,
             preset_menu=preset_menu,
         )
-        return self._world_widgets[world_id]
+        return self._world_widgets[(owner, world_id)]
 
     def _create_all_widgets_from_scratch(self):
         self.clear()
@@ -515,14 +514,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             return self._create_all_widgets_from_scratch()
 
         logger.info("Lightweight widget update")
-        world_states = {}
 
         for user in session.users_list:
             self._user_widgets[user.id].update(user)
             for world_id, state in user.worlds.items():
-                world_states[world_id] = state
-
-        for world in session.worlds:
-            self._world_widgets[world.id].update(
-                world, world_states.get(world.id, UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min))
-            )
+                self._world_widgets[user.id, world_id].update(session.get_world(world_id), state)
