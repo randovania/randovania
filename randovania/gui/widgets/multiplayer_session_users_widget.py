@@ -136,6 +136,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         you = session.users.get(self.your_id)
         return [
             you is not None and you.admin,
+            session.allow_coop,
             [(user.id, user.name, list(user.worlds.keys())) for user in session.users_list],
             [w.id for w in session.worlds],
             session.generation_in_progress,
@@ -377,19 +378,31 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                     world_menu.addAction("Connect via debug connector"), self._register_debug_connector, world_id
                 )
 
-        if self.is_admin() or self._session.allow_everyone_claim_world or self._session.allow_coop:
-            if owner is None or True:
-                world_menu.addSeparator()
+        if self.is_admin() or self._session.allow_everyone_claim_world or owner == self.your_id:
+
+            def create_claim_for_each_player_entry() -> None:
+                claim_menu = world_menu.addMenu("Claim for")
+                for p in self._session.users.values():
+                    connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)
+
+            def create_claim_for_yourself_entry() -> None:
                 connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
-                if self.is_admin() or self._session.allow_coop:
-                    claim_menu = world_menu.addMenu("Claim for")
-                    for p in self._session.users.values():
-                        connect_to(claim_menu.addAction(p.name), self._world_claim_with, world_id, p.id)
-
-                # else:
-                world_menu.addSeparator()
+            def create_unclaim_entry() -> None:
                 connect_to(world_menu.addAction("Unclaim"), self._world_unclaim, world_id, owner)
+
+            if owner is None and (self.is_admin() or self._session.allow_everyone_claim_world):
+                world_menu.addSeparator()
+                create_claim_for_yourself_entry()
+
+                if self.is_admin():
+                    create_claim_for_each_player_entry()
+
+            elif owner is not None and (
+                self.is_admin() or self._session.allow_everyone_claim_world or owner == self.your_id
+            ):
+                world_menu.addSeparator()
+                create_unclaim_entry()
 
         if owner == self.your_id or self.is_admin():
             world_menu.addSeparator()
@@ -464,17 +477,6 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             )
             self._user_widgets[user.id].update(user)
 
-        if self._session.allow_coop:
-            total_world_item = QtWidgets.QTreeWidgetItem(self)
-            total_world_item.setExpanded(True)
-            total_world_item.setText(0, "All Worlds")
-            for world_uid, world in world_by_id.items():
-                if world_uid in world_by_id.keys():
-                    self._create_world_item(world_uid, total_world_item, None).update(
-                        world_by_id[world_uid],
-                        UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
-                    )
-
         unclaimed_worlds = set(world_by_id.keys()) - used_worlds
 
         if unclaimed_worlds:
@@ -487,6 +489,17 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                     self._create_world_item(world_uid, unclaimed_world_item, None).update(
                         world_by_id[world_uid],
                         UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
+                    )
+
+        if self._session.allow_coop:
+            total_world_item = QtWidgets.QTreeWidgetItem(self)
+            total_world_item.setExpanded(True)
+            total_world_item.setText(0, "All Worlds")
+            for world_uid, world in world_by_id.items():
+                if world_uid in world_by_id.keys():
+                    self._create_world_item(world_uid, total_world_item, None).update(
+                        world_by_id[world_uid],
+                        UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
 
         self.resizeColumnToContents(0)

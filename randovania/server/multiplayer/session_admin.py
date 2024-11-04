@@ -428,7 +428,7 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
         return _create_patcher_file(sa, session, *args)
 
     elif action == SessionAdminGlobalAction.SET_ALLOW_COOP:
-        return _set_allow_coop(sa, session, *args)
+        _set_allow_coop(sa, session, *args)
 
     elif action == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         _set_allow_everyone_claim(sa, session, *args)
@@ -494,7 +494,8 @@ def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world
 
 def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
     if not session.allow_everyone_claim_world:
-        verify_has_admin(sa, session.id, None)
+        if sa.get_current_user().id != user_id:
+            verify_has_admin(sa, session.id, None)
 
     world = World.get_by_uuid(world_uid)
     user = database.User.get_by_id(user_id)
@@ -594,7 +595,7 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
 def admin_player(sa: ServerApp, session_id: int, user_id: int, action: str, *args):
     monitoring.set_tag("action", action)
 
-    verify_has_admin(sa, session_id, user_id)
+    verify_has_admin(sa, session_id, sa.get_current_user().id)
     action: SessionAdminUserAction = SessionAdminUserAction(action)
 
     session: MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
