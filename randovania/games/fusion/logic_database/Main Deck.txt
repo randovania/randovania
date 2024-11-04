@@ -158,16 +158,16 @@ Extra - room_id: [7]
 Main Deck Recharge Room
 Extra - map_name: Main Deck8
 Extra - room_id: [8]
-> Door to Eastern Hub; Heals? False
+> Door to Concourse; Heals? False
   * Layers: default
-  * L0 Hatch to Eastern Hub/Door to Main Deck Recharge Room
+  * L0 Hatch to Concourse/Door to Main Deck Recharge Room
   * Extra - door_idx: (16,)
   > Recharge Terminal
       Trivial
 
 > Recharge Terminal; Heals? True
   * Layers: default
-  > Door to Eastern Hub
+  > Door to Concourse
       Trivial
 
 ----------------
@@ -178,12 +178,12 @@ Extra - room_id: [9]
   * Layers: default
   * Open Hatch to Crew Quarters West/Door to Main Deck Navigation Room East
   * Extra - door_idx: (18,)
-  > Door to Eastern Hub
+  > Door to Concourse
       Trivial
 
-> Door to Eastern Hub; Heals? False
+> Door to Concourse; Heals? False
   * Layers: default
-  * Open Hatch to Eastern Hub/Door to Main Deck Navigation Room East
+  * Open Hatch to Concourse/Door to Main Deck Navigation Room East
   * Extra - door_idx: (23,)
   > Door to Crew Quarters West
       Trivial
@@ -196,7 +196,7 @@ Extra - room_id: [9]
   * Extra - hint_name: MainDeckEast
   * Extra - location_precision: REGION_ONLY
   * Extra - item_precision: PRECISE_CATEGORY
-  > Door to Eastern Hub
+  > Door to Concourse
       Trivial
 
 ----------------
@@ -381,19 +381,19 @@ Extra - room_id: [13, 74, 85]
       Trivial
 
 ----------------
-Maintenance Corridor
+Concourse Ventilation
 Extra - map_name: Main Deck14
 Extra - room_id: [14]
 > Other to Arachnus Arena; Heals? False
   * Layers: default
-  * Open Passage to Arachnus Arena/Other to Maintenance Corridor
+  * Open Passage to Arachnus Arena/Other to Concourse Ventilation
   * Extra - door_idx: (28,)
-  > Other to Eastern Hub
+  > Other to Concourse
       Morph Ball
 
-> Other to Eastern Hub; Heals? False
+> Other to Concourse; Heals? False
   * Layers: default
-  * Open Passage to Eastern Hub/Other to Maintenance Corridor
+  * Open Passage to Concourse/Other to Concourse Ventilation
   * Extra - door_idx: (35,)
   > Other to Arachnus Arena
       All of the following:
@@ -617,7 +617,7 @@ Extra - room_id: [20]
   * Layers: default
   * Open Hatch to Main Deck Navigation Room West/Door to Western Hub
   * Extra - door_idx: (42,)
-  > Door to Quarantine Access
+  > Door to Ruined Stairwell
       Trivial
   > Door to Sub-Zero Containment
       Trivial
@@ -626,9 +626,9 @@ Extra - room_id: [20]
   > Other to Central Hub
       Screw Attack and Knowledge (Beginner) and Can Bounce in Ball
 
-> Door to Quarantine Access; Heals? False
+> Door to Ruined Stairwell; Heals? False
   * Layers: default
-  * Open Hatch to Quarantine Access/Door to Western Hub
+  * Open Hatch to Ruined Stairwell/Door to Western Hub
   * Extra - door_idx: (43,)
   > Door to Main Deck Navigation Room West
       Trivial
@@ -655,37 +655,37 @@ Extra - room_id: [20]
       Morph Ball and Screw Attack and Knowledge (Beginner)
 
 ----------------
-Eastern Hub
+Concourse
 Extra - map_name: Main Deck21
 Extra - room_id: [21]
 > Door to Main Deck Recharge Room; Heals? False
   * Layers: default
-  * L0 Hatch to Main Deck Recharge Room/Door to Eastern Hub
+  * L0 Hatch to Main Deck Recharge Room/Door to Concourse
   * Extra - door_idx: (29,)
   > Door to Main Deck Save Room
       Trivial
 
 > Door to Main Deck Navigation Room East; Heals? False
   * Layers: default
-  * L0 Hatch to Main Deck Navigation Room East/Door to Eastern Hub
+  * L0 Hatch to Main Deck Navigation Room East/Door to Concourse
   * Extra - door_idx: (44,)
   > Door to Main Deck Save Room
       Trivial
 
 > Door to Main Deck Save Room; Heals? False
   * Layers: default
-  * L0 Hatch to Main Deck Save Room/Door to Eastern Hub
+  * L0 Hatch to Main Deck Save Room/Door to Concourse
   * Extra - door_idx: (45,)
   > Door to Main Deck Recharge Room
       Trivial
   > Door to Main Deck Navigation Room East
       Trivial
-  > Other to Maintenance Corridor
+  > Other to Concourse Ventilation
       Trivial
 
-> Other to Maintenance Corridor; Heals? False
+> Other to Concourse Ventilation; Heals? False
   * Layers: default
-  * Open Passage to Maintenance Corridor/Other to Eastern Hub
+  * Open Passage to Concourse Ventilation/Other to Concourse
   * Extra - door_idx: (91,)
   > Door to Main Deck Save Room
       Trivial
@@ -712,12 +712,12 @@ Extra - room_id: [22]
           Wall Jump (Beginner) and Can Single Walljump
 
 ----------------
-Quarantine Access
+Ruined Stairwell
 Extra - map_name: Main Deck23
 Extra - room_id: [23]
 > Door to Western Hub; Heals? False
   * Layers: default
-  * Open Hatch to Western Hub/Door to Quarantine Access
+  * Open Hatch to Western Hub/Door to Ruined Stairwell
   * Extra - door_idx: (48,)
   > Door to Main Elevator Access
       Any of the following:
@@ -729,7 +729,7 @@ Extra - room_id: [23]
 
 > Door to Main Elevator Access; Heals? False
   * Layers: default
-  * L0 Hatch to Main Elevator Access/Door to Quarantine Access
+  * L0 Hatch to Main Elevator Access/Door to Ruined Stairwell
   * Extra - door_idx: (74,)
   > Door to Western Hub
       Any of the following:
@@ -739,7 +739,7 @@ Extra - room_id: [23]
 
 > Door to Quarantine Bay; Heals? False
   * Layers: default
-  * Open Hatch to Quarantine Bay/Door to Quarantine Access
+  * Open Hatch to Quarantine Bay/Door to Ruined Stairwell
   * Extra - door_idx: (166,)
   > Door to Western Hub
       Trivial
@@ -961,14 +961,14 @@ Extra - room_id: [33]
   * Layers: default
   * L0 Hatch to Hornoad Hallway/Door to Main Deck Save Room
   * Extra - door_idx: (41,)
-  > Door to Eastern Hub
+  > Door to Concourse
       Trivial
   > Save Station
       Trivial
 
-> Door to Eastern Hub; Heals? False
+> Door to Concourse; Heals? False
   * Layers: default
-  * L0 Hatch to Eastern Hub/Door to Main Deck Save Room
+  * L0 Hatch to Concourse/Door to Main Deck Save Room
   * Extra - door_idx: (73,)
   > Door to Hornoad Hallway
       Trivial
@@ -1114,9 +1114,9 @@ Extra - room_id: [38]
   > Beside Door
       Trivial
 
-> Other to Maintenance Corridor; Heals? False
+> Other to Concourse Ventilation; Heals? False
   * Layers: default
-  * Open Passage to Maintenance Corridor/Other to Arachnus Arena
+  * Open Passage to Concourse Ventilation/Other to Arachnus Arena
   * Extra - door_idx: (89,)
   > Arena
       Morph Ball
@@ -1155,7 +1155,7 @@ Extra - room_id: [38]
 
 > Arena; Heals? False
   * Layers: default
-  > Other to Maintenance Corridor
+  > Other to Concourse Ventilation
       Morph Ball
   > Event - Arachnus
       All of the following:
@@ -1175,7 +1175,7 @@ currently assumed until a few generator issues have been figured out.
       Trivial
   > Door to Crew Quarters East
       After Boss Arachnus Defeated
-  > Other to Maintenance Corridor
+  > Other to Concourse Ventilation
       Morph Ball and Screw Attack
   > Other to The Attic
       Missiles
@@ -1237,12 +1237,12 @@ Extra - room_id: [42, 41]
   * Layers: default
   * Open Hatch to Elevator to Sector Hub/Door to Main Elevator Access
   * Extra - door_idx: (96, 92)
-  > Door to Quarantine Access
+  > Door to Ruined Stairwell
       Trivial
 
-> Door to Quarantine Access; Heals? False
+> Door to Ruined Stairwell; Heals? False
   * Layers: default
-  * L0 Hatch to Quarantine Access/Door to Main Elevator Access
+  * L0 Hatch to Ruined Stairwell/Door to Main Elevator Access
   * Extra - door_idx: (97, 93)
   > Door to Elevator to Sector Hub
       Trivial
@@ -1738,19 +1738,19 @@ Extra - room_id: [61]
       Trivial
 
 ----------------
-Restricted Entrance
+Back Door to Sector 6 (NOC)
 Extra - map_name: Main Deck62
 Extra - room_id: [62]
 > Other to Checkpoint to Restricted Zone; Heals? False
   * Layers: default
-  * Tunnel to Checkpoint to Restricted Zone/Other to Restricted Entrance
+  * Tunnel to Checkpoint to Restricted Zone/Other to Back Door to Sector 6 (NOC)
   * Extra - door_idx: (143,)
   > Door to Restricted Save Room
       Trivial
 
 > Door to Restricted Save Room; Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Save Room/Door to Restricted Entrance
+  * L4 Hatch to Restricted Save Room/Door to Back Door to Sector 6 (NOC)
   * Extra - door_idx: (144,)
   > Other to Checkpoint to Restricted Zone
       All of the following:
@@ -1764,9 +1764,9 @@ Extra - room_id: [62]
 Restricted Save Room
 Extra - map_name: Main Deck64
 Extra - room_id: [64]
-> Door to Restricted Entrance; Heals? False
+> Door to Back Door to Sector 6 (NOC); Heals? False
   * Layers: default
-  * L4 Hatch to Restricted Entrance/Door to Restricted Save Room
+  * L4 Hatch to Back Door to Sector 6 (NOC)/Door to Restricted Save Room
   * Extra - door_idx: (147,)
   > Door to Restricted Corridor
       Trivial
@@ -1775,7 +1775,7 @@ Extra - room_id: [64]
   * Layers: default
   * L4 Hatch to Restricted Corridor/Door to Restricted Save Room
   * Extra - door_idx: (148,)
-  > Door to Restricted Entrance
+  > Door to Back Door to Sector 6 (NOC)
       Trivial
   > Save Station
       Trivial
@@ -1959,16 +1959,16 @@ Extra - room_id: [70]
 Quarantine Bay
 Extra - map_name: Main Deck71
 Extra - room_id: [71]
-> Door to Quarantine Access; Heals? False
+> Door to Ruined Stairwell; Heals? False
   * Layers: default
-  * Open Hatch to Quarantine Access/Door to Quarantine Bay
+  * Open Hatch to Ruined Stairwell/Door to Quarantine Bay
   * Extra - door_idx: (167,)
   > Hornoad
       Trivial
 
 > Hornoad; Heals? False
   * Layers: default
-  > Door to Quarantine Access
+  > Door to Ruined Stairwell
       Trivial
 
 ----------------
