@@ -3,6 +3,62 @@
     "game": "factorio",
     "resource_database": {
         "items": {
+            "steam-power": {
+                "long_name": "Steam power",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "offshore-pump",
+                        "boiler",
+                        "steam-engine"
+                    ]
+                }
+            },
+            "electronics": {
+                "long_name": "Electronics",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "electronic-circuit"
+                    ]
+                }
+            },
+            "automation-science-pack": {
+                "long_name": "Automation science pack",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "automation-science-pack"
+                    ]
+                }
+            },
+            "electric-mining-drill": {
+                "long_name": "Electric mining drill",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "electric-mining-drill"
+                    ]
+                }
+            },
+            "repair-pack": {
+                "long_name": "Repair pack",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "repair-pack"
+                    ]
+                }
+            },
+            "radar": {
+                "long_name": "Radar",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "radar"
+                    ]
+                }
+            },
             "physical-projectile-damage-7": {
                 "long_name": "Physical projectile damage 7",
                 "max_capacity": 1,
@@ -24,7 +80,7 @@
                     "recipes_unlocked": []
                 }
             },
-            "energy-weapons-damage-7": {
+            "laser-weapons-damage-7": {
                 "long_name": "Energy weapons damage 7",
                 "max_capacity": 1,
                 "extra": {
@@ -45,28 +101,20 @@
                     "recipes_unlocked": []
                 }
             },
-            "follower-robot-count-7": {
-                "long_name": "Follower robot count 7",
+            "follower-robot-count-5": {
+                "long_name": "Follower robot count 5",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": []
                 }
             },
-            "stack-inserter": {
-                "long_name": "Stack inserter",
+            "bulk-inserter": {
+                "long_name": "Bulk inserter",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "stack-inserter",
-                        "stack-filter-inserter"
+                        "bulk-inserter"
                     ]
-                }
-            },
-            "inserter-capacity-bonus-7": {
-                "long_name": "Inserter capacity bonus 7",
-                "max_capacity": 1,
-                "extra": {
-                    "recipes_unlocked": []
                 }
             },
             "automation": {
@@ -84,15 +132,6 @@
                 "extra": {
                     "recipes_unlocked": [
                         "assembling-machine-2"
-                    ]
-                }
-            },
-            "electronics": {
-                "long_name": "Electronics",
-                "max_capacity": 1,
-                "extra": {
-                    "recipes_unlocked": [
-                        "electronic-circuit"
                     ]
                 }
             },
@@ -148,8 +187,7 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "fast-inserter",
-                        "filter-inserter"
+                        "fast-inserter"
                     ]
                 }
             },
@@ -187,8 +225,8 @@
                     ]
                 }
             },
-            "optics": {
-                "long_name": "Optics",
+            "lamp": {
+                "long_name": "Lamp",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
@@ -431,8 +469,8 @@
                     ]
                 }
             },
-            "advanced-electronics": {
-                "long_name": "Advanced electronics",
+            "advanced-circuit": {
+                "long_name": "Advanced circuit",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
@@ -440,8 +478,8 @@
                     ]
                 }
             },
-            "advanced-electronics-2": {
-                "long_name": "Advanced electronics 2",
+            "processing-unit": {
+                "long_name": "Processing unit",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
@@ -570,22 +608,15 @@
                     ]
                 }
             },
-            "rocket-control-unit": {
-                "long_name": "Rocket control unit",
-                "max_capacity": 1,
-                "extra": {
-                    "recipes_unlocked": [
-                        "rocket-control-unit"
-                    ]
-                }
-            },
             "rocket-silo": {
                 "long_name": "Rocket silo",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
                         "rocket-silo",
-                        "rocket-part"
+                        "rocket-part",
+                        "cargo-landing-pad",
+                        "satellite"
                     ]
                 }
             },
@@ -665,8 +696,8 @@
                 "extra": {
                     "recipes_unlocked": [
                         "roboport",
-                        "logistic-chest-passive-provider",
-                        "logistic-chest-storage",
+                        "passive-provider-chest",
+                        "storage-chest",
                         "construction-robot"
                     ]
                 }
@@ -677,8 +708,8 @@
                 "extra": {
                     "recipes_unlocked": [
                         "roboport",
-                        "logistic-chest-passive-provider",
-                        "logistic-chest-storage",
+                        "passive-provider-chest",
+                        "storage-chest",
                         "logistic-robot"
                     ]
                 }
@@ -688,9 +719,9 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "logistic-chest-active-provider",
-                        "logistic-chest-requester",
-                        "logistic-chest-buffer"
+                        "active-provider-chest",
+                        "requester-chest",
+                        "buffer-chest"
                     ]
                 }
             },
@@ -785,17 +816,16 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "discharge-defense-equipment",
-                        "discharge-defense-remote"
+                        "discharge-defense-equipment"
                     ]
                 }
             },
-            "fusion-reactor-equipment": {
-                "long_name": "Portable fusion reactor",
+            "fission-reactor-equipment": {
+                "long_name": "Portable fission reactor",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "fusion-reactor-equipment"
+                        "fission-reactor-equipment"
                     ]
                 }
             },
@@ -831,21 +861,30 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "empty-barrel",
-                        "fill-water-barrel",
+                        "barrel",
+                        "water-barrel",
                         "empty-water-barrel",
-                        "fill-sulfuric-acid-barrel",
+                        "sulfuric-acid-barrel",
                         "empty-sulfuric-acid-barrel",
-                        "fill-crude-oil-barrel",
+                        "crude-oil-barrel",
                         "empty-crude-oil-barrel",
-                        "fill-heavy-oil-barrel",
+                        "heavy-oil-barrel",
                         "empty-heavy-oil-barrel",
-                        "fill-light-oil-barrel",
+                        "light-oil-barrel",
                         "empty-light-oil-barrel",
-                        "fill-petroleum-gas-barrel",
+                        "petroleum-gas-barrel",
                         "empty-petroleum-gas-barrel",
-                        "fill-lubricant-barrel",
+                        "lubricant-barrel",
                         "empty-lubricant-barrel"
+                    ]
+                }
+            },
+            "oil-gathering": {
+                "long_name": "Oil gathering",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "pumpjack"
                     ]
                 }
             },
@@ -854,7 +893,6 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "pumpjack",
                         "oil-refinery",
                         "chemical-plant",
                         "basic-oil-processing"
@@ -953,30 +991,30 @@
                     ]
                 }
             },
-            "effectivity-module": {
+            "efficiency-module": {
                 "long_name": "Efficiency module",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "effectivity-module"
+                        "efficiency-module"
                     ]
                 }
             },
-            "effectivity-module-2": {
+            "efficiency-module-2": {
                 "long_name": "Efficiency module 2",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "effectivity-module-2"
+                        "efficiency-module-2"
                     ]
                 }
             },
-            "effectivity-module-3": {
+            "efficiency-module-3": {
                 "long_name": "Efficiency module 3",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "effectivity-module-3"
+                        "efficiency-module-3"
                     ]
                 }
             },
@@ -1007,14 +1045,20 @@
                     ]
                 }
             },
+            "uranium-mining": {
+                "long_name": "Uranium mining",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": []
+                }
+            },
             "uranium-processing": {
                 "long_name": "Uranium processing",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
                         "centrifuge",
-                        "uranium-processing",
-                        "uranium-fuel-cell"
+                        "uranium-processing"
                     ]
                 }
             },
@@ -1027,6 +1071,7 @@
                         "heat-exchanger",
                         "heat-pipe",
                         "steam-turbine",
+                        "uranium-fuel-cell",
                         "nuclear-fuel-reprocessing"
                     ]
                 }
@@ -1055,8 +1100,7 @@
                     "recipes_unlocked": [
                         "artillery-wagon",
                         "artillery-turret",
-                        "artillery-shell",
-                        "artillery-targeting-remote"
+                        "artillery-shell"
                     ]
                 }
             },
@@ -1065,8 +1109,7 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "spidertron",
-                        "spidertron-remote"
+                        "spidertron"
                     ]
                 }
             },
@@ -1075,13 +1118,21 @@
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": [
-                        "red-wire",
-                        "green-wire",
                         "arithmetic-combinator",
                         "decider-combinator",
                         "constant-combinator",
                         "power-switch",
-                        "programmable-speaker"
+                        "programmable-speaker",
+                        "display-panel"
+                    ]
+                }
+            },
+            "advanced-combinators": {
+                "long_name": "Advanced combinators",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": [
+                        "selector-combinator"
                     ]
                 }
             },
@@ -1152,28 +1203,15 @@
                     ]
                 }
             },
-            "steam-power": {
-                "long_name": "Steam power",
-                "max_capacity": 1,
-                "extra": {
-                    "recipes_unlocked": [
-                        "offshore-pump",
-                        "boiler",
-                        "steam-engine"
-                    ]
-                }
-            },
-            "automation-science-pack": {
-                "long_name": "Automation science pack",
-                "max_capacity": 1,
-                "extra": {
-                    "recipes_unlocked": [
-                        "automation-science-pack"
-                    ]
-                }
-            },
             "regular-inserter-capacity-bonus": {
                 "long_name": "Regular inserter capacity bonus",
+                "max_capacity": 1,
+                "extra": {
+                    "recipes_unlocked": []
+                }
+            },
+            "bulk-inserter-capacity-bonus": {
+                "long_name": "bulk inserter capacity bonus",
                 "max_capacity": 1,
                 "extra": {
                     "recipes_unlocked": []
@@ -1231,7 +1269,7 @@
                     }
                 }
             },
-            "craft-logistic-chest-active-provider": {
+            "craft-active-provider-chest": {
                 "display_name": "Craft Active provider chest",
                 "requirement": {
                     "type": "and",
@@ -1274,7 +1312,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "advanced-electronics",
+                                    "name": "advanced-circuit",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -1350,34 +1388,6 @@
                             {
                                 "type": "template",
                                 "data": "craft-explosives"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-artillery-targeting-remote": {
-                "display_name": "Craft Artillery targeting remote",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "artillery",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-processing-unit"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-radar"
                             }
                         ]
                     }
@@ -1573,7 +1583,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-rocket-control-unit"
+                                "data": "craft-processing-unit"
                             },
                             {
                                 "type": "template",
@@ -1610,6 +1620,30 @@
                             {
                                 "type": "template",
                                 "data": "craft-iron-gear-wheel"
+                            }
+                        ]
+                    }
+                }
+            },
+            "craft-barrel": {
+                "display_name": "Craft Barrel",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "fluid-handling",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-steel-plate"
                             }
                         ]
                     }
@@ -1741,7 +1775,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-copper-plate"
+                                "data": "craft-copper-cable"
                             }
                         ]
                     }
@@ -1775,7 +1809,7 @@
                     }
                 }
             },
-            "craft-logistic-chest-buffer": {
+            "craft-buffer-chest": {
                 "display_name": "Craft Buffer chest",
                 "requirement": {
                     "type": "and",
@@ -1802,6 +1836,42 @@
                             {
                                 "type": "template",
                                 "data": "craft-advanced-circuit"
+                            }
+                        ]
+                    }
+                }
+            },
+            "craft-bulk-inserter": {
+                "display_name": "Craft Bulk inserter",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "bulk-inserter",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-iron-gear-wheel"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-electronic-circuit"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-advanced-circuit"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-fast-inserter"
                             }
                         ]
                     }
@@ -1954,6 +2024,38 @@
                             {
                                 "type": "template",
                                 "data": "craft-steel-plate"
+                            }
+                        ]
+                    }
+                }
+            },
+            "craft-cargo-landing-pad": {
+                "display_name": "Craft Cargo landing pad",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "rocket-silo",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-concrete"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-steel-plate"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-processing-unit"
                             }
                         ]
                     }
@@ -2138,7 +2240,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -2356,7 +2458,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -2482,8 +2584,8 @@
                     }
                 }
             },
-            "craft-discharge-defense-remote": {
-                "display_name": "Craft Discharge defense remote",
+            "craft-display-panel": {
+                "display_name": "Craft Display panel",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -2493,10 +2595,14 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "discharge-defense-equipment",
+                                    "name": "circuit-network",
                                     "amount": 1,
                                     "negate": false
                                 }
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-iron-plate"
                             },
                             {
                                 "type": "template",
@@ -2534,7 +2640,7 @@
                     }
                 }
             },
-            "craft-effectivity-module": {
+            "craft-efficiency-module": {
                 "display_name": "Craft Efficiency module",
                 "requirement": {
                     "type": "and",
@@ -2545,7 +2651,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "effectivity-module",
+                                    "name": "efficiency-module",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -2562,7 +2668,7 @@
                     }
                 }
             },
-            "craft-effectivity-module-2": {
+            "craft-efficiency-module-2": {
                 "display_name": "Craft Efficiency module 2",
                 "requirement": {
                     "type": "and",
@@ -2573,14 +2679,14 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "effectivity-module-2",
+                                    "name": "efficiency-module-2",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
                                 "type": "template",
-                                "data": "craft-effectivity-module"
+                                "data": "craft-efficiency-module"
                             },
                             {
                                 "type": "template",
@@ -2594,7 +2700,7 @@
                     }
                 }
             },
-            "craft-effectivity-module-3": {
+            "craft-efficiency-module-3": {
                 "display_name": "Craft Efficiency module 3",
                 "requirement": {
                     "type": "and",
@@ -2605,14 +2711,14 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "effectivity-module-3",
+                                    "name": "efficiency-module-3",
                                     "amount": 1,
                                     "negate": false
                                 }
                             },
                             {
                                 "type": "template",
-                                "data": "craft-effectivity-module-2"
+                                "data": "craft-efficiency-module-2"
                             },
                             {
                                 "type": "template",
@@ -2621,33 +2727,6 @@
                             {
                                 "type": "template",
                                 "data": "craft-processing-unit"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-electric-energy-interface": {
-                "display_name": "Craft Electric energy interface",
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "and",
-                                "data": {
-                                    "comment": null,
-                                    "items": [
-                                        {
-                                            "type": "template",
-                                            "data": "craft-iron-plate"
-                                        },
-                                        {
-                                            "type": "template",
-                                            "data": "craft-electronic-circuit"
-                                        }
-                                    ]
-                                }
                             }
                         ]
                     }
@@ -2752,6 +2831,15 @@
                         "comment": null,
                         "items": [
                             {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "electric-mining-drill",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
                                 "type": "template",
                                 "data": "craft-electronic-circuit"
                             },
@@ -2790,30 +2878,6 @@
                             {
                                 "type": "template",
                                 "data": "craft-copper-cable"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-empty-barrel": {
-                "display_name": "Craft Empty barrel",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "fluid-handling",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-steel-plate"
                             }
                         ]
                     }
@@ -3341,34 +3405,6 @@
                     }
                 }
             },
-            "craft-filter-inserter": {
-                "display_name": "Craft Filter inserter",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "fast-inserter",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-fast-inserter"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-electronic-circuit"
-                            }
-                        ]
-                    }
-                }
-            },
             "craft-firearm-magazine": {
                 "display_name": "Craft Firearm magazine",
                 "requirement": {
@@ -3571,34 +3607,6 @@
                             {
                                 "type": "template",
                                 "data": "craft-electronic-circuit"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-green-wire": {
-                "display_name": "Craft Green wire",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "circuit-network",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-electronic-circuit"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-copper-cable"
                             }
                         ]
                     }
@@ -3871,7 +3879,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -3960,7 +3968,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "optics",
+                                    "name": "lamp",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -4213,7 +4221,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -4484,7 +4492,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -4516,7 +4524,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-copper-plate"
+                                "data": "craft-copper-cable"
                             }
                         ]
                     }
@@ -4696,10 +4704,6 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-electronic-circuit"
-                            },
-                            {
-                                "type": "template",
                                 "data": "craft-pipe"
                             },
                             {
@@ -4767,7 +4771,7 @@
                     }
                 }
             },
-            "craft-logistic-chest-passive-provider": {
+            "craft-passive-provider-chest": {
                 "display_name": "Craft Passive provider chest",
                 "requirement": {
                     "type": "and",
@@ -5067,7 +5071,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -5246,8 +5250,8 @@
                     }
                 }
             },
-            "craft-fusion-reactor-equipment": {
-                "display_name": "Craft Portable fusion reactor",
+            "craft-fission-reactor-equipment": {
+                "display_name": "Craft Portable fission reactor",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -5257,7 +5261,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "fusion-reactor-equipment",
+                                    "name": "fission-reactor-equipment",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -5269,6 +5273,10 @@
                             {
                                 "type": "template",
                                 "data": "craft-low-density-structure"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-uranium-fuel-cell"
                             }
                         ]
                     }
@@ -5356,7 +5364,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-effectivity-module-2"
+                                "data": "craft-efficiency-module-2"
                             },
                             {
                                 "type": "template",
@@ -5421,7 +5429,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "advanced-electronics-2",
+                                    "name": "processing-unit",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -5666,7 +5674,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "oil-processing",
+                                    "name": "oil-gathering",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -5698,6 +5706,15 @@
                     "data": {
                         "comment": null,
                         "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "radar",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
                             {
                                 "type": "template",
                                 "data": "craft-electronic-circuit"
@@ -5802,34 +5819,6 @@
                     }
                 }
             },
-            "craft-red-wire": {
-                "display_name": "Craft Red wire",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "circuit-network",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-electronic-circuit"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-copper-cable"
-                            }
-                        ]
-                    }
-                }
-            },
             "craft-refined-concrete": {
                 "display_name": "Craft Refined concrete",
                 "requirement": {
@@ -5902,6 +5891,15 @@
                         "comment": null,
                         "items": [
                             {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "repair-pack",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
                                 "type": "template",
                                 "data": "craft-electronic-circuit"
                             },
@@ -5913,7 +5911,7 @@
                     }
                 }
             },
-            "craft-logistic-chest-requester": {
+            "craft-requester-chest": {
                 "display_name": "Craft Requester chest",
                 "requirement": {
                     "type": "and",
@@ -6012,43 +6010,11 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-electronic-circuit"
-                            },
-                            {
-                                "type": "template",
                                 "data": "craft-explosives"
                             },
                             {
                                 "type": "template",
                                 "data": "craft-iron-plate"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-rocket-control-unit": {
-                "display_name": "Craft Rocket control unit",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "rocket-control-unit",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-processing-unit"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-speed-module"
                             }
                         ]
                     }
@@ -6140,7 +6106,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-rocket-control-unit"
+                                "data": "craft-processing-unit"
                             },
                             {
                                 "type": "template",
@@ -6202,6 +6168,15 @@
                         "comment": null,
                         "items": [
                             {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "rocket-silo",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
                                 "type": "template",
                                 "data": "craft-low-density-structure"
                             },
@@ -6224,6 +6199,34 @@
                             {
                                 "type": "template",
                                 "data": "craft-rocket-fuel"
+                            }
+                        ]
+                    }
+                }
+            },
+            "craft-selector-combinator": {
+                "display_name": "Craft Selector combinator",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "advanced-combinators",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-advanced-circuit"
+                            },
+                            {
+                                "type": "template",
+                                "data": "craft-decider-combinator"
                             }
                         ]
                     }
@@ -6576,7 +6579,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-fusion-reactor-equipment"
+                                "data": "craft-fission-reactor-equipment"
                             },
                             {
                                 "type": "template",
@@ -6584,7 +6587,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-rocket-control-unit"
+                                "data": "craft-processing-unit"
                             },
                             {
                                 "type": "template",
@@ -6596,39 +6599,11 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-effectivity-module-3"
+                                "data": "craft-efficiency-module-3"
                             },
                             {
                                 "type": "template",
                                 "data": "craft-raw-fish"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-spidertron-remote": {
-                "display_name": "Craft Spidertron remote",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "spidertron",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-rocket-control-unit"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-radar"
                             }
                         ]
                     }
@@ -6661,70 +6636,6 @@
                             {
                                 "type": "template",
                                 "data": "craft-transport-belt"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-stack-filter-inserter": {
-                "display_name": "Craft Stack filter inserter",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "stack-inserter",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-stack-inserter"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-electronic-circuit"
-                            }
-                        ]
-                    }
-                }
-            },
-            "craft-stack-inserter": {
-                "display_name": "Craft Stack inserter",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "stack-inserter",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-iron-gear-wheel"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-electronic-circuit"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-advanced-circuit"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-fast-inserter"
                             }
                         ]
                     }
@@ -6900,7 +6811,7 @@
                     "data": "craft-stone"
                 }
             },
-            "craft-logistic-chest-storage": {
+            "craft-storage-chest": {
                 "display_name": "Craft Storage chest",
                 "requirement": {
                     "type": "and",
@@ -7035,7 +6946,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-copper-plate"
+                                "data": "craft-copper-cable"
                             }
                         ]
                     }
@@ -7135,7 +7046,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -7308,7 +7219,7 @@
                                 "type": "resource",
                                 "data": {
                                     "type": "items",
-                                    "name": "uranium-processing",
+                                    "name": "nuclear-power",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -7495,7 +7406,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "craft-empty-barrel"
+                                "data": "craft-barrel"
                             }
                         ]
                     }
@@ -7656,6 +7567,15 @@
                             {
                                 "type": "template",
                                 "data": "craft-sulfuric-acid"
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "uranium-mining",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         ]
                     }
@@ -7740,163 +7660,6 @@
                     }
                 }
             },
-            "tech-tier-1": {
-                "display_name": "Tech Tier 1",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            },
-            "tech-tier-10": {
-                "display_name": "Tech Tier 10",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "productivity-module-3",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            "tech-tier-2": {
-                "display_name": "Tech Tier 2",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            },
-            "tech-tier-3": {
-                "display_name": "Tech Tier 3",
-                "requirement": {
-                    "type": "template",
-                    "data": "craft-transport-belt"
-                }
-            },
-            "tech-tier-4": {
-                "display_name": "Tech Tier 4",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "craft-assembling-machine-1"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-inserter"
-                            },
-                            {
-                                "type": "template",
-                                "data": "has-electricity"
-                            }
-                        ]
-                    }
-                }
-            },
-            "tech-tier-5": {
-                "display_name": "Tech Tier 5",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "template",
-                                "data": "craft-fast-transport-belt"
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-fast-inserter"
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "railway",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "tech-tier-6": {
-                "display_name": "Tech Tier 6",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "construction-robotics",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-assembling-machine-2"
-                            }
-                        ]
-                    }
-                }
-            },
-            "tech-tier-7": {
-                "display_name": "Tech Tier 7",
-                "requirement": {
-                    "type": "template",
-                    "data": "craft-stack-inserter"
-                }
-            },
-            "tech-tier-8": {
-                "display_name": "Tech Tier 8",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "research-speed-6",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "template",
-                                "data": "craft-assembling-machine-3"
-                            }
-                        ]
-                    }
-                }
-            },
-            "tech-tier-9": {
-                "display_name": "Tech Tier 9",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "logistic-system",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
             "has-accumulator": {
                 "display_name": "Unlocked Accumulator",
                 "requirement": {
@@ -7909,7 +7672,7 @@
                     }
                 }
             },
-            "has-logistic-chest-active-provider": {
+            "has-active-provider-chest": {
                 "display_name": "Unlocked Active provider chest",
                 "requirement": {
                     "type": "resource",
@@ -7927,7 +7690,7 @@
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "advanced-electronics",
+                        "name": "advanced-circuit",
                         "amount": 1,
                         "negate": false
                     }
@@ -7947,18 +7710,6 @@
             },
             "has-artillery-shell": {
                 "display_name": "Unlocked Artillery shell",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "artillery",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            "has-artillery-targeting-remote": {
-                "display_name": "Unlocked Artillery targeting remote",
                 "requirement": {
                     "type": "resource",
                     "data": {
@@ -8053,6 +7804,18 @@
                     }
                 }
             },
+            "has-barrel": {
+                "display_name": "Unlocked Barrel",
+                "requirement": {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "fluid-handling",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            },
             "has-battery": {
                 "display_name": "Unlocked Battery",
                 "requirement": {
@@ -8113,13 +7876,25 @@
                     }
                 }
             },
-            "has-logistic-chest-buffer": {
+            "has-buffer-chest": {
                 "display_name": "Unlocked Buffer chest",
                 "requirement": {
                     "type": "resource",
                     "data": {
                         "type": "items",
                         "name": "logistic-system",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            },
+            "has-bulk-inserter": {
+                "display_name": "Unlocked Bulk inserter",
+                "requirement": {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "bulk-inserter",
                         "amount": 1,
                         "negate": false
                     }
@@ -8184,6 +7959,18 @@
                     "data": {
                         "type": "items",
                         "name": "automobilism",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            },
+            "has-cargo-landing-pad": {
+                "display_name": "Unlocked Cargo landing pad",
+                "requirement": {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "rocket-silo",
                         "amount": 1,
                         "negate": false
                     }
@@ -8406,13 +8193,13 @@
                     }
                 }
             },
-            "has-discharge-defense-remote": {
-                "display_name": "Unlocked Discharge defense remote",
+            "has-display-panel": {
+                "display_name": "Unlocked Display panel",
                 "requirement": {
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "discharge-defense-equipment",
+                        "name": "circuit-network",
                         "amount": 1,
                         "negate": false
                     }
@@ -8430,49 +8217,39 @@
                     }
                 }
             },
-            "has-effectivity-module": {
+            "has-efficiency-module": {
                 "display_name": "Unlocked Efficiency module",
                 "requirement": {
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "effectivity-module",
+                        "name": "efficiency-module",
                         "amount": 1,
                         "negate": false
                     }
                 }
             },
-            "has-effectivity-module-2": {
+            "has-efficiency-module-2": {
                 "display_name": "Unlocked Efficiency module 2",
                 "requirement": {
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "effectivity-module-2",
+                        "name": "efficiency-module-2",
                         "amount": 1,
                         "negate": false
                     }
                 }
             },
-            "has-effectivity-module-3": {
+            "has-efficiency-module-3": {
                 "display_name": "Unlocked Efficiency module 3",
                 "requirement": {
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "effectivity-module-3",
+                        "name": "efficiency-module-3",
                         "amount": 1,
                         "negate": false
-                    }
-                }
-            },
-            "has-electric-energy-interface": {
-                "display_name": "Unlocked Electric energy interface",
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
                     }
                 }
             },
@@ -8513,10 +8290,12 @@
             "has-electric-mining-drill": {
                 "display_name": "Unlocked Electric mining drill",
                 "requirement": {
-                    "type": "and",
+                    "type": "resource",
                     "data": {
-                        "comment": null,
-                        "items": []
+                        "type": "items",
+                        "name": "electric-mining-drill",
+                        "amount": 1,
+                        "negate": false
                     }
                 }
             },
@@ -8527,18 +8306,6 @@
                     "data": {
                         "type": "items",
                         "name": "electronics",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            "has-empty-barrel": {
-                "display_name": "Unlocked Empty barrel",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "fluid-handling",
                         "amount": 1,
                         "negate": false
                     }
@@ -8744,18 +8511,6 @@
                     }
                 }
             },
-            "has-filter-inserter": {
-                "display_name": "Unlocked Filter inserter",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "fast-inserter",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
             "has-firearm-magazine": {
                 "display_name": "Unlocked Firearm magazine",
                 "requirement": {
@@ -8833,18 +8588,6 @@
                     "data": {
                         "type": "items",
                         "name": "gate",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            "has-green-wire": {
-                "display_name": "Unlocked Green wire",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "circuit-network",
                         "amount": 1,
                         "negate": false
                     }
@@ -9021,7 +8764,7 @@
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "optics",
+                        "name": "lamp",
                         "amount": 1,
                         "negate": false
                     }
@@ -9344,7 +9087,7 @@
                     }
                 }
             },
-            "has-logistic-chest-passive-provider": {
+            "has-passive-provider-chest": {
                 "display_name": "Unlocked Passive provider chest",
                 "requirement": {
                     "type": "or",
@@ -9552,13 +9295,13 @@
                     }
                 }
             },
-            "has-fusion-reactor-equipment": {
-                "display_name": "Unlocked Portable fusion reactor",
+            "has-fission-reactor-equipment": {
+                "display_name": "Unlocked Portable fission reactor",
                 "requirement": {
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "fusion-reactor-equipment",
+                        "name": "fission-reactor-equipment",
                         "amount": 1,
                         "negate": false
                     }
@@ -9618,7 +9361,7 @@
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "advanced-electronics-2",
+                        "name": "processing-unit",
                         "amount": 1,
                         "negate": false
                     }
@@ -9719,7 +9462,7 @@
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "oil-processing",
+                        "name": "oil-gathering",
                         "amount": 1,
                         "negate": false
                     }
@@ -9728,10 +9471,12 @@
             "has-radar": {
                 "display_name": "Unlocked Radar",
                 "requirement": {
-                    "type": "and",
+                    "type": "resource",
                     "data": {
-                        "comment": null,
-                        "items": []
+                        "type": "items",
+                        "name": "radar",
+                        "amount": 1,
+                        "negate": false
                     }
                 }
             },
@@ -9771,18 +9516,6 @@
                     }
                 }
             },
-            "has-red-wire": {
-                "display_name": "Unlocked Red wire",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "circuit-network",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
             "has-refined-concrete": {
                 "display_name": "Unlocked Refined concrete",
                 "requirement": {
@@ -9810,14 +9543,16 @@
             "has-repair-pack": {
                 "display_name": "Unlocked Repair pack",
                 "requirement": {
-                    "type": "and",
+                    "type": "resource",
                     "data": {
-                        "comment": null,
-                        "items": []
+                        "type": "items",
+                        "name": "repair-pack",
+                        "amount": 1,
+                        "negate": false
                     }
                 }
             },
-            "has-logistic-chest-requester": {
+            "has-requester-chest": {
                 "display_name": "Unlocked Requester chest",
                 "requirement": {
                     "type": "resource",
@@ -9865,18 +9600,6 @@
                     "data": {
                         "type": "items",
                         "name": "rocketry",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            "has-rocket-control-unit": {
-                "display_name": "Unlocked Rocket control unit",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "rocket-control-unit",
                         "amount": 1,
                         "negate": false
                     }
@@ -9933,10 +9656,24 @@
             "has-satellite": {
                 "display_name": "Unlocked Satellite",
                 "requirement": {
-                    "type": "and",
+                    "type": "resource",
                     "data": {
-                        "comment": null,
-                        "items": []
+                        "type": "items",
+                        "name": "rocket-silo",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            },
+            "has-selector-combinator": {
+                "display_name": "Unlocked Selector combinator",
+                "requirement": {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "advanced-combinators",
+                        "amount": 1,
+                        "negate": false
                     }
                 }
             },
@@ -10058,18 +9795,6 @@
                     }
                 }
             },
-            "has-spidertron-remote": {
-                "display_name": "Unlocked Spidertron remote",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "spidertron",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
             "has-splitter": {
                 "display_name": "Unlocked Splitter",
                 "requirement": {
@@ -10077,30 +9802,6 @@
                     "data": {
                         "type": "items",
                         "name": "logistics",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            "has-stack-filter-inserter": {
-                "display_name": "Unlocked Stack filter inserter",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "stack-inserter",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            "has-stack-inserter": {
-                "display_name": "Unlocked Stack inserter",
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "stack-inserter",
                         "amount": 1,
                         "negate": false
                     }
@@ -10186,7 +9887,7 @@
                     }
                 }
             },
-            "has-logistic-chest-storage": {
+            "has-storage-chest": {
                 "display_name": "Unlocked Storage chest",
                 "requirement": {
                     "type": "or",
@@ -10353,7 +10054,7 @@
                     "type": "resource",
                     "data": {
                         "type": "items",
-                        "name": "uranium-processing",
+                        "name": "nuclear-power",
                         "amount": 1,
                         "negate": false
                     }

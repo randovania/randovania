@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.games.fusion.generator.pool_creator import INFANT_METROID_CATEGORY
@@ -11,6 +12,7 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
@@ -34,6 +36,21 @@ class FusionBootstrap(MetroidBootstrap):
         enabled_resources.add("BomblessPBs")
         enabled_resources.add("GeneratorHack")
         return enabled_resources
+
+    def _damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+        num_suits = sum(
+            (1 if current_resources[db.get_item_by_name(suit)] else 0) for suit in ("Varia Suit", "Gravity Suit")
+        )
+        dr = 1.0
+        if num_suits == 1:
+            dr = 0.9
+        elif num_suits >= 2:
+            dr = 0.8
+
+        return dr
+
+    def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
+        return dataclasses.replace(db, base_damage_reduction=self._damage_reduction)
 
     def assign_pool_results(self, rng: Random, patches: GamePatches, pool_results: PoolResults) -> GamePatches:
         assert isinstance(patches.configuration, FusionConfiguration)
