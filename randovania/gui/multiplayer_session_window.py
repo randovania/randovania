@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Self
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
+import randovania
 from randovania import monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -362,6 +363,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             and self._session.game_details is None
             and self._session.generation_in_progress is None
         )
+        self.allow_coop_check.setVisible(not randovania.is_frozen())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
