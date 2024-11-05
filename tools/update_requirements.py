@@ -52,52 +52,60 @@ def print_arguments(args):
     return args
 
 
-subprocess.run(
-    print_arguments(
-        [
-            "--extra=gui,exporters,server,test,typing,website",
-            "--strip-extras",
-            "--output-file",
-            "requirements.txt",
-            *upgrade_arg,
-            "setup.py",
-        ]
-    ),
-    env=custom_env,
-    check=True,
-    cwd=parent,
-    stdout=stdout,
-    stderr=stdout,
+def run_compile(
+    output_file: str,
+    custom_args,
+    extra: list[str] | None = None,
+):
+    args = [
+        sys.executable,
+        "-m",
+        "piptools",
+        "compile",
+        "--allow-unsafe",
+        "--resolver",
+        "backtracking",
+        "--strip-extras",
+        "--output-file",
+        output_file,
+        *upgrade_arg,
+    ]
+    if extra:
+        args.append("--extra=" + ",".join(extra))
+    args.extend(custom_args)
+
+    print("Running {}".format(" ".join(args)))
+    subprocess.run(
+        args,
+        env=custom_env,
+        check=True,
+        cwd=parent,
+        stdout=stdout,
+        stderr=stdout,
+    )
+    final_file = parent.joinpath(output_file)
+    output_contents = final_file.read_text()
+    final_file.write_text(output_contents.replace(os.fspath(parent.joinpath("requirements.txt")), "requirements.txt"))
+
+
+run_compile(
+    "requirements.txt",
+    [
+        "setup.py",
+    ],
+    extra=["gui", "exporters", "server", "test", "typing", "website"],
 )
 
-subprocess.run(
-    print_arguments(
-        [
-            "--output-file",
-            "requirements-setuptools.txt",
-            *upgrade_arg,
-            "tools/requirements/requirements-setuptools.in",
-        ]
-    ),
-    env=custom_env,
-    check=True,
-    cwd=parent,
-    stdout=stdout,
-    stderr=stdout,
+run_compile(
+    "requirements-setuptools.txt",
+    [
+        "tools/requirements/requirements-setuptools.in",
+    ],
 )
 
-subprocess.run(
-    print_arguments(
-        [
-            "--output-file",
-            "requirements-lint.txt",
-            *upgrade_arg,
-            "tools/requirements/requirements-lint.in",
-        ]
-    ),
-    env=custom_env,
-    check=True,
-    cwd=parent,
-    stdout=stdout,
-    stderr=stdout,
+run_compile(
+    "requirements-lint.txt",
+    [
+        "tools/requirements/requirements-lint.in",
+    ],
 )
