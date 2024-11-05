@@ -547,8 +547,7 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
 
 
 def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool):
-    # TODO: Verification
-    # verify_has_admin(sa, session.id, None)
+    verify_has_admin(sa, session.id, None)
 
     with database.db.atomic():
         session.allow_coop = new_state
