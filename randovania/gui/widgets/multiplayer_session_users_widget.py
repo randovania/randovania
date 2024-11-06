@@ -28,6 +28,7 @@ from randovania.network_common.multiplayer_session import (
     MultiplayerSessionEntry,
     MultiplayerUser,
     MultiplayerWorld,
+    UserID,
     UserWorldDetail,
 )
 
@@ -100,7 +101,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     _last_session: MultiplayerSessionEntry | None = None
     _session: MultiplayerSessionEntry
     _user_widgets: dict[int, UserWidgetEntry]
-    _world_widgets: dict[tuple[int | None, uuid.UUID], WorldWidgetEntry]  # (user id, world UUID): worldWidgetEntry
+    _world_widgets: dict[tuple[UserID, uuid.UUID], WorldWidgetEntry]  # (user id, world UUID): worldWidgetEntry
 
     def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
         super().__init__()

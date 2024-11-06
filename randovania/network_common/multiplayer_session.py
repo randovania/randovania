@@ -23,6 +23,8 @@ MAX_WORLD_NAME_LENGTH = 30
 
 WORLD_NAME_RE = re.compile(r"^[a-zA-Z0-9 _\-!?()]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$")
 
+UserID = int
+
 
 @dataclasses.dataclass(frozen=True)
 class MultiplayerSessionListEntry(JsonDataclass):
@@ -51,7 +53,7 @@ class UserWorldDetail(JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class MultiplayerUser(JsonDataclass):
-    id: int
+    id: UserID
     name: str
     admin: bool
     ready: bool
@@ -149,13 +151,13 @@ class MultiplayerSessionAuditLog(JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class WorldUserInventory:
     world_id: uuid.UUID
-    user_id: int
+    user_id: UserID
     inventory: RemoteInventory
 
 
 @dataclasses.dataclass(frozen=True)
 class User:
-    id: int
+    id: UserID
     name: str
     discord_id: int | None = None
 
