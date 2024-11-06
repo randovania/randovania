@@ -388,25 +388,30 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             def create_claim_for_yourself_entry() -> None:
                 connect_to(world_menu.addAction("Claim for yourself"), self._world_claim_with, world_id, self.your_id)
 
-            def create_unclaim_entry() -> None:
-                connect_to(world_menu.addAction("Unclaim"), self._world_unclaim, world_id, owner)
+            def create_unclaim_entry(menu_caption: str) -> None:
+                connect_to(world_menu.addAction(menu_caption), self._world_unclaim, world_id, owner)
 
-            if (
-                owner is None
-                and (self.is_admin() or self._session.allow_everyone_claim_world)
-                and not self._session.users[self.your_id].worlds.get(world_id)
-            ):
-                world_menu.addSeparator()
-                create_claim_for_yourself_entry()
+            if owner is None and (self.is_admin() or self._session.allow_everyone_claim_world):
+                if self._session.users[self.your_id].worlds.get(world_id):
+                    world_menu.addSeparator()
+                    create_unclaim_entry("Unclaim from yourself")
+                else:
+                    world_menu.addSeparator()
+                    create_claim_for_yourself_entry()
 
-                if self.is_admin():
-                    create_claim_for_each_player_entry()
+                    if self.is_admin():
+                        create_claim_for_each_player_entry()
 
             elif owner is not None and (
                 self.is_admin() or self._session.allow_everyone_claim_world or owner == self.your_id
             ):
+                text = "Unclaim"
+                if owner == self.your_id:
+                    text += " from yourself"
+                else:
+                    text += " from this user"
                 world_menu.addSeparator()
-                create_unclaim_entry()
+                create_unclaim_entry(text)
 
         if owner == self.your_id or self.is_admin():
             world_menu.addSeparator()
