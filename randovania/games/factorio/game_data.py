@@ -74,7 +74,26 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
-    faq=[],
+    faq=[
+        ("What versions of the game is supported?", "Only Factorio 2.0 is supported."),
+        ("Is Factorio: Space Age supported?", "No."),
+        ("Are other mods supported?", "Only mods that don't add new researches are compatible."),
+        (
+            "Is multiplayer supported?",
+            "Yes. Since the generated randomizer mod file isn't in the mod portal, "
+            "it'll be necessary to either share the mod file or have everyone export it themselves.",
+        ),
+    ],
+    web_info=randovania.game.web_info.GameWebInfo(
+        what_can_randomize=[
+            "The tech tree",
+            "The recipes for all Science Packs",
+            "The recipes for rocket parts",
+        ],
+        need_to_play=[
+            "A copy of the game from Steam or Factorio.com",
+        ],
+    ),
     hash_words=_hash_words(),
     layout=randovania.game.layout.GameLayout(
         configuration=layout.FactorioConfiguration,
