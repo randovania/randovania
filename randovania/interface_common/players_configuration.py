@@ -24,3 +24,6 @@ class PlayersConfiguration:
     @property
     def is_multiworld(self) -> int:
         return len(self.player_names) > 1 or self.is_coop
+
+    def is_target_for_local_world(self, player_target: int) -> bool:
+        return player_target == self.player_index and not self.is_coop
