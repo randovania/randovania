@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -24,8 +23,9 @@ from randovania.gui.dialog.game_export_dialog import (
     update_validation,
 )
 from randovania.gui.lib import common_qt_lib
+from randovania.lib import windows_lib
 from randovania.lib.ftp_uploader import FtpUploader
-from randovania.lib.windows_drives import get_windows_drives
+from randovania.lib.windows_lib import get_windows_drives
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -91,7 +91,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             case "Windows", _:
                 # TODO: double check what ryujinx actually uses for windows. I don't think it reads the Appdata env var
                 # but instead probably the value from QStandardPaths.
-                return Path(os.environ["APPDATA"], *ryujinx_path_tuple)
+                return windows_lib.get_appdata().joinpath(*ryujinx_path_tuple)
 
             case "Linux", LinuxRyujinxPath.NATIVE:
                 base_config_path = QtCore.QStandardPaths.writableLocation(
