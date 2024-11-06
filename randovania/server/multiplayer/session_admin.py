@@ -549,6 +549,13 @@ def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool)
     """Sets the Co-Op state of the given session to the desired state."""
     verify_has_admin(sa, session.id, None)
 
+    if not new_state:
+        for generic_world in session.worlds:
+            if len(generic_world.associations) >= 2:
+                raise error.InvalidActionError(
+                    "Can only disable coop, if a world isn't associated to multiple users at once."
+                )
+
     with database.db.atomic():
         session.allow_coop = new_state
         new_operation = "Allowing" if session.allow_coop else "Disallowing"

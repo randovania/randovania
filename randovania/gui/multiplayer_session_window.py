@@ -910,6 +910,35 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     "otherwise they will be lost permanently!"
                 ),
             )
+        else:
+            world_count = collections.defaultdict(int)
+            users_to_unclaim = collections.defaultdict(list)
+            is_world_assigned_to_multiple = False
+            for user in self._session.users.values():
+                for world in user.worlds:
+                    world_count[world] += 1
+                    if world_count[world] >= 2:
+                        is_world_assigned_to_multiple = True
+                        users_to_unclaim[user].append(world)
+
+            if is_world_assigned_to_multiple:
+                result = await message_box(
+                    self,
+                    QtWidgets.QMessageBox.Icon.Question,
+                    "Worlds assigned to multiple users",
+                    (
+                        "There are still worlds left which are claimed by multiple users at the same time.\n"
+                        "Do you want to unclaim those worlds from all users and continue?"
+                    ),
+                    QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                    QtWidgets.QMessageBox.StandardButton.No,
+                )
+                if result == QtWidgets.QMessageBox.StandardButton.No:
+                    return
+
+            for user, worlds in users_to_unclaim.items():
+                for world in worlds:
+                    await self.game_session_api.unclaim_world(world, user.id)
 
         await self.game_session_api.set_allow_coop(self.allow_coop_check.isChecked())
 
