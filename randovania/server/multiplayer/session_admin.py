@@ -493,9 +493,8 @@ def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world
 
 
 def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
-    if not session.allow_everyone_claim_world:
-        if sa.get_current_user().id != user_id:
-            verify_has_admin(sa, session.id, None)
+    if sa.get_current_user().id != user_id and not session.allow_everyone_claim_world:
+        verify_has_admin(sa, session.id, None)
 
     world = World.get_by_uuid(world_uid)
     user = database.User.get_by_id(user_id)
@@ -546,7 +545,8 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
         session.save()
 
 
-def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool):
+def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool) -> None:
+    """Sets the Co-Op state of the given session to the desired state."""
     verify_has_admin(sa, session.id, None)
 
     with database.db.atomic():
@@ -574,7 +574,11 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
 
     layout_description = session.layout_description
     players_config = PlayersConfiguration(
-        player_index=player_index, player_names=player_names, uuids=uuids, session_name=session.name, is_coop=True
+        player_index=player_index,
+        player_names=player_names,
+        uuids=uuids,
+        session_name=session.name,
+        is_coop=True,
     )
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)

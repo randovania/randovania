@@ -74,7 +74,7 @@ class CSPatchDataFactory(PatchDataFactory):
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
 
-            if not self.players_config.is_target_for_local_world(target.player):
+            if not self.players_config.should_target_local_player(target.player):
                 message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
                 message = wrap_msg_text(message, False, ending="<WAI0025<NOD")
                 git = "<GIT0000"  # TODO: add GIT info in pickup db and use it here (respecting offworld models)

@@ -25,5 +25,6 @@ class PlayersConfiguration:
     def is_multiworld(self) -> int:
         return len(self.player_names) > 1 or self.is_coop
 
-    def is_target_for_local_world(self, player_target: int) -> bool:
+    def should_target_local_player(self, player_target: int) -> bool:
+        """Returns whether a pickup should be for the player of this configuration."""
         return player_target == self.player_index and not self.is_coop

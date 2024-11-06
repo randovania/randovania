@@ -278,7 +278,7 @@ class PickupExporterMulti(PickupExporter):
         If for yourself, use the solo creator but adjust the name to mention it's yours.
         For offworld, create a custom details.
         """
-        if self.players_config.is_target_for_local_world(pickup_target.player):
+        if self.players_config.should_target_local_player(pickup_target.player):
             details = self.solo_creator.create_details(
                 original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
             )
