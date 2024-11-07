@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime3.exporter.game_exporter import CorruptionGameExportParams
 from randovania.games.prime3.exporter.options import CorruptionPerGameOptions
 from randovania.games.prime3.gui.generated.corruption_game_export_dialog_ui import Ui_CorruptionGameExportDialog

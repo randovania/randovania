@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
 
 _FIELDS = [
     "instant_transitions",
+    "anti_softlock",
 ]
 
 
@@ -37,8 +38,8 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         return "Other"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:

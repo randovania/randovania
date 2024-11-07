@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options, PerGameOptions
     from randovania.patching.patchers.exceptions import UnableToExportError
 

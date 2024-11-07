@@ -13,11 +13,11 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_database import PickupDatabase
     from randovania.game_description.pickup.pickup_entry import PickupEntry
-    from randovania.games.game import RandovaniaGame
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -29,6 +29,13 @@ class PatcherDataMeta(typing.TypedDict):
 
 
 class PatchDataFactory:
+    """
+    Class with the purpose of creating a JSON-serializable dictionary from a randomized game.
+    The resulting dictionary-data will later be passed to the patcher.
+    Since every patcher needs their data laid out differently, it's up to
+    each game to define the exact layout of the dictionary.
+    """
+
     description: LayoutDescription
     players_config: PlayersConfiguration
     game: GameDescription
@@ -58,12 +65,16 @@ class PatchDataFactory:
         self.memo_data = self.create_memo_data()
 
     def game_enum(self) -> RandovaniaGame:
+        """Returns the game for which this PatchDataFactory is for."""
         raise NotImplementedError
 
     def create_game_specific_data(self) -> dict:
+        """Creates the game specific data. Should be overwritten by individual games."""
         raise NotImplementedError
 
     def create_data(self) -> dict:
+        """Creates the patcher specific data. Applies custom patcher data on top if they exist."""
+
         game_data = self.create_game_specific_data()
         json_delta.patch(game_data, self.patches.custom_patcher_data)
         game_data["_randovania_meta"] = {

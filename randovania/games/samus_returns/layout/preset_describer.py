@@ -3,7 +3,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
-from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
+from randovania.games.samus_returns.layout.msr_configuration import (
+    FinalBossConfiguration,
+    MSRArtifactConfig,
+    MSRConfiguration,
+)
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
@@ -12,36 +16,51 @@ from randovania.layout.preset_describer import (
 )
 
 if TYPE_CHECKING:
-    from randovania.games.game import ProgressiveItemTuples
+    from randovania.game.gui import ProgressiveItemTuples
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
+_BOSS_NAME = {
+    FinalBossConfiguration.ARACHNUS: "Arachnus",
+    FinalBossConfiguration.DIGGERNAUT: "Diggernaut",
+    FinalBossConfiguration.QUEEN: "Metroid Queen",
+    FinalBossConfiguration.RIDLEY: "Proteus Ridley",
+    FinalBossConfiguration.RANDOM: "Unknown Boss",
+}
+
+
+def describe_objective(artifacts: MSRArtifactConfig, final_boss: FinalBossConfiguration) -> list[dict[str, bool]]:
     has_artifacts = artifacts.required_artifacts > 0
     if has_artifacts and artifacts.prefer_anywhere:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA": True,
             },
             {
                 "Place at any item location": artifacts.prefer_anywhere,
+            },
+            {
+                "Defeat " + _BOSS_NAME[final_boss]: True,
             },
         ]
     elif has_artifacts:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA": True,
             },
             {
                 "Prefers Standard Metroids": artifacts.prefer_metroids,
                 "Prefers Stronger Metroids": artifacts.prefer_stronger_metroids,
                 "Prefers Bosses": artifacts.prefer_bosses,
             },
+            {
+                "Defeat " + _BOSS_NAME[final_boss]: True,
+            },
         ]
     else:
         return [
             {
-                "Defeat Proteus Ridley": True,
+                "Defeat " + _BOSS_NAME[final_boss]: True,
             }
         ]
 
@@ -118,7 +137,7 @@ class MSRPresetDescriber(GamePresetDescriber):
                     )
                 },
             ],
-            "Goal": describe_artifacts(configuration.artifacts),
+            "Goal": describe_objective(configuration.artifacts, configuration.final_boss),
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
@@ -157,6 +176,6 @@ class MSRPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.samus_returns.pickup_database import progressive_items
+        from randovania.games.samus_returns.layout import progressive_items
 
         return progressive_items.tuples()

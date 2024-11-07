@@ -19,9 +19,9 @@ from retro_data_structures.formats.pak_gc import PAK_GC
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import get_data_path, monitoring
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.lib import json_lib, status_update_lib
 
 if TYPE_CHECKING:

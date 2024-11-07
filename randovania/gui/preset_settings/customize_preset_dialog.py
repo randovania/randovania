@@ -41,7 +41,6 @@ class PresetTabRoot(QtWidgets.QWidget):
             self.current_tab.on_preset_changed(editor.create_custom_preset_with())
             self.owner.set_visible_tab(self)
             self.current_tab.update_experimental_visibility()
-            self.owner.update_experimental_visibility()
 
         return super().showEvent(arg)
 
@@ -51,8 +50,6 @@ class PresetTabRoot(QtWidgets.QWidget):
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
-    _tab_types: list[type[PresetTab]]
-    _tabs: dict[type[PresetTab], PresetTabRoot]
     _editor: PresetEditor
     _current_tab: PresetTabRoot | None
 
@@ -63,38 +60,51 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
 
         self._editor = editor
         self.window_manager = window_manager
-        self._tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
-        self._tabs = {}
+        _tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
         self._current_tab = None
+        self.item_to_widget = {}
 
-        for extra_tab in self._tab_types:
-            if extra_tab.uses_patches_tab():
-                parent_tab = self.patches_tab_widget
-            else:
-                parent_tab = self.logic_tab_widget
+        first_selection = None
 
-            tab = self._tabs[extra_tab] = PresetTabRoot(self, extra_tab)
-            parent_tab.addTab(tab, extra_tab.tab_title())
+        # Add entries
+        for extra_tab in _tab_types:
+            # Skip experimental if we don't have the setting on
+            if not self.editor._options.experimental_settings and extra_tab.is_experimental():
+                continue
 
-        for i in range(self.main_tab_widget.count()):
-            tab_widget = self.main_tab_widget.widget(i)
-            if isinstance(tab_widget, QtWidgets.QTabWidget):
-                self.main_tab_widget.setTabVisible(i, tab_widget.count() > 0)
+            tab = PresetTabRoot(self, extra_tab)
+            list_item = QtWidgets.QListWidgetItem(tab.tab_type.tab_title())
+
+            self.item_to_widget[list_item.text()] = tab
+            self.stackedWidget.addWidget(tab)
+
+            # Add placeholder header entry, that gets proper text later
+            if extra_tab.header_name():
+                if self.listWidget.count() > 0:
+                    seperator = QtWidgets.QListWidgetItem("")
+                    seperator.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
+                    self.listWidget.addItem(seperator)
+                header = QtWidgets.QListWidgetItem(extra_tab.header_name())
+                font = header.font()
+                font.setBold(True)
+                font.setPointSizeF(font.pointSize() * 1.2)
+                header.setFont(font)
+                header.setFlags(QtGui.Qt.ItemFlag.NoItemFlags)
+                self.listWidget.addItem(header)
+
+            self.listWidget.addItem(list_item)
+
+            if first_selection is None:
+                first_selection = list_item
+
+        self.listWidget.setCurrentItem(first_selection)
+        self.listWidget.currentItemChanged.connect(self.changed_list_item_selection)
+        # Need some extra space to adjust for scrollbar
+        self.listWidget.setMaximumWidth(self.listWidget.sizeHintForColumn(0) * 1.12)
 
         self.name_edit.textEdited.connect(self._edit_name)
-        self.description_edit.textChanged.connect(self._edit_description)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
-
-    def update_experimental_visibility(self):
-        for parent, tabs in [
-            (self.patches_tab_widget, [x for x in self._tab_types if x.uses_patches_tab()]),
-            (self.logic_tab_widget, [x for x in self._tab_types if not x.uses_patches_tab()]),
-        ]:
-            for i in range(parent.count()):
-                tab = tabs[i]
-                visible = self.editor._options.experimental_settings or not tab.is_experimental()
-                parent.setTabVisible(i, visible)
 
     def set_visible_tab(self, tab: PresetTabRoot):
         if tab != self._current_tab:
@@ -102,20 +112,19 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
                 self._current_tab.release_widget()
             self._current_tab = tab
 
+    def changed_list_item_selection(self, item: QtWidgets.QListWidgetItem):
+        widget = self.item_to_widget[item.text()]
+        self.stackedWidget.setCurrentWidget(widget)
+
     # Options
     def on_preset_changed(self, preset: Preset):
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
-        common_qt_lib.set_edit_if_different_text(self.description_edit, preset.description)
         if (tab := self.current_preset_tab) is not None:
             tab.on_preset_changed(preset)
 
     def _edit_name(self, value: str):
         with self._editor as editor:
             editor.name = value
-
-    def _edit_description(self):
-        with self._editor as editor:
-            editor.description = self.description_edit.toPlainText()
 
     @property
     def editor(self):

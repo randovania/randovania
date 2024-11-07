@@ -32,7 +32,6 @@ sample_data = {
     },
     "layers": ["default"],
     "starting_location": {"region": "Temple Grounds", "area": "Landing Site", "node": "Save Station"},
-    "initial_states": {"Default": []},
     "minimal_logic": None,
     "victory_condition": {
         "type": "and",

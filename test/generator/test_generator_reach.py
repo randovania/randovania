@@ -8,6 +8,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.db.area import Area
 from randovania.game_description.db.configurable_node import ConfigurableNode
@@ -22,7 +23,6 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.games.game import RandovaniaGame
 from randovania.generator import reach_lib
 from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.pickup_pool import pool_creator
@@ -140,7 +140,7 @@ _include_tricks_for_game = {
 }
 
 
-@pytest.mark.skip_resolver_tests()
+@pytest.mark.skip_resolver_tests
 @pytest.mark.parametrize(
     ("game_enum", "ignore_events", "ignore_pickups", "include_tricks"),
     [
@@ -264,7 +264,6 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         ("default",),
         Requirement.impossible(),
         MagicMock(),
-        {},
         None,
         region_list,
     )

@@ -34,7 +34,7 @@ from randovania.games.prime2.patcher import echoes_items
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
-@pytest.fixture()
+@pytest.fixture
 def players_config() -> PlayersConfiguration:
     return PlayersConfiguration(
         player_index=0,
@@ -96,7 +96,7 @@ def _create_region_list(asset_id: int, pickup_index: PickupIndex):
     return hint_node, pickup_node, region_list
 
 
-@pytest.fixture()
+@pytest.fixture
 def echoes_hint_exporter(echoes_game_patches) -> HintExporter:
     namer = EchoesHintNamer({0: echoes_game_patches}, PlayersConfiguration(0, {0: "You"}))
     return HintExporter(namer, random.Random(0), ["A Joke"])

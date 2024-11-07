@@ -9,7 +9,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
 
 
 def test_preset_editor_tabs_for(skip_qtbot, game_enum: RandovaniaGame, preset_manager):

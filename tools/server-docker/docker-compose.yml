@@ -43,6 +43,7 @@ services:
         - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.middlewares=rdv_${SERVER_ENVIRONMENT}_stripprefix
         - traefik.http.middlewares.rdv_${SERVER_ENVIRONMENT}_stripprefix.stripprefix.prefixes=/${PATH_PREFIX}
         - traefik.http.services.rdv_${SERVER_ENVIRONMENT}.loadbalancer.server.port=5000
+        - traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=25000000
 
     networks:
       - traefik-public

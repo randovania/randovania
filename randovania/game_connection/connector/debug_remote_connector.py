@@ -12,7 +12,7 @@ from randovania.game_description.resources.resource_collection import ResourceCo
 if TYPE_CHECKING:
     import uuid
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
 
 
 class DebugRemoteConnector(RemoteConnector):

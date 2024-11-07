@@ -5,7 +5,7 @@ import typing
 
 from PySide6 import QtGui, QtWidgets
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 if typing.TYPE_CHECKING:
     from randovania.gui.main_window import MainWindow

@@ -11,6 +11,7 @@ import randovania.games.prime2.exporter.hints
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
@@ -21,7 +22,6 @@ from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupG
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.common import elevators
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
@@ -456,6 +456,7 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
 def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
     raw_champs = [
+        {"title": "2024 Champion", "name": "Naii the Baf"},
         {"title": "CGC 2023 Champions", "name": "TheGingerChris and BajaBlood"},
         {"title": "2022 Champion", "name": "Cestrion"},
         {"title": "CGC 2022 Champions", "name": "Cosmonawt and Cestrion"},

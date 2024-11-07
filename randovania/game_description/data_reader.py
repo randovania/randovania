@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from typing import TYPE_CHECKING, TypeVar
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_migration
 from randovania.game_description.db import event_pickup
 from randovania.game_description.db.area import Area
@@ -42,7 +43,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_id
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.lib import frozen_lib, json_lib
 
 if TYPE_CHECKING:
@@ -476,10 +476,6 @@ def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase
     return db
 
 
-def read_initial_states(data: dict[str, list], resource_database: ResourceDatabase) -> dict[str, ResourceGainTuple]:
-    return {name: read_resource_gain_tuple(item, resource_database) for name, item in data.items()}
-
-
 def read_minimal_logic_db(data: dict | None) -> MinimalLogicData | None:
     if data is None:
         return None
@@ -514,7 +510,6 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
 
     victory_condition = read_requirement(data["victory_condition"], resource_database)
     starting_location = NodeIdentifier.from_json(data["starting_location"])
-    initial_states = read_initial_states(data["initial_states"], resource_database)
     minimal_logic = read_minimal_logic_db(data["minimal_logic"])
     used_trick_levels = read_used_trick_levels(data["used_trick_levels"], resource_database)
 
@@ -526,7 +521,6 @@ def decode_data_with_region_reader(data: dict) -> tuple[RegionReader, GameDescri
         region_list=region_list,
         victory_condition=victory_condition,
         starting_location=starting_location,
-        initial_states=initial_states,
         minimal_logic=minimal_logic,
         used_trick_levels=used_trick_levels,
     )

@@ -32,8 +32,8 @@ class PresetFusionHints(PresetTab, Ui_PresetFusionHints):
         return "Hints"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_art_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:

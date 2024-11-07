@@ -1,20 +1,32 @@
 from __future__ import annotations
 
-from randovania.games import game
+from typing import TYPE_CHECKING
+
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.am2r import layout
 
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
-def _options():
+
+def _options() -> type[PerGameOptions]:
     from randovania.games.am2r.exporter.options import AM2RPerGameOptions
 
     return AM2RPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.am2r import gui
-    from randovania.games.am2r.pickup_database import progressive_items
+    from randovania.games.am2r.layout import progressive_items
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         game_tab=gui.AM2RGameTabWidget,
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.AM2RCosmeticPatchesDialog,
@@ -24,25 +36,27 @@ def _gui() -> game.GameGui:
     )
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.am2r import generator
+    from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.hint_distributor import AllJokesHintDistributor
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=generator.AM2RBootstrap(),
         base_patches_factory=generator.AM2RBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.am2r.exporter.patch_data_factory import AM2RPatchDataFactory
 
     return AM2RPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.am2r.exporter.game_exporter import AM2RGameExporter
 
     return AM2RGameExporter()
@@ -54,10 +68,10 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="AM2R",
     long_name="Another Metroid 2 Remake",
-    development_state=game.DevelopmentState.STABLE,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
     ],
@@ -128,7 +142,7 @@ game_data: game.GameData = game.GameData(
             "In a multiworld game, only your own items can be shiny.",
         ),
     ],
-    web_info=game.GameWebInfo(
+    web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=[
             "All items",
             "Starting locations",
@@ -141,7 +155,7 @@ game_data: game.GameData = game.GameData(
         ],
     ),
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=layout.AM2RConfiguration,
         cosmetic_patches=layout.AM2RCosmeticPatches,
         preset_describer=layout.AM2RPresetDescriber(),

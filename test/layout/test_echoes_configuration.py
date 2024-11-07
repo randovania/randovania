@@ -9,10 +9,10 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
     PrimeTrilogyTeleporterConfiguration,
 )
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration
@@ -57,25 +57,25 @@ def make_dummy(cls: type[T]) -> T:
 @pytest.fixture(
     params=[
         {
-            "encoded": b"@\x00\x1a\xc6?\x8b\x86\x02X\x01\xff",
+            "encoded": b"@\x00\rc\x1f\xc5\xc3\x01,\x00\xff\x80",
             "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
         },
         {
-            "encoded": b"@\x00\x18\x06?\x8b\x86\x02X\x01\xff",
+            "encoded": b"@\x00\x0c\x03\x1f\xc5\xc3\x01,\x00\xff\x80",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
         },
         {
-            "encoded": b"@\x00\x19\x11\x7f\x8b\x86\x02X\x01\xff",
+            "encoded": b"@\x00\x0c\x88\xbf\xc5\xc3\x01,\x00\xff\x80",
             "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
             "energy_per_tank": 280,
         },
         {
-            "encoded": b"@\x00\x18F?\xa2\xf6\x02X\x01\xff",
+            "encoded": b"@\x00\x0c#\x1f\xd1{\x01,\x00\xff\x80",
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "varia_suit_damage": 18.0,
         },
         {
-            "encoded": b"\x10\x00\x18F?\x8b\x86\x02X\x01\xff",
+            "encoded": b"\x10\x00\x0c#\x1f\xc5\xc3\x01,\x00\xff\x80",
             "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
             "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
             "damage_strictness": LayoutDamageStrictness.STRICT.value,

@@ -14,11 +14,11 @@ def render_region_graph_logic(args: Namespace) -> None:
 
     import graphviz  # type: ignore
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description import default_database
     from randovania.game_description.db.dock_node import DockNode
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.requirements.base import Requirement
-    from randovania.games.game import RandovaniaGame
 
     gd = default_database.game_description_for(RandovaniaGame(args.game))
 

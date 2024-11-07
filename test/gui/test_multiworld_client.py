@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     from pytest_mock import MockerFixture
 
 
-@pytest.fixture()
+@pytest.fixture
 def client(skip_qtbot, tmp_path):
     network_client = MagicMock()
     return MultiworldClient(network_client, MagicMock(), WorldDatabase(tmp_path.joinpath("persist")))

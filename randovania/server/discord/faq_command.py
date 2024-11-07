@@ -1,6 +1,6 @@
 import discord
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog

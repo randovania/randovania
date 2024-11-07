@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
-from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
 
@@ -327,6 +327,11 @@ def _migrate_v25(data: dict) -> dict:
     return data
 
 
+def _migrate_v26(data: dict) -> dict:
+    data.pop("initial_states")
+    return data
+
+
 _MIGRATIONS = [
     None,
     None,
@@ -353,6 +358,7 @@ _MIGRATIONS = [
     _migrate_v23,  # add require_documentation_above
     _migrate_v24,
     _migrate_v25,  # flatten_to_set_on_patch
+    _migrate_v26,  # remove initial_states
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

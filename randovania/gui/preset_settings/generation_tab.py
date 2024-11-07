@@ -15,8 +15,8 @@ if TYPE_CHECKING:
 
     from PySide6 import QtWidgets
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
-    from randovania.games.game import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
@@ -34,6 +34,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         # Item Placement
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
         signal_handling.on_checked(self.local_first_progression_check, self._persist_local_first_progression)
+
+        # Door Lock
+        signal_handling.on_checked(self.two_sided_door_search_check, self._persist_two_sided_door_lock_search)
 
         # Logic Settings
         self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
@@ -74,6 +77,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         layout = preset.configuration
 
         self.local_first_progression_check.setChecked(layout.first_progression_must_be_local)
+        self.two_sided_door_search_check.setChecked(layout.two_sided_door_lock_search)
         self.check_major_minor.setChecked(
             layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT
         )
@@ -92,8 +96,8 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         return "Generation"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     @property
     def game_enum(self) -> RandovaniaGame:
@@ -115,6 +119,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         yield self.line_2
         yield self.experimental_generator_line
         yield self.minimal_logic_line
+        yield self.door_lock_group
+        yield self.two_sided_door_search_label
+        yield self.two_sided_door_search_check
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL
@@ -124,6 +131,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _persist_local_first_progression(self, value: bool):
         with self._editor as editor:
             editor.set_configuration_field("first_progression_must_be_local", value)
+
+    def _persist_two_sided_door_lock_search(self, value: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("two_sided_door_lock_search", value)
 
     def _on_dangerous_changed(self, value: LayoutLogicalResourceAction):
         with self._editor as editor:

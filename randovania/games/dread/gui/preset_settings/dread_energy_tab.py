@@ -46,8 +46,8 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
         return "Energy"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration

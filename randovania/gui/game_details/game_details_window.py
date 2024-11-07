@@ -28,7 +28,7 @@ from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 
 if typing.TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.layout.layout_description import LayoutDescription
@@ -63,6 +63,13 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._options = options
         self._window_manager = window_manager
         self._game_details_tabs = []
+
+        self.progress_bar.setVisible(False)
+        self.stop_background_process_button.setVisible(False)
+
+        self.status_bar.addWidget(self.progress_label)
+        self.status_bar.addPermanentWidget(self.progress_bar)
+        self.status_bar.addPermanentWidget(self.stop_background_process_button)
 
         # Ui
         self._tool_button_menu = QtWidgets.QMenu(self.tool_button)
@@ -317,11 +324,18 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 )
 
     def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setVisible(True)
         self.stop_background_process_button.setEnabled(not value and self._can_stop_background_process)
         self.export_iso_button.setEnabled(value)
         generator_frontend.export_busy = not value
 
+        if not self._can_stop_background_process:
+            self.stop_background_process_button.setToolTip("This game doesn't let you stop the export.")
+        else:
+            self.stop_background_process_button.setToolTip("")
+
     def update_progress(self, message: str, percentage: int):
+        self.progress_bar.setVisible(True)
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0

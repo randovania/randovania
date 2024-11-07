@@ -7,13 +7,13 @@ from unittest.mock import ANY, AsyncMock, MagicMock
 import pytest
 from PySide6 import QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder import ConnectorBuilder
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
 from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.dread_connector_builder import DreadConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.widgets.game_connection_window import GameConnectionWindow
@@ -27,7 +27,7 @@ if TYPE_CHECKING:
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 
 
-@pytest.fixture()
+@pytest.fixture
 def window(skip_qtbot, mocker):
     game_connection = MagicMock()
     game_connection.connection_builders = []

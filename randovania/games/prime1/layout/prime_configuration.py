@@ -5,10 +5,10 @@ from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
     PrimeTrilogyTeleporterConfiguration,
 )
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.hint_configuration import HintConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration

@@ -384,58 +384,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Left of Plant Tunnels": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Any Bomb"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Deal with the Electric Gulluggs",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Defeat Gold Autrack"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Dodge",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Start Point": {
+                        "Next to Diggernaut Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -549,7 +498,7 @@
                                 ]
                             }
                         },
-                        "Door to Diggernaut Arena": {
+                        "Next to Diggernaut Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -566,15 +515,20 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
                                                         "type": "tricks",
                                                         "name": "Combat",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Defeat Gold Autrack"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -586,13 +540,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Armor",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Defeat Gold Autrack"
                                                 }
                                             ]
                                         }
@@ -1091,7 +1040,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Next to Diggernaut Arena": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1109,10 +1058,92 @@
                     "valid_starting_location": true,
                     "connections": {
                         "Door to Diggernaut Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossDiggernaut",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "All DNA"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "FinalBossDiggernaut",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Left of Plant Tunnels": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Any Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Deal with the Electric Gulluggs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Armor",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Combat",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dodge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Defeat Gold Autrack"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5210,13 +5241,13 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -19945.508100147275,
-                        "y": -7597.821551300933,
+                        "x": -19945.51,
+                        "y": -7597.82,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
-                        "default"
+                        "final-boss-not-diggernaut"
                     ],
                     "extra": {
                         "actor_name": "LE_PowerUp_Powerbomb",
@@ -5317,8 +5348,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -19401.950891355533,
-                        "y": -7216.548940464178,
+                        "x": -19401.95,
+                        "y": -7216.55,
                         "z": 0.0
                     },
                     "description": "",
@@ -5329,7 +5360,7 @@
                     "valid_starting_location": false,
                     "event_name": "Diggernaut",
                     "connections": {
-                        "Pickup (Power Bomb)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5355,6 +5386,32 @@
                     },
                     "valid_starting_location": false,
                     "connections": {
+                        "Pickup (Power Bomb)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Diggernaut",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossDiggernaut",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Electric Escalade": {
                             "type": "and",
                             "data": {
@@ -5778,6 +5835,40 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Credits (Diggernaut Final Boss)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Diggernaut",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Credits (Diggernaut Final Boss)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -19847.04,
+                        "y": -7321.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "final-boss-diggernaut"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "Credits",
+                    "connections": {
+                        "Room Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -6049,8 +6140,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -21609.08017475499,
-                        "y": -3797.8391781792425,
+                        "x": -21609.08,
+                        "y": -3797.84,
                         "z": 0.0
                     },
                     "description": "",
@@ -6093,65 +6184,82 @@
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Can Spider Boost"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Spider Boost",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "misc",
+                                            "name": "FinalBossDiggernaut",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": "Defeat the Gulluggs",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Defeat Gold Autrack"
+                                                                "data": "Can Spider Boost"
                                                             },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 3,
+                                                                    "name": "Spider Boost",
+                                                                    "amount": 1,
                                                                     "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Defeat the Gulluggs",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Combat",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Defeat Gold Autrack"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -6164,10 +6272,41 @@
                             }
                         },
                         "Door to Diggernaut Arena": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossDiggernaut",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "FinalBossDiggernaut",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "All DNA"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Top Platform": {

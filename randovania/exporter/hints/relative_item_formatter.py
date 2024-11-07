@@ -9,8 +9,8 @@ from randovania.game_description.hint import Hint, RelativeDataItem
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_patches import GamePatches
-    from randovania.games.game import RandovaniaGame
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
 

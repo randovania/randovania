@@ -4,7 +4,7 @@ import dataclasses
 import uuid
 from unittest.mock import MagicMock
 
-from randovania.games.samus_returns.gui.preset_settings.msr_aeion_tab import PresetMSRAeion
+from randovania.games.samus_returns.gui.preset_settings.msr_aeion_energy_tab import PresetMSRAeionAndEnergy
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
 from randovania.interface_common.preset_editor import PresetEditor
 
@@ -17,7 +17,7 @@ def test_aeion_increase(skip_qtbot, msr_game_description, preset_manager):
     options = MagicMock()
     assert isinstance(base_configuration, MSRConfiguration)
 
-    tab = PresetMSRAeion(editor := PresetEditor(preset, options), msr_game_description, MagicMock())
+    tab = PresetMSRAeionAndEnergy(editor := PresetEditor(preset, options), msr_game_description, MagicMock())
     skip_qtbot.addWidget(tab)
     tab.on_preset_changed(preset)
 

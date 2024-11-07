@@ -59,7 +59,7 @@ async def test_handle_network_errors(skip_qtbot, mocker: MockerFixture, exceptio
         mock_warning.assert_awaited_once_with(root, ANY, ANY)
 
 
-@pytest.fixture()
+@pytest.fixture
 def session_api(skip_qtbot):
     network_client = MagicMock()
     network_client.server_call = AsyncMock()

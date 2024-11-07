@@ -1,5 +1,5 @@
 {
-    "schema_version": 26,
+    "schema_version": 27,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -911,7 +911,7 @@
             "BombJump": {
                 "long_name": "Bomb Jump",
                 "description": "By chaining multiple bombs, Samus can reach otherwise unattainable heights. Enabling this trick may require players to perform these maneuevers in unintended locations. Higher difficulties of this trick can integrate horizontal movement, unmorphing in midair, and extremely precise bomb placement and timing.<br /><a href='https://wiki.metroidprime.run/wiki/Bomb_Jump'>Check the wiki for more details.</a>",
-                "require_documentation_above": 0,
+                "require_documentation_above": 1,
                 "extra": {}
             },
             "SlopeJump": {
@@ -2209,31 +2209,6 @@
         "region": "Temple Grounds",
         "area": "Landing Site",
         "node": "Save Station"
-    },
-    "initial_states": {
-        "Default": [
-            {
-                "resource_type": "events",
-                "resource_name": "Event2",
-                "amount": 1
-            },
-            {
-                "resource_type": "events",
-                "resource_name": "Event4",
-                "amount": 1
-            },
-            {
-                "resource_type": "events",
-                "resource_name": "Event71",
-                "amount": 1
-            },
-            {
-                "resource_type": "events",
-                "resource_name": "Event78",
-                "amount": 1
-            }
-        ],
-        "Item Loss Disabled": []
     },
     "minimal_logic": {
         "items_to_exclude": [

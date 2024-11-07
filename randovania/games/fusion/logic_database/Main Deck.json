@@ -775,8 +775,17 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "ShinesparkTrick",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "OpenHatchLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -942,7 +951,7 @@
                 ]
             },
             "nodes": {
-                "Door to Eastern Hub": {
+                "Door to Concourse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -963,7 +972,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Eastern Hub",
+                        "area": "Concourse",
                         "node": "Door to Main Deck Recharge Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -997,7 +1006,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Eastern Hub": {
+                        "Door to Concourse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1048,7 +1057,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Eastern Hub": {
+                        "Door to Concourse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1057,7 +1066,7 @@
                         }
                     }
                 },
-                "Door to Eastern Hub": {
+                "Door to Concourse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1078,7 +1087,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Eastern Hub",
+                        "area": "Concourse",
                         "node": "Door to Main Deck Navigation Room East"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -1127,11 +1136,30 @@
                         "type": "and",
                         "data": {
                             "comment": null,
-                            "items": []
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "L2Locks",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "MainDeckHubVisited",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     },
                     "connections": {
-                        "Door to Eastern Hub": {
+                        "Door to Concourse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1243,7 +1271,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Kill Eye Door"
+                                        "data": "Can Kill Gadora"
                                     }
                                 ]
                             }
@@ -1592,7 +1620,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Operations Deck Navigation Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1601,6 +1629,23 @@
                                         "data": {
                                             "type": "events",
                                             "name": "MainDeckOperationsMissileShield",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Missile Shield": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Kill the Shield from the reverse side",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1785,7 +1830,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "and",
@@ -2093,7 +2138,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "10 DMG Missiles"
+                                                                "data": "10+ DMG Missiles"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -2278,7 +2323,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Freeze Enemies"
+                                                                "data": "Can Freeze Enemies With Any Weapon"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -2327,7 +2372,7 @@
                 }
             }
         },
-        "Maintenance Corridor": {
+        "Concourse Ventilation": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck14",
@@ -2358,7 +2403,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Arachnus Arena",
-                        "node": "Other to Maintenance Corridor"
+                        "node": "Other to Concourse Ventilation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2367,7 +2412,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Other to Eastern Hub": {
+                        "Other to Concourse": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2386,7 +2431,7 @@
                         }
                     }
                 },
-                "Other to Eastern Hub": {
+                "Other to Concourse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2407,8 +2452,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Eastern Hub",
-                        "node": "Other to Maintenance Corridor"
+                        "area": "Concourse",
+                        "node": "Other to Concourse Ventilation"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -2429,6 +2474,27 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Climb up wall",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Have Any Jump Upgrade"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2505,8 +2571,13 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Can Freeze Enemies"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Hi-Jump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "or",
@@ -2516,16 +2587,11 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "Intended method",
+                                                                    "comment": "Freeze Fune",
                                                                     "items": [
                                                                         {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Hi-Jump",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Any Weapon"
                                                                         }
                                                                     ]
                                                                 }
@@ -2533,14 +2599,14 @@
                                                             {
                                                                 "type": "and",
                                                                 "data": {
-                                                                    "comment": "HJ-Less: https://www.youtube.com/watch?v=AUkhZE_5CbE",
+                                                                    "comment": "Kill Fune, then WJ and Jump extend over: https://youtu.be/C56BsRG_eKY",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
                                                                                 "name": "WallJump",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -2548,8 +2614,75 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "tricks",
+                                                                                "name": "JumpExtends",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Kill Tough Beam-Resistant Enemy"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "NHJ WJ before it spawns, then freeze in mid-air: https://youtu.be/AUkhZE_5CbE",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Missiles"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Can Freeze Enemies With Ice Beam"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With Diffusion it's stricter: https://www.youtube.com/watch?v=H5AlKJwEuTU",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Freeze Enemies With Diffusion"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
                                                                                 "name": "Movement",
-                                                                                "amount": 2,
+                                                                                "amount": 3,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -2558,6 +2691,36 @@
                                                             }
                                                         ]
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "NHJ Jump, freeze it while stretched, then WJ of the left door to get on top: https://youtu.be/o-DdSO4E3-M",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Freeze Enemies With Any Weapon"
                                                 }
                                             ]
                                         }
@@ -2661,7 +2824,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Freeze Enemies"
+                                        "data": "Can Freeze Enemies With Any Weapon"
                                     }
                                 ]
                             }
@@ -2709,7 +2872,7 @@
                         "Door to Habitation Deck (Middle)": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "Hold left: https://youtu.be/1Vx2aVhG4W0",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -2846,7 +3009,26 @@
                         "type": "and",
                         "data": {
                             "comment": null,
-                            "items": []
+                            "items": [
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "items",
+                                        "name": "L4Locks",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                },
+                                {
+                                    "type": "resource",
+                                    "data": {
+                                        "type": "events",
+                                        "name": "MainDeckHubVisited",
+                                        "amount": 1,
+                                        "negate": false
+                                    }
+                                }
+                            ]
                         }
                     },
                     "connections": {
@@ -2925,42 +3107,17 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Jump mid-speedboost: https://www.youtube.com/watch?v=u3xzqtz6Gro",
                                             "items": [
                                                 {
-                                                    "type": "and",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": "Shinespark into the corner",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "ShinesparkTrick",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": "Jump mid-speedboost: https://www.youtube.com/watch?v=u3xzqtz6Gro",
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -3245,21 +3402,151 @@
                             }
                         },
                         "Other to Western Hub": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Can Break Single Bomb Blocks"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Single Bomb Blocks"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "Shinespark and recharge in Hornoad Hallway",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "L0Locks",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpeedBooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "DoorLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "EntranceRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With HJ: https://www.youtube.com/watch?v=EJ2G6thP16E",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Hi-Jump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "HJ-less: https://www.youtube.com/watch?v=yCRL0Pgeb3A",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "ShinesparkTrick",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -3655,7 +3942,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Quarantine Access": {
+                        "Door to Ruined Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3718,7 +4005,7 @@
                         }
                     }
                 },
-                "Door to Quarantine Access": {
+                "Door to Ruined Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3739,7 +4026,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Quarantine Access",
+                        "area": "Ruined Stairwell",
                         "node": "Door to Western Hub"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -3918,7 +4205,7 @@
                 }
             }
         },
-        "Eastern Hub": {
+        "Concourse": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck21",
@@ -3949,7 +4236,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Deck Recharge Room",
-                        "node": "Door to Eastern Hub"
+                        "node": "Door to Concourse"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -3997,7 +4284,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Deck Navigation Room East",
-                        "node": "Door to Eastern Hub"
+                        "node": "Door to Concourse"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4037,7 +4324,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Deck Save Room",
-                        "node": "Door to Eastern Hub"
+                        "node": "Door to Concourse"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4068,7 +4355,7 @@
                                 "items": []
                             }
                         },
-                        "Other to Maintenance Corridor": {
+                        "Other to Concourse Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4077,7 +4364,7 @@
                         }
                     }
                 },
-                "Other to Maintenance Corridor": {
+                "Other to Concourse Ventilation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4098,8 +4385,8 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Maintenance Corridor",
-                        "node": "Other to Eastern Hub"
+                        "area": "Concourse Ventilation",
+                        "node": "Other to Concourse"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
@@ -4215,7 +4502,28 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Freeze Enemies"
+                                        "data": "Can Freeze Enemies With Any Weapon"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "TODO: check if you can do this with jump extneds",
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Screw Single Walljump"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4224,7 +4532,7 @@
                 }
             }
         },
-        "Quarantine Access": {
+        "Ruined Stairwell": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck23",
@@ -4255,7 +4563,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Western Hub",
-                        "node": "Door to Quarantine Access"
+                        "node": "Door to Ruined Stairwell"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -4309,6 +4617,15 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "OpenHatchLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4347,7 +4664,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Main Elevator Access",
-                        "node": "Door to Quarantine Access"
+                        "node": "Door to Ruined Stairwell"
                     },
                     "default_dock_weakness": "L0 Hatch",
                     "exclude_from_dock_rando": false,
@@ -4441,7 +4758,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Quarantine Bay",
-                        "node": "Door to Quarantine Access"
+                        "node": "Door to Ruined Stairwell"
                     },
                     "default_dock_weakness": "Open Hatch",
                     "exclude_from_dock_rando": false,
@@ -4478,7 +4795,7 @@
                         "y": 344.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "TODO: future start location",
                     "layers": [
                         "default"
                     ],
@@ -4509,6 +4826,13 @@
                             }
                         },
                         "Door to Elevator to Sector 1 (SRX)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Sector Hub visited": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4587,6 +4911,31 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
+                    "connections": {
+                        "Elevator to Main Elevator Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Sector Hub visited": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 274.92,
+                        "y": 161.27,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "event_name": "MainDeckHubVisited",
                     "connections": {
                         "Elevator to Main Elevator Shaft": {
                             "type": "and",
@@ -5507,7 +5856,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Eastern Hub": {
+                        "Door to Concourse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5523,7 +5872,7 @@
                         }
                     }
                 },
-                "Door to Eastern Hub": {
+                "Door to Concourse": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5544,7 +5893,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Eastern Hub",
+                        "area": "Concourse",
                         "node": "Door to Main Deck Save Room"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -5689,7 +6038,8 @@
             "extra": {
                 "map_name": "Main Deck35",
                 "room_id": [
-                    35
+                    35,
+                    36
                 ]
             },
             "nodes": {
@@ -5847,7 +6197,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "ShinesparkTrick",
-                                                        "amount": 2,
+                                                        "amount": 3,
                                                         "negate": false
                                                     }
                                                 },
@@ -6301,10 +6651,29 @@
                     "location_category": "major",
                     "connections": {
                         "Beside Door": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "GeneratorHack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6340,6 +6709,23 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Arena": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "GeneratorHack",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Beside Door": {
                             "type": "and",
                             "data": {
@@ -6349,7 +6735,7 @@
                         }
                     }
                 },
-                "Other to Maintenance Corridor": {
+                "Other to Concourse Ventilation": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6370,7 +6756,7 @@
                     "dock_type": "Other",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Maintenance Corridor",
+                        "area": "Concourse Ventilation",
                         "node": "Other to Arachnus Arena"
                     },
                     "default_dock_weakness": "Open Passage",
@@ -6427,7 +6813,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -6436,6 +6822,23 @@
                                                         "name": "WallJump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "With Screw Attack Only - https://youtu.be/ycp5oCd5-9I",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -6478,7 +6881,7 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Beside Door": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -6489,6 +6892,32 @@
                                             "name": "Missiles",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "GeneratorHack",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6566,7 +6995,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Other to Maintenance Corridor": {
+                        "Other to Concourse Ventilation": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6586,7 +7015,7 @@
                         "Event - Arachnus": {
                             "type": "and",
                             "data": {
-                                "comment": "FIXME: add health requirements once these dont prevent missile start",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "or",
@@ -6599,6 +7028,40 @@
                                                         "type": "items",
                                                         "name": "Missiles",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Health Requirements",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Hitless: https://youtu.be/WCQdKVWgcXo?t=17",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 60,
                                                         "negate": false
                                                     }
                                                 }
@@ -6649,7 +7112,7 @@
                                 ]
                             }
                         },
-                        "Other to Maintenance Corridor": {
+                        "Other to Concourse Ventilation": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6967,7 +7430,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Quarantine Access": {
+                        "Door to Ruined Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6976,7 +7439,7 @@
                         }
                     }
                 },
-                "Door to Quarantine Access": {
+                "Door to Ruined Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6998,7 +7461,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Quarantine Access",
+                        "area": "Ruined Stairwell",
                         "node": "Door to Main Elevator Access"
                     },
                     "default_dock_weakness": "L0 Hatch",
@@ -7274,7 +7737,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -7369,7 +7832,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -7483,7 +7946,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     },
                                     {
                                         "type": "resource",
@@ -7611,6 +8074,23 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Scaffolding Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Jump on platform, don't fall down: https://youtu.be/tVICpkQOEh0",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Silo Save Room": {
                             "type": "and",
                             "data": {
@@ -7652,6 +8132,23 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
+                        "Door to Silo Entry": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Jump to platform, don't fall down: https://youtu.be/tVICpkQOEh0?t=18",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Silo Save Room": {
                             "type": "and",
                             "data": {
@@ -7714,58 +8211,6 @@
                                             "name": "EntranceRando",
                                             "amount": 1,
                                             "negate": true
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": "Open the gate. Without Charge, the shot must be precisely timed. With Charge, just let go of beam while in the transition.",
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "ChargeBeam",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Movement",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "WideBeam",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Movement",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
                                         }
                                     },
                                     {
@@ -7847,6 +8292,118 @@
                                             "type": "tricks",
                                             "name": "ShinesparkTrick",
                                             "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "OpenHatchLockRando",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Beam requirements.",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ChargeBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "WaveBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Having only one beam makes this harder to hit / have only one attempt",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "ChargeBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "WaveBeam",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Without Wave nor Charge, there's only one attempt and its hard.",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
                                             "negate": false
                                         }
                                     }
@@ -7994,6 +8551,15 @@
                                                         "amount": 1,
                                                         "negate": true
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "misc",
+                                                        "name": "OpenHatchLockRando",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8008,7 +8574,7 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Climb High Jump Wall"
+                                        "data": "Have Any Jump Upgrade"
                                     },
                                     {
                                         "type": "resource",
@@ -8138,7 +8704,7 @@
                                         "data": "Can Kill Tough Beam-Resistant Enemy"
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": "Dodge Pirates: https://www.youtube.com/watch?v=QAffTKp5seU",
                                             "items": [
@@ -8150,13 +8716,39 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage Boost",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 158,
                                                         "negate": false
                                                     }
                                                 }
@@ -8269,13 +8861,39 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Damage boost",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DamageBoosts",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
+                                                        "type": "damage",
+                                                        "name": "NormalDamage",
+                                                        "amount": 94,
                                                         "negate": false
                                                     }
                                                 }
@@ -8600,17 +9218,25 @@
                                             "comment": "Get up",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "WallJump",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": "WJ through holes: https://youtu.be/0OJgzfwgr5o",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Climb High Jump Wall"
+                                                    "data": "Have Any Jump Upgrade"
                                                 }
                                             ]
                                         }
@@ -8744,7 +9370,7 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Can Kill Eye Door"
+                                        "data": "Can Kill Gadora"
                                     },
                                     {
                                         "type": "or",
@@ -9447,7 +10073,7 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Can Climb High Jump Wall"
+                                                                "data": "Have Any Jump Upgrade"
                                                             },
                                                             {
                                                                 "type": "resource",
@@ -9776,7 +10402,7 @@
                 }
             }
         },
-        "Restricted Entrance": {
+        "Back Door to Sector 6 (NOC)": {
             "default_node": null,
             "extra": {
                 "map_name": "Main Deck62",
@@ -9807,7 +10433,7 @@
                     "default_connection": {
                         "region": "Sector 6 (NOC)",
                         "area": "Checkpoint to Restricted Zone",
-                        "node": "Other to Restricted Entrance"
+                        "node": "Other to Back Door to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "Tunnel",
                     "exclude_from_dock_rando": false,
@@ -9847,7 +10473,7 @@
                     "default_connection": {
                         "region": "Main Deck",
                         "area": "Restricted Save Room",
-                        "node": "Door to Restricted Entrance"
+                        "node": "Door to Back Door to Sector 6 (NOC)"
                     },
                     "default_dock_weakness": "L4 Hatch",
                     "exclude_from_dock_rando": false,
@@ -9887,7 +10513,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "SWJ",
+                                                        "comment": "SWJ - TODO: revisit with HJ only after SWJ is patched",
                                                         "items": [
                                                             {
                                                                 "type": "template",
@@ -9924,7 +10550,7 @@
                 ]
             },
             "nodes": {
-                "Door to Restricted Entrance": {
+                "Door to Back Door to Sector 6 (NOC)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9945,7 +10571,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Restricted Entrance",
+                        "area": "Back Door to Sector 6 (NOC)",
                         "node": "Door to Restricted Save Room"
                     },
                     "default_dock_weakness": "L4 Hatch",
@@ -9995,7 +10621,7 @@
                     "override_default_lock_requirement": null,
                     "ui_custom_name": null,
                     "connections": {
-                        "Door to Restricted Entrance": {
+                        "Door to Back Door to Sector 6 (NOC)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10547,10 +11173,12 @@
                                 "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "misc",
+                                            "name": "GeneratorHack",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -10637,15 +11265,17 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Habitation Deck Entrance (Upper)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": "Animals causes issues in generation with DLR, removed as an event for now",
                                 "items": [
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": []
+                                            "type": "misc",
+                                            "name": "GeneratorHack",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -10668,7 +11298,7 @@
                         "y": 410.23,
                         "z": 0.0
                     },
-                    "description": "TODO: Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
+                    "description": "FIXME: Causes issues with door lock rando.\n\nGeneration gets stuck after giving SJ and speed and trying to reach this event.",
                     "layers": [
                         "default"
                     ],
@@ -10699,6 +11329,13 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
+                        "Door to Habitation Deck Entrance (Middle)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Other to Habitation Ventilation (Lower)": {
                             "type": "or",
                             "data": {
@@ -10875,7 +11512,7 @@
                 ]
             },
             "nodes": {
-                "Door to Quarantine Access": {
+                "Door to Ruined Stairwell": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10896,7 +11533,7 @@
                     "dock_type": "Door",
                     "default_connection": {
                         "region": "Main Deck",
-                        "area": "Quarantine Access",
+                        "area": "Ruined Stairwell",
                         "node": "Door to Quarantine Bay"
                     },
                     "default_dock_weakness": "Open Hatch",
@@ -10930,7 +11567,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Door to Quarantine Access": {
+                        "Door to Ruined Stairwell": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12010,7 +12647,7 @@
                                                                         },
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "10 DMG Missiles"
+                                                                            "data": "10+ DMG Missiles"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -12087,7 +12724,7 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "template",
-                                                                                        "data": "10 DMG Missiles"
+                                                                                        "data": "10+ DMG Missiles"
                                                                                     }
                                                                                 ]
                                                                             }

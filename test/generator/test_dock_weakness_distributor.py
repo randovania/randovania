@@ -13,7 +13,7 @@ from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.generator_parameters import GeneratorParameters
 
 
-@pytest.fixture()
+@pytest.fixture
 def _force_blank_two_way(blank_game_description):
     object.__setattr__(
         blank_game_description.dock_weakness_database.dock_rando_config,

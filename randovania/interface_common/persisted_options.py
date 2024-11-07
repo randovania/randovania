@@ -193,6 +193,16 @@ def _msr_room_names_visible(options: dict) -> dict:
     return options
 
 
+def _remove_msr_fields(options: dict) -> dict:
+    if "game_samus_returns" in options:
+        options["game_samus_returns"].pop("input_directory", None)
+        options["game_samus_returns"].pop("input_exheader", None)
+        options["game_samus_returns"].pop("target_version", None)
+        options["game_samus_returns"]["input_file"] = None
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = [
     None,
     None,
@@ -229,6 +239,8 @@ _CONVERTER_FOR_VERSION = [
     _msr_room_names_visible,  # forces room name display to be on by default
     _only_new_fields,  # Adds tileset+background rotation for AM2R
     _only_new_fields,  # added MSR's music shuffle cosemetic option
+    _only_new_fields,  # added MSR's music sliders
+    _remove_msr_fields,  # removes MSR's exheader and input field
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

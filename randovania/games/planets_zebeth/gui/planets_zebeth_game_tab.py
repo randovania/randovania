@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.planets_zebeth.gui.generated.games_tab_planets_zebeth_widget_ui import (
     Ui_PlanetsZebethGameTabWidget,
 )

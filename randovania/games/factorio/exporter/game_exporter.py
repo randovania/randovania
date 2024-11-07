@@ -12,7 +12,6 @@ if TYPE_CHECKING:
 
 @dataclasses.dataclass(frozen=True)
 class FactorioGameExportParams(GameExportParams):
-    input_path: Path
     output_path: Path
 
 
@@ -20,7 +19,7 @@ class FactorioGameExporter(GameExporter):
     _busy: bool = False
 
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the exporter is busy right now
         """
@@ -50,7 +49,6 @@ class FactorioGameExporter(GameExporter):
         import factorio_randovania_mod
 
         factorio_randovania_mod.create(
-            factorio_path=export_params.input_path,
             patch_data=patch_data,
             output_folder=export_params.output_path,
         )

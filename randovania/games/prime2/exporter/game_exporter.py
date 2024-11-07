@@ -28,7 +28,7 @@ class EchoesGameExporter(GameExporter):
     _busy: bool = False
 
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the patcher is busy right now
         """
@@ -193,4 +193,4 @@ def copy_coin_chest(contents_path: Path):
         for pak in paks:
             manager.ensure_present(pak, dep.id)
 
-    manager.save_modifications(contents_path)
+    manager.save_modifications(contents_path.joinpath("files"))

@@ -6,10 +6,10 @@ from unittest.mock import MagicMock
 
 from PySide6 import QtCore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.games.dread.gui.preset_settings.dread_generation_tab import PresetDreadGeneration
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_editor import PresetEditor
 
 

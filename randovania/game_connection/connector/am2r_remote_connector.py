@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
     PickupEntryWithOwner,
     PlayerLocationEvent,
@@ -15,8 +16,7 @@ from randovania.game_description import default_database
 from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.am2r.pickup_database import progressive_items
-from randovania.games.game import RandovaniaGame
+from randovania.games.am2r.layout import progressive_items
 
 if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
