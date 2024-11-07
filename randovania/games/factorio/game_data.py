@@ -8,7 +8,6 @@ import randovania.game.generator
 import randovania.game.gui
 import randovania.game.layout
 from randovania.games.factorio import layout
-from randovania.layout.preset_describer import GamePresetDescriber
 
 if typing.TYPE_CHECKING:
     from randovania.exporter.game_exporter import GameExporter
@@ -98,7 +97,7 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     layout=randovania.game.layout.GameLayout(
         configuration=layout.FactorioConfiguration,
         cosmetic_patches=layout.FactorioCosmeticPatches,
-        preset_describer=GamePresetDescriber(),
+        preset_describer=layout.FactorioPresetDescriber(),
     ),
     options=_options,
     gui=_gui,
