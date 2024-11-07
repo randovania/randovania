@@ -621,6 +621,7 @@ class EchoesPatchDataFactory(PatchDataFactory):
             "dark_world_varia_suit_damage": self.configuration.varia_suit_damage,
             "dark_world_dark_suit_damage": self.configuration.dark_suit_damage,
             "hud_color": self.cosmetic_patches.hud_color if self.cosmetic_patches.use_hud_color else None,
+            "widescreen_hud": self.cosmetic_patches.widescreen_aspect_ratio,
         }
 
     def create_game_specific_data(self) -> dict[str, typing.Any]:
