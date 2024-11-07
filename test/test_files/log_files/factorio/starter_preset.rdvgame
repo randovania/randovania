@@ -1,16 +1,16 @@
 {
-    "schema_version": 28,
+    "schema_version": 29,
     "info": {
-        "randovania_version": "8.1.0.dev554-dirty",
-        "randovania_version_git": "530f6fc2",
-        "permalink": "DdNX9Q9gMlMPb8IJh5rXqNXyS5jrAO47",
+        "randovania_version": "8.6.0.dev432-dirty",
+        "randovania_version_git": "ba1b8544",
+        "permalink": "DdNCpJyYg7obhUQJh_FK9JHyS8rrAH1y",
         "has_spoiler": true,
-        "seed": 1027053325,
-        "hash": "K72Q6YBS",
-        "word_hash": "Explosive Atomic Upgrade",
+        "seed": 315910716,
+        "hash": "IKSJZGED",
+        "word_hash": "Piercing Assembling Steel",
         "presets": [
             {
-                "schema_version": 82,
+                "schema_version": 91,
                 "base_preset_uuid": null,
                 "name": "Starter Preset",
                 "uuid": "51f328a1-3b09-47a1-921f-b84d2cda1e4c",
@@ -64,7 +64,7 @@
                             "Logistic System": {
                                 "num_shuffled_pickups": 1
                             },
-                            "Optics": {
+                            "Lamp": {
                                 "num_shuffled_pickups": 1
                             },
                             "Wall": {
@@ -73,7 +73,7 @@
                             "Braking Force": {
                                 "num_shuffled_pickups": 1
                             },
-                            "Energy Weapons Damage": {},
+                            "Laser Weapons Damage": {},
                             "Follower Robot Count": {},
                             "Laser Shooting Speed": {},
                             "Mining Productivity": {
@@ -87,7 +87,7 @@
                             "Research Speed": {
                                 "num_shuffled_pickups": 5
                             },
-                            "Stack Inserter Capacity Bonus": {
+                            "Bulk Inserter Capacity Bonus": {
                                 "num_shuffled_pickups": 4
                             },
                             "Steel Axe": {
@@ -125,7 +125,7 @@
                             "Exoskeleton Equipment": {
                                 "num_shuffled_pickups": 1
                             },
-                            "Fusion Reactor Equipment": {
+                            "Fission Reactor Equipment": {
                                 "num_shuffled_pickups": 1
                             },
                             "Modular Armor": {
@@ -168,9 +168,6 @@
                                 "num_shuffled_pickups": 1
                             },
                             "Plastics": {
-                                "num_shuffled_pickups": 1
-                            },
-                            "Rocket Control Unit": {
                                 "num_shuffled_pickups": 1
                             },
                             "Rocket Fuel": {
@@ -221,6 +218,9 @@
                             "Oil Cracking": {
                                 "num_shuffled_pickups": 1
                             },
+                            "Oil Gathering": {
+                                "num_shuffled_pickups": 1
+                            },
                             "Oil Processing": {
                                 "num_shuffled_pickups": 2
                             },
@@ -235,6 +235,9 @@
                             },
                             "Steel Furnace": {
                                 "num_shuffled_pickups": 1
+                            },
+                            "Uranium Mining": {
+                                "num_included_in_starting_pickups": 1
                             },
                             "Uranium Processing": {
                                 "num_shuffled_pickups": 2
@@ -313,6 +316,18 @@
                             },
                             "Uranium Ammo": {
                                 "num_shuffled_pickups": 1
+                            },
+                            "Electric Mining Drill": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Repair Pack": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Radar": {
+                                "num_shuffled_pickups": 1
+                            },
+                            "Advanced Combinators": {
+                                "num_shuffled_pickups": 1
                             }
                         },
                         "default_pickups": {},
@@ -351,6 +366,7 @@
             "game": "factorio",
             "starting_equipment": {
                 "pickups": [
+                    "Uranium Mining"
                 ]
             },
             "starting_location": "Tech/Tech Tree/Spawn Point",
@@ -358,152 +374,156 @@
             "dock_weakness": {},
             "locations": {
                 "Tech": {
-                    "Tier 1/Pickup (Automation)": "Logistic Science Pack",
-                    "Tier 1/Pickup (Gun turret)": "Logistics",
-                    "Tier 1/Pickup (Wall)": "Solar Panel",
                     "Tier 1/Pickup (Automation science pack)": "Automation Science Pack",
-                    "Tier 10/Pickup (Atomic bomb)": "Modular Armor",
-                    "Tier 3/Pickup (Fluid storage)": "Plastics",
-                    "Tier 2/Pickup (Logistic science pack)": "Railway",
-                    "Tier 2/Pickup (Logistics)": "Inserter",
-                    "Tier 2/Pickup (Military)": "Steam Power",
-                    "Tier 2/Pickup (Optics)": "Electronics",
+                    "Tier 1/Pickup (Automation)": "Military Science Pack",
+                    "Tier 1/Pickup (Electronics)": "Construction Robotics",
+                    "Tier 1/Pickup (Gun turret)": "Medium Electric Pole",
+                    "Tier 1/Pickup (Steam power)": "Electronics",
+                    "Tier 1/Pickup (Wall)": "Speed Module",
+                    "Tier 10/Pickup (Atomic bomb)": "Repair Pack",
+                    "Tier 2/Pickup (Electric mining drill)": "Steel Processing",
+                    "Tier 2/Pickup (Lamp)": "Solar Panel",
+                    "Tier 2/Pickup (Logistic science pack)": "Atomic Bomb",
+                    "Tier 2/Pickup (Logistics)": "Electric Mining Drill",
+                    "Tier 2/Pickup (Military)": "Beacon",
+                    "Tier 2/Pickup (Radar)": "Accumulator",
+                    "Tier 2/Pickup (Repair pack)": "Belt Immunity Equipment",
+                    "Tier 2/Pickup (Steel axe)": "Logistics",
                     "Tier 2/Pickup (Steel processing)": "Logistics",
-                    "Tier 3/Pickup (Automation 2)": "Assembly Machine",
-                    "Tier 3/Pickup (Barrel handling)": "Research Productivity",
-                    "Tier 3/Pickup (Belt immunity equipment)": "Research Speed",
-                    "Tier 3/Pickup (Chemical science pack)": "Artillery",
-                    "Tier 3/Pickup (Electronics)": "Assembly Machine",
-                    "Tier 3/Pickup (Fast inserter)": "Inserter",
-                    "Tier 3/Pickup (Heavy armor)": "Accumulator",
-                    "Tier 3/Pickup (Military 2)": "Personal Laser Defense Equipment",
-                    "Tier 3/Pickup (Military science pack)": "Follower Capsule",
-                    "Tier 3/Pickup (Nightvision)": "Chemical Science Pack",
-                    "Tier 3/Pickup (Personal battery)": "Speed Module",
-                    "Tier 4/Pickup (Circuit network)": "Fluid Wagon",
-                    "Tier 4/Pickup (Efficiency module)": "Exoskeleton Equipment",
-                    "Tier 4/Pickup (Electric engine)": "Belt Immunity Equipment",
-                    "Tier 4/Pickup (Engine)": "Follower Capsule",
-                    "Tier 4/Pickup (Exoskeleton)": "Modular Armor",
-                    "Tier 4/Pickup (Explosives)": "Steel Processing",
-                    "Tier 4/Pickup (Flamethrower)": "Utility Science Pack",
-                    "Tier 4/Pickup (Flammables)": "Rocketry",
-                    "Tier 4/Pickup (Landfill)": "Regular Inserter Capacity Bonus",
-                    "Tier 4/Pickup (Lubricant)": "Electronics",
-                    "Tier 4/Pickup (Personal roboport)": "Follower Capsule",
-                    "Tier 4/Pickup (Portable solar panel)": "Stack Inserter Capacity Bonus",
-                    "Tier 4/Pickup (Productivity module)": "Longer Handed inserter",
-                    "Tier 4/Pickup (Speed module)": "Worker Robots Storage",
-                    "Tier 4/Pickup (Steel axe)": "Research Productivity",
-                    "Tier 4/Pickup (Worker robot speed 1)": "Worker Robots Speed",
-                    "Tier 5/Pickup (Advanced electronics)": "Research Productivity",
-                    "Tier 5/Pickup (Advanced material processing)": "Oil Processing",
-                    "Tier 5/Pickup (Advanced oil processing)": "Battery Equipment",
-                    "Tier 5/Pickup (Automated rail transportation)": "Research Speed",
-                    "Tier 5/Pickup (Automobilism)": "Worker Robots Storage",
-                    "Tier 5/Pickup (Battery)": "Stack Inserter Capacity Bonus",
-                    "Tier 5/Pickup (Braking force 1)": "Stack Inserter Capacity Bonus",
-                    "Tier 5/Pickup (Cliff explosives)": "Military",
-                    "Tier 5/Pickup (Construction robotics)": "Military",
-                    "Tier 5/Pickup (Defender)": "Land Mine",
-                    "Tier 5/Pickup (Discharge defense)": "Wall",
-                    "Tier 5/Pickup (Effect transmission)": "Regular Inserter Capacity Bonus",
-                    "Tier 5/Pickup (Efficiency module 2)": "Modular Armor",
-                    "Tier 5/Pickup (Electric energy accumulators)": "Oil Processing",
-                    "Tier 5/Pickup (Electric energy distribution 1)": "Worker Robots Storage",
-                    "Tier 5/Pickup (Electric energy distribution 2)": "Atomic Bomb",
-                    "Tier 5/Pickup (Energy shield)": "Oil Cracking",
-                    "Tier 5/Pickup (Energy weapons damage 1)": "Logistic Robotics",
-                    "Tier 5/Pickup (Explosive rocketry)": "Rocketry",
-                    "Tier 5/Pickup (Gate)": "Substation",
-                    "Tier 5/Pickup (Lab research speed 1)": "Solar Panel Equipment",
-                    "Tier 5/Pickup (Land mine)": "Assembly Machine",
-                    "Tier 5/Pickup (Laser shooting speed 1)": "Efficiency Module",
-                    "Tier 5/Pickup (Laser shooting speed 2)": "Night Vision Equipment",
-                    "Tier 5/Pickup (Laser)": "Mining Productivity",
-                    "Tier 5/Pickup (Military 3)": "Uranium Processing",
-                    "Tier 5/Pickup (Modular armor)": "Uranium Ammo",
-                    "Tier 5/Pickup (Modules)": "Concrete",
-                    "Tier 5/Pickup (Nuclear fuel reprocessing)": "Barrel Handling",
-                    "Tier 5/Pickup (Oil processing)": "Coal Liquefaction",
-                    "Tier 5/Pickup (Personal battery MK2)": "Logistic System",
-                    "Tier 5/Pickup (Personal laser defense)": "Long Handed inserter",
-                    "Tier 5/Pickup (Physical projectile damage 1)": "Stack Inserter Capacity Bonus",
-                    "Tier 5/Pickup (Production science pack)": "Productivity Module",
-                    "Tier 5/Pickup (Productivity module 2)": "Solid Fuel",
-                    "Tier 5/Pickup (Rail signals)": "Uranium Processing",
-                    "Tier 5/Pickup (Railway)": "Toolbelt",
-                    "Tier 5/Pickup (Refined flammables 1)": "Fluid Storage",
-                    "Tier 5/Pickup (Robotics)": "Logistics",
-                    "Tier 5/Pickup (Rocketry)": "Tank",
-                    "Tier 5/Pickup (Speed module 2)": "Landfill",
-                    "Tier 5/Pickup (Stack inserter)": "Flamethrower",
-                    "Tier 5/Pickup (Stronger explosives 1)": "Construction Robotics",
-                    "Tier 5/Pickup (Sulfur processing)": "Mining Productivity",
-                    "Tier 5/Pickup (Toolbelt)": "Car",
-                    "Tier 5/Pickup (Utility science pack)": "Rocket Control Unit",
-                    "Tier 5/Pickup (Weapon shooting speed 1)": "Personal Roboport Equipment",
-                    "Tier 5/Pickup (Worker robot speed 2)": "Production Science Pack",
-                    "Tier 6/Pickup (Advanced electronics 2)": "Battery",
-                    "Tier 6/Pickup (Advanced material processing 2)": "Optics",
-                    "Tier 6/Pickup (Automation 3)": "Research Speed",
-                    "Tier 6/Pickup (Braking force 2)": "Armor",
-                    "Tier 6/Pickup (Coal liquefaction)": "Braking Force",
-                    "Tier 6/Pickup (Concrete)": "Gun Turret",
-                    "Tier 6/Pickup (Destroyer)": "Gate",
-                    "Tier 6/Pickup (Distractor)": "Toolbelt",
-                    "Tier 6/Pickup (Energy shield MK2)": "Rocket Fuel",
-                    "Tier 6/Pickup (Energy weapons damage 2)": "Research Productivity",
-                    "Tier 6/Pickup (Fluid wagon)": "Engine Unit",
-                    "Tier 6/Pickup (Follower robot count 1)": "Mining Productivity",
-                    "Tier 6/Pickup (Follower robot count 2)": "Armor",
-                    "Tier 6/Pickup (Inserter capacity bonus 1)": "Worker Robots Speed",
-                    "Tier 6/Pickup (Inserter capacity bonus 2)": "Toolbelt",
-                    "Tier 6/Pickup (Lab research speed 2)": "Cliff Explosives",
-                    "Tier 6/Pickup (Lab research speed 3)": "Electronics",
-                    "Tier 6/Pickup (Laser turret)": "Flying Robot Frame",
-                    "Tier 6/Pickup (Logistic robotics)": "Lubricant",
-                    "Tier 6/Pickup (Logistics 2)": "Medium Electric Pole",
-                    "Tier 6/Pickup (Logistics 3)": "Nuclear Power",
-                    "Tier 6/Pickup (Military 4)": "Efficiency Module",
-                    "Tier 6/Pickup (Mining productivity 1)": "Military Science Pack",
-                    "Tier 6/Pickup (Personal roboport MK2)": "Energy Shield Equipment",
-                    "Tier 6/Pickup (Physical projectile damage 2)": "Efficiency Module",
-                    "Tier 6/Pickup (Plastics)": "Military",
-                    "Tier 6/Pickup (Portable fusion reactor)": "Military",
-                    "Tier 6/Pickup (Power armor)": "Research Speed",
-                    "Tier 6/Pickup (Refined flammables 2)": "Research Speed",
-                    "Tier 6/Pickup (Solar energy)": "Sulfur",
-                    "Tier 6/Pickup (Stronger explosives 2)": "Explosives",
-                    "Tier 6/Pickup (Tank)": "Steel Furnace",
-                    "Tier 6/Pickup (Uranium processing)": "Inserter",
-                    "Tier 6/Pickup (Weapon shooting speed 2)": "Battery Equipment",
-                    "Tier 6/Pickup (Worker robot cargo size 1)": "Worker Robots Speed",
-                    "Tier 6/Pickup (Worker robot speed 3)": "Engine Unit",
-                    "Tier 7/Pickup (Efficiency module 3)": "Laser Turret",
-                    "Tier 7/Pickup (Lab research speed 4)": "Speed Module",
-                    "Tier 7/Pickup (Lab research speed 5)": "Mining Productivity",
-                    "Tier 7/Pickup (Lab research speed 6)": "Circuit Network",
-                    "Tier 7/Pickup (Logistic system)": "Energy Shield Equipment",
-                    "Tier 7/Pickup (Low density structure)": "Beacon",
-                    "Tier 7/Pickup (Mining productivity 2)": "Productivity Module",
-                    "Tier 7/Pickup (Nuclear power)": "Research Productivity",
-                    "Tier 7/Pickup (Power armor MK2)": "Speed Module",
-                    "Tier 7/Pickup (Productivity module 3)": "Personal Roboport Equipment",
-                    "Tier 7/Pickup (Rocket control unit)": "Productivity Module",
-                    "Tier 7/Pickup (Rocket fuel)": "Discharge Defense Equipment",
-                    "Tier 7/Pickup (Speed module 3)": "Steel Axe",
-                    "Tier 7/Pickup (Worker robot cargo size 2)": "Worker Robots Speed",
-                    "Tier 7/Pickup (Worker robot speed 4)": "Big Electric Pole",
-                    "Tier 8/Pickup (Artillery)": "Low Density Structure",
-                    "Tier 8/Pickup (Kovarex enrichment process)": "Worker Robots Storage",
-                    "Tier 8/Pickup (Mining productivity 3)": "Fusion Reactor Equipment",
+                    "Tier 3/Pickup (Automation 2)": "Chemical Science Pack",
+                    "Tier 3/Pickup (Barrel handling)": "Inserter",
+                    "Tier 3/Pickup (Belt immunity equipment)": "Productivity Module",
+                    "Tier 3/Pickup (Chemical science pack)": "Uranium Processing",
+                    "Tier 3/Pickup (Fast inserter)": "Logistic Science Pack",
+                    "Tier 3/Pickup (Heavy armor)": "Military",
+                    "Tier 3/Pickup (Military 2)": "Assembly Machine",
+                    "Tier 3/Pickup (Military science pack)": "Inserter",
+                    "Tier 3/Pickup (Nightvision)": "Worker Robots Storage",
+                    "Tier 3/Pickup (Personal battery)": "Steam Power",
+                    "Tier 4/Pickup (Advanced combinators)": "Battery Equipment",
+                    "Tier 4/Pickup (Circuit network)": "Oil Processing",
+                    "Tier 4/Pickup (Efficiency module)": "Research Productivity",
+                    "Tier 4/Pickup (Electric engine)": "Utility Science Pack",
+                    "Tier 4/Pickup (Engine)": "Assembly Machine",
+                    "Tier 4/Pickup (Exoskeleton)": "Follower Capsule",
+                    "Tier 4/Pickup (Explosives)": "Follower Capsule",
+                    "Tier 4/Pickup (Flamethrower)": "Exoskeleton Equipment",
+                    "Tier 4/Pickup (Flammables)": "Regular Inserter Capacity Bonus",
+                    "Tier 4/Pickup (Landfill)": "Railway",
+                    "Tier 4/Pickup (Lubricant)": "Inserter",
+                    "Tier 4/Pickup (Personal roboport)": "Uranium Processing",
+                    "Tier 4/Pickup (Portable solar panel)": "Spidertron",
+                    "Tier 4/Pickup (Productivity module)": "Speed Module",
+                    "Tier 4/Pickup (Speed module)": "Mining Productivity",
+                    "Tier 4/Pickup (Worker robot speed 1)": "Mining Productivity",
+                    "Tier 5/Pickup (Advanced circuit)": "Tank",
+                    "Tier 5/Pickup (Advanced material processing)": "Efficiency Module",
+                    "Tier 5/Pickup (Advanced oil processing)": "Gate",
+                    "Tier 5/Pickup (Automobilism)": "Logistic Robotics",
+                    "Tier 5/Pickup (Battery)": "Speed Module",
+                    "Tier 5/Pickup (Braking force 1)": "Research Speed",
+                    "Tier 5/Pickup (Bulk inserter)": "Research Speed",
+                    "Tier 5/Pickup (Cliff explosives)": "Coal Liquefaction",
+                    "Tier 5/Pickup (Construction robotics)": "Electronics",
+                    "Tier 5/Pickup (Defender)": "Braking Force",
+                    "Tier 5/Pickup (Discharge defense)": "Night Vision Equipment",
+                    "Tier 5/Pickup (Effect transmission)": "Barrel Handling",
+                    "Tier 5/Pickup (Efficiency module 2)": "Armor",
+                    "Tier 5/Pickup (Electric energy accumulators)": "Lubricant",
+                    "Tier 5/Pickup (Electric energy distribution 1)": "Laser Turret",
+                    "Tier 5/Pickup (Electric energy distribution 2)": "Worker Robots Speed",
+                    "Tier 5/Pickup (Energy shield)": "Regular Inserter Capacity Bonus",
+                    "Tier 5/Pickup (Energy weapons damage 1)": "Steel Furnace",
+                    "Tier 5/Pickup (Explosive rocketry)": "Car",
+                    "Tier 5/Pickup (Follower robot count 1)": "Rocket Fuel",
+                    "Tier 5/Pickup (Gate)": "Worker Robots Storage",
+                    "Tier 5/Pickup (Lab research speed 1)": "Oil Gathering",
+                    "Tier 5/Pickup (Land mine)": "Explosives",
+                    "Tier 5/Pickup (Laser shooting speed 1)": "Mining Productivity",
+                    "Tier 5/Pickup (Laser shooting speed 2)": "Land Mine",
+                    "Tier 5/Pickup (Laser)": "Lamp",
+                    "Tier 5/Pickup (Military 3)": "Battery",
+                    "Tier 5/Pickup (Modular armor)": "Military",
+                    "Tier 5/Pickup (Modules)": "Uranium Ammo",
+                    "Tier 5/Pickup (Nuclear fuel reprocessing)": "Fission Reactor Equipment",
+                    "Tier 5/Pickup (Oil gathering)": "Flying Robot Frame",
+                    "Tier 5/Pickup (Oil processing)": "Concrete",
+                    "Tier 5/Pickup (Personal battery MK2)": "Fluid Wagon",
+                    "Tier 5/Pickup (Personal laser defense)": "Electronics",
+                    "Tier 5/Pickup (Physical projectile damage 1)": "Flamethrower",
+                    "Tier 5/Pickup (Production science pack)": "Personal Laser Defense Equipment",
+                    "Tier 5/Pickup (Productivity module 2)": "Bulk Inserter Capacity Bonus",
+                    "Tier 5/Pickup (Railway)": "Battery Equipment",
+                    "Tier 5/Pickup (Refined flammables 1)": "Bulk Inserter Capacity Bonus",
+                    "Tier 5/Pickup (Robotics)": "Toolbelt",
+                    "Tier 5/Pickup (Rocketry)": "Longer Handed inserter",
+                    "Tier 5/Pickup (Speed module 2)": "Worker Robots Speed",
+                    "Tier 5/Pickup (Stronger explosives 1)": "Efficiency Module",
+                    "Tier 5/Pickup (Sulfur processing)": "Worker Robots Speed",
+                    "Tier 5/Pickup (Toolbelt)": "Sulfur",
+                    "Tier 5/Pickup (Uranium mining)": "Worker Robots Storage",
+                    "Tier 5/Pickup (Uranium processing)": "Plastics",
+                    "Tier 5/Pickup (Utility science pack)": "Mining Productivity",
+                    "Tier 5/Pickup (Weapon shooting speed 1)": "Productivity Module",
+                    "Tier 5/Pickup (Worker robot speed 2)": "Toolbelt",
+                    "Tier 6/Pickup (Advanced material processing 2)": "Advanced Combinators",
+                    "Tier 6/Pickup (Automated rail transportation)": "Engine Unit",
+                    "Tier 6/Pickup (Automation 3)": "Research Productivity",
+                    "Tier 6/Pickup (Braking force 2)": "Circuit Network",
+                    "Tier 6/Pickup (Coal liquefaction)": "Worker Robots Speed",
+                    "Tier 6/Pickup (Concrete)": "Personal Roboport Equipment",
+                    "Tier 6/Pickup (Destroyer)": "Long Handed inserter",
+                    "Tier 6/Pickup (Distractor)": "Worker Robots Storage",
+                    "Tier 6/Pickup (Energy shield MK2)": "Wall",
+                    "Tier 6/Pickup (Energy weapons damage 2)": "Efficiency Module",
+                    "Tier 6/Pickup (Fluid wagon)": "Military",
+                    "Tier 6/Pickup (Follower robot count 2)": "Logistic System",
+                    "Tier 6/Pickup (Inserter capacity bonus 1)": "Oil Processing",
+                    "Tier 6/Pickup (Inserter capacity bonus 2)": "Oil Cracking",
+                    "Tier 6/Pickup (Lab research speed 2)": "Solar Panel Equipment",
+                    "Tier 6/Pickup (Lab research speed 3)": "Worker Robots Speed",
+                    "Tier 6/Pickup (Laser turret)": "Research Productivity",
+                    "Tier 6/Pickup (Logistic robotics)": "Energy Shield Equipment",
+                    "Tier 6/Pickup (Logistics 2)": "Logistics",
+                    "Tier 6/Pickup (Logistics 3)": "Artillery",
+                    "Tier 6/Pickup (Military 4)": "Bulk Inserter Capacity Bonus",
+                    "Tier 6/Pickup (Mining productivity 1)": "Modular Armor",
+                    "Tier 6/Pickup (Personal roboport MK2)": "Regular Inserter Capacity Bonus",
+                    "Tier 6/Pickup (Physical projectile damage 2)": "Military",
+                    "Tier 6/Pickup (Plastics)": "Engine Unit",
+                    "Tier 6/Pickup (Portable fission reactor)": "Rocketry",
+                    "Tier 6/Pickup (Power armor)": "Worker Robots Storage",
+                    "Tier 6/Pickup (Processing unit)": "Research Speed",
+                    "Tier 6/Pickup (Refined flammables 2)": "Rocketry",
+                    "Tier 6/Pickup (Solar energy)": "Modular Armor",
+                    "Tier 6/Pickup (Stronger explosives 2)": "Big Electric Pole",
+                    "Tier 6/Pickup (Tank)": "Modular Armor",
+                    "Tier 6/Pickup (Weapon shooting speed 2)": "Follower Capsule",
+                    "Tier 6/Pickup (Worker robot cargo size 1)": "Bulk Inserter Capacity Bonus",
+                    "Tier 6/Pickup (Worker robot speed 3)": "Assembly Machine",
+                    "Tier 7/Pickup (Efficiency module 3)": "Nuclear Power",
+                    "Tier 7/Pickup (Lab research speed 4)": "Substation",
+                    "Tier 7/Pickup (Lab research speed 5)": "Research Speed",
+                    "Tier 7/Pickup (Lab research speed 6)": "Personal Roboport Equipment",
+                    "Tier 7/Pickup (Logistic system)": "Armor",
+                    "Tier 7/Pickup (Low density structure)": "Energy Shield Equipment",
+                    "Tier 7/Pickup (Mining productivity 2)": "Landfill",
+                    "Tier 7/Pickup (Nuclear power)": "Solid Fuel",
+                    "Tier 7/Pickup (Power armor MK2)": "Production Science Pack",
+                    "Tier 7/Pickup (Productivity module 3)": "Research Productivity",
+                    "Tier 7/Pickup (Rocket fuel)": "Fluid Storage",
+                    "Tier 7/Pickup (Speed module 3)": "Electric Furnace",
+                    "Tier 7/Pickup (Worker robot cargo size 2)": "Radar",
+                    "Tier 7/Pickup (Worker robot speed 4)": "Toolbelt",
+                    "Tier 8/Pickup (Artillery)": "Productivity Module",
+                    "Tier 8/Pickup (Kovarex enrichment process)": "Research Productivity",
+                    "Tier 8/Pickup (Mining productivity 3)": "Discharge Defense Equipment",
                     "Tier 8/Pickup (Rocket silo)": "Rocket Silo",
-                    "Tier 8/Pickup (Space science pack)": "Spidertron",
-                    "Tier 8/Pickup (Uranium ammo)": "Worker Robots Storage",
-                    "Tier 8/Pickup (Worker robot cargo size 3)": "Regular Inserter Capacity Bonus",
-                    "Tier 8/Pickup (Worker robot speed 5)": "Worker Robots Speed",
-                    "Tier 9/Pickup (Spidertron)": "Electric Furnace"
+                    "Tier 8/Pickup (Space science pack)": "Steel Axe",
+                    "Tier 8/Pickup (Uranium ammo)": "Low Density Structure",
+                    "Tier 8/Pickup (Worker robot cargo size 3)": "Gun Turret",
+                    "Tier 8/Pickup (Worker robot speed 5)": "Research Speed",
+                    "Tier 9/Pickup (Spidertron)": "Cliff Explosives"
                 }
             },
             "hints": {},
@@ -511,51 +531,50 @@
                 "recipes": {
                     "automation-science-pack": {
                         "ingredients": {
-                            "coal": 2,
-                            "copper-cable": 2
+                            "copper-ore": 1,
+                            "electronic-circuit": 1
                         }
                     },
                     "logistic-science-pack": {
                         "ingredients": {
-                            "copper-cable": 1,
-                            "inserter": 1,
-                            "iron-stick": 2
+                            "electronic-circuit": 1,
+                            "shotgun-shell": 1
                         }
                     },
                     "military-science-pack": {
                         "ingredients": {
-                            "steam": 10,
-                            "uranium-238": 1
+                            "concrete": 1,
+                            "copper-cable": 3,
+                            "piercing-shotgun-shell": 1
                         }
                     },
                     "chemical-science-pack": {
                         "ingredients": {
-                            "pipe": 1,
-                            "explosives": 1,
-                            "explosive-cannon-shell": 1
+                            "assembling-machine-1": 1,
+                            "electric-engine-unit": 1,
+                            "rocket": 1
                         }
                     },
                     "production-science-pack": {
                         "ingredients": {
-                            "copper-cable": 1,
-                            "stack-inserter": 1
+                            "military-science-pack": 1,
+                            "processing-unit": 1,
+                            "stone-wall": 1
                         }
                     },
                     "utility-science-pack": {
                         "ingredients": {
-                            "copper-cable": 2,
-                            "lubricant": 10,
-                            "hazard-concrete": 6,
-                            "rocket-control-unit": 1,
-                            "water-barrel": 1
+                            "electronic-circuit": 1,
+                            "fluid-wagon": 1,
+                            "military-science-pack": 1,
+                            "refined-hazard-concrete": 1
                         }
                     },
                     "rocket-part": {
                         "ingredients": {
-                            "copper-ore": 1,
-                            "energy-shield-mk2-equipment": 1,
-                            "iron-chest": 6,
-                            "steel-chest": 1
+                            "assembling-machine-3": 2,
+                            "exoskeleton-equipment": 1,
+                            "storage-tank": 1
                         }
                     }
                 }
@@ -563,43 +582,58 @@
         }
     ],
     "item_order": [
-        "Logistics at Tech/Tier 2/Pickup (Steel processing)",
-        "Inserter at Tech/Tier 3/Pickup (Fast inserter)",
-        "Railway at Tech/Tier 2/Pickup (Logistic science pack)",
-        "Assembly Machine at Tech/Tier 3/Pickup (Electronics)",
-        "Plastics at Tech/Tier 2/Pickup (Fluid storage)",
-        "Inserter at Tech/Tier 2/Pickup (Logistics)",
-        "Solar Panel at Tech/Tier 1/Pickup (Wall)",
-        "Logistic Science Pack at Tech/Tier 1/Pickup (Automation)",
-        "Accumulator at Tech/Tier 3/Pickup (Heavy armor)",
-        "Logistics at Tech/Tier 1/Pickup (Gun turret)",
-        "Steam Power at Tech/Tier 2/Pickup (Military)",
-        "Electronics at Tech/Tier 2/Pickup (Optics)",
-        "Coal Liquefaction at Tech/Tier 5/Pickup (Oil processing)",
-        "Oil Processing at Tech/Tier 5/Pickup (Advanced material processing)",
-        "Assembly Machine at Tech/Tier 3/Pickup (Automation 2)",
-        "Steel Processing at Tech/Tier 4/Pickup (Explosives)",
-        "Construction Robotics at Tech/Tier 5/Pickup (Stronger explosives 1)",
-        "Chemical Science Pack at Tech/Tier 3/Pickup (Nightvision)",
-        "Military Science Pack at Tech/Tier 6/Pickup (Mining productivity 1)",
-        "Sulfur at Tech/Tier 6/Pickup (Solar energy)",
-        "Uranium Processing at Tech/Tier 5/Pickup (Rail signals)",
-        "Explosives at Tech/Tier 6/Pickup (Stronger explosives 2)",
-        "Tank at Tech/Tier 5/Pickup (Rocketry)",
-        "Inserter at Tech/Tier 6/Pickup (Uranium processing)",
-        "Lubricant at Tech/Tier 6/Pickup (Logistic robotics)",
-        "Electronics at Tech/Tier 4/Pickup (Lubricant)",
-        "Rocket Control Unit at Tech/Tier 5/Pickup (Utility science pack)",
-        "Electronics at Tech/Tier 6/Pickup (Lab research speed 3)",
-        "Production Science Pack at Tech/Tier 5/Pickup (Worker robot speed 2)",
-        "Barrel Handling at Tech/Tier 5/Pickup (Nuclear fuel reprocessing)",
-        "Research Speed at Tech/Tier 6/Pickup (Power armor)",
-        "Speed Module at Tech/Tier 3/Pickup (Personal battery)",
-        "Assembly Machine at Tech/Tier 5/Pickup (Land mine)",
-        "Utility Science Pack at Tech/Tier 4/Pickup (Flamethrower)",
-        "Concrete at Tech/Tier 5/Pickup (Modules)",
-        "Energy Shield Equipment at Tech/Tier 7/Pickup (Logistic system)",
-        "Low Density Structure at Tech/Tier 8/Pickup (Artillery)",
-        "Energy Shield Equipment at Tech/Tier 6/Pickup (Personal roboport MK2)"
-    ]
+        "Automation Science Pack at Tech/Tier 1/Pickup (Automation science pack)",
+        "Electronics at Tech/Tier 1/Pickup (Steam power)",
+        "Speed Module at Tech/Tier 1/Pickup (Wall)",
+        "Solar Panel at Tech/Tier 2/Pickup (Lamp)",
+        "Steel Processing at Tech/Tier 2/Pickup (Electric mining drill)",
+        "Logistics at Tech/Tier 2/Pickup (Steel axe)",
+        "Military at Tech/Tier 3/Pickup (Heavy armor)",
+        "Logistic Science Pack at Tech/Tier 3/Pickup (Fast inserter)",
+        "Assembly Machine at Tech/Tier 3/Pickup (Military 2)",
+        "Electric Mining Drill at Tech/Tier 2/Pickup (Logistics)",
+        "Inserter at Tech/Tier 3/Pickup (Military science pack)",
+        "Accumulator at Tech/Tier 2/Pickup (Radar)",
+        "Railway at Tech/Tier 4/Pickup (Landfill)",
+        "Inserter at Tech/Tier 3/Pickup (Barrel handling)",
+        "Construction Robotics at Tech/Tier 1/Pickup (Electronics)",
+        "Assembly Machine at Tech/Tier 4/Pickup (Engine)",
+        "Logistics at Tech/Tier 6/Pickup (Logistics 2)",
+        "Oil Gathering at Tech/Tier 5/Pickup (Lab research speed 1)",
+        "Oil Cracking at Tech/Tier 6/Pickup (Inserter capacity bonus 2)",
+        "Steam Power at Tech/Tier 3/Pickup (Personal battery)",
+        "Military at Tech/Tier 5/Pickup (Modular armor)",
+        "Concrete at Tech/Tier 5/Pickup (Oil processing)",
+        "Coal Liquefaction at Tech/Tier 5/Pickup (Cliff explosives)",
+        "Sulfur at Tech/Tier 5/Pickup (Toolbelt)",
+        "Lubricant at Tech/Tier 5/Pickup (Electric energy accumulators)",
+        "Chemical Science Pack at Tech/Tier 3/Pickup (Automation 2)",
+        "Oil Processing at Tech/Tier 4/Pickup (Circuit network)",
+        "Oil Processing at Tech/Tier 6/Pickup (Inserter capacity bonus 1)",
+        "Military at Tech/Tier 6/Pickup (Physical projectile damage 2)",
+        "Military Science Pack at Tech/Tier 1/Pickup (Automation)",
+        "Engine Unit at Tech/Tier 6/Pickup (Plastics)",
+        "Military at Tech/Tier 6/Pickup (Fluid wagon)",
+        "Explosives at Tech/Tier 5/Pickup (Land mine)",
+        "Rocketry at Tech/Tier 6/Pickup (Refined flammables 2)",
+        "Engine Unit at Tech/Tier 6/Pickup (Automated rail transportation)",
+        "Electronics at Tech/Tier 5/Pickup (Construction robotics)",
+        "Plastics at Tech/Tier 5/Pickup (Uranium processing)",
+        "Inserter at Tech/Tier 4/Pickup (Lubricant)",
+        "Electronics at Tech/Tier 5/Pickup (Personal laser defense)",
+        "Wall at Tech/Tier 6/Pickup (Energy shield MK2)",
+        "Fluid Wagon at Tech/Tier 5/Pickup (Personal battery MK2)",
+        "Utility Science Pack at Tech/Tier 4/Pickup (Electric engine)",
+        "Assembly Machine at Tech/Tier 6/Pickup (Worker robot speed 3)",
+        "Production Science Pack at Tech/Tier 7/Pickup (Power armor MK2)",
+        "Research Speed at Tech/Tier 7/Pickup (Lab research speed 5)",
+        "Radar at Tech/Tier 7/Pickup (Worker robot cargo size 2)",
+        "Low Density Structure at Tech/Tier 8/Pickup (Uranium ammo)",
+        "Rocket Fuel at Tech/Tier 5/Pickup (Follower robot count 1)",
+        "Solid Fuel at Tech/Tier 7/Pickup (Nuclear power)",
+        "Exoskeleton Equipment at Tech/Tier 4/Pickup (Flamethrower)",
+        "Battery at Tech/Tier 5/Pickup (Military 3)",
+        "Fluid Storage at Tech/Tier 7/Pickup (Rocket fuel)"
+    ],
+    "checksum": "0d544873c2ae5d569eb2049fea08e68cbec5ef9150a0bf37713110f61b9fb7ec161661414c2ef5c3a5e4af0fc0c993e934073dd6f9483609dfa5a0ed12b5520f"
 }

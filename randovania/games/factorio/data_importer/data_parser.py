@@ -49,8 +49,6 @@ def get_recipes_for(recipes_raw: dict) -> dict[str, set[str]]:
     recipes_for["petroleum-gas"].remove("advanced-oil-processing")  # progressive with basic
     recipes_for["petroleum-gas"].remove("light-oil-cracking")  # implies into having gas already
 
-    del recipes_for["electric-energy-interface"]  # cheat item
-
     return recipes_for
 
 
