@@ -399,8 +399,8 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                     world_menu.addSeparator()
                     create_claim_for_yourself_entry()
 
-                    if self.is_admin():
-                        create_claim_for_each_player_entry()
+                if self.is_admin():
+                    create_claim_for_each_player_entry()
 
             elif owner is not None and (
                 self.is_admin() or self._session.allow_everyone_claim_world or owner == self.your_id
