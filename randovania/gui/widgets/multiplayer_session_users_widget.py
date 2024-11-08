@@ -100,8 +100,11 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
     _last_session: MultiplayerSessionEntry | None = None
     _session: MultiplayerSessionEntry
-    _user_widgets: dict[int, UserWidgetEntry]
+    _user_widgets: dict[UserID, UserWidgetEntry]
     _world_widgets: dict[tuple[UserID, uuid.UUID], WorldWidgetEntry]  # (user id, world UUID): worldWidgetEntry
+
+    UNCLAIMED_PSEUDO_USER_ID = -1
+    ALL_WORLDS_PSEUDO_USER_ID = -2
 
     def __init__(self, options: Options, window_manager: WindowManager, session_api: MultiplayerSessionApi):
         super().__init__()
@@ -341,6 +344,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
     def _create_world_item(
         self, world_id: uuid.UUID, parent: QtWidgets.QTreeWidgetItem, owner: int | None
     ) -> WorldWidgetEntry:
+        def is_valid_owner(owner: int) -> bool:
+            return owner is not None and owner >= 0
+
         in_generation = self._session.generation_in_progress is not None
         has_layout = self._session.game_details is not None
         can_change_preset = not has_layout and not in_generation
@@ -391,7 +397,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             def create_unclaim_entry(menu_caption: str) -> None:
                 connect_to(world_menu.addAction(menu_caption), self._world_unclaim, world_id, owner)
 
-            if owner is None and (self.is_admin() or self._session.allow_everyone_claim_world):
+            if not is_valid_owner(owner) and (self.is_admin() or self._session.allow_everyone_claim_world):
                 if self._session.users[self.your_id].worlds.get(world_id):
                     world_menu.addSeparator()
                     create_unclaim_entry("Unclaim from yourself")
@@ -402,7 +408,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 if self.is_admin():
                     create_claim_for_each_player_entry()
 
-            elif owner is not None and (
+            elif is_valid_owner(owner) and (
                 self.is_admin() or self._session.allow_everyone_claim_world or owner == self.your_id
             ):
                 text = "Unclaim"
@@ -420,7 +426,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             delete_action.setEnabled(can_change_preset)
             connect_to(delete_action, self._world_delete, world_id)
 
-        if owner is not None:
+        if is_valid_owner(owner):
             world_menu.addSeparator()
             connect_to(world_menu.addAction("Watch inventory"), self._watch_inventory, world_id, owner)
 
@@ -495,7 +501,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
 
             for world_uid, world in world_by_id.items():
                 if world_uid in unclaimed_worlds:
-                    self._create_world_item(world_uid, unclaimed_world_item, None).update(
+                    self._create_world_item(world_uid, unclaimed_world_item, self.UNCLAIMED_PSEUDO_USER_ID).update(
                         world_by_id[world_uid],
                         UserWorldDetail(GameConnectionStatus.Unclaimed, datetime.datetime.min),
                     )
@@ -506,7 +512,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             total_world_item.setText(0, "All Worlds")
             for world_uid, world in world_by_id.items():
                 if world_uid in world_by_id.keys():
-                    self._create_world_item(world_uid, total_world_item, None).update(
+                    self._create_world_item(world_uid, total_world_item, self.ALL_WORLDS_PSEUDO_USER_ID).update(
                         world_by_id[world_uid],
                         UserWorldDetail(GameConnectionStatus.Empty, datetime.datetime.min),
                     )
@@ -529,3 +535,16 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
             self._user_widgets[user.id].update(user)
             for world_id, state in user.worlds.items():
                 self._world_widgets[user.id, world_id].update(session.get_world(world_id), state)
+
+        for pseudo_user in [self.UNCLAIMED_PSEUDO_USER_ID, self.ALL_WORLDS_PSEUDO_USER_ID]:
+            for world in self._session.worlds:
+                if self._world_widgets.get((pseudo_user, world.id), None) is not None:
+                    self._world_widgets[pseudo_user, world.id].update(
+                        session.get_world(world.id),
+                        UserWorldDetail(
+                            GameConnectionStatus.Unclaimed
+                            if pseudo_user == self.UNCLAIMED_PSEUDO_USER_ID
+                            else GameConnectionStatus.Empty,
+                            datetime.datetime.min,
+                        ),
+                    )
