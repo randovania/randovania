@@ -141,6 +141,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
         return [
             you is not None and you.admin,
             session.allow_coop,
+            session.allow_everyone_claim_world,
             [(user.id, user.name, list(user.worlds.keys())) for user in session.users_list],
             [w.id for w in session.worlds],
             session.generation_in_progress,

@@ -20,7 +20,6 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
-from randovania.gui.lib.async_dialog import message_box
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -900,7 +899,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     async def _on_allow_coop_check(self):
         if self.allow_coop_check.isChecked():
-            await message_box(
+            await async_dialog.message_box(
                 self,
                 QtWidgets.QMessageBox.Icon.Information,
                 "Information",
@@ -912,17 +911,15 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             )
         else:
             world_count = collections.defaultdict(int)
-            users_to_unclaim = collections.defaultdict(list)
             is_world_assigned_to_multiple = False
             for user in self._session.users.values():
                 for world in user.worlds:
                     world_count[world] += 1
                     if world_count[world] >= 2:
                         is_world_assigned_to_multiple = True
-                        users_to_unclaim[user].append(world)
 
             if is_world_assigned_to_multiple:
-                result = await message_box(
+                result = await async_dialog.message_box(
                     self,
                     QtWidgets.QMessageBox.Icon.Question,
                     "Worlds assigned to multiple users",
@@ -936,9 +933,10 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 if result == QtWidgets.QMessageBox.StandardButton.No:
                     return
 
-            for user, worlds in users_to_unclaim.items():
-                for world in worlds:
-                    await self.game_session_api.unclaim_world(world, user.id)
+            for user in self._session.users.values():
+                for world in user.worlds:
+                    if world in world_count and world_count[world] >= 2:
+                        await self.game_session_api.unclaim_world(world, user.id)
 
         await self.game_session_api.set_allow_coop(self.allow_coop_check.isChecked())
 
