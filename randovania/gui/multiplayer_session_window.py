@@ -753,9 +753,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except AnyNetworkError:
                 # We're interested in catching generation failures.
                 # Let network errors be handled by who called us, which will be captured by handle_network_errors
-                alert_user(self, self._options)
-                # Alert the person who generates on errors since update_game_tab
-                # doesn't generation errors
+                alert_user(
+                    self, self._options
+                )  # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
                 raise
 
             except Exception as e:
@@ -763,9 +763,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     e,
                     self.update_progress,
                 )
-                alert_user(self, self._options)
-                # Alert the person who generates on errors, since update_game_tab
-                # doesn't generation errors
+                alert_user(
+                    self, self._options
+                )  # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
 
             finally:
                 self._generating_game = False

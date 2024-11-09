@@ -131,8 +131,8 @@ _SERIALIZER_FOR_FIELD = {
     "dark_mode": Serializer(identity, bool),
     "show_multiworld_banner": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
-    "sound_alerts": Serializer(identity, bool),
-    "visual_taskbar_dock_alerts": Serializer(identity, bool),
+    "audible_generation_alert": Serializer(identity, bool),
+    "visual_generation_alert": Serializer(identity, bool),
     "allow_crash_reporting": Serializer(identity, bool),
     "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
@@ -202,8 +202,8 @@ class Options:
     _dark_mode: bool | None = None
     _show_multiworld_banner: bool | None = None
     _experimental_settings: bool | None = None
-    _sound_alerts: bool | None = None
-    _visual_taskbar_dock_alerts: bool | None = None
+    _audible_generation_alert: bool | None = None
+    _visual_generation_alert: bool | None = None
     _allow_crash_reporting: bool | None = None
     _use_user_for_crash_reporting: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
@@ -427,20 +427,20 @@ class Options:
         self._edit_field("experimental_settings", value)
 
     @property
-    def sound_alerts(self) -> bool:
-        return _return_with_default(self._sound_alerts, lambda: True)
+    def audible_generation_alert(self) -> bool:
+        return _return_with_default(self._audible_generation_alert, lambda: True)
 
-    @sound_alerts.setter
-    def sound_alerts(self, value: bool):
-        self._edit_field("sound_alerts", value)
+    @audible_generation_alert.setter
+    def audible_generation_alert(self, value: bool):
+        self._edit_field("audible_generation_alert", value)
 
     @property
-    def visual_taskbar_dock_alerts(self) -> bool:
-        return _return_with_default(self._visual_taskbar_dock_alerts, lambda: True)
+    def visual_generation_alert(self) -> bool:
+        return _return_with_default(self._visual_generation_alert, lambda: True)
 
-    @visual_taskbar_dock_alerts.setter
-    def visual_taskbar_dock_alerts(self, value: bool):
-        self._edit_field("visual_taskbar_dock_alerts", value)
+    @visual_generation_alert.setter
+    def visual_generation_alert(self, value: bool):
+        self._edit_field("visual_generation_alert", value)
 
     @property
     def allow_crash_reporting(self) -> bool:
