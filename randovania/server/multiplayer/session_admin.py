@@ -605,7 +605,6 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
 def admin_player(sa: ServerApp, session_id: int, user_id: int, action: str, *args):
     monitoring.set_tag("action", action)
 
-    # verify_has_admin(sa, session_id, sa.get_current_user().id)
     verify_has_admin(sa, session_id, user_id)
     action: SessionAdminUserAction = SessionAdminUserAction(action)
 

@@ -410,7 +410,9 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                     create_claim_for_each_player_entry()
 
             elif is_valid_owner(owner) and (
-                self.is_admin() or self._session.allow_everyone_claim_world or owner == self.your_id
+                self.is_admin()
+                or (self._session.allow_everyone_claim_world and not self._session.allow_coop)
+                or owner == self.your_id
             ):
                 text = "Unclaim"
                 if owner == self.your_id:
