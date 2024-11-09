@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.7.x] - 2024-12-??
 
-- Changed: Added options to alert for when generation completes in the Preferences menu, which is useful for when Randovania is generating in the background.
+- Changed: Added options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
 - Changed: Add confirmation dialog when deleting a world in Multiworld.
 
 ### Door Lock Randomizer
