@@ -203,7 +203,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         if self.game_description.game in {
             RandovaniaGame.METROID_PRIME_ECHOES,
-            RandovaniaGame.METROID_PRIME_CORRUPTION,
         }:
             self.area_view_dock.hide()
 
