@@ -48,6 +48,8 @@ _ALTERNATIVE_MODELS = {
     PickupModel(RandovaniaGame.METROID_SAMUS_RETURNS, "PROGRESSIVE_SUIT"): ["powerup_variasuit", "powerup_gravitysuit"],
 }
 
+_NOTHING_RESOURCE = {"item_id": "ITEM_NONE", "quantity": 1}
+
 
 def get_item_id_for_item(item: ResourceInfo) -> str:
     assert isinstance(item, ItemResourceInfo)
@@ -68,7 +70,7 @@ def get_export_item_id_for_item(item: ResourceInfo) -> str:
 
 def convert_conditional_resource(res: ConditionalResources) -> Iterator[dict]:
     if not res.resources:
-        yield {"item_id": "ITEM_NONE", "quantity": 0}
+        yield _NOTHING_RESOURCE
         return
 
     for resource in reversed(res.resources):
@@ -270,6 +272,9 @@ class MSRPatchDataFactory(PatchDataFactory):
         model_names = alt_model
 
         resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
+
+        if len(resources) == 1 and resources[0] == _NOTHING_RESOURCE:
+            resources = resources * len(model_names)
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
