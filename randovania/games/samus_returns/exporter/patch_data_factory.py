@@ -273,7 +273,7 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
 
-        if len(resources) == 1 and resources[0] == _NOTHING_RESOURCE:
+        if len(resources) == 1 and resources[0] == [_NOTHING_RESOURCE]:
             resources = resources * len(model_names)
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
