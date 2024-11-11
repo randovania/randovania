@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid: Samus Returns
 
-- Fixed: Arachnus now properly checks for having all DNA when configured to be the final boss.
+- Fixed: When Arachnus is configured to be the final boss, logic now requires collecting all DNA.
 
 ## [8.6.1] - 2024-11-03
 
