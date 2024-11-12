@@ -82,7 +82,6 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "darkszero_deluxe.rdvpreset"},
-        {"path": "fewest_changes.rdvpreset"},
     ],
     faq=[
         (

@@ -294,6 +294,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_show_multiworld_banner.triggered.connect(self._on_menu_action_show_multiworld_banner)
         self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
+        self.menu_action_audible_generation_alert.triggered.connect(self._on_menu_action_audible_generation_alert)
+        self.menu_action_visual_generation_alert.triggered.connect(self._on_menu_action_visual_generation_alert)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
@@ -590,6 +592,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
         self.menu_action_show_multiworld_banner.setChecked(self._options.show_multiworld_banner)
         self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
+        self.menu_action_audible_generation_alert.setChecked(self._options.audible_generation_alert)
+        self.menu_action_visual_generation_alert.setChecked(self._options.visual_generation_alert)
 
         self.tab_game_details.on_options_changed(self._options)
         self.refresh_game_list()
@@ -770,6 +774,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
     def _on_menu_action_experimental_settings(self):
         with self._options as options:
             options.experimental_settings = self.menu_action_experimental_settings.isChecked()
+
+    def _on_menu_action_audible_generation_alert(self):
+        with self._options as options:
+            options.audible_generation_alert = self.menu_action_audible_generation_alert.isChecked()
+
+    def _on_menu_action_visual_generation_alert(self):
+        with self._options as options:
+            options.visual_generation_alert = self.menu_action_visual_generation_alert.isChecked()
 
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow

@@ -49,6 +49,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
+    two_sided_door_lock_search: bool
     minimum_available_locations_for_hint_placement: int = dataclasses.field(metadata={"min": 0, "max": 99})
     minimum_location_weight_for_hint_placement: float = dataclasses.field(
         metadata={

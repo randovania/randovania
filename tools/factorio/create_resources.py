@@ -81,6 +81,7 @@ _k_miner_for_resource = {
         [
             template_req("use-electric-mining-drill"),
             template_req("craft-sulfuric-acid"),
+            tech_req("uranium-mining"),
         ]
     ),
     "crude-oil": template_req("use-pumpjack"),
@@ -235,7 +236,7 @@ def read_tech_csv(csv_path: Path) -> dict:
 
 
 _custom_shuffled_count = {
-    "Energy Weapons Damage": 0,
+    "Laser Weapons Damage": 0,
     "Follower Robot Count": 0,
     "Laser Shooting Speed": 0,
     "Mining Productivity": 4,
@@ -243,7 +244,7 @@ _custom_shuffled_count = {
     "Refined Flammables": 0,
     "Regular Inserter Capacity Bonus": 3,
     "Research Speed": 5,
-    "Stack Inserter Capacity Bonus": 4,
+    "Bulk Inserter Capacity Bonus": 4,
     "Stronger Explosives": 0,
     "Research Productivity": 5,
     "Toolbelt": 3,
@@ -288,6 +289,7 @@ def create_pickups(techs_raw: dict, existing_pickup_ids: dict[str, int], tech_cs
                 else:
                     result[pickup_name]["custom_count_for_shuffled_case"] = _custom_shuffled_count[pickup_name]
 
+    result["Uranium Mining"]["expected_case_for_describer"] = "starting_item"
     result["Rocket Silo"]["expected_case_for_describer"] = "vanilla"
     result["Rocket Silo"]["hide_from_gui"] = True
 
@@ -336,6 +338,8 @@ def main():
 
     with header_path.open() as f:
         header = json.load(f)
+
+    header["resource_database"]["requirement_template"] = {}
 
     with pickup_db_path.open() as f:
         pickup_db = json.load(f)

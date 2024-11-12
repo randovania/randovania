@@ -1,4 +1,5 @@
 import configparser
+import itertools
 import json
 from pathlib import Path
 
@@ -36,12 +37,9 @@ def get_localized_name(n: str) -> str:
 
 
 def read_locales(factorio_path: Path) -> None:
-    locale.read(
-        [
-            factorio_path.joinpath("data/base/locale/en/base.cfg"),
-            factorio_path.joinpath("mods/randovania-layout/locale/en/strings.cfg"),
-        ]
-    )
+    with factorio_path.joinpath("data/base/locale/en/base.cfg").open() as fp:
+        locale.read_file(itertools.chain(["[global]"], fp), source="base.cfg")
+    locale.read([factorio_path.joinpath("mods/randovania-layout/locale/en/strings.cfg")])
 
 
 def template_req(name: str) -> dict:
