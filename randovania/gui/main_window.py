@@ -325,7 +325,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if self.has_background_process:
             event.ignore()
             dialog = QtWidgets.QMessageBox(
-                QtWidgets.QMessageBox.Icon.NoIcon,
+                QtWidgets.QMessageBox.Icon.Warning,
                 "Confirm close window",
                 "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
                 (StandardButton.Yes | StandardButton.No),
