@@ -333,7 +333,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             dialog.setDefaultButton(StandardButton.No)
             dialog.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
             result = dialog.exec()
-            if result != StandardButton.Yes:
+            if not result == StandardButton.Yes:
                 return
             event.accept()
         self.stop_background_process()
