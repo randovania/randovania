@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Added options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
 - Changed: Add confirmation dialog when deleting a world in Multiworld.
-- Changed: Add confirmation dialog when closing the main window or multiplayer session window while a task is in progress.
+- Changed: Add confirmation dialog when closing the main window or multiplayer session window while generation is in progress.
 
 ### Door Lock Randomizer
 
