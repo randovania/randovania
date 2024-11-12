@@ -20,6 +20,7 @@ from randovania import VERSION, get_readme_section, monitoring
 from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, theme
+from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import update_checker
@@ -321,6 +322,20 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.main_tab_widget.setCurrentIndex(0)
 
     def closeEvent(self, event):
+        if self.has_background_process:
+            event.ignore()
+            dialog = QtWidgets.QMessageBox(
+                QtWidgets.QMessageBox.Icon.NoIcon,
+                "Confirm close window",
+                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
+                (StandardButton.Yes | StandardButton.No),
+            )
+            dialog.setDefaultButton(StandardButton.No)
+            dialog.setWindowIcon(QtGui.QIcon(os.fspath(randovania.get_icon_path())))
+            result = dialog.exec()
+            if result != StandardButton.Yes:
+                return
+            event.accept()
         self.stop_background_process()
         super().closeEvent(event)
 
@@ -701,7 +716,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                     )
 
     # Background Update
-
     def enable_buttons_with_background_tasks(self, value: bool):
         self.stop_background_process_button.setVisible(True)
         self.stop_background_process_button.setEnabled(not value)
