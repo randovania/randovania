@@ -733,6 +733,15 @@ class PrimePatchDataFactory(PatchDataFactory):
                 }
             ]
 
+        # Remove Bars in Great Tree Hall
+        if self.configuration.remove_bars_great_tree_hall:
+            level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]["deleteIds"] = [
+                2359733,
+                2359744,
+                2359830,
+                2359829,
+            ]
+
         # serialize room modifications
         if self.configuration.superheated_probability != 0:
             probability = self.configuration.superheated_probability / 1000.0
