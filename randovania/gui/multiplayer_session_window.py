@@ -19,6 +19,7 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
+from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.common_qt_lib import alert_user_on_generation
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
@@ -308,6 +309,19 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
+        if self.has_background_process:
+            event.ignore()
+            result = await async_dialog.warning(
+                self,
+                "Confirm close window",
+                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
+                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+                default_button=async_dialog.StandardButton.No,
+            )
+            if result != StandardButton.Yes:
+                return
+            event.accept()
+        self.stop_background_process()
         return await self._on_close_event(event)
 
     async def _on_close_event(self, event: QtGui.QCloseEvent):
