@@ -1217,7 +1217,8 @@ def _migrate_v91(preset: dict) -> dict:
 
 
 def _migrate_v92(preset: dict) -> dict:
-    preset["configuration"]["remove_bars_great_tree_hall"] = False
+    if preset["game"] == "prime1":
+        preset["configuration"]["remove_bars_great_tree_hall"] = False
 
     return preset
 
