@@ -82,12 +82,12 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
 
     layout_names = [
         # Cross Game Multis
-        "multis/multi-cs+dread+prime1+prime2.rdvgame",
-        "multis/multi-am2r+cs+dread+prime1+prime2.rdvgame",
-        "multis/multi-am2r+cs+dread+prime1+prime2+msr.rdvgame",
+        "multi-cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2.rdvgame",
+        "multi-am2r+cs+dread+prime1+prime2+msr.rdvgame",
         "prime1_and_2_multi.rdvgame",
-        "multis/cs_echoes_multi_1.rdvgame",
-        "multis/dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
+        "cs_echoes_multi_1.rdvgame",
+        "dread_prime1_multiworld.rdvgame",  # dread-prime1 multi
         # AM2R
         "am2r/starter_preset.rdvgame",  # starter preset
         "am2r/door_lock.rdvgame",  # starter preset+door lock rando
