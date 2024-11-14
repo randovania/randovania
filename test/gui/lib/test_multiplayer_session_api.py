@@ -433,6 +433,25 @@ async def test_set_everyone_can_claim(session_api, caplog, new_state):
     ]
 
 
+@pytest.mark.parametrize("new_state", [False, True])
+async def test_set_allow_coop(session_api, caplog, new_state):
+    # Run
+    await session_api.set_allow_coop(new_state)
+
+    # Assert
+    session_api.network_client.server_call.assert_called_once_with(
+        "multiplayer_admin_session",
+        [
+            1234,
+            admin_actions.SessionAdminGlobalAction.SET_ALLOW_COOP.value,
+            new_state,
+        ],
+    )
+    assert caplog.record_tuples == [
+        ("MultiplayerSessionApi", logging.INFO, f"[Session 1234] Setting whether to allow coop to {new_state}")
+    ]
+
+
 async def test_switch_readiness(session_api, caplog):
     # Run
     await session_api.switch_readiness(50)
