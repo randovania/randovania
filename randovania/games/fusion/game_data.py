@@ -8,7 +8,7 @@ import randovania.game.generator
 import randovania.game.gui
 import randovania.game.layout
 from randovania.games.fusion import layout
-from randovania.games.fusion.db_integrity.integrity import find_fusion_db_errors
+from randovania.games.fusion.db_integrity import find_fusion_db_errors
 from randovania.games.fusion.layout.preset_describer import FusionPresetDescriber
 
 if typing.TYPE_CHECKING:

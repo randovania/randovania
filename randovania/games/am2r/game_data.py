@@ -7,7 +7,7 @@ import randovania.game.gui
 import randovania.game.layout
 import randovania.game.web_info
 from randovania.games.am2r import layout
-from randovania.games.am2r.db_integrity.integrity import find_am2r_db_errors
+from randovania.games.am2r.db_integrity import find_am2r_db_errors
 
 
 def _options():
