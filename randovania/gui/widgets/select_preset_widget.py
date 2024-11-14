@@ -1,11 +1,8 @@
 from __future__ import annotations
 
-import dataclasses
-import json
 import logging
 import re
 import traceback
-import uuid
 from typing import TYPE_CHECKING
 
 import markdown
@@ -23,7 +20,7 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.migration_lib import UnsupportedVersion
 
 if TYPE_CHECKING:
-    from pathlib import Path
+    import uuid
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
@@ -151,11 +148,27 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         return self.create_preset_tree.current_preset_data
 
     def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None):
+        """
+        Handle a preset being created, by internal means.
+        This also
+        :param preset:
+        :param parent:
+        :return:
+        """
         with self._options as options:
             options.set_parent_for_preset(preset.uuid, parent)
             options.set_selected_preset_uuid_for(self._game, preset.uuid)
 
         self._window_manager.preset_manager.add_new_preset(preset)
+        self.on_new_preset(preset)
+
+    def on_new_preset(self, preset: VersionedPreset) -> None:
+        """
+        Handle having a preset being created, externally.
+        :param preset:
+        :return:
+        """
+        assert self._window_manager.preset_manager.preset_for_uuid(preset.uuid) is not None
         self._update_preset_tree_items()
         self.create_preset_tree.select_preset(preset)
 
@@ -261,33 +274,6 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     def _on_view_deleted(self):
         raise RuntimeError("Feature not implemented")
-
-    def import_preset_file(self, path: Path):
-        try:
-            preset = VersionedPreset.from_file_sync(path)
-            preset.get_preset()
-        except (InvalidPreset, json.JSONDecodeError):
-            QtWidgets.QMessageBox.critical(
-                self._window_manager, "Error loading preset", f"The file at '{path}' contains an invalid preset."
-            )
-            return
-
-        existing_preset = self._window_manager.preset_manager.preset_for_uuid(preset.uuid)
-        if existing_preset is not None:
-            user_response = QtWidgets.QMessageBox.warning(
-                self._window_manager,
-                "Preset ID conflict",
-                f"The new preset '{preset.name}' has the same ID as existing '{existing_preset.name}'. "
-                f"Do you want to overwrite it?",
-                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No | async_dialog.StandardButton.Cancel,
-                async_dialog.StandardButton.Cancel,
-            )
-            if user_response == async_dialog.StandardButton.Cancel:
-                return
-            elif user_response == async_dialog.StandardButton.No:
-                preset = VersionedPreset.with_preset(dataclasses.replace(preset.get_preset(), uuid=uuid.uuid4()))
-
-        self._add_new_preset(preset, parent=None)
 
     def _on_select_preset(self):
         preset_data = self._current_preset_data

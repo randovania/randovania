@@ -205,6 +205,9 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
     def on_options_changed(self, options: Options) -> None:
         self.select_preset_widget.on_options_changed(options)
 
+    def on_new_preset(self, preset: VersionedPreset) -> None:
+        self.select_preset_widget.on_new_preset(preset)
+
     def _on_can_generate(self, can_generate: bool) -> None:
         for btn in [
             self.create_generate_button,
