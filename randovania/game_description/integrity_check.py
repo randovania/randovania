@@ -27,6 +27,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
@@ -367,7 +368,7 @@ def check_for_resources_to_use_together(
     :return: Error messages of requirements which don't pass the check.
     """
     context = _create_node_context(game)
-    requirement_cache = {}
+    requirement_cache: dict[Requirement, RequirementSet] = {}
 
     for source_node in game.region_list.iterate_nodes():
         try:

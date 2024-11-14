@@ -504,7 +504,7 @@ def test_invalid_db():
 
     # Run
     errors = integrity_check.find_database_errors(gd)
-    errors.extend(integrity_check.check_for_resources_to_use_together(gd, {"BombHoverTrick": "BombsItem"}))
+    errors.extend(integrity_check.check_for_resources_to_use_together(gd, {"BombHoverTrick": ("BombsItem",)}))
     errors.extend(
         integrity_check.check_for_items_to_be_replaced_by_templates(
             gd, {"BombsItem": "something along the lines of 'use bombs'"}
