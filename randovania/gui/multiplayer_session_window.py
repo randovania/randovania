@@ -318,7 +318,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
                 default_button=async_dialog.StandardButton.No,
             )
-            if not result == StandardButton.Yes:
+            if result != StandardButton.Yes:
                 return
             event.accept()
         self.stop_background_process()
