@@ -910,15 +910,12 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 ),
             )
         else:
-            world_count = collections.defaultdict(int)
-            is_world_assigned_to_multiple = False
+            world_users = collections.defaultdict(list)
             for user in self._session.users.values():
                 for world in user.worlds:
-                    world_count[world] += 1
-                    if world_count[world] >= 2:
-                        is_world_assigned_to_multiple = True
+                    world_users[world].append(user)
 
-            if is_world_assigned_to_multiple:
+            if any(len(users) > 1 for users in world_users.values()):
                 result = await async_dialog.message_box(
                     self,
                     QtWidgets.QMessageBox.Icon.Question,
@@ -933,9 +930,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 if result == QtWidgets.QMessageBox.StandardButton.No:
                     return
 
-            for user in self._session.users.values():
-                for world in user.worlds:
-                    if world in world_count and world_count[world] >= 2:
+            for world, users in world_users.items():
+                if len(users) > 1:
+                    for user in users:
                         await self.game_session_api.unclaim_world(world, user.id)
 
         await self.game_session_api.set_allow_coop(self.allow_coop_check.isChecked())
