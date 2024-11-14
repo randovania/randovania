@@ -542,7 +542,7 @@ def test_invalid_db():
         "Checking A: Loop detected: ['A', 'B', 'A']",
         "Checking B: Loop detected: ['B', 'A', 'B']",
         "Lava World/Hot/Pickup (Duplicate Id) has PickupIndex 5, but it was already used in Lava World/Hot/Bad Pickup",
-        'Grass World/Plains/Windmill -> Grass World/Plains/Hut contains "BombHoverTrick" but not "BombsItem"',
+        'Grass World/Plains/Windmill -> Grass World/Plains/Hut contains "BombHoverTrick" but not "(\'BombsItem\',)"',
         (
             'Grass World/Plains/Windmill -> Grass World/Plains/Hut is using the resource "BombsItem" directly '
             "than using the template \"something along the lines of 'use bombs'\"."
