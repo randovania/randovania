@@ -12,8 +12,8 @@ from randovania.games.prime1.exporter import game_exporter
 from randovania.games.prime1.exporter.patch_data_factory import prime1_pickup_details_to_patcher
 
 
-@pytest.mark.parametrize("other_player", [False, True])
-def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database, other_player: bool):
+@pytest.mark.parametrize("is_for_remote_player", [False, True])
+def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database, is_for_remote_player: bool):
     # Setup
     rng = MagicMock()
     rng.randint.return_value = 0
@@ -32,10 +32,10 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         conversion=[],
         model=PickupModel(RandovaniaGame.METROID_PRIME, "Missile"),
         original_model=PickupModel(RandovaniaGame.METROID_PRIME, "Missile"),
-        other_player=other_player,
+        is_for_remote_player=is_for_remote_player,
         original_pickup=None,
     )
-    if other_player:
+    if is_for_remote_player:
         pickup_type = "Unknown Item 1"
         amount = 16
         shiny_stuff = {
