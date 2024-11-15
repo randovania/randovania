@@ -279,19 +279,13 @@ class PickupExporterMulti(PickupExporter):
     ) -> ExportedPickupDetails:
         """
         Exports a pickup, for a multiworld game.
-        If for yourself/useless, use the solo creator but adjust the name to mention it's either yours or for your world
-        For offworld, create a custom details.
+        If for yourself/useless, use the solo creator but adjust the name to mention it's either yours.
+        If for yourself but coop, use the solo creator, but adjust name, all resources to give 0 and collection text.
+        For offworld, create custom details.
         """
         other_name = self.players_config.player_names[pickup_target.player]
         remote_name = f"{other_name}'s {name}"
         remote_collection_text = [f"Sent {name} to {other_name}!"]
-        no_resources = [
-            ConditionalResources(
-                name=None,
-                item=None,
-                resources=(),
-            )
-        ]
 
         if pickup_target.player == self.players_config.player_index:
             details = self.solo_creator.create_details(
@@ -308,16 +302,22 @@ class PickupExporterMulti(PickupExporter):
                 self.players_config.should_target_local_player(pickup_target.player)
                 or pickup_target.pickup == useless_pickup
             ):
-                details = dataclasses.replace(details, name=f"Your {details.name}")
-            else:
-                details = dataclasses.replace(
-                    details,
-                    name=remote_name,
-                    collection_text=remote_collection_text
-                    if details.conditional_resources != no_resources
-                    else details.collection_text,
-                    is_for_remote_player=True,
+                return dataclasses.replace(details, name=f"Your {details.name}")
+
+            new_resources = [
+                ConditionalResources(
+                    resource.name, resource.item, tuple((subres, 0) for subres, quantity in resource.resources)
                 )
+                for resource in details.conditional_resources
+            ]
+
+            details = dataclasses.replace(
+                details,
+                name=remote_name,
+                collection_text=remote_collection_text,
+                conditional_resources=new_resources,
+                is_for_remote_player=True,
+            )
             return details
 
         else:
@@ -326,7 +326,13 @@ class PickupExporterMulti(PickupExporter):
                 name=remote_name,
                 description=description,
                 collection_text=remote_collection_text,
-                conditional_resources=no_resources,
+                conditional_resources=[
+                    ConditionalResources(
+                        name=None,
+                        item=None,
+                        resources=(),
+                    )
+                ],
                 conversion=[],
                 model=self.get_model(model_pickup),
                 original_model=model_pickup.model,
