@@ -273,7 +273,9 @@ async def test_update_generate_game_button(
 async def test_sync_background_process_to_session_other_generation(
     window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture
 ):
-    mocker.patch("randovania.gui.lib.async_dialog.warning")
+    mocker.patch(
+        "randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.closeEvent", new_callable=AsyncMock
+    )
     window._session = MagicMock()
     window._session.generation_in_progress = True
     window._generating_game = False
@@ -288,7 +290,9 @@ async def test_sync_background_process_to_session_other_generation(
 async def test_sync_background_process_to_session_stop_background(
     window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture
 ):
-    mocker.patch("randovania.gui.lib.async_dialog.warning")
+    mocker.patch(
+        "randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.closeEvent", new_callable=AsyncMock
+    )
     window._session = MagicMock()
     window._session.generation_in_progress = None
     window._background_thread = True
@@ -305,7 +309,9 @@ async def test_sync_background_process_to_session_stop_background(
 async def test_sync_background_process_to_session_nothing(
     window: MultiplayerSessionWindow, mocker: pytest_mock.MockerFixture
 ):
-    mocker.patch("randovania.gui.lib.async_dialog.warning")
+    mocker.patch(
+        "randovania.gui.multiplayer_session_window.MultiplayerSessionWindow.closeEvent", new_callable=AsyncMock
+    )
     window._session = MagicMock()
     window._session.generation_in_progress = None
     window._background_thread = None
