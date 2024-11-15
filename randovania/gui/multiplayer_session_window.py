@@ -20,6 +20,7 @@ from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
+from randovania.gui.lib.common_qt_lib import alert_user_on_generation
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import AnyNetworkError, QtNetworkClient, handle_network_errors
@@ -760,6 +761,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
             finally:
                 self._generating_game = False
+                alert_user_on_generation(self, self._options)
 
     async def _should_overwrite_presets(self, parameters: GeneratorParameters, permalink_source: bool) -> bool:
         if permalink_source:
