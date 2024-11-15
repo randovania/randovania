@@ -187,6 +187,7 @@ class PickupExporter:
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_pickup: PickupEntry,
         model_style: PickupModelStyle,
@@ -210,6 +211,7 @@ class PickupExporter:
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_style: PickupModelStyle,
     ) -> ExportedPickupDetails:
@@ -223,7 +225,7 @@ class PickupExporter:
             description = ""
 
         return self.create_details(
-            original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
+            original_index, pickup_target, useless_pickup, visual_pickup, model_pickup, model_style, name, description
         )
 
 
@@ -236,6 +238,7 @@ class PickupExporterSolo(PickupExporter):
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_pickup: PickupEntry,
         model_style: PickupModelStyle,
@@ -267,6 +270,7 @@ class PickupExporterMulti(PickupExporter):
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_pickup: PickupEntry,
         model_style: PickupModelStyle,
@@ -275,7 +279,7 @@ class PickupExporterMulti(PickupExporter):
     ) -> ExportedPickupDetails:
         """
         Exports a pickup, for a multiworld game.
-        If for yourself, use the solo creator but adjust the name to mention it's either yours or for your world.
+        If for yourself/useless, use the solo creator but adjust the name to mention it's either yours or for your world
         For offworld, create a custom details.
         """
         other_name = self.players_config.player_names[pickup_target.player]
@@ -291,9 +295,19 @@ class PickupExporterMulti(PickupExporter):
 
         if pickup_target.player == self.players_config.player_index:
             details = self.solo_creator.create_details(
-                original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
+                original_index,
+                pickup_target,
+                useless_pickup,
+                visual_pickup,
+                model_pickup,
+                model_style,
+                name,
+                description,
             )
-            if self.players_config.should_target_local_player(pickup_target.player):
+            if (
+                self.players_config.should_target_local_player(pickup_target.player)
+                or pickup_target.pickup == useless_pickup
+            ):
                 details = dataclasses.replace(details, name=f"Your {details.name}")
             else:
                 details = dataclasses.replace(
@@ -370,6 +384,7 @@ def export_all_indices(
         exporter.export(
             index,
             pickup_assignment.get(index, useless_target),
+            useless_target.pickup,
             _get_visual_model(i, pickup_list, data_source, visual_nothing),
             model_style,
         )
