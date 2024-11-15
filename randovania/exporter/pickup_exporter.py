@@ -175,7 +175,7 @@ class ExportedPickupDetails:
     conversion: list[ResourceConversion]
     model: PickupModel
     original_model: PickupModel
-    other_player: bool
+    is_for_remote_player: bool
     original_pickup: PickupEntry
 
 
@@ -252,7 +252,7 @@ class PickupExporterSolo(PickupExporter):
             conversion=list(pickup.convert_resources),
             model=self.get_model(model_pickup),
             original_model=model_pickup.model,
-            other_player=False,
+            is_for_remote_player=False,
             original_pickup=pickup,
         )
 
@@ -275,32 +275,48 @@ class PickupExporterMulti(PickupExporter):
     ) -> ExportedPickupDetails:
         """
         Exports a pickup, for a multiworld game.
-        If for yourself, use the solo creator but adjust the name to mention it's yours.
+        If for yourself, use the solo creator but adjust the name to mention it's either yours or for your world.
         For offworld, create a custom details.
         """
-        if self.players_config.should_target_local_player(pickup_target.player):
+        other_name = self.players_config.player_names[pickup_target.player]
+        remote_name = f"{other_name}'s {name}"
+        remote_collection_text = [f"Sent {name} to {other_name}!"]
+        no_resources = [
+            ConditionalResources(
+                name=None,
+                item=None,
+                resources=(),
+            )
+        ]
+
+        if pickup_target.player == self.players_config.player_index:
             details = self.solo_creator.create_details(
                 original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
             )
-            return dataclasses.replace(details, name=f"Your {details.name}")
+            if self.players_config.should_target_local_player(pickup_target.player):
+                details = dataclasses.replace(details, name=f"Your {details.name}")
+            else:
+                details = dataclasses.replace(
+                    details,
+                    name=remote_name,
+                    collection_text=remote_collection_text
+                    if details.conditional_resources != no_resources
+                    else details.collection_text,
+                    is_for_remote_player=True,
+                )
+            return details
+
         else:
-            other_name = self.players_config.player_names[pickup_target.player]
             return ExportedPickupDetails(
                 index=original_index,
-                name=f"{other_name}'s {name}",
+                name=remote_name,
                 description=description,
-                collection_text=[f"Sent {name} to {other_name}!"],
-                conditional_resources=[
-                    ConditionalResources(
-                        name=None,
-                        item=None,
-                        resources=(),
-                    )
-                ],
+                collection_text=remote_collection_text,
+                conditional_resources=no_resources,
                 conversion=[],
                 model=self.get_model(model_pickup),
                 original_model=model_pickup.model,
-                other_player=True,
+                is_for_remote_player=True,
                 original_pickup=pickup_target.pickup,
             )
 

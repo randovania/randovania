@@ -112,7 +112,7 @@ def prime1_pickup_details_to_patcher(
     count = 0
     max_count = 0
 
-    if detail.other_player:
+    if detail.is_for_remote_player:
         pickup_type = "Unknown Item 1"
         count = detail.index.index + 1
         max_count = count
@@ -133,7 +133,7 @@ def prime1_pickup_details_to_patcher(
 
     if (
         model["name"] == "Missile"
-        and not detail.other_player
+        and not detail.is_for_remote_player
         and "Missile Expansion" in collection_text
         and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0
     ):
@@ -167,17 +167,17 @@ def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.Exported
     result = set()
 
     for index in _LOCATIONS_WITH_MODAL_ALERT:
-        if pickups[index].other_player:
+        if pickups[index].is_for_remote_player:
             result.add(index)
 
     for indices, extra in _LOCATIONS_GROUPED_TOGETHER:
-        num_other = sum(pickups[i].other_player for i in indices)
+        num_other = sum(pickups[i].is_for_remote_player for i in indices)
         if extra is not None:
-            num_other += pickups[extra].other_player
+            num_other += pickups[extra].is_for_remote_player
 
         if num_other > 1:
             for index in indices:
-                if pickups[index].other_player:
+                if pickups[index].is_for_remote_player:
                     result.add(index)
 
     return result

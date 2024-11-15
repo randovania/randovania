@@ -189,7 +189,7 @@ class DreadPatchDataFactory(PatchDataFactory):
         alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
         model_names = alt_model
 
-        if detail.other_player:
+        if detail.is_for_remote_player:
             if model_names == ["offworld"]:
                 base_icon = "unknown"
                 model_names = ["itemsphere"]
@@ -206,7 +206,9 @@ class DreadPatchDataFactory(PatchDataFactory):
         else:
             map_icon = {"icon_id": detail.model.name}
 
-        resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
+        resources = get_resources_for_details(
+            detail.original_pickup, detail.conditional_resources, detail.is_for_remote_player
+        )
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
