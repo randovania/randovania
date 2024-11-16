@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Added options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
 - Changed: Add confirmation dialog when deleting a world in Multiworld.
+- Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
 
 ### Door Lock Randomizer
 

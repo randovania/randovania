@@ -27,9 +27,16 @@ class PresetCustomizeDescription(PresetTab, Ui_PresetCustomizeDescription):
     def header_name(cls) -> str | None:
         return "Preset Info"
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
+        # to set the visible cursor you must use setTextCursor but at
+        # the same time the "cursor" object gets updated => save the old position, set it
+        # in the cursor and then use "setTextCursor"
+        cursor = self.description_edit.textCursor()
+        cursor_pos = cursor.position()
         self.description_edit.setText(preset.description)
+        cursor.setPosition(cursor_pos)
+        self.description_edit.setTextCursor(cursor)
 
-    def _edit_description(self):
+    def _edit_description(self) -> None:
         with self._editor as editor:
             editor.description = self.description_edit.toPlainText()
