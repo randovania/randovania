@@ -40,6 +40,7 @@ class PrimeBootstrap(MetroidBootstrap):
             "no_doors": "no_doors",
             "superheated_probability": "superheated_probability",
             "submerged_probability": "submerged_probability",
+            "remove_bars_great_tree_hall": "remove_bars_great_tree_hall",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
