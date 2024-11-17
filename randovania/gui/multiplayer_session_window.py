@@ -449,6 +449,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             else:
                 self.export_game_button.setEnabled(False)
 
+            # FIXME: this triggers on every meta update as opposed to just when the generation status gets updated
+            # alert_user_on_generation(self, self._options)
+
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
         try:
@@ -741,6 +744,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 self.update_progress("Finished generating, uploading...", 100)
                 await uploader(layout)
                 self.update_progress("Uploaded!", 100)
+                alert_user_on_generation(self, self._options)
 
                 if layout.has_spoiler:
                     last_multiplayer.unlink()
@@ -751,6 +755,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except AnyNetworkError:
                 # We're interested in catching generation failures.
                 # Let network errors be handled by who called us, which will be captured by handle_network_errors
+
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                alert_user_on_generation(self, self._options)
                 raise
 
             except Exception as e:
@@ -758,10 +765,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     e,
                     self.update_progress,
                 )
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                alert_user_on_generation(self, self._options)
 
             finally:
                 self._generating_game = False
-                alert_user_on_generation(self, self._options)
 
     async def _should_overwrite_presets(self, parameters: GeneratorParameters, permalink_source: bool) -> bool:
         if permalink_source:
