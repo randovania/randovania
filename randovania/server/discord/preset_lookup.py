@@ -173,14 +173,14 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
 
 async def reply_for_layout_description(message: discord.Message, description: LayoutDescription):
     embed = discord.Embed(
-        title=f"Spoiler file for Randovania {description.randovania_version_text}",
+        title=f"Spoiler file (Generated in {description.randovania_version_text})",
     )
 
     if description.world_count == 1:
         preset = description.get_preset(0)
         embed.description = (
             f"{preset.game.long_name}, with preset {preset.name}.\n"
-            f"Seed Hash: {description.shareable_word_hash}\n"
+            f"Seed Hash for {preset.game.long_name}: {description.shareable_word_hash}\n"
             f"Permalink: {description.permalink.as_base64_str}"
         )
         _add_preset_description_to_embed(embed, preset)
