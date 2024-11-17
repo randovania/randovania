@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: In Early Grapple Room: The Slide Jumps have had their difficulty switched. The first one is now Beginner and the second is Intermediate.
 - Changed: In Early Grapple Room: Using Cross Bomb to cross the right gap is now under Movement (Beginner).
-- Changed: In Early Grapple ROom: It is now logical to get from the Door to Transport to Artaria to Door to Early Grapple Access by using just Movement (Beginner) to jump off the slope and into the tunnel, then jump into the tunnel at the end.
+- Changed: In Early Grapple Room: It is now logical to get from the Door to Transport to Artaria to Door to Early Grapple Access by using just Movement (Beginner) to jump off the slope and into the tunnel, then jump into the tunnel at the end.
 
 ##### Ferenia
 
