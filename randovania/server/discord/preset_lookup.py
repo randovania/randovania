@@ -180,8 +180,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         preset = description.get_preset(0)
         embed.description = (
             f"{preset.game.long_name}, with preset {preset.name}.\n"
-            f"Seed Hash for {preset.game.long_name}: {description.shareable_word_hash}\n"
-            f"Permalink: {description.permalink.as_base64_str}"
+            f"Seed Hash for {preset.game.long_name}: {description.shareable_word_hash}"
         )
         _add_preset_description_to_embed(embed, preset)
     else:
