@@ -195,8 +195,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
 
         embed.description = (
             f"{description.world_count} player multiworld for {games_text}.\n"
-            f"Seed Hash: {description.shareable_word_hash}\n"
-            f"Permalink: {description.permalink.as_base64_str}"
+            f"Seed Hash for {preset.game.long_name}: {description.shareable_word_hash}"
         )
 
     await message.reply(embed=embed, mention_author=False)
