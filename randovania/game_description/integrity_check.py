@@ -13,6 +13,8 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -25,11 +27,21 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_description import GameDescription
+    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.pickup_index import PickupIndex
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_suffix_re = re.compile(r" \([^()]+?\)$")
 layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
+
+
+def _create_node_context(game: GameDescription) -> NodeContext:
+    return NodeContext(
+        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
+        current_resources=ResourceCollection.with_database(game.resource_database),
+        database=game.resource_database,
+        node_provider=game.region_list,
+    )
 
 
 def raw_expected_dock_names(
@@ -191,12 +203,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             continue
         graph.add_node(node)
 
-    context = NodeContext(
-        patches=GamePatches.create_from_game(game, 0, typing.cast(BaseConfiguration, None)),
-        current_resources=ResourceCollection.with_database(game.resource_database),
-        database=game.resource_database,
-        node_provider=game.region_list,
-    )
+    context = _create_node_context(game)
 
     for node in game.region_list.iterate_nodes():
         if node not in graph:
@@ -281,6 +288,104 @@ def find_duplicated_pickup_index(region_list: RegionList) -> Iterator[str]:
                 known_indices[node.pickup_index] = name
 
 
+def _needed_resources_partly_satisfied(
+    req: Requirement, resources: tuple[str, tuple[str, ...]], context: NodeContext, req_cache: dict
+) -> bool:
+    if req in req_cache:
+        req_set = req_cache[req]
+    else:
+        req_set = req.as_set(context)
+        req_cache[req] = req_set
+
+    counter = 0
+    res_key = resources[0]
+    res_values = resources[1]
+    for alternative in req_set.alternatives:
+        # Either the key must not be present, or the key is present with all values.
+        if not any(res_key == item.resource.short_name for item in alternative.values()):
+            counter += 1
+        elif all(any(resource == item.resource.short_name for item in alternative.values()) for resource in res_values):
+            counter += 1
+
+    return counter != len(req_set.alternatives)
+
+
+def _does_requirement_contain_resource(req: Requirement, resource: str) -> bool:
+    if isinstance(req, ResourceRequirement):
+        if (
+            req.resource.short_name == resource
+            and req.amount == 1
+            and not req.negate
+            and isinstance(req.resource, ItemResourceInfo)
+        ):
+            return True
+        return False
+    if isinstance(req, RequirementArrayBase):
+        return any(_does_requirement_contain_resource(subreq, resource) for subreq in req.items)
+    return False
+
+
+def check_for_items_to_be_replaced_by_templates(
+    game: GameDescription, items_to_templates: dict[str, str]
+) -> Iterator[str]:
+    """
+    Checks the logic database for item resources which shouldn't be used in non-template requirements and suggests
+    template alternatives instead.
+    Note that it will only check for item requirements which have an amount of 1.
+    This allows you to use ammo or 0/negative requirements without getting caught by this check.
+    :param game: A GameDescription of the game to check for.
+    :param items_to_templates: A dictionary with the item shortname as the key and a recommended template name as the
+    value. Note that the template does not need to exist, thus allowing you to specify it
+    like this: "Can Jump High or Can Jump Very High"
+    :return: Error messages of requirements which don't pass the check.
+    """
+    context = _create_node_context(game)
+
+    for source_node in game.region_list.iterate_nodes():
+        try:
+            for destination_node, req in game.region_list.potential_nodes_from(source_node, context):
+                for resource, template in items_to_templates.items():
+                    if _does_requirement_contain_resource(req, resource):
+                        yield (
+                            f"{source_node.identifier.as_string} -> {destination_node.identifier.as_string} is using "
+                            f'the resource "{resource}" directly than using the template "{template}".'
+                        )
+        except KeyError:
+            # Broken docks
+            continue
+
+
+def check_for_resources_to_use_together(
+    game: GameDescription, combined_resources: dict[str, tuple[str, ...]]
+) -> Iterator[str]:
+    """
+    Checks the logic database for resources that should always be used together with other resources.
+    :param game: A GameDescription of the game to check for.
+    :param combined_resources: A dictionary with a resource shortname as the key and a tuple of
+    resource shortnames which must be present in all requirements where the key-resource is present.
+    The resources can be general resources and can also be mixed together. They do not need to be all ItemResources.
+    For example: { HoverWithBombsTrick: (BombItem, ExplosiveDamage)}
+    :return: Error messages of requirements which don't pass the check.
+    """
+    context = _create_node_context(game)
+    requirement_cache: dict[Requirement, RequirementSet] = {}
+
+    for source_node in game.region_list.iterate_nodes():
+        try:
+            for destination_node, req in game.region_list.potential_nodes_from(source_node, context):
+                for resource_key, resource_value in combined_resources.items():
+                    if _needed_resources_partly_satisfied(
+                        req, (resource_key, resource_value), context, requirement_cache
+                    ):
+                        yield (
+                            f"{source_node.identifier.as_string} -> {destination_node.identifier.as_string} contains "
+                            f'"{resource_key}" but not "{resource_value}"'
+                        )
+        except KeyError:
+            # Broken docks
+            continue
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
@@ -293,5 +398,6 @@ def find_database_errors(game: GameDescription) -> list[str]:
     result.extend(find_invalid_strongly_connected_components(game))
     result.extend(find_recursive_templates(game))
     result.extend(find_duplicated_pickup_index(game.region_list))
+    result.extend(game.game.data.logic_db_integrity(game))
 
     return result

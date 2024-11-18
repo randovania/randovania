@@ -33,11 +33,20 @@ def test_invalid_db():
         "schema_version": 14,
         "game": "prime2",
         "resource_database": {
-            "items": {"LightAmmo": {"long_name": "Light Ammo", "max_capacity": 1, "extra": {"item_id": 46}}},
+            "items": {
+                "LightAmmo": {"long_name": "Light Ammo", "max_capacity": 1, "extra": {"item_id": 46}},
+                "BombsItem": {"long_name": "Bombs", "max_capacity": 1, "extra": {"item_id": 47}},
+            },
             "events": {
                 "Boss": {"long_name": "First Boss Killed", "extra": {}},
             },
-            "tricks": {},
+            "tricks": {
+                "BombHoverTrick": {
+                    "long_name": "Bomb Hovering",
+                    "description": "Trick that allows you to hover with bombs",
+                    "extra": {},
+                }
+            },
             "damage": {},
             "versions": {},
             "misc": {},
@@ -61,6 +70,15 @@ def test_invalid_db():
                     },
                 },
                 "B": {"type": "template", "data": "A"},
+                "Use Bombs": {
+                    "type": "resource",
+                    "data": {
+                        "type": "items",
+                        "name": "BombsItem",
+                        "amount": 1,
+                        "negate": False,
+                    },
+                },
             },
             "damage_reductions": [],
             "energy_tank_item_index": "LightAmmo",
@@ -265,6 +283,101 @@ def test_invalid_db():
                 },
             },
             {
+                "name": "Grass World",
+                "extra": {},
+                "areas": {
+                    "Plains": {
+                        "default_node": None,
+                        "extra": {},
+                        "nodes": {
+                            "Hut": {
+                                "node_type": "generic",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": ["default"],
+                                "extra": {},
+                                "valid_starting_location": True,
+                                "connections": {
+                                    "Windmill": {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": None,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "BombsItem",
+                                                        "amount": 0,
+                                                        "negate": False,
+                                                    },
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "BombsItem",
+                                                        "amount": 1,
+                                                        "negate": True,
+                                                    },
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "BombsItem",
+                                                        "amount": 2,
+                                                        "negate": False,
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    }
+                                },
+                            },
+                            "Windmill": {
+                                "node_type": "generic",
+                                "heal": False,
+                                "coordinates": None,
+                                "description": "",
+                                "layers": ["default"],
+                                "extra": {},
+                                "valid_starting_location": False,
+                                "connections": {
+                                    "Hut": {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": None,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BombHoverTrick",
+                                                        "amount": 1,
+                                                        "negate": False,
+                                                    },
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "BombsItem",
+                                                        "amount": 1,
+                                                        "negate": False,
+                                                    },
+                                                },
+                                            ],
+                                        },
+                                    }
+                                },
+                            },
+                        },
+                    }
+                },
+            },
+            {
                 "name": "Lava World",
                 "extra": {},
                 "areas": {
@@ -391,6 +504,12 @@ def test_invalid_db():
 
     # Run
     errors = integrity_check.find_database_errors(gd)
+    errors.extend(integrity_check.check_for_resources_to_use_together(gd, {"BombHoverTrick": ("BombsItem",)}))
+    errors.extend(
+        integrity_check.check_for_items_to_be_replaced_by_templates(
+            gd, {"BombsItem": "something along the lines of 'use bombs'"}
+        )
+    )
 
     # Assert
     assert errors == [
@@ -416,7 +535,16 @@ def test_invalid_db():
         "['World/Area 1/Door to Area 2 (Generic)']",
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 2/Door to Area 1']",
         "Unknown strongly connected component detected containing 1 nodes:\n['World/Area 1/Door to Area 2 (Dock)']",
+        (
+            "Unknown strongly connected component detected containing 2 nodes:\n"
+            "['Grass World/Plains/Hut', 'Grass World/Plains/Windmill']"
+        ),
         "Checking A: Loop detected: ['A', 'B', 'A']",
         "Checking B: Loop detected: ['B', 'A', 'B']",
         "Lava World/Hot/Pickup (Duplicate Id) has PickupIndex 5, but it was already used in Lava World/Hot/Bad Pickup",
+        'Grass World/Plains/Windmill -> Grass World/Plains/Hut contains "BombHoverTrick" but not "(\'BombsItem\',)"',
+        (
+            'Grass World/Plains/Windmill -> Grass World/Plains/Hut is using the resource "BombsItem" directly '
+            "than using the template \"something along the lines of 'use bombs'\"."
+        ),
     ]
