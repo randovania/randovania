@@ -9,7 +9,7 @@ from randovania.game_description.integrity_check import (
 # Short name resource -> recommended template name
 use_templates_over_items = {
     "MorphBallBombData": "Can Use Bombs",
-    "PowerBombs": "Can Use Spider Ball",
+    "PowerBombs": "Can Use Power Bombs",
 }
 
 # short name resource -> Tuple(short name resources)
