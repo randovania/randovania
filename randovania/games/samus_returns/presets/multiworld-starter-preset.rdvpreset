@@ -1,5 +1,5 @@
 {
-    "schema_version": 82,
+    "schema_version": 93,
     "base_preset_uuid": null,
     "name": "Multiworld Starter Preset",
     "uuid": "7b724691-d556-410f-aca1-8b1d83ca77b9",
@@ -217,6 +217,7 @@
         "pickup_model_data_source": "etm",
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
+        "two_sided_door_lock_search": false,
         "minimum_available_locations_for_hint_placement": 5,
         "minimum_location_weight_for_hint_placement": 0.2,
         "dock_rando": {
@@ -276,13 +277,15 @@
             "prefer_stronger_metroids": true,
             "prefer_bosses": false,
             "prefer_anywhere": true,
-            "required_artifacts": 10
+            "required_artifacts": 10,
+            "placed_artifacts": 10
         },
         "hints": {
             "artifacts": "precise",
             "baby_metroid": "hide-area"
         },
         "constant_heat_damage": 20,
-        "constant_lava_damage": 20
+        "constant_lava_damage": 20,
+        "final_boss": "Ridley"
     }
 }

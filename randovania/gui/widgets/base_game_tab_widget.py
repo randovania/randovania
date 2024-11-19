@@ -99,3 +99,6 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
 
     def _on_can_generate(self, can_generate: bool) -> None:
         self.quick_generate_button.setEnabled(can_generate)
+
+    def select_preset_tab(self) -> None:
+        self.setCurrentWidget(self.tab_generate_game)

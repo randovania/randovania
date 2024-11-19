@@ -463,7 +463,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             else:
                 self.export_game_button.setEnabled(False)
 
-            alert_user_on_generation(self, self._options)
+            # FIXME: this triggers on every meta update as opposed to just when the generation status gets updated
+            # alert_user_on_generation(self, self._options)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
@@ -757,6 +758,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 self.update_progress("Finished generating, uploading...", 100)
                 await uploader(layout)
                 self.update_progress("Uploaded!", 100)
+                alert_user_on_generation(self, self._options)
 
                 if layout.has_spoiler:
                     last_multiplayer.unlink()

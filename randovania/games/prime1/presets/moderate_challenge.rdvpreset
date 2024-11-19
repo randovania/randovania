@@ -1,5 +1,5 @@
 {
-    "schema_version": 66,
+    "schema_version": 93,
     "base_preset_uuid": null,
     "name": "Moderate Challenge",
     "uuid": "7c57ecf6-ff1c-4ab9-bc84-802ac70e980a",
@@ -199,6 +199,27 @@
                     ],
                     "pickup_count": 4,
                     "requires_main_item": false
+                },
+                "Energy Refill": {
+                    "ammo_count": [
+                        20
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": false
+                },
+                "Missile Refill": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": false
+                },
+                "Power Bomb Refill": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 0,
+                    "requires_main_item": false
                 }
             }
         },
@@ -207,6 +228,7 @@
         "pickup_model_data_source": "etm",
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
+        "two_sided_door_lock_search": false,
         "minimum_available_locations_for_hint_placement": 0,
         "minimum_location_weight_for_hint_placement": 0.0,
         "dock_rando": {
@@ -231,8 +253,8 @@
                 }
             }
         },
-        "single_set_for_pickups_that_solve": false,
-        "staggered_multi_pickup_placement": false,
+        "single_set_for_pickups_that_solve": true,
+        "staggered_multi_pickup_placement": true,
         "check_if_beatable_after_base_patches": false,
         "teleporters": {
             "mode": "randomized",
@@ -268,10 +290,11 @@
         },
         "energy_per_tank": 100,
         "artifact_target": 9,
+        "artifact_required": 9,
         "artifact_minimum_progression": 6,
         "heat_damage": 10.0,
         "warp_to_start": true,
-        "progressive_damage_reduction": true,
+        "damage_reduction": "Additive",
         "allow_underwater_movement_without_gravity": false,
         "small_samus": false,
         "large_samus": false,
@@ -290,8 +313,10 @@
         "backwards_upper_mines": true,
         "backwards_lower_mines": false,
         "phazon_elite_without_dynamo": true,
+        "remove_bars_great_tree_hall": false,
         "legacy_mode": false,
         "qol_cutscenes": "SkippableCompetitive",
+        "ingame_difficulty": "Normal",
         "enemy_attributes": null
     }
 }
