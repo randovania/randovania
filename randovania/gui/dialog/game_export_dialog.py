@@ -207,7 +207,7 @@ def output_file_validator(output_file: Path) -> bool:
 
 
 def is_directory_validator(line: QtWidgets.QLineEdit) -> bool:
-    return not line.text() or not Path(line.text()).is_dir()
+    return not line.text() or not Path(line.text()).is_dir() or line.text() == "."
 
 
 def output_input_intersection_validator(output_edit: QtWidgets.QLineEdit, input_edit: QtWidgets.QLineEdit) -> bool:

@@ -6,73 +6,99 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>338</height>
+    <width>543</width>
+    <height>351</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Game Patching</string>
+   <string>Factorio Mod Exporter</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QLabel" name="output_file_label">
-     <property name="text">
-      <string>Output Directory</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QCheckBox" name="auto_save_spoiler_check">
-     <property name="text">
-      <string>Include a spoiler log on same directory</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="output_file_button">
-     <property name="text">
-      <string>Select Folder</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0">
+  <layout class="QGridLayout" name="root_layout">
+   <item row="16" column="0">
     <widget class="QPushButton" name="accept_button">
      <property name="text">
       <string>Accept</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="description_label">
+   <item row="1" column="0">
+    <widget class="QLabel" name="output_file_label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to create the randomizer mod, a copy of Factorio itself is needed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
+      <string>Factorio Mods Folder</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLineEdit" name="output_file_edit">
-     <property name="placeholderText">
-      <string>Path where to place the mod folder</string>
+   <item row="3" column="1">
+    <widget class="QPushButton" name="output_file_button">
+     <property name="text">
+      <string>Select Folder</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="Line" name="line_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="7" column="0" colspan="2">
+    <widget class="Line" name="download_assets_line">
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="use_default_button">
+     <property name="text">
+      <string>Use default</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLineEdit" name="output_file_edit">
+     <property name="placeholderText">
+      <string>Path of the Factorio mod folder</string>
+     </property>
+    </widget>
+   </item>
    <item row="5" column="0" colspan="2">
+    <widget class="QLabel" name="description_b_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If playing from Steam, press &amp;quot;Use default&amp;quot;. On Linux, if using Flatpak Steam the default won't work.&lt;br/&gt;If you downloaded directly from Factorio.com, there will be a mods folder after opening the game once.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QCheckBox" name="auto_save_spoiler_check">
+     <property name="text">
+      <string>Include a spoiler log on same directory</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="2">
+    <widget class="QLabel" name="download_assets_label">
+     <property name="text">
+      <string>During export, a [separate mod](https://mods.factorio.com/mod/randovania-assets) with all assets used by the randomizer is downloaded if it's not already present. </string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::TextFormat::MarkdownText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0" colspan="2">
     <widget class="Line" name="line">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -85,10 +111,36 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="1">
+   <item row="16" column="1">
     <widget class="QPushButton" name="cancel_button">
      <property name="text">
       <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="description_a_label">
+     <property name="text">
+      <string>Select the [mods](https://wiki.factorio.com/Application_directory) folder for the Factorio install you are using.</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::TextFormat::MarkdownText</enum>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <widget class="QLabel" name="description_c_label">
+     <property name="text">
+      <string>For more details, see the [Application directory](https://wiki.factorio.com/Application_directory) and [Modding](https://wiki.factorio.com/Modding) pages of the Factorio Wiki.</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::TextFormat::MarkdownText</enum>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

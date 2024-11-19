@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -26,8 +25,9 @@ from randovania.gui.dialog.game_export_dialog import (
     update_validation,
 )
 from randovania.gui.lib import common_qt_lib
+from randovania.lib import windows_lib
 from randovania.lib.ftp_uploader import FtpUploader
-from randovania.lib.windows_drives import get_windows_drives
+from randovania.lib.windows_lib import get_windows_drives
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -38,7 +38,7 @@ if TYPE_CHECKING:
 
 def get_path_to_citra(title_id: str) -> Path:
     if platform.system() == "Windows":
-        return Path(os.environ["APPDATA"], "Citra", "load", "mods", title_id)
+        return windows_lib.get_appdata().joinpath("Citra", "load", "mods", title_id)
 
     raise ValueError("Unsupported platform")
 
