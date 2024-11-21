@@ -6,6 +6,7 @@ import randovania.game.generator
 import randovania.game.gui
 import randovania.game.layout
 import randovania.game.web_info
+from randovania.games.prime1.db_integrity import find_prime_db_errors
 from randovania.games.prime1.hint_distributor import PrimeHintDistributor
 from randovania.games.prime1.layout.preset_describer import (
     PrimePresetDescriber,
@@ -141,4 +142,5 @@ game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
     defaults_available_in_game_sessions=True,
+    logic_db_integrity=find_prime_db_errors,
 )
