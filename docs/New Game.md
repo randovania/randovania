@@ -8,9 +8,7 @@ the following rules must be adhered to:
 - An open source patcher, with a license that allows us to fork your patcher and continue it in case of abandonment. Licenses such as GPLv3 or Apache 2 are great options.
 - Proper test coverage of new code, at least the part included in Randovania.
 
-# Required Changes
-
-## Development Process
+# Development Process
 
 This is a rough outline on how the development process is for new games.
 1. Make a thread in #randovania-dev in the [Randovania Discord server](https://discord.gg/M23gCxj6fw) to discuss your work. Please communicate with the core dev team there as much as possible.
@@ -25,7 +23,7 @@ A Discord account is required, as said server is necessary to test the developme
 It is important to reiterate that communication with us is key. If you open a Pull Request to a new game out of the blue, without having it ever discussed with us, we may close your PR and ask you to talk with us first.
 Similarly, if you keep things private or are generally uncommunicative with us, then we'll also be less inclined to work with you.
 
-## Adding a new game entry
+# Adding a new game entry
 
 Randovania provides a command line tool for making the necessary changes to start adding a new game.
 First, make sure you have followed the Developer setup and activated the virtual environment as explained in the readme. Then you can run the following command:
