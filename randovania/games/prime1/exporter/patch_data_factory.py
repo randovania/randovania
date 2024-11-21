@@ -796,6 +796,33 @@ class PrimePatchDataFactory(PatchDataFactory):
                 ("Chozo Ruins", "Save Station 3", "0"),
                 # Reflecting Pool -> Antechamber
                 ("Chozo Ruins", "Reflecting Pool", "3"),
+                # Burning Trail <-> Save Station Magmoor A
+                ("Magmoor Caverns", "Burning Trail", "2"),
+                ("Magmoor Caverns", "Save Station Magmoor A", "0"),
+                # Transport to Phendrana Drifts South <-> Save Station Magmoor B
+                ("Magmoor Caverns", "Transport to Phendrana Drifts South", "0"),
+                ("Magmoor Caverns", "Save Station Magmoor B", "0"),
+                # Ice Ruins West <-> Canyon Entryway
+                ("Phendrana Drifts", "Ice Ruins West", "2"),
+                ("Phendrana Drifts", "Canyon Entryway", "1"),
+                # Ruined Courtyard <-> Save Station A
+                ("Phendrana Drifts", "Ruined Courtyard", "1"),
+                ("Phendrana Drifts", "Save Station A", "0"),
+                # Observatory <-> Save Station D
+                ("Phendrana Drifts", "Observatory", "2"),
+                ("Phendrana Drifts", "Save Station D", "0"),
+                # West Tower Entrance <-> West Tower
+                ("Phendrana Drifts", "West Tower Entrance", "0"),
+                ("Phendrana Drifts", "West Tower", "0"),
+                # Waterfall Cavern <-> Frigate Crash Site
+                ("Tallon Overworld", "Waterfall Cavern", "1"),
+                ("Tallon Overworld", "Frigate Crash Site", "0"),
+                # Temple Security Station <-> Temple Lobby
+                ("Tallon Overworld", "Temple Security Station", "1"),
+                ("Tallon Overworld", "Temple Lobby", "1"),
+                # Root Tunnel <-> Root Cave
+                ("Tallon Overworld", "Root Tunnel", "0"),
+                ("Tallon Overworld", "Root Cave", "1"),
             ]
 
             for world_name, room_name, dock_num in BLAST_SHIELDS:
