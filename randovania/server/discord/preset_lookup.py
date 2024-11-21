@@ -15,7 +15,6 @@ import discord
 from discord.ui import Button
 
 import randovania
-import randovania.version
 from randovania.generator import generator
 from randovania.layout import layout_description, preset_describer
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -181,7 +180,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         preset = description.get_preset(0)
         embed.description = (
             f"{preset.game.long_name}, with preset {preset.name}.\n"
-            f"Seed Hash for {randovania.version}: {description.shareable_word_hash}"
+            f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}"
         )
         _add_preset_description_to_embed(embed, preset)
     else:
@@ -196,7 +195,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
 
         embed.description = (
             f"{description.world_count} player multiworld for {games_text}.\n"
-            f"Seed Hash for {randovania.version}: {description.shareable_word_hash}"
+            f"Seed Hash for {randovania.VERSION}: {description.shareable_word_hash}"
         )
 
     await message.reply(embed=embed, mention_author=False)
