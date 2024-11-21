@@ -52,7 +52,7 @@ Feel free to reference how already existing games implement or deal with certain
 
 Setup a logic database. It contains a logical representation on all places one can visit, how they connect to each other, and defines all collectable resources/tricks/events and more that exist in the game.
 It also defines a victory condition. This will normally be some requirement for a final boss event, but during development, this can be anything you want, which can help when the database is not complete. 
-One of *the* most important things to take to heart, is when you want to create your database, try to automate as much as you can. This usually means having a seperate program/script that can read the games internal structures, then building RDV's regions, areas, nodes from the read structures, and populating the `extra` field with any existing internal data that exists for them. Not automating it means having a very long and painful process to set them all up manually.
+When first creating the database, it is *highly* recommended to try to automate the process as much as you can. This usually means having a separate program/script that can read the games internal structures, then building RDV's regions, areas, nodes from the read structures, and populating the `extra` field with any existing internal data that exists for them. Not automating it means having a very long and painful process to set them all up manually.
 
 Further documentation:
 - [Glossary entry](https://github.com/randovania/randovania/blob/main/docs/Glossary.md#database)
