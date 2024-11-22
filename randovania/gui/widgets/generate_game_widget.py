@@ -13,6 +13,7 @@ import randovania
 from randovania import monitoring
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
 from randovania.gui.lib import async_dialog
+from randovania.gui.lib.common_qt_lib import alert_user_on_generation
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.interface_common import generator_frontend
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -180,6 +181,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 ),
                 default_button=async_dialog.StandardButton.Cancel,
             )
+            alert_user_on_generation(self, self._options)
             if code == async_dialog.StandardButton.Save:
                 layout = e.layout
             elif code == async_dialog.StandardButton.Retry:
@@ -192,14 +194,19 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             return
 
         except Exception as e:
+            alert_user_on_generation(self, self._options)
             return await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
 
         self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
+        alert_user_on_generation(self, self._options)
         persist_layout(self._options.game_history_path, layout)
         self._window_manager.open_game_details(layout)
 
     def on_options_changed(self, options: Options) -> None:
         self.select_preset_widget.on_options_changed(options)
+
+    def on_new_preset(self, preset: VersionedPreset) -> None:
+        self.select_preset_widget.on_new_preset(preset)
 
     def _on_can_generate(self, can_generate: bool) -> None:
         for btn in [

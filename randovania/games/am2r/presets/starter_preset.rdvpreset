@@ -1,5 +1,5 @@
 {
-    "schema_version": 79,
+    "schema_version": 93,
     "base_preset_uuid": null,
     "name": "Starter Preset",
     "uuid": "b65bf9d8-f962-4f9a-b28f-b46c03ef3d76",
@@ -42,24 +42,16 @@
                     "num_shuffled_pickups": 1,
                     "priority": 0.5
                 },
-                "Varia Suit": {
-                    "num_shuffled_pickups": 0
-                },
-                "Space Jump": {
-                    "num_shuffled_pickups": 0
-                },
+                "Varia Suit": {},
+                "Space Jump": {},
                 "Speed Booster": {
                     "num_shuffled_pickups": 1
                 },
-                "Hi-Jump Boots": {
-                    "num_shuffled_pickups": 0
-                },
+                "Hi-Jump Boots": {},
                 "Progressive Jump": {
                     "num_shuffled_pickups": 2
                 },
-                "Gravity Suit": {
-                    "num_shuffled_pickups": 0
-                },
+                "Gravity Suit": {},
                 "Progressive Suit": {
                     "num_shuffled_pickups": 2
                 },
@@ -101,6 +93,15 @@
                 },
                 "Energy Tank": {
                     "num_shuffled_pickups": 10
+                },
+                "Long Beam": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Infinite Bomb Propulsion": {
+                    "num_included_in_starting_pickups": 1
+                },
+                "Walljump Boots": {
+                    "num_included_in_starting_pickups": 1
                 }
             },
             "default_pickups": {},
@@ -193,6 +194,7 @@
         "pickup_model_data_source": "etm",
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
+        "two_sided_door_lock_search": false,
         "minimum_available_locations_for_hint_placement": 0,
         "minimum_location_weight_for_hint_placement": 0.0,
         "dock_rando": {
@@ -236,7 +238,8 @@
             "prefer_metroids": true,
             "prefer_bosses": false,
             "prefer_anywhere": false,
-            "required_artifacts": 10
+            "required_artifacts": 10,
+            "placed_artifacts": 10
         },
         "hints": {
             "artifacts": "precise",
@@ -248,6 +251,13 @@
         "nest_pipes": true,
         "a3_entrance_blocks": true,
         "blue_save_doors": false,
-        "force_blue_labs": true
+        "force_blue_labs": true,
+        "vertically_flip_gameplay": false,
+        "horizontally_flip_gameplay": false,
+        "darkness_chance": 0,
+        "darkness_min": 0,
+        "darkness_max": 4,
+        "submerged_water_chance": 0,
+        "submerged_lava_chance": 0
     }
 }

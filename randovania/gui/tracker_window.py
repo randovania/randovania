@@ -112,6 +112,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             if preset.configuration.portal_rando:
                 raise InvalidLayoutForTracker("Tracker does not support Portal rando")
 
+        if preset.game == RandovaniaGame.FACTORIO:
+            raise InvalidLayoutForTracker("Tracker does not support Factorio")
+
         await result.configure()
         return result
 

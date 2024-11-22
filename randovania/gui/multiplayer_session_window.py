@@ -20,6 +20,7 @@ from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
+from randovania.gui.lib.common_qt_lib import alert_user_on_generation
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
 from randovania.gui.lib.qt_network_client import AnyNetworkError, QtNetworkClient, handle_network_errors
@@ -448,6 +449,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             else:
                 self.export_game_button.setEnabled(False)
 
+            # FIXME: this triggers on every meta update as opposed to just when the generation status gets updated
+            # alert_user_on_generation(self, self._options)
+
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
         try:
@@ -740,6 +744,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 self.update_progress("Finished generating, uploading...", 100)
                 await uploader(layout)
                 self.update_progress("Uploaded!", 100)
+                alert_user_on_generation(self, self._options)
 
                 if layout.has_spoiler:
                     last_multiplayer.unlink()
@@ -750,6 +755,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except AnyNetworkError:
                 # We're interested in catching generation failures.
                 # Let network errors be handled by who called us, which will be captured by handle_network_errors
+
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                alert_user_on_generation(self, self._options)
                 raise
 
             except Exception as e:
@@ -757,6 +765,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     e,
                     self.update_progress,
                 )
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                alert_user_on_generation(self, self._options)
 
             finally:
                 self._generating_game = False

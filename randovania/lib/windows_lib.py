@@ -1,3 +1,4 @@
+import os
 import string
 import sys
 from collections.abc import Iterator
@@ -36,3 +37,10 @@ def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
     except ImportError:
         if sys.platform == "win32":
             raise
+
+
+def get_appdata() -> Path:
+    """
+    Returns a path to where the AppData/Roaming is located.
+    """
+    return Path(os.environ["APPDATA"])

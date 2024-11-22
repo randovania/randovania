@@ -131,6 +131,8 @@ _SERIALIZER_FOR_FIELD = {
     "dark_mode": Serializer(identity, bool),
     "show_multiworld_banner": Serializer(identity, bool),
     "experimental_settings": Serializer(identity, bool),
+    "audible_generation_alert": Serializer(identity, bool),
+    "visual_generation_alert": Serializer(identity, bool),
     "allow_crash_reporting": Serializer(identity, bool),
     "use_user_for_crash_reporting": Serializer(identity, bool),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
@@ -200,6 +202,8 @@ class Options:
     _dark_mode: bool | None = None
     _show_multiworld_banner: bool | None = None
     _experimental_settings: bool | None = None
+    _audible_generation_alert: bool | None = None
+    _visual_generation_alert: bool | None = None
     _allow_crash_reporting: bool | None = None
     _use_user_for_crash_reporting: bool | None = None
     _displayed_alerts: set[InfoAlert] | None = None
@@ -421,6 +425,22 @@ class Options:
     @experimental_settings.setter
     def experimental_settings(self, value: bool):
         self._edit_field("experimental_settings", value)
+
+    @property
+    def audible_generation_alert(self) -> bool:
+        return _return_with_default(self._audible_generation_alert, lambda: True)
+
+    @audible_generation_alert.setter
+    def audible_generation_alert(self, value: bool):
+        self._edit_field("audible_generation_alert", value)
+
+    @property
+    def visual_generation_alert(self) -> bool:
+        return _return_with_default(self._visual_generation_alert, lambda: True)
+
+    @visual_generation_alert.setter
+    def visual_generation_alert(self, value: bool):
+        self._edit_field("visual_generation_alert", value)
 
     @property
     def allow_crash_reporting(self) -> bool:

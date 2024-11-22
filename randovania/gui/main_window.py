@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import dataclasses
 import functools
+import json
 import logging
 import os
 import platform
 import re
 import typing
+import uuid
 from functools import partial
 from pathlib import Path
 
@@ -26,6 +29,7 @@ from randovania.interface_common import update_checker
 from randovania.interface_common.installation_check import find_bad_installation
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import enum_lib, json_lib
 from randovania.resolver import debug
 
@@ -294,6 +298,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_dark_mode.triggered.connect(self._on_menu_action_dark_mode)
         self.menu_action_show_multiworld_banner.triggered.connect(self._on_menu_action_show_multiworld_banner)
         self.menu_action_experimental_settings.triggered.connect(self._on_menu_action_experimental_settings)
+        self.menu_action_audible_generation_alert.triggered.connect(self._on_menu_action_audible_generation_alert)
+        self.menu_action_visual_generation_alert.triggered.connect(self._on_menu_action_visual_generation_alert)
         self.menu_action_open_auto_tracker.triggered.connect(self._open_auto_tracker)
         self.menu_action_previously_generated_games.triggered.connect(self._on_menu_action_previously_generated_games)
         self.menu_action_log_files_directory.triggered.connect(self._on_menu_action_log_files_directory)
@@ -323,8 +329,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         super().closeEvent(event)
 
     def dragEnterEvent(self, event: QtGui.QDragEnterEvent):
-        from randovania.layout.versioned_preset import VersionedPreset
-
         valid_extensions = [
             LayoutDescription.file_extension(),
             VersionedPreset.file_extension(),
@@ -344,11 +348,12 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
                 self.RequestOpenLayoutSignal.emit(path)
                 return
 
-            # FIXME: re-implement importing presets
-            # elif path.suffix == f".{VersionedPreset.file_extension()}":
-            #     self._set_main_tab(self.tab_create_seed)
-            #     self.tab_create_seed.import_preset_file(path)
-            #     return
+            elif path.suffix == f".{VersionedPreset.file_extension()}":
+                preset = self.import_preset_file(path)
+                if preset is not None:
+                    self._select_game(preset.game)
+                    self.tab_game_details.select_preset_tab()
+                return
 
     def showEvent(self, event: QtGui.QShowEvent):
         self.InitPostShowSignal.emit()
@@ -590,6 +595,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
         self.menu_action_show_multiworld_banner.setChecked(self._options.show_multiworld_banner)
         self.menu_action_experimental_settings.setChecked(self._options.experimental_settings)
+        self.menu_action_audible_generation_alert.setChecked(self._options.audible_generation_alert)
+        self.menu_action_visual_generation_alert.setChecked(self._options.visual_generation_alert)
 
         self.tab_game_details.on_options_changed(self._options)
         self.refresh_game_list()
@@ -771,6 +778,14 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         with self._options as options:
             options.experimental_settings = self.menu_action_experimental_settings.isChecked()
 
+    def _on_menu_action_audible_generation_alert(self):
+        with self._options as options:
+            options.audible_generation_alert = self.menu_action_audible_generation_alert.isChecked()
+
+    def _on_menu_action_visual_generation_alert(self):
+        with self._options as options:
+            options.visual_generation_alert = self.menu_action_visual_generation_alert.isChecked()
+
     def _open_auto_tracker(self):
         from randovania.gui.auto_tracker_window import AutoTrackerWindow
 
@@ -948,3 +963,51 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         if session_window is not None:
             self.opened_session_windows[session_id] = session_window
             session_window.show()
+
+    def import_preset_file(self, path: Path) -> VersionedPreset | None:
+        """
+        Imports a preset file.
+        :param path:
+        :return: The imported preset, or None if none were imported.
+        """
+
+        try:
+            preset = VersionedPreset.from_file_sync(path)
+            preset.get_preset()
+        except (InvalidPreset, json.JSONDecodeError):
+            QtWidgets.QMessageBox.critical(
+                self, "Error loading preset", f"The file at '{path}' contains an invalid preset."
+            )
+            return None
+
+        if not preset.game.data.development_state.can_view():
+            QtWidgets.QMessageBox.critical(
+                self,
+                "Error loading preset",
+                f"The new preset '{preset.name}' is for game '{preset.game.long_name}', "
+                f"which is incompatible with this version of Randovania.",
+            )
+            return None
+
+        existing_preset = self.preset_manager.preset_for_uuid(preset.uuid)
+        if existing_preset is not None:
+            user_response = QtWidgets.QMessageBox.warning(
+                self,
+                "Preset ID conflict",
+                f"The new preset '{preset.name}' for '{preset.game.long_name}' has "
+                f"the same ID as existing '{existing_preset.name}'. "
+                f"Do you want to overwrite it?",
+                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No | async_dialog.StandardButton.Cancel,
+                async_dialog.StandardButton.Cancel,
+            )
+            if user_response == async_dialog.StandardButton.Cancel:
+                return None
+            elif user_response == async_dialog.StandardButton.No:
+                preset = VersionedPreset.with_preset(dataclasses.replace(preset.get_preset(), uuid=uuid.uuid4()))
+
+        with self._options as options:
+            options.set_selected_preset_uuid_for(preset.game, preset.uuid)
+
+        self.preset_manager.add_new_preset(preset)
+        self.tab_game_details.on_new_preset(preset)
+        return preset
