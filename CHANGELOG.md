@@ -28,6 +28,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
 - Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
 
+#### Logic Database
+
+##### Tallon Overworld
+
+- Added: Now checks for Knowledge (Beginner) for reverse Frigate without activating the Thermal Conduits.
+
 ### Metroid Prime 2: Echoes
 
 #### Logic Database
