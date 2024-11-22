@@ -102,8 +102,12 @@ class GameExporter:
                     input_hash = export_params.calculate_input_hash()
                     incorrect_hashes = self.get_unknown_input_hashes(input_hash)
                     if incorrect_hashes:
-                        msg = "An error occurred while exporting.\nThe following files have invalid hashes:\n"
-                        msg += "\n".join(f"{key} => {value}" for key, value in incorrect_hashes.items())
+                        msg = "An error occurred while exporting.\n\nYour following input is invalid:\n"
+                        msg += "\n".join(f"- {key}" for key in incorrect_hashes.keys())
+                        msg += (
+                            "\n\nPlease check the [Input Validation](https://randovania.org/guides/input-validation) "
+                            "guide for more details."
+                        )
                         raise UnableToExportError(msg) from e
                     else:
                         scope.capture_exception(
@@ -119,7 +123,7 @@ class GameExporter:
 
     def known_good_hashes(self) -> dict[str, tuple[str, ...]]:
         """
-        :return: A dict mapping keys returned by GameExportParams.calculate_input_hash to list of known good hashes.
+        :return: A dict mapping keys returned by GameExportParams.calculate_input_hash to a list of known good hashes.
         """
         return {}
 
