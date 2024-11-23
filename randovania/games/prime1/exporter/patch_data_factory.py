@@ -755,82 +755,25 @@ class PrimePatchDataFactory(PatchDataFactory):
                 for area in region.areas:
                     level_data[region.name]["rooms"][area.name]["submerge"] = self.rng.random() < probability
 
-        # Replace vanilla missile blast shields with the new ones and place corresponding shield on other side if needed
+        # Replace vanilla missile blast shields with the new ones
         if not self.configuration.legacy_mode:
-            BLAST_SHIELDS = [
-                # Main Plaza <-> Ruined Shrine Access
-                ("Chozo Ruins", "Main Plaza", "2"),
-                ("Chozo Ruins", "Ruined Shrine Access", "1"),
-                # Arboretum Access <-> Arboretum
-                ("Chozo Ruins", "Arboretum Access", "0"),
-                ("Chozo Ruins", "Arboretum", "1"),
-                # Arboretum <-> Sunchamber Lobby
-                ("Chozo Ruins", "Arboretum", "0"),
-                ("Chozo Ruins", "Sunchamber Lobby", "0"),
-                # Arboretum <-> Gathering Hall Access
-                ("Chozo Ruins", "Arboretum", "2"),
-                ("Chozo Ruins", "Gathering Hall Access", "1"),
-                # Ruined Gallery <-> Map Station
-                ("Chozo Ruins", "Ruined Gallery", "2"),
-                ("Chozo Ruins", "Map Station", "0"),
-                # Transport Access North <-> Hive Totem
-                ("Chozo Ruins", "Transport Access North", "0"),
-                ("Chozo Ruins", "Hive Totem", "1"),
-                # Gathering Hall <-> Save Station 2
-                ("Chozo Ruins", "Gathering Hall", "2"),
-                ("Chozo Ruins", "Save Station 2", "0"),
-                # Watery Hall Access <-> Watery Hall
-                ("Chozo Ruins", "Watery Hall Access", "1"),
-                ("Chozo Ruins", "Watery Hall", "1"),
-                # Watery Hall <-> Dyanmo Access
-                ("Chozo Ruins", "Watery Hall", "0"),
-                ("Chozo Ruins", "Dynamo Access", "0"),
-                # Dynamo Access <-> Dynamo
-                ("Chozo Ruins", "Dynamo Access", "1"),
-                ("Chozo Ruins", "Dynamo", "0"),
-                # Crossway <-> Elder Hall Access
-                ("Chozo Ruins", "Crossway", "2"),
-                ("Chozo Ruins", "Elder Hall Access", "1"),
-                # Refecting Pool <-> Save Station 3
-                ("Chozo Ruins", "Reflecting Pool", "0"),
-                ("Chozo Ruins", "Save Station 3", "0"),
-                # Reflecting Pool -> Antechamber
-                ("Chozo Ruins", "Reflecting Pool", "3"),
-                # Burning Trail <-> Save Station Magmoor A
-                ("Magmoor Caverns", "Burning Trail", "2"),
-                ("Magmoor Caverns", "Save Station Magmoor A", "0"),
-                # Transport to Phendrana Drifts South <-> Save Station Magmoor B
-                ("Magmoor Caverns", "Transport to Phendrana Drifts South", "0"),
-                ("Magmoor Caverns", "Save Station Magmoor B", "0"),
-                # Ice Ruins West <-> Canyon Entryway
-                ("Phendrana Drifts", "Ice Ruins West", "2"),
-                ("Phendrana Drifts", "Canyon Entryway", "1"),
-                # Ruined Courtyard <-> Save Station A
-                ("Phendrana Drifts", "Ruined Courtyard", "1"),
-                ("Phendrana Drifts", "Save Station A", "0"),
-                # Observatory <-> Save Station D
-                ("Phendrana Drifts", "Observatory", "2"),
-                ("Phendrana Drifts", "Save Station D", "0"),
-                # West Tower Entrance <-> West Tower
-                ("Phendrana Drifts", "West Tower Entrance", "0"),
-                ("Phendrana Drifts", "West Tower", "0"),
-                # Waterfall Cavern <-> Frigate Crash Site
-                ("Tallon Overworld", "Waterfall Cavern", "1"),
-                ("Tallon Overworld", "Frigate Crash Site", "0"),
-                # Temple Security Station <-> Temple Lobby
-                ("Tallon Overworld", "Temple Security Station", "1"),
-                ("Tallon Overworld", "Temple Lobby", "1"),
-                # Root Tunnel <-> Root Cave
-                ("Tallon Overworld", "Root Tunnel", "0"),
-                ("Tallon Overworld", "Root Cave", "1"),
-            ]
+            for region in regions:
+                for area in region.areas:
+                    for node in area.nodes:
+                        if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
+                            if str(node.default_dock_weakness) != "Missile Blast Shield (randomprime)":
+                                continue
 
-            for world_name, room_name, dock_num in BLAST_SHIELDS:
-                if dock_num not in level_data[world_name]["rooms"][room_name]["doors"]:
-                    level_data[world_name]["rooms"][room_name]["doors"][dock_num] = {}
+                            dock_node_key_value = node.extra.get("dock_index")
+                            dock_num = str(dock_node_key_value)
+                            world_name = region.name
+                            room_name = area.name
 
-                level_data[world_name]["rooms"][room_name]["doors"][dock_num]["shieldType"] = "Blue"
-                level_data[world_name]["rooms"][room_name]["doors"][dock_num]["blastShieldType"] = "Missile"
+                            if dock_num not in level_data[world_name]["rooms"][room_name]["doors"]:
+                                level_data[world_name]["rooms"][room_name]["doors"][dock_num] = {}
+
+                            level_data[world_name]["rooms"][room_name]["doors"][dock_num]["shieldType"] = "Blue"
+                            level_data[world_name]["rooms"][room_name]["doors"][dock_num]["blastShieldType"] = "Missile"
 
         # serialize door modifications
         for region in regions:
