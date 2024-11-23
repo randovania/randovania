@@ -20,11 +20,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The option of "Remove Bars in Great Tree Hall". This feature removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall allowing free movement between the lower and upper levels of the room.
 - Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
-- Changed: Vanilla Missile Blast Shields have been changed to the Randomprime Missile Blast Shields. The corresponding doors were also changed to add the needed Radomprime Missile Blast Shield on the other side.
-
-#### Logic Database
-
-- Changed: Nodes affected by the Vanilla Missile Blast Shield change above were updated.
 
 ### Metroid Prime 2: Echoes
 
