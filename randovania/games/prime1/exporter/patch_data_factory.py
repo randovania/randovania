@@ -757,23 +757,22 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         # Replace vanilla missile blast shields with the new ones
         if not self.configuration.legacy_mode:
-            for region in regions:
-                for area in region.areas:
-                    for node in area.nodes:
-                        if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
-                            if str(node.default_dock_weakness) != "Missile Blast Shield (randomprime)":
-                                continue
+            region_list = db.region_list
+            for node in region_list.iterate_nodes():
+                if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
+                    if node.default_dock_weakness.name != "Missile Blast Shield (randomprime)":
+                        continue
 
-                            dock_node_key_value = node.extra.get("dock_index")
-                            dock_num = str(dock_node_key_value)
-                            world_name = region.name
-                            room_name = area.name
+                    dock_num = str(node.extra["dock_index"])
+                    world_name = node.identifier.region
+                    room_name = node.identifier.area
+                    doors_in_node = level_data[world_name]["rooms"][room_name]["doors"]
 
-                            if dock_num not in level_data[world_name]["rooms"][room_name]["doors"]:
-                                level_data[world_name]["rooms"][room_name]["doors"][dock_num] = {}
+                    if dock_num not in doors_in_node:
+                        doors_in_node[dock_num] = {}
 
-                            level_data[world_name]["rooms"][room_name]["doors"][dock_num]["shieldType"] = "Blue"
-                            level_data[world_name]["rooms"][room_name]["doors"][dock_num]["blastShieldType"] = "Missile"
+                    doors_in_node[dock_num]["shieldType"] = node.default_dock_weakness.extra["shieldType"]
+                    doors_in_node[dock_num]["blastShieldType"] = node.default_dock_weakness.extra["blastShieldType"]
 
         # serialize door modifications
         for region in regions:
