@@ -21,7 +21,7 @@ class SoundMode(IntEnum):
 @dataclasses.dataclass(frozen=True)
 class PrimeUserPreferences(JsonDataclass):
     sound_mode: SoundMode = SoundMode.STEREO
-    screen_brightness: int = _int_field(5, 2, 8, True)
+    screen_brightness: int = _int_field(4, 0, 8, True)
     screen_x_offset: int = _int_field(0, -30, 30, False)
     screen_y_offset: int = _int_field(0, -30, 30, False)
     screen_stretch: int = _int_field(0, -10, 10, False)

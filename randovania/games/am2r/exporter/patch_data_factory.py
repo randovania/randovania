@@ -369,6 +369,15 @@ class AM2RPatchDataFactory(PatchDataFactory):
         dud_hints = ["This creature did not give any useful DNA hints.", "Metroid DNA is hidden somewhere on SR-388."]
         joke_hints = JOKE_HINTS + dud_hints
         area_to_amount_map = {0: (0, 5), 1: (5, 9), 2: (9, 17), 3: (17, 27), 4: (27, 33), 5: (33, 41), 6: (41, 46)}
+
+        def _sort_list_by_region(entry: str) -> int:
+            is_located_str = "is located in "
+            index = entry.find("}", entry.find(is_located_str)) + 1
+            for region in self.game.region_list.regions:
+                if entry.startswith(region.name, index):
+                    return region.extra["internal_number"]
+            return 0
+
         for i in range(7):
             start, end = area_to_amount_map[i]
             shuffled_hints = list(dna_hint_mapping.values())[start:end]
@@ -381,7 +390,7 @@ class AM2RPatchDataFactory(PatchDataFactory):
                 joke = rng.choice(joke_hints)
                 joke_hints.remove(joke)
                 shuffled_hints = [hint_namer.format_joke(joke, True)]
-            septogg_hints[f"septogg_a{i}"] = gm_newline.join(shuffled_hints)
+            septogg_hints[f"septogg_a{i}"] = gm_newline.join(sorted(shuffled_hints, key=_sort_list_by_region))
 
         ice_hint = {}
         if hint_config.ice_beam != ItemHintMode.DISABLED:
