@@ -4,6 +4,7 @@ PRIME1_GC_ISOS = (
     "sha1:1a737910b55b59c6ad91be9e3e3c43517fd52efb",  # NTSC 0-02
     "sha1:34ac8a764a3c1db3326c39071cee2fc49e730aca",  # PAL
     "sha1:ee6c58b46012ebffb615506ec43e02ba71905662",  # Japan
+    # TODO: Korean
 )
 
 PRIME2_GC_ISOS = (
