@@ -4,7 +4,6 @@ import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime1.layout.prime_configuration import DamageReduction as DamageReductionConfig
@@ -51,6 +50,9 @@ class PrimeBootstrap(MetroidBootstrap):
 
         if configuration.ingame_difficulty == IngameDifficulty.HARD:
             enabled_resources.add("hard_mode")
+
+        if configuration.legacy_mode:
+            enabled_resources.add("vanilla_heat")
 
         return enabled_resources
 
@@ -112,12 +114,7 @@ class PrimeBootstrap(MetroidBootstrap):
         requirement_template = copy.copy(db.requirement_template)
 
         suits = [db.get_item_by_name("Varia Suit")]
-        if not configuration.legacy_mode:
-            requirement_template["Heat-Resisting Suit"] = dataclasses.replace(
-                requirement_template["Heat-Resisting Suit"],
-                requirement=ResourceRequirement.simple(db.get_item_by_name("Varia Suit")),
-            )
-        else:
+        if configuration.legacy_mode:
             suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
 
         reductions = [DamageReduction(None, configuration.heat_damage / 10.0)]
