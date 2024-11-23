@@ -757,8 +757,7 @@ class PrimePatchDataFactory(PatchDataFactory):
 
         # Replace vanilla missile blast shields with the new ones
         if not self.configuration.legacy_mode:
-            region_list = db.region_list
-            for node in region_list.iterate_nodes():
+            for node in db.region_list.iterate_nodes():
                 if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
                     if node.default_dock_weakness.name != "Missile Blast Shield (randomprime)":
                         continue
