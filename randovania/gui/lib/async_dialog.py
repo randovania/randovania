@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import typing
 
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 from randovania.gui.lib import common_qt_lib
 
@@ -39,6 +39,7 @@ async def message_box(
 ) -> StandardButton:
     box = QtWidgets.QMessageBox(icon, title, text, buttons, parent)
     box.setDefaultButton(default_button)
+    box.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
     common_qt_lib.set_default_window_icon(box)
     return typing.cast(StandardButton, await execute_dialog(box))
 
