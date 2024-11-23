@@ -270,7 +270,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         monitoring.metrics.incr("gui_preset_import_clicked", tags={"game": self._game.value})
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
         if path is not None:
-            self.import_preset_file(path)
+            self._window_manager.import_preset_file(path)
 
     def _on_view_deleted(self):
         raise RuntimeError("Feature not implemented")
