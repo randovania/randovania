@@ -28,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
 - Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
 
+#### Logic Database
+
+- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+
 ### Metroid Prime 2: Echoes
 
 #### Logic Database
