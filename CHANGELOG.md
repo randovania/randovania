@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Tallon Overworld
 
 - Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
+- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
 
 ### Metroid Prime 2: Echoes
 

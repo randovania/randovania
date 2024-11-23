@@ -804,6 +804,10 @@
             "remove_bars_great_tree_hall": {
                 "long_name": "Remove Bars in Great Tree Hall",
                 "extra": {}
+            },
+            "vanilla_heat": {
+                "long_name": "Vanilla Heat Resistance",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -908,12 +912,46 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "items",
-                                    "name": "GravitySuit",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "vanilla_heat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "GravitySuit",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "PhazonSuit",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -921,15 +959,6 @@
                                 "data": {
                                     "type": "items",
                                     "name": "VariaSuit",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "PhazonSuit",
                                     "amount": 1,
                                     "negate": false
                                 }
