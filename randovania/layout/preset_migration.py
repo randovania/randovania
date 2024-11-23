@@ -1225,7 +1225,12 @@ def _migrate_v92(preset: dict) -> dict:
 
 def _migrate_v93(preset: dict) -> dict:
     if preset["game"] == "prime1":
-        return _update_default_dock_rando(preset)
+        preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].remove("Missile Blast Shield")
+        preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].append(
+            "Missile Blast Shield (randomprime)"
+        )
+
+    return preset
 
 
 _MIGRATIONS = [
