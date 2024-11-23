@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Tallon Overworld
 
-- Added: Now checks for Knowledge (Beginner) for reverse Frigate without activating the Thermal Conduits.
+- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
 
 ### Metroid Prime 2: Echoes
 
