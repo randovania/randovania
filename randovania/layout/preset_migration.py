@@ -1223,6 +1223,16 @@ def _migrate_v92(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v93(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].remove("Missile Blast Shield")
+        preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].append(
+            "Missile Blast Shield (randomprime)"
+        )
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1316,6 +1326,7 @@ _MIGRATIONS = [
     _migrate_v90,  # msr configurable final boss
     _migrate_v91,  # two sided door search
     _migrate_v92,  # remove bars great tree hall
+    _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
