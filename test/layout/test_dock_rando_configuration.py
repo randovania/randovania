@@ -71,7 +71,13 @@ def test_prime_thing(default_prime_configuration):
         "mode": "docks",
         "types_state": {
             "door": {
-                "can_change_from": ["Ice Door", "Missile Blast Shield", "Normal Door", "Plasma Door", "Wave Door"],
+                "can_change_from": [
+                    "Ice Door",
+                    "Missile Blast Shield (randomprime)",
+                    "Normal Door",
+                    "Plasma Door",
+                    "Wave Door",
+                ],
                 "can_change_to": [
                     "Ice Door",
                     "Ice Spreader Blast Shield",
