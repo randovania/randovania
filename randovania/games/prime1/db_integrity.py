@@ -10,12 +10,14 @@ from randovania.game_description.integrity_check import (
 use_templates_over_items = {
     "Boost": "Can Use Boost Ball",
     "Spider": "Can Use Spider Ball",
+    "Bombs": "Can Use Bombs or Can Use Any Bombs",
 }
 
 # short name resource -> Tuple(short name resources)
 combined_resources = {
     "Boost": ("MorphBall",),
     "Spider": ("MorphBall",),
+    "Bombs": ("MorphBall",),
 }
 
 
