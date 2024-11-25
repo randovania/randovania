@@ -54,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
 
 ##### Tallon Overworld
 
