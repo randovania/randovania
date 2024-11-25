@@ -102,7 +102,7 @@ def create_ammo_pickup(
             preferred_location_category=ammo.preferred_location_category,
             probability_offset=ammo.probability_offset,
             probability_multiplier=ammo.probability_multiplier,
-            index_age_impact=0.25,
+            index_age_impact=ammo.index_age_impact,
         ),
     )
 

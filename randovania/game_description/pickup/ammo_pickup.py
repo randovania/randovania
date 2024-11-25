@@ -39,6 +39,9 @@ class AmmoPickupDefinition(JsonDataclass):
     mention_limit: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
 
+    index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
+    # TODO: docstring
+
     def __post_init__(self) -> None:
         if self.temporary is not None:
             if self.unlocked_by is None:
