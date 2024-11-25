@@ -187,7 +187,7 @@ def weighted_potential_actions(
     }
 
     # Everything has weight 0, so try collecting potentially unsafe resources
-    if sum(actions_weights.values()) == 0:
+    if sum(actions_weights.values()) == 0 and player_state.configuration.fallback_to_reweight_with_unsafe:
         debug.debug_print("Re-weighting with possible unsafe")
         options_considered = 0
         for action, evaluation in evaluated_actions.items():
