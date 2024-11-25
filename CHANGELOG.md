@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Drag and dropping a preset file into the main window now imports it.
 - Added: Options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
 - Added: Show confirmation dialog when deleting a world in Multiworld.
-- Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
 - Added: Show confirmation dialog when closing the main window or multiplayer session window while generation is in progress.
+- Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
 - Fixed: Closing the multiplayer session window while generation is in progress will now abort the generation.
 
 ### Door Lock Randomizer
@@ -22,28 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### AM2R
 
 - Changed: DNA hints are now sorted. If the DNA is for your own world, it is sorted based on the region, otherwise alphabetically based on the World name.
-
-### Metroid Prime
-
-- Added: The option of "Remove Bars in Great Tree Hall". This feature removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall allowing free movement between the lower and upper levels of the room.
-- Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
-- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
-- Changed: Missile Blast Shields have received some Quality of Life changes: they now automatically open the door when broken, even from behind, as well as being two-way if the opposite side was a normal door.
-
-#### Logic Database
-
-- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
-- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
-
-##### Tallon Overworld
-
-- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
-
-### Metroid Prime 2: Echoes
-
-#### Logic Database
-
-- Fixed: All Seeker Doors without Seekers tricks have been moved into the dock override section thus allowing the corresponding doors to get shuffled in door type rando. To find the requirements of a seeker skip, look in the description of the corresponding dock node in the data visualiser.
 
 ### Metroid Dread
 
@@ -66,9 +44,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Opening the Storm Missile Gate in Cold Room now requires Screw Attack.
 - Changed: Getting back to the door to Energy Recharge Station after opening the Storm missile Gate now accounts for needing two units of Power Bomb ammo.
 
+### Metroid Prime
+
+- Added: A feature that removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall, allowing free movement between the lower and upper levels of the room.
+- Changed: Damage Reduction for Starter Preset and Moderate Challenge is now set to Additive.
+- Changed: Missile Blast Shields have received some Quality of Life changes: they now automatically open the door when broken, even from behind, as well as being two-way if the opposite side was a normal door.
+- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
+
+#### Logic Database
+
+- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
+
+##### Tallon Overworld
+
+- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
+
 ### Metroid Prime 2: Echoes
 
 - Removed: The "Fewest Changes" preset was removed.
+
+#### Logic Database
+
+- Fixed: All Seeker Doors without Seekers tricks have been moved into the dock override section thus allowing the corresponding doors to get shuffled in door type rando. To find the requirements of a seeker skip, look in the description of the corresponding dock node in the data visualiser.
 
 ### Metroid: Samus Returns
 
