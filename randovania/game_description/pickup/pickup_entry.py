@@ -67,7 +67,7 @@ class PickupGeneratorParams:
     probability_offset: float = 0.0
     probability_multiplier: float = 1.0
     required_progression: int = 0
-    index_age_impact: float = 1.0  # by how much the PickupIndex's age is incremented when this pickup is placed
+    index_age_impact: float = 1.0  # By how much the PickupIndex's age is incremented when this pickup is placed
 
 
 @dataclass(frozen=True)

@@ -39,6 +39,8 @@ class AmmoPickupDefinition(JsonDataclass):
     explain_other_sources: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     mention_limit: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
+
+    # TODO: change later to lower number after more experimentation and adjust in test_pickup_creator
     index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
 
     def __post_init__(self) -> None:
