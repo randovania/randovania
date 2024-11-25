@@ -84,9 +84,7 @@ class GameExportDialog(QtWidgets.QDialog):
         """Called when exporting a game fails with `UnableToExportError`.
         Default implementation shows an error dialog, but custom implementations can
         perform additional troubleshooting."""
-        await async_dialog.message_box(
-            None, QtWidgets.QMessageBox.Icon.Critical, "Error during exporting", error.reason
-        )
+        await async_dialog.message_box(None, QtWidgets.QMessageBox.Icon.Critical, "Unable to export", error.reason)
 
 
 def _prompt_for_output_common(

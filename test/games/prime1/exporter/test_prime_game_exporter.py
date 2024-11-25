@@ -331,6 +331,9 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
     mock_create_map_using_matplotlib: MagicMock = mocker.patch(
         "randovania.games.prime1.exporter.game_exporter.create_map_using_matplotlib"
     )
+    mocker.patch(
+        "randovania.games.prime1.exporter.game_exporter.PrimeGameExportParams.calculate_input_hash", return_value={}
+    )
 
     patch_data = test_files_dir.read_json("patcher_data", "prime1", "prime1_crazy_seed", "world_1.json")
 

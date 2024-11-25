@@ -1204,7 +1204,7 @@
                         "area": "Frigate Crash Site",
                         "node": "Door to Waterfall Cavern"
                     },
-                    "default_dock_weakness": "Missile Blast Shield",
+                    "default_dock_weakness": "Missile Blast Shield (randomprime)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -1999,7 +1999,7 @@
                         "area": "Temple Lobby",
                         "node": "Door to Temple Security Station"
                     },
-                    "default_dock_weakness": "Missile Blast Shield",
+                    "default_dock_weakness": "Missile Blast Shield (randomprime)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -2075,7 +2075,7 @@
                         "area": "Waterfall Cavern",
                         "node": "Door to Frigate Crash Site"
                     },
-                    "default_dock_weakness": "Missile Blast Shield",
+                    "default_dock_weakness": "Missile Blast Shield (randomprime)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3010,7 +3010,7 @@
                         "area": "Root Cave",
                         "node": "Door to Root Tunnel"
                     },
-                    "default_dock_weakness": "Missile Blast Shield",
+                    "default_dock_weakness": "Missile Blast Shield (randomprime)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3164,7 +3164,7 @@
                         "area": "Temple Security Station",
                         "node": "Door to Temple Lobby"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Missile Blast Shield (randomprime)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -3679,7 +3679,7 @@
                         "area": "Root Tunnel",
                         "node": "Door to Root Cave"
                     },
-                    "default_dock_weakness": "Missile Blast Shield",
+                    "default_dock_weakness": "Missile Blast Shield (randomprime)",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
@@ -6241,10 +6241,29 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Reactor Core": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event37",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -6844,10 +6863,29 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Reactor Access": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event38",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7095,10 +7133,29 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Cargo Freight Lift to Deck Gamma": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event40",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7637,10 +7694,29 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Biohazard Containment": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event41",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8188,10 +8264,29 @@
                     "ui_custom_name": null,
                     "connections": {
                         "Door to Biotech Research Area 1": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event42",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

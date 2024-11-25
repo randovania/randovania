@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.preset import Preset
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class WindowManager(QtWidgets.QMainWindow):
@@ -77,10 +78,10 @@ class WindowManager(QtWidgets.QMainWindow):
     def open_app_navigation_link(self, link: str):
         raise NotImplementedError
 
-    def import_preset_file(self, path: Path) -> bool:
+    def import_preset_file(self, path: Path) -> VersionedPreset | None:
         """
         Imports a preset file.
         :param path:
-        :return: True if the preset was actually imported.
+        :return: The preset if it was actually imported, None otherwise.
         """
         raise NotImplementedError

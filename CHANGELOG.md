@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.7.x] - 2024-12-??
 
+- Added: When exporting a game fails, for certain cases Randovania will now verify your input files for bad files. This is supported by Metroid Prime and Metroid Prime 2: Echoes.
 - Added: Drag and dropping a preset file into the main window now imports it.
-- Changed: Added options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
-- Changed: Add confirmation dialog when deleting a world in Multiworld.
+- Added: Options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
+- Added: Show confirmation dialog when deleting a world in Multiworld.
 - Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
+- Added: Show confirmation dialog when closing the main window or multiplayer session window while generation is in progress.
+- Fixed: Closing the multiplayer session window while generation is in progress will now abort the generation.
 
 ### Door Lock Randomizer
 
@@ -24,6 +27,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The option of "Remove Bars in Great Tree Hall". This feature removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall allowing free movement between the lower and upper levels of the room.
 - Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
+- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
+- Changed: Missile Blast Shields have received some Quality of Life changes: they now automatically open the door when broken, even from behind, as well as being two-way if the opposite side was a normal door.
+
+#### Logic Database
+
+- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+
+##### Tallon Overworld
+
+- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
 
 #### Logic Database
 
@@ -43,6 +56,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: In Main Hub Tower Bottom: Get from Water Space Jump Platform to Alcove Across Grapple Block with just Gravity Suit and Movement (Beginner).
 - Added: In Main Hub Tower Bottom: Get from Alcove Across Grapple Block to Door to Energy Recharge South with Gravity Suit, Morph Ball and Single-wall Wall Jump (Intermediate).
+
+##### Dairon
+
+- Changed: In Early Grapple Room: The second Slide Jump has been upgraded from Beginner to Advanced.
+- Changed: In Early Grapple Room: Using Cross Bomb to cross the right gap is now under Movement (Beginner).
+- Changed: In Early Grapple Room: It is now logical to get from the Door to Transport to Artaria to Door to Early Grapple Access by using just Movement (Beginner) to jump off the slope and into the tunnel, then jump into the tunnel at the end.
 
 ##### Ferenia
 
@@ -137,7 +156,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The trick to pull the Grapple Block in Energy Recharge Station (Gate) using only Normal Bombs to break the Bomb Blocks has been upgraded to Movement (Advanced).
 
 ### Metroid Prime
-
 - Added: The Data Visualizer now shows an Area View.
 - Changed: Artifact, Phazon Suit, and Missile Expansion generation weights adjusted resulting in more even item-location probability distribution.
 

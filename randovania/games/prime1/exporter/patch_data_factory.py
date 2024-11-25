@@ -755,6 +755,24 @@ class PrimePatchDataFactory(PatchDataFactory):
                 for area in region.areas:
                     level_data[region.name]["rooms"][area.name]["submerge"] = self.rng.random() < probability
 
+        # Replace vanilla missile blast shields with the new ones
+        if not self.configuration.legacy_mode:
+            for node in db.region_list.iterate_nodes():
+                if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
+                    if node.default_dock_weakness.name != "Missile Blast Shield (randomprime)":
+                        continue
+
+                    dock_num = str(node.extra["dock_index"])
+                    world_name = node.identifier.region
+                    room_name = node.identifier.area
+                    doors_in_node = level_data[world_name]["rooms"][room_name]["doors"]
+
+                    if dock_num not in doors_in_node:
+                        doors_in_node[dock_num] = {}
+
+                    doors_in_node[dock_num]["shieldType"] = node.default_dock_weakness.extra["shieldType"]
+                    doors_in_node[dock_num]["blastShieldType"] = node.default_dock_weakness.extra["blastShieldType"]
+
         # serialize door modifications
         for region in regions:
             for area in region.areas:
