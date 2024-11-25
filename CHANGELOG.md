@@ -33,14 +33,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
 
 ##### Tallon Overworld
 
 - Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
-
-#### Logic Database
-
-- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
 
 ### Metroid Prime 2: Echoes
 
