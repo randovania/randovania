@@ -49,9 +49,9 @@ def _calculate_uncollected_index_weights(
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
         for index in sorted(uncollected_indices & indices):
-            weight_from_considered_count = min(10.0, index_age[index] + 1.0) ** -2
-            result[index] = weight_from_collected_indices * weight_from_considered_count
-            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_considered_count}")
+            weight_from_index_age = min(10.0, index_age[index] + 1.0) ** -2
+            result[index] = weight_from_collected_indices * weight_from_index_age
+            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_index_age}")
 
     return result
 
