@@ -182,10 +182,10 @@ def increment_index_age(locations_weighted: WeightedLocations, increment: float)
     Increments the pickup index's age for every already collected index.
     """
     for player, location, _ in locations_weighted.all_items():
-        was_present = location in player.pickup_index_age
-        player.pickup_index_age[location] += increment
+        was_present = location in player.pickup_index_ages
+        player.pickup_index_ages[location] += increment
         if not was_present:
-            # if it wasn't present, thenwe get to log!
+            # if it wasn't present, then we get to log!
             filler_logging.print_new_pickup_index(player, location)
 
 
@@ -423,7 +423,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
         pickup_index_weights = _calculate_uncollected_index_weights(
             player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
             set(player_state.reach.state.patches.pickup_assignment),
-            player_state.pickup_index_age,
+            player_state.pickup_index_ages,
             player_state.indices_groups,
         )
         for pickup_index, weight in pickup_index_weights.items():

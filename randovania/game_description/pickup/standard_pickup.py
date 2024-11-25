@@ -93,7 +93,10 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     """
 
     index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
-    # TODO: docstring
+    """
+    During generation, determines by how much to increase all reachable location's age before this pickup is placed.
+    The older a location is, the less likely it is for future pickups to be placed there.
+    """
 
     probability_offset: float = dataclasses.field(default=0.0, metadata=EXCLUDE_DEFAULT)
     """During generation, determines how much the weight when placing the pickup will be offset."""
