@@ -51,7 +51,7 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
 
     @property
     def experimental_settings(self) -> Iterable[QtWidgets.QWidget]:
-        yield self.door_lock_group
+        yield self.two_sided_door_search_line
         yield self.two_sided_door_search_label
         yield self.two_sided_door_search_check
 
