@@ -99,7 +99,45 @@
            <item row="4" column="0" colspan="2">
             <widget class="Line" name="line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="door_lock_group">
+          <property name="title">
+           <string>Door Lock Settings</string>
+          </property>
+          <layout class="QVBoxLayout" name="door_lock_grops">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item>
+            <widget class="QCheckBox" name="two_sided_door_search_check">
+             <property name="text">
+              <string>[Experimental] Revised door solver</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="two_sided_door_search_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When using type Doors of Door Locks randomization, enables the use of a revised algorithm for deciding what doors can be.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -122,7 +160,7 @@
 Which door locks can be changed.</string>
                </property>
                <property name="textFormat">
-                <enum>Qt::MarkdownText</enum>
+                <enum>Qt::TextFormat::MarkdownText</enum>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>
@@ -137,7 +175,7 @@ Which door locks can be changed.</string>
 Which locks a door can be changed to.</string>
                </property>
                <property name="textFormat">
-                <enum>Qt::MarkdownText</enum>
+                <enum>Qt::TextFormat::MarkdownText</enum>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>
@@ -152,7 +190,7 @@ Which locks a door can be changed to.</string>
         <item>
          <spacer name="spacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
