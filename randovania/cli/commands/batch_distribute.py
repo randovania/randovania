@@ -1,6 +1,9 @@
 from __future__ import annotations
 
-import _xxsubinterpreters as subinterpreters
+try:
+    import _interpreters as subinterpreters
+except ImportError:
+    import _xxsubinterpreters as subinterpreters
 import functools
 import math
 import os
