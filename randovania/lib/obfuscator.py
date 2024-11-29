@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import json
 import os
+import typing
 
-import cryptography
-from cryptography.fernet import Fernet
+if typing.TYPE_CHECKING:
+    from cryptography.fernet import Fernet
 
 try:
     from randovania.lib.obfuscator_secret import secret as _secret  # type: ignore[import-not-found]
@@ -35,7 +36,10 @@ def _get_fernet() -> Fernet:
 
     global _encrypt
     if _encrypt is None:
-        _encrypt = Fernet(secret)
+        # Delay importing `cryptography` as it's not compatible with subinterpreters
+        from cryptography.fernet import Fernet
+
+        _encrypt = Fernet(_secret)
 
     return _encrypt
 
@@ -49,6 +53,8 @@ def obfuscate_json(data: dict) -> str:
 
 
 def deobfuscate(data: str) -> bytes:
+    import cryptography.fernet
+
     try:
         return _get_fernet().decrypt(data)
     except cryptography.fernet.InvalidToken:
