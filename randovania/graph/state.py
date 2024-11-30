@@ -13,7 +13,6 @@ if TYPE_CHECKING:
     from collections.abc import Iterable, Iterator
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_database_view import ResourceDatabaseView
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -38,10 +37,6 @@ class State:
     @property
     def resource_database(self) -> ResourceDatabaseView:
         return self.damage_state.resource_database()
-
-    @property
-    def region_list(self) -> RegionList:
-        return self.damage_state.region_list()
 
     def __init__(
         self,
