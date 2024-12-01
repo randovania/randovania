@@ -9,7 +9,8 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
-from randovania.resolver.state import State, StateGameData
+from randovania.resolver.game_state import EnergyTankGameState, GameState, NoDamageGameState
+from randovania.resolver.state import State
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -96,8 +97,8 @@ class Bootstrap:
             ]
         )
 
-    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
-        return EnergyConfig(99, 100)
+    def create_game_state(self, game: GameDescription, configuration: BaseConfiguration) -> GameState:
+        return NoDamageGameState(game.resource_database, game.region_list)
 
     def calculate_starting_state(
         self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
@@ -105,8 +106,6 @@ class Bootstrap:
         starting_node = game.region_list.node_by_identifier(patches.starting_location)
 
         initial_resources = patches.starting_resources()
-
-        starting_energy, energy_per_tank = self.energy_config(configuration)
 
         if starting_node.is_resource_node:
             assert isinstance(starting_node, ResourceNode)
@@ -124,11 +123,10 @@ class Bootstrap:
         starting_state = State(
             initial_resources,
             (),
-            None,
+            self.create_game_state(game, configuration),
             starting_node,
             patches,
             None,
-            StateGameData(game.resource_database, game.region_list, energy_per_tank, starting_energy),
         )
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
@@ -267,5 +265,10 @@ class Bootstrap:
 
 
 class MetroidBootstrap(Bootstrap):
-    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
-        return EnergyConfig(configuration.energy_per_tank - 1, configuration.energy_per_tank)
+    def create_game_state(self, game: GameDescription, configuration: BaseConfiguration) -> GameState:
+        return EnergyTankGameState(
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
+            game.resource_database,
+            game.region_list,
+        )

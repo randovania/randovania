@@ -32,7 +32,8 @@ from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.resolver.state import State, StateGameData, add_pickup_to_state
+from randovania.resolver.game_state import EnergyTankGameState
+from randovania.resolver.state import State, add_pickup_to_state
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
@@ -186,7 +187,7 @@ def test_database_collectable(
     )
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
-    reach = _create_reach_with_unsafe(game, initial_state.heal())
+    reach = _create_reach_with_unsafe(game, initial_state)
     while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
         reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
         reach = advance_reach_with_possible_unsafe_resources(reach)
@@ -273,11 +274,15 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     initial_state = State(
         ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
         (),
-        99,
+        EnergyTankGameState(
+            99,
+            100,
+            game.resource_database,
+            game.region_list,
+        ),
         node_a,
         echoes_game_patches,
         None,
-        StateGameData(echoes_resource_database, game.region_list, 100, 99),
     )
 
     # Run
