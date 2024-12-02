@@ -8,13 +8,14 @@ from typing_extensions import override
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
 if TYPE_CHECKING:
+    from randovania.game_description.db.node import Node
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
-class GameState:
+class DamageState:
     """
     Represents whatever game specific resource that is consumed during gameplay.
     """
@@ -28,15 +29,15 @@ class GameState:
     def health_for_damage_requirements(self) -> int:
         """How much health is present for purpose of checking damage requirements."""
 
-    def is_better_than(self, other: GameState | None) -> bool:
+    def is_better_than(self, other: DamageState | None) -> bool:
         """Is this state strictly better than other, regarding damage requirements.
         Always True when other is None."""
 
     def apply_damage(self, damage: int) -> Self:
         """Applies the given damage, returned from a Requirements.damage. Returns a new copy."""
 
-    def apply_node_heal(self, resources: ResourceCollection) -> Self:
-        """Applies whatever is considered the Node heal."""
+    def apply_node_heal(self, node: Node, resources: ResourceCollection) -> Self:
+        """Applies all whatever is considered the Node heal."""
 
     def debug_string(self, resources: ResourceCollection) -> str:
         """A string that represents this state for purpose of resolver and generator logs."""
@@ -63,7 +64,7 @@ class GameState:
         """
 
 
-class NoDamageGameState(GameState):
+class NoOpDamageState(DamageState):
     def __init__(self, resource_database: ResourceDatabase, region_list: RegionList):
         self._resource_database = resource_database
         self._region_list = region_list
@@ -81,7 +82,7 @@ class NoDamageGameState(GameState):
         return 0
 
     @override
-    def is_better_than(self, other: GameState | None) -> bool:
+    def is_better_than(self, other: DamageState | None) -> bool:
         return other is None
 
     @override
@@ -89,7 +90,7 @@ class NoDamageGameState(GameState):
         return self
 
     @override
-    def apply_node_heal(self, resources: ResourceCollection) -> Self:
+    def apply_node_heal(self, node: Node, resources: ResourceCollection) -> Self:
         return self
 
     @override
@@ -117,7 +118,7 @@ class NoDamageGameState(GameState):
         return []
 
 
-class EnergyTankGameState(GameState):
+class EnergyTankDamageState(DamageState):
     _energy: int
     _starting_energy: int
     _energy_per_tank: int
@@ -147,15 +148,20 @@ class EnergyTankGameState(GameState):
         num_tanks = resources[self._energy_tank]
         return self._starting_energy + (self._energy_per_tank * num_tanks)
 
+    def _at_maximum_energy(self, resources: ResourceCollection) -> Self:
+        result = copy.copy(self)
+        result._energy = result._maximum_energy(resources)
+        return result
+
     @override
     def health_for_damage_requirements(self) -> int:
         return self._energy
 
     @override
-    def is_better_than(self, other: GameState | None) -> bool:
+    def is_better_than(self, other: DamageState | None) -> bool:
         if other is None:
             return True
-        assert isinstance(other, EnergyTankGameState)
+        assert isinstance(other, EnergyTankDamageState)
         return self._energy > other._energy
 
     @override
@@ -165,8 +171,8 @@ class EnergyTankGameState(GameState):
         return result
 
     @override
-    def apply_node_heal(self, resources: ResourceCollection) -> Self:
-        return self.limited_by_maximum(resources)
+    def apply_node_heal(self, node: Node, resources: ResourceCollection) -> Self:
+        return self._at_maximum_energy(resources)
 
     @override
     def debug_string(self, resources: ResourceCollection) -> str:
@@ -190,7 +196,7 @@ class EnergyTankGameState(GameState):
         self, new_resources: ResourceCollection, old_resources: ResourceCollection
     ) -> Self:
         if self._energy_tank_difference(new_resources, old_resources) > 0:
-            return self.limited_by_maximum(new_resources)
+            return self._at_maximum_energy(new_resources)
         else:
             return self
 
@@ -201,7 +207,7 @@ class EnergyTankGameState(GameState):
         tank_difference = self._energy_tank_difference(new_resources, old_resources)
         result = copy.copy(self)
         result._energy += tank_difference * self._energy_per_tank
-        return result
+        return result.limited_by_maximum(new_resources)
 
     @override
     def resource_requirements_for_satisfying_damage(self, damage: int) -> list[ResourceRequirement]:

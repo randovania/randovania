@@ -49,10 +49,10 @@ def test_possible_actions_with_event():
     event.should_collect.return_value = True
 
     logic.game.region_list.all_nodes = [event]
-    game_state = MagicMock()
+    damage_state = MagicMock()
 
     # Run
-    reach = ResolverReach({0: game_state}, {}, frozenset(), logic)
+    reach = ResolverReach({0: damage_state}, {}, frozenset(), logic)
     options = [action for action, damage in reach.possible_actions(state)]
 
     # Assert
@@ -61,5 +61,5 @@ def test_possible_actions_with_event():
     event.should_collect.assert_called_once_with(state.node_context.return_value)
     logic.get_additional_requirements.assert_called_once_with(event)
     logic.get_additional_requirements.return_value.satisfied.assert_called_once_with(
-        state.node_context(), game_state.health_for_damage_requirements.return_value
+        state.node_context(), damage_state.health_for_damage_requirements.return_value
     )

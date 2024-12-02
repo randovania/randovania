@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
 
     from randovania.game_description.db.node import NodeContext
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-    from randovania.resolver.game_state import GameState
+    from randovania.resolver.damage_state import DamageState
     from randovania.resolver.logic import Logic
     from randovania.resolver.state import State
 
@@ -49,7 +49,7 @@ def _is_requirement_viable_as_additional(requirement: Requirement) -> bool:
 
 class ResolverReach:
     _node_indices: tuple[int, ...]
-    _game_state_at_node: dict[int, GameState]
+    _game_state_at_node: dict[int, DamageState]
     _path_to_node: dict[int, list[int]]
     _satisfiable_requirements_for_additionals: SatisfiableRequirements
     _logic: Logic
@@ -70,7 +70,7 @@ class ResolverReach:
 
     def __init__(
         self,
-        nodes: dict[int, GameState],
+        nodes: dict[int, DamageState],
         path_to_node: dict[int, list[int]],
         requirements_for_additionals: SatisfiableRequirements,
         logic: Logic,
@@ -85,14 +85,14 @@ class ResolverReach:
     def calculate_reach(cls, logic: Logic, initial_state: State) -> ResolverReach:
         # all_nodes is only accessed via indices that guarantee a non-None result
         all_nodes = typing.cast(tuple[Node, ...], logic.game.region_list.all_nodes)
-        checked_nodes: dict[int, GameState] = {}
+        checked_nodes: dict[int, DamageState] = {}
         context = initial_state.node_context()
 
         # Keys: nodes to check
         # Value: how much energy was available when visiting that node
-        nodes_to_check: dict[int, GameState] = {initial_state.node.node_index: initial_state.game_state}
+        nodes_to_check: dict[int, DamageState] = {initial_state.node.node_index: initial_state.damage_state}
 
-        reach_nodes: dict[int, GameState] = {}
+        reach_nodes: dict[int, DamageState] = {}
         requirements_excluding_leaving_by_node: dict[int, list[Requirement]] = defaultdict(list)
 
         path_to_node: dict[int, list[int]] = {
@@ -105,7 +105,7 @@ class ResolverReach:
             game_state = nodes_to_check.pop(node_index)
 
             if node.heal:
-                game_state = game_state.apply_node_heal(initial_state.resources)
+                game_state = game_state.apply_node_heal(node, initial_state.resources)
 
             checked_nodes[node_index] = game_state
             if node_index != initial_state.node.node_index:
@@ -161,7 +161,7 @@ class ResolverReach:
 
         return ResolverReach(reach_nodes, path_to_node, satisfiable_requirements_for_additionals, logic)
 
-    def possible_actions(self, state: State) -> Iterator[tuple[ResourceNode, GameState]]:
+    def possible_actions(self, state: State) -> Iterator[tuple[ResourceNode, DamageState]]:
         ctx = state.node_context()
         for node in self.collectable_resource_nodes(ctx):
             additional_requirements = self._logic.get_additional_requirements(node)

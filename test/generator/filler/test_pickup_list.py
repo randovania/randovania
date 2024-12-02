@@ -19,7 +19,7 @@ from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.resolver.game_state import EnergyTankGameState
+from randovania.resolver.damage_state import EnergyTankDamageState
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:
@@ -201,7 +201,7 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
     state = State(
         resources,
         (),
-        EnergyTankGameState(
+        EnergyTankDamageState(
             99,
             100,
             db,

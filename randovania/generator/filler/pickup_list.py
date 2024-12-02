@@ -70,7 +70,7 @@ def _unsatisfied_item_requirements_in_list(
     sum_damage = sum(req.damage(context) for req in damage)
     if state.health_for_damage_requirements <= sum_damage:
         # Delegates to the game for how to handle the damage requirement
-        yield items + state.game_state.resource_requirements_for_satisfying_damage(sum_damage)
+        yield items + state.damage_state.resource_requirements_for_satisfying_damage(sum_damage)
     else:
         yield items
 

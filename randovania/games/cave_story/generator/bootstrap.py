@@ -6,7 +6,7 @@ from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.game_state import EnergyTankGameState, GameState
+from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -55,9 +55,9 @@ class CSBootstrap(Bootstrap):
         for resource in resource_database.version:
             yield resource, 1 if resource.long_name == "Freeware" else 0
 
-    def create_game_state(self, game: GameDescription, configuration: BaseConfiguration) -> GameState:
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
         assert isinstance(configuration, CSConfiguration)
-        return EnergyTankGameState(
+        return EnergyTankDamageState(
             configuration.starting_hp,
             1,
             game.resource_database,

@@ -26,7 +26,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.game_state import GameState
+    from randovania.resolver.damage_state import DamageState
     from randovania.resolver.state import State
 
 
@@ -235,13 +235,13 @@ async def _inner_advance_depth(
 
     status_update(f"Resolving... {state.resources.num_resources} total resources")
 
-    actions_by_priority: dict[ActionPriority, list[tuple[ResourceNode, GameState]]] = {
+    actions_by_priority: dict[ActionPriority, list[tuple[ResourceNode, DamageState]]] = {
         priority: [] for priority in ActionPriority
     }
 
-    for action, game_state in reach.possible_actions(state):
+    for action, damage_state in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources):
-            potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_game_state=game_state)
+            potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
             # If we can go back to where we were, it's a simple safe node
@@ -270,21 +270,21 @@ async def _inner_advance_depth(
                 # If a safe node was a dead end, we're certainly a dead end as well
                 return new_result
             else:
-                actions_by_priority[ActionPriority.POINT_OF_NO_RETURN].append((action, game_state))
+                actions_by_priority[ActionPriority.POINT_OF_NO_RETURN].append((action, damage_state))
                 continue
 
-        actions_by_priority[_priority_for_resource_action(action, state, logic)].append((action, game_state))
+        actions_by_priority[_priority_for_resource_action(action, state, logic)].append((action, damage_state))
 
-    actions: list[tuple[ResourceNode, GameState]] = list(itertools.chain.from_iterable(actions_by_priority.values()))
+    actions: list[tuple[ResourceNode, DamageState]] = list(itertools.chain.from_iterable(actions_by_priority.values()))
     logic.log_checking_satisfiable_actions(state, actions)
     has_action = False
-    for action, game_state in actions:
+    for action, damage_state in actions:
         action_additional_requirements = logic.get_additional_requirements(action)
-        if not action_additional_requirements.satisfied(context, game_state.health_for_damage_requirements()):
+        if not action_additional_requirements.satisfied(context, damage_state.health_for_damage_requirements()):
             logic.log_skip_action_missing_requirement(action, logic.game)
             continue
         new_result = await _inner_advance_depth(
-            state=state.act_on_node(action, path=reach.path_to_node(action), new_game_state=game_state),
+            state=state.act_on_node(action, path=reach.path_to_node(action), new_damage_state=damage_state),
             logic=logic,
             status_update=status_update,
             max_attempts=max_attempts,

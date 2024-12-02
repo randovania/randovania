@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.resolver.game_state import GameState
+    from randovania.resolver.damage_state import DamageState
     from randovania.resolver.state import State
 
 
@@ -86,7 +86,7 @@ class Logic:
                 f"{self._indent(1)}> {n(state.node, region_list=region_list)}{energy_string(state)} for {resources}"
             )
 
-    def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, GameState]]):
+    def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, DamageState]]):
         if debug.debug_level() > 1:
             debug.print_function(f"{self._indent()}# Satisfiable Actions")
             for action, _ in actions:

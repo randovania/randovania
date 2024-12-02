@@ -7,12 +7,12 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.pickup.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.resolver import state
-from randovania.resolver.game_state import NoDamageGameState
+from randovania.resolver.damage_state import NoOpDamageState
 
 
 @pytest.fixture
-def state_game_data(empty_patches) -> NoDamageGameState:
-    return NoDamageGameState(empty_patches.game.resource_database, empty_patches.game.region_list)
+def state_game_data(empty_patches) -> NoOpDamageState:
+    return NoOpDamageState(empty_patches.game.resource_database, empty_patches.game.region_list)
 
 
 def test_collected_pickup_indices(state_game_data, empty_patches):

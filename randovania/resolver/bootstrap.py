@@ -9,7 +9,7 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
-from randovania.resolver.game_state import EnergyTankGameState, GameState, NoDamageGameState
+from randovania.resolver.damage_state import DamageState, EnergyTankDamageState, NoOpDamageState
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:
@@ -97,8 +97,8 @@ class Bootstrap:
             ]
         )
 
-    def create_game_state(self, game: GameDescription, configuration: BaseConfiguration) -> GameState:
-        return NoDamageGameState(game.resource_database, game.region_list)
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        return NoOpDamageState(game.resource_database, game.region_list)
 
     def calculate_starting_state(
         self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
@@ -123,7 +123,7 @@ class Bootstrap:
         starting_state = State(
             initial_resources,
             (),
-            self.create_game_state(game, configuration),
+            self.create_damage_state(game, configuration),
             starting_node,
             patches,
             None,
@@ -265,8 +265,8 @@ class Bootstrap:
 
 
 class MetroidBootstrap(Bootstrap):
-    def create_game_state(self, game: GameDescription, configuration: BaseConfiguration) -> GameState:
-        return EnergyTankGameState(
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
             game.resource_database,
