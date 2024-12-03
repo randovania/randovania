@@ -177,9 +177,9 @@ def _migrate_v5(preset: dict) -> dict:
         default_items_state[item] = shuffled_item
 
     major_items = preset["layout_configuration"]["major_items_configuration"]["items_state"]
-    for item in default_items_state.keys():
+    for item, state in default_items_state.items():
         if item not in major_items:
-            major_items[item] = default_items_state[item]
+            major_items[item] = state
 
     preset["layout_configuration"]["major_items_configuration"].pop("progressive_suit")
     preset["layout_configuration"]["major_items_configuration"].pop("progressive_grapple")
