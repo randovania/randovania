@@ -7,7 +7,7 @@ from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:

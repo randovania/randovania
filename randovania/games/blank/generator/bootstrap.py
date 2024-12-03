@@ -3,11 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 class BlankBootstrap(Bootstrap):

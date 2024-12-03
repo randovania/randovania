@@ -6,7 +6,7 @@ from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -20,6 +20,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_puppy_node(node: PickupNode, config: BaseConfiguration) -> bool:

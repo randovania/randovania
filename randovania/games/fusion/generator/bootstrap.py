@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.games.fusion.generator.pool_creator import INFANT_METROID_CATEGORY
 from randovania.games.fusion.layout import FusionConfiguration
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -18,6 +18,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_metroid_location(node: PickupNode, config: BaseConfiguration) -> bool:

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 from randovania.games.am2r.generator.pool_creator import METROID_DNA_CATEGORY
 from randovania.games.am2r.layout import AM2RConfiguration
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:

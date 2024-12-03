@@ -32,7 +32,7 @@ from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.resolver.damage_state import EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:

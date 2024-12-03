@@ -4,11 +4,12 @@ from typing import TYPE_CHECKING
 
 from randovania.games.planets_zebeth.layout import PlanetsZebethConfiguration
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 # TODO: look at this later and figure out what to add here
 

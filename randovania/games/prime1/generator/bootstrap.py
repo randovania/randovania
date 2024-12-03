@@ -9,13 +9,14 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime1.layout.prime_configuration import DamageReduction as DamageReductionConfig
 from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 class PrimeBootstrap(Bootstrap):

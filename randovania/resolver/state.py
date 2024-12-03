@@ -23,14 +23,6 @@ if TYPE_CHECKING:
     from randovania.resolver.damage_state import DamageState
 
 
-def _energy_tank_difference(
-    new_resources: ResourceCollection,
-    old_resources: ResourceCollection,
-    database: ResourceDatabase,
-) -> int:
-    return new_resources[database.energy_tank] - old_resources[database.energy_tank]
-
-
 class State:
     resources: ResourceCollection
     collected_resource_nodes: tuple[ResourceNode, ...]

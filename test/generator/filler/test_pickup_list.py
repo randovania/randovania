@@ -19,7 +19,7 @@ from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.resolver.damage_state import EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:

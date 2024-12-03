@@ -14,7 +14,7 @@ from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import Bootstrap
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -26,6 +26,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
