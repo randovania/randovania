@@ -9,7 +9,6 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
-from randovania.resolver.damage_state import DamageState, EnergyTankDamageState, NoOpDamageState
 from randovania.resolver.state import State
 
 if TYPE_CHECKING:
@@ -25,6 +24,7 @@ if TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 class EnergyConfig(NamedTuple):
@@ -98,7 +98,13 @@ class Bootstrap:
         )
 
     def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
-        return NoOpDamageState(game.resource_database, game.region_list)
+        """
+        Creates a DamageState for the given configuration.
+        :param game:
+        :param configuration:
+        :return:
+        """
+        raise NotImplementedError
 
     def calculate_starting_state(
         self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
@@ -262,13 +268,3 @@ class Bootstrap:
         for artifact, location in zip(all_artifacts, reduced_locations, strict=False):
             pool_results.to_place.remove(artifact)
             pool_results.assignment[location.pickup_index] = artifact
-
-
-class MetroidBootstrap(Bootstrap):
-    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
-        return EnergyTankDamageState(
-            configuration.energy_per_tank - 1,
-            configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
-        )

@@ -6,12 +6,14 @@ from randovania.games.samus_returns.generator.pool_creator import METROID_DNA_CA
 from randovania.games.samus_returns.layout import MSRConfiguration
 from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.damage_state import DamageState, EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
 
     from randovania.game_description.db.pickup_node import PickupNode
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
@@ -51,7 +53,16 @@ def is_dna_node(node: PickupNode, config: BaseConfiguration) -> bool:
     return False
 
 
-class MSRBootstrap(MetroidBootstrap):
+class MSRBootstrap(Bootstrap):
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        assert isinstance(configuration, MSRConfiguration)
+        return EnergyTankDamageState(
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
+            game.resource_database,
+            game.region_list,
+        )
+
     def _get_enabled_misc_resources(
         self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:

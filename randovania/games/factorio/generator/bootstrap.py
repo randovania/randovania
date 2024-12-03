@@ -11,6 +11,7 @@ from randovania.games.factorio.data_importer import data_parser
 from randovania.games.factorio.generator import recipes
 from randovania.games.factorio.layout import FactorioConfiguration
 from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.damage_state import DamageState, NoOpDamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
@@ -29,6 +30,9 @@ def _recipe_unlocked_requirements(items: list[ItemResourceInfo]) -> list[Require
 
 
 class FactorioBootstrap(Bootstrap):
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        return NoOpDamageState(game.resource_database, game.region_list)
+
     def apply_game_specific_patches(
         self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches
     ) -> None:
