@@ -108,7 +108,7 @@ class EvaluatedAction(typing.NamedTuple):
     multiplier: float
     offset: float
 
-    def apply_to(self, base: float) -> float:
+    def apply_weight_modifiers_to(self, base: float) -> float:
         """Applies the multiplier and offset to the given weight."""
         return base * self.multiplier + self.offset
 
@@ -118,8 +118,8 @@ class EvaluatedAction(typing.NamedTuple):
 
 def _evaluate_action(base_reach: GeneratorReach, action_weights: ActionWeights, action: Action) -> EvaluatedAction:
     """
-    Evaluates the weight offsets and multipliers for the given action,
-    plus the basic reach advancement if get the given resources.
+    Calculates the weight offsets and multipliers for the given action, as well as the reach
+    you'd get by collecting all resources and pickups of the given action.
     :param base_reach:
     :param action:
     :return:
@@ -211,7 +211,8 @@ def weighted_potential_actions(
 
     # Apply offset only at the end in order to preserve when all actions are weight 0
     final_weights = {
-        action: evaluated_actions[action].apply_to(base_weight) for action, base_weight in actions_weights.items()
+        action: evaluated_actions[action].apply_weight_modifiers_to(base_weight)
+        for action, base_weight in actions_weights.items()
     }
 
     if debug.debug_level() > 1:
