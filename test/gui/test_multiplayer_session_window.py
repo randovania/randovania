@@ -40,12 +40,14 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 if TYPE_CHECKING:
     import pytest_mock
     from pytest_mock import MockerFixture
+    from pytestqt.qtbot import QtBot
 
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
+    from randovania.interface_common.preset_manager import PresetManager
 
 
 @pytest.fixture
-async def window(skip_qtbot) -> MultiplayerSessionWindow:
+async def window(skip_qtbot: QtBot) -> MultiplayerSessionWindow:
     window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
@@ -53,7 +55,7 @@ async def window(skip_qtbot) -> MultiplayerSessionWindow:
 
 
 @pytest.fixture
-def sample_session(preset_manager):
+def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
     u1 = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
     u2 = uuid.UUID("4bdb294e-9059-4fdf-9822-3f649023249a")
     u3 = uuid.UUID("47a8aec3-3149-4c76-b5c1-f86a9d3a5190")
@@ -104,7 +106,9 @@ def sample_session(preset_manager):
     )
 
 
-async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session):
+async def test_on_session_meta_update(
+    preset_manager: PresetManager, skip_qtbot: QtBot, sample_session: MultiplayerSessionEntry
+) -> None:
     # Setup
     network_client = MagicMock()
     network_client.current_user = User(id=12, name="Player A")
