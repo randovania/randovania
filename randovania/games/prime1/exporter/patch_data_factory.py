@@ -320,14 +320,11 @@ def _serialize_dock_modifications(
             size_indices[area.name] = area.extra["size_index"]
 
         default_connections = {}
-        for src_name, src_dock in default_connections_node_name:
-            (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
-
+        for (src_name, src_dock), (dst_name, dst_node_name) in default_connections_node_name.items():
             try:
                 dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
             except KeyError:
                 continue
-
             default_connections[(src_name, src_dock)] = (dst_name, dst_dock)
 
         for area_name, dock_num in candidates:
@@ -550,11 +547,11 @@ def _serialize_dock_modifications(
                             room_connections.append((room_name, dst_room_name))
 
                     # Handle unrandomized connections
-                    for src_name, src_dock in is_nonstandard:
+                    for (src_name, src_dock), is_set in is_nonstandard.items():
                         if (src_name, src_dock) in disabled_doors:
                             continue
 
-                        if is_nonstandard[(src_name, src_dock)]:
+                        if is_set:
                             (dst_name, dst_dock) = default_connections[(src_name, src_dock)]
                             room_connections.append((src_name, dst_name))
 
