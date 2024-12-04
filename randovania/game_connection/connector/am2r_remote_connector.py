@@ -120,7 +120,11 @@ class AM2RRemoteConnector(RemoteConnector):
 
         for index in new_indices[len(start_of_indices) :].split(","):
             if not index.isdigit():
-                self.logger.warning("Response should contain a digit, but instead contains '%s'", index)
+                self.logger.warning(
+                    "Response should contain a digit, but instead contains '%s'. Original message: '%s'",
+                    index,
+                    new_indices,
+                )
                 continue
             locations.add(PickupIndex(int(index)))
 
@@ -158,11 +162,17 @@ class AM2RRemoteConnector(RemoteConnector):
             if not position:
                 continue
             if "|" not in position:
-                self.logger.warning("Response should contain a '|', but it doesn't")
+                self.logger.warning(
+                    "Response should contain a '|', but it doesn't. Original response: %s", new_inventory
+                )
                 continue
             (item_name, quantity) = position.split("|", 1)
             if not quantity.isdigit():
-                self.logger.warning("Response should contain a digit, but instead contains '%s'", position)
+                self.logger.warning(
+                    "Response should contain a digit, but instead contains '%s'. Original response: %s",
+                    position,
+                    new_inventory,
+                )
                 continue
 
             # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.
