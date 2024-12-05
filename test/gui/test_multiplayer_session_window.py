@@ -112,7 +112,13 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
         allow_everyone_claim_world=True,
     )
 
-async def test_on_enable_coop(preset_manager: PresetManager, mocker: MockerFixture, window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry) -> None:
+
+async def test_on_enable_coop(
+    preset_manager: PresetManager,
+    mocker: MockerFixture,
+    window: MultiplayerSessionWindow,
+    sample_session: MultiplayerSessionEntry,
+) -> None:
     # Setup
     async def _set_coop(val: bool) -> None:
         window._session = dataclasses.replace(window._session, allow_coop=val)
@@ -133,7 +139,9 @@ async def test_on_enable_coop(preset_manager: PresetManager, mocker: MockerFixtu
     assert window._session.allow_coop
 
 
-async def test_on_disable_coop(mocker: MockerFixture, window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry) -> None:
+async def test_on_disable_coop(
+    mocker: MockerFixture, window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry
+) -> None:
     # Setup
     async def _set_coop(val: bool) -> None:
         window._session = dataclasses.replace(window._session, allow_coop=val)
