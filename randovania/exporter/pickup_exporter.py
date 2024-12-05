@@ -302,8 +302,10 @@ class PickupExporterMulti(PickupExporter):
                 self.players_config.should_target_local_player(pickup_target.player)
                 or pickup_target.pickup == useless_pickup
             ):
+                # For own world in normal multi
                 return dataclasses.replace(details, name=f"Your {details.name}")
 
+            # For own world in Coop multi
             new_resources = [
                 ConditionalResources(
                     resource.name, resource.item, tuple((subres, 0) for subres, quantity in resource.resources)
