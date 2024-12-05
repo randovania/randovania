@@ -430,8 +430,13 @@ def prepare_to_upload_layout():
 
 @pytest.mark.parametrize("is_ready", [False, True])
 async def test_generate_game(
-    window: MultiplayerSessionWindow, mocker, preset_manager, prepare_to_upload_layout, is_ready
+    window: MultiplayerSessionWindow,
+    mocker: pytest_mock.MockerFixture,
+    preset_manager: PresetManager,
+    prepare_to_upload_layout: MagicMock,
+    is_ready: bool,
 ):
+    mock_alert: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.alert_user_on_generation")
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
     mock_yes_no_prompt: AsyncMock = mocker.patch(
@@ -493,6 +498,7 @@ async def test_generate_game(
     layout.save_to_file.assert_called_once_with(
         window._options.data_dir.joinpath(f"last_multiplayer_{session.id}.rdvgame")
     )
+    mock_alert.assert_called_once_with(window, window._options)
 
 
 async def test_generate_game_no_ready_abort(window: MultiplayerSessionWindow, mocker, preset_manager):
