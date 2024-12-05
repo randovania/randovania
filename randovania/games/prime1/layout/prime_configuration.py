@@ -117,6 +117,7 @@ class PrimeConfiguration(BaseConfiguration):
     backwards_lower_mines: bool
     phazon_elite_without_dynamo: bool
     remove_bars_great_tree_hall: bool
+    remove_superheat_twin_fires_tunnel: bool
 
     legacy_mode: bool
     qol_cutscenes: LayoutCutsceneMode

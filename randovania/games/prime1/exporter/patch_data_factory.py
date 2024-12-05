@@ -740,6 +740,19 @@ class PrimePatchDataFactory(PatchDataFactory):
             ]
 
         # serialize room modifications
+        if self.configuration.remove_superheat_twin_fires_tunnel:
+            magmoor_region = level_data["Magmoor Caverns"]["rooms"]
+            magmoor_region["Twin Fires Tunnel"]["superheated"] = False
+            magmoor_region["Transport to Tallon Overworld West"]["deleteIds"] = [
+                1048683,  # 0x0010006B - Timer for Varia Check
+                1048684,  # 0x0010006C - Function for Varia Check
+                1048682,  # 0x0010006A - Hud Memo Trigger for Heat
+                1048686,  # 0x0010006E - Hud Memo for Heat
+                1048685,  # 0x0010006D - Hud Memo Timer for Heat
+                1048681,  # 0x00100069 - Steam Effect
+                1048687,  # 0x0010006F - Lava that was meant to trigger "Warning" and Heat Glow Effect
+            ]
+
         if self.configuration.superheated_probability != 0:
             probability = self.configuration.superheated_probability / 1000.0
             for region in regions:

@@ -26,6 +26,7 @@ _FIELDS = [
     "phazon_elite_without_dynamo",
     "spring_ball",
     "remove_bars_great_tree_hall",
+    "remove_superheat_twin_fires_tunnel",
 ]
 
 
