@@ -196,7 +196,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tab_audit.sortByColumn(2, QtCore.Qt.SortOrder.AscendingOrder)
 
         self.history_item_model = HistoryItemModel(self, self._last_actions)
-        # self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
         self.history_item_proxy = HistoryFilterModel(self)
         self.history_item_proxy.setSourceModel(self.history_item_model)
         self.history_view.setModel(self.history_item_proxy)

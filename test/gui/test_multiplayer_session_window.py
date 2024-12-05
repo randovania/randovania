@@ -51,6 +51,13 @@ async def window(skip_qtbot: QtBot) -> MultiplayerSessionWindow:
     window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
+
+    # Don't use threads during tests
+    def _start_thread_for_effect(target):
+        target()
+
+    window._start_thread_for = MagicMock(side_effect=_start_thread_for_effect)
+
     return window
 
 
