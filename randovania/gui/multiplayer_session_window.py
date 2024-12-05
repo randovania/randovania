@@ -20,6 +20,7 @@ from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
 from randovania.gui.generated.multiplayer_session_ui import Ui_MultiplayerSessionWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter, layout_loader, model_lib
+from randovania.gui.lib.async_dialog import StandardButton
 from randovania.gui.lib.background_task_mixin import BackgroundTaskInProgressError, BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.multiplayer_session_api import MultiplayerSessionApi
@@ -196,7 +197,6 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.tab_audit.sortByColumn(2, QtCore.Qt.SortOrder.AscendingOrder)
 
         self.history_item_model = HistoryItemModel(self, self._last_actions)
-        # self.history_item_model.setHorizontalHeaderLabels(["Provider", "Receiver", "Pickup", "Location", "Time"])
         self.history_item_proxy = HistoryFilterModel(self)
         self.history_item_proxy.setSourceModel(self.history_item_model)
         self.history_view.setModel(self.history_item_proxy)
@@ -309,6 +309,19 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
 
     @asyncClose
     async def closeEvent(self, event: QtGui.QCloseEvent):
+        if self.has_background_process:
+            event.ignore()
+            result = await async_dialog.warning(
+                self,
+                "Confirm close window",
+                "Are you sure you want to close this window?\nClosing this window will abort current tasks.",
+                buttons=async_dialog.StandardButton.Yes | async_dialog.StandardButton.No,
+                default_button=async_dialog.StandardButton.No,
+            )
+            if result != StandardButton.Yes:
+                return
+            event.accept()
+        self.stop_background_process()
         return await self._on_close_event(event)
 
     async def _on_close_event(self, event: QtGui.QCloseEvent):
@@ -456,6 +469,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 self.export_game_button.setMenu(None)
             else:
                 self.export_game_button.setEnabled(False)
+
+            # FIXME: this triggers on every meta update as opposed to just when the generation status gets updated
+            # common_qt_lib.alert_user_on_generation(self, self._options)
 
     def _describe_action(self, action: MultiplayerSessionAction):
         # get_world can fail if the session meta is not up-to-date
@@ -749,6 +765,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 self.update_progress("Finished generating, uploading...", 100)
                 await uploader(layout)
                 self.update_progress("Uploaded!", 100)
+                common_qt_lib.alert_user_on_generation(self, self._options)
 
                 if layout.has_spoiler:
                     last_multiplayer.unlink()
@@ -759,6 +776,9 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
             except AnyNetworkError:
                 # We're interested in catching generation failures.
                 # Let network errors be handled by who called us, which will be captured by handle_network_errors
+
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                common_qt_lib.alert_user_on_generation(self, self._options)
                 raise
 
             except Exception as e:
@@ -766,6 +786,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                     e,
                     self.update_progress,
                 )
+                # Alert the user who gens on errors, since 'update_game_tab' doesn't show gen errors to other clients
+                common_qt_lib.alert_user_on_generation(self, self._options)
 
             finally:
                 self._generating_game = False

@@ -1,5 +1,5 @@
 {
-    "schema_version": 66,
+    "schema_version": 93,
     "base_preset_uuid": null,
     "name": "Starter Preset (Shuffle Keys)",
     "uuid": "dc33eec9-332f-4296-99d2-6404df5d4e39",
@@ -84,6 +84,7 @@
         "pickup_model_data_source": "etm",
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
+        "two_sided_door_lock_search": false,
         "minimum_available_locations_for_hint_placement": 0,
         "minimum_location_weight_for_hint_placement": 0.0,
         "dock_rando": {
@@ -91,24 +92,24 @@
             "types_state": {
                 "door": {
                     "can_change_from": [
-                        "Normal Door",
-                        "Missile Door"
+                        "Missile Door",
+                        "Normal Door"
                     ],
                     "can_change_to": [
-                        "Normal Door",
-                        "Missile Door"
+                        "Missile Door",
+                        "Normal Door"
                     ]
                 }
             }
         },
-        "single_set_for_pickups_that_solve": false,
-        "staggered_multi_pickup_placement": false,
+        "single_set_for_pickups_that_solve": true,
+        "staggered_multi_pickup_placement": true,
         "check_if_beatable_after_base_patches": false,
-        "energy_per_tank": 100,
-        "include_extra_pickups": false,
         "artifacts": {
             "vanilla_tourian_keys": false,
             "required_artifacts": 9
-        }
+        },
+        "energy_per_tank": 100,
+        "include_extra_pickups": false
     }
 }

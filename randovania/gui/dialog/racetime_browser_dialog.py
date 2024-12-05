@@ -160,8 +160,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
         self.refresh_button.setEnabled(False)
         self.races = []
         try:
-            for game in _SUPPORTED_GAME_URLS:
-                race_url = _SUPPORTED_GAME_URLS[game]
+            for game, race_url in _SUPPORTED_GAME_URLS.items():
                 try:
                     raw_races = await _query_server(race_url)
                 except aiohttp.ClientError as e:

@@ -320,14 +320,11 @@ def _serialize_dock_modifications(
             size_indices[area.name] = area.extra["size_index"]
 
         default_connections = {}
-        for src_name, src_dock in default_connections_node_name:
-            (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
-
+        for (src_name, src_dock), (dst_name, dst_node_name) in default_connections_node_name.items():
             try:
                 dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
             except KeyError:
                 continue
-
             default_connections[(src_name, src_dock)] = (dst_name, dst_dock)
 
         for area_name, dock_num in candidates:
@@ -550,11 +547,11 @@ def _serialize_dock_modifications(
                             room_connections.append((room_name, dst_room_name))
 
                     # Handle unrandomized connections
-                    for src_name, src_dock in is_nonstandard:
+                    for (src_name, src_dock), is_set in is_nonstandard.items():
                         if (src_name, src_dock) in disabled_doors:
                             continue
 
-                        if is_nonstandard[(src_name, src_dock)]:
+                        if is_set:
                             (dst_name, dst_dock) = default_connections[(src_name, src_dock)]
                             room_connections.append((src_name, dst_name))
 
@@ -733,6 +730,15 @@ class PrimePatchDataFactory(PatchDataFactory):
                 }
             ]
 
+        # Remove Bars in Great Tree Hall
+        if self.configuration.remove_bars_great_tree_hall:
+            level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]["deleteIds"] = [
+                2359733,  # 0x002401B5 - bar
+                2359744,  # 0x002401C0 - spinner auto-enable timer
+                2359830,  # 0x00240216 - scan front
+                2359829,  # 0x00240215 - scan back
+            ]
+
         # serialize room modifications
         if self.configuration.superheated_probability != 0:
             probability = self.configuration.superheated_probability / 1000.0
@@ -745,6 +751,24 @@ class PrimePatchDataFactory(PatchDataFactory):
             for region in regions:
                 for area in region.areas:
                     level_data[region.name]["rooms"][area.name]["submerge"] = self.rng.random() < probability
+
+        # Replace vanilla missile blast shields with the new ones
+        if not self.configuration.legacy_mode:
+            for node in db.region_list.iterate_nodes():
+                if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
+                    if node.default_dock_weakness.name != "Missile Blast Shield (randomprime)":
+                        continue
+
+                    dock_num = str(node.extra["dock_index"])
+                    world_name = node.identifier.region
+                    room_name = node.identifier.area
+                    doors_in_node = level_data[world_name]["rooms"][room_name]["doors"]
+
+                    if dock_num not in doors_in_node:
+                        doors_in_node[dock_num] = {}
+
+                    doors_in_node[dock_num]["shieldType"] = node.default_dock_weakness.extra["shieldType"]
+                    doors_in_node[dock_num]["blastShieldType"] = node.default_dock_weakness.extra["blastShieldType"]
 
         # serialize door modifications
         for region in regions:

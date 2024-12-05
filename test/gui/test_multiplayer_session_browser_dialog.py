@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import datetime
+from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
@@ -10,9 +11,12 @@ from randovania.gui.dialog.multiplayer_session_browser_dialog import Multiplayer
 from randovania.network_common.multiplayer_session import MultiplayerSessionListEntry
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
+if TYPE_CHECKING:
+    from pytestqt.qtbot import QtBot
+
 
 @pytest.fixture(name="sessions")
-def create_sessions():
+def create_sessions() -> list[MultiplayerSessionListEntry]:
     utc = datetime.UTC
     session_a = MultiplayerSessionListEntry(
         id=1,
@@ -54,12 +58,13 @@ def create_sessions():
     return [session_a, session_b, session_c]
 
 
-async def test_attempt_join(sessions, skip_qtbot):
+async def test_attempt_join(sessions: list[MultiplayerSessionListEntry], skip_qtbot: QtBot) -> None:
     # Setup
     network_client = MagicMock()
     network_client.attempt_join_with_password_check = AsyncMock()
 
     dialog = MultiplayerSessionBrowserDialog(network_client)
+    skip_qtbot.addWidget(dialog)
     dialog.sessions = sessions
     dialog.update_list()
     dialog.table_widget.selectRow(0)
@@ -71,7 +76,7 @@ async def test_attempt_join(sessions, skip_qtbot):
     network_client.attempt_join_with_password_check.assert_awaited_once_with(sessions[1])
 
 
-def test_filter(sessions, skip_qtbot):
+def test_filter(sessions: list[MultiplayerSessionListEntry], skip_qtbot: QtBot) -> None:
     # still don't ask me why I need to explicity use the middle (height / 2) to click some of the boxes
     def click_helper(qt_object):
         skip_qtbot.mouseClick(qt_object, QtCore.Qt.MouseButton.LeftButton, pos=QtCore.QPoint(2, qt_object.height() / 2))
@@ -80,6 +85,7 @@ def test_filter(sessions, skip_qtbot):
     network_client = MagicMock()
 
     dialog = MultiplayerSessionBrowserDialog(network_client)
+    skip_qtbot.addWidget(dialog)
     dialog.sessions = sessions
     dialog.update_list()
 

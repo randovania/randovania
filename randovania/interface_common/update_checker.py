@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from datetime import datetime
-from distutils.version import StrictVersion
 from typing import NamedTuple
+
+from packaging.version import Version
 
 from randovania import VERSION
 
@@ -23,21 +24,21 @@ class VersionDescription(NamedTuple):
     html_url: str
 
     @property
-    def as_strict_version(self) -> StrictVersion:
-        return StrictVersion(self.tag_name[1:])
+    def as_strict_version(self) -> Version:
+        return Version(self.tag_name[1:])
 
 
-def strict_version_for_version_string(version_name: str) -> StrictVersion:
+def strict_version_for_version_string(version_name: str) -> Version:
     version_name = version_name.replace("-dirty", "")
     try:
-        return StrictVersion(version_name)
+        return Version(version_name)
     except ValueError:
         if ".dev" not in version_name:
             raise
-        return StrictVersion(version_name.split(".dev")[0])
+        return Version(version_name.split(".dev")[0])
 
 
-def strict_current_version() -> StrictVersion:
+def strict_current_version() -> Version:
     return strict_version_for_version_string(VERSION)
 
 
@@ -74,8 +75,8 @@ def _get_major_entries(log: str) -> str:
 
 
 def versions_to_display_for_releases(
-    current_version: StrictVersion,
-    last_changelog_version: StrictVersion,
+    current_version: Version,
+    last_changelog_version: Version,
     releases: list[dict],
 ) -> tuple[dict[str, str], list[str], VersionDescription | None]:
     all_change_logs = {}

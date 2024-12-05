@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>482</width>
-         <height>1110</height>
+         <y>-358</y>
+         <width>487</width>
+         <height>1200</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="scroll_layout">
@@ -63,10 +63,10 @@
         <item>
          <spacer name="top_spacer">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Policy::Fixed</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -139,7 +139,7 @@
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;These quality of life options affect the game world and therefore might affect the logical path the generator expects the player to traverse.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -211,6 +211,23 @@
             <widget class="QLabel" name="backwards_labs_label">
              <property name="text">
               <string>Scan through barrier of Research Lab Hydra when approached from deep labs</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="remove_bars_great_tree_hall_check">
+             <property name="text">
+              <string>Remove Bars in Great Tree Hall</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="remove_bars_great_tree_hall_label">
+             <property name="text">
+              <string>Removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall allowing free movement between the lower and upper levels of the room</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

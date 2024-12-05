@@ -180,7 +180,7 @@ def construct_for_type(type_: type) -> construct.Construct:
     if type_ in _direct_mapping:
         return _direct_mapping[type_]
 
-    if issubclass(type_, Enum):
+    if isinstance(type_, type) and issubclass(type_, Enum):
         enum_arr = list(type_)
         return construct.ExprAdapter(
             construct.VarInt,

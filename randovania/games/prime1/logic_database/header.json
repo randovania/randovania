@@ -800,6 +800,14 @@
             "room_rando": {
                 "long_name": "Entrance Rando",
                 "extra": {}
+            },
+            "remove_bars_great_tree_hall": {
+                "long_name": "Remove Bars in Great Tree Hall",
+                "extra": {}
+            },
+            "vanilla_heat": {
+                "long_name": "Vanilla Heat Resistance",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -904,12 +912,46 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "items",
-                                    "name": "GravitySuit",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "vanilla_heat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "GravitySuit",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "PhazonSuit",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -917,15 +959,6 @@
                                 "data": {
                                     "type": "items",
                                     "name": "VariaSuit",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "PhazonSuit",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -1888,7 +1921,7 @@
                     "locked": "Permanently Locked",
                     "change_from": [
                         "Ice Door",
-                        "Missile Blast Shield",
+                        "Missile Blast Shield (randomprime)",
                         "Normal Door",
                         "Plasma Door",
                         "Wave Door"
@@ -1929,94 +1962,6 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Plasma",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Thermal",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "X-Ray",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Scan",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]

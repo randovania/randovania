@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from randovania.gui.main_window import MainWindow
     from randovania.gui.widgets.base_game_tab_widget import BaseGameTabWidget
     from randovania.interface_common.options import Options
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class GamesHelpWidget(QtWidgets.QTabWidget):
@@ -22,6 +23,7 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
     _layout_for_index: dict[int, QtWidgets.QVBoxLayout] | None = None
     _widget_for_game: dict[RandovaniaGame, BaseGameTabWidget] | None = None
     _pending_current_game: RandovaniaGame | None = None
+    _pending_select_preset_tab: bool = False
 
     def _on_first_show(self):
         self._index_for_game = {}
@@ -87,9 +89,26 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
             self._pending_current_game = game
         else:
             self.setCurrentIndex(self._index_for_game[game])
+            if self._pending_select_preset_tab:
+                self.current_game_widget().select_preset_tab()
+                self._pending_select_preset_tab = False
 
     def on_options_changed(self, options: Options):
         self._last_options = options
         if self._widget_for_game is not None:
             for widget in self._widget_for_game.values():
                 widget.on_options_changed(options)
+
+    def on_new_preset(self, preset: VersionedPreset) -> None:
+        if self._widget_for_game is not None:
+            widget = self._widget_for_game.get(preset.game)
+            if widget is not None:
+                widget.tab_generate_game.on_new_preset(preset)
+
+    def select_preset_tab(self) -> None:
+        """Sets the current widget for the selected game to be"""
+        widget = self.current_game_widget()
+        if widget is not None:
+            widget.select_preset_tab()
+        else:
+            self._pending_select_preset_tab = True

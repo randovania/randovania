@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.cli.commands import benchmark
+from randovania.cli.commands.hash_input import add_hash_input_command
 from randovania.cli.commands.new_game import add_create_databases, add_new_game_command
 from randovania.cli.commands.refresh_presets import add_refresh_presets_command
 from randovania.cli.commands.render_regions import render_regions_graph
@@ -28,6 +29,7 @@ def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     create_export_videos_yaml_command(sub_parsers)
     create_readme_sections_command(sub_parsers)
     create_extract_game_data_command(sub_parsers)
+    add_hash_input_command(sub_parsers)
 
     def check_command(args: Namespace) -> None:
         if args.command is None:

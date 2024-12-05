@@ -41,6 +41,7 @@ def test_build_available_indices(has_exclusion: bool):
         minimum_location_weight_for_hint_placement=0,
         single_set_for_pickups_that_solve=False,
         staggered_multi_pickup_placement=False,
+        fallback_to_reweight_with_unsafe=False,
     )
 
     # Run
