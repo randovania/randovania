@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Self
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncClose, asyncSlot
 
+import randovania
 from randovania import monitoring
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -259,6 +260,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.copy_permalink_button.clicked.connect(self.copy_permalink)
         self.view_game_details_button.clicked.connect(self.view_game_details)
         self.everyone_can_claim_check.clicked.connect(self._on_everyone_can_claim_check)
+        self.allow_coop_check.clicked.connect(self._on_allow_coop_check)
 
         # Background Tasks
         self.background_tasks_button_lock_signal.connect(self.enable_buttons_with_background_tasks)
@@ -367,6 +369,13 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.update_multiworld_client_status()
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
+        self.allow_coop_check.setChecked(session.allow_coop)
+        self.allow_coop_check.setEnabled(
+            self.users_widget.is_admin()
+            and self._session.game_details is None
+            and self._session.generation_in_progress is None
+        )
+        self.allow_coop_check.setVisible(not randovania.is_frozen())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -908,6 +917,47 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
     @asyncSlot()
     async def _on_everyone_can_claim_check(self):
         await self.game_session_api.set_everyone_can_claim(self.everyone_can_claim_check.isChecked())
+
+    @asyncSlot()
+    async def _on_allow_coop_check(self):
+        if self.allow_coop_check.isChecked():
+            await async_dialog.message_box(
+                self,
+                QtWidgets.QMessageBox.Icon.Information,
+                "Information",
+                (
+                    "Co-op is still *very* experimental and may have issues.\nFor Prime 1 and Echoes in particular, "
+                    "please ensure that Randovania is always connected to the game before you collect items, as "
+                    "otherwise they will be lost permanently!"
+                ),
+            )
+        else:
+            world_users = collections.defaultdict(list)
+            for user in self._session.users.values():
+                for world in user.worlds:
+                    world_users[world].append(user)
+
+            if any(len(users) > 1 for users in world_users.values()):
+                result = await async_dialog.message_box(
+                    self,
+                    QtWidgets.QMessageBox.Icon.Question,
+                    "Worlds assigned to multiple users",
+                    (
+                        "There are still worlds left which are claimed by multiple users at the same time.\n"
+                        "Do you want to unclaim those worlds from all users and continue?"
+                    ),
+                    QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No,
+                    QtWidgets.QMessageBox.StandardButton.No,
+                )
+                if result == QtWidgets.QMessageBox.StandardButton.No:
+                    return
+
+            for world, users in world_users.items():
+                if len(users) > 1:
+                    for user in users:
+                        await self.game_session_api.unclaim_world(world, user.id)
+
+        await self.game_session_api.set_allow_coop(self.allow_coop_check.isChecked())
 
     @asyncSlot()
     async def game_export_listener(self, world_id: uuid.UUID, patch_data: dict):

@@ -36,7 +36,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             is_major = False
             if "source" in node.extra:
                 is_major = True
-            if not pickup.other_player and pickup.conditional_resources[0].resources:
+            if not pickup.is_for_remote_player and pickup.conditional_resources[0].resources:
                 resource = pickup.conditional_resources[0].resources[-1][0].extra["item"]
             else:
                 resource = "None"

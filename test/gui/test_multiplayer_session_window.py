@@ -113,6 +113,70 @@ def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
     )
 
 
+async def test_on_enable_coop(
+    preset_manager: PresetManager,
+    mocker: MockerFixture,
+    window: MultiplayerSessionWindow,
+    sample_session: MultiplayerSessionEntry,
+) -> None:
+    # Setup
+    async def _set_coop(val: bool) -> None:
+        window._session = dataclasses.replace(window._session, allow_coop=val)
+
+    window.game_session_api = AsyncMock()
+    window.game_session_api.set_allow_coop = _set_coop
+    mock_message_box: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.message_box", new_callable=AsyncMock)
+
+    window._session = sample_session
+    assert not window._session.allow_coop
+
+    # Run
+    window.allow_coop_check.setChecked(True)
+    await window._on_allow_coop_check()
+
+    # Assert
+    mock_message_box.assert_called_once()
+    assert window._session.allow_coop
+
+
+async def test_on_disable_coop(
+    mocker: MockerFixture, window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry
+) -> None:
+    # Setup
+    async def _set_coop(val: bool) -> None:
+        window._session = dataclasses.replace(window._session, allow_coop=val)
+
+    window.game_session_api = AsyncMock()
+    window.game_session_api.set_allow_coop = _set_coop
+    mock_message_box: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.message_box", new_callable=AsyncMock)
+
+    user1 = sample_session.users_list[0]
+    user2 = MultiplayerUser(
+        24,
+        "Player B",
+        True,
+        True,
+        worlds={
+            uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b"): UserWorldDetail(
+                GameConnectionStatus.InGame, datetime.datetime(2024, 11, 9, 15, 28, tzinfo=datetime.UTC)
+            )
+        },
+    )
+
+    sample_session = dataclasses.replace(sample_session, allow_coop=True, users_list=[user1, user2])
+
+    window._session = sample_session
+    assert window._session.allow_coop
+
+    # Run
+    window.allow_coop_check.setChecked(False)
+    await window._on_allow_coop_check()
+
+    # Assert
+    mock_message_box.assert_called_once()
+    assert not window._session.allow_coop
+
+
 async def test_on_session_meta_update(
     preset_manager: PresetManager, skip_qtbot: QtBot, sample_session: MultiplayerSessionEntry
 ) -> None:
@@ -175,7 +239,7 @@ async def test_on_session_meta_update(
     network_client.server_call.assert_awaited_once_with("multiplayer_request_session_update", 1234)
 
 
-async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session):
+async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry):
     # Setup
     window._session = sample_session
     timestamp = datetime.datetime(year=2020, month=1, day=5)
