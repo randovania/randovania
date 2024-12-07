@@ -37,15 +37,15 @@ def _gui() -> randovania.game.gui.GameGui:
 
 
 def _generator() -> randovania.game.generator.GameGenerator:
+    from randovania.games.prime3.generator.bootstrap import CorruptionBootstrap
     from randovania.games.prime3.generator.pickup_pool.pool_creator import corruption_specific_pool
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.hint_distributor import AllJokesHintDistributor
-    from randovania.resolver.bootstrap import MetroidBootstrap
 
     return randovania.game.generator.GameGenerator(
         pickup_pool_creator=corruption_specific_pool,
-        bootstrap=MetroidBootstrap(),
+        bootstrap=CorruptionBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
         action_weights=ActionWeights(),

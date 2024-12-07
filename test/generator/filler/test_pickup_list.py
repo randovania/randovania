@@ -19,7 +19,8 @@ from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.resolver.state import State, StateGameData
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
+from randovania.resolver.state import State
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
@@ -132,7 +133,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
         MagicMock(), collection, echoes_game_description.resource_database, echoes_game_description.region_list
     )
     reach.state.resources = collection
-    reach.state.energy = 100
+    reach.state.health_for_damage_requirements = 100
     possible_set = MagicMock()
     reach.unreachable_nodes_with_requirements.return_value = {"foo": possible_set}
     resource = MagicMock()
@@ -200,16 +201,15 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
     state = State(
         resources,
         (),
-        99,
+        EnergyTankDamageState(
+            99,
+            100,
+            db,
+            echoes_game_description.region_list,
+        ),
         MagicMock(),
         echoes_game_patches,
         None,
-        StateGameData(
-            db,
-            echoes_game_description.region_list,
-            100,
-            99,
-        ),
     )
 
     # Run
