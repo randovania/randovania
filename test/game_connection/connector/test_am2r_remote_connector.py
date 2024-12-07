@@ -62,6 +62,7 @@ async def test_new_player_location(connector: AM2RRemoteConnector):
 
 async def test_new_inventory_received(connector: AM2RRemoteConnector):
     inventory_updated = MagicMock()
+    connector.logger = MagicMock()
     connector.InventoryUpdated.connect(inventory_updated)
 
     connector.current_region = None
@@ -81,6 +82,8 @@ async def test_new_inventory_received(connector: AM2RRemoteConnector):
         "Speed Booster|1,Missile Launcher|1,Missiles|5,Progressive Suit|5,"
     )
     inventory_updated.assert_called_once()
+
+    connector.logger.warning.assert_not_called()
 
     # Check Missiles
     missiles = connector.game.resource_database.get_item_by_name("Missiles")
@@ -158,7 +161,7 @@ async def test_new_collected_locations_received(connector: AM2RRemoteConnector):
 
     connector.logger = MagicMock()
     connector.PickupIndexCollected.connect(collected_mock)
-    new_indices = "locations:1"
+    new_indices = "locations:1,"
 
     connector.current_region = None
     connector.new_collected_locations_received(new_indices)

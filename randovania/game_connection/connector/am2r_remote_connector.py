@@ -98,7 +98,7 @@ class AM2RRemoteConnector(RemoteConnector):
         )
         self.PlayerLocationChanged.emit(PlayerLocationEvent(self.current_region, None))
 
-    def new_collected_locations_received(self, new_indices: str) -> None:
+    def new_collected_locations_received(self, new_indices_response: str) -> None:
         """
         __Collected locations implementation detail:__
         The game keeps track of which locations it collected, in a big string, with the format `locations:XX,YY,ZZ...`,
@@ -106,7 +106,7 @@ class AM2RRemoteConnector(RemoteConnector):
         Also, this string is saved to the save file.
         The game sends that string to RDV, where we then loop through it, and mark every index as collected.
 
-        :param new_indices: A string from the game with the format `locations:XX,YY,ZZ...`.
+        :param new_indices_response: A string from the game with the format `locations:XX,YY,ZZ...`.
         """
         if self.current_region is None:
             return
@@ -114,16 +114,20 @@ class AM2RRemoteConnector(RemoteConnector):
         locations = set()
         start_of_indices = "locations:"
 
-        if not new_indices.startswith(start_of_indices):
-            self.logger.warning("Unknown response: %s", new_indices)
+        if not new_indices_response.startswith(start_of_indices):
+            self.logger.warning("Unknown response: %s", new_indices_response)
             return
 
-        for index in new_indices[len(start_of_indices) :].split(","):
+        indices_list = new_indices_response[len(start_of_indices) :].split(",")
+        if len(indices_list[-1]) == 0 or indices_list[-1].isspace():
+            indices_list = indices_list[:-1]
+
+        for index in indices_list:
             if not index.isdigit():
                 self.logger.warning(
                     "Response should contain a digit, but instead contains '%s'. Original message: '%s'",
                     index,
-                    new_indices,
+                    new_indices_response,
                 )
                 continue
             locations.add(PickupIndex(int(index)))
@@ -131,7 +135,7 @@ class AM2RRemoteConnector(RemoteConnector):
         for location in locations:
             self.PickupIndexCollected.emit(location)
 
-    def new_inventory_received(self, new_inventory: str) -> None:
+    def new_inventory_received(self, new_inventory_response: str) -> None:
         """
         __New inventory implementation detail:__
         The game keeps track of which items it collected in a big string with the format
@@ -146,24 +150,29 @@ class AM2RRemoteConnector(RemoteConnector):
         Regarding ammo and progressives: for some reason, we need here the name of the ammo, and not the name of the
         expansions. I.e. for `Missile Expansions`, we need `Missiles`. So there's a lookup dict here to adjust for them.
 
-        :param new_inventory: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
+        :param new_inventory_response: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
         """
+        print(f"TEST: {new_inventory_response}")
         if self.current_region is None:
             return
 
         inventory_dict = defaultdict(int)
         start_of_inventory = "items:"
 
-        if not new_inventory.startswith(start_of_inventory):
-            self.logger.warning("Unknown response: %s", new_inventory)
+        if not new_inventory_response.startswith(start_of_inventory):
+            self.logger.warning("Unknown response: %s", new_inventory_response)
             return
 
-        for position in new_inventory[len(start_of_inventory) :].split(","):
+        inventory_list = new_inventory_response[len(start_of_inventory) :].split(",")
+        if len(inventory_list[-1]) == 0 or inventory_list[-1].isspace():
+            inventory_list = inventory_list[:-1]
+
+        for position in inventory_list:
             if not position:
                 continue
             if "|" not in position:
                 self.logger.warning(
-                    "Response should contain a '|', but it doesn't. Original response: %s", new_inventory
+                    "Response should contain a '|', but it doesn't. Original response: %s", new_inventory_response
                 )
                 continue
             (item_name, quantity) = position.split("|", 1)
@@ -171,7 +180,7 @@ class AM2RRemoteConnector(RemoteConnector):
                 self.logger.warning(
                     "Response should contain a digit, but instead contains '%s'. Original response: %s",
                     position,
-                    new_inventory,
+                    new_inventory_response,
                 )
                 continue
 
