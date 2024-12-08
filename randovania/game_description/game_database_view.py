@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region import Region
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -189,6 +190,12 @@ class GameDatabaseView:
         """
         raise NotImplementedError
 
+    def get_victory_condition(self) -> Requirement:
+        """
+        Gets the requirement that determines if the player has won.
+        """
+        raise NotImplementedError
+
 
 class GameDatabaseViewProxy(GameDatabaseView):
     """
@@ -236,6 +243,10 @@ class GameDatabaseViewProxy(GameDatabaseView):
     @typing_extensions.override
     def get_resource_database_view(self) -> ResourceDatabaseView:
         return self._original.get_resource_database_view()
+
+    @typing_extensions.override
+    def get_victory_condition(self) -> Requirement:
+        return self._original.get_victory_condition()
 
 
 def typed_node_by_identifier(game: GameDatabaseView, i: NodeIdentifier, t: type[NodeT]) -> NodeT:

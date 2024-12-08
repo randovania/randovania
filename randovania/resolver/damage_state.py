@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Self
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -18,9 +17,6 @@ class DamageState(ABC):
 
     def resource_database(self) -> ResourceDatabase:
         """The ResourceDatabase."""
-
-    def region_list(self) -> RegionList:
-        """The preprocessed RegionList."""
 
     def health_for_damage_requirements(self) -> int:
         """How much health is present for purpose of checking damage requirements."""

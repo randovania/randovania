@@ -9,7 +9,7 @@ from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.graph import world_graph
-from randovania.graph.state import State, StateGameData
+from randovania.graph.state import State
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.exceptions import InvalidConfiguration
 
@@ -219,25 +219,20 @@ class Bootstrap[Configuration: BaseConfiguration]:
 
         game = self.apply_game_specific_patches(game, configuration, patches)
 
-        starting_energy, energy_per_tank = self.energy_config(configuration)
-
-        game_data = StateGameData(resource_database, game.region_list, energy_per_tank, starting_energy)
         graph = world_graph.create_graph(
             database_view=game,
-            game_data=game_data,
             patches=patches,
             resources=initial_resources,
             damage_multiplier=configuration.damage_strictness.value,
-            victory_condition=game.victory_condition,
+            victory_condition=game.get_victory_condition(),
         )
         starting_state = State(
             initial_resources,
             (),
-            None,
+            self.create_damage_state(game, configuration),
             graph.node_provider.original_to_node[starting_node.node_index],
             patches,
             None,
-            StateGameData(game.resource_database, game.region_list, energy_per_tank, starting_energy),
         )
         return graph, starting_state
 

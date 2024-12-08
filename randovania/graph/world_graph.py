@@ -37,7 +37,6 @@ if typing.TYPE_CHECKING:
         ResourceInfo,
         ResourceQuantity,
     )
-    from randovania.graph.state import StateGameData
 
 
 class NodeConnection(typing.NamedTuple):
@@ -339,7 +338,6 @@ def create_node(
 
 def create_graph(
     database_view: GameDatabaseView,
-    game_data: StateGameData,
     patches: GamePatches,
     resources: ResourceCollection,
     damage_multiplier: float,
@@ -367,9 +365,9 @@ def create_graph(
         nodes.append(create_node(len(nodes), patches, original_node, area, region))
 
     original_to_node = {node.original_node.node_index: node for node in nodes}
-    node_provider = WorldGraphNodeProvider(game_data.region_list, original_to_node)
+    node_provider = WorldGraphNodeProvider(database_view, original_to_node)
 
-    context = NodeContext(patches, resources, game_data.resource_database, node_provider)
+    context = NodeContext(patches, resources, database_view.get_resource_database_view(), node_provider)
     for node in nodes:
         if isinstance(node.original_node, HintNode | PickupNode | EventPickupNode):
             node.resource_gain.append((node_provider.get_node_resource_info_for(node.identifier, context), 1))

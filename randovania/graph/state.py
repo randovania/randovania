@@ -36,7 +36,7 @@ class State:
 
     @property
     def resource_database(self) -> ResourceDatabaseView:
-        return self.damage_state.resource_database()
+        return self.patches.game.get_resource_database_view()
 
     def __init__(
         self,
@@ -108,7 +108,10 @@ class State:
         :return:
         """
         context = self.node_context()
-        if not (node.should_collect(context) and node.requirement_to_collect.satisfied(context, damage_state)):
+        if not (
+            node.should_collect(context)
+            and node.requirement_to_collect.satisfied(context, damage_state.health_for_damage_requirements())
+        ):
             raise ValueError(f"Trying to collect an uncollectable node'{node}'")
 
         new_resources = self.resources.duplicate()
@@ -175,7 +178,7 @@ class State:
             self.patches,
             self.resources,
             self.resource_database,
-            self.region_list,
+            None,
         )
 
 

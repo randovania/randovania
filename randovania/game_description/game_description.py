@@ -234,6 +234,9 @@ class GameDescription(GameDatabaseView):
     def create_resource_collection(self) -> ResourceCollection:
         return ResourceCollection.with_database(self.resource_database)
 
+    def get_victory_condition(self) -> Requirement:
+        return self.victory_condition
+
 
 def _resources_for_damage(
     resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection
