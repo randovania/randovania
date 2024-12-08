@@ -400,13 +400,13 @@ def test_set_parent_for_preset(tmp_path):
 
 def test_last_changelog_displayed(is_dev_version: bool) -> None:
     options = Options(MagicMock())
-    version_text = "2.5.1"
+    version = version_lib.Version("2.5.1")
 
     with options:
-        options.last_changelog_displayed = version_lib.Version(version_text)
+        options.last_changelog_displayed = version
 
-    assert options.last_changelog_displayed == version_lib.Version(version_text)
+    assert options.last_changelog_displayed == version
     if is_dev_version:
-        assert options._last_changelog_displayed_dev == version_text
+        assert options._last_changelog_displayed_dev == version
     else:
-        assert options._last_changelog_displayed == version_text
+        assert options._last_changelog_displayed == version

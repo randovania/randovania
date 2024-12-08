@@ -123,8 +123,8 @@ class PerGameOptions:
 
 
 _SERIALIZER_FOR_FIELD = {
-    "last_changelog_displayed": Serializer(identity, str),
-    "last_changelog_displayed_dev": Serializer(identity, str),
+    "last_changelog_displayed": Serializer(str, version_lib.parse_string),
+    "last_changelog_displayed_dev": Serializer(str, version_lib.parse_string),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "advanced_generate_in_another_process": Serializer(identity, bool),
@@ -195,8 +195,8 @@ class Options:
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
 
-    _last_changelog_displayed: str
-    _last_changelog_displayed_dev: str
+    _last_changelog_displayed: version_lib.Version
+    _last_changelog_displayed_dev: version_lib.Version
     _advanced_validate_seed_after: bool | None = None
     _advanced_timeout_during_generation: bool | None = None
     _advanced_generate_in_another_process: bool | None = None
@@ -217,7 +217,7 @@ class Options:
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
         self._user_dir = user_dir or data_dir
-        self._raw_set_last_changelog_displayed(str(version_lib.current_version()))
+        self._raw_set_last_changelog_displayed(version_lib.current_version())
 
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
@@ -389,23 +389,21 @@ class Options:
     @property
     def last_changelog_displayed(self) -> version_lib.Version:
         if randovania.is_dev_version():
-            version_str = self._last_changelog_displayed_dev
+            return self._last_changelog_displayed_dev
         else:
-            version_str = self._last_changelog_displayed
-
-        return version_lib.parse_string(version_str)
+            return self._last_changelog_displayed
 
     @last_changelog_displayed.setter
     def last_changelog_displayed(self, value: version_lib.Version):
         if value != self.last_changelog_displayed:
             self._check_editable_and_mark_dirty()
-            self._raw_set_last_changelog_displayed(str(value))
+            self._raw_set_last_changelog_displayed(value)
 
-    def _raw_set_last_changelog_displayed(self, version_str: str) -> None:
+    def _raw_set_last_changelog_displayed(self, version: version_lib.Version) -> None:
         if randovania.is_dev_version():
-            self._last_changelog_displayed_dev = version_str
+            self._last_changelog_displayed_dev = version
         else:
-            self._last_changelog_displayed = version_str
+            self._last_changelog_displayed = version
 
     @property
     def auto_save_spoiler(self) -> bool:
