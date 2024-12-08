@@ -16,11 +16,11 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
             return f"Incompatible client version '{client_version}', expected '{server_version}'"
 
     elif version_checking == ClientVersionCheck.MATCH_MAJOR_MINOR:
-        server = version_lib.Version(server_version.split(".dev")[0])
-        client = version_lib.Version(client_version.split(".dev")[0])
-        if server.version[:2] != client.version[:2]:
-            shorter_client = "{}.{}".format(*client.version[:2])
-            shorter_server = "{}.{}".format(*server.version[:2])
+        server = version_lib.parse_string(server_version)
+        client = version_lib.parse_string(client_version)
+        if server.release[:2] != client.release[:2]:
+            shorter_client = "{}.{}".format(*client.release[:2])
+            shorter_server = "{}.{}".format(*server.release[:2])
             return f"Incompatible client version '{shorter_client}', expected '{shorter_server}'"
 
 

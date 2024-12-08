@@ -1,18 +1,15 @@
-from distutils.version import StrictVersion
+from packaging.version import Version
 
 import randovania
-
-Version = StrictVersion
 
 
 def parse_string(version_name: str) -> Version:
     version_name = version_name.replace("-dirty", "")
-    try:
-        return StrictVersion(version_name)
-    except ValueError:
-        if ".dev" not in version_name:
-            raise
-        return StrictVersion(version_name.split(".dev")[0])
+    version = Version(version_name)
+    if version.is_devrelease:
+        return Version(version.base_version)
+    else:
+        return version
 
 
 def current_version() -> Version:
