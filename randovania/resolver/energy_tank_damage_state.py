@@ -7,10 +7,8 @@ from randovania.resolver.damage_state import DamageState
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node import Node
-    from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
-    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 
 class EnergyTankDamageState(DamageState):
@@ -18,29 +16,15 @@ class EnergyTankDamageState(DamageState):
     _starting_energy: int
     _energy_per_tank: int
     _energy_tank: ItemResourceInfo
-    _resource_database: ResourceDatabase
-    _region_list: RegionList
 
-    def __init__(
-        self, starting_energy: int, energy_per_tank: int, resource_database: ResourceDatabase, region_list: RegionList
-    ):
+    def __init__(self, starting_energy: int, energy_per_tank: int, energy_tank: ItemResourceInfo):
         self._energy = starting_energy
         self._starting_energy = starting_energy
         self._energy_per_tank = energy_per_tank
-        self._energy_tank = resource_database.energy_tank  # TODO: this should be an argument
-        self._resource_database = resource_database
-        self._region_list = region_list
+        self._energy_tank = energy_tank
 
     def __copy__(self) -> Self:
         return self._duplicate()
-
-    @override
-    def resource_database(self) -> ResourceDatabase:
-        return self._resource_database
-
-    @override
-    def region_list(self) -> RegionList:
-        return self._region_list
 
     def _maximum_energy(self, resources: ResourceCollection) -> int:
         num_tanks = resources[self._energy_tank]
@@ -50,8 +34,7 @@ class EnergyTankDamageState(DamageState):
         result = EnergyTankDamageState(
             self._starting_energy,
             self._energy_per_tank,
-            self._resource_database,
-            self._region_list,
+            self._energy_tank,
         )
         result._energy = self._energy
         return result
