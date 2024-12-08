@@ -137,10 +137,13 @@ class CSPatchDataFactory(PatchDataFactory):
             starting_script += "<FL+6400"
         # initialize HP counter
         starting_script += set_flag(4011, self.configuration.starting_hp, bits=6)
-        # Camp and Labyrinth B CMP mapflags
-        starting_script += "<MP+0040<MP+0043"
+        # CMP mapflags: Camp, Labyrinth B, Jail no. 1, Grasstown, Outer Wall
+        starting_script += "<MP+0040<MP+0043<MP+0057<MP+0006<MP+0053"
         # Softlock prevention mapflags
         starting_script += "<MP+0032<MP+0033<MP+0036"
+
+        # unlock teleporter slots in the correct order
+        starting_script += "<PS+0001:6001<PS+0002:6002<PS+0003:6003<PS+0004:6004<PS+0005:6005"
 
         # Starting Items
         equip_num = 0
