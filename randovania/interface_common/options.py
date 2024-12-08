@@ -3,10 +3,9 @@ from __future__ import annotations
 import dataclasses
 import json
 import uuid
+from distutils.version import StrictVersion
 from enum import Enum
 from typing import TYPE_CHECKING, Any, TypeVar
-
-from packaging.version import Version
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
@@ -386,11 +385,11 @@ class Options:
 
     # Access to Direct fields
     @property
-    def last_changelog_displayed(self) -> Version:
-        return Version(self._last_changelog_displayed)
+    def last_changelog_displayed(self) -> StrictVersion:
+        return StrictVersion(self._last_changelog_displayed)
 
     @last_changelog_displayed.setter
-    def last_changelog_displayed(self, value: Version):
+    def last_changelog_displayed(self, value: StrictVersion):
         if value != self.last_changelog_displayed:
             self._check_editable_and_mark_dirty()
             self._last_changelog_displayed = str(value)
