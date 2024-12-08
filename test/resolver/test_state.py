@@ -12,13 +12,13 @@ from randovania.resolver.no_op_damage_state import NoOpDamageState
 
 @pytest.fixture
 def state_game_data(empty_patches) -> NoOpDamageState:
-    return NoOpDamageState(empty_patches.game.resource_database, empty_patches.game.region_list)
+    return NoOpDamageState()
 
 
 def test_collected_pickup_indices(state_game_data, empty_patches):
     # Setup
-    db = state_game_data.resource_database()
-    starting = state_game_data.region_list().node_by_identifier(empty_patches.game.starting_location)
+    db = empty_patches.game.resource_database
+    starting = empty_patches.game.region_list.node_by_identifier(empty_patches.game.starting_location)
     pickup_nodes = [node for node in empty_patches.game.region_list.all_nodes if isinstance(node, PickupNode)]
 
     context = NodeContext(

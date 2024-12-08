@@ -32,7 +32,7 @@ def _recipe_unlocked_requirements(items: list[ItemResourceInfo]) -> list[Require
 
 class FactorioBootstrap(Bootstrap):
     def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
-        return NoOpDamageState(game.resource_database, game.region_list)
+        return NoOpDamageState()
 
     def apply_game_specific_patches(
         self, configuration: BaseConfiguration, game: GameDescription, patches: GamePatches

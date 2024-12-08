@@ -36,13 +36,12 @@ def is_boss_location(node: PickupNode, config: EchoesConfiguration) -> bool:
     return False
 
 
-class EchoesBootstrap(Bootstrap):
+class EchoesBootstrap(Bootstrap[EchoesConfiguration]):
     def create_damage_state(self, game: GameDescription, configuration: EchoesConfiguration) -> DamageState:
         return EnergyTankDamageState(
             configuration.energy_per_tank - 1,
             configuration.energy_per_tank,
-            game.resource_database,
-            game.region_list,
+            game.get_resource_database_view().get_item("EnergyTank"),
         )
 
     def event_resources_for_configuration(

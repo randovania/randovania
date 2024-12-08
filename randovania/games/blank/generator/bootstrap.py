@@ -13,9 +13,4 @@ if TYPE_CHECKING:
 
 class BlankBootstrap(Bootstrap[BlankConfiguration]):
     def create_damage_state(self, game: GameDescription, configuration: BlankConfiguration) -> DamageState:
-        return EnergyTankDamageState(
-            100,
-            100,
-            game.resource_database,
-            game.region_list,
-        )
+        return EnergyTankDamageState(100, 100, game.get_resource_database_view().get_item("Health"))
