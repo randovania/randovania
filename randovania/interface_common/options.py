@@ -3,14 +3,14 @@ from __future__ import annotations
 import dataclasses
 import json
 import uuid
-from distutils.version import StrictVersion
 from enum import Enum
 from typing import TYPE_CHECKING, Any, TypeVar
 
+import randovania
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
-from randovania.interface_common import persisted_options, update_checker
-from randovania.lib import migration_lib
+from randovania.interface_common import persisted_options
+from randovania.lib import migration_lib, version_lib
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -124,6 +124,7 @@ class PerGameOptions:
 
 _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
+    "last_changelog_displayed_dev": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
     "advanced_timeout_during_generation": Serializer(identity, bool),
     "advanced_generate_in_another_process": Serializer(identity, bool),
@@ -195,6 +196,7 @@ class Options:
     _is_dirty: bool = False
 
     _last_changelog_displayed: str
+    _last_changelog_displayed_dev: str
     _advanced_validate_seed_after: bool | None = None
     _advanced_timeout_during_generation: bool | None = None
     _advanced_generate_in_another_process: bool | None = None
@@ -215,7 +217,7 @@ class Options:
     def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
         self._user_dir = user_dir or data_dir
-        self._last_changelog_displayed = str(update_checker.strict_current_version())
+        self._raw_set_last_changelog_displayed(str(version_lib.current_version()))
 
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
@@ -350,7 +352,7 @@ class Options:
     def reset_to_defaults(self):
         self._check_editable_and_mark_dirty()
         for field_name in _SERIALIZER_FOR_FIELD.keys():
-            if field_name == "last_changelog_displayed":
+            if field_name.startswith("last_changelog_displayed"):
                 continue
             self._set_field(field_name, None)
 
@@ -385,14 +387,25 @@ class Options:
 
     # Access to Direct fields
     @property
-    def last_changelog_displayed(self) -> StrictVersion:
-        return StrictVersion(self._last_changelog_displayed)
+    def last_changelog_displayed(self) -> version_lib.Version:
+        if randovania.is_dev_version():
+            version_str = self._last_changelog_displayed_dev
+        else:
+            version_str = self._last_changelog_displayed
+
+        return version_lib.parse_string(version_str)
 
     @last_changelog_displayed.setter
-    def last_changelog_displayed(self, value: StrictVersion):
+    def last_changelog_displayed(self, value: version_lib.Version):
         if value != self.last_changelog_displayed:
             self._check_editable_and_mark_dirty()
-            self._last_changelog_displayed = str(value)
+            self._raw_set_last_changelog_displayed(str(value))
+
+    def _raw_set_last_changelog_displayed(self, version_str: str) -> None:
+        if randovania.is_dev_version():
+            self._last_changelog_displayed_dev = version_str
+        else:
+            self._last_changelog_displayed = version_str
 
     @property
     def auto_save_spoiler(self) -> bool:
