@@ -13,7 +13,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
     from random import Random
@@ -25,6 +26,7 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
@@ -38,7 +40,16 @@ def is_boss_location(node: PickupNode, config: BaseConfiguration) -> bool:
     return False
 
 
-class EchoesBootstrap(MetroidBootstrap):
+class EchoesBootstrap(Bootstrap):
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        assert isinstance(configuration, EchoesConfiguration)
+        return EnergyTankDamageState(
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
+            game.resource_database,
+            game.region_list,
+        )
+
     def event_resources_for_configuration(
         self,
         configuration: BaseConfiguration,

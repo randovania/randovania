@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
     from randovania.resolver.state import State
 
 
@@ -21,7 +22,7 @@ def n(node: Node, region_list: RegionList, with_region: bool = False) -> str:
 
 
 def energy_string(state: State) -> str:
-    return f" [{state.energy}/{state.maximum_energy} Energy]" if debug.debug_level() >= 2 else ""
+    return f" [{state.game_state_debug_string()}]" if debug.debug_level() >= 2 else ""
 
 
 class Logic:
@@ -85,7 +86,7 @@ class Logic:
                 f"{self._indent(1)}> {n(state.node, region_list=region_list)}{energy_string(state)} for {resources}"
             )
 
-    def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, int]]):
+    def log_checking_satisfiable_actions(self, state: State, actions: list[tuple[ResourceNode, DamageState]]):
         if debug.debug_level() > 1:
             debug.print_function(f"{self._indent()}# Satisfiable Actions")
             for action, _ in actions:

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import TYPE_CHECKING, Self
 
 from randovania.game_description.db.hint_node import HintNode
@@ -21,51 +20,34 @@ if TYPE_CHECKING:
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo
-
-
-def _energy_tank_difference(
-    new_resources: ResourceCollection,
-    old_resources: ResourceCollection,
-    database: ResourceDatabase,
-) -> int:
-    return new_resources[database.energy_tank] - old_resources[database.energy_tank]
-
-
-@dataclasses.dataclass(frozen=True)
-class StateGameData:
-    resource_database: ResourceDatabase
-    region_list: RegionList
-    energy_per_tank: int
-    starting_energy: int
+    from randovania.resolver.damage_state import DamageState
 
 
 class State:
     resources: ResourceCollection
     collected_resource_nodes: tuple[ResourceNode, ...]
-    energy: int
+    damage_state: DamageState
     node: Node
     patches: GamePatches
     previous_state: Self | None
     path_from_previous_state: tuple[Node, ...]
-    game_data: StateGameData
 
     @property
     def resource_database(self) -> ResourceDatabase:
-        return self.game_data.resource_database
+        return self.damage_state.resource_database()
 
     @property
     def region_list(self) -> RegionList:
-        return self.game_data.region_list
+        return self.damage_state.region_list()
 
     def __init__(
         self,
         resources: ResourceCollection,
         collected_resource_nodes: tuple[ResourceNode, ...],
-        energy: int | None,
+        damage_state: DamageState,
         node: Node,
         patches: GamePatches,
         previous: Self | None,
-        game_data: StateGameData,
     ):
         self.resources = resources
         self.collected_resource_nodes = collected_resource_nodes
@@ -73,22 +55,18 @@ class State:
         self.patches = patches
         self.path_from_previous_state = ()
         self.previous_state = previous
-        self.game_data = game_data
 
         # We place this last because we need resource_database set
-        if energy is None:
-            energy = self.maximum_energy
-        self.energy = min(energy, self.maximum_energy)
+        self.damage_state = damage_state.limited_by_maximum(self.resources)
 
     def copy(self) -> Self:
         return State(
             self.resources.duplicate(),
             self.collected_resource_nodes,
-            self.energy,
+            self.damage_state,
             self.node,
             self.patches,
             self.previous_state,
-            self.game_data,
         )
 
     @property
@@ -114,42 +92,20 @@ class State:
             if resource.resource_type == ResourceType.EVENT and count > 0:
                 yield resource
 
-    def take_damage(self, damage: int) -> Self:
-        return State(
-            self.resources,
-            self.collected_resource_nodes,
-            self.energy - damage,
-            self.node,
-            self.patches,
-            self,
-            self.game_data,
-        )
-
-    def heal(self) -> Self:
-        return State(
-            self.resources,
-            self.collected_resource_nodes,
-            self.maximum_energy,
-            self.node,
-            self.patches,
-            self,
-            self.game_data,
-        )
-
-    def _energy_for(self, resources: ResourceCollection) -> int:
-        num_tanks = resources[self.game_data.resource_database.energy_tank]
-        energy_per_tank = self.game_data.energy_per_tank
-        return self.game_data.starting_energy + (energy_per_tank * num_tanks)
-
     @property
-    def maximum_energy(self) -> int:
-        return self._energy_for(self.resources)
+    def health_for_damage_requirements(self) -> int:
+        # TODO: keep the wrapper?
+        return self.damage_state.health_for_damage_requirements()
 
-    def collect_resource_node(self, node: ResourceNode, new_energy: int) -> Self:
+    def game_state_debug_string(self) -> str:
+        """A string that represents the game state for purpose of resolver and generator logs."""
+        return self.damage_state.debug_string(self.resources)
+
+    def collect_resource_node(self, node: ResourceNode, damage_state: DamageState) -> Self:
         """
         Creates a new State that has the given ResourceNode collected.
         :param node:
-        :param new_energy: How much energy you should have when collecting this resource
+        :param damage_state: The state you should have when collecting this resource. Will add new resources to it.
         :return:
         """
 
@@ -159,24 +115,21 @@ class State:
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(node.resource_gain_on_collect(self.node_context()))
 
-        energy = new_energy
-        if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
-            energy = self._energy_for(new_resources)
-
         return State(
             new_resources,
             self.collected_resource_nodes + (node,),
-            energy,
+            damage_state.apply_collected_resource_difference(new_resources, self.resources),
             self.node,
             self.patches,
             self,
-            self.game_data,
         )
 
-    def act_on_node(self, node: ResourceNode, path: tuple[Node, ...] = (), new_energy: int | None = None) -> Self:
-        if new_energy is None:
-            new_energy = self.energy
-        new_state = self.collect_resource_node(node, new_energy)
+    def act_on_node(
+        self, node: ResourceNode, path: tuple[Node, ...] = (), new_damage_state: DamageState | None = None
+    ) -> Self:
+        if new_damage_state is None:
+            new_damage_state = self.damage_state
+        new_state = self.collect_resource_node(node, new_damage_state)
         new_state.node = node
         new_state.path_from_previous_state = path
         return new_state
@@ -189,18 +142,13 @@ class State:
         for pickup in pickups:
             new_resources.add_resource_gain(pickup.resource_gain(new_resources, force_lock=True))
 
-        energy = self.energy
-        if _energy_tank_difference(new_resources, self.resources, self.resource_database) > 0:
-            energy = self._energy_for(new_resources)
-
         return State(
             new_resources,
             self.collected_resource_nodes,
-            energy,
+            self.damage_state.apply_collected_resource_difference(new_resources, self.resources),
             self.node,
             self.patches,
             self,
-            self.game_data,
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> Self:
@@ -210,18 +158,14 @@ class State:
 
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(pickup_resources.as_resource_gain())
-        new_patches = self.patches.assign_extra_starting_pickups([pickup])
-
-        tank_delta = _energy_tank_difference(new_resources, self.resources, self.resource_database)
 
         return State(
             new_resources,
             self.collected_resource_nodes,
-            self.energy + tank_delta * self.game_data.energy_per_tank,
+            self.damage_state.apply_new_starting_resource_difference(new_resources, self.resources),
             self.node,
-            new_patches,
+            self.patches.assign_extra_starting_pickups([pickup]),
             self,
-            self.game_data,
         )
 
     def node_context(self) -> NodeContext:
@@ -229,7 +173,7 @@ class State:
             self.patches,
             self.resources,
             self.resource_database,
-            self.game_data.region_list,
+            self.region_list,
         )
 
 
@@ -241,21 +185,3 @@ def add_pickup_to_state(state: State, pickup: PickupEntry):
     :return:
     """
     state.resources.add_resource_gain(pickup.resource_gain(state.resources, force_lock=True))
-
-
-def state_with_pickup(
-    state: State,
-    pickup: PickupEntry,
-) -> State:
-    """
-    Returns a new State that follows the given State and also has the resource gain of the given pickup
-    :param state:
-    :param pickup:
-    :return:
-    """
-    new_state = state.copy()
-    new_state.previous_state = state
-    add_pickup_to_state(new_state, pickup)
-    if new_state.maximum_energy > state.maximum_energy:
-        new_state.energy = new_state.maximum_energy
-    return new_state

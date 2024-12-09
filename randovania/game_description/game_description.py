@@ -229,6 +229,7 @@ class GameDescription:
 def _resources_for_damage(
     resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection
 ) -> Iterator[ResourceInfo]:
+    # FIXME: this should be delegated to DamageState
     yield database.energy_tank
     for reduction in database.damage_reductions.get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):

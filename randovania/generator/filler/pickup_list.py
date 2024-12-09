@@ -8,7 +8,6 @@ from randovania.game_description import game_description
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.resolver import debug
@@ -17,6 +16,7 @@ if TYPE_CHECKING:
     from collections.abc import Iterator, Sequence
 
     from randovania.game_description.db.resource_node import ResourceNode
+    from randovania.game_description.requirements.resource_requirement import ResourceRequirement
     from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.generator.generator_reach import GeneratorReach
     from randovania.resolver.state import State
@@ -37,7 +37,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[Resource
         )
     )
     return game_description.calculate_interesting_resources(
-        satisfiable_requirements, reach.state.node_context(), reach.state.energy
+        satisfiable_requirements, reach.state.node_context(), reach.state.health_for_damage_requirements
     )
 
 
@@ -53,7 +53,7 @@ def _unsatisfied_item_requirements_in_list(
             damage.append(individual)
             continue
 
-        if individual.satisfied(context, state.energy):
+        if individual.satisfied(context, state.health_for_damage_requirements):
             continue
 
         if individual.negate or (
@@ -68,12 +68,9 @@ def _unsatisfied_item_requirements_in_list(
         items.append(individual)
 
     sum_damage = sum(req.damage(context) for req in damage)
-    if state.energy <= sum_damage:
-        # A requirement for many "Energy Tanks" is added,
-        # which is then decreased by how many tanks is in the state by pickups_to_solve_list
-        tank_count = (sum_damage - state.game_data.starting_energy) // state.game_data.energy_per_tank
-        yield items + [ResourceRequirement.create(state.resource_database.energy_tank, tank_count + 1, False)]
-        # FIXME: get the required items for reductions (aka suits)
+    if state.health_for_damage_requirements <= sum_damage:
+        # Delegates to the game for how to handle the damage requirement
+        yield items + state.damage_state.resource_requirements_for_satisfying_damage(sum_damage)
     else:
         yield items
 
@@ -126,7 +123,7 @@ def pickups_to_solve_list(
     pickups_for_this.sort(key=lambda p: sum(1 for _ in p.resource_gain(context.current_resources, force_lock=True)))
 
     for individual in sorted(requirement_list.values()):
-        if individual.satisfied(context, state.energy):
+        if individual.satisfied(context, state.health_for_damage_requirements):
             continue
 
         # Create another copy of the list, so we can remove elements while iterating
@@ -140,10 +137,10 @@ def pickups_to_solve_list(
                 pickups_for_this.remove(pickup)
                 context.current_resources.add_resource_gain(new_resources.as_resource_gain())
 
-            if individual.satisfied(context, state.energy):
+            if individual.satisfied(context, state.health_for_damage_requirements):
                 break
 
-        if not individual.satisfied(context, state.energy):
+        if not individual.satisfied(context, state.health_for_damage_requirements):
             return None
 
     return pickups

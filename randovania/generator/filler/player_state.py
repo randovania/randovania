@@ -141,7 +141,9 @@ class PlayerState:
 
     def victory_condition_satisfied(self) -> bool:
         context = self.reach.state.node_context()
-        return self.game.victory_condition_as_set(context).satisfied(context, self.reach.state.energy)
+        return self.game.victory_condition_as_set(context).satisfied(
+            context, self.reach.state.health_for_damage_requirements
+        )
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget) -> None:
         self.num_assigned_pickups += 1
@@ -173,7 +175,11 @@ class PlayerState:
         for node, requirement in self.reach.unreachable_nodes_with_requirements().items():
             for alternative in requirement.alternatives:
                 if any(
-                    r.negate or (r.resource.resource_type != ResourceType.ITEM and not r.satisfied(ctx, s.energy))
+                    r.negate
+                    or (
+                        r.resource.resource_type != ResourceType.ITEM
+                        and not r.satisfied(ctx, s.health_for_damage_requirements)
+                    )
                     for r in alternative.values()
                 ):
                     continue
@@ -182,7 +188,11 @@ class PlayerState:
                     "* {}: {}".format(
                         wl.node_name(node, with_region=True),
                         " and ".join(
-                            sorted(r.pretty_text for r in alternative.values() if not r.satisfied(ctx, s.energy))
+                            sorted(
+                                r.pretty_text
+                                for r in alternative.values()
+                                if not r.satisfied(ctx, s.health_for_damage_requirements)
+                            )
                         ),
                     )
                 )
