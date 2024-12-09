@@ -241,6 +241,7 @@ _CONVERTER_FOR_VERSION = [
     _only_new_fields,  # added MSR's music shuffle cosemetic option
     _only_new_fields,  # added MSR's music sliders
     _remove_msr_fields,  # removes MSR's exheader and input field
+    _only_new_fields,  # added last_changelog_displayed_dev
 ]
 _CURRENT_OPTIONS_FILE_VERSION = migration_lib.get_version(_CONVERTER_FOR_VERSION)
 

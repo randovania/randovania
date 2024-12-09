@@ -11,9 +11,9 @@ import pytest
 import randovania.interface_common.options
 from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
-from randovania.interface_common import persisted_options, update_checker
+from randovania.interface_common import persisted_options
 from randovania.interface_common.options import DecodeFailedException, InfoAlert, Options
-from randovania.lib import migration_lib
+from randovania.lib import migration_lib, version_lib
 
 
 @pytest.fixture
@@ -258,8 +258,13 @@ def test_load_from_disk_with_data(fields_to_test: list[str], tmp_path, mocker):
 
 
 # TODO: test with an actual field as well
-def test_serialize_fields(option: Options):
+def test_serialize_fields(is_dev_version: bool):
     # Setup
+    option = Options(MagicMock())
+    if is_dev_version:
+        last_displayed = "last_changelog_displayed_dev"
+    else:
+        last_displayed = "last_changelog_displayed"
 
     # Run
     result = option._serialize_fields()
@@ -268,7 +273,7 @@ def test_serialize_fields(option: Options):
     assert result == {
         "version": randovania.interface_common.persisted_options._CURRENT_OPTIONS_FILE_VERSION,
         "options": {
-            "last_changelog_displayed": str(update_checker.strict_current_version()),
+            last_displayed: str(version_lib.current_version()),
         },
     }
 
@@ -341,7 +346,7 @@ def test_reset_to_defaults():
     with modified:
         for field in randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys():
             # This cause weirdness in serializing it
-            if field != "last_changelog_displayed":
+            if not field.startswith("last_changelog_displayed"):
                 modified._set_field(field, getattr(modified, field))
     assert blank._serialize_fields() != modified._serialize_fields()
 
@@ -351,13 +356,16 @@ def test_reset_to_defaults():
     assert blank._serialize_fields() == modified._serialize_fields()
 
 
-def test_setting_fields_to_self_do_nothing():
+def test_setting_fields_to_self_do_nothing(is_dev_version):
     options = Options(MagicMock())
     initial_serialize = options._serialize_fields()
 
     # Modify and test they're different
     with options:
         for field in randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys():
+            if field.startswith("last_changelog_displayed"):
+                continue
+
             setattr(options, field, getattr(options, field))
 
     # Reset and test they're the same
@@ -388,3 +396,17 @@ def test_set_parent_for_preset(tmp_path):
     assert opt.get_parent_for_preset(u1) is None
     opt.set_parent_for_preset(u1, u2)
     assert opt.get_parent_for_preset(u1) == u2
+
+
+def test_last_changelog_displayed(is_dev_version: bool) -> None:
+    options = Options(MagicMock())
+    version = version_lib.Version("2.5.1")
+
+    with options:
+        options.last_changelog_displayed = version
+
+    assert options.last_changelog_displayed == version
+    if is_dev_version:
+        assert options._last_changelog_displayed_dev == version
+    else:
+        assert options._last_changelog_displayed == version
