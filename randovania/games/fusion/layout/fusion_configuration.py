@@ -24,6 +24,7 @@ class FusionConfiguration(BaseConfiguration):
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifacts: FusionArtifactConfig
     hints: HintConfiguration
+    open_save_hatches: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
