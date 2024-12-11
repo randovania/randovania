@@ -204,6 +204,9 @@ class PrimeGameExporter(GameExporter):
         if symbols is None:
             raise UnableToExportError("Unsupported Metroid Prime version.")
 
+        input_version = py_randomprime.rust.get_iso_mp1_version(str(export_params.input_path))
+        monitoring.set_tag("prime_input_version", input_version)
+
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
         room_rando_mode = new_config.pop("roomRandoMode")
