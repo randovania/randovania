@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>539</width>
-         <height>944</height>
+         <height>1020</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -127,24 +127,24 @@
             </widget>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="all_obtainable_layout">
+            <layout class="QHBoxLayout" name="logical_pickup_placement_layout">
              <item>
-              <widget class="QLabel" name="all_obtainable_label">
+              <widget class="QLabel" name="logical_pickup_placement_label">
                <property name="text">
-                <string>[Experimental] Place all items logically:</string>
+                <string>[Experimental] Logical pickup placement:</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="all_obtainable_combo">
+              <widget class="QComboBox" name="logical_pickup_placement_combo">
                <item>
                 <property name="text">
-                 <string>Disabled</string>
+                 <string>Minimal</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Majors only</string>
+                 <string>Major pickups</string>
                 </property>
                </item>
                <item>
@@ -157,9 +157,9 @@
             </layout>
            </item>
            <item>
-            <widget class="QLabel" name="all_obtainable_description">
+            <widget class="QLabel" name="logical_pickup_placement_description">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ensures every (major) item included in the preset is placed logically. This means that regardless of other settings, you will be able to collect every item.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning:&lt;/span&gt; Selecting 'All pickups' will make generation fail more frequently.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ensures every item included in the preset is placed logically, depending on the selection. This means that regardless of other settings, you will be able to collect every item.&lt;/p&gt;&lt;p&gt;Minimal: Only the pickups required to beat the game are placed logically. This is the default setting.&lt;br/&gt;Major pickups: Every major pickup in the preset is placed logically.&lt;br/&gt;All pickups: Every pickup, including ammo and expansions, is placed logically.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning:&lt;/span&gt; Selecting options besides 'Minimal' will make generation fail more frequently.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

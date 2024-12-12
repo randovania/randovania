@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING
 from randovania.game_description import default_database
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.generator.pickup_pool import pool_creator
-from randovania.layout.base.all_obtainable_option import AllObtainableOption
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase
 
@@ -159,8 +159,8 @@ class GamePresetDescriber:
 
         template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
 
-        if configuration.all_obtainable is not AllObtainableOption.DISABLED:
-            template_strings["Item Pool"].append(f"All {configuration.all_obtainable._value_} obtainable")
+        if configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
+            template_strings["Item Pool"].append(f"All {configuration.logical_pickup_placement._value_} obtainable")
 
         # Difficulty
         if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:
