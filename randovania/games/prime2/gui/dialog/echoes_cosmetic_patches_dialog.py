@@ -71,6 +71,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self._persist_check_field(self.unvisited_room_names_check, "unvisited_room_names")
         self._persist_check_field(self.pickup_markers_check, "pickup_markers")
         self._persist_check_field(self.custom_hud_color, "use_hud_color")
+        self._persist_check_field(self.widescreen_aspect_ratio_check, "widescreen_aspect_ratio")
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
         self.custom_hud_color_button.clicked.connect(self._open_color_picker)
 
@@ -98,6 +99,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self.on_new_user_preferences(patches.user_preferences)
         self.custom_hud_color.setChecked(patches.use_hud_color)
         self._set_suit_colors(patches.suit_colors)
+        self.widescreen_aspect_ratio_check.setChecked(patches.widescreen_aspect_ratio)
 
     def _set_suit_colors(self, suit_colors: EchoesSuitPreferences) -> None:
         advanced = suit_colors.randomize_separately
