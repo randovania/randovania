@@ -9,7 +9,7 @@ class AllObtainableOption(BitPackEnum, Enum):
 
     DISABLED = "disabled"
     MAJORS = "majors"
-    ALL = "all"
+    ALL = "pickups"
 
 
 enum_lib.add_long_name(
