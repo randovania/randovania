@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
+from randovania.layout.base.all_obtainable_option import AllObtainableOption
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
@@ -62,6 +63,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
+    all_obtainable: AllObtainableOption
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
