@@ -8,7 +8,10 @@ from typing import TYPE_CHECKING
 import tenacity
 
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
@@ -17,6 +20,7 @@ from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.generator.pre_fill_params import PreFillParams
 from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, exceptions, resolver
@@ -148,7 +152,16 @@ async def _create_pools_and_fill(
                 status_update,
             )
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
+
+            # All majors required
+            if player_preset.configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
+                all_pickups = (
+                    player_preset.configuration.logical_pickup_placement is LogicalPickupPlacementConfiguration.ALL
+                )
+                force_logical_placement(new_pool.pickups, new_pool.game, all_pickups)
+
             player_pools.append(new_pool)
+
         except InvalidConfiguration as config:
             if len(presets) > 1:
                 config.world_name = world_names[player_index]
@@ -333,3 +346,19 @@ async def generate_and_validate_description(
             )
 
     return result
+
+
+def force_logical_placement(pickups: list[PickupEntry], game: GameDescription, add_all_pickups: bool = False) -> None:
+    resources = ResourceCollection.with_database(game.resource_database)
+
+    for pickup in pickups:
+        if pickup.pickup_category.hinted_as_major or pickup.pickup_category.is_key or add_all_pickups:
+            resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
+
+    # Modify the victory condition to add every item
+    game.victory_condition = RequirementAnd(
+        [
+            game.victory_condition,
+            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
+        ]
+    )
