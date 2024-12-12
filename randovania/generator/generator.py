@@ -8,14 +8,18 @@ from typing import TYPE_CHECKING
 import tenacity
 
 from randovania.game_description.assignment import PickupTarget, PickupTargetAssociation
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.location_category import LocationCategory
+from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
 from randovania.generator.filler.runner import run_filler
-from randovania.generator.pickup_pool import PoolResults, pool_creator
+from randovania.generator.pickup_pool import PoolResults, pickup_creator, pool_creator, standard_pickup
 from randovania.generator.pre_fill_params import PreFillParams
 from randovania.layout import filtered_database
+from randovania.layout.base.all_obtainable_option import AllObtainableOption
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -79,6 +83,10 @@ async def create_player_pool(
     status_update: Callable[[str], None],
 ) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
+
+    # All majors required
+    if configuration.all_obtainable != AllObtainableOption.DISABLED:
+        require_all_majors(configuration, game)
 
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
@@ -333,3 +341,45 @@ async def generate_and_validate_description(
             )
 
     return result
+
+
+def require_all_majors(configuration: BaseConfiguration, game: GameDescription):
+    resources = ResourceCollection.with_database(game.resource_database)
+
+    # Progression
+    for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
+        # Energy Tanks in Prime 1, for instance, are included in standard pickups, but are not a major item.
+        if (
+            pickup.preferred_location_category == LocationCategory.MAJOR
+            or configuration.all_obtainable == AllObtainableOption.ALL
+        ):
+            ammo, locked_ammo = standard_pickup._find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
+            pickup_entry = pickup_creator.create_standard_pickup(
+                pickup=pickup,
+                state=state,
+                resource_database=game.resource_database,
+                ammo=ammo,
+                ammo_requires_main_item=locked_ammo,
+            )
+            for i in range(state.num_included_in_starting_pickups + state.num_shuffled_pickups):
+                resources.add_resource_gain(pickup_entry.resource_gain(resources, force_lock=True))
+
+    # Ammo
+    if configuration.all_obtainable == AllObtainableOption.ALL:
+        for pickup, state in configuration.ammo_pickup_configuration.pickups_state.items():
+            pickup_entry = pickup_creator.create_ammo_pickup(
+                ammo=pickup,
+                ammo_count=state.ammo_count,
+                requires_main_item=state.requires_main_item,
+                resource_database=game.resource_database,
+            )
+            for i in range(state.pickup_count):
+                resources.add_resource_gain(pickup_entry.resource_gain(resources, force_lock=True))
+
+    # Modify the victory condition to add every item
+    game.victory_condition = RequirementAnd(
+        [
+            game.victory_condition,
+            *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
+        ]
+    )
