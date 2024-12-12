@@ -365,8 +365,11 @@ def require_all_majors(configuration: BaseConfiguration, game: GameDescription):
                 resources.add_resource_gain(pickup_entry.resource_gain(resources, force_lock=True))
 
     # Ammo
-    if configuration.all_obtainable == AllObtainableOption.ALL:
-        for pickup, state in configuration.ammo_pickup_configuration.pickups_state.items():
+    for pickup, state in configuration.ammo_pickup_configuration.pickups_state.items():
+        if (
+            pickup.preferred_location_category == LocationCategory.MAJOR
+            or configuration.all_obtainable == AllObtainableOption.ALL
+        ):
             pickup_entry = pickup_creator.create_ammo_pickup(
                 ammo=pickup,
                 ammo_count=state.ammo_count,
