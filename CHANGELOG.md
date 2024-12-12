@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.8.x] - 2025-01-??
 
+### Metroid: Samus Returns
+
+#### Logic Database
+
+- Added: Area 2 Dam Exterior - Spike Ravine: Collecting the pickup from below with High Jump Boots, Super Jump (Advanded), and Unmorph Extend (Advanced).
 
 ## [8.7.1] - 2024-12-05
 
