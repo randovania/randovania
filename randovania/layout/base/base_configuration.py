@@ -6,11 +6,11 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.layout.base.all_obtainable_option import AllObtainableOption
 from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration, DockRandoMode
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
 from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
@@ -63,7 +63,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     single_set_for_pickups_that_solve: bool
     staggered_multi_pickup_placement: bool
     check_if_beatable_after_base_patches: bool
-    all_obtainable: AllObtainableOption
+    logical_pickup_placement: LogicalPickupPlacementConfiguration
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -87,6 +87,11 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
         if self.first_progression_must_be_local:
             result.append("Requiring first progression to be local causes increased generation failure.")
+
+        if self.all_obtainable is not LogicalPickupPlacementConfiguration.MINIMAL:
+            result.append(
+                "Placing more pickups than required logically to beat the game causes increased generation failure."
+            )
 
         return result
 

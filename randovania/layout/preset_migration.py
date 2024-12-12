@@ -1234,8 +1234,8 @@ def _migrate_v93(preset: dict) -> dict:
 
 
 def _migrate_v94(preset: dict) -> dict:
-    if "all_obtainable" not in preset["configuration"]:
-        preset["configuration"]["all_obtainable"] = "disabled"
+    if "logical_pickup_placement" not in preset["configuration"]:
+        preset["configuration"]["logical_pickup_placement"] = "minimal"
 
     return preset
 

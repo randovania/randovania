@@ -16,11 +16,11 @@ from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_configuration import FillerResults, PlayerPool
 from randovania.generator.filler.filler_library import UnableToGenerate, filter_unassigned_pickup_nodes
 from randovania.generator.filler.runner import run_filler
-from randovania.generator.pickup_pool import PoolResults, pickup_creator, pool_creator, standard_pickup
+from randovania.generator.pickup_pool import PoolResults, pool_creator
 from randovania.generator.pre_fill_params import PreFillParams
 from randovania.layout import filtered_database
-from randovania.layout.base.all_obtainable_option import AllObtainableOption
 from randovania.layout.base.available_locations import RandomizationMode
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, exceptions, resolver
@@ -83,10 +83,6 @@ async def create_player_pool(
     status_update: Callable[[str], None],
 ) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
-
-    # All majors required
-    if configuration.all_obtainable is not AllObtainableOption.DISABLED:
-        require_all_majors(configuration, game)
 
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
@@ -156,7 +152,16 @@ async def _create_pools_and_fill(
                 status_update,
             )
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
+
+            # All majors required
+            if player_preset.configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
+                all_pickups = (
+                    player_preset.configuration.logical_pickup_placement is LogicalPickupPlacementConfiguration.ALL
+                )
+                force_logical_placement(new_pool.pickups, new_pool.game, all_pickups)
+
             player_pools.append(new_pool)
+
         except InvalidConfiguration as config:
             if len(presets) > 1:
                 config.world_name = world_names[player_index]
@@ -343,41 +348,12 @@ async def generate_and_validate_description(
     return result
 
 
-def require_all_majors(configuration: BaseConfiguration, game: GameDescription):
+def force_logical_placement(pickups: list[PickupEntry], game: GameDescription, add_all_pickups: bool = False) -> None:
     resources = ResourceCollection.with_database(game.resource_database)
 
-    # Progression
-    for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
-        # Energy Tanks in Prime 1, for instance, are included in standard pickups, but are not a major item.
-        if (
-            pickup.preferred_location_category is LocationCategory.MAJOR
-            or configuration.all_obtainable is AllObtainableOption.ALL
-        ):
-            ammo, locked_ammo = standard_pickup._find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
-            pickup_entry = pickup_creator.create_standard_pickup(
-                pickup=pickup,
-                state=state,
-                resource_database=game.resource_database,
-                ammo=ammo,
-                ammo_requires_main_item=locked_ammo,
-            )
-            for i in range(state.num_included_in_starting_pickups + state.num_shuffled_pickups):
-                resources.add_resource_gain(pickup_entry.resource_gain(resources, force_lock=True))
-
-    # Ammo
-    for pickup, state in configuration.ammo_pickup_configuration.pickups_state.items():
-        if (
-            pickup.preferred_location_category is LocationCategory.MAJOR
-            or configuration.all_obtainable is AllObtainableOption.ALL
-        ):
-            pickup_entry = pickup_creator.create_ammo_pickup(
-                ammo=pickup,
-                ammo_count=state.ammo_count,
-                requires_main_item=state.requires_main_item,
-                resource_database=game.resource_database,
-            )
-            for i in range(state.pickup_count):
-                resources.add_resource_gain(pickup_entry.resource_gain(resources, force_lock=True))
+    for pickup in pickups:
+        if pickup.pickup_category.hinted_as_major or pickup.pickup_category.is_key or add_all_pickups:
+            resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
 
     # Modify the victory condition to add every item
     game.victory_condition = RequirementAnd(

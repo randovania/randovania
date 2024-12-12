@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING
 from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
-from randovania.layout.base.all_obtainable_option import AllObtainableOption
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 if TYPE_CHECKING:
@@ -36,10 +36,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
         signal_handling.on_checked(self.local_first_progression_check, self._persist_local_first_progression)
 
-        self.all_obtainable_combo.setItemData(0, AllObtainableOption.DISABLED)
-        self.all_obtainable_combo.setItemData(1, AllObtainableOption.MAJORS)
-        self.all_obtainable_combo.setItemData(2, AllObtainableOption.ALL)
-        signal_handling.on_combo(self.all_obtainable_combo, self._persist_all_obtainable)
+        self.logical_pickup_placement_combo.setItemData(0, LogicalPickupPlacementConfiguration.MINIMAL)
+        self.logical_pickup_placement_combo.setItemData(1, LogicalPickupPlacementConfiguration.MAJORS)
+        self.logical_pickup_placement_combo.setItemData(2, LogicalPickupPlacementConfiguration.ALL)
+        signal_handling.on_combo(self.logical_pickup_placement_combo, self._persist_logical_pickup_placement)
 
         # Logic Settings
         self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
@@ -84,7 +84,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT
         )
 
-        signal_handling.set_combo_with_value(self.all_obtainable_combo, layout.all_obtainable)
+        signal_handling.set_combo_with_value(self.logical_pickup_placement_combo, layout.logical_pickup_placement)
 
         self.trick_level_minimal_logic_check.setChecked(layout.trick_level.minimal_logic)
         signal_handling.set_combo_with_value(self.dangerous_combo, layout.logical_resource_action)
@@ -124,9 +124,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         yield self.experimental_generator_line
         yield self.minimal_logic_line
         yield self.line_2_2
-        yield self.all_obtainable_combo
-        yield self.all_obtainable_label
-        yield self.all_obtainable_description
+        yield self.logical_pickup_placement_combo
+        yield self.logical_pickup_placement_label
+        yield self.logical_pickup_placement_description
 
     def _persist_major_minor(self, value: bool):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL
@@ -137,9 +137,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         with self._editor as editor:
             editor.set_configuration_field("first_progression_must_be_local", value)
 
-    def _persist_all_obtainable(self, value: AllObtainableOption):
+    def _persist_logical_pickup_placement(self, value: LogicalPickupPlacementConfiguration):
         with self._editor as editor:
-            editor.set_configuration_field("all_obtainable", value)
+            editor.set_configuration_field("logical_pickup_placement", value)
 
     def _on_dangerous_changed(self, value: LayoutLogicalResourceAction):
         with self._editor as editor:
