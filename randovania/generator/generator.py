@@ -85,7 +85,7 @@ async def create_player_pool(
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
 
     # All majors required
-    if configuration.all_obtainable != AllObtainableOption.DISABLED:
+    if configuration.all_obtainable is not AllObtainableOption.DISABLED:
         require_all_majors(configuration, game)
 
     game_generator = game.game.generator
@@ -350,8 +350,8 @@ def require_all_majors(configuration: BaseConfiguration, game: GameDescription):
     for pickup, state in configuration.standard_pickup_configuration.pickups_state.items():
         # Energy Tanks in Prime 1, for instance, are included in standard pickups, but are not a major item.
         if (
-            pickup.preferred_location_category == LocationCategory.MAJOR
-            or configuration.all_obtainable == AllObtainableOption.ALL
+            pickup.preferred_location_category is LocationCategory.MAJOR
+            or configuration.all_obtainable is AllObtainableOption.ALL
         ):
             ammo, locked_ammo = standard_pickup._find_ammo_for(pickup.ammo, configuration.ammo_pickup_configuration)
             pickup_entry = pickup_creator.create_standard_pickup(
@@ -367,8 +367,8 @@ def require_all_majors(configuration: BaseConfiguration, game: GameDescription):
     # Ammo
     for pickup, state in configuration.ammo_pickup_configuration.pickups_state.items():
         if (
-            pickup.preferred_location_category == LocationCategory.MAJOR
-            or configuration.all_obtainable == AllObtainableOption.ALL
+            pickup.preferred_location_category is LocationCategory.MAJOR
+            or configuration.all_obtainable is AllObtainableOption.ALL
         ):
             pickup_entry = pickup_creator.create_ammo_pickup(
                 ammo=pickup,
