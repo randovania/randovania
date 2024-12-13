@@ -154,11 +154,9 @@ async def _create_pools_and_fill(
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
 
             # All majors required
-            if player_preset.configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
-                all_pickups = (
-                    player_preset.configuration.logical_pickup_placement is LogicalPickupPlacementConfiguration.ALL
-                )
-                force_logical_placement(new_pool.pickups, new_pool.game, all_pickups)
+            force_logical_placement(
+                new_pool.pickups, new_pool.game, player_preset.configuration.logical_pickup_placement
+            )
 
             player_pools.append(new_pool)
 
@@ -348,7 +346,13 @@ async def generate_and_validate_description(
     return result
 
 
-def force_logical_placement(pickups: list[PickupEntry], game: GameDescription, add_all_pickups: bool = False) -> None:
+def force_logical_placement(
+    pickups: list[PickupEntry], game: GameDescription, lpp_config: LogicalPickupPlacementConfiguration
+) -> None:
+    if lpp_config is LogicalPickupPlacementConfiguration.MINIMAL:
+        return
+
+    add_all_pickups = lpp_config is LogicalPickupPlacementConfiguration.ALL
     resources = ResourceCollection.with_database(game.resource_database)
 
     for pickup in pickups:
