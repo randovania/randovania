@@ -175,7 +175,7 @@ class ExportedPickupDetails:
     conversion: list[ResourceConversion]
     model: PickupModel
     original_model: PickupModel
-    other_player: bool
+    is_for_remote_player: bool
     original_pickup: PickupEntry
 
 
@@ -187,6 +187,7 @@ class PickupExporter:
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_pickup: PickupEntry,
         model_style: PickupModelStyle,
@@ -210,6 +211,7 @@ class PickupExporter:
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_style: PickupModelStyle,
     ) -> ExportedPickupDetails:
@@ -223,7 +225,7 @@ class PickupExporter:
             description = ""
 
         return self.create_details(
-            original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
+            original_index, pickup_target, useless_pickup, visual_pickup, model_pickup, model_style, name, description
         )
 
 
@@ -236,6 +238,7 @@ class PickupExporterSolo(PickupExporter):
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_pickup: PickupEntry,
         model_style: PickupModelStyle,
@@ -252,7 +255,7 @@ class PickupExporterSolo(PickupExporter):
             conversion=list(pickup.convert_resources),
             model=self.get_model(model_pickup),
             original_model=model_pickup.model,
-            other_player=False,
+            is_for_remote_player=False,
             original_pickup=pickup,
         )
 
@@ -267,6 +270,7 @@ class PickupExporterMulti(PickupExporter):
         self,
         original_index: PickupIndex,
         pickup_target: PickupTarget,
+        useless_pickup: PickupEntry,
         visual_pickup: PickupEntry,
         model_pickup: PickupEntry,
         model_style: PickupModelStyle,
@@ -275,21 +279,55 @@ class PickupExporterMulti(PickupExporter):
     ) -> ExportedPickupDetails:
         """
         Exports a pickup, for a multiworld game.
-        If for yourself, use the solo creator but adjust the name to mention it's yours.
-        For offworld, create a custom details.
+        If for yourself/useless, use the solo creator but adjust the name to mention it's either yours.
+        If for yourself but coop, use the solo creator, but adjust name, all resources to give 0 and collection text.
+        For offworld, create custom details.
         """
+        other_name = self.players_config.player_names[pickup_target.player]
+        remote_name = f"{other_name}'s {name}"
+        remote_collection_text = [f"Sent {name} to {other_name}!"]
+
         if pickup_target.player == self.players_config.player_index:
             details = self.solo_creator.create_details(
-                original_index, pickup_target, visual_pickup, model_pickup, model_style, name, description
+                original_index,
+                pickup_target,
+                useless_pickup,
+                visual_pickup,
+                model_pickup,
+                model_style,
+                name,
+                description,
             )
-            return dataclasses.replace(details, name=f"Your {details.name}")
+            if (
+                self.players_config.should_target_local_player(pickup_target.player)
+                or pickup_target.pickup == useless_pickup
+            ):
+                # For own world in normal multi
+                return dataclasses.replace(details, name=f"Your {details.name}")
+
+            # For own world in Coop multi
+            new_resources = [
+                ConditionalResources(
+                    resource.name, resource.item, tuple((subres, 0) for subres, quantity in resource.resources)
+                )
+                for resource in details.conditional_resources
+            ]
+
+            details = dataclasses.replace(
+                details,
+                name=remote_name,
+                collection_text=remote_collection_text,
+                conditional_resources=new_resources,
+                is_for_remote_player=True,
+            )
+            return details
+
         else:
-            other_name = self.players_config.player_names[pickup_target.player]
             return ExportedPickupDetails(
                 index=original_index,
-                name=f"{other_name}'s {name}",
+                name=remote_name,
                 description=description,
-                collection_text=[f"Sent {name} to {other_name}!"],
+                collection_text=remote_collection_text,
                 conditional_resources=[
                     ConditionalResources(
                         name=None,
@@ -300,7 +338,7 @@ class PickupExporterMulti(PickupExporter):
                 conversion=[],
                 model=self.get_model(model_pickup),
                 original_model=model_pickup.model,
-                other_player=True,
+                is_for_remote_player=True,
                 original_pickup=pickup_target.pickup,
             )
 
@@ -354,6 +392,7 @@ def export_all_indices(
         exporter.export(
             index,
             pickup_assignment.get(index, useless_target),
+            useless_target.pickup,
             _get_visual_model(i, pickup_list, data_source, visual_nothing),
             model_style,
         )

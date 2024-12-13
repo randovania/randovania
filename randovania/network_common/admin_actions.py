@@ -20,6 +20,7 @@ class SessionAdminGlobalAction(Enum):
     DUPLICATE_SESSION = "duplicate_session"
     DELETE_SESSION = "delete_session"
     REQUEST_PERMALINK = "request_permalink"
+    SET_ALLOW_COOP = "set_allow_coop"
     SET_ALLOW_EVERYONE_CLAIM = "set_allow_everyone_claim"
 
 

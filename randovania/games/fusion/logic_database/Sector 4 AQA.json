@@ -148,7 +148,8 @@
                 "map_name": "Sector 41",
                 "room_id": [
                     1
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -3260,7 +3261,8 @@
                 "map_name": "Sector 411",
                 "room_id": [
                     11
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Serris Escape": {
@@ -5533,7 +5535,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "ShinesparkTrick",
-                                                                    "amount": 1,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -5654,6 +5656,49 @@
                                             "name": "L0Locks",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "ElectricDamage",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "LowerWaterLevel",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -7205,7 +7250,8 @@
                 "map_name": "Sector 422",
                 "room_id": [
                     22
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Pump Control Access": {
@@ -9985,7 +10031,8 @@
                 "map_name": "Sector 432",
                 "room_id": [
                     32
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Bridge Access": {
@@ -13164,6 +13211,49 @@
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "LowerWaterLevel",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "DamageRuns",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "ElectricDamage",
+                                                                                            "amount": 10,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -13520,7 +13610,8 @@
                 "map_name": "Sector 439",
                 "room_id": [
                     39
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Aquarium Shaft West": {
@@ -14790,7 +14881,8 @@
                 "map_name": "Sector 447",
                 "room_id": [
                     47
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Aquarium Hub": {

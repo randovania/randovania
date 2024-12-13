@@ -21,7 +21,7 @@
     </size>
    </property>
    <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
+    <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
@@ -89,7 +89,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -122,10 +122,16 @@
           <property name="text">
            <string/>
           </property>
+          <property name="textFormat">
+           <enum>Qt::TextFormat::MarkdownText</enum>
+          </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
           <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="openExternalLinks">
            <bool>true</bool>
           </property>
          </widget>
@@ -145,7 +151,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seed Hash: ????&lt;br/&gt;Preset Name: ???&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="textInteractionFlags">
-           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
+           <set>Qt::TextInteractionFlag::LinksAccessibleByMouse|Qt::TextInteractionFlag::TextSelectableByMouse</set>
           </property>
          </widget>
         </item>
@@ -155,7 +161,7 @@
            <string>...</string>
           </property>
           <property name="popupMode">
-           <enum>QToolButton::InstantPopup</enum>
+           <enum>QToolButton::ToolButtonPopupMode::InstantPopup</enum>
           </property>
          </widget>
         </item>
@@ -200,7 +206,7 @@
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This content should have been replaced by code.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -241,7 +247,7 @@
      <x>0</x>
      <y>0</y>
      <width>624</width>
-     <height>30</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

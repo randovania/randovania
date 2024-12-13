@@ -19,6 +19,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
             "UpdateHintState__13CStateManagerFf": 0x80044D38,
         },
     )
+    mock_get_version: MagicMock = mocker.patch("py_randomprime.rust.get_iso_mp1_version", return_value="test")
     seed = 103817502
     if use_enemy_attribute_randomizer:
         enemy_attribute_randomizer = EnemyAttributeRandomizer(
@@ -247,6 +248,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models, use_enemy_attribute_ran
         mock_enemy_data.assert_not_called()
 
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
+    mock_get_version.assert_called_once_with(str(tmp_path.joinpath("input.iso")))
     mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(",", ": ")), ANY)
 
 
@@ -322,6 +324,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
             "UpdateHintState__13CStateManagerFf": 0x80044D38,
         },
     )
+    mock_get_version: MagicMock = mocker.patch("py_randomprime.rust.get_iso_mp1_version", return_value="test")
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     progress_update = MagicMock()
 
@@ -330,6 +333,9 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
 
     mock_create_map_using_matplotlib: MagicMock = mocker.patch(
         "randovania.games.prime1.exporter.game_exporter.create_map_using_matplotlib"
+    )
+    mocker.patch(
+        "randovania.games.prime1.exporter.game_exporter.PrimeGameExportParams.calculate_input_hash", return_value={}
     )
 
     patch_data = test_files_dir.read_json("patcher_data", "prime1", "prime1_crazy_seed", "world_1.json")
@@ -354,6 +360,7 @@ def test_room_rando_map_maker(test_files_dir, mocker, tmp_path):
 
     # Assert
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
+    mock_get_version.assert_called_once_with(str(tmp_path.joinpath("input.iso")))
     mock_patch_iso_raw.assert_called_once_with(ANY, ANY)
 
     mock_create_map_using_matplotlib.assert_has_calls(

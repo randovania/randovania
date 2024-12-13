@@ -112,6 +112,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             if preset.configuration.portal_rando:
                 raise InvalidLayoutForTracker("Tracker does not support Portal rando")
 
+        if preset.game == RandovaniaGame.FACTORIO:
+            raise InvalidLayoutForTracker("Tracker does not support Factorio")
+
         await result.configure()
         return result
 
@@ -435,7 +438,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                         node_item.setDisabled(
                             not (
                                 resource_node.should_collect(context)
-                                and resource_node.requirement_to_collect().satisfied(context, state.energy)
+                                and resource_node.requirement_to_collect().satisfied(
+                                    context, state.health_for_damage_requirements
+                                )
                             )
                         )
                         node_item.setCheckState(
@@ -814,7 +819,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if self._actions:
             state.node = self._actions[-1]
 
-        region_list = state.region_list
+        region_list = self.game_description.region_list
 
         state.patches = state.patches.assign_dock_connections(
             (

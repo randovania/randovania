@@ -5,6 +5,8 @@ import typing
 from PySide6 import QtWidgets
 
 if typing.TYPE_CHECKING:
+    from pathlib import Path
+
     from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.close_event_widget import CloseEventWidget
     from randovania.gui.lib.qt_network_client import QtNetworkClient
@@ -14,6 +16,7 @@ if typing.TYPE_CHECKING:
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
     from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.preset import Preset
+    from randovania.layout.versioned_preset import VersionedPreset
 
 
 class WindowManager(QtWidgets.QMainWindow):
@@ -73,4 +76,12 @@ class WindowManager(QtWidgets.QMainWindow):
         raise NotImplementedError
 
     def open_app_navigation_link(self, link: str):
+        raise NotImplementedError
+
+    def import_preset_file(self, path: Path) -> VersionedPreset | None:
+        """
+        Imports a preset file.
+        :param path:
+        :return: The preset if it was actually imported, None otherwise.
+        """
         raise NotImplementedError

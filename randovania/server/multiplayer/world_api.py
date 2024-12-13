@@ -122,7 +122,7 @@ def _collect_location(
         log("It's nothing.")
         return None
 
-    if pickup_target.player == world.order:
+    if pickup_target.player == world.order and not session.allow_coop:
         log("It's a %s for themselves.", pickup_target.pickup.name)
         return None
 

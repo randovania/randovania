@@ -942,3 +942,34 @@ def test_admin_set_allow_everyone_claim(
         sa, two_player_session, f"{'Allowing' if new_state else 'Disallowing'} everyone to claim worlds."
     )
     mock_emit_session_update.assert_called_once_with(two_player_session)
+
+
+@pytest.mark.parametrize("new_state", [False, True])
+@pytest.mark.parametrize("old_state", [False, True])
+def test_admin_allow_coop(flask_app, two_player_session, mock_audit, mock_emit_session_update, old_state, new_state):
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
+    two_player_session.allow_coop = old_state
+    two_player_session.save()
+
+    # Run
+    with flask_app.test_request_context():
+        session_admin.admin_session(sa, 1, SessionAdminGlobalAction.SET_ALLOW_COOP.value, new_state)
+
+    assert database.MultiplayerSession.get_by_id(1).allow_coop == new_state
+    mock_audit.assert_called_once_with(
+        sa, two_player_session, f"{'Allowing' if new_state else 'Disallowing'} coop for the session."
+    )
+    mock_emit_session_update.assert_called_once_with(two_player_session)
+
+
+def test_admin_error_on_disabling_coop_when_coop_worlds_exist(flask_app, one_world_two_player_coop_session):
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1236)
+
+    # Run / Assert
+    with pytest.raises(error.InvalidActionError):
+        with flask_app.test_request_context():
+            session_admin.admin_session(
+                sa, one_world_two_player_coop_session.id, SessionAdminGlobalAction.SET_ALLOW_COOP.value, False
+            )

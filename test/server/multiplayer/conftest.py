@@ -90,6 +90,31 @@ def two_player_session(clean_database):
 
 
 @pytest.fixture
+def one_world_two_player_coop_session(clean_database):
+    user1 = database.User.create(id=1236, name="Test-User-1")
+    user2 = database.User.create(id=1237, name="Test-User-2")
+
+    session = database.MultiplayerSession.create(
+        id=2, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1, allow_coop=True
+    )
+    w1 = database.World.create(
+        session=session, name="World 1", preset="{}", order=0, uuid=uuid.UUID("14ad3fd4-2295-40ed-bc20-2f0892d5a122")
+    )
+
+    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    database.MultiplayerMembership.create(user=user2, session=session, admin=False)
+    database.WorldUserAssociation.create(
+        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.UTC)
+    )
+    database.WorldUserAssociation.create(
+        world=w1, user=user2, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC)
+    )
+    database.WorldAction.create(provider=w1, location=0, receiver=w1, session=session)
+
+    return session
+
+
+@pytest.fixture
 def session_update(clean_database, mocker):
     mock_layout = MagicMock(spec=LayoutDescription)
     mock_layout.shareable_word_hash = "Words of O-Lir"

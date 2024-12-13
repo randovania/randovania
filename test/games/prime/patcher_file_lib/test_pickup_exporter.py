@@ -253,7 +253,7 @@ def test_create_pickup_list(
         conversion=[],
         model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_a,
     )
     assert result[1] == pickup_exporter.ExportedPickupDetails(
@@ -267,7 +267,7 @@ def test_create_pickup_list(
         conversion=[],
         model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         original_model=model_0 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=useless_pickup,
     )
     assert result[2] == pickup_exporter.ExportedPickupDetails(
@@ -286,7 +286,7 @@ def test_create_pickup_list(
         conversion=[],
         model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_b,
     )
     assert result[3] == pickup_exporter.ExportedPickupDetails(
@@ -298,7 +298,7 @@ def test_create_pickup_list(
         conversion=[],
         model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         original_model=model_1 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_a,
     )
     assert result[4] == pickup_exporter.ExportedPickupDetails(
@@ -319,7 +319,7 @@ def test_create_pickup_list(
         conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
         model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_c,
     )
     assert result[5] == pickup_exporter.ExportedPickupDetails(
@@ -340,7 +340,7 @@ def test_create_pickup_list(
         conversion=[ResourceConversion(source=useless_resource, target=resource_a)],
         model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         original_model=model_2 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_d,
     )
     assert result[6] == pickup_exporter.ExportedPickupDetails(
@@ -358,7 +358,7 @@ def test_create_pickup_list(
         conversion=[ResourceConversion(source=useless_resource, target=resource_c)],
         model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
         original_model=model_3 if model_style == PickupModelStyle.ALL_VISIBLE else useless_model,  # type: ignore [arg-type]
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_e,
     )
 
@@ -472,7 +472,7 @@ def test_create_pickup_list_random_data_source(
         conversion=[],
         model=model_1,
         original_model=model_1,
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_a,
     )
     assert result[1] == pickup_exporter.ExportedPickupDetails(
@@ -484,7 +484,7 @@ def test_create_pickup_list_random_data_source(
         conversion=[],
         model=model_1,
         original_model=model_1,
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=useless_pickup,
     )
     assert result[2] == pickup_exporter.ExportedPickupDetails(
@@ -499,7 +499,7 @@ def test_create_pickup_list_random_data_source(
         conversion=[],
         model=model_2,
         original_model=model_2,
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_b,
     )
     assert result[3] == pickup_exporter.ExportedPickupDetails(
@@ -511,7 +511,7 @@ def test_create_pickup_list_random_data_source(
         conversion=[],
         model=model_2,
         original_model=model_2,
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_a,
     )
     assert result[4] == pickup_exporter.ExportedPickupDetails(
@@ -523,7 +523,7 @@ def test_create_pickup_list_random_data_source(
         conversion=[],
         model=model_1,
         original_model=model_1,
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_c,
     )
 
@@ -606,6 +606,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 0),
         pickup_for_create_pickup_data,
+        pickup_for_create_pickup_data,
         pickup_model,
         PickupModelStyle.ALL_VISIBLE,
         "The Name",
@@ -625,7 +626,7 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
         conversion=[],
         model=pickup_model.model,
         original_model=pickup_model.model,
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_for_create_pickup_data,
     )
 
@@ -643,6 +644,7 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     data = creator.create_details(
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 0),
+        pickup_for_create_pickup_data,
         pickup_for_create_pickup_data,
         pickup_for_create_pickup_data,
         PickupModelStyle.ALL_VISIBLE,
@@ -663,7 +665,7 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
         conversion=[],
         model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
         original_model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=pickup_for_create_pickup_data,
     )
 
@@ -679,6 +681,7 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
     data = creator.create_details(
         PickupIndex(10),
         PickupTarget(pickup_for_create_pickup_data, 1),
+        pickup_for_create_pickup_data,
         pickup_for_create_pickup_data,
         pickup_for_create_pickup_data,
         PickupModelStyle.ALL_VISIBLE,
@@ -698,6 +701,6 @@ def test_multi_create_pickup_data_for_other(pickup_for_create_pickup_data):
         conversion=[],
         model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
         original_model=PickupModel(game=RandovaniaGame.METROID_PRIME_ECHOES, name="theModel"),
-        other_player=True,
+        is_for_remote_player=True,
         original_pickup=pickup_for_create_pickup_data,
     )

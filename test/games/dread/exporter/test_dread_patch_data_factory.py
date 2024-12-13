@@ -45,8 +45,10 @@ def test_pickup_data_for_pb_expansion(
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
-    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = get_resources_for_details(details.original_pickup, details.conditional_resources, details.other_player)
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, pickup, PickupModelStyle.ALL_VISIBLE)
+    result = get_resources_for_details(
+        details.original_pickup, details.conditional_resources, details.is_for_remote_player
+    )
 
     # Assert
     assert result == [
@@ -82,8 +84,10 @@ def test_pickup_data_for_main_pb(
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
-    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = get_resources_for_details(details.original_pickup, details.conditional_resources, details.other_player)
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, pickup, PickupModelStyle.ALL_VISIBLE)
+    result = get_resources_for_details(
+        details.original_pickup, details.conditional_resources, details.is_for_remote_player
+    )
 
     # Assert
     assert result == [
@@ -116,7 +120,7 @@ def test_pickup_data_for_recolored_missiles(
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
-    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, pickup, PickupModelStyle.ALL_VISIBLE)
     result = factory._pickup_detail_for_target(details)
 
     # Assert
@@ -156,7 +160,7 @@ def test_pickup_data_for_a_major(dread_game_description: GameDescription, preset
     creator = pickup_exporter.PickupExporterSolo(DreadAcquiredMemo.with_expansion_text(), RandovaniaGame.METROID_DREAD)
 
     # Run
-    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, pickup, PickupModelStyle.ALL_VISIBLE)
     result = factory._pickup_detail_for_target(details)
 
     # Assert

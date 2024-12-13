@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import typing
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock
 
@@ -210,3 +211,21 @@ def test_menu_set_preset_broken(widget: SelectPresetWidget):
         False,
         False,
     ]
+
+
+@pytest.mark.parametrize("confirm", [False, True])
+def test_on_import_preset(widget: SelectPresetWidget, mocker: pytest_mock.MockerFixture, confirm: bool) -> None:
+    mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_preset_file")
+    import_preset_file = typing.cast(MagicMock, widget._window_manager.import_preset_file)
+    if not confirm:
+        mock_prompt.return_value = None
+
+    # Run
+    widget._on_import_preset()
+
+    # Assert
+    mock_prompt.assert_called_once_with(widget._window_manager, new_file=False)
+    if confirm:
+        import_preset_file.assert_called_once_with(mock_prompt.return_value)
+    else:
+        import_preset_file.assert_not_called()
