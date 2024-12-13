@@ -123,7 +123,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         yield self.line_2
         yield self.experimental_generator_line
         yield self.minimal_logic_line
-        yield self.line_2_2
+        yield self.logical_pickup_placement_line
         yield self.logical_pickup_placement_combo
         yield self.logical_pickup_placement_label
         yield self.logical_pickup_placement_description

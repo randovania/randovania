@@ -34,6 +34,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
+    from randovania.game_description.requirements.base import Requirement
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.layout.preset import Preset
@@ -153,8 +154,8 @@ async def _create_pools_and_fill(
             )
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
 
-            # All majors required
-            force_logical_placement(
+            # All majors/pickups required
+            new_pool.game.victory_condition = force_logical_placement(
                 new_pool.pickups, new_pool.game, player_preset.configuration.logical_pickup_placement
             )
 
@@ -348,9 +349,9 @@ async def generate_and_validate_description(
 
 def force_logical_placement(
     pickups: list[PickupEntry], game: GameDescription, lpp_config: LogicalPickupPlacementConfiguration
-) -> None:
+) -> Requirement:
     if lpp_config is LogicalPickupPlacementConfiguration.MINIMAL:
-        return
+        return game.victory_condition
 
     add_all_pickups = lpp_config is LogicalPickupPlacementConfiguration.ALL
     resources = ResourceCollection.with_database(game.resource_database)
@@ -360,7 +361,7 @@ def force_logical_placement(
             resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
 
     # Modify the victory condition to add every item
-    game.victory_condition = RequirementAnd(
+    return RequirementAnd(
         [
             game.victory_condition,
             *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),

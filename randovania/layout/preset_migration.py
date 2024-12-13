@@ -1234,8 +1234,7 @@ def _migrate_v93(preset: dict) -> dict:
 
 
 def _migrate_v94(preset: dict) -> dict:
-    if "logical_pickup_placement" not in preset["configuration"]:
-        preset["configuration"]["logical_pickup_placement"] = "minimal"
+    preset["configuration"]["logical_pickup_placement"] = "minimal"
 
     return preset
 
