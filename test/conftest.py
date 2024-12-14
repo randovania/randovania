@@ -299,6 +299,13 @@ def default_generator_params() -> PickupGeneratorParams:
 
 
 @pytest.fixture
+def default_generator_params_minor() -> PickupGeneratorParams:
+    return PickupGeneratorParams(
+        preferred_location_category=LocationCategory.MINOR,
+    )
+
+
+@pytest.fixture
 def blank_pickup(
     echoes_pickup_database: PickupDatabase, default_generator_params: PickupGeneratorParams
 ) -> PickupEntry:

@@ -6,7 +6,7 @@ from unittest.mock import AsyncMock, MagicMock, call, patch
 import pytest
 
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
-from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.generator import generator
 from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
@@ -112,10 +112,15 @@ def test_distribute_remaining_items_no_locations_left(
     ],
 )
 def test_force_logical_placement(
-    mocker, blank_game_description, blank_pickup_database, default_generator_params, logical_placement_cases
+    mocker,
+    blank_game_description,
+    blank_pickup_database,
+    default_generator_params,
+    default_generator_params_minor,
+    logical_placement_cases,
 ):
     # Setup
-    mocker.patch.object(blank_game_description, "victory_condition", RequirementAnd([]))
+    mocker.patch.object(blank_game_description, "victory_condition", Requirement.trivial())
 
     pickups = [
         PickupEntry(
@@ -160,7 +165,7 @@ def test_force_logical_placement(
                     1,
                 ),
             ),
-            generator_params=default_generator_params,
+            generator_params=default_generator_params_minor,
             resource_lock=None,
             unlocks_resource=False,
         ),
