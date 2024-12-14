@@ -88,3 +88,83 @@ def test_distribute_remaining_items_no_locations_left(
         InvalidConfiguration, match=r"Received 881 remaining pickups, but there's only \d+ unassigned locations."
     ):
         generator._distribute_remaining_items(rng, filler_results, [default_echoes_preset])
+
+
+@pytest.mark.parametrize(
+    "logical_placement_cases",
+    [
+        (
+            LogicalPickupPlacementConfiguration.MINIMAL,
+            "",
+        ),
+        (
+            LogicalPickupPlacementConfiguration.MAJORS,
+            "( and Major ≥ 1)",
+        ),
+        (
+            LogicalPickupPlacementConfiguration.ALL,
+            "( and Major ≥ 1 and Minor ≥ 1)",
+        ),
+    ],
+)
+def test_force_logical_placement(
+    blank_game_description, blank_pickup_database, default_generator_params, logical_placement_cases
+):
+    # Setup
+    pickups = [
+        PickupEntry(
+            name="Major Item",
+            model=PickupModel(
+                game=blank_game_description.game,
+                name="EnergyTransferModule",
+            ),
+            pickup_category=blank_pickup_database.pickup_categories["gear"],
+            broad_category=blank_pickup_database.pickup_categories["gear"],
+            progression=(
+                (
+                    ItemResourceInfo(
+                        resource_index=2,
+                        long_name="Major",
+                        short_name="major",
+                        max_capacity=1,
+                    ),
+                    1,
+                ),
+            ),
+            generator_params=default_generator_params,
+            resource_lock=None,
+            unlocks_resource=False,
+        ),
+        PickupEntry(
+            name="Minor Item",
+            model=PickupModel(
+                game=blank_game_description.game,
+                name="EnergyTransferModule",
+            ),
+            pickup_category=blank_pickup_database.pickup_categories["ammo"],
+            broad_category=blank_pickup_database.pickup_categories["ammo"],
+            progression=(
+                (
+                    ItemResourceInfo(
+                        resource_index=3,
+                        long_name="Minor",
+                        short_name="minor",
+                        max_capacity=1,
+                    ),
+                    1,
+                ),
+            ),
+            generator_params=default_generator_params,
+            resource_lock=None,
+            unlocks_resource=False,
+        ),
+    ]
+
+    # Run
+    victory_str = str(generator.force_logical_placement(pickups, blank_game_description, logical_placement_cases[0]))
+
+    # Assert
+    victory_condition_str = "(First Boss Killed ≥ 1 and Key Switch 1 ≥ 1 and Key Switch 2 ≥ 1 and Victory Key ≥ 1)"
+    victory_str = victory_str.replace(victory_condition_str, "")
+    print(victory_str)
+    assert victory_str == logical_placement_cases[1]
