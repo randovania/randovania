@@ -366,4 +366,4 @@ def force_logical_placement(
             game.victory_condition,
             *(ResourceRequirement.create(resource[0], resource[1], False) for resource in resources.as_resource_gain()),
         ]
-    )
+    ).simplify()

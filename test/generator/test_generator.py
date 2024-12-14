@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+import copy
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call, patch
 
 import pytest
 
+from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.generator import generator
 from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
 from randovania.layout.exceptions import InvalidConfiguration
@@ -95,15 +99,15 @@ def test_distribute_remaining_items_no_locations_left(
     [
         (
             LogicalPickupPlacementConfiguration.MINIMAL,
-            "",
+            "Trivial",
         ),
         (
             LogicalPickupPlacementConfiguration.MAJORS,
-            "( and Major ≥ 1)",
+            "Major ≥ 1",
         ),
         (
             LogicalPickupPlacementConfiguration.ALL,
-            "( and Major ≥ 1 and Minor ≥ 1)",
+            "(Major ≥ 1 and Minor ≥ 1)",
         ),
     ],
 )
@@ -111,11 +115,15 @@ def test_force_logical_placement(
     blank_game_description, blank_pickup_database, default_generator_params, logical_placement_cases
 ):
     # Setup
+    # Since we're modifying the description, we're making a copy of it
+    game_description = copy.deepcopy(blank_game_description)
+    game_description.victory_condition = RequirementAnd([])
+
     pickups = [
         PickupEntry(
             name="Major Item",
             model=PickupModel(
-                game=blank_game_description.game,
+                game=game_description.game,
                 name="EnergyTransferModule",
             ),
             pickup_category=blank_pickup_database.pickup_categories["gear"],
@@ -138,7 +146,7 @@ def test_force_logical_placement(
         PickupEntry(
             name="Minor Item",
             model=PickupModel(
-                game=blank_game_description.game,
+                game=game_description.game,
                 name="EnergyTransferModule",
             ),
             pickup_category=blank_pickup_database.pickup_categories["ammo"],
@@ -161,10 +169,8 @@ def test_force_logical_placement(
     ]
 
     # Run
-    victory_str = str(generator.force_logical_placement(pickups, blank_game_description, logical_placement_cases[0]))
+    victory_str = str(generator.force_logical_placement(pickups, game_description, logical_placement_cases[0]))
 
     # Assert
-    victory_condition_str = "(First Boss Killed ≥ 1 and Key Switch 1 ≥ 1 and Key Switch 2 ≥ 1 and Victory Key ≥ 1)"
-    victory_str = victory_str.replace(victory_condition_str, "")
-    print(victory_str)
+    # print(victory_str)
     assert victory_str == logical_placement_cases[1]
