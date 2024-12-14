@@ -11,6 +11,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.generator import generator
 from randovania.generator.filler.filler_configuration import FillerPlayerResult, FillerResults
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.layout_description import LayoutDescription
 
