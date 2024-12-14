@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import copy
 from typing import TYPE_CHECKING
 from unittest.mock import AsyncMock, MagicMock, call, patch
 
@@ -113,18 +112,16 @@ def test_distribute_remaining_items_no_locations_left(
     ],
 )
 def test_force_logical_placement(
-    blank_game_description, blank_pickup_database, default_generator_params, logical_placement_cases
+    mocker, blank_game_description, blank_pickup_database, default_generator_params, logical_placement_cases
 ):
     # Setup
-    # Since we're modifying the description, we're making a copy of it
-    game_description = copy.deepcopy(blank_game_description)
-    game_description.victory_condition = RequirementAnd([])
+    mocker.patch.object(blank_game_description, "victory_condition", RequirementAnd([]))
 
     pickups = [
         PickupEntry(
             name="Major Item",
             model=PickupModel(
-                game=game_description.game,
+                game=blank_game_description.game,
                 name="EnergyTransferModule",
             ),
             pickup_category=blank_pickup_database.pickup_categories["gear"],
@@ -147,7 +144,7 @@ def test_force_logical_placement(
         PickupEntry(
             name="Minor Item",
             model=PickupModel(
-                game=game_description.game,
+                game=blank_game_description.game,
                 name="EnergyTransferModule",
             ),
             pickup_category=blank_pickup_database.pickup_categories["ammo"],
@@ -170,7 +167,7 @@ def test_force_logical_placement(
     ]
 
     # Run
-    victory_str = str(generator.force_logical_placement(pickups, game_description, logical_placement_cases[0]))
+    victory_str = str(generator.force_logical_placement(pickups, blank_game_description, logical_placement_cases[0]))
 
     # Assert
     # print(victory_str)
