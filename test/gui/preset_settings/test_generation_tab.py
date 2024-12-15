@@ -61,7 +61,7 @@ def test_persist_local_first_progression(skip_qtbot, preset_manager):
     )
 
 
-def test_persist_victory_condition_for_pickup_placement(skip_qtbot, preset_manager):
+def test_persist_logical_pickup_placement(skip_qtbot, preset_manager):
     game = RandovaniaGame.BLANK
 
     editor = MagicMock()
