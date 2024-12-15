@@ -160,7 +160,7 @@ class GamePresetDescriber:
         template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
 
         if configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
-            template_strings["Item Pool"].append(f"All {configuration.logical_pickup_placement._value_} obtainable")
+            template_strings["Item Pool"].append(f"All {configuration.logical_pickup_placement.value} obtainable")
 
         # Difficulty
         if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:
