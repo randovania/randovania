@@ -75,7 +75,7 @@ class MultiplayerWorld(JsonDataclass):
 class MultiplayerWorldPickups:
     world_id: uuid.UUID
     game: RandovaniaGame
-    pickups: tuple[tuple[str, PickupEntry], ...]
+    pickups: tuple[tuple[str, PickupEntry, PickupIndex, str], ...]
 
 
 @dataclasses.dataclass(frozen=True)

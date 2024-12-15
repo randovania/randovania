@@ -14,6 +14,7 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.network_client.network_client import ConnectionState, NetworkClient, UnableToConnect, _decode_pickup
 from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
@@ -251,9 +252,24 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
         "world": "00000000-0000-1111-0000-000000000000",
         "game": RandovaniaGame.METROID_PRIME_CORRUPTION.value,
         "pickups": [
-            {"provider_name": "Message A", "pickup": "VtI6Bb3p"},
-            {"provider_name": "Message B", "pickup": "VtI6Bb3y"},
-            {"provider_name": "Message C", "pickup": "VtI6Bb3*"},
+            {
+                "provider_name": "Message A",
+                "pickup": "VtI6Bb3p",
+                "location": 1,
+                "provider_uuid": "00000000-0000-1111-0000-000000000000",
+            },
+            {
+                "provider_name": "Message B",
+                "pickup": "VtI6Bb3y",
+                "location": 2,
+                "provider_uuid": "00000000-0000-1111-0000-000000000000",
+            },
+            {
+                "provider_name": "Message C",
+                "pickup": "VtI6Bb3*",
+                "location": 3,
+                "provider_uuid": "00000000-0000-1111-0000-000000000000",
+            },
         ],
     }
 
@@ -271,9 +287,9 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
             world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             pickups=(
-                ("Message A", pickups[0]),
-                ("Message B", pickups[1]),
-                ("Message C", pickups[2]),
+                ("Message A", pickups[0], PickupIndex(1), "00000000-0000-1111-0000-000000000000"),
+                ("Message B", pickups[1], PickupIndex(2), "00000000-0000-1111-0000-000000000000"),
+                ("Message C", pickups[2], PickupIndex(3), "00000000-0000-1111-0000-000000000000"),
             ),
         )
     )

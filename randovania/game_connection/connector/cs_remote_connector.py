@@ -5,9 +5,9 @@ from caver.patcher import wrap_msg_text
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
-    PickupEntryWithOwner,
     PlayerLocationEvent,
     RemoteConnector,
+    RemotePickupTuple,
 )
 from randovania.game_connection.executor.cs_executor import CSExecutor, GameState, TSCError
 from randovania.game_description import default_database
@@ -26,7 +26,7 @@ ITEM_RECEIVED_FLAG = 7411
 class CSRemoteConnector(RemoteConnector):
     game_state: GameState
     last_inventory: Inventory
-    remote_pickups: tuple[PickupEntryWithOwner, ...]
+    remote_pickups: tuple[RemotePickupTuple, ...]
     current_map: PlayerLocationEvent
 
     _dt: float = 1.0
@@ -194,7 +194,7 @@ class CSRemoteConnector(RemoteConnector):
         # no pending pickups, and pickups to send:
         # send the next pickup!
         await self.executor.set_flag(ITEM_SENT_FLAG, True)
-        provider_name, pickup = self.remote_pickups[num_pickups]
+        provider_name, pickup, location, provider_uuid = self.remote_pickups[num_pickups]
 
         message = f"Received item from ={provider_name}=!"
         message = wrap_msg_text(message, False)
@@ -210,5 +210,5 @@ class CSRemoteConnector(RemoteConnector):
         script = f"<MSG{text}<WAI0500<END"
         await self.executor.exec_script(script)
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickupTuple, ...]) -> None:
         self.remote_pickups = remote_pickups

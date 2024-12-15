@@ -141,9 +141,12 @@ async def test_update_inventory(connector: CSRemoteConnector, has_item: bool, ha
 async def test_set_remote_pickups(connector: CSRemoteConnector, cs_panties_pickup):
     assert isinstance(connector.executor, MagicMock)
 
-    pickup_entry_with_owner = (("Dummy 1", cs_panties_pickup), ("Dummy 2", cs_panties_pickup))
-    await connector.set_remote_pickups(pickup_entry_with_owner)
-    assert connector.remote_pickups == pickup_entry_with_owner
+    remote_pickups = (
+        ("Dummy 1", cs_panties_pickup, MagicMock(), MagicMock()),
+        ("Dummy 2", cs_panties_pickup, MagicMock(), MagicMock()),
+    )
+    await connector.set_remote_pickups(remote_pickups)
+    assert connector.remote_pickups == remote_pickups
 
 
 async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
@@ -175,8 +178,11 @@ async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
     await connector._receive_items()
     connector.executor.exec_script.assert_not_awaited()
 
-    pickup_entry_with_owner = (("Dummy 1", cs_panties_pickup), ("Dummy 2", cs_panties_pickup))
-    connector.remote_pickups = pickup_entry_with_owner
+    remote_pickups = (
+        ("Dummy 1", cs_panties_pickup, MagicMock(), MagicMock()),
+        ("Dummy 2", cs_panties_pickup, MagicMock(), MagicMock()),
+    )
+    connector.remote_pickups = remote_pickups
 
     # send first item
     await connector._receive_items()

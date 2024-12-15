@@ -113,7 +113,7 @@ async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool,
     inventory.get = MagicMock()
     inventory.get.return_value = magic_item
 
-    remote_pickups = [("", MagicMock())] if has_patches else []
+    remote_pickups = [("", MagicMock(), MagicMock(), MagicMock())] if has_patches else []
 
     # Run
     await connector.receive_remote_pickups(inventory, remote_pickups)

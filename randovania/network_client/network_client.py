@@ -22,6 +22,7 @@ import randovania
 from randovania.bitpacking import bitpacking, construct_pack
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import container_lib
 from randovania.network_common import (
     admin_actions,
@@ -375,7 +376,12 @@ class NetworkClient:
                 world_id=uuid.UUID(data["world"]),
                 game=game,
                 pickups=tuple(
-                    (item["provider_name"], _decode_pickup(item["pickup"], resource_database))
+                    (
+                        item["provider_name"],
+                        _decode_pickup(item["pickup"], resource_database),
+                        PickupIndex(item["location"]),
+                        item["provider_uuid"],
+                    )
                     for item in data["pickups"]
                 ),
             )

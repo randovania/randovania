@@ -17,7 +17,8 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
 
-PickupEntryWithOwner = tuple[str, PickupEntry]
+# provider_name, PickupEntry, PickupIndex, provider_uuid
+RemotePickupTuple = tuple[str, PickupEntry, PickupIndex, str]
 
 
 class PlayerLocationEvent(typing.NamedTuple):
@@ -82,7 +83,7 @@ class RemoteConnector(QtCore.QObject):
         """
         raise NotImplementedError
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickupTuple, ...]):
         """
         Sets the list of remote pickups that must be sent to the game.
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.
