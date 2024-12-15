@@ -348,26 +348,26 @@ async def generate_and_validate_description(
 
 
 def victory_condition_for_pickup_placement(
-    pickups: list[PickupEntry], game: GameDescription, lpp_config: LogicalPickupPlacementConfiguration
+    pickups: list[PickupEntry], game: GameDescription, placement_config: LogicalPickupPlacementConfiguration
 ) -> Requirement:
     """
-    Creates a Requirement with the game's victory condition and the selected pickup set.
+    Creates a Requirement with the game's victory condition adjusted to a specified pickup set.
     :param pickups:
     :param game:
-    :param lpp_config: Whether it'll add nothing, majors, or every pickup.
+    :param placement_config: The configuration for adjusting the victory condition.
     :return:
     """
-    if lpp_config is LogicalPickupPlacementConfiguration.MINIMAL:
+    if placement_config is LogicalPickupPlacementConfiguration.MINIMAL:
         return game.victory_condition
 
-    add_all_pickups = lpp_config is LogicalPickupPlacementConfiguration.ALL
+    add_all_pickups = placement_config is LogicalPickupPlacementConfiguration.ALL
     resources = ResourceCollection.with_database(game.resource_database)
 
     for pickup in pickups:
         if pickup.generator_params.preferred_location_category is LocationCategory.MAJOR or add_all_pickups:
             resources.add_resource_gain(pickup.resource_gain(resources, force_lock=True))
 
-    # Modify the victory condition to add every item
+    # Create a requirement with the victory condition and the pickups
     return RequirementAnd(
         [
             game.victory_condition,
