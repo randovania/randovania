@@ -155,7 +155,7 @@ async def _create_pools_and_fill(
             _validate_pickup_pool_size(new_pool.pickups, new_pool.game, new_pool.configuration)
 
             # All majors/pickups required
-            new_pool.game.victory_condition = force_logical_placement(
+            new_pool.game.victory_condition = victory_condition_for_pickup_placement(
                 new_pool.pickups, new_pool.game, player_preset.configuration.logical_pickup_placement
             )
 
@@ -347,7 +347,7 @@ async def generate_and_validate_description(
     return result
 
 
-def force_logical_placement(
+def victory_condition_for_pickup_placement(
     pickups: list[PickupEntry], game: GameDescription, lpp_config: LogicalPickupPlacementConfiguration
 ) -> Requirement:
     """

@@ -111,7 +111,7 @@ def test_distribute_remaining_items_no_locations_left(
         ),
     ],
 )
-def test_force_logical_placement(
+def test_victory_condition_for_pickup_placement(
     mocker,
     blank_game_description,
     blank_pickup_database,
@@ -172,7 +172,9 @@ def test_force_logical_placement(
     ]
 
     # Run
-    victory_str = str(generator.force_logical_placement(pickups, blank_game_description, logical_placement_cases[0]))
+    victory_str = str(
+        generator.victory_condition_for_pickup_placement(pickups, blank_game_description, logical_placement_cases[0])
+    )
 
     # Assert
     # print(victory_str)
