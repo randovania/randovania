@@ -2,22 +2,20 @@ from __future__ import annotations
 
 import enum
 import typing
-import uuid
 
 from PySide6 import QtCore
 
-from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.lib import enum_lib
 
 if typing.TYPE_CHECKING:
+    import uuid
+
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
-
-# provider_name, PickupEntry, PickupIndex, provider_uuid
-RemotePickupTuple = tuple[str, PickupEntry, PickupIndex, uuid.UUID]
+    from randovania.network_common.remote_pickup import RemotePickup
 
 
 class PlayerLocationEvent(typing.NamedTuple):
@@ -82,7 +80,7 @@ class RemoteConnector(QtCore.QObject):
         """
         raise NotImplementedError
 
-    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickupTuple, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]):
         """
         Sets the list of remote pickups that must be sent to the game.
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.

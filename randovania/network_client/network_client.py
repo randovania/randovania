@@ -42,6 +42,7 @@ from randovania.network_common.multiplayer_session import (
     User,
     WorldUserInventory,
 )
+from randovania.network_common.remote_pickup import RemotePickup
 from randovania.network_common.world_sync import ServerSyncRequest, ServerSyncResponse
 
 if TYPE_CHECKING:
@@ -376,11 +377,11 @@ class NetworkClient:
                 world_id=uuid.UUID(data["world"]),
                 game=game,
                 pickups=tuple(
-                    (
+                    RemotePickup(
                         item["provider_name"],
                         _decode_pickup(item["pickup"], resource_database),
                         PickupIndex(item["location"]),
-                        uuid.UUID(item["provider_uuid"]),
+                        item["is_coop"],
                     )
                     for item in data["pickups"]
                 ),

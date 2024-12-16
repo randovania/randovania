@@ -113,8 +113,8 @@ def test_emit_world_pickups_update_one_action(
                 {
                     "provider_name": "World 2",
                     "pickup": result,
-                    "provider_uuid": "6b5ac1a1-d250-4f05-a5fb-ae37e8a92165",
                     "location": 0,
+                    "is_coop": False,
                 }
             ],
             "world": "1179c986-758a-4170-9b07-fe4541d78db0",

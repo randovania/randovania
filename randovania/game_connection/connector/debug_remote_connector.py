@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from PySide6.QtCore import Signal
 
-from randovania.game_connection.connector.remote_connector import RemoteConnector, RemotePickupTuple
+from randovania.game_connection.connector.remote_connector import RemoteConnector
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.resource_collection import ResourceCollection
@@ -13,11 +13,12 @@ if TYPE_CHECKING:
     import uuid
 
     from randovania.game.game_enum import RandovaniaGame
+    from randovania.network_common.remote_pickup import RemotePickup
 
 
 class DebugRemoteConnector(RemoteConnector):
     messages: list[str]
-    remote_pickups: tuple[RemotePickupTuple, ...] = ()
+    remote_pickups: tuple[RemotePickup, ...] = ()
     _finished: bool = False
     _last_inventory_event: Inventory
     item_collection: ResourceCollection
@@ -46,7 +47,7 @@ class DebugRemoteConnector(RemoteConnector):
         self.messages.append(message)
         self.MessagesUpdated.emit()
 
-    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickupTuple, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]):
         self.remote_pickups = remote_pickups
 
         for remote_pickup in remote_pickups[self._last_remote_pickup :]:

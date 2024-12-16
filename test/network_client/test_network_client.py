@@ -20,6 +20,7 @@ from randovania.network_common import connection_headers, remote_inventory
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.error import InvalidSessionError, RequestTimeoutError, ServerError
 from randovania.network_common.multiplayer_session import MultiplayerWorldPickups, WorldUserInventory
+from randovania.network_common.remote_pickup import RemotePickup
 
 if TYPE_CHECKING:
     import pytest_mock
@@ -256,19 +257,19 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
                 "provider_name": "Message A",
                 "pickup": "VtI6Bb3p",
                 "location": 1,
-                "provider_uuid": "00000000-0000-1111-0000-000000000000",
+                "is_coop": False,
             },
             {
                 "provider_name": "Message B",
                 "pickup": "VtI6Bb3y",
                 "location": 2,
-                "provider_uuid": "00000000-0000-1111-0000-000000000000",
+                "is_coop": False,
             },
             {
                 "provider_name": "Message C",
                 "pickup": "VtI6Bb3*",
                 "location": 3,
-                "provider_uuid": "00000000-0000-1111-0000-000000000000",
+                "is_coop": True,
             },
         ],
     }
@@ -287,9 +288,9 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
             world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             pickups=(
-                ("Message A", pickups[0], PickupIndex(1), uuid.UUID("00000000-0000-1111-0000-000000000000")),
-                ("Message B", pickups[1], PickupIndex(2), uuid.UUID("00000000-0000-1111-0000-000000000000")),
-                ("Message C", pickups[2], PickupIndex(3), uuid.UUID("00000000-0000-1111-0000-000000000000")),
+                RemotePickup("Message A", pickups[0], PickupIndex(1), False),
+                RemotePickup("Message B", pickups[1], PickupIndex(2), False),
+                RemotePickup("Message C", pickups[2], PickupIndex(3), True),
             ),
         )
     )

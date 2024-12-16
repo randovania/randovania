@@ -7,8 +7,6 @@ from randovania.game_connection.connector.mercury_remote_connector import Mercur
 from randovania.games.dread.exporter.patch_data_factory import get_resources_for_details
 
 if TYPE_CHECKING:
-    import uuid
-
     from randovania.game_connection.executor.dread_executor import DreadExecutor
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
 
@@ -28,7 +26,7 @@ class DreadRemoteConnector(MercuryConnector):
         return get_resources_for_details(pickup, conditional_resources, other_player)
 
     async def game_specific_execute(
-        self, item_name: str, items_list: list, provider_name: str, region_name: str, provider_uuid: uuid.UUID
+        self, item_name: str, items_list: list, provider_name: str, region_name: str, is_coop: bool
     ) -> None:
         remote_pickups = self.remote_pickups
         num_pickups = self.received_pickups

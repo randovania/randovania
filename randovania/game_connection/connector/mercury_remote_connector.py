@@ -12,7 +12,6 @@ from randovania.exporter.pickup_exporter import _conditional_resources_for_picku
 from randovania.game_connection.connector.remote_connector import (
     PlayerLocationEvent,
     RemoteConnector,
-    RemotePickupTuple,
 )
 from randovania.game_description import default_database
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
@@ -24,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import ConditionalResources, PickupEntry
     from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.network_common.remote_pickup import RemotePickup
 
 
 class MercuryConnector(RemoteConnector):
@@ -63,7 +63,7 @@ class MercuryConnector(RemoteConnector):
 
     # reset all values on init, disconnect or after switching back to main menu
     def reset_values(self) -> None:
-        self.remote_pickups: tuple[RemotePickupTuple, ...] = ()
+        self.remote_pickups: tuple[RemotePickup, ...] = ()
         self.last_inventory = Inventory.empty()
         self.in_cooldown = True
         self.received_pickups: int | None = None
@@ -122,7 +122,7 @@ class MercuryConnector(RemoteConnector):
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
-    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickupTuple, ...]) -> None:
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         self.remote_pickups = remote_pickups
         await self.receive_remote_pickups()
 
@@ -141,17 +141,17 @@ class MercuryConnector(RemoteConnector):
 
         self.in_cooldown = True
 
-        provider_name, pickup, location, provider_uuid = remote_pickups[num_pickups]
+        provider_name, pickup, pickup_index, is_coop = remote_pickups[num_pickups]
         item_name, items_list = self.resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
-        location_node = self.game.region_list.node_from_pickup_index(location)
+        location_node = self.game.region_list.node_from_pickup_index(pickup_index)
         region_name = self.game.region_list.nodes_to_region(location_node).extra.get("scenario_id", "")
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
-        await self.game_specific_execute(item_name, items_list, provider_name, region_name, provider_uuid)
+        await self.game_specific_execute(item_name, items_list, provider_name, region_name, is_coop)
 
     async def game_specific_execute(
-        self, item_name: str, items_list: list, provider_name: str, region_name: str, provider_uuid: uuid.UUID
+        self, item_name: str, items_list: list, provider_name: str, region_name: str, is_coop: bool
     ) -> None:
         raise NotImplementedError
 
