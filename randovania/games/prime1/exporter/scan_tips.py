@@ -176,7 +176,7 @@ SCAN_TIPS = {
             "&main-color=#89D6FF;While on this building's roof, it is possible to reach Warrior Shrine without "
             "lowering the bridge. To do so, stand on top of the roof computer's tallest monitor, "
             "lock onto a Puffer to the right or left, and perform a combat dash towards the ledge."
-            "Using the &main-color=#FF3333;Space Jump Boots&main-color=#89D6FF;, one can also R-Jump to reach." 
+            "Using the &main-color=#FF3333;Space Jump Boots&main-color=#89D6FF;, one can also R-Jump to reach."
         ),
     ],
     "1839087853": [
@@ -390,9 +390,7 @@ SCAN_TIPS = {
         # Replaces Central Dynamo upper left computer screen scan
         "&main-color=#FF3333;Hidden message discovered.",
         "",
-        (
-            "It is possible to leave the room without collecting the item."
-        ),
+        ("It is possible to leave the room without collecting the item."),
     ],
     "2271012115": [
         # Spinner PB Tip
