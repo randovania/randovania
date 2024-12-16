@@ -22,6 +22,10 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
+def is_empty_or_space(input_string: str) -> bool:
+    return len(input_string) == 0 or input_string.isspace()
+
+
 class AM2RRemoteConnector(RemoteConnector):
     _game_enum: RandovaniaGame = RandovaniaGame.AM2R
 
@@ -120,7 +124,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         indices_list = new_indices_response[len(start_of_indices) :].split(",")
         if len(indices_list[-1]) == 0 or indices_list[-1].isspace():
-            indices_list = indices_list[:-1]
+            indices_list.pop()
 
         for index in indices_list:
             if not index.isdigit():
@@ -152,7 +156,6 @@ class AM2RRemoteConnector(RemoteConnector):
 
         :param new_inventory_response: A string from the game with the format `items:XA|XB,YA|YB,ZA|ZB...`.
         """
-        print(f"TEST: {new_inventory_response}")
         if self.current_region is None:
             return
 
@@ -165,7 +168,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         inventory_list = new_inventory_response[len(start_of_inventory) :].split(",")
         if len(inventory_list[-1]) == 0 or inventory_list[-1].isspace():
-            inventory_list = inventory_list[:-1]
+            inventory_list.pop()
 
         for position in inventory_list:
             if not position:
