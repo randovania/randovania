@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.8.x] - 2025-01-??
 
+- Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
+
 ### Metroid: Samus Returns
 
 #### Logic Database

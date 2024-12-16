@@ -1233,6 +1233,12 @@ def _migrate_v93(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v94(preset: dict) -> dict:
+    preset["configuration"]["logical_pickup_placement"] = "minimal"
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1327,6 +1333,7 @@ _MIGRATIONS = [
     _migrate_v91,  # two sided door search
     _migrate_v92,  # remove bars great tree hall
     _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
+    _migrate_v94,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

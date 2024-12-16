@@ -107,6 +107,11 @@ def blank_resource_db(blank_game_description: GameDescription) -> ResourceDataba
     return blank_game_description.resource_database
 
 
+@pytest.fixture(scope="session")
+def blank_pickup_database() -> PickupDatabase:
+    return default_database.pickup_database_for_game(RandovaniaGame.BLANK)
+
+
 @pytest.fixture
 def blank_game_patches(
     default_blank_configuration: BlankConfiguration, blank_game_description: GameDescription
@@ -290,6 +295,13 @@ def generic_pickup_category() -> PickupCategory:
 def default_generator_params() -> PickupGeneratorParams:
     return PickupGeneratorParams(
         preferred_location_category=LocationCategory.MAJOR,
+    )
+
+
+@pytest.fixture
+def default_generator_params_minor() -> PickupGeneratorParams:
+    return PickupGeneratorParams(
+        preferred_location_category=LocationCategory.MINOR,
     )
 
 
