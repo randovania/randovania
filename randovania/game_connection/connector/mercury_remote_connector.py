@@ -151,7 +151,7 @@ class MercuryConnector(RemoteConnector):
         await self.game_specific_execute(item_name, items_list, provider_name, region_name, provider_uuid)
 
     async def game_specific_execute(
-        self, item_name: str, items_list: list, provider_name: str, region_name: str, provider_uuid: str
+        self, item_name: str, items_list: list, provider_name: str, region_name: str, provider_uuid: uuid.UUID
     ) -> None:
         raise NotImplementedError
 

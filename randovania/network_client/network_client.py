@@ -380,7 +380,7 @@ class NetworkClient:
                         item["provider_name"],
                         _decode_pickup(item["pickup"], resource_database),
                         PickupIndex(item["location"]),
-                        item["provider_uuid"],
+                        uuid.UUID(item["provider_uuid"]),
                     )
                     for item in data["pickups"]
                 ),

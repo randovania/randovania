@@ -287,9 +287,9 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
             world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             pickups=(
-                ("Message A", pickups[0], PickupIndex(1), "00000000-0000-1111-0000-000000000000"),
-                ("Message B", pickups[1], PickupIndex(2), "00000000-0000-1111-0000-000000000000"),
-                ("Message C", pickups[2], PickupIndex(3), "00000000-0000-1111-0000-000000000000"),
+                ("Message A", pickups[0], PickupIndex(1), uuid.UUID("00000000-0000-1111-0000-000000000000")),
+                ("Message B", pickups[1], PickupIndex(2), uuid.UUID("00000000-0000-1111-0000-000000000000")),
+                ("Message C", pickups[2], PickupIndex(3), uuid.UUID("00000000-0000-1111-0000-000000000000")),
             ),
         )
     )
