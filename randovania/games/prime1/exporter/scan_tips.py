@@ -18,7 +18,7 @@ SCAN_TIPS = {
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
-            "&main-color=#89D6FF;One can reach the top with the"
+            "&main-color=#89D6FF;One can reach the top with the "
             "&main-color=#FF3333;Space Jump Boots&main-color=#89D6FF;"
             ' by jumping on the pointed root protruding from the wall. \n The name "Mr. Peg" is etched into the root.'
         ),
@@ -31,7 +31,7 @@ SCAN_TIPS = {
         (
             "&main-color=#89D6FF;It is possible to stand on Sheegoths.\n\n\n"
             "By jumping off of them with &main-color=#FF3333;Space Jump Boots&main-color=#89D6FF;, "
-            "one can climb Ice Ruins East without missiles."
+            "one can climb Ice Ruins West without missiles. This is easiest when the Sheegoth is dead."
         ),
     ],
     "3162940989": [
@@ -42,7 +42,7 @@ SCAN_TIPS = {
         (
             "&main-color=#89D6FF;It is possible to stand on Baby Sheegoths."
             "\n\n\nBy jumping off of them with &main-color=#FF3333;Space Jump Boots&main-color=#89D6FF;, "
-            "one can climb Ice Ruins East without missiles."
+            "one can climb Ice Ruins West without missiles."
         ),
     ],
     "3508298443": [
@@ -142,8 +142,8 @@ SCAN_TIPS = {
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
-            "&main-color=#89D6FF;It is possible to surmount the gate "
-            "at the top of this room with a carefully-timed double bomb jump."
+            "&main-color=#89D6FF;It is possible to surmount the gate at the top of this room with a carefully-timed "
+            "double bomb jump, aimed at the gate's top-right corner."
         ),
     ],
     "1102487982": [
@@ -175,7 +175,8 @@ SCAN_TIPS = {
         (
             "&main-color=#89D6FF;While on this building's roof, it is possible to reach Warrior Shrine without "
             "lowering the bridge. To do so, stand on top of the roof computer's tallest monitor, "
-            "lock onto a Puffer to the right or left, and perform a lock-on dash towards the ledge."
+            "lock onto a Puffer to the right or left, and perform a combat dash towards the ledge."
+            "Using the &main-color=#FF3333;Space Jump Boots&main-color=#89D6FF;, one can also R-Jump to reach." 
         ),
     ],
     "1839087853": [
@@ -272,14 +273,14 @@ SCAN_TIPS = {
             "this can also be destroyed by &main-color=#FF3333;Power Bombs&main-color=#89D6FF;."
         ),
     ],
-    "745991660": [
+    "4213048406": [
         # Gathering Hall PB talloric alloy Tip
-        # Replaces Gathering Hall lamp scans
+        # Replaces Gathering Hall gate scan
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
             "&main-color=#89D6FF;Like most &main-color=#FF3333;Talloric Alloy&main-color=#89D6FF; structures, "
-            "the grate above can also be destroyed by &main-color=#FF3333;Power Bombs&main-color=#89D6FF;."
+            "this can also be destroyed by &main-color=#FF3333;Power Bombs&main-color=#89D6FF;."
         ),
     ],
     "3344095433": [
@@ -298,8 +299,8 @@ SCAN_TIPS = {
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
-            "&main-color=#89D6FF;These Bomb Slot covers are able to be destroyed by &main-color=#FF3333;Power Bombs"
-            "&main-color=#89D6FF;.\n\nAdditionally, these Bomb Slots are also able to be activated by Power Bombs."
+            "&main-color=#89D6FF;These Bomb Slot covers can be destroyed by &main-color=#FF3333;Power Bombs"
+            "&main-color=#89D6FF;.\n\nAdditionally, these Bomb Slots can also be activated by Power Bombs."
         ),
     ],
     "1354393071": [
@@ -379,8 +380,8 @@ SCAN_TIPS = {
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
-            "&main-color=#89D6FF;A corner of this room can be used to acquire &main-color=#FF3333;Infinite Speed"
-            "&main-color=#89D6FF;. Using Infinite Speed before defeating the Cloaked Drone "
+            "&main-color=#89D6FF;Crates in a corner of this room can be used to acquire &main-color=#FF3333;"
+            "Infinite Speed&main-color=#89D6FF;. Using Infinite Speed before defeating the Cloaked Drone "
             "results in taking significantly less damage."
         ),
     ],
@@ -390,8 +391,7 @@ SCAN_TIPS = {
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
-            "&main-color=#89D6FF;When the Cloaked Drone is defeated, "
-            "it is possible to leave the room without collecting the item."
+            "It is possible to leave the room without collecting the item."
         ),
     ],
     "2271012115": [
@@ -425,15 +425,15 @@ SCAN_TIPS = {
             "&main-color=#FF3333;Plasma Beam&main-color=#89D6FF; shot will break the Metroid's tank."
         ),
     ],
-    "437035956": [
+    "3270789713": [
         # HotE Ghost Skip Tip
-        # Replaces HotE statue-side holobanner scans
+        # Replaces HotE peg
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
             "&main-color=#89D6FF;If entering from Reflecting Pool Access before the Chozo Ghosts have been awakened,"
-            "\n\none can move through the room along a specific path while avoiding awakening the ghosts.\n"
-            "This can either be used to activate the Bomb Slots or to reach Crossway Access South."
+            "\n\none can move through the room along a specific path while avoiding awakening the ghosts.\nDoing"
+            " so can either be used to activate the Bomb Slots (using this peg) or to reach Crossway Access South."
         ),
     ],
     "213585783": [
@@ -453,8 +453,8 @@ SCAN_TIPS = {
         "&main-color=#FF3333;Hidden message discovered.",
         "",
         (
-            "&main-color=#89D6FF;It is possible to reach the door to Waste Disposal with a scan dash "
-            "and &main-color=#FF3333;Space Jump Boots&main-color=#89D6FF;."
+            "&main-color=#89D6FF;It is possible to reach the door to Waste Disposal with &main-color=#FF3333;Space "
+            "Jump Boots&main-color=#89D6FF; and a scan dash or R-jump."
         ),
     ],
     "3474604570": [
@@ -474,7 +474,7 @@ SCAN_TIPS = {
         "",
         (
             "&main-color=#89D6FF;One can cross Quarantine Cave without fighting "
-            "Thardus by using aerial movement around the room's edges."
+            "Thardus by using aerial movement around the room's pillars."
         ),
     ],
     "3820360882": [
@@ -486,7 +486,7 @@ SCAN_TIPS = {
             "&main-color=#89D6FF;When entering from Sun Tower Access, one can awaken the Chozo Ghosts in Sunchamber "
             "without falling to the bottom of the room. This requires either using the &main-color=#FF3333;Spider Ball"
             "&main-color=#89D6FF; to roll to the bottom of the magnetic track before rolling back up, or stopping the "
-            "descent with an Oculus and using complex bomb jumps to rise back to the top."
+            "descent with an Oculus and using an infinite bomb jump to rise back to the top."
         ),
     ],
     "1530945290": [
