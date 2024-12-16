@@ -36,10 +36,9 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
         signal_handling.on_checked(self.local_first_progression_check, self._persist_local_first_progression)
 
-        self.logical_pickup_placement_combo.setItemData(0, LogicalPickupPlacementConfiguration.MINIMAL)
-        self.logical_pickup_placement_combo.setItemData(1, LogicalPickupPlacementConfiguration.MAJORS)
-        self.logical_pickup_placement_combo.setItemData(2, LogicalPickupPlacementConfiguration.ALL)
-        signal_handling.on_combo(self.logical_pickup_placement_combo, self._persist_logical_pickup_placement)
+        for i, logical_placement_mode in enumerate(LogicalPickupPlacementConfiguration):
+            self.logical_pickup_placement_combo.setItemData(i, logical_placement_mode)
+        signal_handling.on_combo(self.logical_pickup_placement_combo, self._on_logical_pickup_placement_mode_changed)
 
         # Logic Settings
         self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
@@ -154,3 +153,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
     def _on_update_damage_strictness(self, new_index: int):
         with self._editor as editor:
             editor.layout_configuration_damage_strictness = self.damage_strictness_combo.currentData()
+
+    def _on_logical_pickup_placement_mode_changed(self, logical_placement_config: LogicalPickupPlacementConfiguration):
+        self._persist_logical_pickup_placement(logical_placement_config)
+        self.logical_pickup_placement_description.setText(logical_placement_config.description)

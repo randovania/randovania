@@ -88,9 +88,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
         if self.first_progression_must_be_local:
             result.append("Requiring first progression to be local causes increased generation failure.")
 
-        if self.logical_pickup_placement is LogicalPickupPlacementConfiguration.ALL:
-            result.append("Placing all pickups logically causes increased generation failure.")
-
         return result
 
     def settings_incompatible_with_multiworld(self) -> list[str]:

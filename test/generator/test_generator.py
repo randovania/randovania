@@ -120,6 +120,7 @@ def test_victory_condition_for_pickup_placement(
     logical_placement_cases,
 ):
     # Setup
+    placement_config, expected = logical_placement_cases
     mocker.patch.object(blank_game_description, "victory_condition", Requirement.trivial())
 
     pickups = [
@@ -173,9 +174,9 @@ def test_victory_condition_for_pickup_placement(
 
     # Run
     victory_str = str(
-        generator.victory_condition_for_pickup_placement(pickups, blank_game_description, logical_placement_cases[0])
+        generator.victory_condition_for_pickup_placement(pickups, blank_game_description, placement_config)
     )
 
     # Assert
     # print(victory_str)
-    assert victory_str == logical_placement_cases[1]
+    assert victory_str == expected
