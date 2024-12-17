@@ -101,7 +101,8 @@ class MercuryConnector(RemoteConnector):
         try:
             inventory_json = json.loads(json_string)
             self.inventory_index = inventory_json["index"]
-            inventory_ints: list[int] = inventory_json["inventory"]
+            # just round the values to ints because aeion can be a float in MSR
+            inventory_ints: list[int] = [round(inv_float) for inv_float in inventory_json["inventory"]]
         except Exception as e:
             self.logger.error("Unknown response: %s (got %s)", json_string, e)
             return
