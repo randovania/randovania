@@ -42,9 +42,8 @@ def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> Ga
         resource_database=game.resource_database,
         layers=game.layers,
         dock_weakness_database=game.dock_weakness_database,
-        region_list=RegionList(regions),
+        region_list=RegionList(regions, game.region_list.flatten_to_set_on_patch),
         victory_condition=game.victory_condition,
         starting_location=game.starting_location,
-        initial_states=game.initial_states,
         minimal_logic=game.minimal_logic,
     )

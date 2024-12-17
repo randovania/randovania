@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 if TYPE_CHECKING:

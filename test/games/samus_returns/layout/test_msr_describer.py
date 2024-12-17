@@ -4,27 +4,28 @@ import dataclasses
 
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.samus_returns.layout.msr_configuration import (
     MSRArtifactConfig,
     MSRConfiguration,
 )
+from randovania.games.samus_returns.layout.preset_describer import _BOSS_NAME
 from randovania.interface_common.preset_manager import PresetManager
 
 
 @pytest.mark.parametrize(
     ("artifacts"),
     [
-        MSRArtifactConfig(True, True, True, False, 5),
-        MSRArtifactConfig(True, True, False, False, 39),
-        MSRArtifactConfig(False, False, True, False, 4),
-        MSRArtifactConfig(False, False, False, False, 0),
-        MSRArtifactConfig(False, False, False, True, 2),
-        MSRArtifactConfig(False, False, True, True, 10),
-        MSRArtifactConfig(True, True, False, True, 30),
+        MSRArtifactConfig(True, True, True, False, 5, 5),
+        MSRArtifactConfig(True, True, False, False, 39, 39),
+        MSRArtifactConfig(False, False, True, False, 4, 4),
+        MSRArtifactConfig(False, False, False, False, 0, 0),
+        MSRArtifactConfig(False, False, False, True, 2, 2),
+        MSRArtifactConfig(False, False, True, True, 10, 10),
+        MSRArtifactConfig(True, True, False, True, 30, 30),
     ],
 )
-def test_msr_format_params(artifacts):
+def test_msr_format_params(artifacts) -> None:
     # Setup
     preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_SAMUS_RETURNS).get_preset()
     assert isinstance(preset.configuration, MSRConfiguration)
@@ -48,14 +49,14 @@ def test_msr_format_params(artifacts):
         dna_where = "Prefers Stronger Metroids"
     elif artifacts.prefer_bosses:
         dna_where = "Prefers Bosses"
-    else:
-        dna_where = "Defeat Proteus Ridley"
+
+    final_boss = "Defeat " + _BOSS_NAME[configuration.final_boss]
 
     # Assert
     assert dict(result) == {
         "Logic Settings": ["All tricks disabled"],
         "Item Pool": [
-            f"Size: {174+artifacts.required_artifacts} of 211",
+            f"Size: {174+artifacts.placed_artifacts} of 211",
             "Starts with Scan Pulse",
             "Progressive Beam, Progressive Suit, Progressive Jump",
             "Energy Reserve Tank, Aeion Reserve Tank, Missile Reserve Tank",
@@ -63,7 +64,9 @@ def test_msr_format_params(artifacts):
         "Gameplay": ["Starts at Surface East - Landing Site"],
         "Difficulty": [],
         "Goal": (
-            [f"{artifacts.required_artifacts} Metroid DNA", dna_where] if artifacts.required_artifacts else [dna_where]
+            [f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA", dna_where, final_boss]
+            if artifacts.required_artifacts
+            else [final_boss]
         ),
         "Game Changes": [
             "Missile needs Launcher, Super Missile needs Launcher, Power Bomb needs Launcher",
@@ -71,5 +74,9 @@ def test_msr_format_params(artifacts):
             "Open Area 3 Factory Interior East Shortcut",
             "Change Surface Cavern Cavity Crumble Blocks, Change Area 1 Transport to Surface and Area 2 Crumble Blocks",
         ],
-        "Hints": ["DNA Hints: Area and room"],
+        "Hints": ["Baby Metroid Hint: Area only", "DNA Hints: Area and room"],
+        "Environmental Damage": [
+            "Heat: Constant 20 dmg/s",
+            "Lava: Constant 20 dmg/s",
+        ],
     }

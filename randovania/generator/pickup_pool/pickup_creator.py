@@ -9,11 +9,11 @@ from randovania.game_description.resources.location_category import LocationCate
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
     from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.games.game import RandovaniaGame
     from randovania.layout.base.standard_pickup_state import StandardPickupState
 
 
@@ -63,6 +63,7 @@ def create_standard_pickup(
             preferred_location_category=pickup.preferred_location_category,
             probability_offset=pickup.probability_offset,
             probability_multiplier=pickup.probability_multiplier * state.priority,
+            index_age_impact=pickup.index_age_impact,
         ),
     )
 
@@ -99,7 +100,9 @@ def create_ammo_pickup(
         resource_lock=ammo.create_resource_lock(resource_database),
         generator_params=PickupGeneratorParams(
             preferred_location_category=ammo.preferred_location_category,
-            probability_multiplier=2,
+            probability_offset=ammo.probability_offset,
+            probability_multiplier=ammo.probability_multiplier,
+            index_age_impact=ammo.index_age_impact,
         ),
     )
 
@@ -113,7 +116,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
     """
     return PickupEntry(
         name="Nothing",
-        progression=((resource_database.get_item_by_name("Nothing"), 1),),
+        progression=(),
         model=PickupModel(
             game=resource_database.game_enum,
             name=model_name,

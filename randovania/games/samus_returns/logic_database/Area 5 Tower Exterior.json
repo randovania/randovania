@@ -322,8 +322,85 @@
                             }
                         },
                         "Door to Zeta Arena Access": {
-                            "type": "template",
-                            "data": "Climb Rooms Vertically (No High Jump)"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "SWJ off the wall above the Ammo Recharge Station",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "With Super Jump: https://youtu.be/kPH_NBSq230?t=6",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With Unmorph Extend: https://youtu.be/kPH_NBSq230",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -356,6 +433,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Tower Exterior Elevator East",
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "or",
@@ -684,6 +762,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Red Plant Maze": {
                             "type": "and",
@@ -722,6 +801,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Super Missile Tank Top)": {
                             "type": "and",
@@ -1061,6 +1141,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "and",
@@ -1108,7 +1189,7 @@
                                 ]
                             }
                         },
-                        "Upper Right Ledge": {
+                        "Top of Tower Right Side": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1132,6 +1213,10 @@
                                             "comment": "IBJ",
                                             "items": [
                                                 {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
@@ -1139,10 +1224,68 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "SWJ with High Jump Boots: https://youtu.be/-a1YMwCXM2M",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SuperJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
@@ -1180,6 +1323,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station Left": {
                             "type": "and",
@@ -1348,6 +1492,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Upper Right Ledge": {
                             "type": "or",
@@ -1452,6 +1597,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Elevator to Area 5 Tower Interior": {
                             "type": "and",
@@ -1578,10 +1724,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Below Ceiling Pickup": {
-                            "type": "template",
-                            "data": "Use Spider Ball"
                         }
                     }
                 },
@@ -1610,6 +1752,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -2306,6 +2449,10 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Below Ceiling Pickup": {
+                            "type": "template",
+                            "data": "Use Spider Ball"
                         }
                     }
                 },
@@ -2756,7 +2903,102 @@
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Simple IBJ"
+                                        "data": "Climb Rooms Vertically (No High Jump)"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Freeze Drivel to reach the right ledge",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "With Ice Beam Only: https://youtu.be/d0Qmb4p2wts?t=15",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With Charge Beam: https://youtu.be/d0Qmb4p2wts",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Charge",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With Phase Drift: https://youtu.be/d0Qmb4p2wts?t=8",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Phase",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "FrozenEnemy",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -2795,11 +3037,11 @@
                                 ]
                             }
                         },
-                        "Pickup (Missile Tank Top)": {
+                        "Upper Right Ledge": {
                             "type": "template",
                             "data": "Use Spider Ball"
                         },
-                        "Upper Right Ledge": {
+                        "Next to Teleporter": {
                             "type": "template",
                             "data": "Use Spider Ball"
                         }
@@ -3118,6 +3360,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Energy Tank)": {
                             "type": "or",
@@ -3303,6 +3546,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
                             "type": "resource",
@@ -3404,6 +3648,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -3439,6 +3684,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -3464,7 +3710,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_Checkpoint_005"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Screw Attack)": {
                             "type": "and",
@@ -3559,6 +3805,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Zeta Arena": {
                             "type": "resource",
@@ -3787,6 +4034,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Tower Exterior": {
                             "type": "or",
@@ -3894,6 +4142,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Tower Exterior": {
                             "type": "resource",
@@ -3921,7 +4170,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Zeta_001"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Zeta Arena": {
                             "type": "and",
@@ -4107,6 +4356,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Aeion Tank)": {
                             "type": "or",
@@ -4260,6 +4510,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Tower Exterior Elevator West",
                     "connections": {
                         "Door to Tower Exterior": {
                             "type": "and",
@@ -4298,6 +4549,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Elevator to Area 5 Tower Interior": {
                             "type": "and",
@@ -4368,6 +4620,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -4601,6 +4854,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Zeta Arena Access": {
                             "type": "and",
@@ -4641,6 +4895,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Screw Attack Chamber Access": {
                             "type": "and",
@@ -4874,6 +5129,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "or",
@@ -5199,7 +5455,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Gamma_003"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Bottom of Climb": {
                             "type": "and",
@@ -5940,6 +6196,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Paraby Parlor": {
                             "type": "and",
@@ -5987,6 +6244,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Screw Attack Chamber": {
                             "type": "or",
@@ -6129,6 +6387,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Screw Attack Chamber": {
                             "type": "and",
@@ -6279,6 +6538,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Gamma+ Arena": {
                             "type": "and",
@@ -6494,6 +6754,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Tower Exterior": {
                             "type": "and",
@@ -6713,7 +6974,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Gamma_002"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Gamma+ Arena": {
                             "type": "resource",
@@ -6786,6 +7047,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Gamma Metroid+": {
                             "type": "and",

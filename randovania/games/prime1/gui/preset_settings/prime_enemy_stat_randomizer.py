@@ -3,8 +3,8 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
+from randovania.games.prime1.gui.generated.preset_prime_enemy_stat_randomizer_ui import Ui_EnemyAttributeRandomizer
 from randovania.games.prime1.layout.prime_configuration import EnemyAttributeRandomizer
-from randovania.gui.generated.preset_prime_enemy_stat_randomizer_ui import Ui_EnemyAttributeRandomizer
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -42,8 +42,8 @@ class PresetEnemyAttributeRandomizer(PresetTab, Ui_EnemyAttributeRandomizer):
         return "Enemy Attributes"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     @classmethod
     def is_experimental(cls) -> bool:

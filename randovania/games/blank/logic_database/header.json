@@ -1,5 +1,5 @@
 {
-    "schema_version": 24,
+    "schema_version": 27,
     "game": "blank",
     "resource_database": {
         "items": {
@@ -37,6 +37,16 @@
                 "long_name": "Useless",
                 "max_capacity": 10,
                 "extra": {}
+            },
+            "Jump": {
+                "long_name": "Jump",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "DoubleJump": {
+                "long_name": "Double Jump",
+                "max_capacity": 1,
+                "extra": {}
             }
         },
         "events": {
@@ -50,6 +60,10 @@
             },
             "KeySwitch2": {
                 "long_name": "Key Switch 2",
+                "extra": {}
+            },
+            "PostWeapon": {
+                "long_name": "Post Weapon",
                 "extra": {}
             }
         },
@@ -74,7 +88,37 @@
             }
         },
         "misc": {},
-        "requirement_template": {},
+        "requirement_template": {
+            "Can Jump": {
+                "display_name": "Can Jump",
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Jump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "DoubleJump",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
         "damage_reductions": [],
         "energy_tank_item_index": "Health"
     },
@@ -86,9 +130,6 @@
         "region": "Intro",
         "area": "Starting Area",
         "node": "Spawn Point"
-    },
-    "initial_states": {
-        "Default": []
     },
     "minimal_logic": {
         "items_to_exclude": [],
@@ -319,6 +360,7 @@
             1
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "Intro.json"
     ]

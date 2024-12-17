@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetPrimeChaos</class>
+ <widget class="QMainWindow" name="PresetPrimeChaos">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>503</width>
+    <height>687</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Other</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>487</width>
+         <height>1190</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="top_spacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>8</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="chaos_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This page contains experimental settings which do not yet have (or will never have) logic support. This means that games generated with anything other than this tab's default settings may result in incompletable seeds.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="legacy_mode_group">
+          <property name="title">
+           <string>Legacy Mode</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <property name="leftMargin">
+            <number>9</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>9</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item>
+            <widget class="QCheckBox" name="legacy_mode_check">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Enable Legacy Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="legacy_mode_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this box to skip various patches, resulting in gameplay as close to the vanilla experience as possible. This includes:&lt;/p&gt;&lt;p&gt;Fixed crashes, Fixed softlocks, Fast item acquisition, Better pickup scans, Undo non-NTSC sequence break patches, Varia-only heat protection and &amp;quot;General&amp;quot; QoL&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="room_rando_group">
+          <property name="title">
+           <string>Room Rando</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QComboBox" name="room_rando_combo">
+             <item>
+              <property name="text">
+               <string>None</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>One-way</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Two-way</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="room_rando_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;These options shuffle how rooms within an area are connected completely smashing randovania's delicately balanced logic.&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;None&lt;/span&gt;: No changes are made.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;One-way&lt;/span&gt;: Doors are patched to lead to another random door in the same world. That door most likely does not lead back to the previous room. Scan doors to see where they lead.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Two-way&lt;/span&gt;: Like One-way, but doors will always lead back to the previous room.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Player Size</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QCheckBox" name="small_samus_check">
+             <property name="text">
+              <string>Enable Small Samus</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="small_samus_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes the player 30% of their original size. This includes hitbox size, camera height, morph ball size and step-up height but not movement speed or jump height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="large_samus_check">
+             <property name="text">
+              <string>Enable Large Samus</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="large_samus_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Like above, but makes the player 175% of the original size. Morph ball stays the same to avoid frequent soft-locks.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="random_boss_sizes_group">
+          <property name="title">
+           <string>Boss Size</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <widget class="QCheckBox" name="random_boss_sizes_check">
+             <property name="text">
+              <string>Random Boss Sizes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="random_boss_sizes_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes each of the bosses (and mini-bosses) a random size ranging from &quot;tiny bug&quot; to &quot;barely fits in the room&quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="items_group">
+          <property name="title">
+           <string>Pickup Locations</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <widget class="QCheckBox" name="shuffle_item_pos_check">
+             <property name="text">
+              <string>Shuffle Pickup Position</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="shuffle_item_pos_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Item locations are randomized within the rooms they reside in. There is no checking to ensure items are placed inbounds so seeds are not garunteed to be logical or even completable. Item scan points are adjusted in this mode to be larger and can be seen through walls.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="items_every_room_check">
+             <property name="text">
+              <string>Pickups in Every Room</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="items_every_room_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Like above, but adds 1 additional item spawn locations in each room which normally do not contain an item. Be sure to visit the item pool tab to fill the pool with items to use in the newly added location. These extra locations are always filled with filler items, unless playing on minimum logic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="shuffle_item_pos_group">
+          <property name="title">
+           <string>Room Attributes</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="superheated_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;Superheated Probability: Probability that any room is superheated. If non-zero, rooms which are normally superheated will have their superheated state re-rolled. Completely ignores heat-run logic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="superheated_slider_layout">
+             <item>
+              <widget class="ScrollProtectedSlider" name="superheated_slider">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="pageStep">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="superheated_slider_label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="submerged_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;Submerged Probability: Probability that any room is fully submerged in water. Completely ignores underwater movement logic.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="submerged_slider_layout">
+             <item>
+              <widget class="ScrollProtectedSlider" name="submerged_slider">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="pageStep">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="submerged_slider_label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>QSlider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

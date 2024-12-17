@@ -4,19 +4,20 @@ from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.dread_remote_connector import DreadRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
-from randovania.game_connection.executor.dread_executor import DreadExecutor, DreadExecutorToConnectorSignals
+from randovania.game_connection.executor.dread_executor import DreadExecutor
+from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 
 
 @pytest.fixture(name="connector")
 def dread_remote_connector():
     executor_mock = MagicMock(DreadExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(DreadExecutorToConnectorSignals)
+    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
     executor_mock.version = "2.1.0"
     connector = DreadRemoteConnector(executor_mock)
     return connector
@@ -26,11 +27,7 @@ async def test_general_class_content(connector: DreadRemoteConnector):
     assert connector.game_enum == RandovaniaGame.METROID_DREAD
     assert connector.description() == f"{RandovaniaGame.METROID_DREAD.long_name}: 2.1.0"
 
-    emit_listener = MagicMock()
-    connector.Finished.connect(emit_listener)
-
     connector.connection_lost()
-    emit_listener.assert_called_once_with()
 
     await connector.force_finish()
     connector.executor.disconnect.assert_called_once()

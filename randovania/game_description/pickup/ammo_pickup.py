@@ -7,10 +7,10 @@ from typing import TYPE_CHECKING, Self
 from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.pickup_entry import ResourceLock
 from randovania.game_description.resources.location_category import LocationCategory
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -20,6 +20,7 @@ EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
 @dataclass(frozen=True, order=True)
 class AmmoPickupDefinition(JsonDataclass):
+    # TODO: docstrings
     game: RandovaniaGame = dataclasses.field(metadata={"init_from_extra": True})
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     model_name: str
@@ -30,9 +31,17 @@ class AmmoPickupDefinition(JsonDataclass):
     additional_resources: frozendict[str, int] = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
     unlocked_by: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     temporary: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    probability_offset: float = dataclasses.field(default=0.0, metadata=EXCLUDE_DEFAULT)
+    probability_multiplier: float = dataclasses.field(default=2.0, metadata=EXCLUDE_DEFAULT)
     allows_negative: bool | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
     description: str | None = dataclasses.field(default=None, metadata=EXCLUDE_DEFAULT)
+    include_expected_counts: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
+    explain_other_sources: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
+    mention_limit: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
+
+    # TODO: change later to lower number after more experimentation and adjust in test_pickup_creator
+    index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
 
     def __post_init__(self) -> None:
         if self.temporary is not None:

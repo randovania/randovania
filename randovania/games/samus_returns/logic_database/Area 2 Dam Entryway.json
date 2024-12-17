@@ -127,6 +127,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Area 2 Chozo Seal Elevator North",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -166,6 +167,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Area 2 Chozo Seal Elevator South",
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -264,7 +266,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -583,6 +585,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -621,6 +624,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -835,6 +839,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Transport to Areas 1 and 3 (Bottom)": {
                             "type": "resource",
@@ -875,6 +880,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Transport to Areas 1 and 3 (Top)": {
                             "type": "resource",
@@ -1014,6 +1020,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -1133,7 +1140,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Alpha_002"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Alpha+ Arena": {
                             "type": "and",
@@ -1278,6 +1285,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Lightning Armor Chamber Elevator",
                     "connections": {
                         "Door to Transport Access (Top)": {
                             "type": "and",
@@ -1316,6 +1324,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Right Spawnpoint": {
                             "type": "and",
@@ -1354,6 +1363,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Elevator to Area 2 Dam Exterior": {
                             "type": "and",
@@ -1476,7 +1486,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_DEBUG_Bestowal"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Lightning Armor)": {
                             "type": "or",
@@ -1703,6 +1713,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Fleech Swarm Floodway": {
                             "type": "or",
@@ -1977,8 +1988,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Alpha+ Arena": {
+                        "Door to Alpha+ Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1987,31 +1999,37 @@
                         }
                     }
                 },
-                "Dock to Alpha+ Arena": {
+                "Door to Alpha+ Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10467.516826071555,
-                        "y": -1246.8473255402055,
+                        "x": 10450.0,
+                        "y": -1350.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 91,
+                        "append_entity_group": "PostAlpha_002"
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 Dam Entryway",
                         "area": "Alpha+ Arena",
-                        "node": "Dock to Transport Access"
+                        "node": "Door to Transport Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Lightning Armor & Transport to Dam Exterior East (Top)": {
                             "type": "or",
@@ -2130,6 +2148,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Lightning Armor & Transport to Dam Exterior East (Bottom)": {
                             "type": "and",
@@ -2262,7 +2281,7 @@
                                 ]
                             }
                         },
-                        "Dock to Alpha+ Arena": {
+                        "Door to Alpha+ Arena": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2492,6 +2511,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -2610,6 +2630,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -2620,31 +2641,37 @@
                         }
                     }
                 },
-                "Dock to Transport Access": {
+                "Door to Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 10435.44,
-                        "y": -1296.36,
+                        "x": 10450.0,
+                        "y": -1350.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 92,
+                        "append_entity_group": "PostAlpha_002"
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 2 Dam Entryway",
                         "area": "Transport Access",
-                        "node": "Dock to Alpha+ Arena"
+                        "node": "Door to Alpha+ Arena"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -2725,7 +2752,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Transport Access": {
+                        "Door to Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2767,9 +2794,9 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Alpha_002B"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
-                        "Dock to Transport Access": {
+                        "Door to Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,

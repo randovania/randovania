@@ -11,11 +11,11 @@ from randovania.game_description.hint import Hint, HintLocationPrecision
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.pickup_node import PickupNode
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.games.game import RandovaniaGame
     from randovania.interface_common.players_configuration import PlayersConfiguration
 
 

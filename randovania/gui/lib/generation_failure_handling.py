@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 
-class GenerationFailureHandler(QtWidgets.QWidget):
+class GenerationFailureHandler(QtCore.QObject):
     failed_to_generate_signal = QtCore.Signal(GenerationFailure)
 
     def __init__(self, parent: QtWidgets.QWidget):
@@ -71,9 +71,13 @@ class GenerationFailureHandler(QtWidgets.QWidget):
         await async_dialog.execute_dialog(box)
 
     async def handle_invalid_configuration(self, exception: InvalidConfiguration):
-        logging.warning("Invalid Preset: %s", str(exception))
+        msg = str(exception)
+        if exception.world_name is not None:
+            msg = f"{msg}.\nThis preset belongs to world '{exception.world_name}'."
+
+        logging.warning("Invalid Preset: %s", msg)
         await async_dialog.warning(
             self.parent,
             "Invalid Preset",
-            f"{exception}.",
+            msg,
         )

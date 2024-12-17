@@ -3,9 +3,9 @@ import dataclasses
 from PySide6 import QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.games.fusion.gui.generated.preset_fusion_hints_ui import Ui_PresetFusionHints
 from randovania.games.fusion.layout.fusion_configuration import FusionConfiguration
 from randovania.games.fusion.layout.hint_configuration import ItemHintMode
-from randovania.gui.generated.preset_fusion_hints_ui import Ui_PresetFusionHints
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -32,8 +32,8 @@ class PresetFusionHints(PresetTab, Ui_PresetFusionHints):
         return "Hints"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_art_combo_changed(self, new_index: int) -> None:
         with self._editor as editor:

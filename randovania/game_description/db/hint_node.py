@@ -35,25 +35,19 @@ enum_lib.add_long_name(
 @dataclasses.dataclass(frozen=True, slots=True)
 class HintNode(ResourceNode):
     kind: HintNodeKind
-    requirement_to_collect: Requirement
+    lock_requirement: Requirement
 
     def __repr__(self) -> str:
         return f"HintNode({self.name!r})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return self.requirement_to_collect
+        return self.lock_requirement
+
+    def requirement_to_collect(self) -> Requirement:
+        return self.lock_requirement
 
     def resource(self, context: NodeContext) -> NodeResourceInfo:
         return NodeResourceInfo.from_node(self, context)
-
-    def can_collect(self, context: NodeContext) -> bool:
-        if self.is_collected(context):
-            return False
-
-        return self.requirement_to_collect.satisfied(
-            context,
-            0,
-        )
 
     def is_collected(self, context: NodeContext) -> bool:
         return context.has_resource(self.resource(context))

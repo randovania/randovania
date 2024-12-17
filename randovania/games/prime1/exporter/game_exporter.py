@@ -9,10 +9,11 @@ from textwrap import wrap
 from typing import TYPE_CHECKING
 
 from randovania import monitoring
-from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.exporter.game_exporter import GameExporter, GameExportParams, input_hash_for_file
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupModel
-from randovania.games.game import RandovaniaGame
+from randovania.games.common.prime_family.exporter import good_hashes
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.patchers.exceptions import UnableToExportError
@@ -31,6 +32,12 @@ class PrimeGameExportParams(GameExportParams):
     asset_cache_path: Path
     use_echoes_models: bool
     cache_path: Path
+
+    def calculate_input_hash(self) -> dict[str, str | None]:
+        return {
+            "prime1_iso": input_hash_for_file(self.input_path),
+            "prime2_iso": input_hash_for_file(self.echoes_input_path),
+        }
 
 
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
@@ -136,7 +143,7 @@ def make_one_map(filepath: Path, level_data: dict, region: Region, dock_types_to
 
 class PrimeGameExporter(GameExporter):
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the patcher is busy right now
         """
@@ -165,6 +172,12 @@ class PrimeGameExporter(GameExporter):
             filepath = directory.with_name(f"{base_filename} {region_name}.png")
             make_one_map(filepath, level_data, rl.region_with_name(region_name), dock_types_to_ignore)
 
+    def known_good_hashes(self) -> dict[str, tuple[str, ...]]:
+        return {
+            "prime1_iso": good_hashes.PRIME1_GC_ISOS,
+            "prime2_iso": good_hashes.PRIME2_GC_ISOS,
+        }
+
     def _do_export_game(
         self,
         patch_data: dict,
@@ -179,6 +192,8 @@ class PrimeGameExporter(GameExporter):
         export_params.cache_path.mkdir(parents=True, exist_ok=True)
         cache_dir = os.fspath(export_params.cache_path)
 
+        monitoring.set_tag("prime_output_format", output_file.suffix)
+
         import py_randomprime
         from open_prime_rando.dol_patching import all_prime_dol_patches
         from ppc_asm import assembler
@@ -188,6 +203,9 @@ class PrimeGameExporter(GameExporter):
         symbols = py_randomprime.symbols_for_file(input_file)
         if symbols is None:
             raise UnableToExportError("Unsupported Metroid Prime version.")
+
+        input_version = py_randomprime.rust.get_iso_mp1_version(str(export_params.input_path))
+        monitoring.set_tag("prime_input_version", input_version)
 
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
@@ -205,6 +223,9 @@ class PrimeGameExporter(GameExporter):
 
         random_enemy_attributes = new_config.pop("randEnemyAttributes")
         random_enemy_attributes_seed = new_config.pop("seed")
+
+        monitoring.set_tag("prime_room_rando_mode", room_rando_mode)
+        monitoring.set_tag("prime_random_enemy_attributes", random_enemy_attributes is not None)
 
         split_updater = DynamicSplitProgressUpdate(progress_update)
         asset_updater = None
@@ -240,10 +261,11 @@ class PrimeGameExporter(GameExporter):
         os.environ["RUST_BACKTRACE"] = "1"
 
         try:
-            py_randomprime.patch_iso_raw(
-                patch_as_str,
-                py_randomprime.ProgressNotifier(lambda percent, msg: randomprime_updater(msg, percent)),
-            )
+            with monitoring.trace_block("py_randomprime.patch_iso_raw"):
+                py_randomprime.patch_iso_raw(
+                    patch_as_str,
+                    py_randomprime.ProgressNotifier(lambda percent, msg: randomprime_updater(msg, percent)),
+                )
         except BaseException as e:
             if isinstance(e, Exception):
                 raise
@@ -252,20 +274,21 @@ class PrimeGameExporter(GameExporter):
 
         if random_enemy_attributes is not None:
             enemy_updater("Randomizing enemy attributes", 0)
-            PyRandom_Enemy_Attributes(
-                new_config["inputIso"],
-                new_config["outputIso"],
-                random_enemy_attributes_seed,
-                random_enemy_attributes["enemy_rando_range_scale_low"],
-                random_enemy_attributes["enemy_rando_range_scale_high"],
-                random_enemy_attributes["enemy_rando_range_health_low"],
-                random_enemy_attributes["enemy_rando_range_health_high"],
-                random_enemy_attributes["enemy_rando_range_speed_low"],
-                random_enemy_attributes["enemy_rando_range_speed_high"],
-                random_enemy_attributes["enemy_rando_range_damage_low"],
-                random_enemy_attributes["enemy_rando_range_damage_high"],
-                random_enemy_attributes["enemy_rando_range_knockback_low"],
-                random_enemy_attributes["enemy_rando_range_knockback_high"],
-                random_enemy_attributes["enemy_rando_diff_xyz"],
-            )
+            with monitoring.trace_block("PyRandom_Enemy_Attributes"):
+                PyRandom_Enemy_Attributes(
+                    new_config["inputIso"],
+                    new_config["outputIso"],
+                    random_enemy_attributes_seed,
+                    random_enemy_attributes["enemy_rando_range_scale_low"],
+                    random_enemy_attributes["enemy_rando_range_scale_high"],
+                    random_enemy_attributes["enemy_rando_range_health_low"],
+                    random_enemy_attributes["enemy_rando_range_health_high"],
+                    random_enemy_attributes["enemy_rando_range_speed_low"],
+                    random_enemy_attributes["enemy_rando_range_speed_high"],
+                    random_enemy_attributes["enemy_rando_range_damage_low"],
+                    random_enemy_attributes["enemy_rando_range_damage_high"],
+                    random_enemy_attributes["enemy_rando_range_knockback_low"],
+                    random_enemy_attributes["enemy_rando_range_knockback_high"],
+                    random_enemy_attributes["enemy_rando_diff_xyz"],
+                )
             enemy_updater("Finished randomizing enemy attributes", 1)

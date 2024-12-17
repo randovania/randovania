@@ -4,7 +4,7 @@ import dataclasses
 import functools
 from typing import TYPE_CHECKING
 
-from randovania.gui.generated.preset_patcher_super_patches_ui import Ui_PresetPatcherSuperPatches
+from randovania.games.super_metroid.gui.generated.preset_patcher_super_patches_ui import Ui_PresetPatcherSuperPatches
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -61,8 +61,8 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
         return "Game Patches"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return cls.GAME_MODIFICATIONS_HEADER
 
     def _on_patch_checkbox_changed(self, field_name: str, checkbox: QCheckBox, value: int):
         with self._editor as editor:

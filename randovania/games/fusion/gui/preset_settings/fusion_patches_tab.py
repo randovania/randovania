@@ -4,8 +4,8 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.games.fusion.gui.generated.preset_fusion_patches_ui import Ui_PresetFusionPatches
 from randovania.games.fusion.layout import FusionConfiguration
-from randovania.gui.generated.preset_fusion_patches_ui import Ui_PresetFusionPatches
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
 
 _FIELDS = [
     "instant_transitions",
+    "anti_softlock",
 ]
 
 
@@ -37,8 +38,8 @@ class PresetFusionPatches(PresetTab, Ui_PresetFusionPatches):
         return "Other"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str) -> None:
         def persist(value: bool) -> None:

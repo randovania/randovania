@@ -34,6 +34,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Outside Jenka's House": {
                             "type": "and",
@@ -69,6 +70,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Outside Sand Zone Residence": {
                             "type": "or",
@@ -409,6 +411,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Outside Sand Zone Residence": {
                             "type": "and",
@@ -816,6 +819,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Lower Side": {
                             "type": "and",
@@ -907,6 +911,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 },
                 "Above Sunstones": {
@@ -1806,7 +1811,7 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": "Kill Omega",
                                             "items": [
@@ -1867,7 +1872,7 @@
                                                                                     {
                                                                                         "type": "and",
                                                                                         "data": {
-                                                                                            "comment": null,
+                                                                                            "comment": "Level 3 Missiles are mandatory, and all 3 need to hit for every shot",
                                                                                             "items": [
                                                                                                 {
                                                                                                     "type": "resource",
@@ -1977,52 +1982,17 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "and",
                                                     "data": {
-                                                        "comment": "Energy Requirements",
+                                                        "comment": "Energy Requirements - FIXME: energy requirements here cause generation failures",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "Damage",
-                                                                    "amount": 19,
+                                                                    "amount": 1,
                                                                     "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Combat",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "damage",
-                                                                                "name": "Damage",
-                                                                                "amount": 10,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -2941,6 +2911,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Outside Sand Zone Storehouse": {
                             "type": "and",
@@ -3269,6 +3240,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Curly Boss)": {
                             "type": "and",
@@ -3409,6 +3381,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Sand Zone": {
                             "type": "resource",
@@ -3496,52 +3469,17 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "Health requirements",
+                                            "comment": "Health requirements - FIXME: energy requirements here cause generation failures",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Damage",
-                                                        "amount": 14,
+                                                        "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 9,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3587,6 +3525,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Puppy (Curly))": {
                             "type": "and",
@@ -3761,6 +3700,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Jenka)": {
                             "type": "resource",
@@ -3983,6 +3923,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Puppy (Dark))": {
                             "type": "and",
@@ -4085,6 +4026,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Before Toroko+": {
                             "type": "and",
@@ -4209,76 +4151,15 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Energy requirements",
+                                            "comment": "Energy requirements - FIXME: energy requirements here cause generation failures",
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Damage",
-                                                        "amount": 22,
+                                                        "amount": 1,
                                                         "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Combat",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 15,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Combat",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 9,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4367,6 +4248,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 }
             }

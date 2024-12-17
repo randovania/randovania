@@ -441,6 +441,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Area 1 Chozo Seal Elevator North",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -480,6 +481,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Area 1 Chozo Seal Elevator South",
                     "connections": {
                         "Chozo Seal": {
                             "type": "or",
@@ -804,6 +806,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -842,6 +845,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Elevator to Area 2 Dam Entryway": {
                             "type": "or",
@@ -969,6 +973,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Magma Pool": {
                             "type": "and",
@@ -1007,6 +1012,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Transport to Surface and Area 2": {
                             "type": "and",
@@ -1015,7 +1021,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Harmonized Hallway": {
+                        "Door to Harmonized Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1024,31 +1030,36 @@
                         }
                     }
                 },
-                "Dock to Harmonized Hallway": {
+                "Door to Harmonized Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9528.911323650962,
-                        "y": 4651.540913921361,
+                        "x": -9550.0,
+                        "y": 4500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 186
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Harmonized Hallway",
-                        "node": "Dock to Moheek Mount"
+                        "node": "Door to Moheek Mount"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Magma Pool": {
                             "type": "and",
@@ -1119,6 +1130,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door from Water Maze": {
                             "type": "and",
@@ -1127,7 +1139,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Harmonized Hallway": {
+                        "Door to Harmonized Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1141,7 +1153,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Water Maze": {
+                        "Door to Water Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1171,13 +1183,14 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Water Maze",
-                        "node": "Door to Gullugg Gangway"
+                        "node": "Door to Gullugg Gangway (Bottom)"
                     },
                     "default_dock_weakness": "Access Closed",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Magma Pool": {
                             "type": "and",
@@ -1188,31 +1201,36 @@
                         }
                     }
                 },
-                "Dock to Harmonized Hallway": {
+                "Door to Harmonized Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7150.953278795045,
-                        "y": 4656.824890778132,
+                        "x": -7150.0,
+                        "y": 4500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_002",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 190
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Harmonized Hallway",
-                        "node": "Dock to Gullugg Gangway"
+                        "node": "Door to Gullugg Gangway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Magma Pool": {
                             "type": "and",
@@ -1248,6 +1266,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Magma Pool": {
                             "type": "and",
@@ -1258,31 +1277,36 @@
                         }
                     }
                 },
-                "Dock to Water Maze": {
+                "Door to Water Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5454.590071804845,
-                        "y": 3061.4771519659935,
+                        "x": -5450.0,
+                        "y": 2900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_008",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 161
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Water Maze",
-                        "node": "Dock to Gullugg Gangway"
+                        "node": "Door to Gullugg Gangway (Top)"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Magma Pool": {
                             "type": "and",
@@ -1408,6 +1432,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -1443,6 +1468,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
@@ -1469,7 +1495,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_CheckPoint_005"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Bomb)": {
                             "type": "and",
@@ -1551,8 +1577,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Inner Temple Teleporter": {
+                        "Door to Inner Temple Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1596,6 +1623,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple Upper Hallway": {
                             "type": "or",
@@ -1618,7 +1646,7 @@
                                 ]
                             }
                         },
-                        "Dock to Inner Temple Teleporter": {
+                        "Door to Inner Temple Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1655,6 +1683,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Temple Exterior": {
                             "type": "and",
@@ -1665,31 +1694,36 @@
                         }
                     }
                 },
-                "Dock to Inner Temple Teleporter": {
+                "Door to Inner Temple Teleporter": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7837.105915692526,
-                        "y": 6297.608926673751,
+                        "x": 7850.0,
+                        "y": 6200.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_007",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 234
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple Teleporter",
-                        "node": "Dock to Inner Temple East Hall"
+                        "node": "Door to Inner Temple East Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Destroyed Armory": {
                             "type": "and",
@@ -1755,6 +1789,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Destroyed Armory": {
                             "type": "and",
@@ -1854,6 +1889,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Aeion Tank)": {
                             "type": "and",
@@ -2153,6 +2189,59 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "SWJ and Damage Boost off of the Gullugg: https://youtu.be/BuWKJuJszxk",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "PreciseAiming",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SWJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DBoost",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "UnmorphExtend",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 15,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -2191,6 +2280,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple East Hall": {
                             "type": "and",
@@ -2334,6 +2424,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -2406,6 +2497,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
@@ -2438,6 +2530,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Temple Exterior": {
                             "type": "or",
@@ -2480,7 +2573,7 @@
                         "default"
                     ],
                     "extra": {
-                        "start_point_actor_name": "ST_Checkpoint_007"
+                        "start_point_actor_name": "ST_CheckPoint_007"
                     },
                     "valid_starting_location": true,
                     "connections": {
@@ -2648,6 +2741,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -2683,6 +2777,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Above Arena": {
                             "type": "resource",
@@ -3171,17 +3266,8 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "HJ + SuperJump + UE: https://youtu.be/r8Pb-3bIPGc",
+                                            "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -3192,21 +3278,72 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "SuperJump",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "UnmorphExtend",
-                                                        "amount": 3,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Super Jump with Unmorph Extend: https://youtu.be/r8Pb-3bIPGc",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 4,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Super Jump and aim up to Damage Boost off of the Gullugg: https://youtu.be/boCImRu4y2E",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 5,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DBoost",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -3294,6 +3431,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -3332,6 +3470,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -3340,56 +3479,45 @@
                                 "items": []
                             }
                         },
-                        "Tunnel to Exterior Alpha Arena": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
-                                "comment": "Melee Clip OoB above the tunnel",
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Right Side Wall": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Climb Rooms Vertically (No High Jump)"
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "MeleeClip",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "Climb Rooms Vertically (No High Jump)"
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Boots",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
                                                 },
                                                 {
-                                                    "type": "and",
+                                                    "type": "or",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Boots",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
+                                                                    "comment": "Wall Jump off the wall above the door",
                                                                     "items": [
                                                                         {
                                                                             "type": "resource",
@@ -3399,13 +3527,30 @@
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
-                                                                        },
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SuperJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "SuperJump",
-                                                                                "amount": 2,
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -3426,15 +3571,188 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Freeze the Gullugg to climb up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "FrozenEnemy",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With High Jump: https://youtu.be/IgpHUuAi3q0",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boots",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Ice Beam Only: https://youtu.be/IgpHUuAi3q0?t=27",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "With Unmorph Extend: https://youtu.be/IgpHUuAi3q0?t=13",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnmorphExtend",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Damage Boost: https://youtu.be/ScFsxUqNXns",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "DBoost",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 15,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Wall Jump off the wall above the door",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SWJ",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SuperJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
-                            }
-                        },
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -3467,6 +3785,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -3506,33 +3825,38 @@
                         }
                     }
                 },
-                "Dock to Chute Leech Cabin": {
+                "Door to Chute Leech Cabin": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2537.075848303393,
-                        "y": 7853.455588822356,
+                        "x": -2550.0,
+                        "y": 7700.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_003",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 256
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Chute Leech Cabin",
-                        "node": "Dock to Temple Exterior"
+                        "node": "Door to Temple Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Inner Temple Save Station": {
+                        "Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3566,6 +3890,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -3603,6 +3928,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Exterior Alpha Arena": {
                             "type": "resource",
@@ -3640,6 +3966,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "2nd Level": {
                             "type": "and",
@@ -3650,33 +3977,38 @@
                         }
                     }
                 },
-                "Dock to Inner Temple Save Station": {
+                "Door to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1323.0788423153695,
-                        "y": 7841.354790419162,
+                        "x": 1350.0,
+                        "y": 7700.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_004",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 260
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple Save Station",
-                        "node": "Dock to Temple Exterior"
+                        "node": "Door to Temple Exterior"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Chute Leech Cabin": {
+                        "Door to Chute Leech Cabin": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3781,7 +4113,7 @@
                             "type": "template",
                             "data": "Lay Any Bomb"
                         },
-                        "Dock to Inner Temple Save Station": {
+                        "Door to Inner Temple Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3817,6 +4149,30 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Alpha_004"
                     },
+                    "valid_starting_location": true,
+                    "connections": {
+                        "Door to Exterior Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Right Side Wall": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 11615.495101932753,
+                        "y": 11692.441090812814,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
                     "valid_starting_location": false,
                     "connections": {
                         "Door to Exterior Alpha Arena": {
@@ -3824,6 +4180,196 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Tunnel to Exterior Alpha Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Melee Clip above the tunnel: https://youtu.be/eFYeU_gh6gU",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "MeleeClip",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "OoB",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Above Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Freeze Gullugg and jump to the left: https://youtu.be/IgpHUuAi3q0?t=19",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Ice",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "FrozenEnemy",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Damage Boost off the Gullugg to the left",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DBoost",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "With HJ: https://youtu.be/boCImRu4y2E?t=13",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boots",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "Damage",
+                                                                                            "amount": 15,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "Without HJ: https://youtu.be/ScFsxUqNXns?t=3",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Morph",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "UnmorphExtend",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "SWJ",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "Damage",
+                                                                                            "amount": 25,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3896,8 +4442,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Metroid Caverns Alpha Arena South West Access": {
+                        "Door to Metroid Caverns Alpha Arena South West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3938,6 +4485,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Metroid Caverns Energy Recharge Station": {
                             "type": "and",
@@ -3980,7 +4528,7 @@
                                 ]
                             }
                         },
-                        "Dock to Metroid Caverns Alpha Arena South West Access": {
+                        "Door to Metroid Caverns Alpha Arena South West Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4014,8 +4562,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Metroid Caverns Alpha Arena South West Access": {
+                        "Door to Metroid Caverns Alpha Arena South West Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4026,31 +4575,36 @@
                         }
                     }
                 },
-                "Dock to Metroid Caverns Alpha Arena South West Access": {
+                "Door to Metroid Caverns Alpha Arena South West Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -282.7439519377945,
-                        "y": -280.251505490613,
+                        "x": -250.0,
+                        "y": -400.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_011",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 44
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Metroid Caverns Alpha Arena South West Access",
-                        "node": "Dock to Metroid Caverns Lobby"
+                        "node": "Door to Metroid Caverns Lobby"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Metroid Caverns Alpha Arena South East": {
                             "type": "and",
@@ -4080,7 +4634,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Alpha_002"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Metroid Caverns Alpha Arena South East": {
                             "type": "and",
@@ -4123,31 +4677,36 @@
                 "asset_id": "collision_camera_024"
             },
             "nodes": {
-                "Dock to Metroid Caverns Lobby": {
+                "Door to Metroid Caverns Lobby": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -225.64901349948104,
-                        "y": -281.8715552360412,
+                        "x": -250.0,
+                        "y": -400.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_011",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 43
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Metroid Caverns Lobby",
-                        "node": "Dock to Metroid Caverns Alpha Arena South West Access"
+                        "node": "Door to Metroid Caverns Alpha Arena South West Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Left Pillar": {
                             "type": "or",
@@ -4374,6 +4933,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 },
                 "Tunnel to Metroid Caverns Alpha Arena South West (Bottom)": {
@@ -4401,6 +4961,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Left Pillar": {
                             "type": "and",
@@ -4436,9 +4997,9 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Alpha_001"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
-                        "Dock to Metroid Caverns Lobby": {
+                        "Door to Metroid Caverns Lobby": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4686,6 +5247,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha Metroid": {
                             "type": "template",
@@ -4807,6 +5369,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Event - Alpha Metroid": {
                             "type": "template",
@@ -4929,12 +5492,12 @@
                         }
                     }
                 },
-                "Door to Gullugg Gangway": {
+                "Door to Gullugg Gangway (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5463.392713037992,
-                        "y": 2677.470775770457,
+                        "x": -5463.39,
+                        "y": 2677.47,
                         "z": 0.0
                     },
                     "description": "",
@@ -4957,6 +5520,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -5333,33 +5897,38 @@
                         }
                     }
                 },
-                "Dock to Gullugg Gangway": {
+                "Door to Gullugg Gangway (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5478.270502623539,
-                        "y": 3057.9171094580233,
+                        "x": -5450.0,
+                        "y": 2900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_008",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 162
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Gullugg Gangway",
-                        "node": "Dock to Water Maze"
+                        "node": "Door to Water Maze"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Door to Gullugg Gangway": {
+                        "Door to Gullugg Gangway (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5402,7 +5971,7 @@
                                 ]
                             }
                         },
-                        "Dock to Metroid Caverns Save Station": {
+                        "Door to Metroid Caverns Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5411,33 +5980,38 @@
                         }
                     }
                 },
-                "Dock to Metroid Caverns Save Station": {
+                "Door to Metroid Caverns Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4222.16,
-                        "y": 3060.04,
+                        "x": -4250.0,
+                        "y": 2900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_009",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 163
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Metroid Caverns Save Station",
-                        "node": "Dock to Water Maze"
+                        "node": "Door to Water Maze"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Gullugg Gangway": {
+                        "Door to Gullugg Gangway (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5471,6 +6045,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Pickup": {
                             "type": "resource",
@@ -5530,7 +6105,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Gullugg Gangway": {
+                        "Door to Gullugg Gangway (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5677,6 +6252,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -5731,7 +6307,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_CheckPoint_006"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Pickup (Ice Beam)": {
                             "type": "and",
@@ -5860,6 +6436,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "resource",
@@ -5961,6 +6538,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -6149,6 +6727,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Moheek Mount": {
                             "type": "or",
@@ -6529,15 +7108,16 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Bomb Chamber Access": {
+                        "Door to Bomb Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Inner Temple Save Station": {
+                        "Door to Inner Temple Save Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6613,6 +7193,15 @@
                                                                                 "amount": 3,
                                                                                 "negate": false
                                                                             }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
                                                                         }
                                                                     ]
                                                                 }
@@ -6678,6 +7267,15 @@
                                                         "type": "tricks",
                                                         "name": "UnmorphExtend",
                                                         "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -6746,18 +7344,35 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "UnmorphExtend",
+                                                                    "name": "SuperJump",
                                                                     "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "and",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "SuperJump",
-                                                                    "amount": 2,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Morph",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "UnmorphExtend",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -6796,8 +7411,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Bomb Chamber Access": {
+                        "Door to Bomb Chamber Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6808,31 +7424,36 @@
                         }
                     }
                 },
-                "Dock to Bomb Chamber Access": {
+                "Door to Bomb Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2538.2394615657104,
-                        "y": 4797.343251859724,
+                        "x": 2550.0,
+                        "y": 4600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_006",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 198
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Bomb Chamber Access",
-                        "node": "Dock to Inner Temple West Hall"
+                        "node": "Door to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple Teleporter Access": {
                             "type": "and",
@@ -7045,31 +7666,36 @@
                         }
                     }
                 },
-                "Dock to Inner Temple Save Station": {
+                "Door to Inner Temple Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2538.2394615657104,
-                        "y": 7961.3531703861145,
+                        "x": 2550.0,
+                        "y": 7800.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_005",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 262
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple Save Station",
-                        "node": "Dock to Inner Temple West Hall"
+                        "node": "Door to Inner Temple West Hall"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple Teleporter Access": {
                             "type": "and",
@@ -7161,7 +7787,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Water Maze": {
+                        "Door to Water Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7388,31 +8014,36 @@
                         }
                     }
                 },
-                "Dock to Water Maze": {
+                "Door to Water Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -4252.25,
-                        "y": 3079.33,
+                        "x": -4250.0,
+                        "y": 2900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_009",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 164
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Water Maze",
-                        "node": "Dock to Metroid Caverns Save Station"
+                        "node": "Door to Metroid Caverns Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -7448,6 +8079,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -7485,6 +8117,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
@@ -7524,6 +8157,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -7596,6 +8230,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -7606,12 +8241,12 @@
                         }
                     }
                 },
-                "Dock to Inner Temple Ventilation Shaft": {
+                "Dock from Inner Temple Ventilation Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4590.944689182575,
-                        "y": 6962.7263827704355,
+                        "x": 4590.94,
+                        "y": 6962.73,
                         "z": 0.0
                     },
                     "description": "",
@@ -7626,11 +8261,12 @@
                         "area": "Inner Temple Ventilation Shaft",
                         "node": "Dock to Inner Temple Teleporter Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Blocked Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -7666,6 +8302,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "or",
@@ -7929,6 +8566,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "or",
@@ -7995,13 +8633,14 @@
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple Teleporter Access",
-                        "node": "Dock to Inner Temple Ventilation Shaft"
+                        "node": "Dock from Inner Temple Ventilation Shaft"
                     },
                     "default_dock_weakness": "Open Passage",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 },
                 "Tunnel to Temple Exterior": {
@@ -8029,6 +8668,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Inner Temple Upper Hallway": {
                             "type": "resource",
@@ -8066,6 +8706,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Temple Exterior": {
                             "type": "template",
@@ -8130,9 +8771,10 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Metroid Caverns Save Station": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -8240,7 +8882,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Metroid Caverns Alpha Arena North East Access": {
+                        "Door to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8274,6 +8916,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Metroid Caverns Save Station": {
                             "type": "or",
@@ -8319,6 +8962,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Metroid Caverns Save Station": {
                             "type": "resource",
@@ -8356,8 +9000,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Metroid Caverns Alpha Arena North East Access": {
+                        "Door to Metroid Caverns Alpha Arena North East Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8366,31 +9011,36 @@
                         }
                     }
                 },
-                "Dock to Metroid Caverns Alpha Arena North East Access": {
+                "Door to Metroid Caverns Alpha Arena North East Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2571.6790648246547,
-                        "y": 1447.254693588381,
+                        "x": 2550.0,
+                        "y": 1300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_010",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 87
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Metroid Caverns Alpha Arena North East Access",
-                        "node": "Dock to Metroid Caverns Hub"
+                        "node": "Door to Metroid Caverns Hub"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Metroid Caverns Save Station": {
                             "type": "and",
@@ -8465,8 +9115,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Metroid Caverns Hub": {
+                        "Door to Metroid Caverns Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8482,31 +9133,36 @@
                         }
                     }
                 },
-                "Dock to Metroid Caverns Hub": {
+                "Door to Metroid Caverns Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2514.0546369518333,
-                        "y": 1446.848789839444,
+                        "x": 2550.0,
+                        "y": 1300.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_010",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 88
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Metroid Caverns Hub",
-                        "node": "Dock to Metroid Caverns Alpha Arena North East Access"
+                        "node": "Door to Metroid Caverns Alpha Arena North East Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Metroid Caverns Alpha Arena North East": {
                             "type": "and",
@@ -8532,7 +9188,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_SG_Alpha_003"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Metroid Caverns Alpha Arena North East": {
                             "type": "and",
@@ -8603,8 +9259,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Inner Temple West Hall": {
+                        "Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8613,31 +9270,36 @@
                         }
                     }
                 },
-                "Dock to Inner Temple West Hall": {
+                "Door to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2582.378223495702,
-                        "y": 4792.478510028654,
+                        "x": 2550.0,
+                        "y": 4600.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_006",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 197
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple West Hall",
-                        "node": "Dock to Bomb Chamber Access"
+                        "node": "Door to Bomb Chamber Access"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Bomb Chamber": {
                             "type": "and",
@@ -8677,8 +9339,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Inner Temple West Hall": {
+                        "Door to Inner Temple West Hall": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8740,14 +9403,14 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Inner Temple West Hall": {
+                        "Door to Inner Temple West Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Temple Exterior": {
+                        "Door to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8756,31 +9419,36 @@
                         }
                     }
                 },
-                "Dock to Inner Temple West Hall": {
+                "Door to Inner Temple West Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2584.0772228126107,
-                        "y": 7919.116778840477,
+                        "x": 2550.0,
+                        "y": 7800.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_005",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 261
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple West Hall",
-                        "node": "Dock to Inner Temple Save Station"
+                        "node": "Door to Inner Temple Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -8791,31 +9459,36 @@
                         }
                     }
                 },
-                "Dock to Temple Exterior": {
+                "Door to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1311.1996693824537,
-                        "y": 7828.196953595466,
+                        "x": 1350.0,
+                        "y": 7700.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_004",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 261
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Temple Exterior",
-                        "node": "Dock to Inner Temple Save Station"
+                        "node": "Door to Inner Temple Save Station"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -8886,6 +9559,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple East Hall": {
                             "type": "and",
@@ -8933,6 +9607,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple Ventilation Shaft": {
                             "type": "and",
@@ -8968,6 +9643,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Inner Temple Ventilation Shaft": {
                             "type": "resource",
@@ -9048,7 +9724,7 @@
                         }
                     },
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9082,8 +9758,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -9102,31 +9779,36 @@
                         }
                     }
                 },
-                "Dock to Inner Temple East Hall": {
+                "Door to Inner Temple East Hall": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 7871.189042389893,
-                        "y": 6285.11040264494,
+                        "x": 7850.0,
+                        "y": 6200.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_007",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 233
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Inner Temple East Hall",
-                        "node": "Dock to Inner Temple Teleporter"
+                        "node": "Door to Inner Temple Teleporter"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Teleporter": {
                             "type": "and",
@@ -9172,7 +9854,7 @@
                     "valid_starting_location": false,
                     "event_name": "Area 1 Teleporter",
                     "connections": {
-                        "Dock to Inner Temple East Hall": {
+                        "Door to Inner Temple East Hall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9241,6 +9923,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Inner Temple East Hall": {
                             "type": "or",
@@ -9390,6 +10073,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Ice Beam Chamber": {
                             "type": "and",
@@ -9491,6 +10175,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "template",
@@ -9530,33 +10215,38 @@
                 "asset_id": "collision_camera_052"
             },
             "nodes": {
-                "Dock to Moheek Mount": {
+                "Door to Moheek Mount": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9572.55489021956,
-                        "y": 4675.303066555691,
+                        "x": -9550.0,
+                        "y": 4500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 187
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Moheek Mount",
-                        "node": "Dock to Harmonized Hallway"
+                        "node": "Door to Harmonized Hallway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Gullugg Gangway": {
+                        "Door to Gullugg Gangway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9565,33 +10255,38 @@
                         }
                     }
                 },
-                "Dock to Gullugg Gangway": {
+                "Door to Gullugg Gangway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7129.17,
-                        "y": 4660.76,
+                        "x": -7150.0,
+                        "y": 4500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_002",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 189
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Gullugg Gangway",
-                        "node": "Dock to Harmonized Hallway"
+                        "node": "Door to Harmonized Hallway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Moheek Mount": {
+                        "Door to Moheek Mount": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9657,6 +10352,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "resource",
@@ -9694,6 +10390,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 },
                 "Event - Alpha Metroid": {
@@ -9834,8 +10531,9 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
-                        "Dock to Temple Exterior": {
+                        "Door to Temple Exterior": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9844,31 +10542,36 @@
                         }
                     }
                 },
-                "Dock to Temple Exterior": {
+                "Door to Temple Exterior": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -2532.934131736527,
-                        "y": 7876.197604790419,
+                        "x": -2550.0,
+                        "y": 7700.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_003",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 255
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Area 1",
                         "area": "Temple Exterior",
-                        "node": "Dock to Chute Leech Cabin"
+                        "node": "Door to Chute Leech Cabin"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Gullugg Gangway": {
                             "type": "and",

@@ -13,7 +13,7 @@ Extra - asset_id: collision_camera_005
 
 > Elevator to Area 2 Dam Interior; Heals? False
   * Layers: default
-  * Elevator to Wave Beam & Transport to Dam Exterior West/Elevator to Area 2 Dam Exterior
+  * Elevator to Wave Beam & Transport to Dam Exterior West/Elevator to Area 2 Dam Exterior; Custom name: Dam Exterior Elevator West
   * Extra - actor_name: LE_Platform_Elevator_FromArea02B
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02B
@@ -30,7 +30,7 @@ Extra - asset_id: collision_camera_005
 
 > Elevator to Area 2 Dam Entryway; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Lightning Armor & Transport to Dam Exterior East/Elevator to Area 2 Dam Exterior
+  * Elevator to Lightning Armor & Transport to Dam Exterior East/Elevator to Area 2 Dam Exterior; Custom name: Dam Exterior Elevator East
   * Extra - actor_name: LE_Platform_Elevator_FromArea02C
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea02C
@@ -85,11 +85,7 @@ Extra - asset_id: collision_camera_005
   * Missile Door to Arachnus Arena/Door from Dam Exterior
   * Extra - actor_name: Door004
   * Extra - actor_type: doorclosedpower
-  > Door from Maintenance Tunnel
-      Trivial
-  > Top of Wall
-      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
-  > Start Point (Bottom)
+  > Next to Arachnus Arena
       Trivial
 
 > Door to Metroid Caverns Entrance (Bottom); Heals? False
@@ -141,7 +137,7 @@ Extra - asset_id: collision_camera_005
   * Access Closed to Maintenance Tunnel/Door to Dam Exterior
   * Extra - actor_name: Door014
   * Extra - actor_type: doorclosedpower
-  > Door to Arachnus Arena
+  > Next to Arachnus Arena
       Trivial
 
 > Door to Critter Playground; Heals? False
@@ -178,23 +174,37 @@ Extra - asset_id: collision_camera_005
   * Layers: default
   > Elevator to Area 2 Dam Entryway
       Trivial
-  > Door to Arachnus Arena
-      Trivial
   > Door to Rock Icicle Corridor
       Trivial
   > Door to Exterior Alpha+ Arena
       Diagonal Bomb Jump (Advanced) and Lay Bomb
+  > Next to Arachnus Arena
+      Trivial
 
-> Start Point (Top); Heals? False
+> Start Point (Top); Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_001
   > Door to Exterior Alpha+ Arena
       Trivial
 
-> Start Point (Bottom); Heals? False
+> Next to Arachnus Arena; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Arachnus
   > Door to Arachnus Arena
+      Any of the following:
+          Disabled Final Boss Arachnus
+          Enabled Final Boss Arachnus and All DNA
+  > Door from Maintenance Tunnel
+      Trivial
+  > Top of Wall
+      Single-wall Wall Jump (Intermediate) or Climb Rooms Vertically (No High Jump)
+  > Event - Credits (Arachnus Final Boss)
+      After Area 2 (Dam Exterior) - Arachnus
+
+> Event - Credits (Arachnus Final Boss); Heals? False
+  * Layers: final-boss-arachnus
+  * Event Credits
+  > Next to Arachnus Arena
       Trivial
 
 ----------------
@@ -203,7 +213,7 @@ Extra - total_boundings: {'x1': -3100.0, 'x2': -900.0, 'y1': 4500.0, 'y2': 5600.
 Extra - polygon: [[-3100.0, 5600.0], [-3100.0, 4500.0], [-850.0, 4500.0], [-850.0, 5600.0]]
 Extra - asset_id: collision_camera_006
 > Pickup (Spring Ball); Heals? False
-  * Layers: default
+  * Layers: final-boss-not-arachnus
   * Pickup 37; Category? Major
   * Extra - actor_name: LE_PowerUp_Springball
   * Extra - actor_type: powerup_springball
@@ -227,12 +237,14 @@ Extra - asset_id: collision_camera_006
 > Event - Arachnus; Heals? False
   * Layers: default
   * Event Area 2 (Dam Exterior) - Arachnus
-  > Pickup (Spring Ball)
+  > Room Center
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_007
+  > Pickup (Spring Ball)
+      After Area 2 (Dam Exterior) - Arachnus and Disabled Final Boss Arachnus
   > Door from Dam Exterior
       Trivial
   > Tunnel to Fan Funnel
@@ -261,7 +273,11 @@ Extra - asset_id: collision_camera_007
   * Layers: default
   * Tunnel with Bomb Block to Maintenance Tunnel/Tunnel to Fan Funnel
   > Tunnel to Arachnus Arena
-      Lay Any Bomb
+      All of the following:
+          Lay Any Bomb
+          Any of the following:
+              Disabled Final Boss Arachnus
+              Enabled Final Boss Arachnus and All DNA
 
 ----------------
 Critter Playground
@@ -466,8 +482,16 @@ Extra - asset_id: collision_camera_024
   * Tunnel to Metroid Caverns Entrance/Tunnel to Spike Ravine (Bottom)
   > Pickup (Aeion Tank)
       Any of the following:
+          # IBJ from below
           Simple IBJ
-          Morph Ball and Space Jump and Movement (Intermediate)
+          All of the following:
+              # Dodge the spikes
+              Morph Ball
+              Any of the following:
+                  # With Space Jump
+                  Space Jump and Movement (Intermediate)
+                  # With Super Jump and Unmorph Extend https://youtu.be/UxgWgzcCDxk
+                  High Jump Boots and Super Jump (Expert) and Unmorph Extend (Advanced)
   > Tunnel to Metroid Caverns Entrance (Top)
       Single-wall Wall Jump (Beginner) or Climb Rooms Vertically (No High Jump)
 
@@ -541,7 +565,7 @@ Extra - asset_id: collision_camera_027
       Trivial
   > Door to Metroid Caverns Alpha Arena North West
       Trivial
-  > Dock to Metroid Caverns Alpha Arena East Access
+  > Door to Metroid Caverns Alpha Arena East Access
       Trivial
   > Tunnel to Metroid Caverns Maze
       Lay Any Bomb
@@ -570,9 +594,12 @@ Extra - asset_id: collision_camera_027
   > Energy Recharge Station
       Trivial
 
-> Dock to Metroid Caverns Alpha Arena East Access; Heals? False
+> Door to Metroid Caverns Alpha Arena East Access; Heals? False
   * Layers: default
-  * Open Passage to Metroid Caverns Alpha Arena East Access/Dock to Metroid Caverns Save Station
+  * Access Open to Metroid Caverns Alpha Arena East Access/Door to Metroid Caverns Save Station
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 48
   > Energy Recharge Station
       Trivial
 
@@ -678,7 +705,7 @@ Extra - asset_id: collision_camera_029
   > Door to Metroid Caverns Alpha Arena North West
       Varia Suit
 
-> Start Point; Heals? False; Default Node
+> Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_004
   > Door to Metroid Caverns Alpha Arena South West
@@ -727,14 +754,17 @@ Extra - asset_id: collision_camera_031
 > Tunnel to Metroid Caverns Alpha Arena East; Heals? False
   * Layers: default
   * Tunnel with Bomb Block to Metroid Caverns Alpha Arena East/Tunnel to Metroid Caverns Alpha Arena East Access
-  > Dock to Metroid Caverns Save Station
+  > Door to Metroid Caverns Save Station
       Lay Any Bomb
   > Start Point
       Morph Ball
 
-> Dock to Metroid Caverns Save Station; Heals? False
+> Door to Metroid Caverns Save Station; Heals? False
   * Layers: default
-  * Open Passage to Metroid Caverns Save Station/Dock to Metroid Caverns Alpha Arena East Access
+  * Access Open to Metroid Caverns Save Station/Door to Metroid Caverns Alpha Arena East Access
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 49
   > Tunnel to Metroid Caverns Alpha Arena East
       Any of the following:
           Lay Power Bomb
@@ -745,7 +775,7 @@ Extra - asset_id: collision_camera_031
                   # Lay a Bomb before the fan and move right to be propelled upwardshttps://youtu.be/iGcQA25DM_Y
                   Movement (Intermediate)
 
-> Start Point; Heals? False; Default Node
+> Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_007
   > Tunnel to Metroid Caverns Alpha Arena East
@@ -835,7 +865,7 @@ Extra - asset_id: collision_camera_032
   > Below Pickup
       Varia Suit and Shoot Any Missile
 
-> Start Point; Heals? False
+> Start Point; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Alpha_005
   > Door to Metroid Caverns Alpha+ Arena

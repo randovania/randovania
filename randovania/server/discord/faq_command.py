@@ -1,6 +1,6 @@
 import discord
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
 from randovania.server.discord.randovania_cog import RandovaniaCog
@@ -67,7 +67,7 @@ class FaqCommandCog(RandovaniaCog):
     async def website(self, context: discord.ApplicationContext):
         """Posts information about Randovania's website."""
         embed = discord.Embed(
-            title="https://randovania.github.io/",
+            title="https://randovania.org/",
             description=(
                 "In the website, you'll find download links to Randovania and instructions on how to get started!"
             ),

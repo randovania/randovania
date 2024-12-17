@@ -5,10 +5,10 @@ from functools import partial
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
+from randovania.games.prime1.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 from randovania.gui.lib import slider_updater
 from randovania.gui.lib.signal_handling import set_combo_with_value
 

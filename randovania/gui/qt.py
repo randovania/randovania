@@ -11,7 +11,8 @@ from pathlib import Path
 from PySide6 import QtCore, QtWidgets
 
 import randovania
-from randovania.games.game import RandovaniaGame
+from randovania import monitoring
+from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common import persistence
 
 if typing.TYPE_CHECKING:
@@ -28,6 +29,7 @@ logger = logging.getLogger(__name__)
 
 def display_exception(val: Exception):
     if not isinstance(val, KeyboardInterrupt):
+        monitoring.metrics.incr("amount_of_exceptions")
         logging.exception("unhandled exception", exc_info=val)
 
         from randovania.gui.lib import error_message_box
@@ -105,6 +107,8 @@ async def show_main_window(
             if not await attempt_login():
                 app.quit()
                 return
+            logger.info("Logged in as %s", network_client.current_user)
+
         finally:
 
             def reset_last_window_quit():
@@ -241,6 +245,11 @@ def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
     old_handler = sys.excepthook
     sys.excepthook = catch_exceptions
     loop.set_exception_handler(catch_exceptions_async)
+
+    # patch_asyncio happens when the SDK is initialized, which is before we create our custom loop
+    import sentry_sdk.integrations.asyncio
+
+    sentry_sdk.integrations.asyncio.patch_asyncio()
 
     return loop
 

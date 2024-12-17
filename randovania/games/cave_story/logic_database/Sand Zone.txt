@@ -185,7 +185,7 @@ Extra - starting_script: <TRA0010:0099:0036:0033
                       Missiles ≥ 6 and Break blocks with Missiles (Intermediate)
                       Missiles ≥ 2 and Break blocks with Missiles (Advanced)
                       Missiles and Break blocks with Missiles (Expert)
-          Any of the following:
+          All of the following:
               # Kill Omega
               Any of the following:
                   # Item requirements
@@ -195,6 +195,7 @@ Extra - starting_script: <TRA0010:0099:0036:0033
                       Missile Launcher
                       Any of the following:
                           Missiles ≥ 50 and Kill Bosses with Missiles (Advanced)
+                          # Level 3 Missiles are mandatory, and all 3 need to hit for every shot
                           Missiles ≥ 25 and Kill Bosses with Missiles (Hypermode)
                   All of the following:
                       # Kill with Super Missiles
@@ -202,10 +203,8 @@ Extra - starting_script: <TRA0010:0099:0036:0033
                       Any of the following:
                           Missiles ≥ 11 and Kill Bosses with Missiles (Beginner)
                           Missiles ≥ 10 and Kill Bosses with Missiles (Intermediate)
-              Any of the following:
-                  # Energy Requirements
-                  Combat (Intermediate) or Normal Damage ≥ 19
-                  Combat (Beginner) and Normal Damage ≥ 10
+              # Energy Requirements - FIXME: energy requirements here cause generation failures
+              Normal Damage
   > Above Sunstones
       Any of the following:
           Can Break Blocks
@@ -383,10 +382,8 @@ Extra - starting_script: <TRA0029:0090:0018:0009
               # Item requirements
               Can Kill Bosses
               Missiles ≥ 9 and Super Missile Launcher and Kill Bosses with Missiles (Beginner)
-          Any of the following:
-              # Health requirements
-              Combat (Intermediate) or Normal Damage ≥ 14
-              Combat (Beginner) and Normal Damage ≥ 9
+          # Health requirements - FIXME: energy requirements here cause generation failures
+          Normal Damage
 
 ----------------
 Small Room
@@ -531,11 +528,8 @@ Extra - map_name: Gard
               Can Kill Bosses
               Missiles ≥ 13 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
               Missiles ≥ 30 and Missile Launcher and Kill Bosses with Missiles (Expert)
-          Any of the following:
-              # Energy requirements
-              Combat (Advanced) or Normal Damage ≥ 22
-              Combat (Beginner) and Normal Damage ≥ 15
-              Combat (Intermediate) and Normal Damage ≥ 9
+          # Energy requirements - FIXME: energy requirements here cause generation failures
+          Normal Damage
 
 > Event - Toroko+; Heals? False
   * Layers: default

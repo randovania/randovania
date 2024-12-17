@@ -3,7 +3,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
-from randovania.games.samus_returns.layout.msr_configuration import MSRArtifactConfig, MSRConfiguration
+from randovania.games.samus_returns.layout.msr_configuration import (
+    FinalBossConfiguration,
+    MSRArtifactConfig,
+    MSRConfiguration,
+)
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree,
@@ -12,38 +16,71 @@ from randovania.layout.preset_describer import (
 )
 
 if TYPE_CHECKING:
-    from randovania.games.game import ProgressiveItemTuples
+    from randovania.game.gui import ProgressiveItemTuples
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def describe_artifacts(artifacts: MSRArtifactConfig) -> list[dict[str, bool]]:
+_BOSS_NAME = {
+    FinalBossConfiguration.ARACHNUS: "Arachnus",
+    FinalBossConfiguration.DIGGERNAUT: "Diggernaut",
+    FinalBossConfiguration.QUEEN: "Metroid Queen",
+    FinalBossConfiguration.RIDLEY: "Proteus Ridley",
+    FinalBossConfiguration.RANDOM: "Unknown Boss",
+}
+
+
+def describe_objective(artifacts: MSRArtifactConfig, final_boss: FinalBossConfiguration) -> list[dict[str, bool]]:
     has_artifacts = artifacts.required_artifacts > 0
     if has_artifacts and artifacts.prefer_anywhere:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA": True,
             },
             {
                 "Place at any item location": artifacts.prefer_anywhere,
+            },
+            {
+                "Defeat " + _BOSS_NAME[final_boss]: True,
             },
         ]
     elif has_artifacts:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} out of {artifacts.placed_artifacts} Metroid DNA": True,
             },
             {
                 "Prefers Standard Metroids": artifacts.prefer_metroids,
                 "Prefers Stronger Metroids": artifacts.prefer_stronger_metroids,
                 "Prefers Bosses": artifacts.prefer_bosses,
             },
+            {
+                "Defeat " + _BOSS_NAME[final_boss]: True,
+            },
         ]
     else:
         return [
             {
-                "Defeat Proteus Ridley": True,
+                "Defeat " + _BOSS_NAME[final_boss]: True,
             }
         ]
+
+
+def format_environmental_damage(configuration: MSRConfiguration) -> list:
+    def format_dmg(value: int | None) -> str:
+        if value is None:
+            return "Unmodified"
+        elif value == 0:
+            return "Removed"
+        else:
+            return f"Constant {value} dmg/s"
+
+    return [
+        {f"{name}: {format_dmg(dmg)}": True}
+        for name, dmg in [
+            ("Heat", configuration.constant_heat_damage),
+            ("Lava", configuration.constant_lava_damage),
+        ]
+    ]
 
 
 _MSR_HINT_TEXT = {
@@ -61,6 +98,7 @@ class MSRPresetDescriber(GamePresetDescriber):
         template_strings = super().format_params(configuration)
 
         dna_hint = _MSR_HINT_TEXT[configuration.hints.artifacts]
+        baby_hint = _MSR_HINT_TEXT[configuration.hints.baby_metroid]
 
         extra_message_tree = {
             "Logic Settings": [
@@ -92,8 +130,14 @@ class MSRPresetDescriber(GamePresetDescriber):
                     "Missile Reserve Tank": has_shuffled_item(standard_pickups, "Missile Reserve Tank"),
                 },
             ],
-            "Gameplay": [],
-            "Goal": describe_artifacts(configuration.artifacts),
+            "Gameplay": [
+                {
+                    f"Elevators: {configuration.teleporters.description('elevators')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
+            ],
+            "Goal": describe_objective(configuration.artifacts, configuration.final_boss),
             "Game Changes": [
                 message_for_required_mains(
                     configuration.ammo_pickup_configuration,
@@ -122,14 +166,16 @@ class MSRPresetDescriber(GamePresetDescriber):
                 },
             ],
             "Hints": [
+                {f"Baby Metroid Hint: {baby_hint}": baby_hint is not None},
                 {f"DNA Hints: {dna_hint}": dna_hint is not None},
             ],
+            "Environmental Damage": format_environmental_damage(configuration),
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
 
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.samus_returns.pickup_database import progressive_items
+        from randovania.games.samus_returns.layout import progressive_items
 
         return progressive_items.tuples()

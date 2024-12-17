@@ -5,10 +5,10 @@ from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
     PrimeTrilogyTeleporterConfiguration,
 )
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.hint_configuration import HintConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -28,6 +28,12 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
     MAJOR = "Major"
     SKIPPABLE = "Skippable"
     SKIPPABLE_COMPETITIVE = "SkippableCompetitive"
+
+
+class DamageReduction(BitPackEnum, Enum):
+    DEFAULT = "Default"
+    PROGRESSIVE = "Progressive"
+    ADDITIVE = "Additive"
 
 
 class IngameDifficulty(BitPackEnum, Enum):
@@ -86,7 +92,7 @@ class PrimeConfiguration(BaseConfiguration):
     artifact_minimum_progression: int = dataclasses.field(metadata={"min": 0, "max": 99})
     heat_damage: float = dataclasses.field(metadata={"min": 0.1, "max": 99.9, "precision": 3.0})
     warp_to_start: bool
-    progressive_damage_reduction: bool
+    damage_reduction: DamageReduction
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
     large_samus: bool
@@ -110,6 +116,7 @@ class PrimeConfiguration(BaseConfiguration):
     backwards_upper_mines: bool
     backwards_lower_mines: bool
     phazon_elite_without_dynamo: bool
+    remove_bars_great_tree_hall: bool
 
     legacy_mode: bool
     qol_cutscenes: LayoutCutsceneMode

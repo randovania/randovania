@@ -2,16 +2,16 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from PySide6 import QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 
-from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
+from randovania.game.game_enum import RandovaniaGame
+from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform, LinuxRyujinxPath
 from randovania.games.dread.exporter.options import DreadPerGameOptions
-from randovania.games.game import RandovaniaGame
+from randovania.games.dread.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
@@ -22,10 +22,10 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for_directory,
     update_validation,
 )
-from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
+from randovania.lib import windows_lib
 from randovania.lib.ftp_uploader import FtpUploader
-from randovania.lib.windows_drives import get_windows_drives
+from randovania.lib.windows_lib import get_windows_drives
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -34,15 +34,12 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options
 
 
-def get_path_to_ryujinx() -> Path:
-    if platform.system() == "Windows":
-        return Path(os.environ["APPDATA"], "Ryujinx", "mods", "contents", "010093801237c000")
-
-    raise ValueError("Unsupported platform")
+def return_linux_only_controls() -> set[str]:
+    return {"linux_flatpak_radio", "linux_native_radio"}
 
 
 def supports_ryujinx() -> bool:
-    return platform.system() in {"Windows"}
+    return platform.system() in {"Windows", "Linux", "Darwin"}
 
 
 def serialize_path(path: Path | None) -> str | None:
@@ -72,18 +69,55 @@ def romfs_validation(line: QtWidgets.QLineEdit):
         return True
 
     path = Path(line.text())
-    return not all(
-        p.is_file()
-        for p in [
-            path.joinpath("system", "files.toc"),
-            path.joinpath("packs", "system", "system.pkg"),
-            path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
-            path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
-        ]
+    return not (
+        all(
+            p.is_file()
+            for p in [
+                path.joinpath("config.ini"),
+                path.joinpath("system", "files.toc"),
+                path.joinpath("packs", "system", "system.pkg"),
+                path.joinpath("packs", "maps", "s010_cave", "s010_cave.pkg"),
+                path.joinpath("packs", "maps", "s020_magma", "s020_magma.pkg"),
+            ]
+        )
+        and not all(p.is_file() for p in [path.joinpath("custom_names.json")])
     )
 
 
 class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
+    def get_path_to_ryujinx(self) -> Path:
+        ryujinx_path_tuple = ("Ryujinx", "mods", "contents", "010093801237c000")
+        match (platform.system(), self.linux_ryujinx_path):
+            case "Windows", _:
+                # TODO: double check what ryujinx actually uses for windows. I don't think it reads the Appdata env var
+                # but instead probably the value from QStandardPaths.
+                return windows_lib.get_appdata().joinpath(*ryujinx_path_tuple)
+
+            case "Linux", LinuxRyujinxPath.NATIVE:
+                base_config_path = QtCore.QStandardPaths.writableLocation(
+                    QtCore.QStandardPaths.StandardLocation.GenericConfigLocation
+                )
+                return Path(base_config_path, *ryujinx_path_tuple)
+            case "Linux", LinuxRyujinxPath.FLATPAK:
+                base_config_path = str(
+                    Path(
+                        QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.HomeLocation),
+                        ".var",
+                        "app",
+                        "org.ryujinx.Ryujinx",
+                        "config",
+                    )
+                )
+                return Path(base_config_path, *ryujinx_path_tuple)
+
+            case "Darwin", _:
+                return Path(
+                    QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.StandardLocation.GenericDataLocation),
+                    *ryujinx_path_tuple,
+                )
+
+        raise ValueError("Unsupported platform")
+
     @classmethod
     def game_enum(cls):
         return RandovaniaGame.METROID_DREAD
@@ -109,8 +143,6 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.atmosphere_radio.toggled.connect(self._on_update_target_platform)
         self.ryujinx_radio.toggled.connect(self._on_update_target_platform)
-        self.ryujinx_legacy_radio.toggled.connect(self._on_update_target_platform)
-        self.ryujinx_legacy_radio.setEnabled(not patch_data.get("enable_remote_lua"))
         self._on_update_target_platform()
 
         # Output to SD
@@ -154,10 +186,24 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.ftp_on_anonymous_check()
 
         # Output to Ryujinx
-        self.update_ryujinx_ui()
         self.tab_ryujinx.serialize_options = dict
         self.tab_ryujinx.restore_options = lambda p: None
         self.tab_ryujinx.is_valid = lambda: True
+
+        # Hide Linux Ryujinx controls on non-Linux
+        is_linux = platform.system() == "Linux"
+        for control_name in return_linux_only_controls():
+            widget: QtWidgets.QWidget = getattr(self, control_name)
+            widget.setVisible(is_linux)
+        if per_game.linux_ryujinx_path == LinuxRyujinxPath.NATIVE:
+            self.linux_native_radio.setChecked(True)
+        else:
+            self.linux_flatpak_radio.setChecked(True)
+        self.old_linux_ryujinx_path = self.get_path_to_ryujinx()
+        self.linux_native_radio.toggled.connect(self._on_update_linux_ryujinx_path)
+        self.linux_flatpak_radio.toggled.connect(self._on_update_linux_ryujinx_path)
+
+        self.update_ryujinx_ui()
 
         # Output to Custom
         self.custom_path_edit.textChanged.connect(self._on_custom_path_change)
@@ -218,6 +264,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             cosmetic_patches=per_game.cosmetic_patches,
             input_directory=self.input_file,
             target_platform=self.target_platform,
+            linux_ryujinx_path=self.linux_ryujinx_path,
             output_preference=output_preference,
         )
 
@@ -244,6 +291,11 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         self.output_tab_widget.setCurrentIndex(visible_tabs[0])
 
+    def _on_update_linux_ryujinx_path(self) -> None:
+        self.ryujinx_label.setText(self.ryujinx_label.text().replace(str(self.old_linux_ryujinx_path), "{mod_path}"))
+        self.old_linux_ryujinx_path = self.get_path_to_ryujinx()
+        self.update_ryujinx_ui()
+
     # Getters
     @property
     def input_file(self) -> Path:
@@ -259,6 +311,13 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             return DreadModPlatform.ATMOSPHERE
         else:
             return DreadModPlatform.RYUJINX
+
+    @property
+    def linux_ryujinx_path(self) -> LinuxRyujinxPath:
+        if self.linux_native_radio.isChecked():
+            return LinuxRyujinxPath.NATIVE
+        else:
+            return LinuxRyujinxPath.FLATPAK
 
     # Input file
 
@@ -317,7 +376,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         if supports_ryujinx():
             self.ryujinx_label.setText(
                 self.ryujinx_label.text().format(
-                    mod_path=get_path_to_ryujinx(),
+                    mod_path=self.get_path_to_ryujinx(),
                 )
             )
 
@@ -396,7 +455,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             post_export = None
 
         elif output_tab is self.tab_ryujinx:
-            output_path = get_path_to_ryujinx()
+            output_path = self.get_path_to_ryujinx()
             post_export = None
 
         elif output_tab is self.tab_ftp:
@@ -416,7 +475,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             input_path=self.input_file,
             output_path=output_path,
             target_platform=self.target_platform,
-            use_exlaunch=not self.ryujinx_legacy_radio.isChecked(),
+            use_exlaunch=True,
             clean_output_path=clean_output_path,
             post_export=post_export,
         )

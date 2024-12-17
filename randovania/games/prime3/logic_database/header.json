@@ -1,5 +1,5 @@
 {
-    "schema_version": 24,
+    "schema_version": 27,
     "game": "prime3",
     "resource_database": {
         "items": {
@@ -1275,6 +1275,10 @@
             "SkipCells": {
                 "long_name": "Skipping Energy Cells",
                 "extra": {}
+            },
+            "EntrRand": {
+                "long_name": "Entrance Randomizer",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -1346,7 +1350,7 @@
                 }
             },
             "Shoot Phazite (X-Ray and Nova)": {
-                "display_name": "Shoot Phazite (X-Ray and Nova)",
+                "display_name": "Shoot Phazite",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1375,7 +1379,7 @@
                 }
             },
             "Melt Objects (Plasma or Nova)": {
-                "display_name": "Melt Objects (Plasma or Nova)",
+                "display_name": "Melt Objects",
                 "requirement": {
                     "type": "or",
                     "data": {
@@ -1404,7 +1408,7 @@
                 }
             },
             "Use Grapple Voltage (Lasso and Voltage)": {
-                "display_name": "Use Grapple Voltage (Lasso and Voltage)",
+                "display_name": "Use Grapple Voltage",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1433,7 +1437,7 @@
                 }
             },
             "Bomb Jump/Spring Space Jump (Beginner)": {
-                "display_name": "Bomb Jump/Spring Space Jump (Beginner)",
+                "display_name": "Simple Bomb Jump/Spring Space Jump",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1496,7 +1500,7 @@
                 }
             },
             "Use Ship Missile (Command Visor and Ship Missile)": {
-                "display_name": "Use Ship Missile (Command Visor and Ship Missile)",
+                "display_name": "Use Ship Missile",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1525,7 +1529,7 @@
                 }
             },
             "Use Ship Grapple (Command Visor and Ship Grapple)": {
-                "display_name": "Use Ship Grapple (Command Visor and Ship Grapple)",
+                "display_name": "Use Ship Grapple",
                 "requirement": {
                     "type": "and",
                     "data": {
@@ -1593,6 +1597,263 @@
                         "negate": false
                     }
                 }
+            },
+            "Fight Ghor-G": {
+                "display_name": "Fight Ghor-G",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Bomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "BoostBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "HyperModeBall",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Enter Hypermode"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Use Boost Ball": {
+                "display_name": "Use Boost Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "BoostBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Use Spider Ball": {
+                "display_name": "Use Spider Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "SpiderBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Can Use Bombs": {
+                "display_name": "Can Use Bombs",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Bomb",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "Use Hyper Ball": {
+                "display_name": "Use Hyper Ball",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "MorphBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "HyperModeBall",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Enter Hypermode"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Use Hyper Missile": {
+                "display_name": "Use Hyper Missile",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "HyperModeMissile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Enter Hypermode"
+                            }
+                        ]
+                    }
+                }
+            },
+            "Use Hyper Grapple": {
+                "display_name": "Use Hyper Grapple",
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "HyperModeGrapple",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            },
+                            {
+                                "type": "template",
+                                "data": "Enter Hypermode"
+                            },
+                            {
+                                "type": "template",
+                                "data": "Use Grapple Voltage (Lasso and Voltage)"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "damage_reductions": [],
@@ -1605,9 +1866,6 @@
         "region": "G.F.S. Olympus",
         "area": "MedLab Delta",
         "node": "Pickup (Phazon Enhancement Device)"
-    },
-    "initial_states": {
-        "Item Loss Disabled": []
     },
     "minimal_logic": {
         "items_to_exclude": [
@@ -2039,6 +2297,7 @@
         "Knowledge": [
             1,
             2,
+            3,
             4
         ],
         "BSJ": [
@@ -2054,6 +2313,7 @@
         ],
         "BombJump": [
             1,
+            2,
             3,
             5
         ],
@@ -2124,6 +2384,7 @@
             5
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "GFS Olympus.json",
         "Norion.json",

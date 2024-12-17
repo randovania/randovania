@@ -322,6 +322,9 @@ Templates
           # Spin Jump over the Gravitt when it lunges
           Dodge Enemies (Intermediate)
 
+* All Metroid Larva Defeated:
+      After Area 8 - Larva Metroid 1 and After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 2 and After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4 and After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6 and After Area 8 - Larva Metroid 7 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
+
 ====================
 Dock Weaknesses
 
@@ -344,6 +347,13 @@ Dock Weaknesses
           Trivial
       Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
           Impossible
+
+
+  * Permanently Locked Door
+      Extra - type: locked
+      Open:
+          Impossible
+      No lock
 
 
   * Power Beam Door
@@ -422,7 +432,74 @@ Dock Weaknesses
       Lock type: FRONT_BLAST_BACK_IF_MATCHING
           Lay Power Bomb
 
-  > Dock Rando: Disabled
+
+  * Ice Beam Door
+      Extra - type: ice_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Ice Beam
+
+
+  * Grapple Beam Door
+      Extra - type: grapple_beam
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Grapple Beam
+
+
+  * Bomb Door
+      Extra - type: bomb
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lay Bomb
+
+
+  * Beam Burst Door
+      Extra - type: beam_burst
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Shoot Beam Burst
+
+
+  * Lightning Armor Door
+      Extra - type: lightning_armor
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_IF_MATCHING
+          Lightning Armor
+
+  > Dock Rando:
+      Unlocked: Power Beam Door
+      Locked: Permanently Locked Door
+      Change from:
+          Access Open
+          Charge Beam Door
+          Missile Door
+          Plasma Beam Door
+          Power Beam Door
+          Power Bomb Door
+          Spazer Beam Door
+          Super Missile Door
+          Wave Beam Door
+      Change to:
+          Beam Burst Door
+          Bomb Door
+          Charge Beam Door
+          Grapple Beam Door
+          Ice Beam Door
+          Lightning Armor Door
+          Missile Door
+          Permanently Locked Door
+          Plasma Beam Door
+          Power Beam Door
+          Power Bomb Door
+          Spazer Beam Door
+          Super Missile Door
+          Wave Beam Door
 
 
 > Tunnel

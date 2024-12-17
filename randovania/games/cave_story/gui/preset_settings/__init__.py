@@ -19,10 +19,10 @@ def cs_preset_tabs(editor: PresetEditor, window_manager: WindowManager) -> list[
 
     return [
         PresetTrickLevel,
-        PresetCSStartingArea,
         PresetCSGeneration,
         PresetCSObjective,
         PresetLocationPool,
         CSPresetItemPool,
+        PresetCSStartingArea,
         PresetCSHP,
     ]

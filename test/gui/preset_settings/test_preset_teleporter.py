@@ -7,10 +7,10 @@ from unittest.mock import MagicMock
 import pytest
 from PySide6 import QtCore
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.games.dread.gui.preset_settings.dread_teleporters_tab import PresetTeleportersDread
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.gui.preset_settings.prime_teleporters_tab import PresetTeleportersPrime1
 from randovania.games.prime1.layout import prime_configuration
 from randovania.games.prime2.gui.preset_settings.echoes_teleporters_tab import PresetTeleportersPrime2

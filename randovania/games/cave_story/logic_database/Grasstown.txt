@@ -1,7 +1,7 @@
 ----------------
 Grasstown
 Extra - map_name: Weed
-Extra - starting_script: <TRA0006:0098:0004:0018
+Extra - starting_script: <TRA0006:0097:0004:0018
 > Door to Santa's House; Heals? False
   * Layers: default
   * Door to Santa's House/Door to Grasstown
@@ -29,6 +29,19 @@ Extra - starting_script: <TRA0006:0098:0004:0018
       Any of the following:
           Pacifist Strats (Intermediate) or Has Weapon
           Pacifist Strats (Beginner) and Has Flight
+  > Above Chaco's House
+      Any of the following:
+          After Activated Fans or Has Flight
+          All of the following:
+              # Chaco Skip - https://www.youtube.com/watch?v=Zamb3TjF60M
+              Invincibility Frame Reset (Beginner) and Reset Iframes
+              Any of the following:
+                  # 3 hit method
+                  Damage Boosting (Beginner) and Normal Damage ≥ 6
+                  # 2 hit method
+                  Damage Boosting (Intermediate) and Normal Damage ≥ 4
+                  # Hard Mode method
+                  Damage Boosting (Advanced) and Normal Damage ≥ 2 and Has Weapon
 
 > Entrance from Chaco's House; Heals? False
   * Layers: default
@@ -111,19 +124,6 @@ Extra - starting_script: <TRA0006:0098:0004:0018
       Any of the following:
           Pacifist Strats (Intermediate) or Has Weapon
           Pacifist Strats (Beginner) and Has Flight
-  > Area Centre
-      Any of the following:
-          After Activated Fans or Has Flight
-          All of the following:
-              # Chaco Skip - https://www.youtube.com/watch?v=Zamb3TjF60M
-              Invincibility Frame Reset (Beginner) and Reset Iframes
-              Any of the following:
-                  Damage Boosting (Beginner) and Normal Damage ≥ 6
-                  Damage Boosting (Intermediate) and Normal Damage ≥ 4
-                  Damage Boosting (Advanced) and Normal Damage ≥ 2 and Has Weapon
-              Any of the following:
-                  Pacifist Strats (Intermediate) or Has Weapon
-                  Pacifist Strats (Beginner) and Normal Damage ≥ 5
   > Teleporter to Arthur's House
       Trivial
   > Pickup (Kulala)
@@ -156,48 +156,38 @@ Extra - starting_script: <TRA0006:0098:0004:0018
       Trivial
   > Pickup (Kazuma Chest)
       Rusty Key
-  > Area Centre
-      All of the following:
-          Any of the following:
-              # Get up to the central area
-              After Activated Fans or Has Flight
-              After Entered Grasstown from Fireplace and Remove Points of No Return
-              Any of the following:
-                  # Reverse Chaco Skip
-                  # TAS Jump
-                  Gravity Hopping (Hypermode)
-                  # https://www.youtube.com/watch?v=WiA3lsW5gec
-                  Damage Boosting (Advanced) and Normal Damage ≥ 2
-                  # https://www.youtube.com/watch?v=rmtwHNrxU5Q
-                  Damage Boosting (Intermediate) and Normal Damage ≥ 3
-          Any of the following:
-              # Get past the Mannan
-              Has Weapon
-              All of the following:
-                  Pacifist Strats (Intermediate)
-                  Any of the following:
-                      Has Flight
-                      Damage Boosting (Beginner) and Normal Damage ≥ 3
-              Gravity Hopping (Advanced) and Pacifist Strats (Advanced)
   > Event - Saved Kazuma
       Explosive
   > Event - Level MG (East)
       Machine Gun
   > Near Hint
       Trivial
+  > Beyond First Mannan
+      Any of the following:
+          After Activated Fans or Has Flight
+          After Entered Grasstown from Fireplace and Remove Points of No Return
+          Any of the following:
+              # Reverse Chaco Skip
+              # https://www.youtube.com/watch?v=rmtwHNrxU5Q
+              Damage Boosting (Intermediate) and Normal Damage ≥ 3
+              # https://www.youtube.com/watch?v=WiA3lsW5gec
+              Damage Boosting (Advanced) and Normal Damage ≥ 2
+              # TAS Jump (TODO: vid)
+              Gravity Hopping (Hypermode)
 
-> Area Centre; Heals? False
+> Above Chaco's House; Heals? False
   * Layers: default
   > Door to Chaco's House
       Trivial
-  > East Side
+  > Beyond First Mannan
       Any of the following:
+          # Kill Mannan
           Has Weapon
-          All of the following:
-              Pacifist Strats (Intermediate)
-              Any of the following:
-                  Has Flight
-                  Damage Boosting (Beginner) and Normal Damage ≥ 3
+          # Walk through Mannan
+          Damage Boosting (Beginner) and Pacifist Strats (Intermediate) and Normal Damage ≥ 3
+          # Fly over Mannan
+          Pacifist Strats (Intermediate) and Has Flight
+          # Jump over Mannan (TODO: vid)
           Gravity Hopping (Advanced) and Pacifist Strats (Advanced)
 
 > Event - Saved Kazuma; Heals? False
@@ -244,7 +234,7 @@ Extra - starting_script: <TRA0006:0098:0004:0018
 > Event - Entered Grasstown from Chaco Fireplace; Heals? False
   * Layers: default
   * Event Entered Grasstown from Fireplace
-  > Area Centre
+  > Above Chaco's House
       Trivial
 
 > Event - Level MG (West); Heals? False
@@ -276,6 +266,21 @@ Extra - starting_script: <TRA0006:0098:0004:0018
       Trivial
   > Save Point
       Trivial
+
+> Beyond First Mannan; Heals? False
+  * Layers: default
+  > East Side
+      Trivial
+  > Above Chaco's House
+      Any of the following:
+          # Kill Mannan
+          Has Weapon
+          # Walk through Mannan
+          Damage Boosting (Beginner) and Pacifist Strats (Intermediate) and Normal Damage ≥ 3
+          # Fly over Mannan
+          Pacifist Strats (Intermediate) and Has Flight
+          # Jump over Mannan (TODO: vid)
+          Gravity Hopping (Advanced) and Pacifist Strats (Advanced)
 
 ----------------
 Santa's House

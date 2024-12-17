@@ -8,8 +8,8 @@ from functools import cached_property
 from typing import TYPE_CHECKING
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.game_connection_status import GameConnectionStatus
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
@@ -22,6 +22,8 @@ MAX_SESSION_NAME_LENGTH = 50
 MAX_WORLD_NAME_LENGTH = 30
 
 WORLD_NAME_RE = re.compile(r"^[a-zA-Z0-9 _\-!?()]{1," + str(MAX_WORLD_NAME_LENGTH) + "}$")
+
+UserID = int
 
 
 @dataclasses.dataclass(frozen=True)
@@ -51,7 +53,7 @@ class UserWorldDetail(JsonDataclass):
 
 @dataclasses.dataclass(frozen=True)
 class MultiplayerUser(JsonDataclass):
-    id: int
+    id: UserID
     name: str
     admin: bool
     ready: bool
@@ -149,13 +151,13 @@ class MultiplayerSessionAuditLog(JsonDataclass):
 @dataclasses.dataclass(frozen=True)
 class WorldUserInventory:
     world_id: uuid.UUID
-    user_id: int
+    user_id: UserID
     inventory: RemoteInventory
 
 
 @dataclasses.dataclass(frozen=True)
 class User:
-    id: int
+    id: UserID
     name: str
     discord_id: int | None = None
 

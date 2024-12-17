@@ -12,6 +12,7 @@ from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node import GenericNode, Node
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.teleporter_network_node import TeleporterNetworkNode
+from randovania.game_description.requirements.node_requirement import NodeRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
@@ -30,9 +31,8 @@ if TYPE_CHECKING:
     from randovania.game_description.requirements.array_base import RequirementArrayBase
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-    from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGain, ResourceGainTuple, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
     from randovania.game_description.resources.resource_type import ResourceType
     from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -65,6 +65,10 @@ def write_requirement_template(requirement: RequirementTemplate) -> dict:
     return {"type": "template", "data": requirement.template_name}
 
 
+def write_node_requirement(requirement: NodeRequirement) -> dict:
+    return {"type": "node", "data": requirement.node_identifier.as_json}
+
+
 def write_requirement(requirement: Requirement) -> dict:
     if isinstance(requirement, ResourceRequirement):
         return write_resource_requirement(requirement)
@@ -77,6 +81,9 @@ def write_requirement(requirement: Requirement) -> dict:
 
     elif isinstance(requirement, RequirementTemplate):
         return write_requirement_template(requirement)
+
+    elif isinstance(requirement, NodeRequirement):
+        return write_node_requirement(requirement)
 
     else:
         raise ValueError(f"Unknown requirement type: {type(requirement)}")
@@ -280,6 +287,7 @@ def write_node(node: Node) -> dict:
         data["incompatible_dock_weaknesses"] = [weak.name for weak in node.incompatible_dock_weaknesses]
         data["override_default_open_requirement"] = write_optional_requirement(node.override_default_open_requirement)
         data["override_default_lock_requirement"] = write_optional_requirement(node.override_default_lock_requirement)
+        data["ui_custom_name"] = node.ui_custom_name
 
     elif isinstance(node, PickupNode):
         data["node_type"] = "pickup"
@@ -300,7 +308,7 @@ def write_node(node: Node) -> dict:
         data["node_type"] = "hint"
         data.update(common_fields)
         data["kind"] = node.kind.value
-        data["requirement_to_collect"] = write_requirement(node.requirement_to_collect)
+        data["requirement_to_collect"] = write_requirement(node.lock_requirement)
 
     elif isinstance(node, TeleporterNetworkNode):
         data["node_type"] = "teleporter_network"
@@ -369,23 +377,11 @@ def write_region(region: Region) -> dict:
 
 def write_region_list(region_list: RegionList) -> list:
     errors = []
-    known_indices: dict[PickupIndex, str] = {}
 
     regions = []
     for region in region_list.regions:
         try:
             regions.append(write_region(region))
-
-            for node in region.all_nodes:
-                if isinstance(node, PickupNode):
-                    name = region_list.node_name(node, with_region=True, distinguish_dark_aether=True)
-                    if node.pickup_index in known_indices:
-                        errors.append(
-                            f"{name} has {node.pickup_index}, "
-                            f"but it was already used in {known_indices[node.pickup_index]}"
-                        )
-                    else:
-                        known_indices[node.pickup_index] = name
 
         except ValueError as e:
             errors.append(str(e))
@@ -397,10 +393,6 @@ def write_region_list(region_list: RegionList) -> list:
 
 
 # Game Description
-
-
-def write_initial_states(initial_states: dict[str, ResourceGainTuple]) -> dict:
-    return {name: write_resource_gain(initial_state) for name, initial_state in initial_states.items()}
 
 
 def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
@@ -431,11 +423,11 @@ def write_game_description(game: GameDescription) -> dict:
         "resource_database": write_resource_database(game.resource_database),
         "layers": frozen_lib.unwrap(game.layers),
         "starting_location": game.starting_location.as_json,
-        "initial_states": write_initial_states(game.initial_states),
         "minimal_logic": write_minimal_logic_db(game.minimal_logic),
         "victory_condition": write_requirement(game.victory_condition),
         "dock_weakness_database": write_dock_weakness_database(game.dock_weakness_database),
         "used_trick_levels": write_used_trick_levels(game),
+        "flatten_to_set_on_patch": game.region_list.flatten_to_set_on_patch,
         "regions": write_region_list(game.region_list),
     }
 

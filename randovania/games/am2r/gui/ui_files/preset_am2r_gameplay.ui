@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetAM2RGameplay</class>
+ <widget class="QMainWindow" name="PresetAM2RGameplay">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>528</width>
+    <height>582</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Energy</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="main_layout">
+    <property name="leftMargin">
+     <number>6</number>
+    </property>
+    <property name="topMargin">
+     <number>6</number>
+    </property>
+    <property name="rightMargin">
+     <number>6</number>
+    </property>
+    <property name="bottomMargin">
+     <number>6</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-408</y>
+         <width>495</width>
+         <height>978</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_area_layout">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="misc_box">
+          <property name="title">
+           <string>Gameplay</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QCheckBox" name="skip_cutscenes_check">
+             <property name="text">
+              <string>Skip gameplay cutscenes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="skip_cutscenes_label">
+             <property name="text">
+              <string>Enabling this will skip most gameplay related cutscenes, such as the Drill Sequence, the cutscenes you'll see when viewing a Metroid for the first time and similar.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="skip_save_cutscene_check">
+             <property name="text">
+              <string>Skip Save Station cutscene</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="skip_save_cutscene_label">
+             <property name="text">
+              <string>Enabling this will skip the short cutscene that appears when saving at a Save Station.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="skip_item_cutscenes_check">
+             <property name="text">
+              <string>Skip item acquisition cutscenes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="skip_item_cutscenes_label">
+             <property name="text">
+              <string>Enabling this will skip item related cutscenes, such as the pause when collecting an item or the cutscene that plays when collecting a suit.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="fusion_mode_check">
+             <property name="text">
+              <string>Enable Fusion Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="fusion_mode_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fusion Mode enables the Fusion Suit for Samus, makes organic enemies drop X, makes bosses spawn Core-X and makes Metroids move faster.&lt;br/&gt;It does &lt;span style=&quot; font-weight:600;&quot;&gt;not&lt;/span&gt; add a 4x damage multiplier.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="energy_tank_box">
+          <property name="title">
+           <string>Energy Tank</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="energy_tank_capacity_description">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure how much energy each Energy Tank you collect will provide. Your base energy is always this quantity, minus 1.&lt;/p&gt;&lt;p&gt;While logic will respect this value, only the original value (100) has been tested.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="energy_tank_capacity_spin_box">
+             <property name="suffix">
+              <string> energy</string>
+             </property>
+             <property name="minimum">
+              <number>2</number>
+             </property>
+             <property name="maximum">
+              <number>1000</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="energy_tank_capacity_label">
+             <property name="text">
+              <string>Energy per tank</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <spacer name="energy_tank_capacity_spacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="suit_dr_box">
+          <property name="title">
+           <string>Suit Damage Reduction</string>
+          </property>
+          <layout class="QGridLayout" name="constant_environment_damage_layout">
+           <item row="5" column="0">
+            <widget class="QLabel" name="first_suit_label">
+             <property name="text">
+              <string>First Suit Damage Reduction</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QLabel" name="suit_dr_description">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configure Damage Reduction for suit count. AM2R only cares about suit count not order.&lt;br/&gt;0% will make you take full damage (equal to suitless). 100% will make you take no damage.&lt;br/&gt;While logic will respect this value, only the vanilla values (50%, 75%) have been tested.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QSpinBox" name="first_suit_spin_box">
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="suffix">
+              <string>%</string>
+             </property>
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>50</number>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QSpinBox" name="second_suit_spin_box">
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="suffix">
+              <string>%</string>
+             </property>
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>75</number>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="second_suit_label">
+             <property name="text">
+              <string>Second Suit Damage Reduction</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="flipping_box">
+          <property name="title">
+           <string>Mirroring and Flipping</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="flipping_label">
+             <property name="text">
+              <string>These flip the gameplay horizontally, to achieve a mirrored game effect, or vertically, to achieve an upside down effect. They can be combined together.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="horizontally_flip_gameplay_check">
+             <property name="text">
+              <string>Horizontally flip gameplay</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="vertically_flip_gameplay_check">
+             <property name="text">
+              <string>Vertically flip gameplay</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="energy_tank_spacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

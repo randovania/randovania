@@ -1,5 +1,5 @@
 {
-    "schema_version": 24,
+    "schema_version": 27,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -53,27 +53,6 @@
         "region": "Temple Grounds",
         "area": "Landing Site",
         "node": "Save Station"
-    },
-    "initial_states": {
-        "Default": [
-            {
-                "resource_type": "items",
-                "resource_name": "SpaceJump",
-                "amount": 1
-            }
-        ],
-        "Item Loss Disabled": [
-            {
-                "resource_type": "items",
-                "resource_name": "Light",
-                "amount": 1
-            },
-            {
-                "resource_type": "items",
-                "resource_name": "SpaceJump",
-                "amount": 1
-            }
-        ]
     },
     "minimal_logic": null,
     "victory_condition": {
@@ -245,6 +224,7 @@
         }
     },
     "used_trick_levels": {},
+    "flatten_to_set_on_patch": false,
     "regions": [
         {
             "name": "Temple Grounds",
@@ -338,6 +318,7 @@
                             "incompatible_dock_weaknesses": [],
                             "override_default_open_requirement": null,
                             "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
                             "connections": {
                                 "Save Station": {
                                     "type": "or",
@@ -388,6 +369,7 @@
                             "incompatible_dock_weaknesses": [],
                             "override_default_open_requirement": null,
                             "override_default_lock_requirement": null,
+                            "ui_custom_name": null,
                             "connections": {}
                         },
                         "Luminoth Lore": {

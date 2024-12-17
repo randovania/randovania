@@ -10,11 +10,10 @@ from typing import TYPE_CHECKING, Any, Self
 
 import cachetools
 import peewee
-import sentry_sdk
 from sentry_sdk.tracing_utils import record_sql_queries
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common import error, multiplayer_session
@@ -37,9 +36,7 @@ if TYPE_CHECKING:
 
 class MonitoredDb(peewee.SqliteDatabase):
     def execute_sql(self, sql, params=None, commit=peewee.SENTINEL):
-        with record_sql_queries(
-            sentry_sdk.Hub.current, self.cursor, sql, params, paramstyle="format", executemany=False
-        ):
+        with record_sql_queries(self.cursor, sql, params, paramstyle="format", executemany=False):
             return super().execute_sql(sql, params, commit)
 
 
@@ -51,6 +48,8 @@ def is_boolean(field, value: bool):
 
 
 class BaseModel(peewee.Model):
+    DoesNotExist: type[peewee.DoesNotExist]
+
     class Meta:
         database = db
         legacy_table_names = False
@@ -118,15 +117,16 @@ class UserAccessToken(BaseModel):
         primary_key = peewee.CompositeKey("user", "name")
 
 
-def _decompress_layout_description(layout: bytes, presets: tuple[str, ...]) -> dict:
-    decoded = json.loads(zlib.decompress(layout).decode("utf-8"))
-    decoded["info"]["presets"] = [VersionedPreset.from_str(preset).as_json for preset in presets]
-    return decoded
-
-
 @cachetools.cached(cache=cachetools.TTLCache(maxsize=64, ttl=600))
 def _decode_layout_description(layout: bytes, presets: tuple[str, ...]) -> LayoutDescription:
-    return LayoutDescription.from_json_dict(_decompress_layout_description(layout, presets))
+    preset_list = [VersionedPreset.from_str(preset) for preset in presets]
+    if layout.startswith(b"RDVG"):
+        return LayoutDescription.from_bytes(layout, presets=preset_list)
+    else:
+        # If the file doesn't have our prefix, it's from before it used BinaryLayoutDescription
+        decoded = json.loads(zlib.decompress(layout).decode("utf-8"))
+        decoded["info"]["presets"] = [preset.as_json for preset in preset_list]
+        return LayoutDescription.from_json_dict(decoded)
 
 
 class MultiplayerSession(BaseModel):
@@ -166,11 +166,8 @@ class MultiplayerSession(BaseModel):
     @layout_description.setter
     def layout_description(self, description: LayoutDescription | None):
         if description is not None:
-            # TODO: use description.as_binary
-            # This will need a data migration for the server, just to introduce our little header.
-            encoded = description.as_json(force_spoiler=True)
-            encoded["info"].pop("presets")
-            self.layout_description_json = zlib.compress(json.dumps(encoded, separators=(",", ":")).encode("utf-8"))
+            encoded = description.as_binary(force_spoiler=True, include_presets=False)
+            self.layout_description_json = encoded
             self.game_details_json = json.dumps(
                 GameDetails(
                     spoiler=description.has_spoiler,
@@ -185,8 +182,9 @@ class MultiplayerSession(BaseModel):
     def get_layout_description_as_json(self) -> dict | None:
         """Get the stored LayoutDescription as a JSON object"""
         if self.layout_description_json is not None:
-            return _decompress_layout_description(
-                self.layout_description_json, tuple(world.preset for world in self.get_ordered_worlds())
+            return LayoutDescription.bytes_to_dict(
+                self.layout_description_json,
+                presets=[VersionedPreset.from_str(world.preset) for world in self.get_ordered_worlds()],
             )
         return None
 

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetAM2RRoomDesign</class>
+ <widget class="QMainWindow" name="PresetAM2RRoomDesign">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>770</width>
+    <height>660</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Other</string>
+  </property>
+  <widget class="QWidget" name="root_widget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>6</number>
+    </property>
+    <property name="topMargin">
+     <number>6</number>
+    </property>
+    <property name="rightMargin">
+     <number>6</number>
+    </property>
+    <property name="bottomMargin">
+     <number>6</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>758</width>
+         <height>648</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_layout">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="room_group">
+          <property name="title">
+           <string>Room Design</string>
+          </property>
+          <layout class="QVBoxLayout" name="unlock_layout">
+           <item>
+            <widget class="QCheckBox" name="septogg_helpers_check">
+             <property name="text">
+              <string>Enable Septogg Helpers</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="septogg_helpers_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Septoggs will appear in certain rooms, helping you reach higher platforms if you don't have the means to reach them yourself. Due to SR-388's cave structure, this setting is highly recommended.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="grave_grotto_blocks_check">
+             <property name="text">
+              <string>Bomb Blocks in Grave Grotto</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="grave_grotto_blocks_label">
+             <property name="text">
+              <string>&quot;Grave Grotto&quot; (the cave between Golden Temple and Hydro Station) usually has bomb blocks. Disabling this option removes them.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="a3_entrance_blocks_check">
+             <property name="text">
+              <string>Bomb Block in Industrial Complex Access</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="a3_entrance_blocks_label">
+             <property name="text">
+              <string>&quot;Industrial Complex Access&quot; usually has a bomb block on the way to &quot;Industrial Complex Exterior&quot;. Disabling this option removes it, allowing sooner access to that area.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="softlock_prevention_blocks_check">
+             <property name="text">
+              <string>Softlock Prevention Checks</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="softlock_prevention_blocks_label">
+             <property name="text">
+              <string>This option adds checks to some rooms that removes certain blocks in order to minimize softlocks.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="screw_blocks_check">
+             <property name="text">
+              <string>Screw Attack Blocks near Teleporter Pipes</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="screw_blocks_label">
+             <property name="text">
+              <string>Usually, Teleporter Pipe rooms have Screw Attack Blocks near them. Disabling this option makes them dissapear, allowing sooner usage of them.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="respawn_bomb_blocks_check">
+             <property name="text">
+              <string>Respawn destructable bomb blocks</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="respawn_bomb_blocks_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Makes most destructable bomb blocks respawn. Disabling this will make it easier to traverse certain rooms if you only have Power Bombs.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="nest_pipes_check">
+             <property name="text">
+              <string>Add new Teleporter Pipes in final areas</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nest_pipes_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adds new Teleporter Pipes to make the final areas less cumbersome to traverse.&lt;br/&gt;The Pipes will be located &amp;quot;Hideout Hub Access East&amp;quot;, &amp;quot;Shinespark Cave East&amp;quot;, &amp;quot;Depths Omega Nest South West Access&amp;quot; and &amp;quot;Waterfall Passage Top&amp;quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

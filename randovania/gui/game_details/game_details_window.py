@@ -7,10 +7,8 @@ from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
 import randovania
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
+from randovania import monitoring
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.game_details.dock_lock_details_tab import DockLockDetailsTab
 from randovania.gui.game_details.generation_order_widget import GenerationOrderWidget
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
@@ -30,6 +28,7 @@ from randovania.layout import preset_describer
 from randovania.layout.versioned_preset import VersionedPreset
 
 if typing.TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.layout.layout_description import LayoutDescription
@@ -65,9 +64,17 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._window_manager = window_manager
         self._game_details_tabs = []
 
+        self.progress_bar.setVisible(False)
+        self.stop_background_process_button.setVisible(False)
+
+        self.status_bar.addWidget(self.progress_label)
+        self.status_bar.addPermanentWidget(self.progress_bar)
+        self.status_bar.addPermanentWidget(self.stop_background_process_button)
+
         # Ui
         self._tool_button_menu = QtWidgets.QMenu(self.tool_button)
         self.tool_button.setMenu(self._tool_button_menu)
+        self.tool_button.triggered.connect(lambda: monitoring.metrics.incr("gui_export_window_tool_button_clicked"))
 
         self._action_open_tracker = QtGui.QAction(self)
         self._action_open_tracker.setText("Open map tracker")
@@ -153,76 +160,6 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
         self._trick_usage_popup.open()
 
-    async def _show_dialog_for_prime3_layout(self):
-        from randovania.game_description import default_database
-        from randovania.games.prime3.layout.corruption_configuration import (
-            CorruptionConfiguration,
-        )
-        from randovania.games.prime3.layout.corruption_cosmetic_patches import (
-            CorruptionCosmeticPatches,
-        )
-        from randovania.games.prime3.patcher import gollop_corruption_patcher
-
-        cosmetic = typing.cast(
-            CorruptionCosmeticPatches,
-            self._options.options_for_game(RandovaniaGame.METROID_PRIME_CORRUPTION).cosmetic_patches,
-        )
-        configuration = typing.cast(
-            CorruptionConfiguration,
-            self.layout_description.get_preset(self.current_player_index).configuration,
-        )
-        patches = self.layout_description.all_patches[self.current_player_index]
-        game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
-        pickup_names = []
-        for index in range(game.region_list.num_pickup_nodes):
-            p_index = PickupIndex(index)
-            if p_index in patches.pickup_assignment:
-                name = patches.pickup_assignment[p_index].pickup.name
-            else:
-                name = "Missile Expansion"
-            pickup_names.append(name)
-
-        layout_string = gollop_corruption_patcher.layout_string_for_items(pickup_names)
-        starting_location = patches.starting_location
-
-        starting_items = patches.starting_resources()
-        starting_items.add_resource_gain(
-            [
-                (
-                    game.resource_database.get_item_by_name("Suit Type"),
-                    cosmetic.player_suit.value,
-                ),
-            ]
-        )
-        if configuration.start_with_corrupted_hypermode:
-            hypermode_original = 0
-        else:
-            hypermode_original = 1
-
-        starting_items = gollop_corruption_patcher.starting_items_for(starting_items, hypermode_original)
-        commands = "\n".join(
-            [
-                f'set seed="{layout_string}"',
-                f'set "starting_items={starting_items}"',
-                f'set "starting_location={gollop_corruption_patcher.starting_location_for(game, starting_location)}"',
-                f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
-                f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
-            ]
-        )
-        dialog_text = (
-            "There is no integrated patcher for Metroid Prime 3: Corruption games.\n"
-            "Download the randomizer for it from #corruption-general in the Metroid Prime Randomizer Discord, "
-            "and use the following commands as a seed.\n\n"
-            f"\n{commands}"
-        )
-
-        message_box = ScrollLabelDialog(self, dialog_text, "Commands for patcher")
-        message_box.resize(750, 200)
-        message_box.label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-        common_qt_lib.set_clipboard(commands)
-        await async_dialog.execute_dialog(message_box)
-
     @property
     def current_player_game(self) -> RandovaniaGame:
         return self.layout_description.get_preset(self.current_player_index).game
@@ -233,7 +170,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         has_spoiler = layout.has_spoiler
         options = self._options
 
+        game = self.current_player_game
+
         if not options.is_alert_displayed(InfoAlert.FAQ):
+            monitoring.metrics.incr("gui_export_window_alert_shown", tags={"game": game.short_name})
             await async_dialog.message_box(
                 self,
                 QtWidgets.QMessageBox.Icon.Information,
@@ -242,9 +182,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             )
             options.mark_alert_as_displayed(InfoAlert.FAQ)
 
-        game = self.current_player_game
-        if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            return await self._show_dialog_for_prime3_layout()
+        monitoring.metrics.incr("gui_export_window_export_clicked", tags={"game": game.short_name})
 
         cosmetic_patches = options.options_for_game(game).cosmetic_patches
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
@@ -299,7 +237,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         else:
             self.export_iso_button.setToolTip("")
 
-        self.customize_user_preferences_button.setVisible(description.world_count == 1)
+        has_user_preferences = False
+        if description.world_count == 1:
+            has_user_preferences = description.get_preset(0).game.gui.cosmetic_dialog is not None
+        self.customize_user_preferences_button.setVisible(has_user_preferences)
 
         self.player_index_combo.clear()
         for i in range(description.world_count):
@@ -308,7 +249,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.player_index_combo.setVisible(description.world_count > 1)
 
         if description.has_spoiler:
-            if description.world_count == 1:
+            exists_minimal_logic = any(
+                preset.configuration.trick_level.minimal_logic for preset in description.all_presets
+            )
+            if description.world_count == 1 and not exists_minimal_logic:
                 if self.validator_widget is not None:
                     self.validator_widget.stop_validator()
 
@@ -367,6 +311,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     def _open_user_preferences_dialog(self):
         game = self.current_player_game
+        monitoring.metrics.incr("gui_export_window_cosmetic_clicked", tags={"game": game.short_name})
         per_game_options = self._options.options_for_game(game)
 
         dialog = game_specific_gui.create_dialog_for_cosmetic_patches(self, per_game_options.cosmetic_patches)
@@ -379,11 +324,18 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
                 )
 
     def enable_buttons_with_background_tasks(self, value: bool):
+        self.stop_background_process_button.setVisible(True)
         self.stop_background_process_button.setEnabled(not value and self._can_stop_background_process)
         self.export_iso_button.setEnabled(value)
         generator_frontend.export_busy = not value
 
+        if not self._can_stop_background_process:
+            self.stop_background_process_button.setToolTip("This game doesn't let you stop the export.")
+        else:
+            self.stop_background_process_button.setToolTip("")
+
     def update_progress(self, message: str, percentage: int):
+        self.progress_bar.setVisible(True)
         self.progress_label.setText(message)
         if "Aborted" in message:
             percentage = 0

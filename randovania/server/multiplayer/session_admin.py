@@ -4,6 +4,7 @@ import uuid
 import peewee
 
 import randovania
+from randovania import monitoring
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import InvalidLayoutDescription, LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
@@ -99,6 +100,14 @@ def _get_preset(preset_bytes: bytes) -> VersionedPreset:
         raise error.InvalidActionError(f"invalid preset: {e}")
 
 
+def _verify_preset_allowed_for(preset: VersionedPreset, session: MultiplayerSession) -> None:
+    if preset.game not in session.allowed_games:
+        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
+
+    if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
+        raise error.InvalidActionError("Preset uses unsupported features.")
+
+
 def _create_world(
     sa: ServerApp, session: MultiplayerSession, name: str, preset_bytes: bytes, for_user: int | None = None
 ):
@@ -108,8 +117,7 @@ def _create_world(
     _verify_not_in_generation(session)
     preset = _get_preset(preset_bytes)
 
-    if preset.game not in session.allowed_games:
-        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
+    _verify_preset_allowed_for(preset, session)
 
     if WORLD_NAME_RE.match(name) is None:
         raise error.InvalidActionError("Invalid world name")
@@ -134,11 +142,7 @@ def _change_world(sa: ServerApp, session: MultiplayerSession, world_uid: uuid.UU
     _verify_world_has_session(world, session)
     verify_has_admin_or_claimed(sa, world)
 
-    if preset.game not in session.allowed_games:
-        raise error.InvalidActionError(f"{preset.game.long_name} not allowed.")
-
-    if not randovania.is_dev_version() and preset.get_preset().configuration.unsupported_features():
-        raise error.InvalidActionError("Preset uses unsupported features.")
+    _verify_preset_allowed_for(preset, session)
 
     try:
         with database.db.atomic():
@@ -206,9 +210,14 @@ def _update_layout_generation(sa: ServerApp, session: MultiplayerSession, world_
     with database.db.atomic():
         if world_order:
             session.generation_in_progress = sa.get_current_user()
+            objects_to_save = []
             for i, world_uuid in enumerate(world_order):
-                world_objects[world_uuid].order = i
-                world_objects[world_uuid].save()
+                world_obj = world_objects[world_uuid]
+                world_obj.order = i
+                objects_to_save.append(world_obj)
+
+            World.bulk_update(objects_to_save, fields=[World.order], batch_size=50)
+
         else:
             session.generation_in_progress = None
 
@@ -370,6 +379,8 @@ def _get_permalink(sa: ServerApp, session: MultiplayerSession) -> str:
 
 
 def admin_session(sa: ServerApp, session_id: int, action: str, *args):
+    monitoring.set_tag("action", action)
+
     action: SessionAdminGlobalAction = SessionAdminGlobalAction(action)
     session: database.MultiplayerSession = database.MultiplayerSession.get_by_id(session_id)
 
@@ -415,6 +426,9 @@ def admin_session(sa: ServerApp, session_id: int, action: str, *args):
 
     elif action == SessionAdminGlobalAction.CREATE_PATCHER_FILE:
         return _create_patcher_file(sa, session, *args)
+
+    elif action == SessionAdminGlobalAction.SET_ALLOW_COOP:
+        _set_allow_coop(sa, session, *args)
 
     elif action == SessionAdminGlobalAction.SET_ALLOW_EVERYONE_CLAIM:
         _set_allow_everyone_claim(sa, session, *args)
@@ -479,7 +493,7 @@ def _claim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world
 
 
 def _unclaim_world(sa: ServerApp, session: MultiplayerSession, user_id: int, world_uid: uuid.UUID):
-    if not session.allow_everyone_claim_world:
+    if sa.get_current_user().id != user_id and not session.allow_everyone_claim_world:
         verify_has_admin(sa, session.id, None)
 
     world = World.get_by_uuid(world_uid)
@@ -531,6 +545,24 @@ def _set_allow_everyone_claim(sa: ServerApp, session: MultiplayerSession, new_st
         session.save()
 
 
+def _set_allow_coop(sa: ServerApp, session: MultiplayerSession, new_state: bool) -> None:
+    """Sets the Co-Op state of the given session to the desired state."""
+    verify_has_admin(sa, session.id, None)
+
+    if not new_state:
+        for generic_world in session.worlds:
+            if len(generic_world.associations) >= 2:
+                raise error.InvalidActionError(
+                    "Can only disable coop, if a world isn't associated to multiple users at once."
+                )
+
+    with database.db.atomic():
+        session.allow_coop = new_state
+        new_operation = "Allowing" if session.allow_coop else "Disallowing"
+        session_common.add_audit_entry(sa, session, f"{new_operation} coop for the session.")
+        session.save()
+
+
 def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: str, cosmetic_json: dict):
     player_names = {}
     uuids = {}
@@ -553,6 +585,7 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
         player_names=player_names,
         uuids=uuids,
         session_name=session.name,
+        is_coop=session.allow_coop,
     )
     preset = layout_description.get_preset(players_config.player_index)
     cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(cosmetic_json)
@@ -570,6 +603,8 @@ def _create_patcher_file(sa: ServerApp, session: MultiplayerSession, world_uid: 
 
 
 def admin_player(sa: ServerApp, session_id: int, user_id: int, action: str, *args):
+    monitoring.set_tag("action", action)
+
     verify_has_admin(sa, session_id, user_id)
     action: SessionAdminUserAction = SessionAdminUserAction(action)
 

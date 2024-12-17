@@ -26,9 +26,12 @@ Extra - asset_id: collision_camera_000
   > Save Station
       Trivial
 
-> Dock to Hornoad Hallway; Heals? False
+> Door to Hornoad Hallway; Heals? False
   * Layers: default
-  * Open Passage to Hornoad Hallway/Dock to Landing Site
+  * Access Open to Hornoad Hallway/Door to Landing Site
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 195
   > Ship
       Trivial
 
@@ -37,13 +40,15 @@ Extra - asset_id: collision_camera_000
   * Extra - actor_name: StartPoint0
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: StartPoint0
-  > Dock to Hornoad Hallway
+  > Door to Hornoad Hallway
       Trivial
   > Top of Mountain
       Any of the following:
           Space Jump or Single-wall Wall Jump (Advanced) or Use Spider Ball
           # IBJ
           Infinite Bomb Jump (Intermediate) and Lay Bomb
+  > Pickup (Ridley)
+      After Surface (West) - Proteus Ridley and Disabled Final Boss Proteus Ridley
 
 > Top of Mountain; Heals? False
   * Layers: default
@@ -83,6 +88,20 @@ Extra - asset_id: collision_camera_000
   > Dock to Surface Crumble Block Challenge (Top)
       Lay Power Bomb
   > Dock to Surface Crumble Block Challenge (Bottom)
+      Trivial
+
+> Pickup (Ridley); Heals? False
+  * Layers: final-boss-not-ridley
+  * Pickup 211; Category? Major
+  * Extra - actor_name: LE_Item_Ridley
+  * Extra - actor_type: item_energytank
+  > Ship
+      Trivial
+
+> Dock from Surface West; Heals? False
+  * Layers: final-boss-not-ridley
+  * Blocked Passage to Landing Site/Dock to Surface East
+  > Ship
       Trivial
 
 ----------------
@@ -127,7 +146,7 @@ Extra - asset_id: collision_camera_002
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Default Node
+> Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_Morphball
   > Door to Morph Ball Chamber
@@ -195,7 +214,7 @@ Extra - asset_id: collision_camera_003
   > Save Station
       Trivial
 
-> Start Point; Heals? False
+> Start Point; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_004
   > Door to Twisty Tunnel
@@ -215,7 +234,7 @@ Extra - asset_id: collision_camera_004
       # Reaching the teleporter needs some bombs, so this template is sufficient to deal with the Gravitt
       Lay Any Bomb
 
-> Chozo Seal; Heals? False; Default Node
+> Chozo Seal; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: LE_ChozoUnlockAreaDNA
@@ -293,7 +312,7 @@ Extra - asset_id: collision_camera_006
 
 > Elevator to Area 1; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Surface and Area 2/Elevator to Surface East
+  * Elevator to Transport to Surface and Area 2/Elevator to Surface East; Custom name: Surface East Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea01
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea01
@@ -337,6 +356,7 @@ Extra - asset_id: collision_camera_006
 
 > Next to Teleporter; Heals? False
   * Layers: default
+  * Extra - start_point_actor_name: ST_DEBUG_IntroTeleport
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
@@ -408,7 +428,7 @@ Extra - asset_id: collision_camera_008
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Default Node
+> Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_CheckPoint_003
   > Door to Charge Beam Chamber Access (Lower)
@@ -557,7 +577,7 @@ Extra - asset_id: collision_camera_011
   > Dock to Cavern Cavity
       Trivial
 
-> Start Point - Right of Statue; Heals? False; Default Node
+> Start Point - Right of Statue; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_Bestowal
   > Door to Chozo Seal
@@ -741,9 +761,12 @@ Extra - asset_id: collision_camera_016
   > Highest Point
       Trivial
 
-> Dock to Landing Site; Heals? False
+> Door to Landing Site; Heals? False
   * Layers: default
-  * Open Passage to Landing Site/Dock to Hornoad Hallway
+  * Access Open to Landing Site/Door to Hornoad Hallway
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 196
   > Past First Missile Block
       Any of the following:
           Morph Ball or Space Jump or Shoot Any Missile
@@ -752,7 +775,7 @@ Extra - asset_id: collision_camera_016
               Wall Jump (Beginner)
               High Jump Boots or Super Jump (Intermediate)
 
-> Start Point; Heals? False; Default Node
+> Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_DEBUG_MeleeTutoCutscene
   > Door to Twisty Tunnel
@@ -760,7 +783,7 @@ Extra - asset_id: collision_camera_016
 
 > Past First Missile Block; Heals? False
   * Layers: default
-  > Dock to Landing Site
+  > Door to Landing Site
       Trivial
   > Highest Point
       Any of the following:
@@ -805,7 +828,7 @@ Extra - asset_id: collision_camera_018
 
 > Door to Landing Site; Heals? False
   * Layers: default
-  * Spazer Beam Door to Landing Site/Door to Surface Stash; Dock Lock Rando incompatible with: Access Open
+  * Spazer Beam Door to Landing Site/Door to Surface Stash
   * Extra - actor_name: Door012
   * Extra - actor_type: doorpowerpower
   > Room Center

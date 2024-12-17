@@ -19,7 +19,8 @@ from randovania.generator.filler import pickup_list
 from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.standard_pickup_state import StandardPickupState
-from randovania.resolver.state import State, StateGameData
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
+from randovania.resolver.state import State
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
@@ -132,7 +133,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
         MagicMock(), collection, echoes_game_description.resource_database, echoes_game_description.region_list
     )
     reach.state.resources = collection
-    reach.state.energy = 100
+    reach.state.health_for_damage_requirements = 100
     possible_set = MagicMock()
     reach.unreachable_nodes_with_requirements.return_value = {"foo": possible_set}
     resource = MagicMock()
@@ -171,7 +172,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
 
     # Assert
     mock_req_lists.assert_called_once_with(
-        reach.state, [possible_set, reach.game.victory_condition.as_set.return_value], {resource}
+        reach.state, [possible_set, reach.game.victory_condition_as_set.return_value], {resource}
     )
     assert result == ()
 
@@ -200,16 +201,15 @@ def test_pickups_to_solve_list_multiple(echoes_game_description, echoes_pickup_d
     state = State(
         resources,
         (),
-        99,
+        EnergyTankDamageState(
+            99,
+            100,
+            db,
+            echoes_game_description.region_list,
+        ),
         MagicMock(),
         echoes_game_patches,
         None,
-        StateGameData(
-            db,
-            echoes_game_description.region_list,
-            100,
-            99,
-        ),
     )
 
     # Run
@@ -247,7 +247,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
             ),
         ),
     )
-    pool = await generator.create_player_pool(Random(0), config, 0, 1, MagicMock())
+    pool = await generator.create_player_pool(Random(0), config, 0, 1, "World 1", MagicMock())
     new_game, state = pool.game_generator.bootstrap.logic_bootstrap(
         config,
         pool.game,
@@ -267,7 +267,7 @@ async def test_get_pickups_that_solves_unreachable_quad(
     r2 = sorted(sorted(a.name for a in it) for it in result)
     base = ["Boost Ball", "Echo Visor"]
     bomb = "Morph Ball Bomb"
-    tanks = ["Energy Tank"] * 8
+    tanks = ["Energy Tank"] * 7
     missiles = ["Missile Expansion"] * 12
 
     if has_light_beam:

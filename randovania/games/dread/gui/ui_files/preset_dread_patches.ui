@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetDreadPatches</class>
+ <widget class="QMainWindow" name="PresetDreadPatches">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>438</width>
+    <height>284</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Other</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>498</width>
+         <height>754</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_layout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="top_spacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>8</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="unlock_group">
+          <property name="title">
+           <string>Unlocking access</string>
+          </property>
+          <layout class="QVBoxLayout" name="unlock_layout">
+           <item>
+            <widget class="QCheckBox" name="hanubia_shortcut_no_grapple_check">
+             <property name="text">
+              <string>Remove Grapple Blocks in Hanubia - Ferenia Shortcut</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="hanubia_shortcut_no_grapple_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hanubia - Ferenia Shortcut, the room next to the elevator to Ferenia in Hanubia, has two Grapple Blocks that prevents access to Hanubia from this elevator.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="hanubia_easier_path_to_itorash_check">
+             <property name="text">
+              <string>Remove Grapple and Wave locks in path to Itorash</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="hanubia_easier_path_to_itorash_label">
+             <property name="text">
+              <string>Removes the Grapple Blocks and Wave Beam door locks on the top of Hanubia.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="bosses_group">
+          <property name="title">
+           <string>Bosses</string>
+          </property>
+          <layout class="QVBoxLayout" name="raven_beak_damage_table_handling_layout">
+           <item>
+            <widget class="QCheckBox" name="raven_beak_damage_table_handling_check">
+             <property name="text">
+              <string>Use alternate Raven Beak damage resistance</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="raven_beak_damage_table_handling_label">
+             <property name="text">
+              <string>Normally, Raven Beak has a strong resistance to only Wave Beam and Ice Missiles. This setting decides how this inconsistency in damage resistance is addressed.
+
+When unchecked, the damage of all weapons will be reduced by the same factor as Wave Beam and Ice Missiles.
+
+When checked, the damage of Wave Beam and Ice Missiles will be increased to match that of Plasma Beam and Super Missiles, respectively.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="x_group">
+          <property name="title">
+           <string>X Parasites</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QCheckBox" name="x_starts_released_check">
+             <property name="text">
+              <string>Start game with the X already released</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="x_starts_released_label">
+             <property name="text">
+              <string>The X variant of enemies are stronger, making the game harder. This allows access to Golzuna and Experiment Z-57 without having to visit Elun.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="miscellaneous_group">
+          <property name="title">
+           <string>Miscellaneous</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="nerf_power_bombs_check">
+             <property name="text">
+              <string>Power Bomb Limitations</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nerf_power_bombs_label">
+             <property name="text">
+              <string>The Power Bomb is one of the most powerful abilities in the game, as it can defeat most enemies and some bosses in one hit, as well as open Charge Beam doors, and destroy Enkies. 
+This setting removes the ability to destroy Enkies and open Charge Beam doors, making Ice Missiles and Charge Beam much more valuable. </string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

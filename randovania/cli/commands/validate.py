@@ -11,10 +11,11 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug, resolver
 
 if TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, Namespace, _SubParsersAction
+    from typing import Any
 
 
-def validate_command_logic(args):
+def validate_command_logic(args: Namespace) -> int:
     debug.set_level(args.debug)
 
     description = LayoutDescription.from_file(args.layout_file)
@@ -26,8 +27,8 @@ def validate_command_logic(args):
     if write_to is not None:
         output_file = write_to.open("w", encoding="utf-8")
 
-        def write_to_log(*a):
-            output_file.write("    ".join(str(t) for t in a) + "\n")
+        def write_to_log(s: str) -> Any:
+            output_file.write(s + "\n")
 
         debug.print_function = write_to_log
 
@@ -56,7 +57,7 @@ def validate_command_logic(args):
     return 0 if final_state_by_resolve is not None else 1
 
 
-def add_validate_command(sub_parsers):
+def add_validate_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("validate", help="Validate a rdvgame file.")
     add_debug_argument(parser)
     parser.add_argument("--repeat", default=1, type=int, help="Validate multiple times. Used for benchmarking.")

@@ -4,7 +4,7 @@
 
 Welcome to Randovania, a randomizer platform for a multitude of games.
 
-New here or looking to install? Check [our website](https://randovania.github.io/).
+New here or looking to install? Check [our website](https://randovania.org/).
 
 <!-- Begin SUPPORTED -->
 
@@ -20,15 +20,11 @@ New here or looking to install? Check [our website](https://randovania.github.io
 
 <!-- Begin EXPERIMENTAL -->
 
-### Experimental Games
- - Metroid Prime 3: Corruption
- - Super Metroid
-
 <!-- End EXPERIMENTAL -->
 
 <!-- Begin WELCOME -->
 
-Randovania can randomize many aspects of its supported games, all while still ensuring they're completable 
+Randovania can randomize many aspects of its supported games, all while still ensuring they're completable
 without using any glitches or exploits. Its features include:
 
 * Randomizing what can be found in each item location. Weapons, keys, and more can end up in
@@ -81,7 +77,7 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 
 ## Games
 
-### Metroid Prime 1
+### Metroid Prime
 * Game patching via [randomprime](https://github.com/randovania/randomprime). Originally authored by [April Wade](https://github.com/aprilwade), it is now maintained and developed by [toasterparty](https://github.com/toasterparty) with contributions from [others](https://github.com/randovania/randomprime/graphs/contributors)
 * Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [SolventMercury](https://github.com/SolventMercury).
 * Converting Metroid Prime 2 models by [Migs](https://www.twitch.tv/migslive).
@@ -92,16 +88,6 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
 * [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z) created by Claris. For more information, see the
 [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
 * Converting Metroid Prime models by [Migs](https://www.twitch.tv/migslive).
-
-### Metroid Prime 3: Corruption
-* Game patching written by [gollop](https://github.com/gollop).
-* Room data collected by [Dyceron](https://www.twitch.tv/dyceron) and [KirbymastaH](https://www.twitch.tv/kirbymastah).
-
-### Super Metroid
-* Game Patching and Logic Database by [SolventMercury](https://github.com/SolventMercury).
-* Custom Item PLMs patch by [Kazuto](https://github.com/Kazuto88).
-* Skip Intro Saves patch by [PHOSPHOTiDYL](https://metroidconstruction.com/resource.php?id=265).
-* Other individual patches by [Total](https://github.com/tewtal), Foosda, Leodox, and others.
 
 ### Cave Story
 * Patcher and logic written by [duncathan_salt](https://twitter.com/duncathan_salt).
@@ -160,11 +146,19 @@ Linux Flatpak build contributed by [Ethan Lee](https://flibitijibibo.com/).
   * [Haxaplax](https://github.com/haxaplax)
 
 ## Auto Tracker
+
+### Primes
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
 * Pixel theme assets were provided by [Uncle Reggie](https://www.twitch.tv/unclereggie).
+
+### AM2R
 * AM2R 1.5.5 item sprites were made by [Eskimode7](https://twitter.com/shmegleskimo) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 * The AM2R DNA sprite was made by [AbyssalCreature](https://github.com/AbyssalCreature) licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 * The AM2R Morph Ball and Power Grip sprites were made by ShirtyScarab554 licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+
+### Metroid: Samus Returns
+
+* Game theme assets were provided by [Dyceron](https://www.twitch.tv/dyceron).
 
 ## Multiworld
 Server and logic written by [Henrique "Darkszero" Gemignani](https://github.com/henriquegemignani/).
@@ -182,6 +176,9 @@ The "unplug" icon is by tezar tantular from [Noun Project](https://thenounprojec
 ### Another Metroid 2 Remake
 Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and are made by [AbyssalCreature](https://github.com/AbyssalCreature), ShirtyScarab554 and [many others](https://github.com/randovania/YAMS/blob/main/YAMS-LIB/sprites/Attribution.md).
 
+### Metroid: Samus Returns
+Integration written by [Thanatos](https://github.com/ThanatosGit).
+
 <!-- End CREDITS -->
 
 # Developer Help
@@ -194,7 +191,7 @@ Integration written by [Miepee](https://github.com/Miepee). Offworld sprites are
 ## Setup
 
 Getting started:
-   1. Clone this repository. (downloading the zip is *not* supported and will not work)
+   1. Clone this repository. If you want to clone your fork, make sure that during the forking process you **uncheck** the `Copy main branch only` checkbox. Because the git history is needed, downloading the zip is *not* supported and will not work.
    2. Open a terminal in the repository root
    3. Run the following file:
       1. Windows: `tools/prepare_virtual_env.bat`
@@ -240,7 +237,15 @@ the `prepare_virtual_env` scripts.
 
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
-_*If using Visual Studio Code, make sure to set `"qtForPython.uic.liveExecution.enabled": false` when using the QT extension._
+## Visual Studio Code
+
+Clone this repository and open the folder in Visual Studio Code. It suggests several useful plugins for developing which you should download and install.
+
+If your Python is setup properly, you can use the `Create venv with all exporters` task by pressing CTRL+SHIFT+P, type in `Task`, select `Tasks: Run task` and then select the task. It will create the venv with all the dependencies installed for you.
+
+There is also a task defined to run all tests. To run individual tests you can utilise the `Testing` section of Visual Studio Code. You can simply run or debug a test there.
+
+To start Randovania you can press CTRL+F5. If you only press F5, Randovania will start with a debugger. Be aware that starting with a debugger makes the application much slower.
 
 # Documentation
 

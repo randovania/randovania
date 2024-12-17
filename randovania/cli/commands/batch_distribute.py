@@ -13,7 +13,7 @@ from randovania.interface_common import sleep_inhibitor
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 if typing.TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, Namespace, _SubParsersAction
 
     from randovania.layout.generator_parameters import GeneratorParameters
 
@@ -58,10 +58,14 @@ def batch_distribute_helper(
     return delta_time
 
 
-def batch_distribute_command_logic(args):
+def batch_distribute_command_logic(args: Namespace) -> None:
     from randovania.layout.permalink import Permalink
 
     finished_count = 0
+    impossible_count = 0
+    impossible_seeds = []
+    failure_count = 0
+    failure_seeds = []
 
     timeout: int = args.timeout
     validate: bool = args.validate
@@ -78,7 +82,7 @@ def batch_distribute_command_logic(args):
     def get_permalink_text(seed: int) -> str:
         return Permalink.from_parameters(get_generator_params(base_params, seed)).as_base64_str
 
-    def report_update(seed: int, msg: str):
+    def report_update(seed: int, msg: str) -> None:
         nonlocal finished_count
         finished_count += 1
         front = number_format.format(finished_count, seed_count)
@@ -86,13 +90,21 @@ def batch_distribute_command_logic(args):
 
     all_futures: list[Future] = []
 
-    def with_result(seed: int, r: Future):
+    def with_result(seed: int, r: Future) -> None:
         try:
             report_update(seed, f"Finished seed in {r.result()} seconds.")
         except ImpossibleForSolver as e:
             report_update(seed, f"Failed to generate seed: {e}")
+            nonlocal impossible_count
+            impossible_count += 1
+            nonlocal impossible_seeds
+            impossible_seeds.append(get_permalink_text(seed))
         except GenerationFailure as e:
             report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
+            nonlocal failure_count
+            failure_count += 1
+            nonlocal failure_seeds
+            failure_seeds.append(get_permalink_text(seed))
         except CancelledError:
             nonlocal finished_count
             finished_count += 1
@@ -117,11 +129,15 @@ def batch_distribute_command_logic(args):
                     )
                     result.add_done_callback(functools.partial(with_result, seed_number))
                     all_futures.append(result)
+
     except KeyboardInterrupt:
         pass
 
+    print("Generation Failed: " + str(failure_count) + " " + str(failure_seeds))
+    print("Impossible for Solver: " + str(impossible_count) + " " + str(impossible_seeds))
 
-def add_batch_distribute_command(sub_parsers):
+
+def add_batch_distribute_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("batch-distribute", help="Generate multiple layouts in parallel")
 
     parser.add_argument("permalink", type=str, help="The permalink to use")

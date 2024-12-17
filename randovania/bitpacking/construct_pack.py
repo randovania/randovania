@@ -8,17 +8,34 @@ import typing
 import uuid
 from enum import Enum
 
-import construct
+import construct  # type: ignore[import-untyped]
 from frozendict import frozendict
 
-from randovania.lib import type_lib
+from randovania.lib import construct_lib, type_lib
 
 if typing.TYPE_CHECKING:
     from _typeshed import DataclassInstance
 
+    from randovania.lib.construct_stub import CodeGen
     from randovania.lib.json_lib import JsonValue
 
 BinStr = construct.PascalString(construct.VarInt, "utf-8")
+
+
+def _bin_str_emitbuild(code: CodeGen) -> str:
+    fname = f"build_str_{code.allocateId()}"
+    code.append(f"""
+        def {fname}(obj: str, io, this):
+            encoded = obj.encode("utf-8")
+            obj = len(encoded)
+            {construct_lib.compile_build_struct(construct.VarInt, code)}
+            io.write(encoded)
+            return obj
+        """)
+    return f"{fname}(obj, io, this)"
+
+
+construct_lib.add_emit_build(BinStr, _bin_str_emitbuild)
 
 
 T = typing.TypeVar("T")
@@ -60,6 +77,21 @@ class ConstructTypedStruct(construct.Adapter, typing.Generic[T]):
     def _encode(self, obj: T, context: construct.Container, path: str) -> construct.Container:
         return construct.Container((field_name, getattr(obj, field_name)) for field_name in self.field_types.keys())
 
+    def _emitbuild(self, code: CodeGen) -> str:
+        fname = f"build_typed_struct_{code.allocateId()}"
+        block = f"""
+            def {fname}(obj, io, this):
+                obj = Container([
+"""
+        for field_name in self.field_types.keys():
+            block += f"                    ({repr(field_name)}, obj.{field_name}),\n"
+        block += f"""
+                ])
+                return {construct_lib.compile_build_struct(self.subcon, code)}
+        """
+        code.append(block)
+        return f"{fname}(obj, io, this)"
+
 
 def _construct_dataclass(cls: type[DataclassInstance]) -> ConstructTypedStruct:
     resolved_types = typing.get_type_hints(cls)
@@ -87,6 +119,13 @@ class UUIDAdapter(construct.Adapter):
     def _encode(self, obj: uuid.UUID, context: construct.Container, path: str) -> bytes:
         return obj.bytes
 
+    def _emitparse(self, code: CodeGen) -> str:
+        code.append("import uuid")
+        return "uuid.UUID(bytes=io.read(16))"
+
+    def _emitbuild(self, code: CodeGen) -> str:
+        return "(io.write(obj.bytes), obj)[1]"
+
 
 class DatetimeAdapter(construct.Adapter):
     def __init__(self) -> None:
@@ -100,6 +139,10 @@ class DatetimeAdapter(construct.Adapter):
             raise construct.ConstructError(f"{obj} is not an UTC datetime", path)
 
         return int(obj.timestamp() * 10000000)
+
+    def _emitbuild(self, code: CodeGen) -> str:
+        construct_lib.zigzag_emitbuild(code)
+        return "_zigzag_build(int(obj.timestamp() * 10000000), io, this)"
 
 
 _direct_mapping: dict[type, construct.Construct] = {
@@ -147,7 +190,7 @@ def construct_for_type(type_: type) -> construct.Construct:
     elif type_lib.is_named_tuple(type_):
         return _construct_for_named_tuple(typing.cast(type[typing.NamedTuple], type_))
 
-    elif type_origin == list:
+    elif type_origin is list:
         if type_args := typing.get_args(type_):
             value_type = type_args[0]
         else:
@@ -155,7 +198,7 @@ def construct_for_type(type_: type) -> construct.Construct:
 
         return construct.PrefixedArray(construct.VarInt, construct_for_type(value_type))
 
-    elif type_origin == tuple:
+    elif type_origin is tuple:
         type_args = typing.get_args(type_)
         if type_args:
             if len(type_args) == 2 and type_args[1] == Ellipsis:
@@ -195,11 +238,19 @@ def construct_for_type(type_: type) -> construct.Construct:
     raise TypeError(f"Unsupported type: {type_}.")
 
 
+@functools.cache
+def compiled_construct_for_type(type_: type) -> construct.Construct:
+    return construct_for_type(type_).compile(
+        # Uncomment to inspect the generated code
+        # f"compiled_{type_.__name__}.py"
+    )
+
+
 def encode(obj: T, type_: type[T] | None = None) -> bytes:
     if type_ is None:
         type_ = type(obj)
     t: type = type_  # workaround for mypy considering type[T] not hashable
-    return construct_for_type(t).build(obj)
+    return compiled_construct_for_type(t).build(obj)
 
 
 def decode(data: bytes, type_: type[T]) -> T:

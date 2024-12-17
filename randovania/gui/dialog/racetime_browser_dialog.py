@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QCheckBox, QDialog, QDialogButtonBox, QPushButton, QTableWidgetItem
 from qasync import asyncSlot
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.racetime_browser_dialog_ui import Ui_RacetimeBrowserDialog
 from randovania.gui.lib import async_dialog, common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
@@ -45,6 +45,7 @@ _SUPPORTED_GAME_URLS = {
     RandovaniaGame.METROID_PRIME_ECHOES: "https://racetime.gg/mp2r/data",
     RandovaniaGame.METROID_DREAD: "https://racetime.gg/dread-rando/data",
     RandovaniaGame.AM2R: "https://racetime.gg/am2r-rdv/data",
+    RandovaniaGame.METROID_SAMUS_RETURNS: "https://racetime.gg/msrr/data",
 }
 _TEST_RESPONSE = {
     "name": "Metroid Prime 2: Echoes Randomizer",
@@ -159,8 +160,7 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
         self.refresh_button.setEnabled(False)
         self.races = []
         try:
-            for game in _SUPPORTED_GAME_URLS:
-                race_url = _SUPPORTED_GAME_URLS[game]
+            for game, race_url in _SUPPORTED_GAME_URLS.items():
                 try:
                     raw_races = await _query_server(race_url)
                 except aiohttp.ClientError as e:

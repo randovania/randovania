@@ -6,10 +6,9 @@ import randovania
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
@@ -28,6 +27,7 @@ if TYPE_CHECKING:
     from randovania.game_description.db.dock import DockType
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.db.region_list import Region, RegionList
+    from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -110,21 +110,30 @@ def prime1_pickup_details_to_patcher(
     collection_text = detail.collection_text[0]
     pickup_type = "Nothing"
     count = 0
+    max_count = 0
 
-    if detail.other_player:
+    if detail.is_for_remote_player:
         pickup_type = "Unknown Item 1"
         count = detail.index.index + 1
+        max_count = count
     else:
         for resource, quantity in detail.conditional_resources[0].resources:
-            if resource.extra["item_id"] >= 1000:
-                continue
-            pickup_type = resource.long_name
-            count = quantity
-            break
+            # Refill items
+            if resource.extra.get("is_refill"):
+                pickup_type = resource.extra.get("pickup_type", resource.long_name)
+                count = quantity
+                max_count = 0
+                break
+            # Regular items
+            elif resource.extra["item_id"] < 1000:
+                pickup_type = resource.long_name
+                count = quantity
+                max_count = count
+                break
 
     if (
         model["name"] == "Missile"
-        and not detail.other_player
+        and not detail.is_for_remote_player
         and "Missile Expansion" in collection_text
         and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0
     ):
@@ -140,7 +149,7 @@ def prime1_pickup_details_to_patcher(
         "scanText": f"{name}. {detail.description}".strip(),
         "hudmemoText": collection_text,
         "currIncrease": count,
-        "maxIncrease": count,
+        "maxIncrease": max_count,
         "respawn": False,
         "showIcon": pickup_markers,
     }
@@ -158,17 +167,17 @@ def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.Exported
     result = set()
 
     for index in _LOCATIONS_WITH_MODAL_ALERT:
-        if pickups[index].other_player:
+        if pickups[index].is_for_remote_player:
             result.add(index)
 
     for indices, extra in _LOCATIONS_GROUPED_TOGETHER:
-        num_other = sum(pickups[i].other_player for i in indices)
+        num_other = sum(pickups[i].is_for_remote_player for i in indices)
         if extra is not None:
-            num_other += pickups[extra].other_player
+            num_other += pickups[extra].is_for_remote_player
 
         if num_other > 1:
             for index in indices:
-                if pickups[index].other_player:
+                if pickups[index].is_for_remote_player:
                     result.add(index)
 
     return result
@@ -215,6 +224,22 @@ def _random_factor(rng: Random, min: float, max: float, target: float):
 
 
 def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
+    if room_name == "Artifact Temple":
+        center = [-373, 47, -30]
+        scale = [65, 50, 16]
+        return [rng.uniform(center[i] - scale[i] / 2, center[i] + scale[i] / 2) for i in range(3)]
+
+    if room_name == "Burn Dome":
+        if bool(rng.getrandbits(1)):
+            # Main Room
+            center = [577.5, -13.1, 34.9]
+            scale = [25, 22.4, 7.4]
+        else:
+            # Missile Room
+            center = [588.8, 39.5, 33.9]
+            scale = [9, 8, 5]
+        return [rng.uniform(center[i] - scale[i] / 2, center[i] + scale[i] / 2) for i in range(3)]
+
     # return a quasi-random point within the provided aabb, but bias towards being closer to in-bounds
     offset_xy = 0.0
     offset_max_z = 0.0
@@ -227,7 +252,6 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
         "Triclops Pit",
         "Elite Quarters",
         "Quarantine Cave",
-        "Burn Dome",
         "Research Lab Hydra",
         "Research Lab Aether",
     ]
@@ -235,7 +259,6 @@ def _pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
     if room_name in ROOMS_THAT_NEED_HELP:
         offset_xy = 0.1
         offset_max_z = -0.3
-
     x_factor = _random_factor(rng, 0.15 + offset_xy, 0.85 - offset_xy, 0.5)
     y_factor = _random_factor(rng, 0.15 + offset_xy, 0.85 - offset_xy, 0.5)
     z_factor = _random_factor(rng, 0.1, 0.8 + offset_max_z, 0.35)
@@ -297,14 +320,11 @@ def _serialize_dock_modifications(
             size_indices[area.name] = area.extra["size_index"]
 
         default_connections = {}
-        for src_name, src_dock in default_connections_node_name:
-            (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
-
+        for (src_name, src_dock), (dst_name, dst_node_name) in default_connections_node_name.items():
             try:
                 dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
             except KeyError:
                 continue
-
             default_connections[(src_name, src_dock)] = (dst_name, dst_dock)
 
         for area_name, dock_num in candidates:
@@ -466,7 +486,7 @@ def _serialize_dock_modifications(
                 assert len(candidates) % 2 == 0
 
                 if max_index < -0.00001:
-                    raise Exception("Failed to find pairings for %s" % str(candidates))
+                    raise Exception(f"Failed to find pairings for {str(candidates)}")
 
                 (src_name, src_dock) = next_candidate(max_index)
 
@@ -527,11 +547,11 @@ def _serialize_dock_modifications(
                             room_connections.append((room_name, dst_room_name))
 
                     # Handle unrandomized connections
-                    for src_name, src_dock in is_nonstandard:
+                    for (src_name, src_dock), is_set in is_nonstandard.items():
                         if (src_name, src_dock) in disabled_doors:
                             continue
 
-                        if is_nonstandard[(src_name, src_dock)]:
+                        if is_set:
                             (dst_name, dst_dock) = default_connections[(src_name, src_dock)]
                             room_connections.append((src_name, dst_name))
 
@@ -618,6 +638,10 @@ class PrimePatchDataFactory(PatchDataFactory):
             "swapBeamControls": cosmetic_patches.user_preferences.swap_beam_controls,
         }
 
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
+
     def create_game_specific_data(self) -> dict:
         # Setup
         db = self.game
@@ -636,22 +660,7 @@ class PrimePatchDataFactory(PatchDataFactory):
             )
 
         scan_visor = self.game.resource_database.get_item_by_name("Scan Visor")
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(db.resource_database), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            db.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(
-                pickup_exporter.GenericAcquiredMemo(), self.players_config, self.game_enum()
-            ),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
         regions = [region for region in db.region_list.regions if region.name != "End of Game"]
         elevator_dock_types = self.game.dock_weakness_database.all_teleporter_dock_types
@@ -678,15 +687,15 @@ class PrimePatchDataFactory(PatchDataFactory):
                     if not is_teleporter:
                         continue
 
-                    identifier = db.region_list.identifier_for_node(node)
+                    identifier = node.identifier.area_identifier
                     target = _name_for_location(
                         db.region_list, self.patches.get_dock_connection_for(node).identifier.area_identifier
                     )
 
                     source_name = prime1_elevators.RANDOMPRIME_CUSTOM_NAMES[
                         (
-                            identifier.area_identifier.region,
-                            identifier.area_identifier.area,
+                            identifier.region,
+                            identifier.area,
                         )
                     ]
                     level_data[region.name]["transports"][source_name] = target
@@ -708,13 +717,27 @@ class PrimePatchDataFactory(PatchDataFactory):
                     if self.configuration.shuffle_item_pos or node.extra.get("position_required"):
                         aabb = area.extra["aabb"]
                         pickup["position"] = _pick_random_point_in_aabb(self.rng, aabb, area.name)
-
-                        if node.extra.get("position_required"):
-                            # Scan this item through walls
-                            assert self.configuration.items_every_room
-                            pickup["jumboScan"] = True
+                        pickup["jumboScan"] = True
 
                     level_data[region.name]["rooms"][area.name]["pickups"].append(pickup)
+
+        if self.configuration.shuffle_item_pos:
+            # Allow temple cutscene without collecting item
+            level_data["Tallon Overworld"]["rooms"]["Artifact Temple"]["triggers"] = [
+                {
+                    "id": 0x00100470,
+                    "active": True,
+                }
+            ]
+
+        # Remove Bars in Great Tree Hall
+        if self.configuration.remove_bars_great_tree_hall:
+            level_data["Tallon Overworld"]["rooms"]["Great Tree Hall"]["deleteIds"] = [
+                2359733,  # 0x002401B5 - bar
+                2359744,  # 0x002401C0 - spinner auto-enable timer
+                2359830,  # 0x00240216 - scan front
+                2359829,  # 0x00240215 - scan back
+            ]
 
         # serialize room modifications
         if self.configuration.superheated_probability != 0:
@@ -728,6 +751,24 @@ class PrimePatchDataFactory(PatchDataFactory):
             for region in regions:
                 for area in region.areas:
                     level_data[region.name]["rooms"][area.name]["submerge"] = self.rng.random() < probability
+
+        # Replace vanilla missile blast shields with the new ones
+        if not self.configuration.legacy_mode:
+            for node in db.region_list.iterate_nodes():
+                if isinstance(node, DockNode) and node.dock_type not in elevator_dock_types:
+                    if node.default_dock_weakness.name != "Missile Blast Shield (randomprime)":
+                        continue
+
+                    dock_num = str(node.extra["dock_index"])
+                    world_name = node.identifier.region
+                    room_name = node.identifier.area
+                    doors_in_node = level_data[world_name]["rooms"][room_name]["doors"]
+
+                    if dock_num not in doors_in_node:
+                        doors_in_node[dock_num] = {}
+
+                    doors_in_node[dock_num]["shieldType"] = node.default_dock_weakness.extra["shieldType"]
+                    doors_in_node[dock_num]["blastShieldType"] = node.default_dock_weakness.extra["blastShieldType"]
 
         # serialize door modifications
         for region in regions:
@@ -813,7 +854,7 @@ class PrimePatchDataFactory(PatchDataFactory):
         else:
             starting_memo = None
 
-        if self.cosmetic_patches.open_map and self.configuration.teleporters.is_vanilla:
+        if self.cosmetic_patches.open_map:
             map_default_state = "Always"
         else:
             map_default_state = "MapStationOrVisit"
@@ -968,7 +1009,7 @@ class PrimePatchDataFactory(PatchDataFactory):
                 "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": not self.configuration.legacy_mode,
                 "missileStationPbRefill": not self.configuration.legacy_mode,
-                "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
+                "staggeredSuitDamage": self.configuration.damage_reduction.value,
                 "heatDamagePerSec": self.configuration.heat_damage,
                 "autoEnabledElevators": not starting_resources.has_resource(scan_visor),
                 "multiworldDolPatches": True,

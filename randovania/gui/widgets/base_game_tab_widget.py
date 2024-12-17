@@ -6,10 +6,11 @@ from typing import TYPE_CHECKING
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
+from randovania import monitoring
 from randovania.gui.lib import faq_lib, hints_text
 
 if TYPE_CHECKING:
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.widgets.generate_game_widget import GenerateGameWidget
@@ -90,6 +91,7 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
 
     @asyncSlot()
     async def on_quick_generate(self) -> None:
+        monitoring.metrics.incr("gui_generate_quick", tags={"game": self.game().value})
         await self.tab_generate_game.generate_new_layout(spoiler=True)
 
     def enable_buttons_with_background_tasks(self, value: bool) -> None:
@@ -97,3 +99,6 @@ class BaseGameTabWidget(QtWidgets.QTabWidget):
 
     def _on_can_generate(self, can_generate: bool) -> None:
         self.quick_generate_button.setEnabled(can_generate)
+
+    def select_preset_tab(self) -> None:
+        self.setCurrentWidget(self.tab_generate_game)

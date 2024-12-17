@@ -11,6 +11,7 @@ import randovania.games.prime2.exporter.hints
 from randovania.exporter import item_names, pickup_exporter
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.dock_node import DockNode
@@ -20,7 +21,7 @@ from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
+from randovania.games.common import elevators
 from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
@@ -30,7 +31,6 @@ from randovania.generator.pickup_pool import pickup_creator
 from randovania.layout.exceptions import InvalidConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.lib import json_lib, string_lib
-from randovania.patching.prime import elevators
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
@@ -128,10 +128,10 @@ def _create_spawn_point_field(
 
 
 def _pretty_name_for_elevator(
-    game: RandovaniaGame,
+    game: GameDescription,
     region_list: RegionList,
     original_teleporter_node: DockNode,
-    connection: AreaIdentifier,
+    connection: NodeIdentifier,
 ) -> str:
     """
     Calculates the name the room that contains this elevator should have
@@ -141,7 +141,7 @@ def _pretty_name_for_elevator(
     :return:
     """
     if original_teleporter_node.extra.get("keep_name_when_vanilla", False):
-        if original_teleporter_node.default_connection.area_identifier == connection:
+        if original_teleporter_node.default_connection.area_identifier == connection.area_identifier:
             return region_list.nodes_to_area(original_teleporter_node).name
 
     return f"Transport to {elevators.get_elevator_or_area_name(game, region_list, connection, False)}"
@@ -166,7 +166,7 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription, elevato
                     "instance_id": node.extra["teleporter_instance_id"],
                     "origin_location": _area_identifier_to_json(game.region_list, node.identifier.area_identifier),
                     "target_location": _area_identifier_to_json(game.region_list, target_area_location),
-                    "room_name": _pretty_name_for_elevator(game.game, region_list, node, target_area_location),
+                    "room_name": _pretty_name_for_elevator(game, region_list, node, connection.identifier),
                 }
             )
 
@@ -218,7 +218,7 @@ def _apply_translator_gate_patches(specific_patches: dict, elevator_shuffle_mode
 
 
 def _create_elevator_scan_port_patches(
-    game: RandovaniaGame,
+    game: GameDescription,
     region_list: RegionList,
     get_elevator_connection_for: Callable[[DockNode], Node],
     elevator_dock_type: DockType,
@@ -228,7 +228,7 @@ def _create_elevator_scan_port_patches(
             continue
 
         target_area_name = elevators.get_elevator_or_area_name(
-            game, region_list, get_elevator_connection_for(node).identifier.area_identifier, True
+            game, region_list, get_elevator_connection_for(node).identifier, True
         )
         yield {
             "asset_id": node.extra["scan_asset_id"],
@@ -456,6 +456,7 @@ def _logbook_title_string_patches() -> list[dict[str, typing.Any]]:
 def _akul_testament_string_patch(namer: HintNamer) -> list[dict[str, typing.Any]]:
     # update after each tournament! ordered from newest to oldest
     raw_champs = [
+        {"title": "2024 Champion", "name": "Naii the Baf"},
         {"title": "CGC 2023 Champions", "name": "TheGingerChris and BajaBlood"},
         {"title": "2022 Champion", "name": "Cestrion"},
         {"title": "CGC 2022 Champions", "name": "Cosmonawt and Cestrion"},
@@ -522,7 +523,7 @@ def _create_string_patches(
     if not use_new_patcher:
         string_patches.extend(
             _create_elevator_scan_port_patches(
-                game.game, game.region_list, patches.get_dock_connection_for, elevator_dock_type
+                game, game.region_list, patches.get_dock_connection_for, elevator_dock_type
             )
         )
 
@@ -804,23 +805,23 @@ class EchoesPatchDataFactory(PatchDataFactory):
         elevator_type = self.elevator_dock_type()
         all_teleporters = [pair for pair in self.patches.all_dock_connections() if pair[0].dock_type == elevator_type]
         for node, connection in all_teleporters:
-            target_area_identifier = connection.identifier.area_identifier
+            node_identifier = connection.identifier
             region, area = self._add_area_to_regions_patch(regions_patch_data, node)
             area_patches = regions_patch_data[region.name]["areas"][area.name]
             area_patches["elevators"].append(
                 {
                     "instance_id": node.extra["teleporter_instance_id"],
-                    "target_assets": _area_identifier_to_json(self.game.region_list, target_area_identifier),
+                    "target_assets": _area_identifier_to_json(self.game.region_list, node_identifier.area_identifier),
                     "target_strg": node.extra["scan_asset_id"],
                     "target_name": elevators.get_elevator_or_area_name(
-                        self.game.game, self.game.region_list, target_area_identifier, include_world_name=True
+                        self.game, self.game.region_list, node_identifier, include_world_name=True
                     ),
                 }
             )
 
             if "new_name" not in area_patches:
                 area_patches["new_name"] = _pretty_name_for_elevator(
-                    self.game.game, self.game.region_list, node, target_area_identifier
+                    self.game, self.game.region_list, node, node_identifier
                 )
 
     def add_layer_patches(self, regions_patch_data: dict) -> None:
@@ -875,8 +876,9 @@ class EchoesPatchDataFactory(PatchDataFactory):
         #     self.add_credits_skip(regions_patch_data)
 
         return {
+            "legacy_compatibility": True,
             "worlds": regions_patch_data,
-            "area_patches": {"torvus_temple": True},
+            "area_patches": {"rebalance_world": True},
             "small_randomizations": {
                 "seed": self.description.get_seed_for_player(self.players_config.player_index),
                 "echo_locks": True,

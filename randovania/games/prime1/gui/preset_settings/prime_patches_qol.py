@@ -4,8 +4,8 @@ import typing
 
 from PySide6 import QtWidgets
 
+from randovania.games.prime1.gui.generated.preset_prime_qol_ui import Ui_PresetPrimeQol
 from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode
-from randovania.gui.generated.preset_prime_qol_ui import Ui_PresetPrimeQol
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -25,6 +25,7 @@ _FIELDS = [
     "backwards_lower_mines",
     "phazon_elite_without_dynamo",
     "spring_ball",
+    "remove_bars_great_tree_hall",
 ]
 
 
@@ -70,8 +71,8 @@ cutscenes happen. Inferior to the above options, but kept around because it's fu
         return "Quality of Life"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):
         def persist(value: bool):

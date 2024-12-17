@@ -12,6 +12,7 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.games.common.prime_family.exporter import good_hashes
 from randovania.games.prime2.exporter.claris_randomizer_data import decode_randomizer_data
 from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
@@ -28,7 +29,7 @@ class EchoesGameExporter(GameExporter):
     _busy: bool = False
 
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the patcher is busy right now
         """
@@ -53,6 +54,12 @@ class EchoesGameExporter(GameExporter):
 
     def _after_export(self):
         self._busy = False
+
+    def known_good_hashes(self) -> dict[str, tuple[str, ...]]:
+        return {
+            "prime1_iso": good_hashes.PRIME1_GC_ISOS,
+            "prime2_iso": good_hashes.PRIME2_GC_ISOS,
+        }
 
     def _do_export_game(
         self,
@@ -193,4 +200,4 @@ def copy_coin_chest(contents_path: Path):
         for pak in paks:
             manager.ensure_present(pak, dep.id)
 
-    manager.save_modifications(contents_path)
+    manager.save_modifications(contents_path.joinpath("files"))

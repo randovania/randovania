@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-288</y>
-         <width>542</width>
-         <height>879</height>
+         <y>0</y>
+         <width>539</width>
+         <height>900</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -88,7 +88,7 @@
            <item>
             <widget class="QLabel" name="major_minor_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this setting is enabled, major items (i.e., major upgrades, Energy Tanks, Dark Temple Keys, and Energy Transfer Modules) and minor items (i.e, expansions) will be shuffled separately.&lt;br/&gt;Major items in excess of the number of major locations will be placed in minor locations, and vice versa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this setting is enabled, major items (e.g., major upgrades and keys to new areas) and minor items (i.e, ammo expansions) will be shuffled separately.&lt;br/&gt;Major items in excess of the number of major locations will be placed in minor locations, and vice versa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -98,7 +98,7 @@
            <item>
             <widget class="Line" name="line_2">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -113,6 +113,53 @@
             <widget class="QLabel" name="local_first_progression_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ensures that that your first progression is placed in your own world, ensuring you always have something to do before potentially having to wait for progression.&lt;/p&gt;&lt;p&gt;This only changes anything in multiworld sessions.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning:&lt;/span&gt; This will make generation fail more frequently. Use with caution in sessions with many players and random starting locations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="logical_pickup_placement_line">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="logical_pickup_placement_layout">
+             <item>
+              <widget class="QLabel" name="logical_pickup_placement_label">
+               <property name="text">
+                <string>[Experimental] Logical pickup placement:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="logical_pickup_placement_combo">
+               <item>
+                <property name="text">
+                 <string>Minimal</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Major pickups</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>All pickups</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="logical_pickup_placement_description">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Minimal&lt;/span&gt;: Only the pickups required to beat the game are guaranteed to be obtainable.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -166,7 +213,7 @@
            <item>
             <widget class="Line" name="experimental_generator_line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -180,7 +227,7 @@
            <item>
             <widget class="Line" name="minimal_logic_line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -194,10 +241,10 @@
            <item>
             <widget class="QLabel" name="trick_level_minimal_logic_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;/p&gt;&lt;p&gt;Minimal Logic is a setting that checks for the bare minimum items to create an almost pure random layout. This setting assumes the player has extensive knowledge of the game and will likely require Out of Bounds to complete.&lt;/p&gt;&lt;p&gt;There are no guarantees that a seed will be possible in this case.&lt;/p&gt;&lt;p&gt;{game_specific_text}&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;/p&gt;&lt;p&gt;Minimal Logic is a setting that checks for the bare minimum items to create an almost pure random layout. This setting assumes the player has extensive knowledge of the game and will likely require major glitches (e.g. breaking out of bounds) to complete.&lt;/p&gt;&lt;p&gt;There are no guarantees that a seed will be possible in this case.&lt;/p&gt;&lt;p&gt;{game_specific_text}&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -222,7 +269,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Certain locations, such as rooms without safe zones in Dark Aether or bosses, requires a certain number of energy tanks (or suits).&lt;/p&gt;&lt;p&gt;This setting controls how much energy the logic will expect you to have to reach these locations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Certain locations, such as rooms with bosses or passive damage over time, require you to be able to take a certain amount of damage.&lt;/p&gt;&lt;p&gt;This setting controls how much energy the logic will expect you to have to reach these locations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

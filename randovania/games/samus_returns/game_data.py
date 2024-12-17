@@ -1,52 +1,66 @@
 from __future__ import annotations
 
-from randovania.games import game
+from typing import TYPE_CHECKING
+
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.samus_returns import layout
+from randovania.games.samus_returns.layout import progressive_items
 from randovania.games.samus_returns.layout.preset_describer import MSRPresetDescriber
-from randovania.games.samus_returns.pickup_database import progressive_items
+
+if TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import PatchDataFactory
+    from randovania.interface_common.options import PerGameOptions
 
 
-def _options():
+def _options() -> type[PerGameOptions]:
     from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
 
     return MSRPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.samus_returns import gui
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         game_tab=gui.MSRGameTabWidget,
         tab_provider=gui.msr_preset_tabs,
         cosmetic_dialog=gui.MSRCosmeticPatchesDialog,
         export_dialog=gui.MSRGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
-        spoiler_visualizer=(gui.MSRHintDetailsTab,),
+        spoiler_visualizer=(gui.MSRHintDetailsTab, gui.MSRTeleporterDetailsTab),
     )
 
 
-def _patch_data_factory():
+def _patch_data_factory() -> type[PatchDataFactory]:
     from randovania.games.samus_returns.exporter.patch_data_factory import MSRPatchDataFactory
 
     return MSRPatchDataFactory
 
 
-def _exporter():
+def _exporter() -> GameExporter:
     from randovania.games.samus_returns.exporter.game_exporter import MSRGameExporter
 
     return MSRGameExporter()
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.samus_returns import generator
     from randovania.games.samus_returns.generator.bootstrap import MSRBootstrap
     from randovania.games.samus_returns.generator.hint_distributor import MSRHintDistributor
+    from randovania.generator.filler.weights import ActionWeights
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=generator.pool_creator,
         bootstrap=MSRBootstrap(),
         base_patches_factory=generator.MSRBasePatchesFactory(),
         hint_distributor=MSRHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
@@ -56,12 +70,13 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="MSR",
     long_name="Metroid: Samus Returns",
-    development_state=game.DevelopmentState.STABLE,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
+        {"path": "multiworld-starter-preset.rdvpreset"},
     ],
     faq=[
         (
@@ -132,10 +147,12 @@ game_data: game.GameData = game.GameData(
             "If Diggernaut is defeated or a checkpoint/save is reloaded, your Power Bombs will be re-enabled.",
         ),
     ],
-    web_info=game.GameWebInfo(
+    web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=[
             "All items, including ones normally locked behind amiibo",
             "Starting locations",
+            "Door locks",
+            "Elevator destinations",
             "A new goal has been added (DNA Hunt)",
         ],
         need_to_play=[
@@ -144,7 +161,7 @@ game_data: game.GameData = game.GameData(
         ],
     ),
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=layout.MSRConfiguration,
         cosmetic_patches=layout.MSRCosmeticPatches,
         preset_describer=MSRPresetDescriber(),
@@ -154,5 +171,6 @@ game_data: game.GameData = game.GameData(
     generator=_generator,
     patch_data_factory=_patch_data_factory,
     exporter=_exporter,
+    defaults_available_in_game_sessions=True,
     multiple_start_nodes_per_area=True,
 )

@@ -4,20 +4,21 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.am2r_remote_connector import AM2RRemoteConnector
 from randovania.game_connection.connector.remote_connector import PlayerLocationEvent
-from randovania.game_connection.executor.am2r_executor import AM2RExecutor, AM2RExecutorToConnectorSignals
+from randovania.game_connection.executor.am2r_executor import AM2RExecutor
+from randovania.game_connection.executor.executor_to_connector_signals import ExecutorToConnectorSignals
 from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 
 
 @pytest.fixture(name="connector")
 def am2r_remote_connector():
     executor_mock = MagicMock(AM2RExecutor)
     executor_mock.layout_uuid_str = "00000000-0000-1111-0000-000000000000"
-    executor_mock.signals = MagicMock(AM2RExecutorToConnectorSignals)
+    executor_mock.signals = MagicMock(ExecutorToConnectorSignals)
     connector = AM2RRemoteConnector(executor_mock)
     return connector
 
@@ -26,11 +27,7 @@ async def test_general_class_content(connector: AM2RRemoteConnector):
     assert connector.game_enum == RandovaniaGame.AM2R
     assert connector.description() == f"{RandovaniaGame.AM2R.long_name}"
 
-    emit_listener = MagicMock()
-    connector.Finished.connect(emit_listener)
-
     connector.connection_lost()
-    emit_listener.assert_called_once_with()
 
     await connector.force_finish()
     connector.executor.disconnect.assert_called_once()

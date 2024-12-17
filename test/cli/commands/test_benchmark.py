@@ -6,7 +6,7 @@ import pytest
 import pytest_mock
 
 from randovania.cli.commands import benchmark
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
 def test_generate_helper_success(mocker: pytest_mock.MockerFixture) -> None:
@@ -91,6 +91,7 @@ def test_run_logic(mocker: pytest_mock.MockerFixture, no_data: bool) -> None:
     args.game = None
     args.no_data = no_data
     args.output_file = None
+    args.seed_count = 100
 
     benchmark.run_logic(args)
 

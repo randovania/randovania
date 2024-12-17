@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import contextlib
-import json
+import os
 import platform
 import re
 import typing
@@ -9,7 +9,9 @@ from pathlib import Path
 
 import sentry_sdk
 import sentry_sdk.integrations.logging
+import sentry_sdk.metrics
 import sentry_sdk.scrubber
+import sentry_sdk.types
 
 import randovania
 
@@ -55,14 +57,30 @@ def _filter_data(data: object, str_filter: typing.Callable[[str], str]) -> typin
     return result
 
 
-_HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\])([^/\\]+)([/\\])")
+_HOME_RE = re.compile(r"(:?[/\\](?:home|Users)[/\\]+)([^/\\]+)([/\\])")
 
 
-def _filter_user_home(data):
+def _filter_user_home(data: typing.Any) -> typing.Any | None:
     def filter_home(s: str) -> str:
         return _HOME_RE.sub(r"\1<redacted>\3", s)
 
     return _filter_data(data, filter_home)
+
+
+def before_breadcrumb(crumb: dict[str, typing.Any], hint: sentry_sdk.types.Hint) -> dict[str, typing.Any] | None:
+    # Crumb is a dictionary, so this function will always return None and modify crumb in-place instead.
+    _filter_user_home(crumb)
+    return crumb
+
+
+def before_send(event: sentry_sdk.types.Event, hint: sentry_sdk.types.Hint) -> sentry_sdk.types.Event | None:
+    if "exc_info" in hint:
+        exc_type, exc_value, tb = hint["exc_info"]
+        if isinstance(exc_value, ConnectionError):
+            return None
+
+    _filter_user_home(event)
+    return event
 
 
 def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude_server_name: bool = False) -> None:
@@ -89,7 +107,12 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
 
         integrations.append(FlaskIntegration())
     else:
-        profiles_sample_rate = 0.0
+        profiles_sample_rate = 0.5 if randovania.is_dev_version() else 0.0
+
+        # We use asyncio for clients and bot, but not server.
+        from sentry_sdk.integrations.asyncio import AsyncioIntegration
+
+        integrations.append(AsyncioIntegration())
 
     server_name = None
     if exclude_server_name:
@@ -113,8 +136,10 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
         server_name=server_name,
         auto_session_tracking=include_flask,
         event_scrubber=HomeEventScrubber(),
+        before_breadcrumb=before_breadcrumb,
+        before_send=before_send,
     )
-    sentry_sdk.set_context(
+    sentry_sdk.Scope.get_global_scope().set_context(
         "os",
         {
             "name": platform.system(),
@@ -126,7 +151,11 @@ def _init(include_flask: bool, url_key: str, sampling_rate: float = 1.0, exclude
 def client_init() -> None:
     _init(False, "client", exclude_server_name=True)
 
-    sentry_sdk.set_tag("frozen", randovania.is_frozen())
+    global_scope = sentry_sdk.Scope.get_global_scope()
+    global_scope.set_tag("frozen", randovania.is_frozen())
+    global_scope.set_tag("cpu.architecture", platform.machine())
+    global_scope.set_tag("cpu.processor", platform.processor() or "unknown")  # Empty string is an invalid value
+    global_scope.set_tag("cpu.count", os.cpu_count())
 
     # Ignore the "packet queue is empty, aborting" message
     # It causes a disconnect, but we smoothly reconnect in that case.
@@ -141,20 +170,10 @@ def bot_init() -> None:
     return _init(False, "bot")
 
 
-@contextlib.contextmanager
-def attach_patcher_data(patcher_data: dict):
-    with sentry_sdk.push_scope() as scope:
-        scope.add_attachment(
-            json.dumps(patcher_data).encode("utf-8"),
-            filename="patcher.json",
-            content_type="application/json",
-        )
-        yield
-
-
 trace_function = sentry_sdk.trace
 set_tag = sentry_sdk.set_tag
 start_transaction = sentry_sdk.start_transaction
+metrics = sentry_sdk.metrics
 
 
 def trace_block(description: str):

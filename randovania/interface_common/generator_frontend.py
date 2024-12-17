@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import asyncio
 import multiprocessing
+import operator
 from concurrent.futures import ProcessPoolExecutor
 from typing import TYPE_CHECKING
 
 from randovania import monitoring
 from randovania.generator import generator
+from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.status_update_lib import ConstantPercentageCallback, ProgressUpdateCallable
 from randovania.resolver import debug
 
@@ -27,6 +30,7 @@ def generate_layout(
     parameters: GeneratorParameters,
     progress_update: ProgressUpdateCallable,
     retries: int | None = None,
+    world_names: list[str] | None = None,
 ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the configured permalink
@@ -34,22 +38,50 @@ def generate_layout(
     :param parameters:
     :param progress_update:
     :param retries:
+    :param world_names:
     :return:
     """
     with monitoring.start_transaction(op="task", name="generate_layout") as span:
         games = {preset.game.short_name for preset in parameters.presets}
         span.set_tag("num_worlds", parameters.world_count)
         span.set_tag("game", next(iter(games)) if len(games) == 1 else "cross-game")
+        span.set_tag("amount_of_games", len(games))
+        span.set_tag("unique_games", str(sorted(set(games))))
         span.set_tag("attempts", retries if retries is not None else generator.DEFAULT_ATTEMPTS)
         span.set_tag("validate_after", options.advanced_validate_seed_after)
         span.set_tag(
             "dock_rando",
             any(preset.configuration.dock_rando.mode == DockRandoMode.DOCKS for preset in parameters.presets),
         )
+        span.set_tag(
+            "minimal_logic", any(preset.configuration.trick_level.minimal_logic for preset in parameters.presets)
+        )
+        if len(games) == 1:
+            manager = PresetManager(None)
+            preset = parameters.get_preset(0)
+            if manager.is_included_preset_uuid(preset.uuid):
+                span.set_tag("builtin_preset", f"{preset.name} ({preset.game.short_name})")
+
+        for preset in parameters.presets:
+            tag_name_to_trick = {
+                "generation_trick_amount_disabled": LayoutTrickLevel.DISABLED,
+                "generation_trick_amount_beginner": LayoutTrickLevel.BEGINNER,
+                "generation_trick_amount_intermediate": LayoutTrickLevel.INTERMEDIATE,
+                "generation_trick_amount_advanced": LayoutTrickLevel.ADVANCED,
+                "generation_trick_amount_expert": LayoutTrickLevel.EXPERT,
+                "generation_trick_amount_hypermode": LayoutTrickLevel.HYPERMODE,
+            }
+            for tag_name, trick in tag_name_to_trick.items():
+                monitoring.metrics.incr(
+                    tag_name,
+                    value=operator.countOf(preset.configuration.trick_level.specific_levels.values(), trick),
+                    tags={"game": preset.game.short_name},
+                )
 
         extra_args = {
             "generator_params": parameters,
             "validate_after_generation": options.advanced_validate_seed_after,
+            "world_names": world_names,
         }
         if not options.advanced_timeout_during_generation:
             extra_args["timeout"] = None

@@ -13,7 +13,7 @@ Extra - asset_id: collision_camera_034
 
 > Elevator to Area 7; Heals? False
   * Layers: default
-  * Elevator to Transport to Area 6/Elevator to Area 6
+  * Elevator to Transport to Area 6/Elevator to Area 6; Custom name: Diggernaut Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea09
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea09
@@ -56,12 +56,7 @@ Extra - asset_id: collision_camera_034
   * Charge Beam Door to Diggernaut Arena/Door from Transport to Area 7
   * Extra - actor_name: DoorManicMinerBot
   * Extra - actor_type: doorclosedcharge
-  > Left of Plant Tunnels
-      All of the following:
-          Lay Any Bomb
-          # Deal with the Electric Gulluggs
-          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Weak Enemies
-  > Start Point
+  > Next to Diggernaut Arena
       Trivial
 
 > Event - Grapple Block Top; Heals? False
@@ -77,7 +72,7 @@ Extra - asset_id: collision_camera_034
           Morph Ball and After Area 6 - Transport to Area 7 Grapple Block Pull
           # Deal with the Electric Gulluggs and Autoad
           Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Non-Counterable Enemies
-  > Door to Diggernaut Arena
+  > Next to Diggernaut Arena
       All of the following:
           Lay Any Bomb
           # Deal with the Electric Gulluggs
@@ -136,11 +131,18 @@ Extra - asset_id: collision_camera_034
                           High Jump Boots
                           Super Jump (Advanced) or Unmorph Extend (Advanced)
 
-> Start Point; Heals? False
+> Next to Diggernaut Arena; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_ManicMiner
   > Door to Diggernaut Arena
-      Trivial
+      Any of the following:
+          Disabled Final Boss Diggernaut
+          Enabled Final Boss Diggernaut and All DNA
+  > Left of Plant Tunnels
+      All of the following:
+          Lay Any Bomb
+          # Deal with the Electric Gulluggs
+          Lightning Armor or Combat (Intermediate) or Dodge Enemies (Intermediate) or Defeat Weak Enemies
 
 > Event - Grapple Block Pull; Heals? False
   * Layers: default
@@ -244,9 +246,9 @@ Extra - asset_id: collision_camera_037
           # Roll under the Omega
           Morph Ball and Movement (Intermediate)
 
-> Dock to Omega Arena Access; Heals? False
+> Dock from Omega Arena Access; Heals? False
   * Layers: default
-  * Open Passage to Omega Arena Access/Dock to Omega Arena
+  * Blocked Passage to Omega Arena Access/Dock to Omega Arena
   > Room Center
       Trivial
 
@@ -572,9 +574,9 @@ Extra - asset_id: collision_camera_041
   > Start Point
       Trivial
 
-> Start Point; Heals? False; Default Node
+> Start Point; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Extra - start_point_actor_name: ST_DEBUG_ManicMinerAbsorption
+  * Extra - start_point_actor_name: ST_DEBUG_ManicMinerAbsorbption
   > Door to Hideout Sprawl
       Trivial
 
@@ -651,7 +653,7 @@ Extra - asset_id: collision_camera_042
 
 > Door to Chozo Seal West Intersection Terminal; Heals? False
   * Layers: default
-  * Power Beam Door to Chozo Seal West Intersection Terminal/Door from Crumbling Stairwell
+  * Power Beam Door to Chozo Seal West Intersection Terminal/Door from Crumbling Stairwell; Excluded from Dock Lock Rando
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
 
@@ -693,7 +695,7 @@ Extra - total_boundings: {'x1': -21150.0, 'x2': -17850.0, 'y1': -7800.0, 'y2': -
 Extra - polygon: [[-21150.0, -6400.0], [-21150.0, -7800.0], [-17850.0, -7800.0], [-17850.0, -6400.0]]
 Extra - asset_id: collision_camera_043
 > Pickup (Power Bomb); Heals? False
-  * Layers: default
+  * Layers: final-boss-not-diggernaut
   * Pickup 139; Category? Major
   * Extra - actor_name: LE_PowerUp_Powerbomb
   * Extra - actor_type: itemsphere_powerbomb
@@ -719,12 +721,14 @@ Extra - asset_id: collision_camera_043
 > Event - Diggernaut; Heals? False
   * Layers: default
   * Event Area 6 - Diggernaut
-  > Pickup (Power Bomb)
+  > Room Center
       Trivial
 
 > Room Center; Heals? False; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_Checkpoint_009
+  > Pickup (Power Bomb)
+      After Area 6 - Diggernaut and Disabled Final Boss Diggernaut
   > Door to Electric Escalade
       After Area 6 - Diggernaut and Lay Power Bomb
   > Event - Diggernaut
@@ -765,6 +769,14 @@ Extra - asset_id: collision_camera_043
               Spider Ball
               # Lay a bomb near a weak point when its on the right or top only
               Mid-Air Morph (Advanced) or Infinite Bomb Jump (Advanced)
+  > Event - Credits (Diggernaut Final Boss)
+      After Area 6 - Diggernaut
+
+> Event - Credits (Diggernaut Final Boss); Heals? False
+  * Layers: final-boss-diggernaut
+  * Event Credits
+  > Room Center
+      Trivial
 
 ----------------
 Swarm Square
@@ -813,14 +825,18 @@ Extra - asset_id: collision_camera_045
   * Extra - actor_name: LE_Platform_AmmoCharge_002
   * Extra - actor_type: weightactivatedplatform
   > Pickup (Power Bomb Tank)
-      Any of the following:
-          Spider Boost (Beginner) and Can Spider Boost
-          All of the following:
-              Infinite Bomb Jump (Advanced) and Lay Bomb
-              # Defeat the Gulluggs
-              Combat (Advanced) or Defeat Weak Enemies
+      All of the following:
+          Disabled Final Boss Diggernaut
+          Any of the following:
+              Spider Boost (Beginner) and Can Spider Boost
+              All of the following:
+                  Infinite Bomb Jump (Intermediate) and Lay Bomb
+                  # Defeat the Gulluggs
+                  Combat (Advanced) or Defeat Weak Enemies
   > Door to Diggernaut Arena
-      Trivial
+      Any of the following:
+          Disabled Final Boss Diggernaut
+          Enabled Final Boss Diggernaut and All DNA
   > Top Platform
       Any of the following:
           Single-wall Wall Jump (Expert)
@@ -908,6 +924,8 @@ Extra - asset_id: collision_camera_046
               Hazard Runs (Advanced) and Hazard Damage ≥ 85
   > Door to Teleporter North Access
       Trivial
+  > Start Point
+      Trivial
 
 > Tunnel to Teleporter North Access; Heals? False
   * Layers: default
@@ -919,6 +937,12 @@ Extra - asset_id: collision_camera_046
   * Layers: default
   * Event Area 6 - Poisonous Tunnel Grapple Block
   > Pickup (Missile Tank)
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Omega_001B
+  > Door to Omega Arena
       Trivial
 
 ----------------
@@ -933,7 +957,7 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_type: doorpowerpower
   > Door to Zeta Arena
       Lay Any Bomb
-  > Start Point (Left)
+  > Start Point (Omega)
       Trivial
 
 > Door to Zeta Arena; Heals? False
@@ -943,7 +967,7 @@ Extra - asset_id: collision_camera_047
   * Extra - actor_type: doorpowerpower
   > Door to Omega Arena
       Lay Any Bomb
-  > Start Point (Right)
+  > Start Point (Zeta)
       Trivial
 
 > Tunnel to Zeta Arena; Heals? False
@@ -952,13 +976,13 @@ Extra - asset_id: collision_camera_047
   > Door to Zeta Arena
       Morph Ball
 
-> Start Point (Left); Heals? False; Default Node
+> Start Point (Omega); Heals? False; Spawn Point; Default Node
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Omega_001
   > Door to Omega Arena
       Trivial
 
-> Start Point (Right); Heals? False
+> Start Point (Zeta); Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: ST_SG_Zeta_001
   > Door to Zeta Arena
@@ -1026,7 +1050,7 @@ Extra - polygon: [[-1200.0, 900.0], [-1200.0, -1900.0], [2700.0, -1900.0], [3900
 Extra - asset_id: collision_camera_051
 > Elevator to Area 5 Tower Lobby; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Areas 4 and 6/Elevator to Area 6
+  * Elevator to Transport to Areas 4 and 6/Elevator to Area 6; Custom name: Area 6 Entrance Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea06
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea06
@@ -1132,7 +1156,7 @@ Extra - asset_id: collision_camera_060
   > Next to Pickup Puzzle
       Trivial
 
-> Chozo Seal; Heals? False; Default Node
+> Chozo Seal; Heals? False; Spawn Point; Default Node
   * Layers: default
   * Hint
   * Extra - actor_name: LE_ChozoUnlockAreaDNA_002
@@ -1254,6 +1278,8 @@ Extra - asset_id: collision_camera_061
                       Charge Beam or Phase Drift or Freeze Enemy with Melee (Beginner)
   > Dock to Omega Arena
       Trivial
+  > Start Point
+      Trivial
 
 > Door to Hideout Sprawl (Top); Heals? False
   * Layers: default
@@ -1265,7 +1291,13 @@ Extra - asset_id: collision_camera_061
 
 > Dock to Omega Arena; Heals? False
   * Layers: default
-  * Open Passage to Omega Arena/Dock to Omega Arena Access
+  * Open Passage to Omega Arena/Dock from Omega Arena Access
+
+> Start Point; Heals? False; Spawn Point
+  * Layers: default
+  * Extra - start_point_actor_name: ST_SG_Omega_001C
+  > Door to Hideout Sprawl (Bottom)
+      Trivial
 
 ----------------
 Chozo Seal West Intersection Terminal
@@ -1400,7 +1432,7 @@ Extra - asset_id: collision_camera_Hazard_End_A
 
 > Door from Crumbling Stairwell; Heals? False
   * Layers: default
-  * Access Closed to Crumbling Stairwell/Door to Chozo Seal West Intersection Terminal
+  * Access Closed to Crumbling Stairwell/Door to Chozo Seal West Intersection Terminal; Excluded from Dock Lock Rando
   * Extra - actor_name: Door003
   * Extra - actor_type: doorpowerclosed
   > Ammo Recharge Station

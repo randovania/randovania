@@ -17,8 +17,8 @@ import tenacity
 import randovania
 from randovania import VERSION
 from randovania.cli import database
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games import default_data
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common import installation_check
 from randovania.lib import json_lib
 from randovania.lib.enum_lib import iterate_enum
@@ -116,6 +116,48 @@ secret = b"".join(
     )
 
 
+def remove_unnecessary_dotnet_deps(package_folder: Path) -> None:
+    """
+    Some wheels ship dependencies for a lot of OS' and arches.
+    Since the randovania executable here for a specific OS+arch, we want to remove everything else for spaces sake.
+    """
+
+    dotnet_os = "unknown"
+    dotnet_arch = "unknown"
+    system = platform.system()
+    if system == "Windows":
+        dotnet_os = "win"
+    elif system == "Darwin":
+        dotnet_os = "osx"
+    elif system == "Linux":
+        dotnet_os = "linux"  # Might break for musl, I dont care.
+    else:
+        raise ValueError("Couldn't determine the OS handle for dotnet cleanup!")
+
+    arch = platform.machine()
+    if arch == "AMD64" or arch == "x86_64":
+        dotnet_arch = "x64"
+    elif arch == "arm64" or arch == "aarch64":
+        dotnet_arch = "arm64"
+    else:
+        raise ValueError("Couldn't determine the architecture handle for dotnet cleanup!")
+
+    dotnet_rid = f"{dotnet_os}-{dotnet_arch}"
+
+    dotnet_paths_to_clean = [
+        "am2r_yams/yams/runtimes",
+    ]
+
+    internal = package_folder.joinpath("_internal")
+    for dotnet_lib_path in dotnet_paths_to_clean:
+        for subdir in list(internal.joinpath(dotnet_lib_path).iterdir()):
+            if not subdir.is_dir():
+                continue
+            name = subdir.name
+            if name.endswith(("64", "x86")) and "-" in name and name != dotnet_rid:
+                shutil.rmtree(subdir)
+
+
 def write_frozen_file_list(package_folder: Path) -> None:
     internal = package_folder.joinpath("_internal")
     json_lib.write_path(
@@ -140,8 +182,8 @@ async def main():
 
     icon_path = randovania.get_icon_path()
     shutil.copyfile(icon_path, icon_path.with_name("executable_icon.ico"))
-
-    if (secret := os.environ.get("OBFUSCATOR_SECRET")) is not None:
+    secret = os.environ.get("OBFUSCATOR_SECRET", "")
+    if secret.strip() and not secret.isspace():
         write_obfuscator_secret(
             _ROOT_FOLDER.joinpath("randovania", "lib", "obfuscator_secret.py"),
             secret.encode("ascii"),
@@ -158,7 +200,7 @@ async def main():
         "discord_client_id": client_id,
         "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
         "socketio_path": f"/{server_suffix}/socket.io",
-        "sentry_urls": {"client": os.environ["SENTRY_CLIENT_URL"]},
+        "sentry_urls": {"client": os.environ.get("SENTRY_CLIENT_URL")},
     }
     json_lib.write_path(_ROOT_FOLDER.joinpath("randovania", "data", "configuration.json"), configuration)
 
@@ -176,6 +218,8 @@ async def main():
     compat_path.write_text(compat_text)
 
     subprocess.run([sys.executable, "-m", "PyInstaller", "randovania.spec"], check=True)
+
+    remove_unnecessary_dotnet_deps(package_folder)
 
     if platform.system() == "Windows":
         create_windows_zip(package_folder)

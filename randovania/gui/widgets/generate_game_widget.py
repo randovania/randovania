@@ -10,8 +10,10 @@ from PySide6 import QtWidgets
 from qasync import asyncSlot
 
 import randovania
+from randovania import monitoring
 from randovania.gui.generated.generate_game_widget_ui import Ui_GenerateGameWidget
 from randovania.gui.lib import async_dialog
+from randovania.gui.lib.common_qt_lib import alert_user_on_generation
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.interface_common import generator_frontend
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -21,7 +23,7 @@ from randovania.resolver.exceptions import ImpossibleForSolver
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
@@ -98,14 +100,17 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
 
     @asyncSlot()
     async def generate_new_layout_regular(self) -> None:
+        monitoring.metrics.incr("gui_generate_plain", tags={"game": self.game.value})
         return await self.generate_new_layout(spoiler=True)
 
     @asyncSlot()
     async def generate_new_layout_no_retry(self) -> None:
+        monitoring.metrics.incr("gui_generate_no_retry", tags={"game": self.game.value})
         return await self.generate_new_layout(spoiler=True, retries=0)
 
     @asyncSlot()
     async def generate_new_layout_race(self) -> None:
+        monitoring.metrics.incr("gui_generate_race", tags={"game": self.game.value})
         return await self.generate_new_layout(spoiler=False)
 
     async def generate_new_layout(self, spoiler: bool, retries: int | None = None) -> None:
@@ -176,6 +181,7 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
                 ),
                 default_button=async_dialog.StandardButton.Cancel,
             )
+            alert_user_on_generation(self, self._options)
             if code == async_dialog.StandardButton.Save:
                 layout = e.layout
             elif code == async_dialog.StandardButton.Retry:
@@ -188,14 +194,19 @@ class GenerateGameWidget(QtWidgets.QWidget, Ui_GenerateGameWidget):
             return
 
         except Exception as e:
+            alert_user_on_generation(self, self._options)
             return await self.failure_handler.handle_exception(e, self._background_task.progress_update_signal.emit)
 
         self._background_task.progress_update_signal.emit(f"Success! (Seed hash: {layout.shareable_hash})", 100)
+        alert_user_on_generation(self, self._options)
         persist_layout(self._options.game_history_path, layout)
         self._window_manager.open_game_details(layout)
 
     def on_options_changed(self, options: Options) -> None:
         self.select_preset_widget.on_options_changed(options)
+
+    def on_new_preset(self, preset: VersionedPreset) -> None:
+        self.select_preset_widget.on_new_preset(preset)
 
     def _on_can_generate(self, can_generate: bool) -> None:
         for btn in [

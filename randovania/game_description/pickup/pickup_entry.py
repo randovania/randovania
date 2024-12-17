@@ -8,8 +8,8 @@ from typing import TYPE_CHECKING
 from frozendict import frozendict
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -67,6 +67,7 @@ class PickupGeneratorParams:
     probability_offset: float = 0.0
     probability_multiplier: float = 1.0
     required_progression: int = 0
+    index_age_impact: float = 1.0  # By how much the PickupIndex's age is incremented when this pickup is placed
 
 
 @dataclass(frozen=True)

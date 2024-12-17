@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, MagicMock, call
 import pytest
 from PySide6 import QtCore, QtWidgets
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
@@ -240,6 +240,6 @@ async def test_handle_unable_to_export(skip_qtbot, tmp_path: Path, mocker: pytes
     mock_message_box.assert_awaited_once_with(
         None,
         QtWidgets.QMessageBox.Icon.Critical,
-        "Error during exporting",
+        "Unable to export",
         "I dunno, something broke",
     )

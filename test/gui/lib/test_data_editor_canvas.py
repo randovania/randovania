@@ -5,12 +5,12 @@ from unittest.mock import ANY, MagicMock, call
 import pytest
 from PySide6.QtCore import QPoint
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
-from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
 
 
-@pytest.fixture()
+@pytest.fixture
 def canvas(skip_qtbot, dread_game_description):
     canvas = DataEditorCanvas()
     skip_qtbot.addWidget(canvas)

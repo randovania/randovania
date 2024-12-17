@@ -4,9 +4,9 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.prime1.gui.generated.preset_prime_goal_ui import Ui_PresetPrimeGoal
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.gui.generated.preset_prime_goal_ui import Ui_PresetPrimeGoal
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -30,8 +30,8 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_editor(self) -> None:
         with self._editor as editor:

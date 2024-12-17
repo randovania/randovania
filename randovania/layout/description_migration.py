@@ -3,8 +3,8 @@ from __future__ import annotations
 import re
 import typing
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import migration_data
-from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
 
@@ -529,6 +529,52 @@ def _migrate_v26(data: dict) -> dict:
     return data
 
 
+def _migrate_v27(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "am2r":
+            continue
+
+        migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a5_pipe_rename"]
+
+        dock_connections = game.get("dock_connections")
+        if dock_connections is not None and dock_connections != {}:
+            for old_node, new_node in migration["nodes"].items():
+                if old_node in dock_connections.keys():
+                    dock_connections[new_node] = dock_connections.pop(old_node)
+                for orig_connection, new_connection in dock_connections.items():
+                    if old_node == new_connection:
+                        dock_connections[orig_connection] = new_node
+
+        dock_weakness = game.get("dock_weakness")
+        if dock_weakness is not None and dock_weakness != {}:
+            for old_name, new_name in migration["doors"].items():
+                if old_name in dock_weakness.keys():
+                    dock_weakness[new_name] = dock_weakness.pop(old_name)
+
+    return data
+
+
+def _migrate_v28(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        game_name = game["game"]
+        if game_name != "samus_returns":
+            continue
+
+        dock_weakness = game.get("dock_weakness")
+        migration = migration_data.get_raw_data(RandovaniaGame(game_name))["a1_dlr_rename"]
+        if dock_weakness is not None and dock_weakness != {}:
+            for old_name, new_name in migration.items():
+                if old_name in dock_weakness.keys():
+                    dock_weakness[new_name] = dock_weakness.pop(old_name)
+
+    return data
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -556,6 +602,8 @@ _MIGRATIONS = [
     _migrate_v24,  # AM2R expansion -> tank rename for solo games
     _migrate_v25,  # AM2R expansion -> tank rename for MW games
     _migrate_v26,  # configurable nodes -> game_specific
+    _migrate_v27,
+    _migrate_v28,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

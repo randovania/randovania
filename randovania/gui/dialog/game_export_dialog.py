@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from randovania.exporter.game_exporter import GameExportParams
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options, PerGameOptions
     from randovania.patching.patchers.exceptions import UnableToExportError
 
@@ -84,9 +84,7 @@ class GameExportDialog(QtWidgets.QDialog):
         """Called when exporting a game fails with `UnableToExportError`.
         Default implementation shows an error dialog, but custom implementations can
         perform additional troubleshooting."""
-        await async_dialog.message_box(
-            None, QtWidgets.QMessageBox.Icon.Critical, "Error during exporting", error.reason
-        )
+        await async_dialog.message_box(None, QtWidgets.QMessageBox.Icon.Critical, "Unable to export", error.reason)
 
 
 def _prompt_for_output_common(
@@ -207,7 +205,7 @@ def output_file_validator(output_file: Path) -> bool:
 
 
 def is_directory_validator(line: QtWidgets.QLineEdit) -> bool:
-    return not line.text() or not Path(line.text()).is_dir()
+    return not line.text() or not Path(line.text()).is_dir() or line.text() == "."
 
 
 def output_input_intersection_validator(output_edit: QtWidgets.QLineEdit, input_edit: QtWidgets.QLineEdit) -> bool:

@@ -5,12 +5,13 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore, QtWidgets
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.gui.dialog.trick_details_popup import BaseResourceDetailsPopup, ResourceDetailsPopup, TrickDetailsPopup
 from randovania.gui.generated.preset_trick_level_ui import Ui_PresetTrickLevel
 from randovania.gui.lib import signal_handling
+from randovania.gui.lib.scroll_protected import ScrollProtectedSlider
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.lib import trick_lib
@@ -22,23 +23,6 @@ if TYPE_CHECKING:
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
-
-
-class TrickSlider(QtWidgets.QSlider):
-    """
-    A custom implementation of QSlider that filters out mouse wheel events
-    """
-
-    def __init__(self, orientation: QtCore.Qt.Orientation, parent: QtWidgets.QWidget | None = None):
-        super().__init__(orientation, parent)
-
-    def eventFilter(self, watched: QtCore.QObject, event: QtCore.QEvent) -> bool:
-        # filter out "Wheel" type events
-        if event.type() == QtCore.QEvent.Type.Wheel:
-            event.ignore()
-            return True
-
-        return super().eventFilter(watched, event)
 
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
@@ -89,8 +73,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             for i in range(12):
                 slider_layout.setColumnStretch(i, 1)
 
-            horizontal_slider = TrickSlider(self.trick_level_scroll_contents)
-            horizontal_slider.installEventFilter(horizontal_slider)  # enables scroll wheel filter
+            horizontal_slider = ScrollProtectedSlider(self.trick_level_scroll_contents)
             horizontal_slider.setMaximum(5)
             horizontal_slider.setPageStep(2)
             horizontal_slider.setOrientation(QtCore.Qt.Orientation.Horizontal)
@@ -126,8 +109,8 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         return "Trick Level"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return cls.RANDOMIZER_LOGIC_HEADER
 
     @property
     def game_enum(self) -> RandovaniaGame:

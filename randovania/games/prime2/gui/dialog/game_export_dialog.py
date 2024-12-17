@@ -5,11 +5,12 @@ import shutil
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.common.prime_family.gui.export_validator import is_prime1_iso_validator, is_prime2_iso_validator
-from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.export_params import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
+from randovania.games.prime2.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     add_field_validation,
@@ -19,7 +20,6 @@ from randovania.gui.dialog.game_export_dialog import (
     spoiler_path_for,
     update_validation,
 )
-from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir
 
 if TYPE_CHECKING:

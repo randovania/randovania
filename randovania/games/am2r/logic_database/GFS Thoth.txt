@@ -2,13 +2,16 @@
 Elevator Shaft
 Extra - map_name: rm_a8h00
 Extra - minimap_data: [{'x': 41, 'y': 8}, {'x': 41, 'y': 9}, {'x': 41, 'y': 10}, {'x': 41, 'y': 11}, {'x': 41, 'y': 12}, {'x': 41, 'y': 16}, {'x': 41, 'y': 17}, {'x': 41, 'y': 18}, {'x': 41, 'y': 19}, {'x': 41, 'y': 20}, {'x': 41, 'y': 22}, {'x': 41, 'y': 23}]
+Extra - light_level: 0
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Vertical Dock to Main Caves; Heals? False
   * Layers: default
   * 2-Tiles Wide Dock to Research Site Elevator/Vertical Dock to GFS Thoth
   > Vertical Dock to GFS Thoth Exterior
       Any of the following:
-          Space Jump or Walljump (Expert) or Disabled Entrance Rando
+          Space Jump or Disabled Entrance Rando
           Mid-Air Morph (Beginner) and Can Use Spider Ball
+          Walljump (Expert) and Can Walljump
 
 > Vertical Dock to GFS Thoth Exterior; Heals? False
   * Layers: default
@@ -20,10 +23,14 @@ Extra - minimap_data: [{'x': 41, 'y': 8}, {'x': 41, 'y': 9}, {'x': 41, 'y': 10},
 GFS Thoth Exterior
 Extra - map_name: rm_a8h01
 Extra - minimap_data: [{'x': 34, 'y': 3}, {'x': 34, 'y': 4}, {'x': 34, 'y': 5}, {'x': 35, 'y': 3}, {'x': 35, 'y': 4}, {'x': 35, 'y': 5}, {'x': 36, 'y': 3}, {'x': 36, 'y': 4}, {'x': 36, 'y': 5}, {'x': 36, 'y': 6}, {'x': 37, 'y': 3}, {'x': 37, 'y': 4}, {'x': 37, 'y': 5}, {'x': 37, 'y': 6}, {'x': 38, 'y': 3}, {'x': 38, 'y': 4}, {'x': 38, 'y': 5}, {'x': 38, 'y': 6}, {'x': 38, 'y': 7}, {'x': 39, 'y': 3}, {'x': 39, 'y': 4}, {'x': 39, 'y': 5}, {'x': 39, 'y': 6}, {'x': 39, 'y': 7}, {'x': 40, 'y': 3}, {'x': 40, 'y': 4}, {'x': 40, 'y': 5}, {'x': 40, 'y': 6}, {'x': 40, 'y': 7}, {'x': 41, 'y': 3}, {'x': 41, 'y': 4}, {'x': 41, 'y': 5}, {'x': 41, 'y': 6}, {'x': 41, 'y': 7}, {'x': 42, 'y': 3}, {'x': 42, 'y': 4}, {'x': 42, 'y': 5}, {'x': 42, 'y': 6}, {'x': 42, 'y': 7}, {'x': 43, 'y': 3}, {'x': 43, 'y': 4}, {'x': 43, 'y': 5}, {'x': 44, 'y': 3}, {'x': 44, 'y': 4}, {'x': 44, 'y': 5}, {'x': 45, 'y': 3}, {'x': 45, 'y': 4}, {'x': 45, 'y': 5}, {'x': 46, 'y': 3}, {'x': 46, 'y': 4}, {'x': 47, 'y': 3}, {'x': 47, 'y': 4}, {'x': 48, 'y': 3}, {'x': 48, 'y': 4}, {'x': 49, 'y': 3}, {'x': 49, 'y': 4}, {'x': 50, 'y': 3}, {'x': 50, 'y': 4}, {'x': 50, 'y': 5}, {'x': 51, 'y': 3}, {'x': 51, 'y': 4}, {'x': 51, 'y': 5}, {'x': 52, 'y': 3}, {'x': 52, 'y': 4}, {'x': 52, 'y': 5}, {'x': 52, 'y': 6}, {'x': 52, 'y': 7}, {'x': 53, 'y': 3}, {'x': 53, 'y': 4}, {'x': 53, 'y': 5}, {'x': 53, 'y': 6}, {'x': 53, 'y': 7}, {'x': 54, 'y': 3}, {'x': 54, 'y': 4}, {'x': 54, 'y': 5}, {'x': 54, 'y': 6}, {'x': 54, 'y': 7}, {'x': 55, 'y': 3}, {'x': 55, 'y': 4}, {'x': 55, 'y': 5}, {'x': 55, 'y': 6}, {'x': 56, 'y': 3}, {'x': 56, 'y': 4}, {'x': 56, 'y': 5}, {'x': 56, 'y': 6}, {'x': 57, 'y': 3}, {'x': 57, 'y': 4}, {'x': 57, 'y': 5}, {'x': 58, 'y': 3}, {'x': 58, 'y': 4}]
+Extra - light_level: 0
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth East Entrance; Heals? False
   * Layers: default
   * Normal Door to Thoth East Entrance/Door to GFS Thoth Exterior
-  * Extra - instance_id: 149522
+  * Extra - door_instance_id: 149522
+  * Extra - instance_id: 149465
+  * Extra - facing: right
   > Pickup (Power Bomb Tank)
       Any of the following:
           Hijump Wall
@@ -38,7 +45,9 @@ Extra - minimap_data: [{'x': 34, 'y': 3}, {'x': 34, 'y': 4}, {'x': 34, 'y': 5}, 
 > Door to Thoth West Entrance; Heals? False
   * Layers: default
   * Normal Door to Thoth West Entrance/Door to GFS Thoth Exterior
-  * Extra - instance_id: 149406
+  * Extra - door_instance_id: 149406
+  * Extra - instance_id: 149466
+  * Extra - facing: left
   > Vertical Dock to Elevator Shaft
       Trivial
 
@@ -61,6 +70,8 @@ Extra - minimap_data: [{'x': 34, 'y': 3}, {'x': 34, 'y': 4}, {'x': 34, 'y': 5}, 
 > Horizontal Dock to Hornoad Dorm; Heals? False
   * Layers: default
   * 3-Tiles High Dock to Hornoad Dorm/Horizontal Dock to GFS Thoth Exterior
+  * Extra - instance_id: 149511
+  * Extra - facing: right
   > Vertical Dock to Elevator Shaft
       Trivial
 
@@ -82,9 +93,13 @@ Extra - minimap_data: [{'x': 34, 'y': 3}, {'x': 34, 'y': 4}, {'x': 34, 'y': 5}, 
 Hornoad Dorm
 Extra - map_name: rm_a8h02
 Extra - minimap_data: [{'x': 33, 'y': 5}]
+Extra - light_level: 0
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Horizontal Dock to GFS Thoth Exterior; Heals? False
   * Layers: default
   * 3-Tiles High Dock to GFS Thoth Exterior/Horizontal Dock to Hornoad Dorm
+  * Extra - instance_id: 149540
+  * Extra - facing: left
   > Pickup (Power Bomb Tank)
       Trivial
 
@@ -99,17 +114,23 @@ Extra - minimap_data: [{'x': 33, 'y': 5}]
 Thoth East Entrance
 Extra - map_name: rm_a8a01
 Extra - minimap_data: [{'x': 50, 'y': 7}, {'x': 51, 'y': 7}]
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to GFS Thoth Exterior; Heals? False
   * Layers: default
   * Normal Door to GFS Thoth Exterior/Door to Thoth East Entrance
-  * Extra - instance_id: 149560
+  * Extra - door_instance_id: 149560
+  * Extra - instance_id: 149562
+  * Extra - facing: left
   > Door to Thoth East Lift
       Trivial
 
 > Door to Thoth East Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth East Lift/Door to Thoth East Entrance
-  * Extra - instance_id: 149559
+  * Extra - door_instance_id: 149559
+  * Extra - instance_id: 149563
+  * Extra - facing: right
   > Door to GFS Thoth Exterior
       Trivial
 
@@ -117,17 +138,23 @@ Extra - minimap_data: [{'x': 50, 'y': 7}, {'x': 51, 'y': 7}]
 Thoth East Lift
 Extra - map_name: rm_a8a02
 Extra - minimap_data: [{'x': 49, 'y': 6}, {'x': 49, 'y': 7}]
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth East Entrance; Heals? False
   * Layers: default
   * Normal Door to Thoth East Entrance/Door to Thoth East Lift
-  * Extra - instance_id: 149600
+  * Extra - door_instance_id: 149600
+  * Extra - instance_id: 149601
+  * Extra - facing: left
   > Door to Thoth Bridge
       Trivial
 
 > Door to Thoth Bridge; Heals? False
   * Layers: default
   * Normal Door to Thoth Bridge/Door to Thoth East Lift
-  * Extra - instance_id: 149598
+  * Extra - door_instance_id: 149598
+  * Extra - instance_id: 149602
+  * Extra - facing: right
   > Door to Thoth East Entrance
       Trivial
   > Door to Thoth Research
@@ -136,7 +163,9 @@ Extra - minimap_data: [{'x': 49, 'y': 6}, {'x': 49, 'y': 7}]
 > Door to Thoth Research; Heals? False
   * Layers: default
   * Normal Door to Thoth Research/Door to Thoth East Lift
-  * Extra - instance_id: 149597
+  * Extra - door_instance_id: 149597
+  * Extra - instance_id: 149603
+  * Extra - facing: right
   > Door to Thoth Bridge
       Trivial
   > Door to Thoth Cockpit
@@ -145,7 +174,9 @@ Extra - minimap_data: [{'x': 49, 'y': 6}, {'x': 49, 'y': 7}]
 > Door to Thoth Cockpit; Heals? False
   * Layers: default
   * Normal Door to Thoth Cockpit/Door to Thoth East Lift
-  * Extra - instance_id: 149599
+  * Extra - door_instance_id: 149599
+  * Extra - instance_id: 149604
+  * Extra - facing: left
   > Door to Thoth Research
       Trivial
 
@@ -153,11 +184,15 @@ Extra - minimap_data: [{'x': 49, 'y': 6}, {'x': 49, 'y': 7}]
 Thoth Bridge
 Extra - map_name: rm_a8a03
 Extra - minimap_data: [{'x': 47, 'y': 7}, {'x': 48, 'y': 7}]
+Extra - light_level: 0
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth East Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth East Lift/Door to Thoth Bridge
   * Rando modifies these to be doors!
-  * Extra - instance_id: 400001
+  * Extra - door_instance_id: 400001
+  * Extra - instance_id: 149620
+  * Extra - facing: left
   > Door to Thoth Storage
       Trivial
 
@@ -165,7 +200,9 @@ Extra - minimap_data: [{'x': 47, 'y': 7}, {'x': 48, 'y': 7}]
   * Layers: default
   * Normal Door to Thoth Storage/Door to Thoth Bridge
   * Rando modifies these to be doors!
-  * Extra - instance_id: 400000
+  * Extra - door_instance_id: 400000
+  * Extra - instance_id: 149621
+  * Extra - facing: right
   > Door to Thoth East Lift
       Trivial
 
@@ -173,17 +210,23 @@ Extra - minimap_data: [{'x': 47, 'y': 7}, {'x': 48, 'y': 7}]
 Thoth West Entrance
 Extra - map_name: rm_a8a06
 Extra - minimap_data: [{'x': 43, 'y': 7}]
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth Storage; Heals? False
   * Layers: default
   * Normal Door to Thoth Storage/Door to Thoth West Entrance
-  * Extra - instance_id: 149696
+  * Extra - door_instance_id: 149696
+  * Extra - instance_id: 149706
+  * Extra - facing: left
   > Door to GFS Thoth Exterior
       Trivial
 
 > Door to GFS Thoth Exterior; Heals? False
   * Layers: default
   * Normal Door to GFS Thoth Exterior/Door to Thoth West Entrance
-  * Extra - instance_id: 149708
+  * Extra - door_instance_id: 149708
+  * Extra - instance_id: 149707
+  * Extra - facing: right
   > Door to Thoth Storage
       Trivial
 
@@ -191,19 +234,27 @@ Extra - minimap_data: [{'x': 43, 'y': 7}]
 Thoth Cockpit
 Extra - map_name: rm_a8a07
 Extra - minimap_data: [{'x': 50, 'y': 6}, {'x': 51, 'y': 6}]
+Extra - light_level: 0
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth East Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth East Lift/Door to Thoth Cockpit
-  * Extra - instance_id: 149718
+  * Extra - door_instance_id: 149718
+  * Extra - instance_id: 149740
+  * Extra - facing: right
 
 ----------------
 Thoth Research
 Extra - map_name: rm_a8a08
 Extra - minimap_data: [{'x': 47, 'y': 6}, {'x': 48, 'y': 6}]
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth East Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth East Lift/Door to Thoth Research
-  * Extra - instance_id: 149758
+  * Extra - door_instance_id: 149758
+  * Extra - instance_id: 149762
+  * Extra - facing: left
   > Tunnel to Thoth West Lift
       All of the following:
           Can Use Any Bombs
@@ -219,17 +270,23 @@ Extra - minimap_data: [{'x': 47, 'y': 6}, {'x': 48, 'y': 6}]
 Thoth Storage
 Extra - map_name: rm_a8a10
 Extra - minimap_data: [{'x': 44, 'y': 7}, {'x': 45, 'y': 7}, {'x': 46, 'y': 7}]
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth West Entrance; Heals? False
   * Layers: default
   * Normal Door to Thoth West Entrance/Door to Thoth Storage
-  * Extra - instance_id: 149807
+  * Extra - door_instance_id: 149807
+  * Extra - instance_id: 149809
+  * Extra - facing: right
   > Door to Thoth Bridge
       Trivial
 
 > Door to Thoth Bridge; Heals? False
   * Layers: default
   * Normal Door to Thoth Bridge/Door to Thoth Storage
-  * Extra - instance_id: 149808
+  * Extra - door_instance_id: 149808
+  * Extra - instance_id: 149810
+  * Extra - facing: left
   > Door to Thoth West Entrance
       Trivial
 
@@ -237,10 +294,14 @@ Extra - minimap_data: [{'x': 44, 'y': 7}, {'x': 45, 'y': 7}, {'x': 46, 'y': 7}]
 Genesis Arena
 Extra - map_name: rm_a8a11
 Extra - minimap_data: [{'x': 47, 'y': 5}, {'x': 48, 'y': 5}, {'x': 49, 'y': 5}]
+Extra - light_level: 3
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth West Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth West Lift/Door to Genesis Arena; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
-  * Extra - instance_id: 149828
+  * Extra - door_instance_id: 149828
+  * Extra - instance_id: 149827
+  * Extra - facing: right
   > Pickup (Energy Tank)
       Trivial
 
@@ -256,8 +317,9 @@ Extra - minimap_data: [{'x': 47, 'y': 5}, {'x': 48, 'y': 5}, {'x': 49, 'y': 5}]
           Combat (Advanced) or Normal Damage ≥ 399
           Any of the following:
               # Item requirements
-              Super Missiles ≥ 7 or Combat (Intermediate)
+              Super Missiles ≥ 7 or Combat (Hypermode)
               Morph Ball and Power Bombs ≥ 10
+              Long Beam and Combat (Expert)
           # Fusion Mode requirements
           Missiles or Super Missiles or Disabled Fusion Mode
 
@@ -272,10 +334,14 @@ Thoth Save Station Access
 Extra - map_name: rm_a8a12
 Extra - minimap_data: [{'x': 44, 'y': 6}, {'x': 45, 'y': 6}]
 Extra - unlocked_save_station: True
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Thoth West Lift; Heals? False
   * Layers: default
   * Normal Door to Thoth West Lift/Door to Thoth Save Station Access
-  * Extra - instance_id: 149853
+  * Extra - door_instance_id: 149853
+  * Extra - instance_id: 149850
+  * Extra - facing: left
   > Tunnel to Thoth Save Station
       Can Use Any Bombs
 
@@ -289,17 +355,23 @@ Extra - unlocked_save_station: True
 Thoth West Lift
 Extra - map_name: rm_a8a13
 Extra - minimap_data: [{'x': 46, 'y': 5}, {'x': 46, 'y': 6}]
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Door to Genesis Arena; Heals? False
   * Layers: default
   * Normal Door to Genesis Arena/Door to Thoth West Lift; Dock Lock Rando incompatible with: Hydro Station Water Turbine, Research Site Open Hatch
-  * Extra - instance_id: 149890
+  * Extra - door_instance_id: 149890
+  * Extra - instance_id: 149876
+  * Extra - facing: left
   > Door to Thoth Save Station Access
       Trivial
 
 > Door to Thoth Save Station Access; Heals? False
   * Layers: default
   * Normal Door to Thoth Save Station Access/Door to Thoth West Lift
-  * Extra - instance_id: 149889
+  * Extra - door_instance_id: 149889
+  * Extra - instance_id: 149877
+  * Extra - facing: right
   > Door to Genesis Arena
       Trivial
   > Tunnel to Thoth Research
@@ -315,6 +387,8 @@ Extra - minimap_data: [{'x': 46, 'y': 5}, {'x': 46, 'y': 6}]
 Thoth Save Station
 Extra - map_name: rm_a8a14
 Extra - minimap_data: [{'x': 43, 'y': 6}]
+Extra - light_level: 2
+Extra - liquid_info: {'liquid_type': 0, 'liquid_level': 0}
 > Tunnel to Thoth Save Station Access; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Thoth Save Station Access/Tunnel to Thoth Save Station

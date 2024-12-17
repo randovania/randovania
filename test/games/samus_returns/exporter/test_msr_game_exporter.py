@@ -9,7 +9,6 @@ import pytest
 from randovania.games.samus_returns.exporter.game_exporter import (
     MSRGameExporter,
     MSRGameExportParams,
-    MSRGameVersion,
     MSRModPlatform,
 )
 
@@ -35,10 +34,9 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
     exporter = MSRGameExporter()
     export_params = MSRGameExportParams(
         spoiler_output=None,
-        input_path=tmp_path.joinpath("input_path"),
+        input_file=tmp_path.joinpath("input_file.3ds"),
         output_path=tmp_path.joinpath("output", "path"),
         target_platform=MSRModPlatform.LUMA,
-        target_version=MSRGameVersion.PAL,
         clean_output_path=False,
         post_export=None,
     )
@@ -49,7 +47,7 @@ def test_export_game(test_files_dir, mocker, patch_data_name: str, tmp_path):
 
     # Assert
     mock_patch.assert_called_with(
-        tmp_path.joinpath("input_path"),
+        tmp_path.joinpath("input_file.3ds"),
         tmp_path.joinpath("output", "path"),
         ANY,
         ANY,

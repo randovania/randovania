@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.prime2.gui.generated.preset_echoes_goal_ui import Ui_PresetEchoesGoal
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.gui.generated.preset_echoes_goal_ui import Ui_PresetEchoesGoal
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -37,8 +37,8 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _set_slider_visible(self, visible: bool):
         for w in [self.skytemple_slider, self.skytemple_slider_label]:

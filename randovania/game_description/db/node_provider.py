@@ -18,10 +18,6 @@ if TYPE_CHECKING:
 
 class NodeProvider:
     # Identifier for
-
-    def identifier_for_node(self, node: Node) -> NodeIdentifier:
-        return node.identifier
-
     def identifier_for_area(self, area: Area) -> AreaIdentifier:
         region = self.region_with_area(area)
         return AreaIdentifier(region=region.name, area=area.name)
@@ -72,6 +68,11 @@ class NodeProvider:
         if node is not None:
             return node
         raise ValueError(f"No node with name {identifier.node} found in {area}")
+
+    def does_node_identifier_exist(self, identifier: NodeIdentifier) -> bool:
+        area = self.area_by_area_location(identifier.area_identifier)
+        node = area.node_with_name(identifier.node)
+        return node is not None
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.region_and_area_by_area_identifier(location)[1]

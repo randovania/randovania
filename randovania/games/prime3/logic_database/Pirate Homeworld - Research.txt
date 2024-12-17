@@ -17,7 +17,7 @@ Extra - asset_id: 13146584938063573409
           After Landing Site Alpha Barrier
           Space Jump Boots or Movement (Beginner)
   > Event - Barrier
-      Use Grapple Voltage (Lasso and Voltage)
+      Use Grapple Voltage
 
 > Samus Ship; Heals? True; Spawn Point; Default Node
   * Layers: default
@@ -34,7 +34,7 @@ Extra - asset_id: 13146584938063573409
                   Boost Ball or Use Screw Attack (No Space Jump)
   > Event - Barrier
       All of the following:
-          Use Grapple Voltage (Lasso and Voltage)
+          Use Grapple Voltage
           Any of the following:
               Space Jump Boots or Terminal Fall Abuse (Beginner)
               All of the following:
@@ -109,7 +109,7 @@ Extra - asset_id: 7063455547734255887
   > Door to Airshaft
       All of the following:
           Hazard Shield
-          Space Jump Boots or Bomb Jump/Spring Space Jump (Beginner)
+          Space Jump Boots or Simple Bomb Jump/Spring Space Jump
 
 > Spinner Section; Heals? False
   * Layers: default
@@ -184,7 +184,7 @@ Extra - asset_id: 3594029436312475339
   * Normal Door to Transit Station 1-B/Door to Proving Grounds
   * Extra - dock_index: 0
   > Event - Barrier
-      After Gandrayda and Use Grapple Voltage (Lasso and Voltage)
+      After Gandrayda and Use Grapple Voltage
   > Room Center
       Before Gandrayda or After Proving Grounds Barrier Removed
 
@@ -221,20 +221,51 @@ Extra - asset_id: 3594029436312475339
       After Proving Grounds Barrier Removed
   > Event - Gandrayda
       Any of the following:
-          Combat (Expert)
           All of the following:
-              Morph Ball
+              Grapple Lasso and Fight Ghor-G
               Any of the following:
-                  Grapple Lasso and X-Ray Visor
-                  Combat (Beginner) and Enter Hypermode
+                  # Fighting Gandrayda
+                  Combat (Expert)
+                  All of the following:
+                      # Fight with Hypermode
+                      Enter Hypermode
+                      Any of the following:
+                          Combat (Intermediate) or Damage ≥ 399
+                          Combat (Beginner) and Damage ≥ 199
+                  Any of the following:
+                      # Fight Without Hypermode
+                      Damage ≥ 599
+                      Combat (Beginner) and Damage ≥ 299
+                      Combat (Intermediate) and Damage ≥ 199
+                      Combat (Advanced) and Damage ≥ 99
               Any of the following:
-                  Morph Ball Bomb or Boost Ball
-                  Hyper Ball and Knowledge (Beginner) and Enter Hypermode
+                  # Fighting/Avoiding Invisible Phase
+                  X-Ray Visor or Combat (Intermediate) or Invisible Objects (Intermediate)
+                  Combat (Beginner) and Damage ≥ 49
           All of the following:
-              Combat (Advanced)
-              Boost Ball or Use Screw Attack (Space Jump)
+              # Skip Phases with Screw Attack
+              Knowledge (Intermediate) and Use Screw Attack (Space Jump)
+              Any of the following:
+                  # Skip Both Phases
+                  Combat (Advanced)
+                  All of the following:
+                      # Skip One Phase
+                      Fight Ghor-G
+                      Combat (Intermediate) or Damage ≥ 249
+          All of the following:
+              # Skip Phases with Boost Ball
+              Boost Ball and Morph Ball and Knowledge (Advanced)
+              Any of the following:
+                  # Skip Both Phases
+                  Combat (Expert)
+                  # https://youtu.be/SdK5OJxzfHs
+                  Combat (Advanced) and Damage ≥ 99
+                  All of the following:
+                      # Skip One Phase
+                      Fight Ghor-G
+                      Combat (Intermediate) or Damage ≥ 249
   > Event - Barrier
-      Use Grapple Voltage (Lasso and Voltage)
+      Use Grapple Voltage
 
 ----------------
 Metroid Processing
@@ -470,7 +501,7 @@ Extra - asset_id: 11846340785047609812
   > Door to Processing Access
       All of the following:
           After Scrapvault Wall
-          Space Jump Boots or Bomb Jump/Spring Space Jump (Beginner)
+          Space Jump Boots or Simple Bomb Jump/Spring Space Jump
   > Morph Ball Door to Scrapworks (Entrance)
       All of the following:
           Morph Ball

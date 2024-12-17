@@ -32,7 +32,6 @@ sample_data = {
     },
     "layers": ["default"],
     "starting_location": {"region": "Temple Grounds", "area": "Landing Site", "node": "Save Station"},
-    "initial_states": {"Default": []},
     "minimal_logic": None,
     "victory_condition": {
         "type": "and",
@@ -47,6 +46,7 @@ sample_data = {
         "dock_rando": {"force_change_two_way": False, "resolver_attempts": 200, "to_shuffle_proportion": 1.0},
     },
     "used_trick_levels": {},
+    "flatten_to_set_on_patch": False,
     "regions": [],
 }
 
@@ -153,4 +153,4 @@ def test_encode_resource_database():
     encoded = binary_data.ConstructResourceDatabase.build(resource_database)
 
     # Assert
-    assert encoded == b"\x00\x00\x00\x00\x00\x00\x01Foo\x00Foo\x00\x02\x00\x00\x00\x00"
+    assert encoded == b"\x00\x00\x00\x00\x00\x00\x01\x03Foo\x03Foo\x02\x00\x00\x00\x00"

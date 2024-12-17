@@ -7,9 +7,9 @@ from unittest.mock import ANY, MagicMock, call, patch
 import pytest
 
 from randovania.cli import database
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -30,11 +30,7 @@ def test_list_paths_with_resource_logic(
     resource_c = SimpleResourceInfo(2, "Long Name C", "C", ResourceType.ITEM)
     resources = [resource_a, resource_b, resource_c]
 
-    game.resource_database = [
-        [resource_a],
-        [resource_b],
-        [resource_c],
-    ]
+    game.resource_database = MagicMock(item=[resource_a], event=[resource_b], trick=[resource_c])
 
     resource = resources[expected_resource]
     args.resource = resource.long_name
@@ -74,6 +70,7 @@ def test_refresh_game_description_logic(check, mocker):
     # Setup
     args = MagicMock()
     args.integrity_check = check
+    args.game = None
 
     from randovania.game_description import default_database, integrity_check
 

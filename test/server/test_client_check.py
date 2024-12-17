@@ -5,7 +5,7 @@ import pytest
 from randovania.server import client_check
 
 
-@pytest.fixture()
+@pytest.fixture
 def expected_headers():
     return {
         "X-Randovania-API-Version": "2",
@@ -61,6 +61,9 @@ def test_check_client_headers_wrong_value(expected_headers):
         (client_check.ClientVersionCheck.STRICT, "1.0", "1.1", False),
         (client_check.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.0", True),
         (client_check.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.0.1", True),
+        (client_check.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0.0.dev5", "1.0.1", True),
+        (client_check.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.0.1.dev35", True),
+        (client_check.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.0.1.dev35-dirty", True),
         (client_check.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.1", False),
         (client_check.ClientVersionCheck.IGNORE, "1.0", "1.0", True),
         (client_check.ClientVersionCheck.IGNORE, "1.0", "1.0.1", True),

@@ -11,7 +11,7 @@ from randovania.layout.preset_describer import (
 )
 
 if TYPE_CHECKING:
-    from randovania.games.game import ProgressiveItemTuples
+    from randovania.game.gui import ProgressiveItemTuples
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -20,7 +20,7 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
     if has_artifacts and artifacts.prefer_anywhere:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}": True,
             },
             {
                 "Place anywhere": artifacts.prefer_anywhere,
@@ -29,7 +29,7 @@ def describe_artifacts(artifacts: AM2RArtifactConfig) -> list[dict[str, bool]]:
     elif has_artifacts:
         return [
             {
-                f"{artifacts.required_artifacts} Metroid DNA": True,
+                f"{artifacts.required_artifacts} Metroid DNA out of {artifacts.placed_artifacts}": True,
             },
             {
                 "Prefers Metroids": artifacts.prefer_metroids,
@@ -54,6 +54,17 @@ _AM2R_HINT_TEXT = {
 class AM2RPresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, AM2RConfiguration)
+
+        def describe_probability(probability: int, attribute: str) -> str | None:
+            if probability == 0:
+                return None
+
+            return f"{probability / 10:.1f}% chance of a room being {attribute}"
+
+        darkness_probability = describe_probability(configuration.darkness_chance, "dark")
+        submerged_water_probability = describe_probability(configuration.submerged_water_chance, "submerged in water")
+        submerged_lava_probability = describe_probability(configuration.submerged_lava_chance, "submerged in lava")
+
         template_strings = super().format_params(configuration)
 
         dna_hint = _AM2R_HINT_TEXT[configuration.hints.artifacts]
@@ -70,6 +81,13 @@ class AM2RPresetDescriber(GamePresetDescriber):
                     },
                 ),
                 {f"Energy per Tank: {configuration.energy_per_tank}": configuration.energy_per_tank != 100},
+                {f"First Suit Damage Reduction {configuration.first_suit_dr}%": configuration.first_suit_dr != 50},
+                {f"Second Suit Damage Reduction {configuration.second_suit_dr}%": configuration.second_suit_dr != 75},
+                {
+                    f"Transport Pipes: {configuration.teleporters.description('transporters')}": (
+                        not configuration.teleporters.is_vanilla
+                    )
+                },
                 {
                     "Enable Septoggs": configuration.septogg_helpers,
                     "Add new Nest Pipes": configuration.nest_pipes,
@@ -85,6 +103,13 @@ class AM2RPresetDescriber(GamePresetDescriber):
                     "Enable Fusion Mode": configuration.fusion_mode,
                     "Open Missile Doors with Supers": configuration.supers_on_missile_doors,
                 },
+                {
+                    "Horizontally flipped gameplay": configuration.horizontally_flip_gameplay,
+                    "Vertically flipped gameplay": configuration.vertically_flip_gameplay,
+                    darkness_probability: darkness_probability is not None,
+                    submerged_water_probability: submerged_water_probability is not None,
+                    submerged_lava_probability: submerged_lava_probability is not None,
+                },
             ],
             "Goal": describe_artifacts(configuration.artifacts),
             "Hints": [
@@ -98,6 +123,6 @@ class AM2RPresetDescriber(GamePresetDescriber):
         return template_strings
 
     def progressive_items(self) -> ProgressiveItemTuples:
-        from randovania.games.am2r.pickup_database import progressive_items
+        from randovania.games.am2r.layout import progressive_items
 
         return progressive_items.tuples()

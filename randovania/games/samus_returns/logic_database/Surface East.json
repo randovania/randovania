@@ -146,8 +146,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -18979.94011976048,
-                        "y": 5618.7125748503,
+                        "x": -18979.94,
+                        "y": 5618.71,
                         "z": 0.0
                     },
                     "description": "",
@@ -170,6 +170,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -180,31 +181,36 @@
                         }
                     }
                 },
-                "Dock to Hornoad Hallway": {
+                "Door to Hornoad Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3385.6287425149712,
-                        "y": 2736.9760479041925,
+                        "x": -3350.0,
+                        "y": 2500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 195
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Surface East",
                         "area": "Hornoad Hallway",
-                        "node": "Dock to Landing Site"
+                        "node": "Door to Landing Site"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Ship": {
                             "type": "and",
@@ -234,7 +240,7 @@
                     },
                     "valid_starting_location": true,
                     "connections": {
-                        "Dock to Hornoad Hallway": {
+                        "Door to Hornoad Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -287,6 +293,32 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Ridley)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Proteus Ridley",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "FinalBossRidley",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -371,6 +403,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -427,6 +460,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -462,6 +496,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -507,6 +542,71 @@
                             }
                         },
                         "Dock to Surface Crumble Block Challenge (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Ridley)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8000.0,
+                        "y": 1900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "final-boss-not-ridley"
+                    ],
+                    "extra": {
+                        "actor_name": "LE_Item_Ridley",
+                        "actor_type": "item_energytank"
+                    },
+                    "valid_starting_location": false,
+                    "pickup_index": 211,
+                    "location_category": "major",
+                    "connections": {
+                        "Ship": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock from Surface West": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10658.46,
+                        "y": 2813.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "final-boss-not-ridley"
+                    ],
+                    "extra": {},
+                    "valid_starting_location": false,
+                    "dock_type": "other",
+                    "default_connection": {
+                        "region": "Surface West",
+                        "area": "Landing Site",
+                        "node": "Dock to Surface East"
+                    },
+                    "default_dock_weakness": "Blocked Passage",
+                    "exclude_from_dock_rando": false,
+                    "incompatible_dock_weaknesses": [],
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
+                    "connections": {
+                        "Ship": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -680,6 +780,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "and",
@@ -718,6 +819,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -759,7 +861,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_DEBUG_Morphball"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Morph Ball Chamber": {
                             "type": "and",
@@ -1113,6 +1215,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Morph Ball)": {
                             "type": "and",
@@ -1167,6 +1270,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -1192,7 +1296,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_CheckPoint_004"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Twisty Tunnel": {
                             "type": "and",
@@ -1302,7 +1406,7 @@
                         "actor_type": "weightactivatedplatform",
                         "start_point_actor_name": "ST_ChozoUnlockAreaDNA_Checkpoint"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "kind": "generic",
                     "requirement_to_collect": {
                         "type": "and",
@@ -1416,6 +1520,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -1454,6 +1559,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Chozo Seal": {
                             "type": "and",
@@ -1509,6 +1615,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Chozo Seal": {
                             "type": "or",
@@ -1653,6 +1760,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Scan Pulse Chamber": {
                             "type": "resource",
@@ -1690,6 +1798,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "and",
@@ -1795,6 +1904,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": "Surface East Elevator",
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -1878,6 +1988,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -1913,6 +2024,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Teleporter": {
                             "type": "template",
@@ -1945,6 +2057,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Next to Teleporter": {
                             "type": "and",
@@ -1984,15 +2097,17 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 8704.26850867871,
-                        "y": -8112.203329791002,
+                        "x": 9600.0,
+                        "y": -7900.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "start_point_actor_name": "ST_DEBUG_IntroTeleport"
+                    },
                     "valid_starting_location": false,
                     "connections": {
                         "Pickup (Missile Tank)": {
@@ -2185,6 +2300,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -2286,6 +2402,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Charge Beam Chamber Access (Lower)": {
                             "type": "and",
@@ -2324,6 +2441,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Charge Beam)": {
                             "type": "and",
@@ -2403,7 +2521,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_CheckPoint_003"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Charge Beam Chamber Access (Lower)": {
                             "type": "and",
@@ -2590,6 +2708,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -2625,6 +2744,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -2660,6 +2780,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -2697,6 +2818,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -2737,6 +2859,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Inside Arena": {
                             "type": "and",
@@ -2968,6 +3091,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Scan Pulse)": {
                             "type": "resource",
@@ -3041,6 +3165,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Chozo Seal": {
                             "type": "resource",
@@ -3078,6 +3203,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Scan Pulse)": {
                             "type": "resource",
@@ -3122,6 +3248,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Chozo Seal": {
                             "type": "resource",
@@ -3175,7 +3302,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_DEBUG_Bestowal"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Chozo Seal": {
                             "type": "and",
@@ -3315,6 +3442,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
                             "type": "and",
@@ -3382,6 +3510,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Alpha Arena": {
                             "type": "resource",
@@ -3419,6 +3548,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Tunnel to Alpha Arena": {
                             "type": "resource",
@@ -3499,6 +3629,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Dock to Scan Pulse Chamber": {
                             "type": "and",
@@ -3800,6 +3931,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Energy Recharge Station Shaft": {
                             "type": "and",
@@ -3835,6 +3967,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Energy Recharge Station Shaft": {
                             "type": "resource",
@@ -3972,6 +4105,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "and",
@@ -4010,6 +4144,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "and",
@@ -4048,6 +4183,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "and",
@@ -4086,6 +4222,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Energy Tank)": {
                             "type": "or",
@@ -4161,6 +4298,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Door to Ammo Recharge Station": {
                             "type": "resource",
@@ -4253,6 +4391,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -4270,31 +4409,36 @@
                         }
                     }
                 },
-                "Dock to Landing Site": {
+                "Door to Landing Site": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -3368.5628742514973,
-                        "y": 2713.9270385011228,
+                        "x": -3350.0,
+                        "y": 2500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "layers": [
                         "default"
                     ],
-                    "extra": {},
+                    "extra": {
+                        "actor_name": "RandoDoor_001",
+                        "actor_type": "doorpowerpower",
+                        "tile_index": 196
+                    },
                     "valid_starting_location": false,
-                    "dock_type": "other",
+                    "dock_type": "door",
                     "default_connection": {
                         "region": "Surface East",
                         "area": "Landing Site",
-                        "node": "Dock to Hornoad Hallway"
+                        "node": "Door to Hornoad Hallway"
                     },
-                    "default_dock_weakness": "Open Passage",
+                    "default_dock_weakness": "Access Open",
                     "exclude_from_dock_rando": false,
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Past First Missile Block": {
                             "type": "or",
@@ -4386,7 +4530,7 @@
                     "extra": {
                         "start_point_actor_name": "ST_DEBUG_MeleeTutoCutscene"
                     },
-                    "valid_starting_location": false,
+                    "valid_starting_location": true,
                     "connections": {
                         "Door to Twisty Tunnel": {
                             "type": "and",
@@ -4412,7 +4556,7 @@
                     "extra": {},
                     "valid_starting_location": false,
                     "connections": {
-                        "Dock to Landing Site": {
+                        "Door to Landing Site": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4732,11 +4876,10 @@
                     },
                     "default_dock_weakness": "Spazer Beam Door",
                     "exclude_from_dock_rando": false,
-                    "incompatible_dock_weaknesses": [
-                        "Access Open"
-                    ],
+                    "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -5374,6 +5517,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Super Missile Tank)": {
                             "type": "or",
@@ -5466,6 +5610,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {}
                 }
             }
@@ -5568,6 +5713,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
                             "type": "and",
@@ -5666,6 +5812,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Pickup (Missile Tank)": {
                             "type": "resource",
@@ -5814,6 +5961,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "and",
@@ -5921,6 +6069,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Energy Recharge Station": {
                             "type": "resource",
@@ -6053,6 +6202,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "and",
@@ -6091,6 +6241,7 @@
                     "incompatible_dock_weaknesses": [],
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
+                    "ui_custom_name": null,
                     "connections": {
                         "Ammo Recharge Station": {
                             "type": "and",

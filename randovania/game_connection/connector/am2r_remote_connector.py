@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
     PickupEntryWithOwner,
     PlayerLocationEvent,
@@ -15,8 +16,7 @@ from randovania.game_description import default_database
 from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.am2r.pickup_database import progressive_items
-from randovania.games.game import RandovaniaGame
+from randovania.games.am2r.layout import progressive_items
 
 if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
@@ -52,8 +52,6 @@ class AM2RRemoteConnector(RemoteConnector):
 
     def connection_lost(self) -> None:
         self.logger.info("Finishing connector")
-        # TODO: Finished signal is never used. Remove it everywhere?
-        self.Finished.emit()
 
     async def force_finish(self) -> None:
         self.executor.disconnect()
@@ -122,7 +120,11 @@ class AM2RRemoteConnector(RemoteConnector):
 
         for index in new_indices[len(start_of_indices) :].split(","):
             if not index.isdigit():
-                self.logger.warning("Response should contain a digit, but instead contains '%s'", index)
+                self.logger.warning(
+                    "Response should contain a digit, but instead contains '%s'. Original message: '%s'",
+                    index,
+                    new_indices,
+                )
                 continue
             locations.add(PickupIndex(int(index)))
 
@@ -160,11 +162,17 @@ class AM2RRemoteConnector(RemoteConnector):
             if not position:
                 continue
             if "|" not in position:
-                self.logger.warning("Response should contain a '|', but it doesn't")
+                self.logger.warning(
+                    "Response should contain a '|', but it doesn't. Original response: %s", new_inventory
+                )
                 continue
             (item_name, quantity) = position.split("|", 1)
             if not quantity.isdigit():
-                self.logger.warning("Response should contain a digit, but instead contains '%s'", position)
+                self.logger.warning(
+                    "Response should contain a digit, but instead contains '%s'. Original response: %s",
+                    position,
+                    new_inventory,
+                )
                 continue
 
             # Ammo is sent twice by the game: once as actual ammo, once as expansion. Let's ignore the expansions.

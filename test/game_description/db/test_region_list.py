@@ -58,6 +58,7 @@ def test_connections_from_dock_blast_shield(empty_patches: GamePatches):
         None,
         False,
         (),
+        None,
     )
     node_1_lock = DockLockNode.create_from_dock(node_1, 1, db)
     node_2 = DockNode(
@@ -76,6 +77,7 @@ def test_connections_from_dock_blast_shield(empty_patches: GamePatches):
         None,
         False,
         (),
+        None,
     )
     node_2_lock = DockLockNode.create_from_dock(node_2, 3, db)
 

@@ -12,7 +12,7 @@ from unittest.mock import ANY, MagicMock, PropertyMock, call
 import peewee
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -598,7 +598,7 @@ def test_admin_session_change_layout_description(
     sa = MagicMock()
     sa.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
-    layout_description.as_json.return_value = {"info": {"presets": []}}
+    layout_description.as_binary.return_value = b"OUR_ENCODED_LAYOUT"
     layout_description.world_count = 2
     layout_description.all_presets = [new_preset, new_preset]
     layout_description.shareable_word_hash = "Hash Words"
@@ -616,9 +616,10 @@ def test_admin_session_change_layout_description(
     mock_emit_session_update.assert_called_once_with(session)
     mock_audit.assert_called_once_with(sa, session, "Set game to Hash Words")
     mock_verify_no_layout_description.assert_called_once_with(session)
+    layout_description.as_binary.assert_called_once_with(force_spoiler=True, include_presets=False)
 
     session_mod = database.MultiplayerSession.get_by_id(1)
-    assert session_mod.layout_description_json == b"x\x9c\xabV\xca\xccK\xcbW\xb2\xaa\xae\xad\x05\x00\x17\xa7\x04\x1b"
+    assert session_mod.layout_description_json == b"OUR_ENCODED_LAYOUT"
     assert session_mod.generation_in_progress is None
     assert session_mod.game_details_json == '{"seed_hash": "ASDF", "word_hash": "Hash Words", "spoiler": true}'
 
@@ -941,3 +942,34 @@ def test_admin_set_allow_everyone_claim(
         sa, two_player_session, f"{'Allowing' if new_state else 'Disallowing'} everyone to claim worlds."
     )
     mock_emit_session_update.assert_called_once_with(two_player_session)
+
+
+@pytest.mark.parametrize("new_state", [False, True])
+@pytest.mark.parametrize("old_state", [False, True])
+def test_admin_allow_coop(flask_app, two_player_session, mock_audit, mock_emit_session_update, old_state, new_state):
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1234)
+    two_player_session.allow_coop = old_state
+    two_player_session.save()
+
+    # Run
+    with flask_app.test_request_context():
+        session_admin.admin_session(sa, 1, SessionAdminGlobalAction.SET_ALLOW_COOP.value, new_state)
+
+    assert database.MultiplayerSession.get_by_id(1).allow_coop == new_state
+    mock_audit.assert_called_once_with(
+        sa, two_player_session, f"{'Allowing' if new_state else 'Disallowing'} coop for the session."
+    )
+    mock_emit_session_update.assert_called_once_with(two_player_session)
+
+
+def test_admin_error_on_disabling_coop_when_coop_worlds_exist(flask_app, one_world_two_player_coop_session):
+    sa = MagicMock()
+    sa.get_current_user.return_value = database.User.get_by_id(1236)
+
+    # Run / Assert
+    with pytest.raises(error.InvalidActionError):
+        with flask_app.test_request_context():
+            session_admin.admin_session(
+                sa, one_world_two_player_coop_session.id, SessionAdminGlobalAction.SET_ALLOW_COOP.value, False
+            )

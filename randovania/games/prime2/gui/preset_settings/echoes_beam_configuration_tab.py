@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QComboBox
 
-from randovania.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
+from randovania.games.prime2.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -113,8 +113,8 @@ class PresetEchoesBeamConfiguration(PresetTab, Ui_PresetEchoesBeamConfiguration)
         return "Beam Configuration"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_ammo_type_combo_changed(self, beam: str, combo: QComboBox, is_ammo_b: bool, _):
         with self._editor as editor:

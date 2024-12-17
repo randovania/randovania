@@ -115,14 +115,24 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                 continue
 
             if item.short_name not in prime_items.ARTIFACT_ITEMS:
-                patches.append(
-                    all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
-                        self.version.powerup_functions,
-                        self.version.game,
-                        item.extra["item_id"],
-                        delta,
+                if item.extra.get("max_increase", None) == 0:
+                    patches.append(
+                        all_prime_dol_patches.adjust_item_amount_patch(
+                            self.version.powerup_functions,
+                            self.version.game,
+                            item.extra["refill_id"] if item.extra.get("is_refill", None) else item.extra["item_id"],
+                            delta,
+                        )
                     )
-                )
+                else:
+                    patches.append(
+                        all_prime_dol_patches.adjust_item_amount_and_capacity_patch(
+                            self.version.powerup_functions,
+                            self.version.game,
+                            item.extra["item_id"],
+                            delta,
+                        )
+                    )
             else:
                 if item.extra["item_id"] > 29:
                     layer_id = item.extra["item_id"] - 28

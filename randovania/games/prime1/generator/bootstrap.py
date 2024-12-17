@@ -4,19 +4,31 @@ import copy
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.games.prime1.layout.prime_configuration import DamageReduction as DamageReductionConfig
 from randovania.games.prime1.layout.prime_configuration import IngameDifficulty, PrimeConfiguration
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
-class PrimeBootstrap(MetroidBootstrap):
+class PrimeBootstrap(Bootstrap):
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        assert isinstance(configuration, PrimeConfiguration)
+        return EnergyTankDamageState(
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
+            game.resource_database,
+            game.region_list,
+        )
+
     def _get_enabled_misc_resources(
         self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
@@ -39,6 +51,7 @@ class PrimeBootstrap(MetroidBootstrap):
             "no_doors": "no_doors",
             "superheated_probability": "superheated_probability",
             "submerged_probability": "submerged_probability",
+            "remove_bars_great_tree_hall": "remove_bars_great_tree_hall",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
@@ -49,6 +62,9 @@ class PrimeBootstrap(MetroidBootstrap):
 
         if configuration.ingame_difficulty == IngameDifficulty.HARD:
             enabled_resources.add("hard_mode")
+
+        if configuration.legacy_mode:
+            enabled_resources.add("vanilla_heat")
 
         return enabled_resources
 
@@ -64,6 +80,21 @@ class PrimeBootstrap(MetroidBootstrap):
             dr = 0.9
         else:
             dr = 1
+
+        hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
+        if current_resources.has_resource(hard_mode):
+            dr *= 1.53
+
+        return dr
+
+    def prime1_additive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection) -> float:
+        dr = 1.0
+        if current_resources[db.get_item_by_name("Varia Suit")]:
+            dr -= 0.1
+        if current_resources[db.get_item_by_name("Gravity Suit")]:
+            dr -= 0.1
+        if current_resources[db.get_item_by_name("Phazon Suit")]:
+            dr -= 0.3
 
         hard_mode = db.get_by_type_and_index(ResourceType.MISC, "hard_mode")
         if current_resources.has_resource(hard_mode):
@@ -95,20 +126,17 @@ class PrimeBootstrap(MetroidBootstrap):
         requirement_template = copy.copy(db.requirement_template)
 
         suits = [db.get_item_by_name("Varia Suit")]
-        if not configuration.legacy_mode:
-            requirement_template["Heat-Resisting Suit"] = dataclasses.replace(
-                requirement_template["Heat-Resisting Suit"],
-                requirement=ResourceRequirement.simple(db.get_item_by_name("Varia Suit")),
-            )
-        else:
+        if configuration.legacy_mode:
             suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
 
         reductions = [DamageReduction(None, configuration.heat_damage / 10.0)]
         reductions.extend([DamageReduction(suit, 0) for suit in suits])
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "HeatDamage1")] = reductions
 
-        if configuration.progressive_damage_reduction:
+        if configuration.damage_reduction == DamageReductionConfig.PROGRESSIVE:
             base_damage_reduction = self.prime1_progressive_damage_reduction
+        elif configuration.damage_reduction == DamageReductionConfig.ADDITIVE:
+            base_damage_reduction = self.prime1_additive_damage_reduction
         else:
             base_damage_reduction = self.prime1_absolute_damage_reduction
 

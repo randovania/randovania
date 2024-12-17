@@ -4,9 +4,9 @@ import dataclasses
 import functools
 from typing import TYPE_CHECKING
 
+from randovania.games.fusion.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
 from randovania.games.fusion.layout.fusion_cosmetic_patches import ColorSpace, FusionCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.fusion_cosmetic_patches_dialog_ui import Ui_FusionCosmeticPatchesDialog
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
@@ -39,6 +39,8 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
     def connect_signals(self) -> None:
         super().connect_signals()
 
+        # Checkboxes for enabing Gameplay Options
+        self._persist_check_field(self.map_check, "starting_map")
         # Checkboxes for enabling Pallete Rando
         self._persist_check_field(self.suit_palette_check, "enable_suit_palette")
         self._persist_check_field(self.beam_palette_check, "enable_beam_palette")
@@ -63,6 +65,7 @@ class FusionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_FusionCosmeticPa
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, stereo_default=option)
 
     def on_new_cosmetic_patches(self, patches: FusionCosmeticPatches) -> None:
+        self.map_check.setChecked(patches.starting_map)
         self.suit_palette_check.setChecked(patches.enable_suit_palette)
         self.beam_palette_check.setChecked(patches.enable_beam_palette)
         self.enemy_palette_check.setChecked(patches.enable_enemy_palette)

@@ -6,12 +6,12 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.games.common.prime_family.layout.lib.prime_trilogy_teleporters import (
     PrimeTrilogyTeleporterConfiguration,
 )
-from randovania.games.game import RandovaniaGame
 from randovania.layout.lib.teleporters import (
     TeleporterList,
     TeleporterShuffleMode,

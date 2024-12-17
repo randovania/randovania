@@ -8,13 +8,14 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
-    from randovania.games.game import ProgressiveItemTuples
+    from randovania.game.gui import ProgressiveItemTuples
     from randovania.layout.base.ammo_pickup_configuration import AmmoPickupConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
@@ -52,7 +53,9 @@ class GamePresetDescriber:
                 continue
 
             starting_count = pickup_state.num_included_in_starting_pickups
-            shuffled_count = pickup_state.num_shuffled_pickups + int(pickup_state.include_copy_in_original_location)
+            shuffled_count = pickup_state.num_shuffled_pickups + pickup_state.include_copy_in_original_location * len(
+                standard_pickup.original_locations
+            )
 
             # Get the case we should have
             expected_state = StandardPickupState.from_case(
@@ -155,6 +158,9 @@ class GamePresetDescriber:
             template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
 
         template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
+
+        if configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
+            template_strings["Item Pool"].append(f"All {configuration.logical_pickup_placement.value} obtainable")
 
         # Difficulty
         if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:

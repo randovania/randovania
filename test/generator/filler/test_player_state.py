@@ -14,7 +14,7 @@ from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 
 
-@pytest.fixture()
+@pytest.fixture
 def default_filler_config() -> FillerConfiguration:
     return FillerConfiguration(
         randomization_mode=RandomizationMode.FULL,
@@ -27,10 +27,11 @@ def default_filler_config() -> FillerConfiguration:
         minimum_location_weight_for_hint_placement=0,
         single_set_for_pickups_that_solve=False,
         staggered_multi_pickup_placement=False,
+        fallback_to_reweight_with_unsafe=False,
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def state_for_blank(
     default_filler_config, blank_game_description, default_blank_configuration, empty_patches
 ) -> player_state.PlayerState:
@@ -38,6 +39,7 @@ def state_for_blank(
 
     return player_state.PlayerState(
         index=0,
+        name="World",
         game=game,
         initial_state=game.game.generator.bootstrap.calculate_starting_state(
             game,
@@ -52,19 +54,22 @@ def state_for_blank(
 def test_current_state_report(state_for_blank):
     result = state_for_blank.current_state_report()
     assert result == (
-        "At Intro/Heated Room/Pickup (Health) after 0 actions and 0 pickups, "
-        "with 4 collected locations, 20 safe nodes.\n\n"
+        "At Intro/Starting Area/Event - Post Weapon after 0 actions and 0 pickups, "
+        "with 4 collected locations, 24 safe nodes.\n\n"
         "Pickups still available: \n\n"
-        "Resources to progress: Blue Key, Missile, Weapon\n\n"
+        "Resources to progress: Blue Key, Double Jump, Jump, Missile, Weapon\n\n"
         "Paths to be opened:\n"
         "* Intro/Blue Key Room/Lock - Door to Starting Area (Exit): Blue Key\n"
+        "* Intro/Hint Room/Hint with Translator: Blue Key\n"
+        "* Intro/Ledge Room/Low Ledge: Double Jump\n"
+        "* Intro/Ledge Room/Low Ledge: Jump\n"
         "* Intro/Starting Area/Door to Boss Arena: Missile and Weapon\n"
         "\n"
         "Accessible teleporters:\n"
         "None\n"
         "\n"
         "Reachable nodes:\n"
-        "26 nodes total"
+        "32 nodes total"
     )
 
 
@@ -91,6 +96,7 @@ def test_filter_usable_locations(
 
     second_state = player_state.PlayerState(
         index=0,
+        name="World",
         game=state_for_blank.game,
         initial_state=state_for_blank.game.game.generator.bootstrap.calculate_starting_state(
             state_for_blank.game,

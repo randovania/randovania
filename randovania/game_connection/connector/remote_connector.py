@@ -13,9 +13,9 @@ from randovania.lib import enum_lib
 if typing.TYPE_CHECKING:
     import uuid
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area import Area
     from randovania.game_description.db.region import Region
-    from randovania.games.game import RandovaniaGame
 
 PickupEntryWithOwner = tuple[str, PickupEntry]
 
@@ -49,8 +49,6 @@ class RemoteConnector(QtCore.QObject):
     PlayerLocationChanged = QtCore.Signal(PlayerLocationEvent)
     PickupIndexCollected = QtCore.Signal(PickupIndex)
     InventoryUpdated = QtCore.Signal(Inventory)
-    # TODO: Finished signal is never used. Remove it everywhere?
-    Finished = QtCore.Signal()
 
     @property
     def game_enum(self) -> RandovaniaGame:

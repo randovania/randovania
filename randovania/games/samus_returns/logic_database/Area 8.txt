@@ -80,7 +80,7 @@ Extra - asset_id: collision_camera_007
 
 > Elevator to Surface West; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Area 8/Elevator to Area 8
+  * Elevator to Transport to Area 8/Elevator to Area 8; Custom name: Metroid Queen Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromAreaSurfaceB
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromAreaSurfaceB
@@ -499,7 +499,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_type: doorpowerpower
   > Door to Nest Nodule (Bottom)
       Trivial
-  > Dock to Nest Nodule
+  > Door to Nest Nodule (Middle)
       Screw Attack
   > Above Screw Attack Blocks
       # Deal with the enemies
@@ -520,9 +520,12 @@ Extra - asset_id: collision_camera_010
   > Above Screw Attack Blocks
       Trivial
 
-> Dock to Nest Nodule; Heals? False
+> Door to Nest Nodule (Middle); Heals? False
   * Layers: default
-  * Open Passage to Nest Nodule/Dock to Nest Network
+  * Access Open to Nest Nodule/Door to Nest Network (Middle)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 83
   > Door to Nest Nodule (Bottom)
       Screw Attack
 
@@ -748,7 +751,7 @@ Extra - asset_id: collision_camera_012
   * Pickup 162; Category? Minor
   * Extra - actor_name: LE_Item_010
   * Extra - actor_type: item_missiletank
-  > Dock to Nest Network
+  > Door to Nest Network (Middle)
       Morph Ball
 
 > Door to Nest Network (Bottom); Heals? False
@@ -787,9 +790,12 @@ Extra - asset_id: collision_camera_012
       # Deal with the enemies
       Lightning Armor or Defeat Weak Enemies
 
-> Dock to Nest Network; Heals? False
+> Door to Nest Network (Middle); Heals? False
   * Layers: default
-  * Open Passage to Nest Network/Dock to Nest Nodule
+  * Access Open to Nest Network/Door to Nest Nodule (Middle)
+  * Extra - actor_name: RandoDoor_001
+  * Extra - actor_type: doorpowerpower
+  * Extra - tile_index: 84
   > Pickup (Missile Tank)
       Morph Ball
   > Door to Nest Network (Bottom)
@@ -1129,7 +1135,7 @@ Extra - polygon: [[-2100.0, -16700.0], [-2100.0, -18400.0], [2000.0, -18400.0], 
 Extra - asset_id: collision_camera_021
 > Elevator to Area 7; Heals? False; Spawn Point; Default Node
   * Layers: default
-  * Elevator to Transport to Area 8/Elevator to Area 8
+  * Elevator to Transport to Area 8/Elevator to Area 8; Custom name: Metroid Nest Entrance Elevator
   * Extra - actor_name: LE_Platform_Elevator_FromArea09
   * Extra - actor_type: weightactivatedplatform
   * Extra - start_point_actor_name: ST_FromArea09
@@ -1181,9 +1187,15 @@ Extra - asset_id: collision_camera_020
   * Layers: default
   * Open Passage to Queen Arena Access/Dock to Queen Arena
   > Before Queen
-      After Area 8 - Larva Metroid 1 and After Area 8 - Larva Metroid 10 and After Area 8 - Larva Metroid 2 and After Area 8 - Larva Metroid 3 and After Area 8 - Larva Metroid 4 and After Area 8 - Larva Metroid 5 and After Area 8 - Larva Metroid 6 and After Area 8 - Larva Metroid 7 and After Area 8 - Larva Metroid 8 and After Area 8 - Larva Metroid 9
-  > Dock to Hatchling Room
-      After Area 8 - Queen Metroid or Enabled Remove Queen Wall
+      All of the following:
+          All Metroid Larva Defeated
+          Any of the following:
+              Disabled Final Boss Metroid Queen
+              Enabled Final Boss Metroid Queen and All DNA
+  > Room Center
+      Any of the following:
+          Enabled Remove Queen Wall
+          After Area 8 - Queen Metroid and Disabled Final Boss Metroid Queen
 
 > Tunnel to Queen Arena Access; Heals? False
   * Layers: default
@@ -1192,7 +1204,7 @@ Extra - asset_id: collision_camera_020
 > Event - Queen Metroid; Heals? False
   * Layers: default
   * Event Area 8 - Queen Metroid
-  > Dock to Hatchling Room
+  > Room Center
       Trivial
 
 > Before Queen; Heals? False
@@ -1227,6 +1239,11 @@ Extra - asset_id: collision_camera_020
 > Dock to Hatchling Room; Heals? False
   * Layers: default
   * Open Passage to Hatchling Room/Dock to Queen Arena
+  > Room Center
+      Trivial
+
+> Room Center; Heals? False
+  * Layers: default
   > Tunnel to Queen Arena Access
       All of the following:
           Screw Attack
@@ -1234,6 +1251,16 @@ Extra - asset_id: collision_camera_020
               Space Jump and Lay Any Bomb
               # IBJ and unmorph respin to break the blocks then IBJ again https://youtu.be/gL8hrjKpF4k
               Infinite Bomb Jump (Advanced) and Lay Bomb
+  > Dock to Hatchling Room
+      Trivial
+  > Event - Credits (Queen Final Boss)
+      After Area 8 - Queen Metroid
+
+> Event - Credits (Queen Final Boss); Heals? False
+  * Layers: final-boss-queen
+  * Event Credits
+  > Room Center
+      Trivial
 
 ----------------
 Hatchling Room
@@ -1253,7 +1280,7 @@ Extra - asset_id: collision_camera_022
       Trivial
 
 > Pickup (Baby Metroid); Heals? False
-  * Layers: default
+  * Layers: final-boss-not-queen
   * Pickup 171; Category? Major
   * Extra - actor_name: LE_Baby_Hatchling
   * Extra - actor_type: ITEM_BABY_HATCHLING
@@ -1267,7 +1294,7 @@ Extra - asset_id: collision_camera_022
   > Dock to Transport to Surface
       Baby Metroid
   > Pickup (Baby Metroid)
-      After Area 8 - Queen Metroid
+      After Area 8 - Queen Metroid and Disabled Final Boss Metroid Queen
 
 ----------------
 Nest Vestibule

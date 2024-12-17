@@ -10,9 +10,9 @@ from randovania.layout import filtered_database
 from randovania.lib.container_lib import iterate_key_sorted
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.region_list import RegionList
     from randovania.game_description.game_patches import GamePatches
-    from randovania.games.game import RandovaniaGame
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.base.base_configuration import BaseConfiguration
 

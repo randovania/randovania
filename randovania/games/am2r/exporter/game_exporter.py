@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import randovania
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.patching.patchers.exceptions import UnableToExportError
 
@@ -27,7 +28,7 @@ class AM2RGameExporter(GameExporter):
     _busy: bool = False
 
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the exporter is busy right now
         """
@@ -49,9 +50,11 @@ class AM2RGameExporter(GameExporter):
     def _do_export_game(
         self,
         patch_data: dict,
-        export_params: AM2RGameExportParams,
+        export_params: GameExportParams,
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
+        assert isinstance(export_params, AM2RGameExportParams)
+
         # Check if dotnet is available
         dotnet_ran_fine = False
         try:
@@ -59,6 +62,9 @@ class AM2RGameExporter(GameExporter):
             dotnet_ran_fine = dotnet_process.returncode == 0
         except FileNotFoundError:
             dotnet_ran_fine = False
+
+        monitoring.set_tag("am2r_dotnet_ran_fine", dotnet_ran_fine)
+
         if not dotnet_ran_fine:
             raise UnableToExportError(
                 "You do not have .NET installed!\n"
@@ -92,6 +98,7 @@ class AM2RGameExporter(GameExporter):
             future.result()
 
 
+@monitoring.trace_function
 def _run_patcher(patch_data: dict, export_params: AM2RGameExportParams, output_pipe: Connection) -> None:
     # Delay this, so that we only load CLR/dotnet when exporting
     import am2r_yams

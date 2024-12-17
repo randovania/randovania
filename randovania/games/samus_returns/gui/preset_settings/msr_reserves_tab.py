@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.samus_returns.gui.generated.preset_msr_reserves_ui import Ui_PresetMSRReserves
 from randovania.games.samus_returns.layout.msr_configuration import MSRConfiguration
-from randovania.gui.generated.preset_msr_reserves_ui import Ui_PresetMSRReserves
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -28,8 +28,8 @@ class PresetMSRReserves(PresetTab, Ui_PresetMSRReserves):
         return "Reserve Tanks"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def on_preset_changed(self, preset: Preset) -> None:
         config = preset.configuration

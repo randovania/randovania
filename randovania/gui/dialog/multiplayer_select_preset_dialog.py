@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.gui.generated.multiplayer_select_preset_dialog_ui import Ui_MultiplayerSelectPresetDialog
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.network_common.multiplayer_session import MAX_WORLD_NAME_LENGTH, WORLD_NAME_RE

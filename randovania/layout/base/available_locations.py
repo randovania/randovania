@@ -13,8 +13,8 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
-    from randovania.games.game import RandovaniaGame
 
 
 def _all_indices(db: GameDescription) -> list[int]:

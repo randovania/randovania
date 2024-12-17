@@ -15,10 +15,10 @@ from randovania.lib.enum_lib import iterate_enum
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-    from randovania.games.game import RandovaniaGame
 
 
 def _all_tricks(resource_database: ResourceDatabase):

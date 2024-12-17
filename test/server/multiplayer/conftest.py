@@ -7,7 +7,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.multiplayer_session import GameDetails
@@ -15,17 +15,17 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 from randovania.server import database
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_emit_session_update(mocker) -> MagicMock:
     return mocker.patch("randovania.server.multiplayer.session_common.emit_session_meta_update", autospec=True)
 
 
-@pytest.fixture()
+@pytest.fixture
 def mock_audit(mocker) -> MagicMock:
     return mocker.patch("randovania.server.multiplayer.session_common.add_audit_entry", autospec=True)
 
 
-@pytest.fixture()
+@pytest.fixture
 def solo_two_world_session(clean_database, test_files_dir):
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame"))
     preset_0 = VersionedPreset.with_preset(description.get_preset(0))
@@ -61,7 +61,7 @@ def solo_two_world_session(clean_database, test_files_dir):
     return session
 
 
-@pytest.fixture()
+@pytest.fixture
 def two_player_session(clean_database):
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other Name")
@@ -89,7 +89,32 @@ def two_player_session(clean_database):
     return session
 
 
-@pytest.fixture()
+@pytest.fixture
+def one_world_two_player_coop_session(clean_database):
+    user1 = database.User.create(id=1236, name="Test-User-1")
+    user2 = database.User.create(id=1237, name="Test-User-2")
+
+    session = database.MultiplayerSession.create(
+        id=2, name="Debug", state=MultiplayerSessionVisibility.VISIBLE, creator=user1, allow_coop=True
+    )
+    w1 = database.World.create(
+        session=session, name="World 1", preset="{}", order=0, uuid=uuid.UUID("14ad3fd4-2295-40ed-bc20-2f0892d5a122")
+    )
+
+    database.MultiplayerMembership.create(user=user1, session=session, admin=True)
+    database.MultiplayerMembership.create(user=user2, session=session, admin=False)
+    database.WorldUserAssociation.create(
+        world=w1, user=user1, last_activity=datetime.datetime(2021, 9, 1, 10, 20, tzinfo=datetime.UTC)
+    )
+    database.WorldUserAssociation.create(
+        world=w1, user=user2, last_activity=datetime.datetime(2022, 5, 6, 12, 0, tzinfo=datetime.UTC)
+    )
+    database.WorldAction.create(provider=w1, location=0, receiver=w1, session=session)
+
+    return session
+
+
+@pytest.fixture
 def session_update(clean_database, mocker):
     mock_layout = MagicMock(spec=LayoutDescription)
     mock_layout.shareable_word_hash = "Words of O-Lir"

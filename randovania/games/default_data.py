@@ -10,7 +10,7 @@ from randovania.games import binary_data
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
 
 
 @functools.lru_cache

@@ -1,5 +1,5 @@
 {
-    "schema_version": 24,
+    "schema_version": 27,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -145,7 +145,7 @@
             },
             "PowerSuit": {
                 "long_name": "Power Suit",
-                "max_capacity": 1,
+                "max_capacity": 2147483647,
                 "extra": {
                     "item_id": 20
                 }
@@ -185,16 +185,9 @@
                     "item_id": 25
                 }
             },
-            "HealthRefill": {
-                "long_name": "Health Refill",
-                "max_capacity": 1,
-                "extra": {
-                    "item_id": 26
-                }
-            },
             "Unknown2": {
                 "long_name": "Unknown Item 2",
-                "max_capacity": 1,
+                "max_capacity": 2147483647,
                 "extra": {
                     "item_id": 27
                 }
@@ -323,6 +316,39 @@
                 "max_capacity": 999,
                 "extra": {
                     "item_id": 1008
+                }
+            },
+            "HealthRefill": {
+                "long_name": "Energy",
+                "max_capacity": 9999,
+                "extra": {
+                    "item_id": 1009,
+                    "pickup_type": "Health Refill",
+                    "max_increase": 0,
+                    "is_refill": true,
+                    "refill_id": 26
+                }
+            },
+            "MissileRefill": {
+                "long_name": "Missile Ammunition",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": 1010,
+                    "pickup_type": "Missile",
+                    "max_increase": 0,
+                    "is_refill": true,
+                    "refill_id": 4
+                }
+            },
+            "PBRefill": {
+                "long_name": "Power Bomb Ammunition",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": 1011,
+                    "pickup_type": "Power Bomb",
+                    "max_increase": 0,
+                    "is_refill": true,
+                    "refill_id": 7
                 }
             }
         },
@@ -562,7 +588,7 @@
             "Knowledge": {
                 "long_name": "Knowledge",
                 "description": "Some destructible objects have vulnerabilities other than those which the player is informed of. Enabling this trick may require players to apply this knowledge in order to progress.",
-                "require_documentation_above": 0,
+                "require_documentation_above": 1,
                 "extra": {}
             },
             "Combat": {
@@ -610,7 +636,7 @@
             "BJ": {
                 "long_name": "Bomb Jump",
                 "description": "By using the vanilla Bomb Jump mechanic in unexpected locations, Samus can clear jumps normally meant to require the use of other items. Enabling this trick means that the player may be expected to use standard bomb jumps in places other than morph tunnels.",
-                "require_documentation_above": 0,
+                "require_documentation_above": 1,
                 "extra": {}
             },
             "StandEnemies": {
@@ -770,6 +796,18 @@
             "hard_mode": {
                 "long_name": "Hard Mode",
                 "extra": {}
+            },
+            "room_rando": {
+                "long_name": "Entrance Rando",
+                "extra": {}
+            },
+            "remove_bars_great_tree_hall": {
+                "long_name": "Remove Bars in Great Tree Hall",
+                "extra": {}
+            },
+            "vanilla_heat": {
+                "long_name": "Vanilla Heat Resistance",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -780,15 +818,6 @@
                     "data": {
                         "comment": null,
                         "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Power",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
                             {
                                 "type": "resource",
                                 "data": {
@@ -818,7 +847,7 @@
                             },
                             {
                                 "type": "template",
-                                "data": "Can Use Arm Cannon"
+                                "data": "Shoot Power Beam"
                             }
                         ]
                     }
@@ -883,12 +912,46 @@
                         "comment": null,
                         "items": [
                             {
-                                "type": "resource",
+                                "type": "and",
                                 "data": {
-                                    "type": "items",
-                                    "name": "GravitySuit",
-                                    "amount": 1,
-                                    "negate": false
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "vanilla_heat",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "GravitySuit",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "PhazonSuit",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -896,15 +959,6 @@
                                 "data": {
                                     "type": "items",
                                     "name": "VariaSuit",
-                                    "amount": 1,
-                                    "negate": false
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "PhazonSuit",
                                     "amount": 1,
                                     "negate": false
                                 }
@@ -1287,9 +1341,6 @@
         "region": "Tallon Overworld",
         "area": "Landing Site",
         "node": "Ship"
-    },
-    "initial_states": {
-        "Item Loss Disabled": []
     },
     "minimal_logic": {
         "items_to_exclude": [
@@ -1870,7 +1921,7 @@
                     "locked": "Permanently Locked",
                     "change_from": [
                         "Ice Door",
-                        "Missile Blast Shield",
+                        "Missile Blast Shield (randomprime)",
                         "Normal Door",
                         "Plasma Door",
                         "Wave Door"
@@ -1911,94 +1962,6 @@
                                             "name": "MorphBall",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Plasma",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Thermal",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "X-Ray",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Scan",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -2143,6 +2106,27 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Frigate Ship Teleporter": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "lock": null
@@ -2300,6 +2284,7 @@
             2
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "Impact Crater.json",
         "Phendrana Drifts.json",

@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AM2RGameTabWidget</class>
+ <widget class="QTabWidget" name="AM2RGameTabWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>767</width>
+    <height>671</height>
+   </rect>
+  </property>
+  <property name="currentIndex">
+   <number>0</number>
+  </property>
+  <property name="documentMode">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="tab_intro">
+   <attribute name="title">
+    <string>Introduction</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="intro_layout">
+    <item>
+     <layout class="QHBoxLayout" name="intro_cover_layout">
+      <item>
+       <widget class="QLabel" name="game_cover_label">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="intro_label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traverse SR-388 and its depths, while collecting Metroid DNA in order to fight the Queen and bring the Baby to the Ship.&lt;/p&gt;&lt;p&gt;Two blocks will block the path to the Metroid Queen, unless you collected enough DNA. You can find them by defeating major bosses or Metroids. The default settings require you to collect 10 Metroid DNA.&lt;/p&gt;&lt;p&gt;The final Chozo log will provide a hint for the location of Ice Beam. Additionally, Wisdom Septoggs have settled themselves in some areas which will provide hints for the location of Metroid DNA.&lt;/p&gt;&lt;p&gt;For more details, check out the &lt;a href=&quot;tab://FAQ&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;FAQ&lt;/span&gt;&lt;/a&gt; and &lt;a href=&quot;tab://Differences&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;Differences&lt;/span&gt;&lt;/a&gt; tabs.&lt;/p&gt;&lt;p&gt;To get started, use the Quick Generate button to generate a game using the default settings!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="quick_generate_button">
+      <property name="text">
+       <string>Quick generate</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="intro_spacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="GenerateGameWidget" name="tab_generate_game">
+   <attribute name="title">
+    <string>Play</string>
+   </attribute>
+  </widget>
+  <widget class="QWidget" name="faq_tab">
+   <attribute name="title">
+    <string>FAQ</string>
+   </attribute>
+   <layout class="QGridLayout" name="faq_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QScrollArea" name="faq_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="faq_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>96</width>
+         <height>48</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="faq_scroll_layout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="faq_label">
+          <property name="text">
+           <string># updated from code</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="differences_tab">
+   <attribute name="title">
+    <string>Differences</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QScrollArea" name="differences_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="differences_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>135</width>
+         <height>7788</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="differences_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania makes some changes to the original game in order to improve the game experience or to simply fix bugs in the original game.&lt;br/&gt;Many changes are optional and can be disabled in the options Randovania provides, but the following are &lt;span style=&quot; font-weight:600;&quot;&gt;always&lt;/span&gt; there:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The game will now use a different save directory.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The lava progression system has been changed. There is no lava in the game tied to Metroids anymore, which means you can access any area. However, in order to reach the Queen, you now have to collect 46 total DNA, with Randovania having an option on how much DNA you want to start with / still need to collect. If you do not have the needed DNA, and try to reach the Queen, you will be met with two blocks standing in the way.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Due to killing Metroids not being as important now, the HUD now shows how much DNA is still needed to reach the Queen or how much total DNA you have collected, depending on the DNA setting in the display settings.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Metroids now give you items when they die.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Charge Beam weakness for Metroids have been slightly revamped. They can now always be hit with Charge Beam (but all other Beams disabled), instead of having to need 0 Missiles / Super Missiles.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The stats on the map screen have been revamped. They now show your current Health / Ammo and total Health / Ammo, instead of the amount of expansions you collected / total amount of expansions. A current DNA / total DNA counter has also been added.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;An option has been added to the pause menu that allows loading your last save from your starting location.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The final Chozo log entry in the Genetics Laboratory has been changed to give an Ice Beam hint.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Hints have been placed to reveal the location of DNA. These Hints are given by Wisdom Septoggs. Their locations can be found in the FAQ.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;All Doors have been changed to use the look they have in Distribution Center. Their sprites have also been changed for accessibility reasons.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Normal Game, New Game+ and Random Game+ have all been replaced with a &amp;quot;Randovania&amp;quot; mode.&lt;/li&gt;&lt;/ul&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Higher Difficulties don't reduce the amount of ammo per expansion. If you want that functionality, use Randovania's built-in feature to reduce the amount of ammo per expansion.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fusion Mode has been slightly revamped. The in-game difficulty has been changed to only deal 4x damage and is now named &amp;quot;Brutal&amp;quot;. The option to add the X Parasites and play with the Fusion Suit has been moved to a Randovania setting. This means, it is now possible to play with a 4x damage multiplier without the X Parasites, or to play with the X Parasites on Normal.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Brutal difficulty, the extra settings, and the ability to show the ammo stats on the pause screen don't require you to finish the game once, but instead are all unlocked by default.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The &amp;quot;Varia Suit obtained&amp;quot; cutscene was missing a visual effect; this has been restored.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When going through a Missile / Super Missile / Power Bomb door from behind, you automatically clear that door, without needing to hit it with the appropriate weapon.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Fighting the Tester before activating the Tower now enlightens the room during the fight.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Proboscums will be active without needing to activate the Tower.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Defeating Tester does not automatically enable the Tower anymore.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;EMP puzzles don't unlock all doors in the room anymore, but only relevant ones.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The door to Plasma Chamber will now be blue after defeating Tester, instead of red.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Larva Metroids will now always give ammo drops when necessary, instead of having a small chance to drop nothing.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The file selection screen will now show a hash of the current seed.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Item in Gravity Chamber will now always be in the open, with the Gravity Pod cutscene being disabled.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The bomb blocks in &amp;quot;The Tower - Tower Exterior North&amp;quot; will now always be gone if you come from the &amp;quot;Dark Maze&amp;quot; room.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When going down the Elevator from GFS Thoth, the Power Bomb Blocks will be automatically gone if you haven't cleared them before, as otherwise you'd be stuck.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Long Range Activation has been enabled for every room, allowing for more Zip strats.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;In GFS Thoth, both sides on the &amp;quot;Thoth Bridge&amp;quot; now have doors added for better Door Lock Randomizer compatibility.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;In Hydro Station, the connection from &amp;quot;Water Turbine Station&amp;quot; to &amp;quot;Hydro Station Exterior&amp;quot; now has a door for better Door Lock Randomizer compatibility.&lt;/li&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The Geothermal Power Plant is always in its exploded state. The Power Bomb Expansion that was located there has been moved to &amp;quot;Power Plant Destroyed Shaft&amp;quot;.&lt;/li&gt;&lt;/ul&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="hints_tab">
+   <attribute name="title">
+    <string>Hints</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="hints_tab_layout_4">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="hints_scroll_area">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="hints_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>681</width>
+         <height>530</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="hints_scroll_layout_4">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="hints_label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In AM2R, you can find hints from the following sources: &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Broken Chozo Statue&lt;/span&gt;: Hints for where your Ice Beam is located. It can be found in Genetics Laboratory - Destroyed Chozo Memorial. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Wisdom Septoggs&lt;/span&gt;: Wisdom Septoggs have been placed throughout the planet, one in each Area. They hint to where your Metroid DNA is located. Each Wisdom Septogg can hint between zero DNA and a set maximum. If no hints are provided, a joke hint is displayed instead. The locations and maximum amount of hinted DNA is as follows:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="tableWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+          </property>
+          <property name="autoScroll">
+           <bool>true</bool>
+          </property>
+          <property name="rowCount">
+           <number>7</number>
+          </property>
+          <property name="columnCount">
+           <number>2</number>
+          </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="horizontalHeaderCascadingSectionResizes">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderMinimumSectionSize">
+           <number>30</number>
+          </attribute>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>322</number>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>30</number>
+          </attribute>
+          <row>
+           <property name="text">
+            <string>Neue Zeile</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Neue Zeile</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Neue Zeile</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Neue Zeile</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Neue Zeile</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Neue Zeile</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>Neue Zeile</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Location</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Maximum amount of DNA hints</string>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string>Main Caves - Research Site Elevator</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="0" column="1">
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="1" column="0">
+           <property name="text">
+            <string>Golden Temple - Breeding Grounds Hub</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="1" column="1">
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="2" column="0">
+           <property name="text">
+            <string>Hydro Station - Breeding Grounds Lobby</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="2" column="1">
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="3" column="0">
+           <property name="text">
+            <string>Industrial Complex - Breeding Grounds Fly Stadium</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="3" column="1">
+           <property name="text">
+            <string>10</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="4" column="0">
+           <property name="text">
+            <string>The Tower - Tower Exterior North</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="4" column="1">
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="5" column="0">
+           <property name="text">
+            <string>Distribution Center - Distribution Facility Tower East</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="5" column="1">
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="6" column="0">
+           <property name="text">
+            <string>The Depths - Bubble Lair Shinespark Cave</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+          <item row="6" column="1">
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="textAlignment">
+            <set>AlignCenter</set>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;All Hints are marked with an &quot;H&quot; on the map. In a Multiworld session, all hints will also describe the player which has the item.&lt;/p&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="hint_item_names_tab">
+   <attribute name="title">
+    <string>Hint Item Names</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="hint_item_names_layout_4">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="hint_item_names_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <widget class="QWidget" name="hint_item_names_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>100</width>
+         <height>462</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="hint_item_names_scroll_layout_4">
+        <item>
+         <widget class="QLabel" name="hint_item_names_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When
+                                                items are referenced in a hint, multiple names can be
+                                                used depending on how precise the hint is. The names
+                                                each item can use are the following:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                                            </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="hint_item_names_tree_widget">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Item</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Precise Category</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>General Category</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Broad Category</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GenerateGameWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">randovania/gui/widgets/generate_game_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -4,7 +4,7 @@ import dataclasses
 from enum import Enum
 
 from randovania.bitpacking.bitpacking import BitPackEnum
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.lib import enum_lib
 
@@ -44,6 +44,10 @@ class AM2RCosmeticPatches(BaseCosmeticPatches):
     etank_hud_rotation: int = 0
     dna_hud_rotation: int = 0
     music: MusicMode = MusicMode.VANILLA
+    tileset_rotation_min: int = 0
+    tileset_rotation_max: int = 0
+    background_rotation_min: int = 0
+    background_rotation_max: int = 0
     # TODO: decide how to add samus palettes. will probably only get added after patcher is integrated
 
     @classmethod
@@ -51,5 +55,5 @@ class AM2RCosmeticPatches(BaseCosmeticPatches):
         return cls()
 
     @classmethod
-    def game(cls):
+    def game(cls) -> RandovaniaGame:
         return RandovaniaGame.AM2R

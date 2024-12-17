@@ -1,4 +1,3 @@
-import argparse
 import asyncio
 import base64
 import collections
@@ -8,12 +7,13 @@ import math
 import statistics
 import time
 import typing
+from argparse import Namespace
 from asyncio import CancelledError
 from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.interface_common import sleep_inhibitor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -143,7 +143,7 @@ def compare_reports(
     print_report("Difference", difference_report)
 
 
-def run_logic(args: argparse.Namespace) -> None:
+def run_logic(args: Namespace) -> None:
     base_seed = 1000
     process_count = 6
     preset_manager = PresetManager(None)
@@ -155,8 +155,10 @@ def run_logic(args: argparse.Namespace) -> None:
     if args.game is not None:
         games = [RandovaniaGame(args.game)]
 
+    count = args.seed_count
+
     for game in games:
-        for i in range(100):
+        for i in range(count):
             permalink = Permalink.from_parameters(
                 GeneratorParameters(
                     seed_number=base_seed + i,
@@ -165,6 +167,8 @@ def run_logic(args: argparse.Namespace) -> None:
                     presets=[preset_manager.default_preset_for_game(game).get_preset()],
                 )
             )
+            if i % 1000 == 0 and i > 0:
+                print(f"Generated Permalink {i}...")
             link_str_for_param.append(permalink.as_base64_str)
             reference_params.append(permalink.parameters)
 
@@ -189,7 +193,7 @@ def run_logic(args: argparse.Namespace) -> None:
     print_report("Results", game_report)
 
 
-def repeat_logic(args: argparse.Namespace) -> None:
+def repeat_logic(args: Namespace) -> None:
     input_file: Path = args.input_file
 
     reference = read_file(input_file)
@@ -221,7 +225,7 @@ def _extract_generator_params_bytes(link: str) -> bytes:
     return data.generator_params
 
 
-def compare_logic(args: argparse.Namespace) -> None:
+def compare_logic(args: Namespace) -> None:
     reference_data = read_file(args.reference_file)
     new_data = read_file(args.new_file)
 
@@ -260,6 +264,9 @@ def add_commands(sub_parsers: typing.Any) -> None:
     )
     create_parser.add_argument("--no-data", action="store_true", help="Do not include any data in the report.")
     create_parser.add_argument("--output-file", type=Path, help="Saves the results to a file, to compare later on.")
+    create_parser.add_argument(
+        "--seed-count", type=int, default=100, help="How many seeds should be genned for the benchmark."
+    )
     create_parser.set_defaults(func=run_logic)
 
     repeat_parser: ArgumentParser = sub_parsers.add_parser("repeat", help="Repeats a benchmark session")

@@ -1,5 +1,5 @@
 {
-    "schema_version": 24,
+    "schema_version": 27,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -796,6 +796,14 @@
                 "long_name": "Artaria - EMMI Spinner Rotated",
                 "extra": {}
             },
+            "ArtariaEmmiSpinnerPulled": {
+                "long_name": "Artaria - EMMI Spinner Pulled",
+                "extra": {}
+            },
+            "ArtariaEmmiSpinnerRotatedAgain": {
+                "long_name": "Artaria - EMMI Spinner Rotated Again",
+                "extra": {}
+            },
             "ArtariaEmmiWideBeamBlock": {
                 "long_name": "Artaria - EMMI Wide Beam Block",
                 "extra": {}
@@ -1223,6 +1231,12 @@
             "FloorClip": {
                 "long_name": "Floor Clip",
                 "description": "Many floors can be clippped through with some or all of the following items: Speed Booster, Flash Shift, and Grapple Beam. See https://dreadwiki.hijumpboots.com/en/tricks/clipping",
+                "require_documentation_above": 0,
+                "extra": {}
+            },
+            "SlopeClimb": {
+                "long_name": "Climb Sloped Surfaces",
+                "description": "It is possible to gain height on sloped surfaces with good movement. This may require usage of techniques/items such as free-aim, Flash Shift, Spin Boost, or Phantom Cloak.",
                 "require_documentation_above": 0,
                 "extra": {}
             }
@@ -5607,7 +5621,6 @@
         "area": "Intro Room",
         "node": "Start Point"
     },
-    "initial_states": {},
     "minimal_logic": null,
     "victory_condition": {
         "type": "resource",
@@ -5940,6 +5953,56 @@
                                 "name": "s020_magma:default:deviceheat_002",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Dairon Power Switch 1 Powered Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "lock": null
+                    },
+                    "Dairon Power Switch 2 Powered Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "lock": null
@@ -6436,11 +6499,6 @@
             1,
             2
         ],
-        "Walljump": [
-            1,
-            2,
-            3
-        ],
         "IBJ": [
             1,
             2,
@@ -6476,6 +6534,11 @@
             2,
             3
         ],
+        "Walljump": [
+            1,
+            2,
+            3
+        ],
         "SWJ": [
             1,
             2,
@@ -6489,7 +6552,14 @@
         ],
         "Slide": [
             1,
-            2
+            2,
+            3
+        ],
+        "SlopeClimb": [
+            1,
+            2,
+            3,
+            4
         ],
         "DBJ": [
             1,
@@ -6557,6 +6627,7 @@
             4
         ]
     },
+    "flatten_to_set_on_patch": false,
     "regions": [
         "Artaria.json",
         "Cataris.json",

@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.cave_story.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
 from randovania.gui.lib.signal_handling import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -38,8 +38,8 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
         return "Objective"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_objective_changed(self) -> None:
         combo_enum = self.goal_combo.currentData()

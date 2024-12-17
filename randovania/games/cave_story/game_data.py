@@ -3,10 +3,16 @@ from __future__ import annotations
 import typing
 
 if typing.TYPE_CHECKING:
+    from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import PatchDataFactory
     from randovania.interface_common.options import PerGameOptions
 
-from randovania.games import game
+import randovania.game.data
+import randovania.game.development_state
+import randovania.game.generator
+import randovania.game.gui
+import randovania.game.layout
+import randovania.game.web_info
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import (
@@ -21,11 +27,11 @@ def _options() -> type[PerGameOptions]:
     return CSPerGameOptions
 
 
-def _gui() -> game.GameGui:
+def _gui() -> randovania.game.gui.GameGui:
     from randovania.games.cave_story import gui
-    from randovania.games.cave_story.pickup_database import progressive_items
+    from randovania.games.cave_story.layout import progressive_items
 
-    return game.GameGui(
+    return randovania.game.gui.GameGui(
         tab_provider=gui.cs_preset_tabs,
         cosmetic_dialog=gui.CSCosmeticPatchesDialog,
         export_dialog=gui.CSGameExportDialog,
@@ -35,17 +41,19 @@ def _gui() -> game.GameGui:
     )
 
 
-def _generator() -> game.GameGenerator:
+def _generator() -> randovania.game.generator.GameGenerator:
     from randovania.games.cave_story.generator.bootstrap import CSBootstrap
     from randovania.games.cave_story.generator.hint_distributor import CSHintDistributor
     from randovania.games.cave_story.generator.pool_creator import pool_creator
     from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.filler.weights import ActionWeights
 
-    return game.GameGenerator(
+    return randovania.game.generator.GameGenerator(
         pickup_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=CSHintDistributor(),
+        action_weights=ActionWeights(),
     )
 
 
@@ -55,7 +63,7 @@ def _patch_data_factory() -> type[PatchDataFactory]:
     return CSPatchDataFactory
 
 
-def _exporter() -> game.GameExporter:
+def _exporter() -> GameExporter:
     from randovania.games.cave_story.exporter.game_exporter import CSGameExporter
 
     return CSGameExporter()
@@ -67,27 +75,30 @@ def _hash_words() -> list[str]:
     return HASH_WORDS
 
 
-game_data: game.GameData = game.GameData(
+game_data: randovania.game.data.GameData = randovania.game.data.GameData(
     short_name="CS",
     long_name="Cave Story",
-    development_state=game.DevelopmentState.STABLE,
+    development_state=randovania.game.development_state.DevelopmentState.STABLE,
     presets=[
         {"path": "starter_preset.rdvpreset"},
         {"path": "multiworld-starter-preset.rdvpreset"},
         {"path": "classic.rdvpreset"},
     ],
     faq=[],
-    web_info=game.GameWebInfo(
+    web_info=randovania.game.web_info.GameWebInfo(
         what_can_randomize=[
             "All items",
             "Starting locations",
         ],
         need_to_play=[
-            "Windows, Linux, or Wine. The game is included with Randovania",
+            (
+                "The game is included with Randovania. Windows or Wine is needed to play Freeware."
+                "Windows or Linux is needed to play Cave Story Tweaked"
+            ),
         ],
     ),
     hash_words=_hash_words(),
-    layout=game.GameLayout(
+    layout=randovania.game.layout.GameLayout(
         configuration=CSConfiguration,
         cosmetic_patches=CSCosmeticPatches,
         preset_describer=CSPresetDescriber(),

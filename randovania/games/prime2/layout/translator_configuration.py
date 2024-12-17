@@ -8,9 +8,9 @@ from typing import TYPE_CHECKING, Self
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.db.configurable_node import ConfigurableNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 
 if TYPE_CHECKING:
@@ -68,9 +68,7 @@ def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifi
 
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     return {
-        game.region_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(
-            node.extra[extra_field]
-        )
+        node.identifier: LayoutTranslatorRequirement.from_item_short_name(node.extra[extra_field])
         for node in game.region_list.iterate_nodes()
         if isinstance(node, ConfigurableNode)
     }

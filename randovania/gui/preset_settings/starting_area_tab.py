@@ -12,10 +12,10 @@ from randovania.layout.base.base_configuration import StartingLocationList
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.area_identifier import AreaIdentifier
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_description import GameDescription
-    from randovania.games.game import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
@@ -69,8 +69,8 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, NodeListHelper):
         return "Starting Area"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     @property
     def game_enum(self) -> RandovaniaGame:

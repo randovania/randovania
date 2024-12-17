@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 

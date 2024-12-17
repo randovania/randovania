@@ -19,15 +19,15 @@ from construct import (
     VarInt,
 )
 
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import game_migration
 from randovania.game_description.db.hint_node import HintNodeKind
-from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import ConstructDict, JsonEncodedValue, OptionalValue, String, convert_to_raw_python
 
 if TYPE_CHECKING:
     from pathlib import Path
 
-current_format_version = 10
+current_format_version = 11
 
 _EXPECTED_FIELDS = [
     "schema_version",
@@ -35,11 +35,11 @@ _EXPECTED_FIELDS = [
     "resource_database",
     "layers",
     "starting_location",
-    "initial_states",
     "minimal_logic",
     "victory_condition",
     "dock_weakness_database",
     "used_trick_levels",
+    "flatten_to_set_on_patch",
     "regions",
 ]
 
@@ -120,10 +120,11 @@ ConstructResourceRequirement = Struct(
 requirement_type_map = {
     "resource": ConstructResourceRequirement,
     "template": String,
+    "node": ConstructNodeIdentifier,
 }
 
 ConstructRequirement = Struct(
-    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3),
+    type=construct.Enum(Byte, resource=0, **{"and": 1, "or": 2}, template=3, node=4),
     data=Switch(lambda this: this.type, requirement_type_map),
 )
 ConstructRequirementArray = Struct(
@@ -191,7 +192,7 @@ class NodeAdapter(construct.Adapter):
     def _decode(self, obj: construct.Container, context, path):
         result = construct.Container(node_type=obj["node_type"])
         result.update(obj["data"])
-        result.move_to_end("connections")
+        result["connections"] = result.pop("connections")
         return result
 
     def _encode(self, obj: construct.Container, context, path):
@@ -222,6 +223,7 @@ ConstructNode = NodeAdapter(
                     incompatible_dock_weaknesses=PrefixedArray(VarInt, String),
                     override_default_open_requirement=OptionalValue(ConstructRequirement),
                     override_default_lock_requirement=OptionalValue(ConstructRequirement),
+                    ui_custom_name=OptionalValue(String),
                 ),
                 "pickup": Struct(
                     **NodeBaseFields,
@@ -329,11 +331,11 @@ ConstructGame = Struct(
             resource_database=ConstructResourceDatabase,
             layers=PrefixedArray(VarInt, String),
             starting_location=ConstructNodeIdentifier,
-            initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),
             minimal_logic=OptionalValue(ConstructMinimalLogicDatabase),
             victory_condition=ConstructRequirement,
             dock_weakness_database=ConstructDockWeaknessDatabase,
             used_trick_levels=ConstructUsedTrickLevels,
+            flatten_to_set_on_patch=Flag,
             regions=PrefixedArray(VarInt, ConstructRegion),
         ),
         "lzma",

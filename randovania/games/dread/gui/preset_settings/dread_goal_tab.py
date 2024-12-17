@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.dread.gui.generated.preset_dread_goal_ui import Ui_PresetDreadGoal
 from randovania.games.dread.layout.dread_configuration import DreadArtifactConfig, DreadConfiguration
-from randovania.gui.generated.preset_dread_goal_ui import Ui_PresetDreadGoal
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -35,8 +35,8 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider_max(self):
         self.dna_slider.setMaximum(self.num_preferred_locations)

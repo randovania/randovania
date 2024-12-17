@@ -19,13 +19,14 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.db.dock import DockWeaknessDatabase
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+    from randovania.game_description.requirements.requirement_set import RequirementSet
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceInfo
-    from randovania.games.game import RandovaniaGame
+    from randovania.game_description.resources.resource_info import ResourceInfo
 
 
 def _requirement_dangerous(requirement: Requirement, context: NodeContext) -> Iterator[ResourceInfo]:
@@ -74,12 +75,12 @@ class GameDescription:
     layers: tuple[str, ...]
     victory_condition: Requirement
     starting_location: NodeIdentifier
-    initial_states: dict[str, ResourceGainTuple]
     minimal_logic: MinimalLogicData | None
     _dangerous_resources: frozenset[ResourceInfo] | None = None
     region_list: RegionList
     _used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None
     mutable: bool = False
+    _victory_condition_as_set: RequirementSet | None = None
 
     def __deepcopy__(self, memodict: dict) -> GameDescription:
         new_game = GameDescription(
@@ -90,7 +91,6 @@ class GameDescription:
             region_list=copy.deepcopy(self.region_list, memodict),
             victory_condition=self.victory_condition,
             starting_location=self.starting_location,
-            initial_states=copy.copy(self.initial_states),
             minimal_logic=self.minimal_logic,
         )
         new_game._dangerous_resources = self._dangerous_resources
@@ -104,7 +104,6 @@ class GameDescription:
         layers: tuple[str, ...],
         victory_condition: Requirement,
         starting_location: NodeIdentifier,
-        initial_states: dict[str, ResourceGainTuple],
         minimal_logic: MinimalLogicData | None,
         region_list: RegionList,
         used_trick_levels: dict[TrickResourceInfo, set[int]] | None = None,
@@ -116,10 +115,19 @@ class GameDescription:
         self.layers = layers
         self.victory_condition = victory_condition
         self.starting_location = starting_location
-        self.initial_states = initial_states
         self.minimal_logic = minimal_logic
         self.region_list = region_list
         self._used_trick_levels = used_trick_levels
+
+    def __getstate__(self) -> dict:
+        state = self.__dict__.copy()
+        # Don't pickle _victory_condition_as_set
+        del state["_victory_condition_as_set"]
+        return state
+
+    def __setstate__(self, state: dict) -> None:
+        self.__dict__.update(state)
+        self._victory_condition_as_set = None
 
     def create_node_context(self, resources: ResourceCollection) -> NodeContext:
         return NodeContext(
@@ -133,9 +141,8 @@ class GameDescription:
         if not self.mutable:
             raise ValueError("self is not mutable")
 
-        self.region_list.patch_requirements(
-            damage_multiplier, self.create_node_context(resources), self.dock_weakness_database
-        )
+        context = self.create_node_context(resources)
+        self.region_list.patch_requirements(damage_multiplier, context, self.dock_weakness_database)
         self._dangerous_resources = None
 
     def get_prefilled_docks(self) -> list[int | None]:
@@ -182,6 +189,13 @@ class GameDescription:
             for _, _, requirement in area.all_connections:
                 process(requirement)
 
+            for node in area.nodes:
+                if isinstance(node, DockNode):
+                    if node.override_default_open_requirement is not None:
+                        process(node.override_default_open_requirement)
+                    if node.override_default_lock_requirement is not None:
+                        process(node.override_default_lock_requirement)
+
         self._used_trick_levels = dict(result)
         return result
 
@@ -194,19 +208,28 @@ class GameDescription:
                 resource_database=self.resource_database,
                 layers=self.layers,
                 dock_weakness_database=self.dock_weakness_database,
-                region_list=RegionList([region.duplicate() for region in self.region_list.regions]),
+                region_list=RegionList(
+                    [region.duplicate() for region in self.region_list.regions],
+                    self.region_list.flatten_to_set_on_patch,
+                ),
                 victory_condition=self.victory_condition,
                 starting_location=self.starting_location,
-                initial_states=copy.copy(self.initial_states),
                 minimal_logic=self.minimal_logic,
             )
             result.mutable = True
             return result
 
+    def victory_condition_as_set(self, context: NodeContext) -> RequirementSet:
+        if self._victory_condition_as_set is None:
+            self._victory_condition_as_set = self.victory_condition.as_set(context)
+        return self._victory_condition_as_set
+        # return self.victory_condition.as_set(context)
+
 
 def _resources_for_damage(
     resource: SimpleResourceInfo, database: ResourceDatabase, collection: ResourceCollection
 ) -> Iterator[ResourceInfo]:
+    # FIXME: this should be delegated to DamageState
     yield database.energy_tank
     for reduction in database.damage_reductions.get(resource, []):
         if reduction.inventory_item is not None and not collection.has_resource(reduction.inventory_item):

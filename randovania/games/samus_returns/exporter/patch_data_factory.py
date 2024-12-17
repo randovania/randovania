@@ -1,24 +1,28 @@
 from __future__ import annotations
 
+from random import Random
 from typing import TYPE_CHECKING
 
-from randovania.exporter import item_names, pickup_exporter
+from randovania.exporter import item_names
 from randovania.exporter.hints import credits_spoiler, guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import PatchDataFactory
-from randovania.game_description.assignment import PickupTarget
+from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.pickup.pickup_entry import PickupModel
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
 from randovania.games.samus_returns.exporter.hint_namer import MSRHintNamer
 from randovania.games.samus_returns.exporter.joke_hints import JOKE_HINTS
 from randovania.games.samus_returns.layout.hint_configuration import ItemHintMode
+from randovania.games.samus_returns.layout.msr_configuration import FinalBossConfiguration
+from randovania.games.samus_returns.layout.msr_cosmetic_patches import MusicMode
 from randovania.generator.pickup_pool import pickup_creator
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
+from randovania.lib import random_lib
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
-    from random import Random
 
     from randovania.exporter.pickup_exporter import ExportedPickupDetails
     from randovania.game_description.db.area import Area
@@ -102,16 +106,99 @@ def get_resources_for_details(
     return resources
 
 
+def _construct_music_shuffle_dict(music_mode: MusicMode, rng: Random) -> dict[str, str]:
+    combat_list = [
+        "m_boss_alpha_mn",
+        "m_boss_alpha2_99",
+        "m_boss_arachnus03",
+        "m_boss_gamma04",
+        "m_boss_manic_miner_bot99",
+        "m_boss_manic_miner_chase99",
+        "m_boss_omega02",
+        "m_boss_queen02",
+        "m_boss_ridley_second99",
+        "m_boss_ridley_third99",
+        "m_boss_ridley01",
+        "m_boss_zeta06",
+    ]
+
+    exploration_list = [
+        "boss_go",
+        "boss_mae_32",
+        "ele",
+        "k_brinstra_0714",
+        "k_crateria99",
+        "k_matad_result",
+        "k_ravacaves2_0916",
+        "m_allarea_a99",
+        "m_allarea_b99",
+        "m_area_indefinite01_99",
+        "m_area_tension02",
+        "m_area1_add1_03",
+        "m_area2_add1_02",
+        "m_area2_basic02",
+        "m_area4_5_basic01",
+        "m_area6_basic01",
+        "m_area7_8_basic01",
+        "m_area10_basic02",
+        "m_boss_before99",
+        "m_chozo_gallery_las",
+        "m_met2_ancient_chozo_ruins_2_99",
+        "m_met2_ancient_chozo_ruins99",
+        "m_met2_caverns1_99",
+        "m_met2_caverns3_99",
+        "m_met2_caverns4_99",
+        "m_met2_metroid_hatching99",
+        "m_prologue99",
+        "m_select99",
+        "m_title99",
+        "t_m2_ancient_chozo_ruins_arr2_lp",
+        "t_m2_surface_arr1",
+        "t_matad_ambi06",
+        "t_matad_area01_damage",
+    ]
+
+    fanfare_list = [
+        "event_jingle_placeholder",
+        "k_matad_jinchozo",
+        "matad_jintojo_32728k",
+        "special_ability2_32",
+        "sphere_jingle_placeholder",
+        "tank_jingle",
+    ]
+
+    excluded_list = [
+        "m_movie_ship_landing99",
+        "m_staffcredit99",
+    ]
+
+    if music_mode == MusicMode.VANILLA:
+        return {}
+
+    # Music is now either TYPE or FULL
+    original_list: list = combat_list + exploration_list
+    new_list: list = []
+
+    if music_mode == MusicMode.FULL:
+        original_list += excluded_list
+        new_list = random_lib.shuffle(rng, iter(original_list))
+    else:
+        # MusicMode is TYPE
+        shuffled_combat = random_lib.shuffle(rng, iter(combat_list))
+        shuffled_exploration = random_lib.shuffle(rng, iter(exploration_list))
+        new_list = shuffled_combat + shuffled_exploration
+
+    # Shuffle the fanfare list separately and append to the new list
+    new_list += random_lib.shuffle(rng, iter(fanfare_list))
+    # Append the fanfare list to the original list
+    original_list += fanfare_list
+
+    return {f"{orig}": f"{new}" for orig, new in zip(original_list, new_list, strict=True)}
+
+
 class MSRPatchDataFactory(PatchDataFactory):
     cosmetic_patches: MSRCosmeticPatches
     configuration: MSRConfiguration
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.memo_data = MSRAcquiredMemo.with_expansion_text()
-
-        tank = self.configuration.energy_per_tank
-        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
@@ -182,7 +269,9 @@ class MSRPatchDataFactory(PatchDataFactory):
         alt_model = _ALTERNATIVE_MODELS.get(detail.model, [detail.model.name])
         model_names = alt_model
 
-        resources = get_resources_for_details(detail.original_pickup, detail.conditional_resources, detail.other_player)
+        resources = get_resources_for_details(
+            detail.original_pickup, detail.conditional_resources, detail.is_for_remote_player
+        )
 
         pickup_node = self.game.region_list.node_from_pickup_index(detail.index)
         pickup_type = pickup_node.extra.get("pickup_type", "actor")
@@ -209,14 +298,14 @@ class MSRPatchDataFactory(PatchDataFactory):
         return details
 
     def _encode_hints(self, rng: Random) -> list[dict]:
-        namer = MSRHintNamer(self.description.all_patches, self.players_config)
-        exporter = HintExporter(namer, self.rng, ["A joke hint."])
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        exporter = HintExporter(hint_namer, self.rng, ["A joke hint."])
 
         hints = [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "text": exporter.create_message_for_hint(
-                    self.patches.hints[self.game.region_list.identifier_for_node(logbook_node)],
+                    self.patches.hints[logbook_node.identifier],
                     self.description.all_patches,
                     self.players_config,
                     True,
@@ -227,13 +316,13 @@ class MSRPatchDataFactory(PatchDataFactory):
         ]
 
         artifacts = [self.game.resource_database.get_item(f"Metroid DNA {i + 1}") for i in range(39)]
-        dna_hint_mapping = {}
+        dna_hint_mapping: dict = {}
         hint_config = self.configuration.hints
         if hint_config.artifacts != ItemHintMode.DISABLED:
             dna_hint_mapping = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
-                MSRHintNamer(self.description.all_patches, self.players_config),
+                hint_namer,
                 hint_config.artifacts == ItemHintMode.HIDE_AREA,
                 artifacts,
                 False,
@@ -271,6 +360,29 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return hints
 
+    def _create_baby_metroid_hint(self) -> str:
+        hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
+        hint_config = self.configuration.hints
+
+        baby_metroid = [(self.game.resource_database.get_item("Baby"))]
+        baby_metroid_hint: str = ""
+        if hint_config.baby_metroid != ItemHintMode.DISABLED:
+            temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                hint_namer,
+                hint_config.baby_metroid == ItemHintMode.HIDE_AREA,
+                baby_metroid,
+                False,
+            )
+            baby_metroid_hint = "A " + temp_baby_hint[baby_metroid[0]].replace(
+                " Metroid is located in ", "'s Cry can be heard echoing from|"
+            )
+        else:
+            baby_metroid_hint = "Continue searching for the Baby Metroid!"
+
+        return baby_metroid_hint
+
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
 
@@ -304,6 +416,21 @@ class MSRPatchDataFactory(PatchDataFactory):
                 ", ".join(restricted_text[:-1]), " and " if len(restricted_text) > 1 else "", restricted_text[-1]
             )
 
+        final_boss_text = ""
+        ridley_text = "If you haven't defeated Proteus Ridley, you can either fight him or continue to your ship."
+        if self.configuration.final_boss == FinalBossConfiguration.ARACHNUS:
+            final_boss_text = " and then fight Arachnus"
+        elif self.configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            final_boss_text = " and then fight Diggernaut"
+        elif self.configuration.final_boss == FinalBossConfiguration.QUEEN:
+            final_boss_text = ", collect Ice Beam, defeat all 10 Larva Metroids, and then fight the Metroid Queen"
+        elif self.configuration.final_boss == FinalBossConfiguration.RIDLEY:
+            final_boss_text = ", find the Baby, and then fight Proteus Ridley at your ship"
+            ridley_text = (
+                "Once you have collected all the required DNA, "
+                "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
+            )
+
         # Intro Text
         text["GUI_CUTSCENE_OPENING_1"] = (
             "Welcome to the Metroid: Samus Returns Randomizer!|Here are some useful tips to help you on your journey."
@@ -313,18 +440,13 @@ class MSRPatchDataFactory(PatchDataFactory):
             "Metroids now also drop items."
         )
         text["GUI_CUTSCENE_OPENING_3"] = (
-            "In this randomizer, you need to collect all Metroid DNA, find the Baby, "
-            "and then fight Proteus Ridley at your ship to leave the planet."
+            f"In this randomizer, you need to collect all Metroid DNA{final_boss_text} to leave the planet."
         )
         text["GUI_CUTSCENE_OPENING_4"] = (
             f"With your current configuration, you need to find {self.configuration.artifacts.required_artifacts} DNA. "
             f"It can be found {location_text}."
         )
-        text["GUI_CUTSCENE_OPENING_5"] = (
-            "You may freely travel between Surface and Area 8.|"
-            "Once you have collected all the required DNA, "
-            "going from Area 8 to Surface will force a confrontation with Proteus Ridley."
-        )
+        text["GUI_CUTSCENE_OPENING_5"] = f"You may freely travel between Surface and Area 8.|{ridley_text}"
         text["GUI_CUTSCENE_OPENING_6"] = (
             "All the Chozo Seals have been repurposed to give hints on the region where a specific item is located.|"
             "Additionally, more distinct Chozo Seals have been placed that give hints on DNA locations."
@@ -382,15 +504,13 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return all_dict
 
-    def _create_cosmetics(self) -> dict:
+    def _create_cosmetics(self, seed_number: int) -> dict:
         c = self.cosmetic_patches
         cosmetic_patches: dict = {}
         # Game needs each color component in [0-1] range
         if self.cosmetic_patches.use_laser_color:
             cosmetic_patches["laser_locked_color"] = [x / 255 for x in c.laser_locked_color]
             cosmetic_patches["laser_unlocked_color"] = [x / 255 for x in c.laser_unlocked_color]
-
-        if self.cosmetic_patches.use_grapple_laser_color:
             cosmetic_patches["grapple_laser_locked_color"] = [x / 255 for x in c.grapple_laser_locked_color]
             cosmetic_patches["grapple_laser_unlocked_color"] = [x / 255 for x in c.grapple_laser_unlocked_color]
 
@@ -406,27 +526,136 @@ class MSRPatchDataFactory(PatchDataFactory):
         cosmetic_patches["enable_room_name_display"] = c.show_room_names.value
         cosmetic_patches["camera_names_dict"] = self._build_area_name_dict()
 
+        cosmetic_patches["music_shuffle_dict"] = _construct_music_shuffle_dict(c.music, Random(seed_number))
+
+        cosmetic_patches["volume_adjustments"] = {
+            "music": c.music_volume / 100,
+            "environment_sfx": c.ambience_volume / 100,
+        }
+
         return cosmetic_patches
+
+    def _build_elevator_dict(self) -> dict[str, dict[str, dict[str, str]]]:
+        # generate a 2D dictionary of source (scenario, actor) => target (scenario, actor)
+        elevator_dict: dict = {}
+        for node, connection in self.patches.all_dock_connections():
+            if not isinstance(node, DockNode):
+                continue
+            if node.dock_type not in self.game.dock_weakness_database.all_teleporter_dock_types:
+                continue
+
+            scenario = self._level_name_for(node)
+            actor_name = node.extra["actor_name"]
+            if elevator_dict.get(scenario, None) is None:
+                elevator_dict[scenario] = {}
+            elevator_dict[scenario][actor_name] = self._start_point_ref_for(connection)
+
+        return elevator_dict
+
+    def _add_custom_doors(self) -> list[dict]:
+        custom_doors: list = []
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            assert node.location is not None
+            if not isinstance(node, DockNode):
+                continue
+            if node.default_dock_weakness.name != "Access Open":
+                continue
+            if any(entry["door_actor"] == self._teleporter_ref_for(node) for entry in custom_doors):
+                continue
+
+            # Make a set of the entity groups for each room that each door exists in
+            entity_groups = {
+                self.game.region_list.area_by_area_location(node.identifier.area_identifier).extra["asset_id"],
+                self.game.region_list.area_by_area_location(node.default_connection.area_identifier).extra["asset_id"],
+            }
+
+            # Add additional entity groups if needed, mainly for post-Metroid groups
+            if "append_entity_group" in node.extra:
+                entity_groups.add(node.extra["append_entity_group"])
+
+            # Make a list of the tile_indices listed in each door node and append them
+            tile_indices = [
+                node.extra["tile_index"],
+                self.game.region_list.typed_node_by_identifier(node.default_connection, DockNode).extra["tile_index"],
+            ]
+
+            custom_doors.append(
+                {
+                    "door_actor": self._teleporter_ref_for(node),
+                    "position": {
+                        # FIXME: location_override only exists because DB maps are not 1:1, so fix maps
+                        "x": node.extra.get("location_x_override", node.location.x),
+                        "y": node.extra.get("location_y_override", node.location.y),
+                        "z": node.extra.get("location_z_override", node.location.z),
+                    },
+                    "tile_indices": sorted(tile_indices),  # [left, right]
+                    "entity_groups": sorted(entity_groups),
+                }
+            )
+
+        return custom_doors
+
+    def _door_patches(self) -> list[dict[str, str]]:
+        wl = self.game.region_list
+
+        result: list = []
+        used_actors: dict[str, str] = {}
+
+        for node, weakness in self.patches.all_dock_weaknesses():
+            if "type" not in weakness.extra:
+                raise ValueError(
+                    f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness"
+                )
+
+            if "actor_name" not in node.extra:
+                print(f"Invalid door (no actor): {node}")
+                continue
+
+            if any(entry["actor"] == self._teleporter_ref_for(node) for entry in result):
+                continue
+
+            result.append(
+                {
+                    "actor": (actor := self._teleporter_ref_for(node)),
+                    "door_type": (door_type := weakness.extra["type"]),
+                }
+            )
+            actor_idef = str(actor)
+            if used_actors.get(actor_idef, door_type) != door_type:
+                raise ValueError(
+                    f"Door for {wl.node_name(node)} ({actor}) previously "
+                    f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}."
+                )
+            used_actors[actor_idef] = door_type
+
+        return result
+
+    def _objective(self, config: MSRConfiguration) -> dict:
+        return {
+            "required_dna": config.artifacts.required_artifacts,
+            "final_boss": config.final_boss.value,
+        }
+
+    def create_memo_data(self) -> dict:
+        """Used to generate pickup collection messages."""
+        self.memo_data = MSRAcquiredMemo.with_expansion_text()
+
+        tank = self.configuration.energy_per_tank
+        memo_data = MSRAcquiredMemo.with_expansion_text()
+        memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {tank:g}."
+        return memo_data
+
+    def create_visual_nothing(self) -> PickupEntry:
+        """The model of this pickup replaces the model of all pickups when PickupModelDataSource is ETM"""
+        return pickup_creator.create_visual_nothing(self.game_enum(), "Nothing")
 
     def create_game_specific_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_resources())
         starting_text = self._starting_inventory_text()
 
-        useless_target = PickupTarget(
-            pickup_creator.create_nothing_pickup(self.game.resource_database), self.players_config.player_index
-        )
-
-        pickup_list = pickup_exporter.export_all_indices(
-            self.patches,
-            useless_target,
-            self.game.region_list,
-            self.rng,
-            self.configuration.pickup_model_style,
-            self.configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(self.memo_data, self.players_config, self.game_enum()),
-            visual_nothing=pickup_creator.create_visual_nothing(self.game_enum(), "Nothing"),
-        )
+        pickup_list = self.export_pickup_list()
 
         energy_per_tank = self.configuration.energy_per_tank
 
@@ -437,6 +666,9 @@ class MSRPatchDataFactory(PatchDataFactory):
             "pickups": [
                 data for pickup_item in pickup_list if (data := self._pickup_detail_for_target(pickup_item)) is not None
             ],
+            "elevators": self._build_elevator_dict()
+            if self.configuration.teleporters.mode != TeleporterShuffleMode.VANILLA
+            else {},
             "energy_per_tank": energy_per_tank,
             "reserves_per_tank": {
                 "life_tank_size": self.configuration.life_tank_size,
@@ -458,8 +690,20 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(self.rng),
-            "cosmetic_patches": self._create_cosmetics(),
+            "baby_metroid_hint": self._create_baby_metroid_hint(),
+            "cosmetic_patches": self._create_cosmetics(
+                self.description.get_seed_for_player(self.players_config.player_index)
+            ),
             "configuration_identifier": self.description.shareable_hash,
+            "custom_doors": self._add_custom_doors(),
+            "door_patches": self._door_patches(),
+            "constant_environment_damage": {
+                "heat": self.configuration.constant_heat_damage,
+                "lava": self.configuration.constant_lava_damage,
+            },
+            "objective": self._objective(self.configuration),
+            "layout_uuid": str(self.players_config.get_own_uuid()),
+            "enable_remote_lua": self.cosmetic_patches.enable_remote_lua or self.players_config.is_multiworld,
         }
 
 

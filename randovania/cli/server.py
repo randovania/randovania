@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from argparse import ArgumentParser
+    from argparse import ArgumentParser, Namespace, _SubParsersAction
 
 
-def flask_command_logic(args):
+def flask_command_logic(args: Namespace) -> None:
     import randovania
 
     sampling_rate = randovania.get_configuration().get("sentry_sampling_rate", 1.0)
@@ -21,23 +21,23 @@ def flask_command_logic(args):
     server_app.sa.sio.run(server_app, host="0.0.0.0")
 
 
-def add_flask_command(sub_parsers):
+def add_flask_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("flask", help="Hosts the flask server.")
     parser.set_defaults(func=flask_command_logic)
 
 
-def migrate_database_command_logic(args):
+def migrate_database_command_logic(args: Namespace) -> None:
     from randovania.server import database_migration
 
     database_migration.apply_migrations()
 
 
-def add_migrate_database_command(sub_parsers):
+def add_migrate_database_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("migrate-database", help="Apply schema migrations to the database.")
     parser.set_defaults(func=migrate_database_command_logic)
 
 
-def bot_command_logic(args):
+def bot_command_logic(args: Namespace) -> None:
     import randovania.monitoring
 
     randovania.monitoring.bot_init()
@@ -47,19 +47,19 @@ def bot_command_logic(args):
     bot.run()
 
 
-def add_bot_command(sub_parsers):
+def add_bot_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("bot", help="Runs the Discord bot.")
     parser.set_defaults(func=bot_command_logic)
 
 
-def create_subparsers(sub_parsers):
+def create_subparsers(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser("server", help="CLI tools for the server tools")
     sub_parsers = parser.add_subparsers(dest="command")
     add_flask_command(sub_parsers)
     add_migrate_database_command(sub_parsers)
     add_bot_command(sub_parsers)
 
-    def check_command(args):
+    def check_command(args: Namespace) -> None:
         if args.command is None:
             parser.print_help()
             raise SystemExit(1)

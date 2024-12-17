@@ -4,22 +4,27 @@ from typing import TYPE_CHECKING, NamedTuple
 
 from randovania.game_description import default_database
 from randovania.game_description.db.node import NodeContext
+from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.resource_node import ResourceNode
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.resolver.state import State, StateGameData
+from randovania.layout.exceptions import InvalidConfiguration
+from randovania.resolver.state import State
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from random import Random
 
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.pickup.pickup_category import PickupCategory
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceGain
     from randovania.generator.pickup_pool import PoolResults
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.standard_pickup_configuration import StandardPickupConfiguration
     from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
 class EnergyConfig(NamedTuple):
@@ -92,8 +97,14 @@ class Bootstrap:
             ]
         )
 
-    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
-        return EnergyConfig(99, 100)
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        """
+        Creates a DamageState for the given configuration.
+        :param game:
+        :param configuration:
+        :return:
+        """
+        raise NotImplementedError
 
     def calculate_starting_state(
         self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration
@@ -101,8 +112,6 @@ class Bootstrap:
         starting_node = game.region_list.node_by_identifier(patches.starting_location)
 
         initial_resources = patches.starting_resources()
-
-        starting_energy, energy_per_tank = self.energy_config(configuration)
 
         if starting_node.is_resource_node:
             assert isinstance(starting_node, ResourceNode)
@@ -117,18 +126,13 @@ class Bootstrap:
                 ),
             )
 
-        initial_game_state = game.initial_states.get("Default")
-        if initial_game_state is not None:
-            initial_resources.add_resource_gain(initial_game_state)
-
         starting_state = State(
             initial_resources,
             (),
-            None,
+            self.create_damage_state(game, configuration),
             starting_node,
             patches,
             None,
-            StateGameData(game.resource_database, game.region_list, energy_per_tank, starting_energy),
         )
 
         # Being present with value 0 is troublesome since this dict is used for a simplify_requirements later on
@@ -228,7 +232,39 @@ class Bootstrap:
             pool_results.starting
         )
 
+    def all_preplaced_item_locations(
+        self,
+        game: GameDescription,
+        config: BaseConfiguration,
+        game_specific_check: Callable[[PickupNode, BaseConfiguration], bool],
+    ) -> list[PickupNode]:
+        locations = []
 
-class MetroidBootstrap(Bootstrap):
-    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
-        return EnergyConfig(configuration.energy_per_tank - 1, configuration.energy_per_tank)
+        for node in game.region_list.all_nodes:
+            if isinstance(node, PickupNode) and game_specific_check(node, config):
+                locations.append(node)
+
+        return locations
+
+    def pre_place_items(
+        self,
+        rng: Random,
+        locations: list[PickupNode],
+        pool_results: PoolResults,
+        item_category: PickupCategory,
+    ) -> None:
+        pre_placed_indices = list(pool_results.assignment.keys())
+        reduced_locations = [loc for loc in locations if loc.pickup_index not in pre_placed_indices]
+
+        rng.shuffle(reduced_locations)
+
+        all_artifacts = [pickup for pickup in list(pool_results.to_place) if pickup.pickup_category is item_category]
+        if len(all_artifacts) > len(reduced_locations):
+            raise InvalidConfiguration(
+                f"Has {len(all_artifacts)} {item_category.long_name} in the pool, "
+                f"but only {len(reduced_locations)} valid locations."
+            )
+
+        for artifact, location in zip(all_artifacts, reduced_locations, strict=False):
+            pool_results.to_place.remove(artifact)
+            pool_results.assignment[location.pickup_index] = artifact

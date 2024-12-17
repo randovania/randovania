@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import math
 import pprint
+import typing
 from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.db.node import Node
 from randovania.game_description.hint import Hint, HintType
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
@@ -18,39 +20,39 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Mapping, Set
     from random import Random
 
-    from randovania.game_description.db.node import NodeContext
     from randovania.game_description.db.node_identifier import NodeIdentifier
-    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.generator.filler.action import Action
     from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.filler.weights import ActionWeights
     from randovania.generator.generator_reach import GeneratorReach
-
-_DANGEROUS_ACTION_MULTIPLIER = 0.75
-_EVENTS_WEIGHT_MULTIPLIER = 0.5
-_INDICES_WEIGHT_MULTIPLIER = 1
-_LOGBOOKS_WEIGHT_MULTIPLIER = 1
-_ADDITIONAL_NODES_WEIGHT_MULTIPLIER = 0.01
-_VICTORY_WEIGHT = 1000
 
 
 def _calculate_uncollected_index_weights(
     uncollected_indices: Set[PickupIndex],
     assigned_indices: Set[PickupIndex],
-    considered_counts: Mapping[PickupIndex, int],
+    index_age: Mapping[PickupIndex, float],
     indices_groups: list[set[PickupIndex]],
 ) -> dict[PickupIndex, float]:
+    """
+    Calculates a weight
+    :param uncollected_indices
+    :param assigned_indices
+    :param index_age: the higher the age for an index, the smaller it's weight
+    :param indices_groups: indices separated in distinct groups.
+    In practice, one group for each region respecting preset exclusions
+    """
     result = {}
 
     for indices in indices_groups:
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
         for index in sorted(uncollected_indices & indices):
-            weight_from_considered_count = min(10, considered_counts[index] + 1) ** -2
-            result[index] = weight_from_collected_indices * weight_from_considered_count
-            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_considered_count}")
+            weight_from_index_age = min(10.0, index_age[index] + 1.0) ** -2
+            result[index] = weight_from_collected_indices * weight_from_index_age
+            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_index_age}")
 
     return result
 
@@ -100,6 +102,52 @@ def _get_next_player(
             )
 
 
+class EvaluatedAction(typing.NamedTuple):
+    action: Action
+    reach: GeneratorReach
+    multiplier: float
+    offset: float
+
+    def apply_weight_modifiers_to(self, base: float) -> float:
+        """Applies the multiplier and offset to the given weight."""
+        return base * self.multiplier + self.offset
+
+    def replace_reach(self, new_reach: GeneratorReach) -> EvaluatedAction:
+        return EvaluatedAction(self.action, new_reach, self.multiplier, self.offset)
+
+
+def _evaluate_action(base_reach: GeneratorReach, action_weights: ActionWeights, action: Action) -> EvaluatedAction:
+    """
+    Calculates the weight offsets and multipliers for the given action, as well as the reach
+    you'd get by collecting all resources and pickups of the given action.
+    :param base_reach:
+    :param action:
+    :return:
+    """
+    state = base_reach.state
+    multiplier = 1.0
+    offset = 0.0
+
+    resources, pickups = action.split_pickups()
+
+    if resources:
+        for resource in resources:
+            state = state.act_on_node(resource)
+        multiplier *= action_weights.DANGEROUS_ACTION_MULTIPLIER
+
+    if pickups:
+        state = state.assign_pickups_resources(pickups)
+        multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
+        offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
+
+    return EvaluatedAction(
+        action,
+        reach_lib.advance_to_with_reach_copy(base_reach, state),
+        multiplier,
+        offset,
+    )
+
+
 def weighted_potential_actions(
     player_state: PlayerState, status_update: Callable[[str], None], locations_weighted: WeightedLocations
 ) -> dict[Action, float]:
@@ -110,11 +158,17 @@ def weighted_potential_actions(
     :param locations_weighted: Which locations are available and their weight.
     :return:
     """
-    actions_weights: dict[Action, float] = {}
-    potential_reaches: dict[Action, GeneratorReach] = {}
-    current_uncollected = UncollectedState.from_reach(player_state.reach)
-
+    evaluated_actions: dict[Action, EvaluatedAction] = {}
     actions = player_state.potential_actions(locations_weighted)
+
+    if len(actions) == 1:
+        debug.debug_print(f"{actions[0]}")
+        debug.debug_print("Only one action, weighting skipped")
+        return {action: 1.0 for action in actions}
+
+    current_uncollected = UncollectedState.from_reach(player_state.reach)
+    action_weights = player_state.game.game.generator.action_weights
+
     options_considered = 0
 
     def update_for_option() -> None:
@@ -122,38 +176,44 @@ def weighted_potential_actions(
         options_considered += 1
         status_update(f"Checked {options_considered} of {len(actions)} options.")
 
+    options_considered = 0
     for action in actions:
-        state = player_state.reach.state
-        multiplier = 1.0
-        offset = 0.0
-
-        resources, pickups = action.split_pickups()
-
-        if resources:
-            for resource in resources:
-                state = state.act_on_node(resource)
-            multiplier *= _DANGEROUS_ACTION_MULTIPLIER
-
-        if pickups:
-            state = state.assign_pickups_resources(pickups)
-            multiplier *= sum(pickup.generator_params.probability_multiplier for pickup in pickups) / len(pickups)
-            offset += sum(pickup.generator_params.probability_offset for pickup in pickups) / len(pickups)
-
-        potential_reach = reach_lib.advance_to_with_reach_copy(player_state.reach, state)
-        potential_reaches[action] = potential_reach
-        base_weight = _calculate_weights_for(potential_reach, current_uncollected)
-        actions_weights[action] = base_weight * multiplier + offset
+        evaluated_actions[action] = _evaluate_action(player_state.reach, action_weights, action)
         update_for_option()
+
+    actions_weights = {
+        action: _calculate_weights_for(evaluation, current_uncollected)
+        for action, evaluation in evaluated_actions.items()
+    }
+
+    # Everything has weight 0, so try collecting potentially unsafe resources
+    if sum(actions_weights.values()) == 0 and player_state.configuration.fallback_to_reweight_with_unsafe:
+        debug.debug_print("Re-weighting with possible unsafe")
+        options_considered = 0
+        for action, evaluation in evaluated_actions.items():
+            evaluated_actions[action] = evaluation.replace_reach(
+                reach_lib.advance_reach_with_possible_unsafe_resources(evaluation.reach)
+            )
+            update_for_option()
+
+        actions_weights = {
+            action: _calculate_weights_for(evaluation, current_uncollected)
+            for action, evaluation in evaluated_actions.items()
+        }
 
     if sum(actions_weights.values()) == 0:
         debug.debug_print("Using backup weights")
-        final_weights = {
-            action: _ADDITIONAL_NODES_WEIGHT_MULTIPLIER
-            * len((UncollectedState.from_reach(potential_reach) - current_uncollected).nodes)
-            for action, potential_reach in potential_reaches.items()
+        actions_weights = {
+            action: action_weights.ADDITIONAL_NODES_WEIGHT_MULTIPLIER
+            * len((UncollectedState.from_reach(evaluation.reach) - current_uncollected).nodes)
+            for action, evaluation in evaluated_actions.items()
         }
-    else:
-        final_weights = actions_weights
+
+    # Apply offset only at the end in order to preserve when all actions are weight 0
+    final_weights = {
+        action: evaluated_actions[action].apply_weight_modifiers_to(base_weight)
+        for action, base_weight in actions_weights.items()
+    }
 
     if debug.debug_level() > 1:
         for action, weight in final_weights.items():
@@ -175,13 +235,16 @@ def select_weighted_action(rng: Random, weighted_actions: Mapping[Action, float]
         return rng.choice(list(weighted_actions.keys()))
 
 
-def increment_considered_count(locations_weighted: WeightedLocations) -> None:
+def increment_index_age(locations_weighted: WeightedLocations, increment: float) -> None:
+    """
+    Increments the pickup index's age for every already collected index.
+    """
     for player, location, _ in locations_weighted.all_items():
-        was_present = location in player.pickup_index_considered_count
-        player.pickup_index_considered_count[location] += 1
+        was_present = location in player.pickup_index_ages
+        player.pickup_index_ages[location] += increment
         if not was_present:
-            # if it wasn't present, thenwe get to log!
-            filler_logging.print_new_pickup_index(player.index, player.game, location)
+            # if it wasn't present, then we get to log!
+            filler_logging.print_new_pickup_index(player, location)
 
 
 def _print_header(player_states: list[PlayerState]) -> None:
@@ -195,8 +258,8 @@ def _print_header(player_states: list[PlayerState]) -> None:
         "{}\nRetcon filler started with standard pickups:\n{}".format(
             "*" * 100,
             "\n".join(
-                "Player {}: {}".format(
-                    player_state.index,
+                "{}: {}".format(
+                    player_state.name,
                     pprint.pformat(
                         {
                             item.name: player_state.pickups_left.count(item)
@@ -211,8 +274,8 @@ def _print_header(player_states: list[PlayerState]) -> None:
     debug.debug_print(
         "Static assignments:\n{}".format(
             "\n".join(
-                "Player {}: {}".format(
-                    player_state.index,
+                "{}: {}".format(
+                    player_state.name,
                     pprint.pformat(
                         {
                             _name_for_index(player_state, index): target.pickup.name
@@ -220,6 +283,14 @@ def _print_header(player_states: list[PlayerState]) -> None:
                         }
                     ),
                 )
+                for player_state in player_states
+            )
+        )
+    )
+    debug.debug_print(
+        "Game specific:\n{}".format(
+            "\n".join(
+                f"{player_state.name}: {pprint.pformat(player_state.reach.state.patches.game_specific)}"
                 for player_state in player_states
             )
         )
@@ -251,6 +322,11 @@ def retcon_playthrough_filler(
 
     while True:
         all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
+        if debug.debug_level() > 1:
+            player_health = {
+                player_state: player_state.reach.state.game_state_debug_string() for player_state in player_states
+            }
+            print(f">>>> Player Health: {player_health}")
         current_player = _get_next_player(rng, player_states, all_locations_weighted)
         if current_player is None:
             break
@@ -298,11 +374,11 @@ def retcon_playthrough_filler(
     return all_patches, tuple(actions_log)
 
 
-def debug_print_weighted_locations(all_locations_weighted: WeightedLocations) -> None:
+def debug_print_weighted_locations(all_locations_weighted: WeightedLocations, player_states: list[PlayerState]) -> None:
     print("==> Weighted Locations")
     for owner, index, weight in all_locations_weighted.all_items():
         node_name = owner.game.region_list.node_name(owner.game.region_list.node_from_pickup_index(index))
-        print(f"[Player {owner.index}] {node_name} - {weight}")
+        print(f"[{player_states[owner.index].name}] {node_name} - {weight}")
 
 
 def should_be_starting_pickup(player: PlayerState, locations: WeightedLocations) -> bool:
@@ -341,12 +417,12 @@ def _assign_pickup_somewhere(
 
     if not should_be_starting_pickup(current_player, usable_locations):
         if debug.debug_level() > 2:
-            debug_print_weighted_locations(all_locations)
+            debug_print_weighted_locations(all_locations, player_states)
 
         index_owner_state, pickup_index = usable_locations.select_location(rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
 
-        increment_considered_count(all_locations)
+        increment_index_age(all_locations, action.generator_params.index_age_impact)
         all_locations.remove(index_owner_state, pickup_index)
 
         # Place a hint for the new item
@@ -371,14 +447,12 @@ def _assign_pickup_somewhere(
             debug.debug_print(f"ERROR! Assigned {action.name} to {pickup_index}, but location wasn't collected!")
 
         spoiler_entry = pickup_placement_spoiler_entry(
-            current_player.index,
+            current_player,
             action,
-            index_owner_state.game,
             pickup_index,
             hint_location,
-            index_owner_state.index,
+            index_owner_state,
             len(player_states) > 1,
-            index_owner_state.reach.node_context(),
         )
 
     else:
@@ -388,7 +462,7 @@ def _assign_pickup_somewhere(
 
         spoiler_entry = f"{action.name} as starting item"
         if len(player_states) > 1:
-            spoiler_entry += f" for Player {current_player.index + 1}"
+            spoiler_entry += f" for {current_player.name}"
         current_player.reach.advance_to(current_player.reach.state.assign_pickup_to_starting_items(action))
 
     return spoiler_entry
@@ -404,12 +478,12 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
         delta = total_assigned_pickups - player_state.num_assigned_pickups
         player_weight = 1 + delta
 
-        # print(f"** Player {player_state.index} -- {player_weight}")
+        # print(f"** {player_state.name} -- {player_weight}")
 
         pickup_index_weights = _calculate_uncollected_index_weights(
             player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
             set(player_state.reach.state.patches.pickup_assignment),
-            player_state.pickup_index_considered_count,
+            player_state.pickup_index_ages,
             player_state.indices_groups,
         )
         for pickup_index, weight in pickup_index_weights.items():
@@ -417,7 +491,7 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
 
     # for (player_state, pickup_index), weight in all_weights.items():
     #     wl = player_state.game.region_list
-    #     print(f"> {player_state.index} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
+    #     print(f"> {player_state.name} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
     # print("============================================")
 
     return WeightedLocations(all_weights)
@@ -434,19 +508,19 @@ def _calculate_hint_location_for_action(
 ) -> NodeIdentifier | None:
     """
     Calculates where a hint for the given action should be placed.
-    :return: A LogbookAsset to use, or None if no hint should be placed.
+    :return: A hint's NodeIdentifier to use, or None if no hint should be placed.
     """
     if index_owner_state.should_have_hint(action, current_uncollected, all_locations):
         potential_hint_locations = [
             identifier
-            for identifier in current_uncollected.logbooks
+            for identifier in current_uncollected.hints
             if pickup_index not in hint_initial_pickups[identifier]
         ]
         if potential_hint_locations:
             return rng.choice(sorted(potential_hint_locations))
         else:
             debug.debug_print(
-                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.logbooks)}"
+                f">> Pickup {action.name} had no potential hint locations out of {len(current_uncollected.hints)}"
             )
     else:
         debug.debug_print(f">> Pickup {action.name} was decided to not have a hint.")
@@ -454,36 +528,47 @@ def _calculate_hint_location_for_action(
 
 
 def _calculate_weights_for(
-    potential_reach: GeneratorReach,
+    evaluation: EvaluatedAction,
     current_uncollected: UncollectedState,
 ) -> float:
     """
     Calculate a weight to be used for this action, based on what's collected in the reach.
     """
+    potential_reach = evaluation.reach
+    action_weights = potential_reach.game.game.generator.action_weights
+
     if potential_reach.victory_condition_satisfied():
-        return _VICTORY_WEIGHT
+        return action_weights.VICTORY_WEIGHT
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
+    if debug.debug_level() > 2:
+        nodes = typing.cast(tuple[Node, ...], potential_reach.game.region_list.all_nodes)
+
+        print(f">>> {evaluation.action}")
+        print(f"indices: {potential_uncollected.indices}")
+        print(f"events: {[event.long_name for event in potential_uncollected.events]}")
+        print(f"hints: {[hint.as_string for hint in potential_uncollected.hints]}")
+        print(f"nodes: {[nodes[n].identifier.as_string for n in potential_uncollected.nodes]}")
+        print()
+
     return sum(
         (
-            _EVENTS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.events)),
-            _INDICES_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.indices)),
-            _LOGBOOKS_WEIGHT_MULTIPLIER * int(bool(potential_uncollected.logbooks)),
+            action_weights.indices_weight * int(bool(potential_uncollected.indices)),
+            action_weights.events_weight * int(bool(potential_uncollected.events)),
+            action_weights.hints_weight * int(bool(potential_uncollected.hints)),
         )
     )
 
 
 def pickup_placement_spoiler_entry(
-    owner_index: int,
+    location_owner: PlayerState,
     action: PickupEntry,
-    game: GameDescription,
     pickup_index: PickupIndex,
     hint_identifier: NodeIdentifier | None,
-    player_index: int,
+    index_owner: PlayerState,
     add_indices: bool,
-    node_context: NodeContext,
 ) -> str:
-    region_list = game.region_list
+    region_list = index_owner.game.region_list
     if hint_identifier is not None:
         hint_string = " with hint at {}".format(
             region_list.node_name(
@@ -495,9 +580,9 @@ def pickup_placement_spoiler_entry(
 
     pickup_node = region_list.node_from_pickup_index(pickup_index)
     return "{}{} at {}{}{}".format(
-        f"Player {owner_index + 1}'s " if add_indices else "",
+        f"{location_owner.name}'s " if add_indices else "",
         action.name,
-        f"player {player_index + 1}'s " if add_indices else "",
+        f"{index_owner.name}'s " if add_indices else "",
         region_list.node_name(pickup_node, with_region=True, distinguish_dark_aether=True),
         hint_string,
     )

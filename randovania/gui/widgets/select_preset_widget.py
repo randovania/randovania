@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-import dataclasses
-import json
 import logging
 import re
 import traceback
-import uuid
 from typing import TYPE_CHECKING
 
 import markdown
 from PySide6 import QtCore, QtGui, QtWidgets
 from qasync import asyncSlot
 
+from randovania import monitoring
 from randovania.gui.dialog.preset_history_dialog import PresetHistoryDialog
 from randovania.gui.generated.select_preset_widget_ui import Ui_SelectPresetWidget
 from randovania.gui.lib import async_dialog, common_qt_lib
@@ -22,9 +20,9 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.migration_lib import UnsupportedVersion
 
 if TYPE_CHECKING:
-    from pathlib import Path
+    import uuid
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.options import Options
 
@@ -140,6 +138,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self.create_preset_description.linkActivated.connect(self._on_click_create_preset_description)
 
         self._update_preset_tree_items()
+        self.on_preset_changed(None)
 
     def _update_preset_tree_items(self):
         self.create_preset_tree.update_items()
@@ -149,11 +148,27 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         return self.create_preset_tree.current_preset_data
 
     def _add_new_preset(self, preset: VersionedPreset, *, parent: uuid.UUID | None):
+        """
+        Handle a preset being created, by internal means.
+        This also
+        :param preset:
+        :param parent:
+        :return:
+        """
         with self._options as options:
             options.set_parent_for_preset(preset.uuid, parent)
             options.set_selected_preset_uuid_for(self._game, preset.uuid)
 
         self._window_manager.preset_manager.add_new_preset(preset)
+        self.on_new_preset(preset)
+
+    def on_new_preset(self, preset: VersionedPreset) -> None:
+        """
+        Handle having a preset being created, externally.
+        :param preset:
+        :return:
+        """
+        assert self._window_manager.preset_manager.preset_for_uuid(preset.uuid) is not None
         self._update_preset_tree_items()
         self.create_preset_tree.select_preset(preset)
 
@@ -162,6 +177,8 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         if self._logic_settings_window is not None:
             self._logic_settings_window.raise_()
             return
+
+        monitoring.metrics.incr("gui_preset_customize_clicked", tags={"game": self._game.value})
 
         old_preset = self._current_preset_data.get_preset()
         if self._current_preset_data.is_included_preset:
@@ -187,6 +204,7 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
 
     @asyncSlot()
     async def _on_delete_preset(self):
+        monitoring.metrics.incr("gui_preset_delete_clicked", tags={"game": self._game.value})
         result = await async_dialog.warning(
             self,
             "Delete preset?",
@@ -195,12 +213,14 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
             default_button=async_dialog.StandardButton.No,
         )
         if result == async_dialog.StandardButton.Yes:
+            monitoring.metrics.incr("gui_preset_delete_confirmed", tags={"game": self._game.value})
             self._window_manager.preset_manager.delete_preset(self._current_preset_data)
             self._update_preset_tree_items()
             self._on_select_preset()
 
     @asyncSlot()
     async def _on_view_preset_history(self):
+        monitoring.metrics.incr("gui_preset_history_clicked", tags={"game": self._game.value})
         if self._preset_history is not None:
             return await async_dialog.warning(
                 self, "Dialog already open", "Another preset history dialog is already open. Please close it first."
@@ -223,7 +243,12 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         default_name = f"{self._current_preset_data.slug_name}.rdvpreset"
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True, name=default_name)
         if path is not None:
-            self._current_preset_data.save_to_file(path)
+            try:
+                self._current_preset_data.save_to_file(path)
+            except OSError as e:
+                QtWidgets.QMessageBox.critical(
+                    self, "Unable to save", f"The following error occurred when writing to '{path}': {e}."
+                )
 
     def _on_duplicate_preset(self):
         old_preset = self._current_preset_data
@@ -242,39 +267,13 @@ class SelectPresetWidget(QtWidgets.QWidget, Ui_SelectPresetWidget):
         self._trick_usage_popup.open()
 
     def _on_import_preset(self):
+        monitoring.metrics.incr("gui_preset_import_clicked", tags={"game": self._game.value})
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=False)
         if path is not None:
-            self.import_preset_file(path)
+            self._window_manager.import_preset_file(path)
 
     def _on_view_deleted(self):
         raise RuntimeError("Feature not implemented")
-
-    def import_preset_file(self, path: Path):
-        try:
-            preset = VersionedPreset.from_file_sync(path)
-            preset.get_preset()
-        except (InvalidPreset, json.JSONDecodeError):
-            QtWidgets.QMessageBox.critical(
-                self._window_manager, "Error loading preset", f"The file at '{path}' contains an invalid preset."
-            )
-            return
-
-        existing_preset = self._window_manager.preset_manager.preset_for_uuid(preset.uuid)
-        if existing_preset is not None:
-            user_response = QtWidgets.QMessageBox.warning(
-                self._window_manager,
-                "Preset ID conflict",
-                f"The new preset '{preset.name}' has the same ID as existing '{existing_preset.name}'. "
-                f"Do you want to overwrite it?",
-                async_dialog.StandardButton.Yes | async_dialog.StandardButton.No | async_dialog.StandardButton.Cancel,
-                async_dialog.StandardButton.Cancel,
-            )
-            if user_response == async_dialog.StandardButton.Cancel:
-                return
-            elif user_response == async_dialog.StandardButton.No:
-                preset = VersionedPreset.with_preset(dataclasses.replace(preset.get_preset(), uuid=uuid.uuid4()))
-
-        self._add_new_preset(preset, parent=None)
 
     def _on_select_preset(self):
         preset_data = self._current_preset_data

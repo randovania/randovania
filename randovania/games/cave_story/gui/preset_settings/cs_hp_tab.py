@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from randovania.games.cave_story.gui.generated.preset_cs_hp_ui import Ui_PresetCSHP
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
-from randovania.gui.generated.preset_cs_hp_ui import Ui_PresetCSHP
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
 if TYPE_CHECKING:
@@ -25,8 +25,8 @@ class PresetCSHP(PresetTab, Ui_PresetCSHP):
         return "HP"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return True
+    def header_name(cls) -> str | None:
+        return None
 
     def _on_starting_hp_changed(self) -> None:
         with self._editor as editor:

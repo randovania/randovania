@@ -8,8 +8,8 @@ from typing import TYPE_CHECKING
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
+from randovania.game.game_enum import RandovaniaGame
 from randovania.games import default_data
-from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
 

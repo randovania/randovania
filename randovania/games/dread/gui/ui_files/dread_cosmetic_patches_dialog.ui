@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DreadCosmeticPatchesDialog</class>
+ <widget class="QDialog" name="DreadCosmeticPatchesDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>421</width>
+    <height>368</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Metroid Dread - Cosmetic Options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0" colspan="3">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scroll_area_contents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-326</y>
+        <width>384</width>
+        <height>644</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="game_changes_box">
+         <property name="title">
+          <string>Config Options</string>
+         </property>
+         <layout class="QVBoxLayout" name="game_changes_layout">
+          <item>
+           <widget class="QCheckBox" name="show_boss_life">
+            <property name="text">
+             <string>Show boss life bars</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="show_enemy_life">
+            <property name="text">
+             <string>Show enemy life bars</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="show_enemy_damage">
+            <property name="text">
+             <string>Show enemy damage</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="show_player_damage">
+            <property name="text">
+             <string>Show player damage</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="show_death_counter">
+            <property name="text">
+             <string>Show player death count in HUD</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="enable_auto_tracker">
+            <property name="text">
+             <string>Enable automatic item tracker</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="show_room_names">
+            <item>
+             <widget class="QLabel" name="room_names_label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Show Room Names On HUD</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="room_names_dropdown">
+              <property name="editable">
+               <bool>false</bool>
+              </property>
+              <property name="currentText">
+               <string/>
+              </property>
+              <property name="placeholderText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="missile_cosmetic" stretch="0,0">
+            <item>
+             <widget class="QLabel" name="missile_cosmetic_label">
+              <property name="text">
+               <string>Missile Pack Recolor</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="missile_cosmetic_dropdown"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="music_title_label">
+            <property name="text">
+             <string>Music Volume:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="music_group">
+            <item>
+             <widget class="ScrollProtectedSlider" name="music_slider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="sliderPosition">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="music_label">
+              <property name="text">
+               <string>100%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="sfx_title_label">
+            <property name="text">
+             <string>SFX Volume:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="sfx_group">
+            <item>
+             <widget class="ScrollProtectedSlider" name="sfx_slider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="sliderPosition">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="sfx_label">
+              <property name="text">
+               <string>100%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="ambience_title_label">
+            <property name="text">
+             <string>Background Ambience Volume:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="ambience_group">
+            <item>
+             <widget class="ScrollProtectedSlider" name="ambience_slider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="sliderPosition">
+               <number>100</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="ambience_label">
+              <property name="text">
+               <string>100%</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="accessibility_options_box">
+         <property name="title">
+          <string>Accessibility Options</string>
+         </property>
+         <layout class="QVBoxLayout" name="game_changes_layout_3">
+          <item>
+           <widget class="QCheckBox" name="alt_ice_missile">
+            <property name="text">
+             <string>Alternate Ice Missile shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_storm_missile">
+            <property name="text">
+             <string>Alternate Storm Missile shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_diffusion_beam">
+            <property name="text">
+             <string>Alternate Diffusion Beam shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_bomb">
+            <property name="text">
+             <string>Alternate Bomb shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_cross_bomb">
+            <property name="text">
+             <string>Alternate Cross Bomb shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_power_bomb">
+            <property name="text">
+             <string>Alternate Power Bomb shield texture</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="alt_closed">
+            <property name="text">
+             <string>Alternate &quot;Access Permanently Closed&quot; shield texture</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="reset_button">
+     <property name="text">
+      <string>Reset to Defaults</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="cancel_button">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ScrollProtectedSlider</class>
+   <extends>QSlider</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

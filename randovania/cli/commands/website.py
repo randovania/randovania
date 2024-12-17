@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import argparse
 import shutil
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace, _SubParsersAction
 from pathlib import Path
 
 from randovania import get_readme_section
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 
 
-def export_videos_yaml_command_logic(args):
+def export_videos_yaml_command_logic(args: Namespace) -> None:
     from randovania.cli.commands.export_db_videos import export_as_yaml
 
     games = []
@@ -23,7 +23,7 @@ def export_videos_yaml_command_logic(args):
         export_as_yaml(game, args.output_dir, args.as_frontmatter)
 
 
-def create_export_videos_yaml_command(sub_parsers):
+def create_export_videos_yaml_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "export-videos-yaml",
         help="Export the video database in YAML format.",
@@ -50,16 +50,16 @@ def create_export_videos_yaml_command(sub_parsers):
     parser.set_defaults(func=export_videos_yaml_command_logic)
 
 
-def export_readme_sections(section: str, out_dir: Path):
+def export_readme_sections(section: str, out_dir: Path) -> None:
     md = get_readme_section(section)
     out_dir.joinpath(f"{section.lower()}.md").write_text(md)
 
 
-def export_readme_sections_logic(args):
+def export_readme_sections_logic(args: Namespace) -> None:
     export_readme_sections(args.section, args.output_dir)
 
 
-def create_readme_sections_command(sub_parsers):
+def create_readme_sections_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "export-readme-section",
         help="Extract a specific section of the readme.",
@@ -80,7 +80,7 @@ def create_readme_sections_command(sub_parsers):
     parser.set_defaults(func=export_readme_sections_logic)
 
 
-def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path):
+def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path) -> None:
     # copy cover art
     shutil.copyfile(
         game.data_path.joinpath("assets/cover.png"),
@@ -101,7 +101,7 @@ def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path):
     }
 
     if game is RandovaniaGame.BLANK:
-        # in dev builds, this would normally be true
+        # in dev builds, this would normally be true,
         # but we don't want the website to know that
         output["multiworld"] = False
 
@@ -113,7 +113,7 @@ def extract_game_data(game: RandovaniaGame, games_dir: Path, covers_dir: Path):
         yaml.dump(output, out_file, transform=lambda s: f"---\n{s}---\n")
 
 
-def extract_game_data_logic(args):
+def extract_game_data_logic(args: Namespace) -> None:
     games = []
 
     if args.game is not None:
@@ -125,7 +125,7 @@ def extract_game_data_logic(args):
         extract_game_data(game, args.games_dir, args.covers_dir)
 
 
-def create_extract_game_data_command(sub_parsers):
+def create_extract_game_data_command(sub_parsers: _SubParsersAction) -> None:
     parser: ArgumentParser = sub_parsers.add_parser(
         "extract-game-data",
         help="Extract the game data",

@@ -10,6 +10,7 @@ from tsc_utils.numbers import num_to_tsc_value
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.exporter.patch_data_factory import PatchDataFactory
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.pickup_node import PickupNode
@@ -20,7 +21,6 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
-from randovania.games.game import RandovaniaGame
 
 if TYPE_CHECKING:
     from randovania.game_description.db.node_identifier import NodeIdentifier
@@ -74,7 +74,7 @@ class CSPatchDataFactory(PatchDataFactory):
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
 
-            if target.player != self.players_config.player_index:
+            if not self.players_config.should_target_local_player(target.player):
                 message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
                 message = wrap_msg_text(message, False, ending="<WAI0025<NOD")
                 git = "<GIT0000"  # TODO: add GIT info in pickup db and use it here (respecting offworld models)
@@ -93,22 +93,22 @@ class CSPatchDataFactory(PatchDataFactory):
 
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
         hints = {}
-        for logbook_node in game_description.region_list.iterate_nodes():
-            if not isinstance(logbook_node, HintNode):
+        for hint_node in game_description.region_list.iterate_nodes():
+            if not isinstance(hint_node, HintNode):
                 continue
 
-            mapname = logbook_node.extra.get(
-                "event_map", game_description.region_list.nodes_to_area(logbook_node).extra["map_name"]
+            mapname = hint_node.extra.get(
+                "event_map", game_description.region_list.nodes_to_area(hint_node).extra["map_name"]
             )
-            event = logbook_node.extra["event"]
+            event = hint_node.extra["event"]
 
             if hints.get(mapname) is None:
                 hints[mapname] = {}
 
             hints[mapname][event] = {
-                "text": hints_for_identifier[game_description.region_list.identifier_for_node(logbook_node)],
-                "facepic": logbook_node.extra.get("facepic", "0000"),
-                "ending": "<NOD" + logbook_node.extra.get("ending", "<END"),
+                "text": hints_for_identifier[hint_node.identifier],
+                "facepic": hint_node.extra.get("facepic", "0000"),
+                "ending": "<NOD" + hint_node.extra.get("ending", "<END"),
             }
 
         mapnames = pickups.keys() | music.keys() | entrances.keys()
@@ -137,10 +137,13 @@ class CSPatchDataFactory(PatchDataFactory):
             starting_script += "<FL+6400"
         # initialize HP counter
         starting_script += set_flag(4011, self.configuration.starting_hp, bits=6)
-        # Camp and Labyrinth B CMP mapflags
-        starting_script += "<MP+0040<MP+0043"
+        # CMP mapflags: Camp, Labyrinth B, Jail no. 1, Grasstown, Outer Wall
+        starting_script += "<MP+0040<MP+0043<MP+0057<MP+0006<MP+0053"
         # Softlock prevention mapflags
         starting_script += "<MP+0032<MP+0033<MP+0036"
+
+        # unlock teleporter slots in the correct order
+        starting_script += "<PS+0001:6001<PS+0002:6002<PS+0003:6003<PS+0004:6004<PS+0005:6005"
 
         # Starting Items
         equip_num = 0

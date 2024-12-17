@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetMSRPatches</class>
+ <widget class="QMainWindow" name="PresetMSRPatches">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>642</width>
+    <height>535</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Other</string>
+  </property>
+  <widget class="QWidget" name="root_widget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>6</number>
+    </property>
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>626</width>
+         <height>681</height>
+        </rect>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>469</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_layout">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="environment_group">
+          <property name="title">
+           <string>Room Changes</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="area3_interior_shortcut_no_grapple_check">
+             <property name="text">
+              <string>Grapple Block in Area 3 Factory Interior - Gamma Arena &amp;&amp; Transport to Metroid Caverns East</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="area3_interior_shortcut_no_grapple_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Removes the Grapple Block next to the elevator, allowing earlier access from this side.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="elevator_grapple_blocks_check">
+             <property name="text">
+              <string>Grapple Blocks leaving areas</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="elevator_grapple_blocks_label">
+             <property name="mouseTracking">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Removes the Grapple Blocks that are near the exit elevators of certain areas. These include:&lt;/p&gt;&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Area 4 Central Caves to Area 4 Crystal Mines&lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Area 5 Tower Lobby to Area 6 &lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Area 6 to Area 7 &lt;/li&gt;&lt;li style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Area 7 to Area 8 &lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If Diggernaut is the final boss, the block in Area 6 will always be removed even if this option is unchecked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="surface_crumbles_check">
+             <property name="text">
+              <string>Crumble Blocks in Surface East - Cavern Cavity</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="surface_crumbles_label">
+             <property name="mouseTracking">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Changes the Crumble Blocks to Power Beam Blocks, allowing for a two-way path through the room. This makes this section less dangerous without Charge Beam.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="area1_crumbles_check">
+             <property name="text">
+              <string>Crumble Blocks in Area 1 - Transport to Surface and Area 2</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="area1_crumbles_label">
+             <property name="mouseTracking">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Changes the Crumble Blocks leaving Area 1 to Power Beam Blocks, allowing for earlier access to Area 2 with only Morph Ball. This helps make item placement less restrictive.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="reverse_area8_check">
+             <property name="text">
+              <string>Reverse Area 8</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="reverse_area8_label">
+             <property name="mouseTracking">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Removes the wall between the Queen Arena and Hatchling Room, allowing for earlier access into Area 8 by entering the area backwards.&lt;/p&gt;&lt;p&gt;If the Metroid Queen is the final boss, the wall will always be removed even if this option is unchecked.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="misc_group">
+          <property name="title">
+           <string>Item Changes</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QCheckBox" name="charge_door_buff_check">
+             <property name="text">
+              <string>Buff Charge Beam Doors</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="charge_door_buff_label">
+             <property name="text">
+              <string>Makes Charge Doors invulnerable to Power Bombs. Beam Burst is unaffected.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="beam_door_buff_check">
+             <property name="text">
+              <string>Buff Beam Doors</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="beam_door_buff_label">
+             <property name="text">
+              <string>Makes Beam Doors invulnerable to Power Bombs.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="beam_burst_buff_check">
+             <property name="text">
+              <string>Buff Beam Burst</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="beam_burst_buff_label">
+             <property name="text">
+              <string>Makes Blob Throwers and Steel Orbs invulnerable to Power Bombs.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="nerf_super_missiles_check">
+             <property name="text">
+              <string>Buff Missile Doors</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="nerf_super_missiles_label">
+             <property name="text">
+              <string>Makes Missile Doors invulnerable to Super Missiles. Missile blocks are unaffected.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

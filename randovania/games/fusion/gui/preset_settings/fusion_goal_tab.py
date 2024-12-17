@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtCore
 
+from randovania.games.fusion.gui.generated.preset_fusion_goal_ui import Ui_PresetFusionGoal
 from randovania.games.fusion.layout.fusion_configuration import FusionArtifactConfig, FusionConfiguration
-from randovania.gui.generated.preset_fusion_goal_ui import Ui_PresetFusionGoal
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 
@@ -36,8 +36,8 @@ class PresetFusionGoal(PresetTab, Ui_PresetFusionGoal):
         return "Goal"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     def _update_slider_max(self) -> None:
         self.placed_slider.setMaximum(self.num_preferred_locations)

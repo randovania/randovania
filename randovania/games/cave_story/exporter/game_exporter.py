@@ -7,8 +7,9 @@ from pathlib import Path
 from caver import patcher as caver_patcher
 from caver.patcher import CSPlatform
 
+from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.lib import json_lib, status_update_lib
 
 
@@ -22,7 +23,7 @@ class CSGameExporter(GameExporter):
     _busy: bool = False
 
     @property
-    def is_busy(self) -> bool:
+    def can_start_new_export(self) -> bool:
         """
         Checks if the exporter is busy right now
         """
@@ -60,6 +61,7 @@ class CSGameExporter(GameExporter):
             new_patch["mychar"] = str(RandovaniaGame.CAVE_STORY.data_path.joinpath(patch_data["mychar"]))
 
         new_patch["platform"] = export_params.platform.value
+        monitoring.set_tag("cs_platform", new_patch["platform"])
         try:
             caver_patcher.patch_files(new_patch, export_params.output_path, export_params.platform, progress_update)
         finally:

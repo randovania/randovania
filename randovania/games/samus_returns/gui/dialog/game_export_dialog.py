@@ -2,30 +2,32 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from construct import StreamError  # type: ignore
 from PySide6 import QtGui, QtWidgets
 
-from randovania.games.game import RandovaniaGame
-from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRGameVersion, MSRModPlatform
+from randovania.game.game_enum import RandovaniaGame
+from randovania.games.samus_returns.exporter.game_exporter import MSRGameExportParams, MSRModPlatform
 from randovania.games.samus_returns.exporter.options import MSRPerGameOptions
+from randovania.games.samus_returns.gui.generated.msr_game_export_dialog_ui import Ui_MSRGameExportDialog
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog,
     is_directory_validator,
+    is_file_validator,
     output_input_intersection_validator,
     path_in_edit,
-    prompt_for_input_directory,
+    prompt_for_input_file,
     prompt_for_output_directory,
     spoiler_path_for_directory,
     update_validation,
 )
-from randovania.gui.generated.msr_game_export_dialog_ui import Ui_MSRGameExportDialog
 from randovania.gui.lib import common_qt_lib
+from randovania.lib import windows_lib
 from randovania.lib.ftp_uploader import FtpUploader
-from randovania.lib.windows_drives import get_windows_drives
+from randovania.lib.windows_lib import get_windows_drives
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -34,17 +36,9 @@ if TYPE_CHECKING:
     from randovania.interface_common.options import Options, PerGameOptions
 
 
-def get_title_id(version: MSRGameVersion) -> str:
-    if version == MSRGameVersion.NTSC:
-        return "00040000001BB200"
-    else:
-        return "00040000001BFB00"
-
-
-def get_path_to_citra(version: MSRGameVersion) -> Path:
-    id = get_title_id(version)
+def get_path_to_citra(title_id: str) -> Path:
     if platform.system() == "Windows":
-        return Path(os.environ["APPDATA"], "Citra", "load", "mods", id)
+        return windows_lib.get_appdata().joinpath("Citra", "load", "mods", title_id)
 
     raise ValueError("Unsupported platform")
 
@@ -76,24 +70,9 @@ def add_validation(
     edit.textChanged.connect(field_validation)
 
 
-def romfs_validation(line: QtWidgets.QLineEdit) -> bool:
-    if is_directory_validator(line):
-        return True
-
-    path = Path(line.text())
-    return not all(
-        p.is_file()
-        for p in [
-            path.joinpath("system", "files.toc"),
-            path.joinpath("packs", "system", "system_discardables.pkg"),
-            path.joinpath("packs", "maps", "s000_surface", "s000_surface.pkg"),
-            path.joinpath("packs", "maps", "s010_area1", "s010_area1.pkg"),
-        ]
-    )
-
-
-#
 class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
+    title_id: str = ""
+
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_SAMUS_RETURNS
@@ -162,17 +141,11 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         # Output to Citra
         self._citra_label_placeholder = self.citra_label.text()
-        self.update_citra_ui()
         self.tab_citra.serialize_options = dict
         self.tab_citra.restore_options = lambda p: None
         self.tab_citra.is_valid = lambda: True
 
-        if per_game.target_version == MSRGameVersion.NTSC:
-            self.ntsc_radio.setChecked(True)
-        else:
-            self.pal_radio.setChecked(True)
-        self.ntsc_radio.toggled.connect(self.update_citra_ui)
-        self.pal_radio.toggled.connect(self.update_citra_ui)
+        self.update_citra_ui()
 
         # Output to Custom
         self.custom_path_edit.textChanged.connect(self._on_custom_path_change)
@@ -191,8 +164,8 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         }
 
         # Restore options
-        if per_game.input_directory is not None:
-            self.input_file_edit.setText(str(per_game.input_directory))
+        if per_game.input_file is not None:
+            self.input_file_edit.setText(str(per_game.input_file))
 
         if per_game.output_preference is not None:
             output_preference = json.loads(per_game.output_preference)
@@ -232,9 +205,8 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         return MSRPerGameOptions(
             cosmetic_patches=per_game.cosmetic_patches,
-            input_directory=self.input_file,
+            input_file=self.input_file,
             target_platform=self.target_platform,
-            target_version=self.target_version,
             output_preference=output_preference,
         )
 
@@ -259,6 +231,8 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         if self.output_tab_widget.indexOf(self.tab_sd_card) in visible_tabs:
             self.refresh_drive_list()
 
+        self.console_reminder_label.setVisible(target_platform == MSRModPlatform.LUMA)
+
         self.output_tab_widget.setCurrentIndex(visible_tabs[0])
 
     # Getters
@@ -277,31 +251,47 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         else:
             return MSRModPlatform.CITRA
 
-    @property
-    def target_version(self) -> MSRGameVersion:
-        if self.ntsc_radio.isChecked():
-            return MSRGameVersion.NTSC
-        else:
-            return MSRGameVersion.PAL
-
     # Input file
+    def rom_validation(self, line: QtWidgets.QLineEdit) -> bool:
+        self.encrypted_hint.setVisible(False)
+        input_path = Path(line.text())
+        if is_file_validator(input_path):
+            return True
+
+        from open_samus_returns_rando.romfs.rom3ds import Rom3DS, parse_rom_file
+
+        try:
+            file_stream = Path.open(input_path, "rb")
+            parsed_rom = Rom3DS(parse_rom_file(input_path, file_stream), file_stream)
+            self.title_id = parsed_rom.get_title_id()
+        except ValueError:
+            # very likely happens if file is encrypted
+            self.encrypted_hint.setVisible(True)
+            return True
+        except StreamError:
+            # very likely happens if using totally wrong file
+            return True
+        finally:
+            file_stream.close()
+        return False
 
     def _validate_input_file(self) -> None:
-        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, romfs_validation(self.input_file_edit))
+        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, self.rom_validation(self.input_file_edit))
 
     def _on_input_file_change(self) -> None:
         self._validate_input_file()
+        self.update_citra_ui()
         self.update_accept_validation()
 
     def _on_input_file_button(self) -> None:
-        input_file = prompt_for_input_directory(self, self.input_file_edit)
+        input_file = prompt_for_input_file(self, self.input_file_edit, ["3ds", "cia", "cxi", "app"])
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
 
     # SD Card
     def get_sd_card_output_path(self) -> Path:
         root_path: Path = self.sd_combo.currentData()
-        return root_path.joinpath("luma", "titles", get_title_id(self.target_version))
+        return root_path.joinpath("luma", "titles", self.title_id)
 
     def refresh_drive_list(self) -> None:
         old_value = self.sd_combo.currentText()
@@ -336,7 +326,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
         if supports_citra():
             self.citra_label.setText(
                 self._citra_label_placeholder.format(
-                    mod_path=get_path_to_citra(self.target_version),
+                    mod_path=get_path_to_citra(self.title_id),
                 )
             )
 
@@ -373,7 +363,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             ip=self.ftp_ip_edit.text(),
             port=int(self.ftp_port_edit.text()),
             local_path=self._get_ftp_internal_path(),
-            remote_path=f"/luma/titles/{get_title_id(self.target_version)}",
+            remote_path=f"/luma/titles/{self.title_id}",
         )
 
     # Custom Path
@@ -415,7 +405,7 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
             post_export = None
 
         elif output_tab is self.tab_citra:
-            output_path = get_path_to_citra(self.target_version)
+            output_path = get_path_to_citra(self.title_id)
             post_export = None
 
         elif output_tab is self.tab_ftp:
@@ -435,10 +425,9 @@ class MSRGameExportDialog(GameExportDialog, Ui_MSRGameExportDialog):
 
         return MSRGameExportParams(
             spoiler_output=spoiler_path_for_directory(self.auto_save_spoiler, output_path),
-            input_path=self.input_file,
+            input_file=self.input_file,
             output_path=output_path,
             target_platform=self.target_platform,
-            target_version=self.target_version,
             clean_output_path=clean_output_path,
             post_export=post_export,
         )

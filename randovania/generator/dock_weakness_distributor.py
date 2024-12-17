@@ -14,6 +14,7 @@ from randovania.game_description.db.dock import DockLock, DockLockType, DockRand
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node import NodeContext
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.generator.filler.filler_library import UnableToGenerate
@@ -151,16 +152,25 @@ def distribute_pre_fill_weaknesses(patches: GamePatches, rng: Random) -> GamePat
 
 class DockRandoLogic(Logic):
     dock: DockNode
+    target: DockNode
 
-    def __init__(self, game: GameDescription, configuration: BaseConfiguration, dock: DockNode):
+    def __init__(self, game: GameDescription, configuration: BaseConfiguration, dock: DockNode, target: DockNode):
         super().__init__(game, configuration)
         self.dock = dock
+        self.target = target
 
     @classmethod
-    def from_logic(cls, logic: Logic, dock: DockNode) -> Self:
-        return cls(logic.game, logic.configuration, dock)
+    def from_logic(cls, logic: Logic, dock: DockNode, target: DockNode) -> Self:
+        return cls(logic.game, logic.configuration, dock, target)
 
     def victory_condition(self, state: State) -> Requirement:
+        if self.configuration.two_sided_door_lock_search:
+            return RequirementOr(
+                [
+                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context())),
+                    ResourceRequirement.simple(NodeResourceInfo.from_node(self.target, state.node_context())),
+                ]
+            )
         return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, state.node_context()))
 
     @staticmethod
@@ -233,7 +243,7 @@ async def _run_dock_resolver(
 
     state = setup[0].copy()
     state.patches = state.patches.assign_dock_weakness(locks)
-    logic = DockRandoLogic.from_logic(setup[1], dock)
+    logic = DockRandoLogic.from_logic(setup[1], dock, target)
 
     debug.debug_print(f"{dock.identifier}")
     try:
@@ -269,14 +279,26 @@ def _determine_valid_weaknesses(
 
     if state is not None:
         reach = ResolverReach.calculate_reach(logic, state)
+        if state.node == target:
+            target, dock = dock, target
         ctx = state.node_context()
 
         exclusions: set[DockWeakness] = set()
         exclusions.update(dock.incompatible_dock_weaknesses)
         exclusions.update(target.incompatible_dock_weaknesses)  # two-way
 
-        if dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions) and target in reach.nodes:
-            weighted_weaknesses[dock_type_params.locked] = 2.0
+        is_locked_door_not_excluded = dock_type_params.locked in dock_type_state.can_change_to.difference(exclusions)
+        is_target_node_reachable = target in reach.nodes
+
+        if is_locked_door_not_excluded and is_target_node_reachable:
+            # Small optimization to only calculate the reach back, if the locked door is even a viable option
+            state_from_target = state.copy()
+            state_from_target.node = target
+            reach_from_target = ResolverReach.calculate_reach(logic, state_from_target)
+            is_source_reachable_from_target = dock in reach_from_target.nodes
+
+            if is_source_reachable_from_target:
+                weighted_weaknesses[dock_type_params.locked] = 2.0
 
         exclusions.update(weighted_weaknesses.keys())
 
@@ -285,8 +307,11 @@ def _determine_valid_weaknesses(
                 weakness: 1.0
                 for weakness in sorted(dock_type_state.can_change_to.difference(exclusions))
                 if (
-                    weakness.requirement.satisfied(ctx, state.energy)
-                    and (weakness.lock is None or weakness.lock.requirement.satisfied(ctx, state.energy))
+                    weakness.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                    and (
+                        weakness.lock is None
+                        or weakness.lock.requirement.satisfied(ctx, state.health_for_damage_requirements)
+                    )
                 )
             }
         )

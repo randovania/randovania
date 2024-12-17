@@ -6,10 +6,12 @@ from typing import TYPE_CHECKING
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 
+from randovania import monitoring
+
 if TYPE_CHECKING:
     import uuid
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.interface_common.options import Options
     from randovania.interface_common.preset_manager import PresetManager
     from randovania.layout.versioned_preset import VersionedPreset
@@ -117,6 +119,10 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
             item = create_item(self if preset_parent is None else default_parent, preset)
             if preset_parent is None:
                 root_parents.add(item)
+
+        monitoring.metrics.gauge(
+            "amount_of_presets", value=len(self.preset_to_item), tags={"game": self.game.short_name}
+        )
 
         # Set parents after, so don't have issues with order
         for preset in ordered_custom_presets:

@@ -24,16 +24,16 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel,
-        PresetPatcherEnergy,
-        PresetTeleportersPrime2,
-        PresetMetroidStartingArea,
         PresetGeneration,
         PresetEchoesGoal,
         PresetEchoesHints,
+        PresetLocationPool,
+        EchoesPresetItemPool,
+        PresetPatcherEnergy,
+        PresetTeleportersPrime2,
+        PresetMetroidStartingArea,
         PresetEchoesDockRando,
         PresetEchoesTranslators,
         PresetEchoesBeamConfiguration,
         PresetEchoesPatches,
-        PresetLocationPool,
-        EchoesPresetItemPool,
     ]

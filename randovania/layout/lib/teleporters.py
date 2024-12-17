@@ -7,10 +7,10 @@ from typing import TYPE_CHECKING
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
+from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 from randovania.lib import enum_lib
 
@@ -53,7 +53,7 @@ class TeleporterList(location_list.LocationList):
         teleporter_dock_types = game_description.dock_weakness_database.all_teleporter_dock_types
         region_list = game_description.region_list
         nodes = [
-            region_list.identifier_for_node(node)
+            node.identifier
             for node in region_list.all_nodes
             if isinstance(node, DockNode) and node.dock_type in teleporter_dock_types
         ]
@@ -76,11 +76,10 @@ def _valid_teleporter_target(area: Area, node: Node, game: RandovaniaGame):
     ):
         return True
 
-    return (
-        area.has_start_node()
-        and node in area.get_start_nodes()
-        and not any(node.name == "Save Station" for node in area.nodes)
-    )
+    if any(node.name == "Save Station" for node in area.nodes):
+        return False
+
+    return node.valid_starting_location and not node.is_derived_node
 
 
 class TeleporterTargetList(location_list.LocationList):

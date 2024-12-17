@@ -6,7 +6,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.games.game import RandovaniaGame
+from randovania.game.game_enum import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
 
 core_blank_json = {
@@ -71,7 +71,13 @@ def test_prime_thing(default_prime_configuration):
         "mode": "docks",
         "types_state": {
             "door": {
-                "can_change_from": ["Ice Door", "Missile Blast Shield", "Normal Door", "Plasma Door", "Wave Door"],
+                "can_change_from": [
+                    "Ice Door",
+                    "Missile Blast Shield (randomprime)",
+                    "Normal Door",
+                    "Plasma Door",
+                    "Wave Door",
+                ],
                 "can_change_to": [
                     "Ice Door",
                     "Ice Spreader Blast Shield",

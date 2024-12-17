@@ -16,6 +16,8 @@ from randovania import get_data_path
 if typing.TYPE_CHECKING:
     from collections.abc import Iterator
 
+    from randovania.interface_common.options import Options
+
 
 def map_set_checked(iterable: Iterator[QtWidgets.QCheckBox], new_status: bool):
     for checkbox in iterable:
@@ -177,6 +179,16 @@ def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name:
     )
 
 
+def prompt_user_for_preset_folder(window: QtWidgets.QWidget) -> None | Path:
+    """
+    Shows a QFileDialog asking the user for a directory in which to save multiple Randovania preset files
+    :param parent:
+    :return: A string if the user selected a directory, None otherwise
+    """
+
+    return _prompt_user_for_directory(window, caption="Select a directory in which to place preset files")
+
+
 def set_default_window_icon(window: QtWidgets.QWidget):
     """
     Sets the window icon for the given widget to the default icon
@@ -284,3 +296,10 @@ def set_icon_data_paths(label: QtWidgets.QLabel):
     repl = rf'<img src="{get_data_path().as_posix()}/\g<1>"/>'
     new_text = image_pattern.sub(repl, label.text())
     label.setText(new_text)
+
+
+def alert_user_on_generation(parent: QtWidgets, options: Options):
+    if options.audible_generation_alert:
+        QtWidgets.QApplication.beep()
+    if options.visual_generation_alert:
+        QtWidgets.QApplication.alert(parent)

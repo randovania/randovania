@@ -13,7 +13,8 @@ def test_gui(skip_qtbot, game_enum):
     skip_qtbot.addWidget(g.game_tab(MagicMock(), MagicMock(), MagicMock()))
 
     # Assert
-    assert issubclass(g.cosmetic_dialog, BaseCosmeticPatchesDialog)
+    if g.cosmetic_dialog is not None:
+        assert issubclass(g.cosmetic_dialog, BaseCosmeticPatchesDialog)
     assert issubclass(g.export_dialog, GameExportDialog)
     for v in g.spoiler_visualizer:
         assert issubclass(v, GameDetailsTab)

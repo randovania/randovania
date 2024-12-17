@@ -5,7 +5,7 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.dock_node import DockNode
-from randovania.gui.generated.preset_teleporters_prime1_ui import (
+from randovania.games.prime1.gui.generated.preset_teleporters_prime1_ui import (
     Ui_PresetTeleportersPrime1,
 )
 from randovania.gui.lib import signal_handling
@@ -37,7 +37,7 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
         TeleporterShuffleMode.TWO_WAY_RANDOMIZED: (
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were. "
             "An elevator will never connect to another in the same region. "
-            "This is the only setting that guarantees all regions are reachable."
+            "This is the only non-vanilla setting which guarantees that all regions are reachable."
         ),
         TeleporterShuffleMode.TWO_WAY_UNCHECKED: (
             "After taking an elevator, the elevator in the room you are in will bring you back to where you were."
@@ -95,12 +95,12 @@ class PresetTeleportersPrime1(PresetTeleporterTab, Ui_PresetTeleportersPrime1, N
                 for node in node_identifiers[location].nodes
                 if isinstance(node, DockNode)
                 and node.dock_type in self.teleporter_types
-                and region_list.identifier_for_node(node) == location
+                and node.identifier == location
             ]
             assert len(other_locations) == 1
             teleporters_in_target = [
-                region_list.identifier_for_node(node)
-                for node in region_list.area_by_area_location(other_locations[0]).nodes
+                node.identifier
+                for node in region_list.area_by_area_location(other_locations[0].area_identifier).nodes
                 if isinstance(node, DockNode) and node.dock_type in self.teleporter_types
             ]
 

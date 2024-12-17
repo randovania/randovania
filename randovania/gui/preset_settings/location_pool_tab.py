@@ -18,8 +18,8 @@ from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.layout.base.available_locations import RandomizationMode
 
 if TYPE_CHECKING:
+    from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.game_description import GameDescription
-    from randovania.games.game import RandovaniaGame
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
@@ -94,8 +94,8 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, NodeListHelper):
         return "Location Pool"
 
     @classmethod
-    def uses_patches_tab(cls) -> bool:
-        return False
+    def header_name(cls) -> str | None:
+        return None
 
     @property
     def game_enum(self) -> RandovaniaGame:
