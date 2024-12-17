@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
 
+### Metroid Prime
+
+- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
+
 ### Metroid: Samus Returns
 
 #### Logic Database
