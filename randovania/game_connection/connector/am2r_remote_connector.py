@@ -22,10 +22,6 @@ if TYPE_CHECKING:
     from randovania.game_description.pickup.pickup_entry import PickupEntry
 
 
-def is_empty_or_space(input_string: str) -> bool:
-    return len(input_string) == 0 or input_string.isspace()
-
-
 class AM2RRemoteConnector(RemoteConnector):
     _game_enum: RandovaniaGame = RandovaniaGame.AM2R
 
@@ -123,7 +119,7 @@ class AM2RRemoteConnector(RemoteConnector):
             return
 
         indices_list = new_indices_response[len(start_of_indices) :].split(",")
-        if len(indices_list[-1]) == 0 or indices_list[-1].isspace():
+        if not indices_list[-1].strip():
             indices_list.pop()
 
         for index in indices_list:
@@ -167,7 +163,7 @@ class AM2RRemoteConnector(RemoteConnector):
             return
 
         inventory_list = new_inventory_response[len(start_of_inventory) :].split(",")
-        if len(inventory_list[-1]) == 0 or inventory_list[-1].isspace():
+        if inventory_list[-1].strip():
             inventory_list.pop()
 
         for position in inventory_list:
