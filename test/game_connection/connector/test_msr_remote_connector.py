@@ -70,20 +70,24 @@ async def test_new_inventory_received(connector: MSRRemoteConnector):
     inventory_updated.assert_not_called()
 
     assert connector.inventory_index is None
-    connector.new_inventory_received('{"index": 69, "inventory": [0,1,0,1]}')
+    connector.new_inventory_received('{"index": 69, "inventory": [0,1,0,1,275.323]}')
     assert connector.inventory_index == 69
 
     # check ice beam
-    plasma_beam = connector.game.resource_database.get_item_by_name("Ice Beam")
-    assert connector.last_inventory[plasma_beam].capacity == 1
+    ice_beam = connector.game.resource_database.get_item_by_name("Ice Beam")
+    assert connector.last_inventory[ice_beam].capacity == 1
 
     # check wave beam
-    plasma_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
-    assert connector.last_inventory[plasma_beam].capacity == 0
+    wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
+    assert connector.last_inventory[wave_beam].capacity == 0
 
     # check spazer beam
     spazer_beam = connector.game.resource_database.get_item_by_name("Spazer Beam")
     assert connector.last_inventory[spazer_beam].capacity == 1
+
+    # check rounding floats to ints via plasma beam item
+    plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
+    assert connector.last_inventory[plasma_beam].capacity == 275
 
     inventory_updated.assert_called_once()
 
