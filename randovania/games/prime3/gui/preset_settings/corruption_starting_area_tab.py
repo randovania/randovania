@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea, PresetStartingArea
+from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
 
 
 class PresetCorruptionStartingArea(PresetMetroidStartingArea):
@@ -23,7 +23,7 @@ class PresetCorruptionStartingArea(PresetMetroidStartingArea):
             ]
         )
 
-    def _starting_location_on_select_ships(self, area: PresetStartingArea) -> None:
+    def _starting_location_on_select_ships(self) -> None:
         region_list = self.game_description.region_list
         ships = [node.identifier for node in region_list.iterate_nodes() if "Samus Ship" in node.name]
 

@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
     from _typeshed import DataclassInstance
 
     from randovania.lib.construct_stub import CodeGen
-    from randovania.lib.json_lib import JsonValue
+    from randovania.lib.json_lib import JsonType
 
 BinStr = construct.PascalString(construct.VarInt, "utf-8")
 
@@ -44,9 +44,9 @@ T = typing.TypeVar("T")
 @typing.runtime_checkable
 class JsonEncodable(typing.Protocol):
     @classmethod
-    def from_json(cls, value: JsonValue) -> typing.Self: ...
+    def from_json(cls, value: JsonType) -> typing.Self: ...
 
-    def as_json(self) -> JsonValue: ...
+    def as_json(self) -> JsonType: ...
 
 
 class DictAdapter(construct.Adapter):
