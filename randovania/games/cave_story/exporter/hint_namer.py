@@ -6,7 +6,7 @@ from randovania.exporter.hints.hint_formatters import RelativeAreaFormatter, Tem
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
 from randovania.game_description import default_database
-from randovania.game_description.hint import Hint, HintLocationPrecision
+from randovania.game_description.hint import Hint, HintLocationPrecision, HintType
 
 if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
@@ -64,6 +64,8 @@ class CSHintNamer(HintNamer):
         return area.name
 
     def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
+        assert hint.hint_type == HintType.LOCATION
+        assert hint.precision is not None
         return self.location_formatters[hint.precision.location].format(
             game,
             pick_hint,

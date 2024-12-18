@@ -4,7 +4,7 @@ import dataclasses
 import json
 import uuid
 from enum import Enum
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
@@ -15,8 +15,10 @@ from randovania.lib import migration_lib, version_lib
 if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
+    from typing import Any, Self
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+    from randovania.lib.json_lib import JsonObject
 
 T = TypeVar("T")
 
@@ -108,17 +110,17 @@ class PerGameOptions:
     cosmetic_patches: BaseCosmeticPatches
 
     @property
-    def as_json(self):
+    def as_json(self) -> JsonObject:
         return {
             "cosmetic_patches": self.cosmetic_patches.as_json,
         }
 
     @classmethod
-    def default_for_game(cls, game: RandovaniaGame) -> PerGameOptions:
+    def default_for_game(cls, game: RandovaniaGame) -> Self:
         return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
-    def from_json(cls, value: dict) -> PerGameOptions:
+    def from_json(cls, value: JsonObject) -> Self:
         raise NotImplementedError
 
 

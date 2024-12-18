@@ -75,7 +75,7 @@ exporters = [
     "am2r-yams>=2.8.1",
 
     # Cave Story
-    "cave-story-randomizer>=2.3.3",
+    "cave-story-randomizer>=2.4.2",
     "tsc-utils>=0.2.5",
 
     # Factorio
@@ -234,10 +234,13 @@ runtime-evaluated-base-classes = [
 files = [
     "randovania/bitpacking/",
     "randovania/cli/",
+    "randovania/game_connection/builder/cs_connector_builder.py",
     "randovania/game_connection/builder/debug_connector_builder.py",
+    "randovania/game_connection/connector/cs_remote_connector.py",
     "randovania/game_connection/connector/dread_remote_connector.py",
     "randovania/game_connection/connector/mercury_remote_connector.py",
     "randovania/game_connection/connector/msr_remote_connector.py",
+    "randovania/game_connection/executor/cs_executor.py",
     "randovania/game_connection/executor/dread_executor.py",
     "randovania/game_connection/executor/msr_executor.py",
     "randovania/game_description/",
@@ -245,8 +248,7 @@ files = [
     "randovania/games/am2r/generator/",
     "randovania/games/am2r/layout/",
     "randovania/games/blank/",
-    "randovania/games/cave_story/gui/dialog/cs_connector_prompt_dialog.py",
-    "randovania/games/cave_story/gui/dialog/cs_cosmetic_patches_dialog.py",
+    "randovania/games/cave_story/",
     "randovania/games/dread/gui/dialog/dread_connector_prompt_dialog.py",
     "randovania/games/dread/gui/dialog/dread_cosmetic_patches_dialog.py",
     "randovania/games/fusion/gui/",
@@ -273,7 +275,7 @@ files = [
     "test/bitpacking/",
     "test/game_description/",
     "test/games/blank/",
-    "test/games/cave_story/gui/test_cs_cosmetic_patches_dialog.py",
+    "test/games/cave_story/",
     "test/games/dread/gui/test_dread_cosmetic_patches_dialog.py",
     "test/games/prime1/gui/dialog/test_prime_cosmetic_patches_dialog.py",
     "test/games/prime2/gui/dialog/test_echoes_cosmetic_patches_dialog.py",
