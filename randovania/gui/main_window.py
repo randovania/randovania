@@ -671,7 +671,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             QtWidgets.QMessageBox.critical(self, "Unsupported configuration for Tracker", str(e))
             return
 
-        self._map_tracker.show()
+        if self._map_tracker.confirm_open:
+            self._map_tracker.show()
 
     # Difficulties stuff
 
