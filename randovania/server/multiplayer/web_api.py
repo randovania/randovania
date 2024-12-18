@@ -107,7 +107,7 @@ def admin_session(user: User, session_id: int) -> ResponseReturnValue:
                 ", ".join(inventory),
                 MultiplayerMembership.get_by_ids(association.user_id, session_id).admin,
                 "<a href='{link}'>Download</a>".format(
-                    link=flask.url_for("download_world_preset", session_id=session_id, world_id=association.world_id)
+                    link=flask.url_for("download_world_preset", world_id=association.world_id)
                 ),
             ]
         )
@@ -153,16 +153,16 @@ def download_session_spoiler(user: User, session_id: int) -> ResponseReturnValue
     return response
 
 
-def download_world_preset(user: User, session_id: int, world_id: int) -> ResponseReturnValue:
-    try:
-        session: MultiplayerSession = MultiplayerSession.get_by_id(session_id)
-    except MultiplayerSession.DoesNotExist:
-        return "Session not found", 404
-
+def download_world_preset(user: User, world_id: int) -> ResponseReturnValue:
     try:
         world = World.get_by_id(world_id)
     except World.DoesNotExist:
         return "World not found", 404
+
+    try:
+        session: MultiplayerSession = MultiplayerSession.get_by_id(world.session_id)
+    except MultiplayerSession.DoesNotExist:
+        return "Session not found", 404
 
     response = flask.make_response(world.preset)
     response.headers["Content-Disposition"] = f"attachment; filename={session.name} - {world.name}.rdvpreset"
@@ -189,4 +189,4 @@ def setup_app(sa: ServerApp):
     sa.route_with_user("/session/<session_id>", need_admin=True)(admin_session)
     sa.route_with_user("/session/<session_id>/rdvgame", need_admin=True)(download_session_spoiler)
     sa.route_with_user("/session/<session_id>/delete", methods=["GET", "POST"], need_admin=True)(delete_session)
-    sa.route_with_user("/session/<session_id>/<world_id>/rdvpreset", need_admin=True)(download_world_preset)
+    sa.route_with_user("/world/<world_id>/rdvpreset", need_admin=True)(download_world_preset)
