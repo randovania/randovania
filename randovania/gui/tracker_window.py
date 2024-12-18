@@ -101,6 +101,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     _widget_for_pickup: dict[PickupEntry, QtWidgets.QCheckBox | ScrollProtectedSpinBox]
     _during_setup = False
 
+    # Confirmation to open the tracker
+    confirm_open = True
+
     @classmethod
     async def create_new(cls, persistence_path: Path, preset: Preset) -> TrackerWindow:
         result = cls(persistence_path, preset)
@@ -205,6 +208,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         if not self.apply_previous_state(previous_state):
             self.setup_starting_location(None)
+
+            # Don't save the tracker if opening the tracker was cancelled
+            if not self.confirm_open:
+                return
 
             VersionedPreset.with_preset(self.preset).save_to_file(_persisted_preset_path(self.persistence_path))
             self._add_new_action(self._initial_state.node)
@@ -663,10 +670,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 location_names = [
                     region_list.node_name(region_list.node_by_identifier(it), with_region=True) for it in node_locations
                 ]
-                selected_name = QtWidgets.QInputDialog.getItem(
+                selected_name, self.confirm_open = QtWidgets.QInputDialog.getItem(
                     self, "Starting Location", "Select starting location", location_names, 0, False
                 )
-                node_location = node_locations[location_names.index(selected_name[0])]
+                node_location = node_locations[location_names.index(selected_name)]
             elif locations_len == 1:
                 node_location = self.game_configuration.starting_location.locations[0]
             else:
