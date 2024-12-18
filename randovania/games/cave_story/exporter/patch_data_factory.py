@@ -30,6 +30,8 @@ if TYPE_CHECKING:
 
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_collection import ResourceCollection
+    from randovania.game_description.resources.resource_info import ResourceInfo
     from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
     from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -41,19 +43,29 @@ class CSPatchDataFactory(PatchDataFactory):
     cosmetic_patches: CSCosmeticPatches
     configuration: CSConfiguration
 
+    # Variables shared between multiple functions
+    _seed_number: int
+    _maps: dict[MapName, CaverdataMaps]
+    _equip_num: int
+    _items_extra: str
+    _trades: dict[str, int]
+    _life: int
+    _starting_items: ResourceCollection
+    _missile: ResourceInfo | None
+
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.CAVE_STORY
 
     def create_game_specific_data(self) -> dict:
-        self.seed_number = self.description.get_seed_for_player(self.players_config.player_index)
+        self._seed_number = self.description.get_seed_for_player(self.players_config.player_index)
 
-        self.maps = self._create_maps_data()
-        self.maps["Start"]["pickups"]["0201"] = self._create_starting_script()
+        self._maps = self._create_maps_data()
+        self._maps["Start"]["pickups"]["0201"] = self._create_starting_script()
 
         data: CaverData = {
-            "maps": self.maps,
+            "maps": self._maps,
             "other_tsc": {"Head": self._head_tsc_edits()},
-            "mychar": self.cosmetic_patches.mychar.mychar_bmp(Random(self.seed_number)),
+            "mychar": self.cosmetic_patches.mychar.mychar_bmp(Random(self._seed_number)),
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
             "uuid": f"{{{self.players_config.get_own_uuid()}}}",
         }
@@ -61,7 +73,7 @@ class CSPatchDataFactory(PatchDataFactory):
 
     def _create_maps_data(self) -> dict[MapName, CaverdataMaps]:
         pickups = self._create_pickups_data()
-        music = CaverMusic.get_shuffled_mapping(Random(self.seed_number), self.cosmetic_patches)
+        music = CaverMusic.get_shuffled_mapping(Random(self._seed_number), self.cosmetic_patches)
         entrances = self._create_entrance_data()
         hints = self._create_hints_data()
 
@@ -134,7 +146,7 @@ class CSPatchDataFactory(PatchDataFactory):
         return defaultdict(dict)  # TODO: entrance rando
 
     def _create_hints_data(self) -> dict[MapName, dict[EventNumber, CaverdataMapsHints]]:
-        hint_rng = Random(self.seed_number)
+        hint_rng = Random(self._seed_number)
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
 
         hints: dict[MapName, dict[EventNumber, CaverdataMapsHints]] = defaultdict(dict)
@@ -203,9 +215,9 @@ class CSPatchDataFactory(PatchDataFactory):
         return starting_script
 
     def _script_for_starting_items(self) -> str:
-        self.equip_num = 0
-        self.items_extra = ""
-        self.trades = {
+        self._equip_num = 0
+        self._items_extra = ""
+        self._trades = {
             "blade": 0,
             "fireball": 0,
             "keys": 0,
@@ -215,33 +227,33 @@ class CSPatchDataFactory(PatchDataFactory):
             "mushrooms": 0,
             "none": 0,
         }
-        self.life = 0
+        self._life = 0
 
-        self.starting_items = self.patches.starting_resources()
+        self._starting_items = self.patches.starting_resources()
 
         starting_msg = self._grant_starting_items()
 
-        if self.starting_items.num_resources > 0:
-            starting_msg += self.items_extra
+        if self._starting_items.num_resources > 0:
+            starting_msg += self._items_extra
 
-            if self.life > 0:
+            if self._life > 0:
                 starting_msg += (
-                    f"<GIT1006Got a =Life Capsule=!<ML+{num_to_tsc_value(self.life).decode('utf-8')}\r\n"
+                    f"<GIT1006Got a =Life Capsule=!<ML+{num_to_tsc_value(self._life).decode('utf-8')}\r\n"
                     f"Max health increased by\r\n"
-                    f"{self.life}!<WAI0010<NOD\r\n<CLR"
+                    f"{self._life}!<WAI0010<NOD\r\n<CLR"
                 )
 
             if starting_msg:
                 starting_msg += "<GIT0000\r\n"
 
-            if self.trades["blade"] >= 2:
+            if self._trades["blade"] >= 2:
                 starting_msg += (
                     "You may trade the =Nemesis=\r\n"
                     "with the =Blade= and vice-versa\r\n"
                     "at the computer in Arthur's House.<WAI0025<NOD<FL+2811\r\n<CLR"
                 )
 
-            if self.trades["fireball"] >= 2:
+            if self._trades["fireball"] >= 2:
                 starting_msg += (
                     "You may trade the =Fireball=\r\n"
                     "with the =Snake= and vice-versa\r\n"
@@ -249,45 +261,46 @@ class CSPatchDataFactory(PatchDataFactory):
                 )
 
             # Consolidation items
-            if self.trades["keys"] >= 2:
+            if self._trades["keys"] >= 2:
                 starting_msg += "<IT+0040"
-            if self.trades["medals"] >= 2:
+            if self._trades["medals"] >= 2:
                 starting_msg += "<IT+0041"
-            if self.trades["lewd"] >= 2:
+            if self._trades["lewd"] >= 2:
                 starting_msg += "<IT+0042"
-            if self.trades["sprinklers"] >= 2:
+            if self._trades["sprinklers"] >= 2:
                 starting_msg += "<IT+0043"
-            if self.trades["mushrooms"] >= 2:
+            if self._trades["mushrooms"] >= 2:
                 starting_msg += "<IT+0044"
 
         starting_script = ""
         if starting_msg:
             starting_script += f"\r\n<PRI<MSG<TUR{starting_msg}<CLO"
 
-        starting_script += f"<EQ+{num_to_tsc_value(self.equip_num).decode('utf-8')}\r\n"
+        starting_script += f"<EQ+{num_to_tsc_value(self._equip_num).decode('utf-8')}\r\n"
 
         # Starting HP
-        if self.configuration.starting_hp != 3 or self.life > 0:
-            starting_script += f"<ML+{num_to_tsc_value(self.configuration.starting_hp + self.life - 3).decode('utf-8')}"
+        if self.configuration.starting_hp != 3 or self._life > 0:
+            life = num_to_tsc_value(self.configuration.starting_hp + self._life - 3).decode("utf-8")
+            starting_script += f"<ML+{life}"
 
         return starting_script
 
     def _grant_starting_items(self) -> str:
         starting_msg = ""
-        self.missile = next(
-            (res for res, _ in self.starting_items.as_resource_gain() if res.short_name in {"missile", "tempMissile"}),
+        self._missile = next(
+            (res for res, _ in self._starting_items.as_resource_gain() if res.short_name in {"missile", "tempMissile"}),
             None,
         )
-        for item, _ in self.starting_items.as_resource_gain():
-            if item.resource_type != ResourceType.ITEM or item == self.missile:
+        for item, _ in self._starting_items.as_resource_gain():
+            if item.resource_type != ResourceType.ITEM or item == self._missile:
                 continue
 
             if item.short_name == "lifeCapsule":
-                self.life = self.starting_items[item]
+                self._life = self._starting_items[item]
                 continue
 
             if item.short_name == "puppies":
-                num_puppies = self.starting_items[item]
+                num_puppies = self._starting_items[item]
 
                 flags = "".join([f"<FL+{num_to_tsc_value(5001 + i).decode('utf-8')}" for i in range(num_puppies)])
                 flags += "<FL+0274"
@@ -316,17 +329,17 @@ class CSPatchDataFactory(PatchDataFactory):
             if (item_num is None) == (arms_num is None):
                 raise ValueError(f"{item.long_name} must define exactly one of item_num and arms_num.")
 
-            self.equip_num |= item.extra.get("equip", 0)
-            self.items_extra += item.extra.get("extra", "")
+            self._equip_num |= item.extra.get("equip", 0)
+            self._items_extra += item.extra.get("extra", "")
             trade = item.extra.get("trade", "none")
-            self.trades[trade] += 1
+            self._trades[trade] += 1
 
             if item_num is not None:
                 git = num_to_tsc_value(item_num + 1000).decode("utf-8")
                 plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}"
             elif arms_num is not None:
-                if item.short_name in {"missiles", "supers"} and self.missile is not None:
-                    ammo = num_to_tsc_value(self.starting_items[self.missile]).decode("utf-8")
+                if item.short_name in {"missiles", "supers"} and self._missile is not None:
+                    ammo = num_to_tsc_value(self._starting_items[self._missile]).decode("utf-8")
                 else:
                     ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode("utf-8")
 
@@ -338,7 +351,7 @@ class CSPatchDataFactory(PatchDataFactory):
 
             starting_msg += f"<GIT{git}{plus}<FL+{flag}\r\n{text}<WAI0010<NOD\r\n<CLR"
 
-            if self.trades[trade] >= 2:
+            if self._trades[trade] >= 2:
                 # we do this mid-loop, even though it duplicates them for the keys.
                 # otherwise, starting with *everything* can cause some items to be
                 # missed due to inventory overflow
@@ -372,7 +385,7 @@ class CSPatchDataFactory(PatchDataFactory):
         ammo_state = self.configuration.ammo_pickup_configuration.pickups_state
         small_missile = ammo_state[small_missile_ammo].ammo_count[0]
         hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
-        base_missiles = self.starting_items[self.missile] if self.missile is not None else 0
+        base_missiles = self._starting_items[self._missile] if self._missile is not None else 0
         missile_id = "0005"
         supers_id = "0010"
         missile_events = {
