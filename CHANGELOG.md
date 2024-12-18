@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
 
+### Metroid Prime 2: Echoes
+
+- Fixed: Error when splitting or unsplitting Beam Ammo Expansions when there are a total 0 Beam Ammo expansions.
+
 ### Metroid: Samus Returns
 
 #### Logic Database
