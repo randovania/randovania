@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
 
+### Metroid Prime 2: Echoes
+
+- Fixed: Error when splitting or unsplitting Beam Ammo Expansions when there are a total 0 Beam Ammo expansions.
+
 ### Metroid: Samus Returns
 
 #### Logic Database
