@@ -120,7 +120,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         indices_list = new_indices_response[len(start_of_indices) :].split(",")
         if not indices_list[-1].strip():
-            indices_list.pop()
+            indices_list.pop()  # Last element is empty, so preemptively remove to avoid warnings later
 
         for index in indices_list:
             if not index.isdigit():
@@ -164,7 +164,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         inventory_list = new_inventory_response[len(start_of_inventory) :].split(",")
         if inventory_list[-1].strip():
-            inventory_list.pop()
+            inventory_list.pop()  # Last element is empty, so preemptively remove to avoid warnings later
 
         for position in inventory_list:
             if not position:
