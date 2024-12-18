@@ -66,7 +66,7 @@ class CSPatchDataFactory(PatchDataFactory):
         hints = self._create_hints_data()
 
         mapnames = pickups.keys() | music.keys() | entrances.keys() | hints.keys()
-        maps = {
+        maps: dict[MapName, CaverdataMaps] = {
             mapname: {
                 "pickups": pickups[mapname],
                 "music": music[mapname],

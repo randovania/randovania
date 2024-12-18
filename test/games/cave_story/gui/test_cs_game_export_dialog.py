@@ -75,9 +75,11 @@ def test_save_options(skip_qtbot, tmp_path):
 
     # Run
     window.save_options()
+    game_options = options.options_for_game(RandovaniaGame.CAVE_STORY)
+    assert isinstance(game_options, CSPerGameOptions)
 
     # Assert
-    assert options.options_for_game(RandovaniaGame.CAVE_STORY).output_directory == Path("somewhere/foo")
+    assert game_options.output_directory == Path("somewhere/foo")
 
 
 @pytest.mark.parametrize("export_platform", [CSPlatform.FREEWARE, CSPlatform.TWEAKED])
