@@ -41,10 +41,12 @@ If a feature changes multiple times in development, the existing entry should be
 It is acceptable if users need to open the Data Visualizer to understand the exact details of what changed in those areas, however.
 
 ## Best practices for static typing
-- avoid using `isinstance` to resolve typing errors whenever possible. exception to this is for game-specific subclasses in function arguments
-- start requiring use of `TypedDict` when doing substantial work with `extra` dicts in the database
-- avoid heavily nested collections. instead use type aliases, dataclasses, namedtuples, typeddicts, etc.
-- encourage using semantic type aliases instead of primitive types where appropriate (e.g. a semantic `JsonObject` type alias instead of just `dict`)
+- Avoid using `isinstance()` to resolve typing errors whenever possible. Using it for type-narrowing on game-specific subclasses in function arguments is acceptable.
+- Use `typing.cast()` as necessary when resolving type errors regarding mixtures of `JsonType`, `TypeDict`, and regular `dict`. Since `dict` type arguments are invariant, you may sometimes get errors when mixing such types without appropriate casting.
+- Make use of `TypedDict` when doing substantial work with `extra` dicts in the database.
+- If possible, include `TypedDict` definitions in the patcher repo for use in the `PatchDataFactory`. (See https://github.com/henriquegemignani/jsonschema-to-typeddict for one way to achieve this.)
+- Avoid heavily nested collections. Instead use type aliases, `dataclass`es, `NamedTuple`s, `TypedDict`s, etc.
+- Use or create semantic type aliases instead of primitive types where appropriate. For example, when working with JSON data, use the semantic `JsonType` type alias instead of just `dict`.
 
 ## Need some help?
 
