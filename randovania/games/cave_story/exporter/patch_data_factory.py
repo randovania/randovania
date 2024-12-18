@@ -66,15 +66,27 @@ class CSPatchDataFactory(PatchDataFactory):
         hints = self._create_hints_data()
 
         mapnames = pickups.keys() | music.keys() | entrances.keys() | hints.keys()
-        return {
+        maps = {
             mapname: {
-                "pickups": pickups.get(mapname, {}),
-                "music": music.get(mapname, {}),
-                "entrances": entrances.get(mapname, {}),
-                "hints": hints.get(mapname, {}),
+                "pickups": pickups[mapname],
+                "music": music[mapname],
+                "entrances": entrances[mapname],
+                "hints": hints[mapname],
             }
             for mapname in sorted(mapnames)
         }
+
+        # Softlock debug cat warps
+        softlock_warps = {
+            mapname: area.extra["softlock_warp"]
+            for area in self.game.region_list.all_areas
+            if area.extra.get("softlock_warp") is not None
+            for mapname in area.extra.get("softlock_maps", [area.extra["map_name"]])
+        }
+        for mapname, event in softlock_warps.items():
+            maps[mapname]["pickups"][event] = self._tra_for_warp_to_start()
+
+        return maps
 
     def _create_pickups_data(self) -> dict[MapName, dict[EventNumber, TscScript]]:
         nothing_item = PickupTarget(
@@ -351,17 +363,6 @@ class CSPatchDataFactory(PatchDataFactory):
                 "starting_script"
             ],
         )
-
-    def _add_anti_softlock_warps(self) -> None:
-        # Softlock debug cat warps
-        softlock_warps = {
-            mapname: area.extra["softlock_warp"]
-            for area in self.game.region_list.all_areas
-            if area.extra.get("softlock_warp") is not None
-            for mapname in area.extra.get("softlock_maps", [area.extra["map_name"]])
-        }
-        for mapname, event in softlock_warps.items():
-            self.maps[mapname]["pickups"][event] = self._tra_for_warp_to_start()
 
     def _head_tsc_edits(self) -> dict[EventNumber, CaverdataOtherTsc]:
         # Configurable missile ammo
