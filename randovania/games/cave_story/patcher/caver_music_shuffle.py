@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING
 
 from randovania.games.cave_story.layout.cs_cosmetic_patches import SONGS, CSCosmeticPatches, CSSong, MusicRandoType
 
@@ -24,11 +24,6 @@ class CaverCue:
 
     def assign_songs(self, songs: dict[str, CSSong]) -> dict[str, CSSong]:
         return {event: songs.get(event, self.default_song) for event in self.events}
-
-
-class SongChangeDetails(TypedDict):
-    song_id: str
-    original_id: str
 
 
 class CaverMusic:

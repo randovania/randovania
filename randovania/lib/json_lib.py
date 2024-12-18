@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
-from typing import TYPE_CHECKING, Any, TypeAlias, cast
+from typing import TYPE_CHECKING, cast
 
 import aiofiles
 
 if TYPE_CHECKING:
     from collections.abc import Hashable
     from pathlib import Path
+    from typing import Any, TypeAlias
 
 _JsonPrimitive: TypeAlias = str | int | float | bool | None
 

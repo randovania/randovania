@@ -5,7 +5,7 @@ import typing
 if typing.TYPE_CHECKING:
     from typing import Self
 
-    from randovania.games.game import RandovaniaGame
+    from randovania.game.game_enum import RandovaniaGame
 
 import dataclasses
 

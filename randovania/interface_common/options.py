@@ -4,7 +4,7 @@ import dataclasses
 import json
 import uuid
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Self, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import randovania
 from randovania.game.game_enum import RandovaniaGame
@@ -15,6 +15,7 @@ from randovania.lib import migration_lib, version_lib
 if TYPE_CHECKING:
     from collections.abc import Callable
     from pathlib import Path
+    from typing import Any, Self
 
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.lib.json_lib import JsonObject
