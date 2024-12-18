@@ -41,7 +41,8 @@ class DreadRemoteConnector(MercuryConnector):
         main_item_id = items_list[0][0]["item_id"]
         from open_dread_rando.pickups.lua_editor import LuaEditor  # type: ignore
 
-        parent = LuaEditor.get_parent_for(None, main_item_id)
+        # use any none 0 quantity
+        parent = LuaEditor.get_parent_for(None, main_item_id, 1)
 
         execute_string = (
             f"RL.ReceivePickup({repr(message)},{parent},{repr(progression_as_lua)},"
