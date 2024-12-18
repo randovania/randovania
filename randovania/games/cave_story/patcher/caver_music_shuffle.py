@@ -10,6 +10,8 @@ if TYPE_CHECKING:
     from collections.abc import Iterable
     from random import Random
 
+    from caver.schema import CaverdataMapsMusic, EventNumber, MapName
+
 
 @dataclass(frozen=True)
 class CaverCue:
@@ -157,13 +159,15 @@ class CaverMusic:
         raise NotImplementedError
 
     @classmethod
-    def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, SongChangeDetails]]:
+    def get_shuffled_mapping(
+        cls, rng: Random, cosmetic: CSCosmeticPatches
+    ) -> dict[MapName, dict[EventNumber, CaverdataMapsMusic]]:
         music = cls.get_randomizer(cosmetic.music_rando.randomization_type)
-        mapping: defaultdict[str, dict[str, SongChangeDetails]] = defaultdict(dict)
+        mapping: defaultdict[MapName, dict[EventNumber, CaverdataMapsMusic]] = defaultdict(dict)
         for cue, events in music.shuffle(rng, cosmetic).items():
             mapping[cue.map_name].update(
                 {
-                    event: SongChangeDetails({"song_id": song.song_id, "original_id": cue.default_song.song_id})
+                    event: {"song_id": song.song_id, "original_id": cue.default_song.song_id}
                     for event, song in events.items()
                 }
             )

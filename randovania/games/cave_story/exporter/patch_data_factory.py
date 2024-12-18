@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import typing
+from collections import defaultdict
 from random import Random
 from typing import TYPE_CHECKING
 
 from caver.patcher import wrap_msg_text
+from caver.schema import EventNumber, MapName
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
@@ -23,6 +26,8 @@ from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
 
 if TYPE_CHECKING:
+    from caver.schema import CaverData, CaverdataMaps, CaverdataMapsHints, CaverdataOtherTsc, TscScript
+
     from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
     from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
@@ -62,7 +67,7 @@ class CSPatchDataFactory(PatchDataFactory):
             self.players_config.player_index,
         )
 
-        pickups = {area.extra["map_name"]: {} for area in game_description.region_list.all_areas}
+        pickups: dict[MapName, dict[EventNumber, TscScript]] = defaultdict(dict)
         for index in sorted(
             node.pickup_index for node in game_description.region_list.iterate_nodes() if isinstance(node, PickupNode)
         ):
@@ -71,8 +76,8 @@ class CSPatchDataFactory(PatchDataFactory):
             node = game_description.region_list.node_from_pickup_index(index)
             area = game_description.region_list.nodes_to_area(node)
 
-            mapname = node.extra.get("event_map", area.extra["map_name"])
-            event = node.extra["event"]
+            mapname = typing.cast(MapName, node.extra.get("event_map", area.extra["map_name"]))
+            event = typing.cast(EventNumber, node.extra["event"])
 
             if not self.players_config.should_target_local_player(target.player):
                 message = f"Sent ={target.pickup.name}= to ={self.players_config.player_names[target.player]}=!"
@@ -89,21 +94,21 @@ class CSPatchDataFactory(PatchDataFactory):
 
         music = CaverMusic.get_shuffled_mapping(music_rng, self.cosmetic_patches)
 
-        entrances = {}  # TODO: entrance rando
+        entrances: dict[MapName, dict[EventNumber, TscScript]] = defaultdict(dict)  # TODO: entrance rando
 
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
-        hints = {}
+        hints: dict[MapName, dict[EventNumber, CaverdataMapsHints]] = defaultdict(dict)
         for hint_node in game_description.region_list.iterate_nodes():
             if not isinstance(hint_node, HintNode):
                 continue
 
-            mapname = hint_node.extra.get(
-                "event_map", game_description.region_list.nodes_to_area(hint_node).extra["map_name"]
+            mapname = typing.cast(
+                MapName,
+                hint_node.extra.get(
+                    "event_map", game_description.region_list.nodes_to_area(hint_node).extra["map_name"]
+                ),
             )
-            event = hint_node.extra["event"]
-
-            if hints.get(mapname) is None:
-                hints[mapname] = {}
+            event = typing.cast(EventNumber, hint_node.extra["event"])
 
             hints[mapname][event] = {
                 "text": hints_for_identifier[hint_node.identifier],
@@ -112,7 +117,7 @@ class CSPatchDataFactory(PatchDataFactory):
             }
 
         mapnames = pickups.keys() | music.keys() | entrances.keys()
-        maps = {
+        maps: dict[MapName, CaverdataMaps] = {
             mapname: {
                 "pickups": pickups.get(mapname, {}),
                 "music": music.get(mapname, {}),
@@ -129,9 +134,7 @@ class CSPatchDataFactory(PatchDataFactory):
             starting_script += "<FL+1351"
         # rocket skip enabled
         if (
-            self.configuration.trick_level.level_for_trick(
-                self.game.resource_database.get_by_type_and_index(ResourceType.TRICK, "Dboost")
-            ).as_number
+            self.configuration.trick_level.level_for_trick(self.game.resource_database.get_trick("Dboost")).as_number
             >= 4
         ):
             starting_script += "<FL+6400"
@@ -209,14 +212,18 @@ class CSPatchDataFactory(PatchDataFactory):
             trade = item.extra.get("trade", "none")
             trades[trade] += 1
 
-            git = num_to_tsc_value(arms_num or item_num + 1000).decode("utf-8")
-            ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode("utf-8")
-            if item.short_name in {"missiles", "supers"}:
-                ammo = num_to_tsc_value(starting_items[missile]).decode("utf-8")
-            if item_num:
+            if item_num is not None:
+                git = num_to_tsc_value(item_num + 1000).decode("utf-8")
                 plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}"
-            else:
+            elif arms_num is not None:
+                if item.short_name in {"missiles", "supers"} and missile is not None:
+                    ammo = num_to_tsc_value(starting_items[missile]).decode("utf-8")
+                else:
+                    ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode("utf-8")
+
+                git = num_to_tsc_value(arms_num).decode("utf-8")
                 plus = f"<AM+{num_to_tsc_value(arms_num).decode('utf-8')}:{ammo}"
+
             flag = num_to_tsc_value(item.extra["flag"]).decode("utf-8")
             text = item.extra["text"]
 
@@ -325,7 +332,7 @@ class CSPatchDataFactory(PatchDataFactory):
         ammo_state = self.configuration.ammo_pickup_configuration.pickups_state
         small_missile = ammo_state[small_missile_ammo].ammo_count[0]
         hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
-        base_missiles = starting_items[missile]
+        base_missiles = starting_items[missile] if missile is not None else 0
         missile_id = "0005"
         supers_id = "0010"
         missile_events = {
@@ -337,7 +344,7 @@ class CSPatchDataFactory(PatchDataFactory):
             "0037": (supers_id, hell_missile),  # supers hell expansion
             "0038": (supers_id, base_missiles),  # supers launcher
         }
-        head = {}
+        head: dict[EventNumber, CaverdataOtherTsc] = {}
         for event, m_ammo in missile_events.items():
             head[event] = {
                 "needle": "<AM%+....:....",
@@ -358,13 +365,14 @@ class CSPatchDataFactory(PatchDataFactory):
                 "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}",
             }
 
-        return {
+        data: CaverData = {
             "maps": maps,
             "other_tsc": {"Head": head},
             "mychar": self.cosmetic_patches.mychar.mychar_bmp(mychar_rng),
             "hash": get_ingame_hash(self.description.shareable_hash_bytes),
             "uuid": f"{{{self.players_config.get_own_uuid()}}}",
         }
+        return typing.cast(dict, data)
 
 
 def get_hints(

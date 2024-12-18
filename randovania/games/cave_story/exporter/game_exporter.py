@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import copy
 import dataclasses
+import typing
 from pathlib import Path
 
 from caver import patcher as caver_patcher
 from caver.patcher import CSPlatform
+from caver.schema import CaverData
 
 from randovania import monitoring
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -56,7 +58,7 @@ class CSGameExporter(GameExporter):
         progress_update: status_update_lib.ProgressUpdateCallable,
     ) -> None:
         assert isinstance(export_params, CSGameExportParams)
-        new_patch = copy.copy(patch_data)
+        new_patch = typing.cast(CaverData, copy.copy(patch_data))
         if new_patch["mychar"] is not None:
             new_patch["mychar"] = str(RandovaniaGame.CAVE_STORY.data_path.joinpath(patch_data["mychar"]))
 
