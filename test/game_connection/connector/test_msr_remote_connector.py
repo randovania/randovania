@@ -154,6 +154,22 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
     connector.executor.run_lua_code.assert_called_once_with(execute_string)
 
 
+@pytest.mark.parametrize("is_coop", [False, True])
+async def test_receive_remote_pickups_coop_logic(connector: MSRRemoteConnector, msr_ice_beam_pickup, is_coop: bool):
+    connector.in_cooldown = False
+    remote_pickup = (("Dummy 1", msr_ice_beam_pickup, PickupIndex(69), is_coop),)
+    connector.remote_pickups = remote_pickup
+    connector.game_specific_execute = AsyncMock()
+
+    connector.received_pickups = 0
+    connector.inventory_index = 2
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is True
+    connector.game_specific_execute.assert_called_once_with(
+        "Ice Beam", [[{"item_id": "ITEM_WEAPON_ICE_BEAM", "quantity": 1}]], "Dummy 1", "s033_area3b" if is_coop else ""
+    )
+
+
 async def test_new_collected_locations_received_wrong_answer(connector: MSRRemoteConnector):
     connector.logger = MagicMock()
     new_indices = b"Foo"

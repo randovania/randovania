@@ -144,15 +144,18 @@ class MercuryConnector(RemoteConnector):
 
         provider_name, pickup, pickup_index, is_coop = remote_pickups[num_pickups]
         item_name, items_list = self.resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
-        location_node = self.game.region_list.node_from_pickup_index(pickup_index)
-        region_name = self.game.region_list.nodes_to_region(location_node).extra.get("scenario_id", "")
+
+        scenario_id = ""
+        if is_coop:
+            location_node = self.game.region_list.node_from_pickup_index(pickup_index)
+            scenario_id = self.game.region_list.nodes_to_region(location_node).extra["scenario_id"]
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)
 
-        await self.game_specific_execute(item_name, items_list, provider_name, region_name, is_coop)
+        await self.game_specific_execute(item_name, items_list, provider_name, scenario_id)
 
     async def game_specific_execute(
-        self, item_name: str, items_list: list, provider_name: str, region_name: str, is_coop: bool
+        self, item_name: str, items_list: list, provider_name: str, scenario_id: str
     ) -> None:
         raise NotImplementedError
 
