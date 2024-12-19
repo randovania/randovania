@@ -215,8 +215,8 @@ async def test_receive_remote_pickups_give_pickup(
 
     inventory = {connector.multiworld_magic_item: InventoryItem(0, 0)}
     permanent_pickups = (
-        ("A", MagicMock()),
-        ("B", MagicMock()),
+        ("A", MagicMock(), None),
+        ("B", MagicMock(), None),
     )
 
     # Run
@@ -370,7 +370,7 @@ async def test_receive_required_missile_launcher(
     )
 
     connector.execute_remote_patches = AsyncMock()
-    permanent_pickups = (("Received Missile Launcher from Someone Else", pickup),)
+    permanent_pickups = (("Received Missile Launcher from Someone Else", pickup, None),)
 
     inventory = Inventory(
         {

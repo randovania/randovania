@@ -1,13 +1,11 @@
 import logging
 import uuid
 from collections import defaultdict
-from typing import TYPE_CHECKING
 
 from qasync import asyncSlot
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
-    PickupEntryWithOwner,
     PlayerLocationEvent,
     RemoteConnector,
 )
@@ -17,9 +15,7 @@ from randovania.game_description.db.region import Region
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.am2r.layout import progressive_items
-
-if TYPE_CHECKING:
-    from randovania.game_description.pickup.pickup_entry import PickupEntry
+from randovania.network_common.remote_pickup import RemotePickup
 
 
 class AM2RRemoteConnector(RemoteConnector):
@@ -61,7 +57,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
     # Reset all values on init, disconnect or after switching back to main menu
     def reset_values(self) -> None:
-        self.remote_pickups: tuple[tuple[str, PickupEntry], ...] = ()
+        self.remote_pickups: tuple[RemotePickup, ...] = ()
         self.last_inventory = Inventory.empty()
         self.in_cooldown = True
         self.received_pickups: int | None = None
@@ -233,7 +229,7 @@ class AM2RRemoteConnector(RemoteConnector):
         self.received_pickups = new_recv_as_int
         await self.receive_remote_pickups()
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]) -> None:
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]) -> None:
         self.remote_pickups = remote_pickups
         await self.receive_remote_pickups()
 
@@ -254,7 +250,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         # Mark as cooldown, and send provider, item name, model name and quantity to game
         self.in_cooldown = True
-        provider_name, pickup = remote_pickups[num_pickups]
+        provider_name, pickup, coop_location = remote_pickups[num_pickups]
         name, model = pickup.name, pickup.model.name
         # For some reason, the resources here are sorted differently to the patch data factory.
         # There we want the first entry, here we want the last.

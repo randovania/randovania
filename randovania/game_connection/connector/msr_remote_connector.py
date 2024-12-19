@@ -25,7 +25,9 @@ class MSRRemoteConnector(MercuryConnector):
     ) -> list:
         return get_resources_for_details(pickup, conditional_resources, other_player)
 
-    async def game_specific_execute(self, item_name: str, items_list: list, provider_name: str) -> None:
+    async def game_specific_execute(
+        self, item_name: str, items_list: list, provider_name: str, scenario_id: str
+    ) -> None:
         remote_pickups = self.remote_pickups
         num_pickups = self.received_pickups
         message = self.format_received_item(item_name, provider_name)
