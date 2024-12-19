@@ -142,8 +142,8 @@ async def test_set_remote_pickups(connector: CSRemoteConnector, cs_panties_picku
     assert isinstance(connector.executor, MagicMock)
 
     remote_pickups = (
-        ("Dummy 1", cs_panties_pickup, MagicMock(), MagicMock()),
-        ("Dummy 2", cs_panties_pickup, MagicMock(), MagicMock()),
+        ("Dummy 1", cs_panties_pickup, None),
+        ("Dummy 2", cs_panties_pickup, None),
     )
     await connector.set_remote_pickups(remote_pickups)
     assert connector.remote_pickups == remote_pickups
@@ -179,8 +179,8 @@ async def test_receive_items(connector: CSRemoteConnector, cs_panties_pickup):
     connector.executor.exec_script.assert_not_awaited()
 
     remote_pickups = (
-        ("Dummy 1", cs_panties_pickup, MagicMock(), MagicMock()),
-        ("Dummy 2", cs_panties_pickup, MagicMock(), MagicMock()),
+        ("Dummy 1", cs_panties_pickup, None),
+        ("Dummy 2", cs_panties_pickup, None),
     )
     connector.remote_pickups = remote_pickups
 

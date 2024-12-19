@@ -142,12 +142,12 @@ class MercuryConnector(RemoteConnector):
 
         self.in_cooldown = True
 
-        provider_name, pickup, pickup_index, is_coop = remote_pickups[num_pickups]
+        provider_name, pickup, coop_location = remote_pickups[num_pickups]
         item_name, items_list = self.resources_to_give_for_pickup(self.game.resource_database, pickup, inventory)
 
         scenario_id = ""
-        if is_coop:
-            location_node = self.game.region_list.node_from_pickup_index(pickup_index)
+        if coop_location is not None:
+            location_node = self.game.region_list.node_from_pickup_index(coop_location)
             scenario_id = self.game.region_list.nodes_to_region(location_node).extra["scenario_id"]
 
         self.logger.debug("Resource changes for %s from %s", pickup.name, provider_name)

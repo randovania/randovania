@@ -351,8 +351,7 @@ def emit_world_pickups_update(sa: ServerApp, world: World):
                 {
                     "provider_name": action.provider.name,
                     "pickup": _base64_encode_pickup(pickup_target.pickup, resource_database),
-                    "location": action.location,
-                    "is_coop": action.provider.uuid == world.uuid,
+                    "coop_location": action.location if action.provider.uuid == world.uuid else None,
                 }
             )
 

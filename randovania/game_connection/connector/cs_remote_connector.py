@@ -194,7 +194,7 @@ class CSRemoteConnector(RemoteConnector):
         # no pending pickups, and pickups to send:
         # send the next pickup!
         await self.executor.set_flag(ITEM_SENT_FLAG, True)
-        provider_name, pickup, pickup_index, is_coop = self.remote_pickups[num_pickups]
+        provider_name, pickup, coop_location = self.remote_pickups[num_pickups]
 
         message = f"Received item from ={provider_name}=!"
         message = wrap_msg_text(message, False)

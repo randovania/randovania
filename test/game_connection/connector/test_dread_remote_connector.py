@@ -100,8 +100,8 @@ async def test_new_received_pickups_received(connector: DreadRemoteConnector):
 async def test_set_remote_pickups(connector: DreadRemoteConnector, dread_spider_pickup):
     connector.receive_remote_pickups = AsyncMock()
     remote_pickup = (
-        ("Dummy 1", dread_spider_pickup, PickupIndex(1), MagicMock()),
-        ("Dummy 2", dread_spider_pickup, PickupIndex(2), MagicMock()),
+        ("Dummy 1", dread_spider_pickup, None),
+        ("Dummy 2", dread_spider_pickup, None),
     )
     await connector.set_remote_pickups(remote_pickup)
     assert connector.remote_pickups == remote_pickup
@@ -110,8 +110,8 @@ async def test_set_remote_pickups(connector: DreadRemoteConnector, dread_spider_
 async def test_receive_remote_pickups(connector: DreadRemoteConnector, dread_spider_pickup):
     connector.in_cooldown = False
     remote_pickup = (
-        ("Dummy 1", dread_spider_pickup, PickupIndex(1), MagicMock()),
-        ("Dummy 2", dread_spider_pickup, PickupIndex(2), MagicMock()),
+        ("Dummy 1", dread_spider_pickup, None),
+        ("Dummy 2", dread_spider_pickup, None),
     )
     connector.remote_pickups = remote_pickup
     connector.executor.run_lua_code = AsyncMock()

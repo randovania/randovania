@@ -117,8 +117,8 @@ async def test_new_received_pickups_received(connector: AM2RRemoteConnector):
 async def test_set_remote_pickups(connector: AM2RRemoteConnector, am2r_varia_pickup):
     connector.receive_remote_pickups = AsyncMock()
     remote_pickups = (
-        ("Dummy 1", am2r_varia_pickup, MagicMock(), MagicMock()),
-        ("Dummy 2", am2r_varia_pickup, MagicMock(), MagicMock()),
+        ("Dummy 1", am2r_varia_pickup, None),
+        ("Dummy 2", am2r_varia_pickup, None),
     )
     await connector.set_remote_pickups(remote_pickups)
     assert connector.remote_pickups == remote_pickups
@@ -128,8 +128,8 @@ async def test_receive_remote_pickups(connector: AM2RRemoteConnector, am2r_varia
     connector.in_cooldown = False
     connector.current_region = Region(name="Golden Temple", areas=[], extra={})
     remote_pickups = (
-        ("Dummy 1", am2r_varia_pickup, MagicMock(), MagicMock()),
-        ("Dummy 2", am2r_varia_pickup, MagicMock(), MagicMock()),
+        ("Dummy 1", am2r_varia_pickup, None),
+        ("Dummy 2", am2r_varia_pickup, None),
     )
     connector.remote_pickups = remote_pickups
 

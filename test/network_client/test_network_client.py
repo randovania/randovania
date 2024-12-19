@@ -256,20 +256,17 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
             {
                 "provider_name": "Message A",
                 "pickup": "VtI6Bb3p",
-                "location": 1,
-                "is_coop": False,
+                "coop_location": None,
             },
             {
                 "provider_name": "Message B",
                 "pickup": "VtI6Bb3y",
-                "location": 2,
-                "is_coop": False,
+                "coop_location": None,
             },
             {
                 "provider_name": "Message C",
                 "pickup": "VtI6Bb3*",
-                "location": 3,
-                "is_coop": True,
+                "coop_location": 3,
             },
         ],
     }
@@ -288,9 +285,9 @@ async def test_refresh_received_pickups(client: NetworkClient, corruption_game_d
             world_id=uuid.UUID("00000000-0000-1111-0000-000000000000"),
             game=RandovaniaGame.METROID_PRIME_CORRUPTION,
             pickups=(
-                RemotePickup("Message A", pickups[0], PickupIndex(1), False),
-                RemotePickup("Message B", pickups[1], PickupIndex(2), False),
-                RemotePickup("Message C", pickups[2], PickupIndex(3), True),
+                RemotePickup("Message A", pickups[0], None),
+                RemotePickup("Message B", pickups[1], None),
+                RemotePickup("Message C", pickups[2], PickupIndex(3)),
             ),
         )
     )

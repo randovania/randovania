@@ -113,8 +113,7 @@ def test_emit_world_pickups_update_one_action(
                 {
                     "provider_name": "World 2",
                     "pickup": result,
-                    "location": 0,
-                    "is_coop": False,
+                    "coop_location": None,
                 }
             ],
             "world": "1179c986-758a-4170-9b07-fe4541d78db0",

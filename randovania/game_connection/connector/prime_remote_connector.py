@@ -203,7 +203,7 @@ class PrimeRemoteConnector(RemoteConnector):
         if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
             return False
 
-        provider_name, pickup, pickup_index, is_coop = remote_pickups[magic_inv.capacity]
+        provider_name, pickup, coop_location = remote_pickups[magic_inv.capacity]
         item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
         self.logger.info(f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. Next pickup: {message}")
 

@@ -7,5 +7,4 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 class RemotePickup(NamedTuple):
     provider_name: str
     pickup_entry: PickupEntry
-    pickup_index: PickupIndex
-    is_coop: bool
+    coop_location: PickupIndex | None

@@ -250,7 +250,7 @@ class AM2RRemoteConnector(RemoteConnector):
 
         # Mark as cooldown, and send provider, item name, model name and quantity to game
         self.in_cooldown = True
-        provider_name, pickup, pickup_index, is_coop = remote_pickups[num_pickups]
+        provider_name, pickup, coop_location = remote_pickups[num_pickups]
         name, model = pickup.name, pickup.model.name
         # For some reason, the resources here are sorted differently to the patch data factory.
         # There we want the first entry, here we want the last.

@@ -380,8 +380,7 @@ class NetworkClient:
                     RemotePickup(
                         item["provider_name"],
                         _decode_pickup(item["pickup"], resource_database),
-                        PickupIndex(item["location"]),
-                        item["is_coop"],
+                        PickupIndex(item["coop_location"]) if item["coop_location"] is not None else None,
                     )
                     for item in data["pickups"]
                 ),
