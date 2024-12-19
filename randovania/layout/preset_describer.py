@@ -8,6 +8,7 @@ from randovania.game_description.resources.location_category import LocationCate
 from randovania.generator.pickup_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.logical_pickup_placement_configuration import LogicalPickupPlacementConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.standard_pickup_state import StandardPickupState, StandardPickupStateCase
 
@@ -157,6 +158,9 @@ class GamePresetDescriber:
             template_strings["Item Pool"].append(f"{random_starting_pickups} random starting items")
 
         template_strings["Item Pool"].extend(self._calculate_pickup_pool(configuration))
+
+        if configuration.logical_pickup_placement is not LogicalPickupPlacementConfiguration.MINIMAL:
+            template_strings["Item Pool"].append(f"All {configuration.logical_pickup_placement.value} obtainable")
 
         # Difficulty
         if configuration.damage_strictness != LayoutDamageStrictness.MEDIUM:

@@ -29,7 +29,7 @@ class GeneratorReach:
 
     def victory_condition_satisfied(self) -> bool:
         context = self.state.node_context()
-        return self.game.victory_condition_as_set(context).satisfied(context, self.state.energy)
+        return self.game.victory_condition_as_set(context).satisfied(context, self.state.health_for_damage_requirements)
 
     @property
     def iterate_nodes(self) -> Iterator[Node]:

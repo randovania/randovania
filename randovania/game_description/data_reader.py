@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import typing
 from typing import TYPE_CHECKING, TypeVar
 
 from randovania.game.game_enum import RandovaniaGame
@@ -539,7 +540,7 @@ def read_split_file(dir_path: Path) -> dict:
         # This code runs before we can run old data migration, so we need to handle this difference here
         key_name = "worlds"
 
-    regions = data.pop(key_name)
+    regions = typing.cast(list[str], data.pop(key_name))
 
     data[key_name] = [
         json_lib.read_path(dir_path.joinpath(region_file_name), raise_on_duplicate_keys=True)

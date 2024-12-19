@@ -3,10 +3,10 @@ from __future__ import annotations
 from datetime import datetime
 
 import pytest
-from packaging.version import Version
 
 from randovania.interface_common import update_checker
 from randovania.interface_common.update_checker import ChangeLogDetails, VersionDescription
+from randovania.lib import version_lib
 
 _MORE_DETAILS = "\n\n---\nFor more details, check the Change Log tab."
 
@@ -59,7 +59,7 @@ def test_versions_to_display_for_releases(
         change_logs,
         version_to_display,
     ) = update_checker.versions_to_display_for_releases(
-        Version(f"0.{current_version}.0"), Version(f"0.{last_changelog_version}.0"), releases
+        version_lib.Version(f"0.{current_version}.0"), version_lib.Version(f"0.{last_changelog_version}.0"), releases
     )
 
     # Assert

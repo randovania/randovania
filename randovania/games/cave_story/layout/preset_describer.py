@@ -95,7 +95,7 @@ hash_items = {
 def get_ingame_hash_str(hash_bytes: bytes) -> str:
     ids = get_ingame_hash(hash_bytes)
 
-    def get_str(x):
+    def get_str(x: int) -> str:
         name = hash_items[x]
         path = str(RandovaniaGame.CAVE_STORY.data_path.joinpath("assets", "icon", f"{name}.png"))
         return f"""<img src="{path}" alt="{name}" width="32" height="16">"""

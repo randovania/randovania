@@ -5,7 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.7.x] - 2024-12-??
+## [8.8.x] - 2025-01-??
+
+- Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
+- Fixed: The map tracker no longer opens if the starting location prompt was cancelled.
+
+### Metroid Prime
+
+- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Error when splitting or unsplitting Beam Ammo Expansions when there are a total 0 Beam Ammo expansions.
+
+### Metroid: Samus Returns
+
+#### Logic Database
+
+- Added: Area 2 Dam Exterior - Spike Ravine: Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
+
+## [8.7.1] - 2024-12-05
+
+### Cave Story
+
+- Fixed: Curly's item in Plantation is now always sent in multiworld
+- Changed: Loading a save in Jail no. 1 will now remove the block if the chest has been opened
+- Changed: The helper block in Grasstown to return from east to west has been lowered by one block to make the jump easier
+- Fixed: The helper block in Grasstown always spawns when it is supposed to
+- Fixed: Freeware no longer crashes when alt-tabbing in fullscreen mode
+- Fixed: Teleporter icons in Arthur's House now always appear in the correct order
+- Fixed: Music randomization in Outer Wall now works regardless of which way you entered the room
+- Added: Ikuyo and kl3cks7r have been added to the ingame credits
+
+## [8.7.0] - 2024-12-02
 
 - Added: When exporting a game fails, for certain cases Randovania will now verify your input files for bad files. This is supported by Metroid Prime and Metroid Prime 2: Echoes.
 - Added: Drag and dropping a preset file into the main window now imports it.

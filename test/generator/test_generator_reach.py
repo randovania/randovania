@@ -32,7 +32,8 @@ from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.resolver.state import State, StateGameData, add_pickup_to_state
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
+from randovania.resolver.state import State
 
 if TYPE_CHECKING:
     from randovania.game_description.db.resource_node import ResourceNode
@@ -166,7 +167,7 @@ def test_database_collectable(
         "randovania.generator.base_patches_factory.BasePatchesFactory.check_item_pool",
         autospec=True,
     )
-    game, initial_state, permalink = run_bootstrap(
+    game, state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset(), include_tricks
     )
 
@@ -174,11 +175,11 @@ def test_database_collectable(
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration, game)
 
     for pickup in pool_results.starting + pool_results.to_place:
-        add_pickup_to_state(initial_state, pickup)
+        state = state.assign_pickup_to_starting_items(pickup)
     for pickup in pool_results.assignment.values():
-        add_pickup_to_state(initial_state, pickup)
+        state = state.assign_pickup_to_starting_items(pickup)
     for trick in game.resource_database.trick:
-        initial_state.resources.set_resource(trick, LayoutTrickLevel.maximum().as_number)
+        state.resources.set_resource(trick, LayoutTrickLevel.maximum().as_number)
 
     expected_events = sorted(
         (event for event in game.resource_database.event if event.short_name not in ignore_events),
@@ -186,7 +187,7 @@ def test_database_collectable(
     )
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
-    reach = _create_reach_with_unsafe(game, initial_state.heal())
+    reach = _create_reach_with_unsafe(game, state)
     while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
         reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
         reach = advance_reach_with_possible_unsafe_resources(reach)
@@ -273,11 +274,15 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     initial_state = State(
         ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
         (),
-        99,
+        EnergyTankDamageState(
+            99,
+            100,
+            game.resource_database,
+            game.region_list,
+        ),
         node_a,
         echoes_game_patches,
         None,
-        StateGameData(echoes_resource_database, game.region_list, 100, 99),
     )
 
     # Run

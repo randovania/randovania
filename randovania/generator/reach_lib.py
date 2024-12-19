@@ -35,7 +35,7 @@ def _filter_collectable(resource_nodes: Iterator[ResourceNodeT], reach: Generato
     context = reach.node_context()
     for resource_node in resource_nodes:
         if resource_node.should_collect(context) and resource_node.requirement_to_collect().satisfied(
-            context, reach.state.energy
+            context, reach.state.health_for_damage_requirements
         ):
             yield resource_node
 

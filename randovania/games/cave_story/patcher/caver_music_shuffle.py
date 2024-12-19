@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
@@ -8,6 +9,8 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import SONGS, CSCosm
 if TYPE_CHECKING:
     from collections.abc import Iterable
     from random import Random
+
+    from caver.schema import CaverdataMapsMusic, EventNumber, MapName
 
 
 @dataclass(frozen=True)
@@ -19,7 +22,7 @@ class CaverCue:
     def assign_song(self, song: CSSong) -> dict[str, CSSong]:
         return {event: song for event in self.events}
 
-    def assign_songs(self, songs: dict[str, CSSong]):
+    def assign_songs(self, songs: dict[str, CSSong]) -> dict[str, CSSong]:
         return {event: songs.get(event, self.default_song) for event in self.events}
 
 
@@ -33,7 +36,7 @@ class CaverMusic:
         CaverCue("Eggs", ("0600",), SONGS["gravity"]),
         CaverCue("EggX", ("0095",), SONGS["pulse"]),
         CaverCue("EggR", ("0090", "0091", "0092", "0093", "0094"), SONGS["gestation"]),
-        CaverCue("Weed", ("0090", "0091", "0092", "0093", "0094", "0098", "0099", "0600"), SONGS["onToGrasstown"]),
+        CaverCue("Weed", ("0090", "0091", "0092", "0093", "0094", "0097", "0099", "0600"), SONGS["onToGrasstown"]),
         CaverCue("Santa", ("0090", "0091", "0092", "0093", "0094"), SONGS["safety"]),
         CaverCue("Santa", ("0099",), SONGS["quiet"]),
         CaverCue("Chako", ("0090", "0091", "0092", "0093", "0094"), SONGS["safety"]),
@@ -96,7 +99,7 @@ class CaverMusic:
         CaverCue("EggR2", ("0090", "0091", "0092", "0093", "0094", "1000"), SONGS["gestation"]),
         CaverCue("EggR2", ("0304",), SONGS["gravity"]),
         CaverCue("EggX2", ("0090", "0091", "0092", "0093", "0095"), SONGS["pulse"]),
-        CaverCue("Oside", ("0090", "0091", "0092", "0093", "0094"), SONGS["moonsong"]),
+        CaverCue("Oside", ("0090", "0091", "0092", "0093", "0094", "0095", "0097"), SONGS["moonsong"]),
         CaverCue("Oside", ("0402",), SONGS["herosEnd"]),
         CaverCue("Itoh", ("0090", "0091", "0092", "0093", "0094", "0095"), SONGS["gestation"]),
         CaverCue("Cent", ("0090", "0091", "0092", "0093", "0094"), SONGS["caveStory"]),
@@ -151,17 +154,18 @@ class CaverMusic:
         raise NotImplementedError
 
     @classmethod
-    def get_shuffled_mapping(cls, rng: Random, cosmetic: CSCosmeticPatches) -> dict[str, dict[str, str]]:
+    def get_shuffled_mapping(
+        cls, rng: Random, cosmetic: CSCosmeticPatches
+    ) -> dict[MapName, dict[EventNumber, CaverdataMapsMusic]]:
         music = cls.get_randomizer(cosmetic.music_rando.randomization_type)
-        mapping = {}
+        mapping: defaultdict[MapName, dict[EventNumber, CaverdataMapsMusic]] = defaultdict(dict)
         for cue, events in music.shuffle(rng, cosmetic).items():
-            if mapping.get(cue.map_name) is None:
-                mapping[cue.map_name] = {}
-            events = {
-                event: {"song_id": song.song_id, "original_id": cue.default_song.song_id}
-                for event, song in events.items()
-            }
-            mapping[cue.map_name].update(events)
+            mapping[cue.map_name].update(
+                {
+                    event: {"song_id": song.song_id, "original_id": cue.default_song.song_id}
+                    for event, song in events.items()
+                }
+            )
         return mapping
 
 

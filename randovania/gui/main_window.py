@@ -31,7 +31,7 @@ from randovania.interface_common.installation_check import find_bad_installation
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
-from randovania.lib import enum_lib, json_lib
+from randovania.lib import enum_lib, json_lib, version_lib
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
@@ -543,7 +543,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         await self._on_releases_data(await github_releases_data.get_releases())
 
     async def _on_releases_data(self, releases: list[dict] | None):
-        current_version = update_checker.strict_current_version()
+        current_version = version_lib.current_version()
         last_changelog = self._options.last_changelog_displayed
 
         (all_change_logs, new_change_logs, version_to_display) = update_checker.versions_to_display_for_releases(
@@ -671,7 +671,8 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
             QtWidgets.QMessageBox.critical(self, "Unsupported configuration for Tracker", str(e))
             return
 
-        self._map_tracker.show()
+        if self._map_tracker.confirm_open:
+            self._map_tracker.show()
 
     # Difficulties stuff
 

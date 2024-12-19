@@ -1,8 +1,7 @@
 from enum import Enum
 
-from packaging.version import Version
-
 import randovania
+from randovania.lib import version_lib
 
 
 class ClientVersionCheck(Enum):
@@ -17,9 +16,8 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
             return f"Incompatible client version '{client_version}', expected '{server_version}'"
 
     elif version_checking == ClientVersionCheck.MATCH_MAJOR_MINOR:
-        server = Version(server_version)
-        client = Version(client_version)
-
+        server = version_lib.parse_string(server_version)
+        client = version_lib.parse_string(client_version)
         if server.release[:2] != client.release[:2]:
             shorter_client = "{}.{}".format(*client.release[:2])
             shorter_server = "{}.{}".format(*server.release[:2])
