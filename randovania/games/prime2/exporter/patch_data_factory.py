@@ -993,10 +993,8 @@ def echoes_pickup_details_to_patcher(
         assert item is not None
         return item
 
-    resources = multiworld_tuple
     conditional_resources = []
     if not details.is_for_remote_player:
-        resources = details.conditional_resources[0].resources + multiworld_tuple
         conditional_resources = [
             {
                 "item": item_id_for_item_resource(_assert_item_exists(conditional.item)),
@@ -1007,7 +1005,11 @@ def echoes_pickup_details_to_patcher(
 
     return {
         "pickup_index": details.index.index,
-        "resources": _create_pickup_resources_for(resources),
+        "resources": _create_pickup_resources_for(
+            (details.conditional_resources[0].resources + multiworld_tuple)
+            if not details.is_for_remote_player
+            else multiworld_tuple
+        ),
         "conditional_resources": conditional_resources,
         "convert": [
             {
