@@ -13,6 +13,7 @@ from randovania.exporter.game_exporter import GameExporter, GameExportParams, in
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.game_description.pickup.pickup_entry import PickupModel
+from randovania.games.common.prime_family.exporter import good_hashes
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 from randovania.patching.patchers.exceptions import UnableToExportError
@@ -171,6 +172,12 @@ class PrimeGameExporter(GameExporter):
             filepath = directory.with_name(f"{base_filename} {region_name}.png")
             make_one_map(filepath, level_data, rl.region_with_name(region_name), dock_types_to_ignore)
 
+    def known_good_hashes(self) -> dict[str, tuple[str, ...]]:
+        return {
+            "prime1_iso": good_hashes.PRIME1_GC_ISOS,
+            "prime2_iso": good_hashes.PRIME2_GC_ISOS,
+        }
+
     def _do_export_game(
         self,
         patch_data: dict,
@@ -196,6 +203,9 @@ class PrimeGameExporter(GameExporter):
         symbols = py_randomprime.symbols_for_file(input_file)
         if symbols is None:
             raise UnableToExportError("Unsupported Metroid Prime version.")
+
+        input_version = py_randomprime.rust.get_iso_mp1_version(str(export_params.input_path))
+        monitoring.set_tag("prime_input_version", input_version)
 
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")

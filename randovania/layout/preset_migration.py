@@ -177,9 +177,9 @@ def _migrate_v5(preset: dict) -> dict:
         default_items_state[item] = shuffled_item
 
     major_items = preset["layout_configuration"]["major_items_configuration"]["items_state"]
-    for item in default_items_state.keys():
+    for item, state in default_items_state.items():
         if item not in major_items:
-            major_items[item] = default_items_state[item]
+            major_items[item] = state
 
     preset["layout_configuration"]["major_items_configuration"].pop("progressive_suit")
     preset["layout_configuration"]["major_items_configuration"].pop("progressive_grapple")
@@ -1223,6 +1223,22 @@ def _migrate_v92(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v93(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].remove("Missile Blast Shield")
+        preset["configuration"]["dock_rando"]["types_state"]["door"]["can_change_from"].append(
+            "Missile Blast Shield (randomprime)"
+        )
+
+    return preset
+
+
+def _migrate_v94(preset: dict) -> dict:
+    preset["configuration"]["logical_pickup_placement"] = "minimal"
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1316,6 +1332,8 @@ _MIGRATIONS = [
     _migrate_v90,  # msr configurable final boss
     _migrate_v91,  # two sided door search
     _migrate_v92,  # remove bars great tree hall
+    _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
+    _migrate_v94,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

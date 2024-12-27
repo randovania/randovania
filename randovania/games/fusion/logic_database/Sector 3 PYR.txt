@@ -17,7 +17,7 @@ Extra - room_id: [0]
               # Get up to the screw blocks
               Space Jump
               # Shinespark from Recharge Room: https://youtu.be/eb9I2ToxEdw
-              Level 0 Locks and Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando
+              Level 0 Keycard and Speed Booster and Shinespark Tricks (Advanced) and Disabled Door Lock Rando
               # Single Wall Jump from below - https://youtu.be/BfqjAd4Mq6Q
               Hi-Jump and Wall Jump (Intermediate) and Can Single Walljump
   > Door to Monkey Bars of Fire
@@ -55,6 +55,7 @@ Extra - room_id: [0]
 Entrance Save Room
 Extra - map_name: Sector 31
 Extra - room_id: [1]
+Extra - unlocked_save_station: True
 > Door to Entrance Recharge Room; Heals? False
   * Layers: default
   * L0 Hatch to Entrance Recharge Room/Door to Entrance Save Room
@@ -222,7 +223,7 @@ Extra - room_id: [5]
           # Kill Fune
           Can Kill Tough Beam-Resistant Enemy
           # Charge shinespark from Entrance Lobby and kill Fune: https://youtu.be/3sm2XhRsRRI
-          Level 0 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Level 0 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to Bob's Abode; Heals? False
   * Layers: default
@@ -262,7 +263,7 @@ Extra - room_id: [6, 24]
       Any of the following:
           Can Kill Super Geron
           # Old BOB skip: https://youtu.be/Kqb60S6Kr0w
-          Hi-Jump and Level 0 Locks and Level 2 Locks and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
+          Hi-Jump and Level 0 Keycard and Level 2 Keycard and Speed Booster and Shinespark Tricks (Hypermode) and Disabled Door Lock Rando and Disabled Entrance Rando
 
 > Door to B.O.X. Access; Heals? False
   * Layers: default
@@ -339,10 +340,10 @@ Extra - room_id: [8]
   * L0 Hatch to Deserted Runway/Door to Alcove
   * Extra - door_idx: (18,)
   > Above E-Tank
-      Level 0 Locks and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
+      Level 0 Keycard and Speed Booster and Disabled Door Lock Rando and Disabled Entrance Rando
   > Below E-Tank
       # Store shinespark from adjacent room: https://youtu.be/OzwrRjDZKXs
-      Level 0 Locks and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Tough Beam-Resistant Enemy
+      Level 0 Keycard and Speed Booster and Knowledge (Intermediate) and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Kill Tough Beam-Resistant Enemy
   > Bottom Right
       Trivial
 
@@ -538,7 +539,7 @@ Extra - room_id: [11]
           Damage Runs (Intermediate) and Heat Damage ≥ 120
           All of the following:
               # Shinespark Across from Processing Access: https://youtu.be/-HJkLyrtElg
-              Level 2 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
+              Level 2 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
               Any of the following:
                   Varia Suit
                   Damage Runs (Beginner) and Heat Damage ≥ 30
@@ -854,7 +855,7 @@ Extra - room_id: [19]
                               Damage Runs (Advanced) and Heat Damage ≥ 80 and Lava Damage ≥ 80
                       All of the following:
                           # From Red Tower: https://youtu.be/tyMisiNDQuA
-                          Level 0 Locks and Level 2 Locks and Wave Beam and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
+                          Level 0 Keycard and Level 2 Keycard and Wave Beam and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
                           # Kill Owtch in previous room
                           Charge Beam or Plasma Beam or Wide Beam or Combat (Intermediate)
           Any of the following:
@@ -966,6 +967,7 @@ Extra - room_id: [23, 18]
       After Boss B.O.X. Defeated
   > Event - B.O.X.
       All of the following:
+          # TODO: xbox kills box
           Any of the following:
               # Weapon Requirements
               Charge Beam
@@ -1212,6 +1214,11 @@ Extra - room_id: [28]
               Wall Jump (Expert)
               # Single Wall Jump up to the E-Tank - https://youtu.be/_vfp_MNlHws
               Wall Jump (Beginner) and Can Single Walljump
+          Any of the following:
+              # Account for Door Lock Rando
+              Level 0 Keycard and Disabled Door Lock Rando
+              # If Door Lock Rando you may be forced to do the spark from the shortcut, the SA blocks do not reform
+              Shinespark Tricks (Advanced)
   > Door to Monkey Bars of Fire
       Can Break Single Bomb Blocks
   > Door to Glass Tube to Sector 5 (ARC)
@@ -1295,6 +1302,7 @@ Extra - room_id: [31]
 Data Save Room
 Extra - map_name: Sector 332
 Extra - room_id: [32]
+Extra - unlocked_save_station: True
 > Door to B.O.X. Access; Heals? False
   * Layers: default
   * L0 Hatch to B.O.X. Access/Door to Data Save Room
@@ -1380,7 +1388,7 @@ Extra - room_id: [34]
   > Door to Sova Processing (Upper)
       All of the following:
           # Shinespark from adjacent room: https://youtu.be/0ILTTSV-Uc4
-          Level 2 Locks and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
+          Level 2 Keycard and Speed Booster and Shinespark Tricks (Intermediate) and Disabled Door Lock Rando and Disabled Entrance Rando and Can Break Single Bomb Blocks
           Any of the following:
               # Need beams to kill the Owtches
               Charge Beam

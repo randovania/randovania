@@ -42,9 +42,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-288</y>
-         <width>542</width>
-         <height>879</height>
+         <y>0</y>
+         <width>539</width>
+         <height>900</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -98,7 +98,7 @@
            <item>
             <widget class="Line" name="line_2">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -119,38 +119,47 @@
              </property>
             </widget>
            </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="door_lock_group">
-          <property name="title">
-           <string>Door Lock Settings</string>
-          </property>
-          <layout class="QVBoxLayout" name="door_lock_grops">
-           <property name="leftMargin">
-            <number>9</number>
-           </property>
-           <property name="topMargin">
-            <number>9</number>
-           </property>
-           <property name="rightMargin">
-            <number>9</number>
-           </property>
-           <property name="bottomMargin">
-            <number>9</number>
-           </property>
            <item>
-            <widget class="QCheckBox" name="two_sided_door_search_check">
-             <property name="text">
-              <string>[Experimental] Search for both sides of door</string>
+            <widget class="Line" name="logical_pickup_placement_line">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="two_sided_door_search_label">
+            <layout class="QHBoxLayout" name="logical_pickup_placement_layout">
+             <item>
+              <widget class="QLabel" name="logical_pickup_placement_label">
+               <property name="text">
+                <string>[Experimental] Logical pickup placement:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="logical_pickup_placement_combo">
+               <item>
+                <property name="text">
+                 <string>Minimal</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Major pickups</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>All pickups</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="logical_pickup_placement_description">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When randomizing doors using Door Lock Randimizer, search for either side of each door instead of a fixed one. In cases where only the other side of the door is accesible, this leads to more types of locks being used. In cases where there exists a path to the other side of the door, that path is less likely to be required. Placement of door locks is expected to be faster.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Minimal&lt;/span&gt;: Only the pickups required to beat the game are guaranteed to be obtainable.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -204,7 +213,7 @@
            <item>
             <widget class="Line" name="experimental_generator_line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -218,7 +227,7 @@
            <item>
             <widget class="Line" name="minimal_logic_line">
              <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+              <enum>Qt::Orientation::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -235,7 +244,7 @@
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;/p&gt;&lt;p&gt;Minimal Logic is a setting that checks for the bare minimum items to create an almost pure random layout. This setting assumes the player has extensive knowledge of the game and will likely require major glitches (e.g. breaking out of bounds) to complete.&lt;/p&gt;&lt;p&gt;There are no guarantees that a seed will be possible in this case.&lt;/p&gt;&lt;p&gt;{game_specific_text}&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

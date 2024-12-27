@@ -4,15 +4,27 @@ import dataclasses
 from typing import TYPE_CHECKING
 
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
 
 if TYPE_CHECKING:
+    from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.resource_collection import ResourceCollection
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.resolver.damage_state import DamageState
 
 
-class SuperMetroidBootstrap(MetroidBootstrap):
+class SuperMetroidBootstrap(Bootstrap):
+    def create_damage_state(self, game: GameDescription, configuration: BaseConfiguration) -> DamageState:
+        assert isinstance(configuration, SuperMetroidConfiguration)
+        return EnergyTankDamageState(
+            configuration.energy_per_tank - 1,
+            configuration.energy_per_tank,
+            game.resource_database,
+            game.region_list,
+        )
+
     def _get_enabled_misc_resources(
         self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:

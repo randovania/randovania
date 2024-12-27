@@ -20,6 +20,7 @@ EXCLUDE_DEFAULT = {"exclude_if_default": True}
 
 @dataclass(frozen=True, order=True)
 class AmmoPickupDefinition(JsonDataclass):
+    # TODO: docstrings
     game: RandovaniaGame = dataclasses.field(metadata={"init_from_extra": True})
     name: str = dataclasses.field(metadata={"init_from_extra": True})
     model_name: str
@@ -38,6 +39,9 @@ class AmmoPickupDefinition(JsonDataclass):
     explain_other_sources: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     mention_limit: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
     extra: frozendict = dataclasses.field(default_factory=frozendict, metadata=EXCLUDE_DEFAULT)
+
+    # TODO: change later to lower number after more experimentation and adjust in test_pickup_creator
+    index_age_impact: float = dataclasses.field(default=1.0, metadata=EXCLUDE_DEFAULT)
 
     def __post_init__(self) -> None:
         if self.temporary is not None:

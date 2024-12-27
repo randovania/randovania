@@ -5,13 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.7.x] - 2024-12-??
+## [8.8.x] - 2025-01-??
 
+- Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
+- Fixed: The map tracker no longer opens if the starting location prompt was cancelled.
+
+### Metroid Prime
+
+- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Error when splitting or unsplitting Beam Ammo Expansions when there are a total 0 Beam Ammo expansions.
+
+### Metroid: Samus Returns
+
+#### Logic Database
+
+- Added: Area 2 Dam Exterior - Spike Ravine: Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
+
+## [8.7.1] - 2024-12-05
+
+### Cave Story
+
+- Fixed: Curly's item in Plantation is now always sent in multiworld
+- Changed: Loading a save in Jail no. 1 will now remove the block if the chest has been opened
+- Changed: The helper block in Grasstown to return from east to west has been lowered by one block to make the jump easier
+- Fixed: The helper block in Grasstown always spawns when it is supposed to
+- Fixed: Freeware no longer crashes when alt-tabbing in fullscreen mode
+- Fixed: Teleporter icons in Arthur's House now always appear in the correct order
+- Fixed: Music randomization in Outer Wall now works regardless of which way you entered the room
+- Added: Ikuyo and kl3cks7r have been added to the ingame credits
+
+## [8.7.0] - 2024-12-02
+
+- Added: When exporting a game fails, for certain cases Randovania will now verify your input files for bad files. This is supported by Metroid Prime and Metroid Prime 2: Echoes.
 - Added: Drag and dropping a preset file into the main window now imports it.
 - Added: Options to alert the user via flashing the taskbar/playing a sound when generation completes in the Preferences menu.
 - Added: Show confirmation dialog when deleting a world in Multiworld.
-- Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
 - Added: Show confirmation dialog when closing the main window or multiplayer session window while generation is in progress.
+- Fixed: When editing the preset description after another change in a preset, the cursor position is now retained.
 - Fixed: Closing the multiplayer session window while generation is in progress will now abort the generation.
 
 ### Door Lock Randomizer
@@ -22,26 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: DNA hints are now sorted. If the DNA is for your own world, it is sorted based on the region, otherwise alphabetically based on the World name.
 
-### Metroid Prime
-
-- Added: The option of "Remove Bars in Great Tree Hall". This feature removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall allowing free movement between the lower and upper levels of the room.
-- Changed: Damage Reduction for Starter Preset and Moderate Challenge is now Additive.
-- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
-
-#### Logic Database
-
-- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
-
-##### Tallon Overworld
-
-- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
-
-### Metroid Prime 2: Echoes
-
-#### Logic Database
-
-- Fixed: All Seeker Doors without Seekers tricks have been moved into the dock override section thus allowing the corresponding doors to get shuffled in door type rando. To find the requirements of a seeker skip, look in the description of the corresponding dock node in the data visualiser.
-
 ### Metroid Dread
 
 #### Logic Database
@@ -51,15 +64,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Main Hub Tower Bottom: Get from Water Space Jump Platform to Alcove Across Grapple Block with just Gravity Suit and Movement (Beginner).
 - Added: In Main Hub Tower Bottom: Get from Alcove Across Grapple Block to Door to Energy Recharge South with Gravity Suit, Morph Ball and Single-wall Wall Jump (Intermediate).
 
+##### Dairon
+
+- Changed: In Early Grapple Room: The second Slide Jump has been upgraded from Beginner to Advanced.
+- Changed: In Early Grapple Room: Using Cross Bomb to cross the right gap is now under Movement (Beginner).
+- Changed: In Early Grapple Room: It is now logical to get from the Door to Transport to Artaria to Door to Early Grapple Access by using just Movement (Beginner) to jump off the slope and into the tunnel, then jump into the tunnel at the end.
+
 ##### Ferenia
 
 - Added: Wall Jump (Beginner) to get from Cold Room (Storm Missile Gate) to Wave Beam Tutorial.
 - Changed: Opening the Storm Missile Gate in Cold Room now requires Screw Attack.
 - Changed: Getting back to the door to Energy Recharge Station after opening the Storm missile Gate now accounts for needing two units of Power Bomb ammo.
 
+### Metroid Prime
+
+- Added: A feature that removes the Boost Ball bars obstacle in Tallon Overworld's Great Tree Hall, allowing free movement between the lower and upper levels of the room.
+- Changed: Damage Reduction for Starter Preset and Moderate Challenge is now set to Additive.
+- Changed: Missile Blast Shields have received some Quality of Life changes: they now automatically open the door when broken, even from behind, as well as being two-way if the opposite side was a normal door.
+- Fixed: Setting Screen Brightness in the cosmetic settings mismatching with what appears in-game.
+
+#### Logic Database
+
+- Changed: The Varia-only heat reduction is now done via a miscellaneous resource rather than being patched at runtime.
+- Changed: Going through Morph Ball Doors doesn't require the ability to shoot a beam anymore.
+
+##### Tallon Overworld
+
+- Added: Reverse Frigate now requires Knowledge (Beginner) in every room where the door usually requires activating Thermal Conduits from the other side.
+
 ### Metroid Prime 2: Echoes
 
 - Removed: The "Fewest Changes" preset was removed.
+
+#### Logic Database
+
+- Fixed: All Seeker Doors without Seekers tricks have been moved into the dock override section thus allowing the corresponding doors to get shuffled in door type rando. To find the requirements of a seeker skip, look in the description of the corresponding dock node in the data visualiser.
 
 ### Metroid: Samus Returns
 

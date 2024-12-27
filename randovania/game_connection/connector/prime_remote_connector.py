@@ -11,7 +11,6 @@ from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
-    PickupEntryWithOwner,
     PlayerLocationEvent,
     RemoteConnector,
 )
@@ -35,6 +34,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+    from randovania.network_common.remote_pickup import RemotePickup
 
 
 @dataclasses.dataclass(frozen=True)
@@ -56,7 +56,7 @@ class PrimeRemoteConnector(RemoteConnector):
     _last_message_size: int = 0
     _last_emitted_region: Region | None = None
     executor: MemoryOperationExecutor
-    remote_pickups: tuple[PickupEntryWithOwner, ...]
+    remote_pickups: tuple[RemotePickup, ...]
     message_cooldown: float = 0.0
     last_inventory: Inventory = {}
     _dt: float = 2.5
@@ -193,7 +193,7 @@ class PrimeRemoteConnector(RemoteConnector):
     async def receive_remote_pickups(
         self,
         inventory: Inventory,
-        remote_pickups: tuple[PickupEntryWithOwner, ...],
+        remote_pickups: tuple[RemotePickup, ...],
     ) -> bool:
         """Returns true if an operation was sent."""
 
@@ -203,7 +203,7 @@ class PrimeRemoteConnector(RemoteConnector):
         if magic_inv is None or magic_inv.amount > 0 or magic_inv.capacity >= len(remote_pickups) or in_cooldown:
             return False
 
-        provider_name, pickup = remote_pickups[magic_inv.capacity]
+        provider_name, pickup, coop_location = remote_pickups[magic_inv.capacity]
         item_patches, message = await self._patches_for_pickup(provider_name, pickup, inventory)
         self.logger.info(f"{len(remote_pickups)} permanent pickups, magic {magic_inv.capacity}. Next pickup: {message}")
 
@@ -373,7 +373,7 @@ class PrimeRemoteConnector(RemoteConnector):
     async def display_arbitrary_message(self, message: str):
         self.pending_messages.append(message)
 
-    async def set_remote_pickups(self, remote_pickups: tuple[PickupEntryWithOwner, ...]):
+    async def set_remote_pickups(self, remote_pickups: tuple[RemotePickup, ...]):
         """
         Sets the list of remote pickups that must be sent to the game.
         :param remote_pickups: Ordered list of pickups sent from other players, with the name of the player.

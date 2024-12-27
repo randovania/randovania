@@ -9,7 +9,6 @@ import pytest
 from randovania.game_description import default_database
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.generator.bootstrap import (
     CAMP_INDICES,
     FIRST_CAVE_INDICES,
@@ -36,11 +35,11 @@ def test_assign_pool_results(default_cs_configuration: CSConfiguration, puppies,
 
     default_cs_configuration = dataclasses.replace(default_cs_configuration, puppies_anywhere=puppies)
     tricks = default_cs_configuration.trick_level.set_level_for_trick(
-        game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNBubbler"),
+        game_description.resource_database.get_trick("SNBubbler"),
         LayoutTrickLevel.HYPERMODE,
     )
     tricks = tricks.set_level_for_trick(
-        game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNMissiles"),
+        game_description.resource_database.get_trick("SNMissiles"),
         LayoutTrickLevel.HYPERMODE,
     )
     default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)

@@ -261,27 +261,27 @@ def generate_region_html(name: str, areas: dict[str, AreaVideos]) -> str:
                 connection_body = HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
 
-                any = False
+                any_found = False
 
-                for id, start_time, highest_diff in sorted(yt_ids, key=lambda x: x[2]):
-                    if "%s?start=%d" % (id, start_time) in area_body:
+                for yt_id, start_time, highest_diff in sorted(yt_ids, key=lambda x: x[2]):
+                    if f"{yt_id}?start={start_time}" in area_body:
                         # video already used for another connection in this room
                         continue
 
-                    any = True
+                    any_found = True
 
                     difficulty = LayoutTrickLevel.from_number(highest_diff).long_name
 
                     connection_body += HTML_VIDEO_FORMAT.format(
                         difficulty,
-                        id,
+                        yt_id,
                         start_time,
-                        id,
+                        yt_id,
                         start_time,
-                        id,
+                        yt_id,
                     )
 
-                if not any:
+                if not any_found:
                     # no videos for this connection after filtering out duplicates
                     continue
 

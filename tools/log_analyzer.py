@@ -251,8 +251,8 @@ def create_report(
 
     # probability that any given location in this region contains progression
     regions_weighted = {}
-    for region in regions:
-        regions_weighted[region] = (regions[region] / seed_count) / region_totals[region]
+    for region, region_count in regions.items():
+        regions_weighted[region] = (region_count / seed_count) / region_totals[region]
 
     items = sort_by_contents(items)
     locations = sort_by_contents(locations)
@@ -313,8 +313,8 @@ def create_report(
             location_progression_count[location] = location_progression_count[location] / seed_count
         for location in location_progression_no_key_count:
             location_progression_no_key_count[location] = location_progression_no_key_count[location] / seed_count
-        for region in regions:
-            regions[region] = regions[region] / total_progression_item_count
+        for region, region_count in regions.items():
+            regions[region] = region_count / total_progression_item_count
 
         for loc in starting_location_report:
             for it in loc:

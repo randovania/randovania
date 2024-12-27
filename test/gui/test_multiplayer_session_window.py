@@ -40,20 +40,29 @@ from randovania.network_common.session_visibility import MultiplayerSessionVisib
 if TYPE_CHECKING:
     import pytest_mock
     from pytest_mock import MockerFixture
+    from pytestqt.qtbot import QtBot
 
     from randovania.gui.dialog.text_prompt_dialog import TextPromptDialog
+    from randovania.interface_common.preset_manager import PresetManager
 
 
 @pytest.fixture
-async def window(skip_qtbot) -> MultiplayerSessionWindow:
+async def window(skip_qtbot: QtBot) -> MultiplayerSessionWindow:
     window = MultiplayerSessionWindow(MagicMock(), MagicMock(spec=WindowManager), MagicMock())
     skip_qtbot.addWidget(window)
     window.connect_to_events()
+
+    # Don't use threads during tests
+    def _start_thread_for_effect(target):
+        target()
+
+    window._start_thread_for = MagicMock(side_effect=_start_thread_for_effect)
+
     return window
 
 
 @pytest.fixture
-def sample_session(preset_manager):
+def sample_session(preset_manager: PresetManager) -> MultiplayerSessionEntry:
     u1 = uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b")
     u2 = uuid.UUID("4bdb294e-9059-4fdf-9822-3f649023249a")
     u3 = uuid.UUID("47a8aec3-3149-4c76-b5c1-f86a9d3a5190")
@@ -104,7 +113,73 @@ def sample_session(preset_manager):
     )
 
 
-async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session):
+async def test_on_enable_coop(
+    preset_manager: PresetManager,
+    mocker: MockerFixture,
+    window: MultiplayerSessionWindow,
+    sample_session: MultiplayerSessionEntry,
+) -> None:
+    # Setup
+    async def _set_coop(val: bool) -> None:
+        window._session = dataclasses.replace(window._session, allow_coop=val)
+
+    window.game_session_api = AsyncMock()
+    window.game_session_api.set_allow_coop = _set_coop
+    mock_message_box: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.message_box", new_callable=AsyncMock)
+
+    window._session = sample_session
+    assert not window._session.allow_coop
+
+    # Run
+    window.allow_coop_check.setChecked(True)
+    await window._on_allow_coop_check()
+
+    # Assert
+    mock_message_box.assert_called_once()
+    assert window._session.allow_coop
+
+
+async def test_on_disable_coop(
+    mocker: MockerFixture, window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry
+) -> None:
+    # Setup
+    async def _set_coop(val: bool) -> None:
+        window._session = dataclasses.replace(window._session, allow_coop=val)
+
+    window.game_session_api = AsyncMock()
+    window.game_session_api.set_allow_coop = _set_coop
+    mock_message_box: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.message_box", new_callable=AsyncMock)
+
+    user1 = sample_session.users_list[0]
+    user2 = MultiplayerUser(
+        24,
+        "Player B",
+        True,
+        True,
+        worlds={
+            uuid.UUID("53308c10-c283-4be5-b5d2-1761c81a871b"): UserWorldDetail(
+                GameConnectionStatus.InGame, datetime.datetime(2024, 11, 9, 15, 28, tzinfo=datetime.UTC)
+            )
+        },
+    )
+
+    sample_session = dataclasses.replace(sample_session, allow_coop=True, users_list=[user1, user2])
+
+    window._session = sample_session
+    assert window._session.allow_coop
+
+    # Run
+    window.allow_coop_check.setChecked(False)
+    await window._on_allow_coop_check()
+
+    # Assert
+    mock_message_box.assert_called_once()
+    assert not window._session.allow_coop
+
+
+async def test_on_session_meta_update(
+    preset_manager: PresetManager, skip_qtbot: QtBot, sample_session: MultiplayerSessionEntry
+) -> None:
     # Setup
     network_client = MagicMock()
     network_client.current_user = User(id=12, name="Player A")
@@ -164,7 +239,7 @@ async def test_on_session_meta_update(preset_manager, skip_qtbot, sample_session
     network_client.server_call.assert_awaited_once_with("multiplayer_request_session_update", 1234)
 
 
-async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session):
+async def test_on_session_actions_update(window: MultiplayerSessionWindow, sample_session: MultiplayerSessionEntry):
     # Setup
     window._session = sample_session
     timestamp = datetime.datetime(year=2020, month=1, day=5)
@@ -426,8 +501,13 @@ def prepare_to_upload_layout():
 
 @pytest.mark.parametrize("is_ready", [False, True])
 async def test_generate_game(
-    window: MultiplayerSessionWindow, mocker, preset_manager, prepare_to_upload_layout, is_ready
+    window: MultiplayerSessionWindow,
+    mocker: pytest_mock.MockerFixture,
+    preset_manager: PresetManager,
+    prepare_to_upload_layout: MagicMock,
+    is_ready: bool,
 ):
+    mock_alert: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.alert_user_on_generation")
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.generator_frontend.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
     mock_yes_no_prompt: AsyncMock = mocker.patch(
@@ -489,6 +569,7 @@ async def test_generate_game(
     layout.save_to_file.assert_called_once_with(
         window._options.data_dir.joinpath(f"last_multiplayer_{session.id}.rdvgame")
     )
+    mock_alert.assert_called_once_with(window, window._options)
 
 
 async def test_generate_game_no_ready_abort(window: MultiplayerSessionWindow, mocker, preset_manager):

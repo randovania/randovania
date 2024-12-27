@@ -361,7 +361,8 @@
                 "map_name": "Sector 31",
                 "room_id": [
                     1
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to Entrance Recharge Room": {
@@ -6479,7 +6480,7 @@
                         "Event - B.O.X.": {
                             "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "TODO: xbox kills box",
                                 "items": [
                                     {
                                         "type": "or",
@@ -8414,6 +8415,57 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Account for Door Lock Rando",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "misc",
+                                                                    "name": "DoorLockRando",
+                                                                    "amount": 1,
+                                                                    "negate": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "L0Locks",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "If Door Lock Rando you may be forced to do the spark from the shortcut, the SA blocks do not reform",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "ShinesparkTrick",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8886,7 +8938,8 @@
                 "map_name": "Sector 332",
                 "room_id": [
                     32
-                ]
+                ],
+                "unlocked_save_station": true
             },
             "nodes": {
                 "Door to B.O.X. Access": {

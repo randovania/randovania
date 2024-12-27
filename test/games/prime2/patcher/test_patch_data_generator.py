@@ -441,7 +441,7 @@ def test_pickup_data_for_seeker_launcher(echoes_pickup_database, multiworld_item
     )
 
     # Run
-    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, pickup, PickupModelStyle.ALL_VISIBLE)
     result = patch_data_factory.echoes_pickup_details_to_patcher(details, multiworld_item, MagicMock())
 
     # Assert
@@ -503,7 +503,7 @@ def test_pickup_data_for_pb_expansion_locked(
     creator = pickup_exporter.PickupExporterSolo(memo, RandovaniaGame.METROID_PRIME_ECHOES)
 
     # Run
-    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, pickup, PickupModelStyle.ALL_VISIBLE)
     result = patch_data_factory.echoes_pickup_details_to_patcher(details, multiworld_item, MagicMock())
 
     # Assert
@@ -537,7 +537,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_pickup_database, multiworl
     )
 
     # Run
-    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
+    details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, pickup, PickupModelStyle.ALL_VISIBLE)
     result = patch_data_factory.echoes_pickup_details_to_patcher(details, multiworld_item, MagicMock())
 
     # Assert
@@ -564,7 +564,7 @@ def test_create_pickup_all_from_pool(echoes_game_description, default_echoes_con
     creator = pickup_exporter.PickupExporterSolo(memo_data, RandovaniaGame.METROID_PRIME_ECHOES)
 
     for item in item_pool.to_place:
-        data = creator.export(index, PickupTarget(item, 0), item, PickupModelStyle.ALL_VISIBLE)
+        data = creator.export(index, PickupTarget(item, 0), item, item, PickupModelStyle.ALL_VISIBLE)
         for hud_text in data.collection_text:
             assert not hud_text.startswith("Locked")
 
@@ -590,7 +590,7 @@ def test_run_validated_hud_text(multiworld_item):
             game=RandovaniaGame.METROID_PRIME_ECHOES,
             name="EnergyTransferModule",
         ),
-        other_player=False,
+        is_for_remote_player=False,
         original_pickup=None,
     )
 

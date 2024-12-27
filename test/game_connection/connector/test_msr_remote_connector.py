@@ -70,20 +70,24 @@ async def test_new_inventory_received(connector: MSRRemoteConnector):
     inventory_updated.assert_not_called()
 
     assert connector.inventory_index is None
-    connector.new_inventory_received('{"index": 69, "inventory": [0,1,0,1]}')
+    connector.new_inventory_received('{"index": 69, "inventory": [0,1,0,1,275.323]}')
     assert connector.inventory_index == 69
 
     # check ice beam
-    plasma_beam = connector.game.resource_database.get_item_by_name("Ice Beam")
-    assert connector.last_inventory[plasma_beam].capacity == 1
+    ice_beam = connector.game.resource_database.get_item_by_name("Ice Beam")
+    assert connector.last_inventory[ice_beam].capacity == 1
 
     # check wave beam
-    plasma_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
-    assert connector.last_inventory[plasma_beam].capacity == 0
+    wave_beam = connector.game.resource_database.get_item_by_name("Wave Beam")
+    assert connector.last_inventory[wave_beam].capacity == 0
 
     # check spazer beam
     spazer_beam = connector.game.resource_database.get_item_by_name("Spazer Beam")
     assert connector.last_inventory[spazer_beam].capacity == 1
+
+    # check rounding floats to ints via plasma beam item
+    plasma_beam = connector.game.resource_database.get_item_by_name("Plasma Beam")
+    assert connector.last_inventory[plasma_beam].capacity == 275
 
     inventory_updated.assert_called_once()
 
@@ -99,15 +103,21 @@ async def test_new_received_pickups_received(connector: MSRRemoteConnector):
 
 async def test_set_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pickup):
     connector.receive_remote_pickups = AsyncMock()
-    pickup_entry_with_owner = (("Dummy 1", msr_ice_beam_pickup), ("Dummy 2", msr_ice_beam_pickup))
-    await connector.set_remote_pickups(pickup_entry_with_owner)
-    assert connector.remote_pickups == pickup_entry_with_owner
+    remote_pickup = (
+        ("Dummy 1", msr_ice_beam_pickup, None),
+        ("Dummy 2", msr_ice_beam_pickup, None),
+    )
+    await connector.set_remote_pickups(remote_pickup)
+    assert connector.remote_pickups == remote_pickup
 
 
 async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_beam_pickup):
     connector.in_cooldown = False
-    pickup_entry_with_owner = (("Dummy 1", msr_ice_beam_pickup), ("Dummy 2", msr_ice_beam_pickup))
-    connector.remote_pickups = pickup_entry_with_owner
+    remote_pickup = (
+        ("Dummy 1", msr_ice_beam_pickup, None),
+        ("Dummy 2", msr_ice_beam_pickup, None),
+    )
+    connector.remote_pickups = remote_pickup
     connector.executor.run_lua_code = AsyncMock()
 
     connector.received_pickups = None
@@ -142,6 +152,22 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
         ", nil)',0,2)"
     )
     connector.executor.run_lua_code.assert_called_once_with(execute_string)
+
+
+@pytest.mark.parametrize("is_coop", [False, True])
+async def test_receive_remote_pickups_coop_logic(connector: MSRRemoteConnector, msr_ice_beam_pickup, is_coop: bool):
+    connector.in_cooldown = False
+    remote_pickup = (("Dummy 1", msr_ice_beam_pickup, PickupIndex(69) if is_coop else None),)
+    connector.remote_pickups = remote_pickup
+    connector.game_specific_execute = AsyncMock()
+
+    connector.received_pickups = 0
+    connector.inventory_index = 2
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is True
+    connector.game_specific_execute.assert_called_once_with(
+        "Ice Beam", [[{"item_id": "ITEM_WEAPON_ICE_BEAM", "quantity": 1}]], "Dummy 1", "s033_area3b" if is_coop else ""
+    )
 
 
 async def test_new_collected_locations_received_wrong_answer(connector: MSRRemoteConnector):
