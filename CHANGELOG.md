@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Area 5 Tower Exterior
 
-- Fixed: Starting in Screw Attack Chamber now placed Samus in the correct room.
+- Fixed: Starting in Screw Attack Chamber now places Samus in the correct room.
 
 ## [8.7.1] - 2024-12-05
 
