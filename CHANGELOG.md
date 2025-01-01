@@ -32,6 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Spike Ravine - Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
 
+##### Area 4 Central Caverns
+
+- Added: Out of bounds movement (Intermediate) with Space Jump to access Crystal Mines.
+
 ##### Area 5 Tower Exterior
 
 - Fixed: Starting in Screw Attack Chamber now places Samus in the correct room.
