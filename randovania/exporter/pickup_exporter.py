@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import dataclasses
+import typing
 from typing import TYPE_CHECKING
 
 from randovania.exporter import item_names
@@ -72,11 +73,14 @@ def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalRe
 def _pickup_description(pickup: PickupEntry) -> str:
     if not pickup.pickup_category.is_expansion:
         if len(pickup.progression) > 1:
-            return "Provides the following in order: {}.".format(
-                ", ".join(
-                    conditional.name for conditional in pickup.conditional_resources if conditional.name is not None
-                )
-            )
+
+            def _all_conditionals_have_names(names: list[str | None]) -> typing.TypeGuard[list[str]]:
+                return all(name is not None for name in names)
+
+            names = [conditional.name for conditional in pickup.conditional_resources]
+            assert _all_conditionals_have_names(names)
+
+            return "Provides the following in order: {}.".format(", ".join(names))
         else:
             return ""
 

@@ -17,7 +17,7 @@ class HintDarkTemple(Enum):
 
 
 class HintItemPrecision(Enum):
-     # Precision hasn't been assigned yet
+    # Precision hasn't been assigned yet
     UNDEFINED = "undefined"
 
     # The exact item
@@ -37,7 +37,7 @@ class HintItemPrecision(Enum):
 
 
 class HintLocationPrecision(Enum):
-     # Precision hasn't been assigned yet
+    # Precision hasn't been assigned yet
     UNDEFINED = "undefined"
 
     # The exact location
@@ -134,8 +134,12 @@ class BaseHint(JsonDataclass):
     @property
     def as_json(self) -> dict:
         data = super().as_json
-        data["hint_type"] = {v: k for k, v in HINT_TYPE_TO_CLASS.items()}[self.__class__].value
+        data["hint_type"] = self.hint_type().value
         return data
+
+    @classmethod
+    def hint_type(cls) -> HintType:
+        raise NotImplementedError
 
 
 @dataclass(frozen=True)
@@ -155,6 +159,10 @@ class LocationHint(BaseHint):
         """Creates a LocationHint without assigning its precision."""
         return cls(target=target, precision=_PRECISION_PAIR_UNASSIGNED)
 
+    @classmethod
+    def hint_type(cls) -> HintType:
+        return HintType.LOCATION
+
 
 def is_unassigned_location(hint: BaseHint) -> typing.TypeGuard[LocationHint]:
     return isinstance(hint, LocationHint) and (hint.precision is _PRECISION_PAIR_UNASSIGNED)
@@ -166,6 +174,9 @@ class JokeHint(BaseHint):
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
         return cls()
 
+    @classmethod
+    def hint_type(cls) -> HintType:
+        return HintType.JOKE
 
 
 @dataclass(frozen=True)
@@ -178,8 +189,13 @@ class RedTempleHint(BaseHint):
             dark_temple=HintDarkTemple(json_dict["dark_temple"]),
         )
 
+    @classmethod
+    def hint_type(cls) -> HintType:
+        return HintType.RED_TEMPLE_KEY_SET
+
 
 Hint: typing.TypeAlias = LocationHint | JokeHint | RedTempleHint
+
 
 class HintType(Enum):
     # Joke
@@ -194,11 +210,7 @@ class HintType(Enum):
     hint_class: type[BaseHint]
 
 
-HINT_TYPE_TO_CLASS: dict[HintType, type[BaseHint]] = {
-    HintType.LOCATION: LocationHint,
-    HintType.JOKE: JokeHint,
-    HintType.RED_TEMPLE_KEY_SET: RedTempleHint,
-}
+HINT_TYPE_TO_CLASS = {cls.hint_type(): cls for cls in (LocationHint, JokeHint, RedTempleHint)}
 
 enum_lib.add_per_enum_field(
     HintType,
