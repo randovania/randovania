@@ -32,6 +32,9 @@ class CorruptionPresetDescriber(GamePresetDescriber):
                         "Ship Missiles needs Main": "Ship Missile Expansion",
                     },
                 ),
+                {
+                    "Phaaze skip enabled": configuration.teleporters.skip_final_bosses,
+                },
             ],
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)

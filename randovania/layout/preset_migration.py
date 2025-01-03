@@ -1239,6 +1239,18 @@ def _migrate_v94(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v95(preset: dict) -> dict:
+    if preset["game"] == "prime3":
+        preset["configuration"]["teleporters"] = {
+            "mode": "vanilla",
+            "excluded_teleporters": [],
+            "excluded_targets": [],
+            "skip_final_bosses": False,
+            "allow_unvisited_room_names": True,
+        }
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1334,6 +1346,7 @@ _MIGRATIONS = [
     _migrate_v92,  # remove bars great tree hall
     _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
     _migrate_v94,
+    _migrate_v95,  # prime 3 phaaze skip
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

@@ -57,6 +57,9 @@ class CorruptionPatchDataFactory(PatchDataFactory):
                 f'set "starting_location={starting_location_text}"',
                 f'set "random_door_colors={str(cosmetic.random_door_colors).lower()}"',
                 f'set "random_welding_colors={str(cosmetic.random_welding_colors).lower()}"',
+                'set "hyper_hints=true"',
+                'set "fast_flying=true"',
+                f'set "phaaze_skip={str(configuration.teleporters.skip_final_bosses).lower()}"',
             ]
         )
 
