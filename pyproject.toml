@@ -130,6 +130,7 @@ server = [
     "cachetools",  # for TTLCache
 
     "py-cord>=2.3.1",  # for randovania/server/discord; 2.3.1+ is needed for Python 3.11
+    "audioop-lts; python_version>='3.13'",  # for py-cord
     "Pillow>=9.0.0",  # for randovania/server/discord/database_command
     "graphviz",  # for randovania/server/discord/database_command
 ]
@@ -151,7 +152,7 @@ typing = [
 ]
 
 website = [
-    "htmlmin",
+    "htmlmin2",
     "ruamel.yaml",
 ]
 
