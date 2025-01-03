@@ -21,6 +21,7 @@ from randovania.game_description.hint import (
     RelativeData,
     RelativeDataArea,
     RelativeDataItem,
+    is_unassigned_location,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler.filler_library import UnableToGenerate
@@ -269,7 +270,7 @@ class HintDistributor(ABC):
 
             del pickup_indices_weight[new_index]
 
-            new_hints[hint] = LocationHint(None, new_index)
+            new_hints[hint] = LocationHint.unassigned(new_index)
             debug.debug_print(
                 f"Added hint at {hint} for item at "
                 f"{region_list.node_name(region_list.node_from_pickup_index(new_index))}"
@@ -287,7 +288,7 @@ class HintDistributor(ABC):
         hints_to_replace = {
             asset: JokeHint()
             for asset, hint in patches.hints.items()
-            if isinstance(hint, LocationHint) and hint.precision is None
+            if is_unassigned_location(hint)
         }
 
         return dataclasses.replace(
@@ -403,10 +404,10 @@ class HintDistributor(ABC):
         :return:
         """
 
-        hints_to_replace: dict[NodeIdentifier, LocationHint] = {
+        hints_to_replace = {
             identifier: hint
             for identifier, hint in patches.hints.items()
-            if isinstance(hint, LocationHint) and hint.precision is None
+            if is_unassigned_location(hint)
         }
 
         relative_hint_providers = self._get_relative_hint_providers()

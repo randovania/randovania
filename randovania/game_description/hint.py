@@ -17,6 +17,9 @@ class HintDarkTemple(Enum):
 
 
 class HintItemPrecision(Enum):
+     # Precision hasn't been assigned yet
+    UNDEFINED = "undefined"
+
     # The exact item
     DETAILED = "detailed"
 
@@ -34,6 +37,9 @@ class HintItemPrecision(Enum):
 
 
 class HintLocationPrecision(Enum):
+     # Precision hasn't been assigned yet
+    UNDEFINED = "undefined"
+
     # The exact location
     DETAILED = "detailed"
 
@@ -110,10 +116,17 @@ class PrecisionPair(JsonDataclass):
         )
 
 
+_PRECISION_PAIR_UNASSIGNED = PrecisionPair(
+    location=HintLocationPrecision.UNDEFINED,
+    item=HintItemPrecision.UNDEFINED,
+    include_owner=False,
+)
+
+
 @dataclass(frozen=True)
-class Hint(JsonDataclass):
+class BaseHint(JsonDataclass):
     @classmethod
-    def from_json(cls, json_dict: dict, **extra: typing.Any) -> Hint:
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> BaseHint:
         hint_type = HintType(json_dict["hint_type"])
 
         return hint_type.hint_class.from_json(json_dict, **extra)
@@ -126,8 +139,8 @@ class Hint(JsonDataclass):
 
 
 @dataclass(frozen=True)
-class LocationHint(Hint):
-    precision: PrecisionPair | None
+class LocationHint(BaseHint):
+    precision: PrecisionPair
     target: PickupIndex
 
     @classmethod
@@ -137,16 +150,26 @@ class LocationHint(Hint):
             precision=PrecisionPair.from_json(json_dict["precision"]),
         )
 
+    @classmethod
+    def unassigned(cls, target: PickupIndex) -> typing.Self:
+        """Creates a LocationHint without assigning its precision."""
+        return cls(target=target, precision=_PRECISION_PAIR_UNASSIGNED)
+
+
+def is_unassigned_location(hint: BaseHint) -> typing.TypeGuard[LocationHint]:
+    return isinstance(hint, LocationHint) and (hint.precision is _PRECISION_PAIR_UNASSIGNED)
+
 
 @dataclass(frozen=True)
-class JokeHint(Hint):
+class JokeHint(BaseHint):
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
         return cls()
 
 
+
 @dataclass(frozen=True)
-class RedTempleHint(Hint):
+class RedTempleHint(BaseHint):
     dark_temple: HintDarkTemple
 
     @classmethod
@@ -155,6 +178,8 @@ class RedTempleHint(Hint):
             dark_temple=HintDarkTemple(json_dict["dark_temple"]),
         )
 
+
+Hint: typing.TypeAlias = LocationHint | JokeHint | RedTempleHint
 
 class HintType(Enum):
     # Joke
@@ -166,10 +191,10 @@ class HintType(Enum):
     # All other hints
     LOCATION = "location"
 
-    hint_class: type[Hint]
+    hint_class: type[BaseHint]
 
 
-HINT_TYPE_TO_CLASS: dict[HintType, type[Hint]] = {
+HINT_TYPE_TO_CLASS: dict[HintType, type[BaseHint]] = {
     HintType.LOCATION: LocationHint,
     HintType.JOKE: JokeHint,
     HintType.RED_TEMPLE_KEY_SET: RedTempleHint,

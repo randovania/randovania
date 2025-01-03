@@ -22,7 +22,6 @@ class RelativeItemFormatter(RelativeFormatter):
         self.players_config = players_config
 
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
-        assert hint.precision is not None
         assert isinstance(hint.precision.relative, RelativeDataItem)
         index = hint.precision.relative.other_index
 

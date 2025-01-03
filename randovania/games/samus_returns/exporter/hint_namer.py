@@ -90,7 +90,6 @@ class MSRHintNamer(HintNamer):
     def format_location_hint(
         self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool
     ) -> str:
-        assert isinstance(hint.precision, PrecisionPair)
         msg = self.location_formatters[hint.precision.location].format(
             game,
             dataclasses.replace(pick_hint, pickup_name=pick_hint.pickup_name),

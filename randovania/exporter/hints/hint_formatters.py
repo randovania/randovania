@@ -31,8 +31,6 @@ class TemplatedFormatter(LocationFormatter):
         self.upper_pickup = upper_pickup
 
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
-        assert hint.precision is not None
-
         node_name = self.namer.format_location(
             location=PickupLocation(game, hint.target),
             with_region=self.with_region or hint.precision.location == HintLocationPrecision.REGION_ONLY,
@@ -75,7 +73,6 @@ class RelativeFormatter(LocationFormatter):
         other_name: str,
         with_color: bool,
     ) -> str:
-        assert hint.precision is not None
         assert hint.precision.relative is not None
 
         distance = self._calculate_distance(hint.target, other_area) + (hint.precision.relative.distance_offset or 0)
@@ -97,8 +94,6 @@ class RelativeFormatter(LocationFormatter):
 
 class RelativeAreaFormatter(RelativeFormatter):
     def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
-        assert hint.precision is not None
-
         relative = hint.precision.relative
         assert isinstance(relative, RelativeDataArea)
 

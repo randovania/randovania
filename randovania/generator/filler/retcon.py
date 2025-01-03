@@ -437,7 +437,7 @@ def _assign_pickup_somewhere(
         )
         if hint_location is not None:
             index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_hint(
-                hint_location, LocationHint(None, pickup_index)
+                hint_location, LocationHint.unassigned(pickup_index)
             )
 
         if pickup_index in index_owner_state.reach.state.collected_pickup_indices:

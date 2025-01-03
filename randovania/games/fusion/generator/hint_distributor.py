@@ -9,6 +9,7 @@ from randovania.game_description.hint import (
     HintLocationPrecision,
     LocationHint,
     PrecisionPair,
+    is_unassigned_location,
 )
 from randovania.generator.hint_distributor import HintDistributor
 
@@ -35,10 +36,10 @@ class FusionHintDistributor(HintDistributor):
     async def assign_precision_to_hints(
         self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
     ) -> GamePatches:
-        hints_to_replace: dict[NodeIdentifier, LocationHint] = {
+        hints_to_replace = {
             identifier: hint
             for identifier, hint in patches.hints.items()
-            if isinstance(hint, LocationHint) and hint.precision is None
+            if is_unassigned_location(hint)
         }
 
         for node, hint in hints_to_replace.items():

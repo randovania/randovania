@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, PrecisionPair
+from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, JokeHint, PrecisionPair
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.hint_distributor import HintDistributor
 
@@ -35,7 +35,7 @@ class DreadHintDistributor(HintDistributor):
         assert isinstance(prefill.configuration, DreadConfiguration)
         if prefill.configuration.artifacts.required_artifacts > 0:
             patches = patches.assign_hint(
-                NodeIdentifier.create("Dairon", "Navigation Station North", "Save Station"), Hint(HintType.JOKE, None)
+                NodeIdentifier.create("Dairon", "Navigation Station North", "Save Station"), JokeHint()
             )
 
         return await super().assign_specific_location_hints(patches, prefill)

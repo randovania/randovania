@@ -66,7 +66,6 @@ class CSHintNamer(HintNamer):
     def format_location_hint(
         self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool
     ) -> str:
-        assert hint.precision is not None
         return self.location_formatters[hint.precision.location].format(
             game,
             pick_hint,

@@ -50,7 +50,6 @@ class HintExporter:
 
         else:
             assert isinstance(hint, LocationHint)
-            assert hint.precision is not None
 
             configuration = all_patches[players_config.player_index].configuration
 

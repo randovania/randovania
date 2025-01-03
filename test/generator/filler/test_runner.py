@@ -50,7 +50,7 @@ async def test_run_filler(
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
-    patches = echoes_game_patches.assign_hint(hint_identifiers[0], LocationHint(None, PickupIndex(0)))
+    patches = echoes_game_patches.assign_hint(hint_identifiers[0], LocationHint.unassigned(PickupIndex(0)))
     action_log = (MagicMock(), MagicMock())
     player_state = MagicMock()
     player_state.index = 0
@@ -110,8 +110,8 @@ def test_add_hints_precision(empty_patches):
             PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(1),
         ),
-        LocationHint(None, PickupIndex(2)),
-        LocationHint(None, PickupIndex(3)),
+        LocationHint.unassigned(PickupIndex(2)),
+        LocationHint.unassigned(PickupIndex(3)),
     ]
     nc = NodeIdentifier.create
 
