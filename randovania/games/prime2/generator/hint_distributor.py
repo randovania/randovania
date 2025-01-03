@@ -3,13 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.hint import (
-    Hint,
     HintDarkTemple,
     HintItemPrecision,
     HintLocationPrecision,
     HintRelativeAreaName,
-    HintType,
     PrecisionPair,
+    RedTempleHint,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -57,9 +56,7 @@ class EchoesHintDistributor(HintDistributor):
         temple_hints = list(enum_lib.iterate_enum(HintDarkTemple))
         while all_hint_identifiers and temple_hints:
             identifier = all_hint_identifiers.pop()
-            patches = patches.assign_hint(
-                identifier, Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=temple_hints.pop(0))
-            )
+            patches = patches.assign_hint(identifier, RedTempleHint(dark_temple=temple_hints.pop(0)))
             identifiers.remove(identifier)
 
         return patches

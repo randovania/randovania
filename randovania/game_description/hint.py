@@ -118,6 +118,12 @@ class Hint(JsonDataclass):
 
         return hint_type.hint_class.from_json(json_dict, **extra)
 
+    @property
+    def as_json(self) -> dict:
+        data = super().as_json
+        data["hint_type"] = {v: k for k, v in HINT_TYPE_TO_CLASS.items()}[self.__class__].value
+        return data
+
 
 @dataclass(frozen=True)
 class LocationHint(Hint):
@@ -163,12 +169,14 @@ class HintType(Enum):
     hint_class: type[Hint]
 
 
+HINT_TYPE_TO_CLASS: dict[HintType, type[Hint]] = {
+    HintType.LOCATION: LocationHint,
+    HintType.JOKE: JokeHint,
+    HintType.RED_TEMPLE_KEY_SET: RedTempleHint,
+}
+
 enum_lib.add_per_enum_field(
     HintType,
     "hint_class",
-    {
-        HintType.LOCATION: LocationHint,
-        HintType.JOKE: JokeHint,
-        HintType.RED_TEMPLE_KEY_SET: RedTempleHint,
-    },
+    HINT_TYPE_TO_CLASS,
 )

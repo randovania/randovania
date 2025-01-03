@@ -44,7 +44,6 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
                 "Torvus Bog/Catacombs/Lore Scan",
                 {
                     "hint_type": "location",
-                    "dark_temple": None,
                     "precision": {
                         "location": "detailed",
                         "item": "detailed",
