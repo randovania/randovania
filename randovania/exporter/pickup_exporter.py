@@ -73,7 +73,9 @@ def _pickup_description(pickup: PickupEntry) -> str:
     if not pickup.pickup_category.is_expansion:
         if len(pickup.progression) > 1:
             return "Provides the following in order: {}.".format(
-                ", ".join(conditional.name for conditional in pickup.conditional_resources)
+                ", ".join(
+                    conditional.name for conditional in pickup.conditional_resources if conditional.name is not None
+                )
             )
         else:
             return ""
@@ -131,7 +133,11 @@ def _get_all_hud_text(
     conditionals: list[ConditionalResources],
     memo_data: dict[str, str],
 ) -> list[str]:
-    return [_get_single_hud_text(conditional.name, memo_data, conditional.resources) for conditional in conditionals]
+    return [
+        _get_single_hud_text(conditional.name, memo_data, conditional.resources)
+        for conditional in conditionals
+        if conditional.name is not None
+    ]
 
 
 def _calculate_collection_text(
@@ -402,13 +408,15 @@ def export_all_indices(
     return pickups
 
 
-class GenericAcquiredMemo(dict):
-    def __missing__(self, key):
+class GenericAcquiredMemo(dict[str, str]):
+    def __missing__(self, key: str) -> str:
         return f"{key} acquired!"
 
 
-def create_pickup_exporter(memo_data: dict, players_config: PlayersConfiguration, game: RandovaniaGame):
-    exporter = PickupExporterSolo(memo_data, game)
+def create_pickup_exporter(
+    memo_data: dict, players_config: PlayersConfiguration, game: RandovaniaGame
+) -> PickupExporter:
+    exporter: PickupExporter = PickupExporterSolo(memo_data, game)
     if players_config.is_multiworld:
         exporter = PickupExporterMulti(exporter, players_config)
     return exporter

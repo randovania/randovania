@@ -23,6 +23,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.hint_distributor import HintProvider
     from randovania.generator.pre_fill_params import PreFillParams
 
 
@@ -81,7 +82,7 @@ class EchoesHintDistributor(HintDistributor):
 
         return hints
 
-    def _get_relative_hint_providers(self):
+    def _get_relative_hint_providers(self) -> list[HintProvider]:
         return [
             self._relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
             self._relative(HintLocationPrecision.RELATIVE_TO_AREA, False, HintRelativeAreaName.NAME, 3),

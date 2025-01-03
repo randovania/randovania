@@ -7,17 +7,7 @@ from enum import Enum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.resources.pickup_index import PickupIndex
-
-
-class HintType(Enum):
-    # Joke
-    JOKE = "joke"
-
-    # Hints for where a set of red temple keys are
-    RED_TEMPLE_KEY_SET = "red-temple-key-set"
-
-    # All other hints
-    LOCATION = "location"
+from randovania.lib import enum_lib
 
 
 class HintDarkTemple(Enum):
@@ -122,33 +112,63 @@ class PrecisionPair(JsonDataclass):
 
 @dataclass(frozen=True)
 class Hint(JsonDataclass):
-    # FIXME: refactor this into subclasses. this is a typing nightmare
-    hint_type: HintType
-    precision: PrecisionPair | None
-    target: PickupIndex | None = None
-    dark_temple: HintDarkTemple | None = None
+    @classmethod
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> Hint:
+        hint_type = HintType(json_dict["hint_type"])
 
-    def __post_init__(self) -> None:
-        if self.hint_type is HintType.JOKE:
-            if self.target is not None or self.dark_temple is not None:
-                raise ValueError("Joke Hint, but had a target or dark_temple.")
-        elif self.hint_type is HintType.LOCATION:
-            if self.target is None:
-                raise ValueError("Location Hint, but no target set.")
-        elif self.hint_type is HintType.RED_TEMPLE_KEY_SET:
-            if self.dark_temple is None:
-                raise ValueError("Dark Temple Hint, but no dark_temple set.")
+        return hint_type.hint_class.from_json(json_dict, **extra)
+
+
+@dataclass(frozen=True)
+class LocationHint(Hint):
+    precision: PrecisionPair | None
+    target: PickupIndex
 
     @classmethod
     def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
-        # re-implemented for an version without expensive reflection
-        precision = json_dict.get("precision")
-        target = json_dict.get("target")
-        dark_temple = json_dict.get("dark_temple")
-
         return cls(
-            hint_type=HintType(json_dict["hint_type"]),
-            precision=PrecisionPair.from_json(precision) if precision is not None else None,
-            target=PickupIndex(target) if target is not None else None,
-            dark_temple=HintDarkTemple(dark_temple) if dark_temple is not None else None,
+            target=PickupIndex(json_dict["target"]),
+            precision=PrecisionPair.from_json(json_dict["precision"]),
         )
+
+
+@dataclass(frozen=True)
+class JokeHint(Hint):
+    @classmethod
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+        return cls()
+
+
+@dataclass(frozen=True)
+class RedTempleHint(Hint):
+    dark_temple: HintDarkTemple
+
+    @classmethod
+    def from_json(cls, json_dict: dict, **extra: typing.Any) -> typing.Self:
+        return cls(
+            dark_temple=HintDarkTemple(json_dict["dark_temple"]),
+        )
+
+
+class HintType(Enum):
+    # Joke
+    JOKE = "joke"
+
+    # Hints for where a set of red temple keys are
+    RED_TEMPLE_KEY_SET = "red-temple-key-set"
+
+    # All other hints
+    LOCATION = "location"
+
+    hint_class: type[Hint]
+
+
+enum_lib.add_per_enum_field(
+    HintType,
+    "hint_class",
+    {
+        HintType.LOCATION: LocationHint,
+        HintType.JOKE: JokeHint,
+        HintType.RED_TEMPLE_KEY_SET: RedTempleHint,
+    },
+)

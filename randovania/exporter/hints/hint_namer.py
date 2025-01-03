@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, NamedTuple
 if TYPE_CHECKING:
     from randovania.exporter.hints.pickup_hint import PickupHint
     from randovania.game.game_enum import RandovaniaGame
-    from randovania.game_description.hint import Hint
+    from randovania.game_description.hint import LocationHint
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.game_description.resources.pickup_index import PickupIndex
 
@@ -28,7 +28,9 @@ class HintNamer:
     def format_area(self, location: PickupLocation, with_region: bool, with_color: bool) -> str:
         raise NotImplementedError
 
-    def format_location_hint(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
+    def format_location_hint(
+        self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool
+    ) -> str:
         raise NotImplementedError
 
     def format_resource_is_starting(self, resource: ItemResourceInfo, with_color: bool) -> str:

@@ -5,10 +5,9 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
-    Hint,
     HintItemPrecision,
     HintLocationPrecision,
-    HintType,
+    LocationHint,
     PrecisionPair,
 )
 from randovania.generator.hint_distributor import HintDistributor
@@ -36,10 +35,10 @@ class FusionHintDistributor(HintDistributor):
     async def assign_precision_to_hints(
         self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
     ) -> GamePatches:
-        hints_to_replace: dict[NodeIdentifier, Hint] = {
+        hints_to_replace: dict[NodeIdentifier, LocationHint] = {
             identifier: hint
             for identifier, hint in patches.hints.items()
-            if hint.precision is None and hint.hint_type == HintType.LOCATION
+            if isinstance(hint, LocationHint) and hint.precision is None
         }
 
         for node, hint in hints_to_replace.items():

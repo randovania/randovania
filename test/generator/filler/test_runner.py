@@ -12,11 +12,10 @@ from randovania.game_description.db.area_identifier import AreaIdentifier
 from randovania.game_description.db.hint_node import HintNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
-    Hint,
     HintItemPrecision,
     HintLocationPrecision,
     HintRelativeAreaName,
-    HintType,
+    LocationHint,
     PrecisionPair,
     RelativeData,
     RelativeDataArea,
@@ -51,7 +50,7 @@ async def test_run_filler(
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
-    patches = echoes_game_patches.assign_hint(hint_identifiers[0], Hint(HintType.LOCATION, None, PickupIndex(0)))
+    patches = echoes_game_patches.assign_hint(hint_identifiers[0], LocationHint(None, PickupIndex(0)))
     action_log = (MagicMock(), MagicMock())
     player_state = MagicMock()
     player_state.index = 0
@@ -75,7 +74,9 @@ async def test_run_filler(
 
     # Assert
     assert len(result_patches.hints) == len(hint_identifiers)
-    assert [hint for hint in result_patches.hints.values() if hint.precision is None] == []
+    assert [
+        hint for hint in result_patches.hints.values() if isinstance(hint, LocationHint) and hint.precision is None
+    ] == []
     assert initial_pickup_count == len(remaining_items) + len(result_patches.pickup_assignment.values())
 
 
@@ -105,13 +106,12 @@ def test_add_hints_precision(empty_patches):
     player_state = MagicMock()
     rng = MagicMock()
     hints = [
-        Hint(
-            HintType.LOCATION,
+        LocationHint(
             PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(1),
         ),
-        Hint(HintType.LOCATION, None, PickupIndex(2)),
-        Hint(HintType.LOCATION, None, PickupIndex(3)),
+        LocationHint(None, PickupIndex(2)),
+        LocationHint(None, PickupIndex(3)),
     ]
     nc = NodeIdentifier.create
 
@@ -131,13 +131,11 @@ def test_add_hints_precision(empty_patches):
     failed_relative_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(2))
     relative_hint_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(3))
     assert result.hints == {
-        nc("w", "a", "0"): Hint(
-            HintType.LOCATION,
+        nc("w", "a", "0"): LocationHint(
             PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
             PickupIndex(1),
         ),
-        nc("w", "a", "1"): Hint(
-            HintType.LOCATION,
+        nc("w", "a", "1"): LocationHint(
             PrecisionPair(HintLocationPrecision.REGION_ONLY, HintItemPrecision.PRECISE_CATEGORY, include_owner=True),
             PickupIndex(2),
         ),
@@ -221,4 +219,4 @@ def test_add_relative_hint(
 
     # Assert
     pair = PrecisionPair(location_precision, target_precision, include_owner=False, relative=data)
-    assert result == Hint(HintType.LOCATION, pair, PickupIndex(1))
+    assert result == LocationHint(pair, PickupIndex(1))

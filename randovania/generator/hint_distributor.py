@@ -12,11 +12,11 @@ from randovania.game_description.db.hint_node import HintNode, HintNodeKind
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
-    Hint,
     HintItemPrecision,
     HintLocationPrecision,
     HintRelativeAreaName,
-    HintType,
+    JokeHint,
+    LocationHint,
     PrecisionPair,
     RelativeData,
     RelativeDataArea,
@@ -36,7 +36,7 @@ if TYPE_CHECKING:
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.pre_fill_params import PreFillParams
 
-HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Hint | None]
+HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], LocationHint | None]
 
 
 def _not_empty(it: Iterator) -> bool:
@@ -77,8 +77,7 @@ class HintDistributor(ABC):
                 identifier = node.identifier
                 patches = patches.assign_hint(
                     identifier,
-                    Hint(
-                        HintType.LOCATION,
+                    LocationHint(
                         specific_location_precisions.get(identifier, default_precision),
                         PickupIndex(node.extra["hint_index"]),
                     ),
@@ -104,7 +103,7 @@ class HintDistributor(ABC):
                 break
 
             identifier = all_hint_identifiers.pop()
-            patches = patches.assign_hint(identifier, Hint(HintType.LOCATION, precision, index))
+            patches = patches.assign_hint(identifier, LocationHint(precision, index))
             identifiers.remove(identifier)
 
         return patches
@@ -124,7 +123,7 @@ class HintDistributor(ABC):
 
         while num_joke > 0 and all_hint_identifiers:
             identifier = all_hint_identifiers.pop()
-            patches = patches.assign_hint(identifier, Hint(HintType.JOKE, None))
+            patches = patches.assign_hint(identifier, JokeHint())
             num_joke -= 1
             identifiers.remove(identifier)
 
@@ -197,7 +196,8 @@ class HintDistributor(ABC):
         potential_hint_locations -= patches.hints.keys()
 
         # We try our best to not hint the same thing twice
-        hinted_indices: set[PickupIndex] = {hint.target for hint in patches.hints.values() if hint.target is not None}
+        location_hints = {hint for hint in patches.hints.values() if isinstance(hint, LocationHint)}
+        hinted_indices: set[PickupIndex] = {hint.target for hint in location_hints}
 
         # Get interesting items to place hints for
         possible_indices: set[PickupIndex] = {
@@ -269,7 +269,7 @@ class HintDistributor(ABC):
 
             del pickup_indices_weight[new_index]
 
-            new_hints[hint] = Hint(HintType.LOCATION, None, new_index)
+            new_hints[hint] = LocationHint(None, new_index)
             debug.debug_print(
                 f"Added hint at {hint} for item at "
                 f"{region_list.node_name(region_list.node_from_pickup_index(new_index))}"
@@ -285,9 +285,9 @@ class HintDistributor(ABC):
         """
 
         hints_to_replace = {
-            asset: Hint(HintType.JOKE, None)
+            asset: JokeHint()
             for asset, hint in patches.hints.items()
-            if hint.precision is None and hint.hint_type == HintType.LOCATION
+            if isinstance(hint, LocationHint) and hint.precision is None
         }
 
         return dataclasses.replace(
@@ -308,7 +308,7 @@ class HintDistributor(ABC):
         precise_distance: bool,
         precision: HintItemPrecision | HintRelativeAreaName,
         max_distance: int,
-    ) -> Hint | None:
+    ) -> LocationHint | None:
         """
         Creates a relative hint.
         :return: Might be None, if no hint could be created.
@@ -360,7 +360,7 @@ class HintDistributor(ABC):
             raise ValueError(f"Invalid relative_type: {relative_type}")
 
         precision_pair = PrecisionPair(relative_type, target_precision, include_owner=False, relative=relative)
-        return Hint(HintType.LOCATION, precision_pair, target)
+        return LocationHint(precision_pair, target)
 
     def _relative(
         self,
@@ -369,7 +369,9 @@ class HintDistributor(ABC):
         precision: HintItemPrecision | HintRelativeAreaName,
         max_distance: int,
     ) -> HintProvider:
-        def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex) -> Hint | None:
+        def _wrapper(
+            player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex
+        ) -> LocationHint | None:
             return self.add_relative_hint(
                 player_state.game.region_list,
                 patches,
@@ -401,10 +403,10 @@ class HintDistributor(ABC):
         :return:
         """
 
-        hints_to_replace: dict[NodeIdentifier, Hint] = {
+        hints_to_replace: dict[NodeIdentifier, LocationHint] = {
             identifier: hint
             for identifier, hint in patches.hints.items()
-            if hint.precision is None and hint.hint_type == HintType.LOCATION
+            if isinstance(hint, LocationHint) and hint.precision is None
         }
 
         relative_hint_providers = self._get_relative_hint_providers()
