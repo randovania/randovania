@@ -76,7 +76,7 @@ def generic_credits(
         pickup.name: index for index, pickup in enumerate(standard_pickup_configuration.pickups_state.keys())
     }
 
-    def sort_pickup(p: PickupEntry) -> tuple[int | float, str]:
+    def sort_pickup(p: PickupEntry) -> tuple[float, str]:
         return major_pickup_name_order.get(p.name, math.inf), p.name
 
     details = get_locations_for_major_pickups_and_keys(all_patches, players_config)
