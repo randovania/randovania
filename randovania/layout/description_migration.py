@@ -575,6 +575,22 @@ def _migrate_v28(data: dict) -> dict:
     return data
 
 
+def _migrate_v29(data: dict) -> dict:
+    game_modifications = data["game_modifications"]
+
+    for game in game_modifications:
+        for hint in game["hints"].values():
+            hint_type = hint["hint_type"]
+
+            if hint_type != "red-temple-key-set":
+                hint.pop("dark_temple", None)
+            if hint_type != "location":
+                hint.pop("precision", None)
+                hint.pop("target", None)
+
+    return data
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v2.2.0-6-gbfd37022
     _migrate_v2,  # v2.4.2-16-g735569fd
@@ -604,6 +620,7 @@ _MIGRATIONS = [
     _migrate_v26,  # configurable nodes -> game_specific
     _migrate_v27,
     _migrate_v28,
+    _migrate_v29,  # hint type refactor
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

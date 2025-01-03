@@ -11,7 +11,7 @@ from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint
+from randovania.game_description.hint import BaseHint
 from randovania.game_description.resources.resource_collection import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.generator.pickup_pool import PoolResults, pool_creator
@@ -256,7 +256,7 @@ def decode_single(
     # Hints
     hints = {}
     for identifier_str, hint in game_modifications["hints"].items():
-        hints[NodeIdentifier.from_string(identifier_str)] = Hint.from_json(hint)
+        hints[NodeIdentifier.from_string(identifier_str)] = BaseHint.from_json(hint)
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_connections(dock_connections)

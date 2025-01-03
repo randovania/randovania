@@ -3,13 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.hint import (
-    Hint,
     HintDarkTemple,
     HintItemPrecision,
     HintLocationPrecision,
     HintRelativeAreaName,
-    HintType,
     PrecisionPair,
+    RedTempleHint,
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -23,6 +22,7 @@ if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
+    from randovania.generator.hint_distributor import HintProvider
     from randovania.generator.pre_fill_params import PreFillParams
 
 
@@ -56,9 +56,7 @@ class EchoesHintDistributor(HintDistributor):
         temple_hints = list(enum_lib.iterate_enum(HintDarkTemple))
         while all_hint_identifiers and temple_hints:
             identifier = all_hint_identifiers.pop()
-            patches = patches.assign_hint(
-                identifier, Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=temple_hints.pop(0))
-            )
+            patches = patches.assign_hint(identifier, RedTempleHint(dark_temple=temple_hints.pop(0)))
             identifiers.remove(identifier)
 
         return patches
@@ -81,7 +79,7 @@ class EchoesHintDistributor(HintDistributor):
 
         return hints
 
-    def _get_relative_hint_providers(self):
+    def _get_relative_hint_providers(self) -> list[HintProvider]:
         return [
             self._relative(HintLocationPrecision.RELATIVE_TO_AREA, True, HintRelativeAreaName.NAME, 4),
             self._relative(HintLocationPrecision.RELATIVE_TO_AREA, False, HintRelativeAreaName.NAME, 3),

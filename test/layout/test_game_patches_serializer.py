@@ -14,7 +14,7 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.dock_node import DockNode
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.hint import Hint
+from randovania.game_description.hint import BaseHint
 from randovania.game_description.pickup.pickup_entry import (
     PickupEntry,
     PickupModel,
@@ -44,7 +44,6 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
                 "Torvus Bog/Catacombs/Lore Scan",
                 {
                     "hint_type": "location",
-                    "dark_temple": None,
                     "precision": {
                         "location": "detailed",
                         "item": "detailed",
@@ -148,7 +147,7 @@ def patches_with_data(request, echoes_game_description, echoes_game_patches, ech
 
     if request.param.get("hint"):
         identifier, hint = request.param.get("hint")
-        patches = patches.assign_hint(NodeIdentifier.from_string(identifier), Hint.from_json(hint))
+        patches = patches.assign_hint(NodeIdentifier.from_string(identifier), BaseHint.from_json(hint))
         data["hints"][identifier] = hint
 
     return data, patches

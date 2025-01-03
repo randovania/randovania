@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.db.pickup_node import PickupNode
-from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, PrecisionPair
+from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision, LocationHint, PrecisionPair
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.generator.hint_distributor import HintDistributor, HintProvider, HintTargetPrecision
 
@@ -53,7 +53,7 @@ class CSHintDistributor(HintDistributor):
             if patches.starting_location.area != "Start Point":
                 items_with_hint.append("Arthur's Key")
 
-            already_hinted_indices = [hint.target for hint in patches.hints.values() if hint.target is not None]
+            already_hinted_indices = [hint.target for hint in patches.hints.values() if isinstance(hint, LocationHint)]
             indices_with_hint = [
                 (node.pickup_index, PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False))
                 for node in patches.game.region_list.iterate_nodes()

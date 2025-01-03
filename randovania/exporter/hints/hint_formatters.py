@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description import node_search
-from randovania.game_description.hint import Hint, HintLocationPrecision, HintRelativeAreaName, RelativeDataArea
+from randovania.game_description.hint import HintLocationPrecision, HintRelativeAreaName, LocationHint, RelativeDataArea
 from randovania.layout import filtered_database
 
 if TYPE_CHECKING:
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 
 class LocationFormatter:
-    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
+    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
         raise NotImplementedError
 
 
@@ -30,7 +30,7 @@ class TemplatedFormatter(LocationFormatter):
         self.with_region = with_region
         self.upper_pickup = upper_pickup
 
-    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
+    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
         node_name = self.namer.format_location(
             location=PickupLocation(game, hint.target),
             with_region=self.with_region or hint.precision.location == HintLocationPrecision.REGION_ONLY,
@@ -62,20 +62,19 @@ class RelativeFormatter(LocationFormatter):
 
     def _calculate_distance(self, source_location: PickupIndex, target: Area) -> int:
         source = self.region_list.node_from_pickup_index(source_location)
-        dock_types_to_ignore = []
 
-        return node_search.distances_to_node(self.region_list, source, dock_types_to_ignore, patches=self.patches)[
-            target
-        ]
+        return node_search.distances_to_node(self.region_list, source, [], patches=self.patches)[target]
 
     def relative_format(
         self,
         pick_hint: PickupHint,
-        hint: Hint,
+        hint: LocationHint,
         other_area: Area,
         other_name: str,
         with_color: bool,
     ) -> str:
+        assert hint.precision.relative is not None
+
         distance = self._calculate_distance(hint.target, other_area) + (hint.precision.relative.distance_offset or 0)
         if distance == 1:
             distance_msg = "one room"
@@ -89,14 +88,15 @@ class RelativeFormatter(LocationFormatter):
             f" can be found {colored_dist} away from {other_name}."
         )
 
-    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
+    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
         raise NotImplementedError
 
 
 class RelativeAreaFormatter(RelativeFormatter):
-    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: Hint, with_color: bool) -> str:
+    def format(self, game: RandovaniaGame, pick_hint: PickupHint, hint: LocationHint, with_color: bool) -> str:
         relative = hint.precision.relative
         assert isinstance(relative, RelativeDataArea)
+
         other_area = self.region_list.area_by_area_location(relative.area_location)
 
         if relative.precision == HintRelativeAreaName.NAME:

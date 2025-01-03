@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.db.node import Node
-from randovania.game_description.hint import Hint, HintType
+from randovania.game_description.hint import LocationHint
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.filler_library import UnableToGenerate, UncollectedState
@@ -437,7 +437,7 @@ def _assign_pickup_somewhere(
         )
         if hint_location is not None:
             index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_hint(
-                hint_location, Hint(HintType.LOCATION, None, pickup_index)
+                hint_location, LocationHint.unassigned(pickup_index)
             )
 
         if pickup_index in index_owner_state.reach.state.collected_pickup_indices:
