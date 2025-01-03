@@ -3,11 +3,9 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.game_description.db.node_identifier import NodeIdentifier
 from randovania.game_description.hint import (
     HintItemPrecision,
     HintLocationPrecision,
-    LocationHint,
     PrecisionPair,
     is_unassigned_location,
 )
@@ -16,7 +14,6 @@ from randovania.generator.hint_distributor import HintDistributor
 if TYPE_CHECKING:
     from random import Random
 
-    from randovania.game_description.db.node_identifier import NodeIdentifier
     from randovania.game_description.game_patches import GamePatches
     from randovania.generator.filler.filler_configuration import PlayerPool
     from randovania.generator.filler.player_state import PlayerState
@@ -37,9 +34,7 @@ class FusionHintDistributor(HintDistributor):
         self, patches: GamePatches, rng: Random, player_pool: PlayerPool, player_state: PlayerState
     ) -> GamePatches:
         hints_to_replace = {
-            identifier: hint
-            for identifier, hint in patches.hints.items()
-            if is_unassigned_location(hint)
+            identifier: hint for identifier, hint in patches.hints.items() if is_unassigned_location(hint)
         }
 
         for node, hint in hints_to_replace.items():

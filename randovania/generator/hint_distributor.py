@@ -285,11 +285,7 @@ class HintDistributor(ABC):
         :return:
         """
 
-        hints_to_replace = {
-            asset: JokeHint()
-            for asset, hint in patches.hints.items()
-            if is_unassigned_location(hint)
-        }
+        hints_to_replace = {asset: JokeHint() for asset, hint in patches.hints.items() if is_unassigned_location(hint)}
 
         return dataclasses.replace(
             patches, hints={asset: hints_to_replace.get(asset, hint) for asset, hint in patches.hints.items()}
@@ -405,9 +401,7 @@ class HintDistributor(ABC):
         """
 
         hints_to_replace = {
-            identifier: hint
-            for identifier, hint in patches.hints.items()
-            if is_unassigned_location(hint)
+            identifier: hint for identifier, hint in patches.hints.items() if is_unassigned_location(hint)
         }
 
         relative_hint_providers = self._get_relative_hint_providers()

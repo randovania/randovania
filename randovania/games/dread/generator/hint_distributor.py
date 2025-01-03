@@ -3,7 +3,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from randovania.game_description.db.node_identifier import NodeIdentifier
-from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, JokeHint, PrecisionPair
+from randovania.game_description.hint import (
+    HintItemPrecision,
+    HintLocationPrecision,
+    JokeHint,
+    PrecisionPair,
+)
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.hint_distributor import HintDistributor
 
