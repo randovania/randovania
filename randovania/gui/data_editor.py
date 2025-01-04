@@ -10,7 +10,7 @@ import frozendict
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QFileDialog, QInputDialog, QMainWindow, QMessageBox, QRadioButton
-from qasync import asyncSlot  # type: ignore
+from qasync import asyncSlot
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description import (
@@ -111,7 +111,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.edit_mode = edit_mode
         self.radio_button_to_node = {}
 
-        self.setCentralWidget(None)  # type: ignore
+        self.setCentralWidget(None)  # type: ignore[arg-type]
         # self.points_of_interest_dock.hide()
         # self.node_info_dock.hide()
         self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Orientation.Horizontal)

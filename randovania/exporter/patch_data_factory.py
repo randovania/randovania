@@ -4,7 +4,7 @@ import typing
 from random import Random
 from typing import TYPE_CHECKING
 
-import json_delta  # type: ignore
+import json_delta
 
 from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database

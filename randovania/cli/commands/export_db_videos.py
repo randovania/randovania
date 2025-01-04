@@ -300,7 +300,7 @@ def generate_region_html(name: str, areas: dict[str, AreaVideos]) -> str:
 
     html = header + toc + body + HTML_FOOTER
 
-    from htmlmin import minify  # type: ignore
+    from htmlmin import minify
 
     return minify(html, remove_comments=True, remove_all_empty_space=True)
 

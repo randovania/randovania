@@ -6,7 +6,7 @@ import typing
 import uuid
 from typing import TYPE_CHECKING
 
-from qasync import asyncSlot  # type: ignore
+from qasync import asyncSlot
 
 from randovania.exporter.pickup_exporter import _conditional_resources_for_pickup
 from randovania.game_connection.connector.remote_connector import (

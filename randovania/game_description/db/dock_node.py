@@ -19,7 +19,7 @@ if typing.TYPE_CHECKING:
 
 def _requirement_from_back(context: NodeContext, target_node: Node) -> ResourceRequirement | None:
     if isinstance(target_node, DockNode):
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         weak = patches.get_dock_weakness_for(target_node)
         if weak.lock is not None:
             return ResourceRequirement.simple(NodeResourceInfo.from_node(target_node, context))
@@ -56,7 +56,7 @@ class DockNode(Node):
         return f"DockNode({self.name!r} -> {self.default_connection})"
 
     def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         target_node = patches.get_dock_connection_for(self)
         if isinstance(target_node, DockNode):
             return patches.get_dock_weakness_for(target_node)
@@ -80,7 +80,7 @@ class DockNode(Node):
         context: NodeContext,
         target_node: Node,
     ) -> tuple[Node, Requirement]:
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         forward_weakness = patches.get_dock_weakness_for(self)
 
         reqs: list[Requirement] = [self._get_open_requirement(context, forward_weakness)]
@@ -104,7 +104,7 @@ class DockNode(Node):
     def _lock_connection(self, context: NodeContext) -> tuple[Node, Requirement] | None:
         requirement = Requirement.trivial()
 
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         forward_weakness = patches.get_dock_weakness_for(self)
         forward_lock = forward_weakness.lock
 
@@ -125,11 +125,11 @@ class DockNode(Node):
         return self.lock_node, requirement
 
     def get_target_node(self, context: NodeContext) -> Node:
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         return patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         result: Iterable[tuple[Node, Requirement]] | None = patches.get_cached_dock_connections_from(self)
         if result is None:
             connections = []

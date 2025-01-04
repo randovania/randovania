@@ -289,17 +289,36 @@ files = [
 follow_imports = "silent"
 disallow_untyped_defs = true
 local_partial_types = true
+warn_unused_ignores = true
+enable_error_code = [
+    "ignore-without-code",
+]
 
 [[tool.mypy.overrides]]
 module = "test.*"
 disallow_untyped_defs = false
 check_untyped_defs = true
-disable_error_code = "method-assign"
+disable_error_code = [
+    "method-assign",
+]
 
 [[tool.mypy.overrides]]
-module = "randovania.games.*.gui.generated.*"
+module = "randovania.*.gui.generated.*"
 disallow_untyped_defs = false
 
 [[tool.mypy.overrides]]
-module = "randovania.gui.generated.*"
-disallow_untyped_defs = false
+# any dependencies which we do not control but are missing types go here
+# not too much can be done about these, so they're not the end of the world
+# dependencies we DO control should use `type: ignore[import-untyped]`
+module = [
+    "bitstruct.*",
+    "construct.*",
+    "graphviz.*",
+    "htmlmin.*",
+    "json_delta.*",
+    "networkx.*",
+    "pytest_localftpserver.*",
+    "pytestqt.*",
+    "qasync.*",
+]
+ignore_missing_imports = true
