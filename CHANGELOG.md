@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.8.x] - 2025-01-??
+## [8.9.x] - 2025-02-??
+
+- Changed: Wording on the Door Locks preset tab to be clearer.
+
+## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
 - Fixed: The map tracker no longer opens if the starting location prompt was cancelled.

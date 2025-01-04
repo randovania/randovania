@@ -16,13 +16,14 @@ from randovania.game_description.db.pickup_node import PickupNode
 from randovania.game_description.db.region import Region
 from randovania.game_description.db.region_list import RegionList
 from randovania.game_description.hint import (
-    Hint,
     HintDarkTemple,
     HintItemPrecision,
     HintLocationPrecision,
     HintRelativeAreaName,
-    HintType,
+    JokeHint,
+    LocationHint,
     PrecisionPair,
+    RedTempleHint,
     RelativeDataArea,
     RelativeDataItem,
 )
@@ -112,8 +113,7 @@ def test_create_hints_nothing(echoes_game_patches, players_config):
     patches = dataclasses.replace(
         echoes_game_patches,
         hints={
-            hint_node.identifier: Hint(
-                HintType.LOCATION,
+            hint_node.identifier: LocationHint(
                 PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, include_owner=False),
                 pickup_index,
             )
@@ -138,7 +138,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
     asset_id = 1000
     hint_node, _, region_list = _create_region_list(asset_id, PickupIndex(50))
 
-    patches = dataclasses.replace(empty_patches, hints={hint_node.identifier: Hint(HintType.JOKE, None)})
+    patches = dataclasses.replace(empty_patches, hints={hint_node.identifier: JokeHint()})
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
 
@@ -197,7 +197,7 @@ def test_create_hints_item_dark_temple_keys(
         pickup_assignment={pickup_index: PickupTarget(key, 0) for pickup_index, key in keys},
     )
 
-    hint = Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG)
+    hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
 
     namer = EchoesHintNamer({0: patches}, players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"])
@@ -247,7 +247,7 @@ def test_create_hints_item_dark_temple_keys_cross_game(
         },
     )
 
-    hint = Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG)
+    hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
 
     namer = EchoesHintNamer({0: echoes_patches, 1: prime_patches}, players_config)
     exporter = HintExporter(namer, random.Random(0), ["A Joke"])
@@ -266,7 +266,7 @@ def test_create_hints_item_dark_temple_keys_cross_game(
 
 def test_create_message_for_hint_dark_temple_no_keys(empty_patches, players_config, echoes_hint_exporter):
     # Setup
-    hint = Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG)
+    hint = RedTempleHint(dark_temple=HintDarkTemple.TORVUS_BOG)
 
     # Run
     result = echoes_hint_exporter.create_message_for_hint(hint, {0: empty_patches}, players_config, True)
@@ -313,8 +313,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            hint_node.identifier: Hint(
-                HintType.LOCATION,
+            hint_node.identifier: LocationHint(
                 PrecisionPair(location[0], location_precision, include_owner=owner),
                 pickup_index,
             )
@@ -369,8 +368,7 @@ def test_create_hints_guardians(
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            hint_node.identifier: Hint(
-                HintType.LOCATION,
+            hint_node.identifier: LocationHint(
                 PrecisionPair(HintLocationPrecision.GUARDIAN, item[0], include_owner=False),
                 pickup_index,
             )
@@ -409,8 +407,7 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            hint_node.identifier: Hint(
-                HintType.LOCATION,
+            hint_node.identifier: LocationHint(
                 PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0], include_owner=False),
                 pickup_index,
             )
@@ -459,8 +456,7 @@ def test_create_message_for_hint_relative_item(
         ]
     )
 
-    hint = Hint(
-        HintType.LOCATION,
+    hint = LocationHint(
         PrecisionPair(
             HintLocationPrecision.RELATIVE_TO_INDEX,
             HintItemPrecision.DETAILED,
@@ -500,8 +496,7 @@ def test_create_message_for_hint_relative_area(
         ]
     )
 
-    hint = Hint(
-        HintType.LOCATION,
+    hint = LocationHint(
         PrecisionPair(
             HintLocationPrecision.RELATIVE_TO_AREA,
             HintItemPrecision.DETAILED,
