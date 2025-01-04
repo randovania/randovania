@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
     Changed = Signal()
 
-    def __init__(self, parent: QWidget, editor: PresetEditor):
+    def __init__(self, parent: QWidget | None, editor: PresetEditor):
         super().__init__(parent)
         self.setupUi(self)
         self._editor = editor
