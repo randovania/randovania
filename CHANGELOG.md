@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.9.x] - 2025-02-??
 
-- TODO: remove this entry
+- Changed: Wording on the Door Locks preset tab to be clearer.
 
 ## [8.8.x] - 2025-01-02
 
