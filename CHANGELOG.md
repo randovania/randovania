@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - TODO: remove this entry
 
-## [8.8.x] - 2025-01-02
+## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
 - Fixed: The map tracker no longer opens if the starting location prompt was cancelled.
