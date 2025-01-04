@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 from PySide6 import QtWidgets
 
+from randovania.game_description.hint import LocationHint
 from randovania.games.cave_story.exporter.patch_data_factory import get_hints
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
@@ -50,7 +51,7 @@ class CSHintDetailsTab(GameDetailsTab):
 
             hint_text = hints[identifier]
             hint = patches.hints[identifier]
-            if hint.target is None:
+            if not isinstance(hint, LocationHint):
                 hinted_pickup = "No target for hint"
             else:
                 target = patches.pickup_assignment.get(hint.target)

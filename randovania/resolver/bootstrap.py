@@ -129,7 +129,9 @@ class Bootstrap:
         starting_state = State(
             initial_resources,
             (),
-            self.create_damage_state(game, configuration),
+            self.create_damage_state(game, configuration).apply_collected_resource_difference(
+                initial_resources, ResourceCollection()
+            ),
             starting_node,
             patches,
             None,

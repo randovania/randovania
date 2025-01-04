@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.8.x] - 2025-01-??
+## [8.9.x] - 2025-02-??
+
+- TODO: remove this entry
+
+## [8.8.x] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
 - Fixed: The map tracker no longer opens if the starting location prompt was cancelled.
@@ -13,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
+
+#### Logic Database
+
+##### Tallon Overworld
+
+- Fixed: Artifact Temple - Using the Artifact Temple Transport now expects Ridley to be defeated first.
 
 ### Metroid Prime 2: Echoes
 
@@ -22,7 +32,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Added: Area 2 Dam Exterior - Spike Ravine: Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
+##### Area 2 Dam Exterior
+
+- Added: Spike Ravine - Collecting the pickup from below with High Jump Boots, Super Jump (Expert), and Unmorph Extend (Advanced).
+
+##### Area 5 Tower Exterior
+
+- Fixed: Starting in Screw Attack Chamber now places Samus in the correct room.
 
 ## [8.7.1] - 2024-12-05
 
