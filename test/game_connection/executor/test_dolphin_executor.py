@@ -3,7 +3,7 @@ from __future__ import annotations
 import platform
 from unittest.mock import MagicMock, call
 
-import pid
+import pid  # type: ignore[import-untyped]
 import pytest
 
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor

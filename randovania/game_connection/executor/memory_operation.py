@@ -23,7 +23,7 @@ class MemoryOperation:
             return len(self.write_bytes)
         return 0
 
-    def validate_byte_sizes(self):
+    def validate_byte_sizes(self) -> None:
         if (
             self.write_bytes is not None
             and self.read_byte_count is not None
@@ -31,7 +31,7 @@ class MemoryOperation:
         ):
             raise ValueError(f"Attempting to read {self.read_byte_count} bytes while writing {len(self.write_bytes)}.")
 
-    def __str__(self):
+    def __str__(self) -> str:
         address_text = f"0x{self.address:08x}"
         if self.offset is not None:
             address_text = f"*{address_text} {self.offset:+05x}"
@@ -46,13 +46,13 @@ class MemoryOperation:
 
 
 class MemoryOperationExecutor:
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger(type(self).__name__)
 
     async def connect(self) -> str | None:
         raise NotImplementedError
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         raise NotImplementedError
 
     def is_connected(self) -> bool:

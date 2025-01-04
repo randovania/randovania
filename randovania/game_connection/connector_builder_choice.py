@@ -31,7 +31,8 @@ class ConnectorBuilderChoice(Enum):
                 case "Darwin":
                     return False
                 case "Linux" if randovania.is_frozen():
-                    return os.getuid() == 0 and not randovania.is_flatpak()
+                    return os.getuid() == 0 and not randovania.is_flatpak()  # type: ignore[attr-defined]
+                    # see https://github.com/python/mypy/issues/8166
                 case _:
                     return True
 
