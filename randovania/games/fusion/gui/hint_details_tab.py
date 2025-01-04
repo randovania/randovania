@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.exporter.hints.hint_exporter import HintExporter
+from randovania.game_description.hint import LocationHint
 from randovania.games.fusion.exporter.hint_namer import FusionHintNamer
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
@@ -53,7 +54,7 @@ class FusionHintDetailsTab(GameDetailsTab):
             hint_text = exporter.create_message_for_hint(hint, all_patches, players, False).strip()
 
             # FIXME: tell the room name instead of the pickup name
-            if hint.target is None:
+            if not isinstance(hint, LocationHint):
                 hinted_pickup = ""
             else:
                 target = patches.pickup_assignment.get(hint.target)

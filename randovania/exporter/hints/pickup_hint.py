@@ -30,7 +30,7 @@ _DET_AN = [
     "X-Ray Visor",
 ]
 
-_DET_NULL = []
+_DET_NULL: list[str] = []
 _DET_NULL.extend(f"{temple} Key {i}" for i in range(1, 4) for temple in ("Dark Agon", "Dark Torvus", "Ing Hive"))
 _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 
@@ -43,7 +43,7 @@ class PickupHint:
 
 
 def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry, region_list: RegionList) -> str:
-    name_count = collections.defaultdict(int)
+    name_count: dict[str, int] = collections.defaultdict(int)
     for i in range(region_list.num_pickup_nodes):
         index = PickupIndex(i)
         if index in pickup_assignment:

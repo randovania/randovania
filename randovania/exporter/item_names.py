@@ -49,7 +49,7 @@ def resource_user_friendly_delta(resource: ResourceInfo) -> str:
 
 
 def _pickups_count_by_name(pickups: list[PickupEntry]) -> dict[str, int]:
-    result = collections.defaultdict(int)
+    result: dict[str, int] = collections.defaultdict(int)
     for it in pickups:
         result[it.name] += 1
     return result
