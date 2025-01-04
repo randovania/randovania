@@ -29,7 +29,7 @@ class PresetDreadGeneration(PresetGeneration):
         signal_handling.on_checked(self.highdanger_logic_check, self._on_highdanger_logic_check)
         self.highdanger_logic_label.linkActivated.connect(self._on_click_link_highdanger_logic_details)
 
-    def setupUi(self, obj):
+    def setupUi(self, obj: QtWidgets.QWidget) -> None:
         super().setupUi(obj)
 
         self.highdanger_logic_check = QtWidgets.QCheckBox("Allow Highly Dangerous Logic", obj)
@@ -47,19 +47,19 @@ class PresetDreadGeneration(PresetGeneration):
         yield self.highdanger_logic_check
         yield self.highdanger_logic_label
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, DreadConfiguration)
         super().on_preset_changed(preset)
         self.highdanger_logic_check.setChecked(preset.configuration.allow_highly_dangerous_logic)
 
-    def _on_highdanger_logic_check(self, state: bool):
+    def _on_highdanger_logic_check(self, state: bool) -> None:
         with self._editor as options:
             options.set_configuration_field(
                 "allow_highly_dangerous_logic",
                 state,
             )
 
-    def _on_click_link_highdanger_logic_details(self, link: str):
+    def _on_click_link_highdanger_logic_details(self, link: str) -> None:
         self._exec_trick_details(
             ResourceDetailsPopup(
                 self,
@@ -69,7 +69,7 @@ class PresetDreadGeneration(PresetGeneration):
             )
         )
 
-    def _exec_trick_details(self, popup: ResourceDetailsPopup):
+    def _exec_trick_details(self, popup: ResourceDetailsPopup) -> None:
         self._trick_details_popup = popup
-        self._trick_details_popup.setWindowModality(QtCore.Qt.WindowModal)
+        self._trick_details_popup.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
         self._trick_details_popup.open()

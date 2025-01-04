@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from PySide6 import QtWidgets
 
 from randovania.exporter.hints.hint_exporter import HintExporter
+from randovania.game_description.hint import LocationHint
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout import filtered_database
@@ -32,7 +33,7 @@ class DreadHintDetailsTab(GameDetailsTab):
 
     def update_content(
         self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches], players: PlayersConfiguration
-    ):
+    ) -> None:
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
@@ -53,7 +54,7 @@ class DreadHintDetailsTab(GameDetailsTab):
             hint_text = exporter.create_message_for_hint(hint, all_patches, players, False)
 
             # FIXME: tell the room name instead of the pickup name
-            if hint.target is None:
+            if not isinstance(hint, LocationHint):
                 hinted_pickup = ""
             else:
                 target = patches.pickup_assignment.get(hint.target)
