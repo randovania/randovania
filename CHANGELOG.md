@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Area 4 Central Caverns
 
-- Added: Out of bounds movement (Intermediate) with Space Jump to access Crystal Mines.
+- Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
 
 ##### Area 5 Tower Exterior
 
