@@ -368,8 +368,8 @@ class MSRPatchDataFactory(PatchDataFactory):
             final_boss_item = "Baby"
             disabled_hint = f"Continue searching for the {final_boss_item} Metroid!"
         elif self.configuration.final_boss == FinalBossConfiguration.QUEEN:
-            final_boss_item = "Ice Beam"
-            disabled_hint = f"Continue searching for the {final_boss_item}!"
+            final_boss_item = "Ice"
+            disabled_hint = f"Continue searching for the {final_boss_item} Beam!"
         elif self.configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
             final_boss_item = "Bomb"
             disabled_hint = f"Continue searching for the {final_boss_item}!"
@@ -377,23 +377,30 @@ class MSRPatchDataFactory(PatchDataFactory):
         else:
             return ""
 
-        final_boss_ressource = [(self.game.resource_database.get_item(final_boss_item))]
+        final_boss_resource = [(self.game.resource_database.get_item(final_boss_item))]
         final_boss_hint: str = ""
 
-        # FIXME: Rename that option
-        if hint_config.baby_metroid != ItemHintMode.DISABLED:
-            temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+        if hint_config.final_boss_item != ItemHintMode.DISABLED:
+            temp_final_boss_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 hint_namer,
-                hint_config.baby_metroid == ItemHintMode.HIDE_AREA,
-                final_boss_ressource,
+                hint_config.final_boss_item == ItemHintMode.HIDE_AREA,
+                final_boss_resource,
                 False,
             )
-            # FIXME: Add hints for other items
-            final_boss_hint = "A " + temp_baby_hint[final_boss_ressource[0]].replace(
-                " Metroid is located in ", "'s Cry can be heard echoing from|"
-            )
+            if final_boss_item == "Baby":
+                final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
+                    " Metroid is located in ", "'s Cry can be heard echoing from|"
+                )
+            elif final_boss_item == "Bomb":
+                final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
+                    "Bomb is located in ", " small explosion can be heard detonating from|"
+                )
+            elif final_boss_item == "Ice":
+                final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
+                    "Ice Beam is located in ", "frosty breeze can be felt blowing in from|"
+                )
         else:
             final_boss_hint = disabled_hint
 

@@ -1239,6 +1239,15 @@ def _migrate_v94(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v95(preset: dict) -> dict:
+    if preset["game"] == "samus_returns":
+        hints = preset["configuration"]["hints"]
+        hints["final_boss_item"] = hints["baby_metroid"]
+        hints.pop("baby_metroid")
+
+    return preset
+
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -1334,6 +1343,7 @@ _MIGRATIONS = [
     _migrate_v92,  # remove bars great tree hall
     _migrate_v93,  # update default dock_rando in Prime 1 to use RP Blast Shield Change
     _migrate_v94,
+    _migrate_v95,  # msr rename baby_metroid hint to final_boss_item hint
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
