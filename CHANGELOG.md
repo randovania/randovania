@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
 - Fixed: If you are able to travel from Surface West to Surface East, the text always appears asking if you want to fight Proteus Ridley. This is to prevent Surface East from being locked if there is no other way to get there than from Surface West.
 
+#### Logic Database
+
+##### Area 4 Crystal Mines
+
+- Changed: Gawron Groove - Bombs or Power Bombs are no longer required to exit the tunnel from Gamma Arena.
+
 ## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
