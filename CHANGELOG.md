@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.9.x] - 2025-02-??
 
-- TODO: remove this entry
+### Metroid: Samus Returns
+
+- Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
+- Changed: Removed the first Power Beam block before entering the Gamma Arena from Area 4 Crystal Mines - Gawron Groove.
+- Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
+- Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
+- Fixed: If you are able to travel from Surface West to Surface East, the text always appears asking if you want to fight Proteus Ridley. This is to prevent Surface East from being locked if there is no other way to get there than from Surface West.
 
 ## [8.8.x] - 2025-01-02
 
