@@ -9,7 +9,7 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import]
+    import pytestqt.qtbot
 
 
 def test_suit_cosmetics(skip_qtbot: pytestqt.qtbot.QtBot) -> None:

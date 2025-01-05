@@ -8,7 +8,7 @@ from randovania.games.super_metroid.gui.dialog.super_cosmetic_patches_dialog imp
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 
 if typing.TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import]
+    import pytestqt.qtbot
 
 
 def test_dialog_checkboxes(skip_qtbot: pytestqt.qtbot.QtBot) -> None:

@@ -6,7 +6,7 @@ import platform
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from construct import StreamError  # type: ignore
+from construct import StreamError
 from PySide6 import QtGui, QtWidgets
 
 from randovania.game.game_enum import RandovaniaGame

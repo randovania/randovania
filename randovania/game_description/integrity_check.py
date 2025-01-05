@@ -194,7 +194,7 @@ def find_region_errors(game: GameDescription, region: Region) -> Iterator[str]:
 
 
 def find_invalid_strongly_connected_components(game: GameDescription) -> Iterator[str]:
-    import networkx  # type: ignore
+    import networkx
 
     graph = networkx.DiGraph()
 

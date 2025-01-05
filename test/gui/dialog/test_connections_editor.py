@@ -18,7 +18,7 @@ from randovania.gui.dialog import connections_editor
 from randovania.gui.lib import signal_handling
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import-untyped]
+    import pytestqt.qtbot
 
     from randovania.game_description.game_description import GameDescription
 
