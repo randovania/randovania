@@ -175,8 +175,11 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.main_tab_widget.currentChanged.connect(self._on_main_tab_changed)
 
         self.intro_play_solo_button.clicked.connect(partial(self._set_main_tab, self.tab_game_list))
-        self.intro_play_existing_button.clicked.connect(partial(self._set_main_tab, self.tab_play_existing))
         self.intro_play_multiworld_button.clicked.connect(partial(self._set_main_tab, self.tab_multiworld))
+        self.intro_play_existing_button.clicked.connect(partial(self._set_main_tab, self.tab_play_existing))
+        self.intro_about_button.clicked.connect(self._on_menu_action_about)
+        self.intro_changelog_button.clicked.connect(self._on_menu_action_changelog)
+        self.intro_help_button.clicked.connect(self._on_menu_action_help)
 
         self.import_permalink_button.clicked.connect(self._import_permalink)
         self.import_game_file_button.clicked.connect(self._import_spoiler_log)
@@ -838,7 +841,13 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         experimental = get_readme_section("EXPERIMENTAL")
 
         self.games_supported_label.setText(supported)
-        self.games_experimental_label.setText(experimental if randovania.is_dev_version() else "")
+        if randovania.is_dev_version():
+            self.intro_games_experimental_foldable.setVisible(True)
+            self.games_experimental_label.setText(experimental)
+        else:
+            self.intro_games_experimental_foldable.setVisible(False)
+            self.games_experimental_label.setText("Foobar")
+
         self.intro_welcome_label.setText(welcome)
 
     def _create_generic_window(self, widget: QtWidgets.QWidget, title: str | None = None) -> QtWidgets.QMainWindow:
