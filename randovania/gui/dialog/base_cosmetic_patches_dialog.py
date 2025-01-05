@@ -33,7 +33,7 @@ class BaseCosmeticPatchesDialog(QtWidgets.QDialog):
         def persist_field(value: bool) -> None:
             self._cosmetic_patches = dataclasses.replace(
                 self._cosmetic_patches,
-                **{attribute_name: value},  # type: ignore[arg-type]
+                **{attribute_name: value},
             )
 
         signal_handling.on_checked(check, persist_field)

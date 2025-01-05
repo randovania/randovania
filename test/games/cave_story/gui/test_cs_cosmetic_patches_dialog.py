@@ -14,7 +14,7 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import (
 )
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import]
+    import pytestqt.qtbot
 
 
 def test_change_mychar(skip_qtbot: pytestqt.qtbot.QtBot) -> None:

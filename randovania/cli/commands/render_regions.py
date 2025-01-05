@@ -12,7 +12,7 @@ def render_region_graph_logic(args: Namespace) -> None:
     import hashlib
     import re
 
-    import graphviz  # type: ignore
+    import graphviz
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description import default_database

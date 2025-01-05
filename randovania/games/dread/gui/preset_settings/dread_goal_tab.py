@@ -38,11 +38,11 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
     def header_name(cls) -> str | None:
         return None
 
-    def _update_slider_max(self):
+    def _update_slider_max(self) -> None:
         self.dna_slider.setMaximum(self.num_preferred_locations)
         self.dna_slider.setEnabled(self.num_preferred_locations > 0)
 
-    def _edit_config(self, call: Callable[[DreadArtifactConfig], DreadArtifactConfig]):
+    def _edit_config(self, call: Callable[[DreadArtifactConfig], DreadArtifactConfig]) -> None:
         config = self._editor.configuration
         assert isinstance(config, DreadConfiguration)
 
@@ -58,29 +58,29 @@ class PresetDreadGoal(PresetTab, Ui_PresetDreadGoal):
             preferred += 6
         return preferred
 
-    def _on_prefer_emmi(self, value: bool):
-        def edit(config: DreadArtifactConfig):
+    def _on_prefer_emmi(self, value: bool) -> None:
+        def edit(config: DreadArtifactConfig) -> DreadArtifactConfig:
             return dataclasses.replace(config, prefer_emmi=value)
 
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_prefer_major_bosses(self, value: bool):
-        def edit(config: DreadArtifactConfig):
+    def _on_prefer_major_bosses(self, value: bool) -> None:
+        def edit(config: DreadArtifactConfig) -> DreadArtifactConfig:
             return dataclasses.replace(config, prefer_major_bosses=value)
 
         self._edit_config(edit)
         self._update_slider_max()
 
-    def _on_dna_slider_changed(self):
+    def _on_dna_slider_changed(self) -> None:
         self.dna_slider_label.setText(f"{self.dna_slider.value()} DNA")
 
-        def edit(config: DreadArtifactConfig):
+        def edit(config: DreadArtifactConfig) -> DreadArtifactConfig:
             return dataclasses.replace(config, required_artifacts=self.dna_slider.value())
 
         self._edit_config(edit)
 
-    def on_preset_changed(self, preset: Preset):
+    def on_preset_changed(self, preset: Preset) -> None:
         assert isinstance(preset.configuration, DreadConfiguration)
         artifacts = preset.configuration.artifacts
         self.prefer_emmi_check.setChecked(artifacts.prefer_emmi)

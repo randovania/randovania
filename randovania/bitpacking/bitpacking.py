@@ -7,7 +7,7 @@ import typing
 from enum import Enum
 from typing import TYPE_CHECKING, TypeVar
 
-import bitstruct  # type: ignore
+import bitstruct
 
 from randovania.lib import type_lib
 

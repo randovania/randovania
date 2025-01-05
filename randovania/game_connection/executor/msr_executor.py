@@ -50,7 +50,7 @@ class ClientInterests(IntEnum):
 # FIXME: This is a copy of ODR's implementation just that the first param is a path instead of a name
 # for a file within ODR's template folder
 def replace_lua_template(file: Path, replacement: dict[str, Any], wrap_strings: bool = False) -> str:
-    from open_samus_returns_rando.misc_patches.lua_util import lua_convert  # type: ignore
+    from open_samus_returns_rando.misc_patches.lua_util import lua_convert
 
     code = file.read_text()
     for key, content in replacement.items():
