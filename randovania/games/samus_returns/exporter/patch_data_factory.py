@@ -395,7 +395,7 @@ class MSRPatchDataFactory(PatchDataFactory):
                 )
             elif final_boss_item == "Bomb":
                 final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
-                    "Bomb is located in ", " small explosion can be heard detonating from|"
+                    "Bomb is located in ", "small explosion can be heard detonating from|"
                 )
             elif final_boss_item == "Ice":
                 final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
