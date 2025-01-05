@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from PySide6 import QtGui, QtWidgets
+from PySide6 import QtCore, QtGui, QtWidgets
 from PySide6.QtCore import QEvent, Signal
 
 
@@ -25,3 +25,17 @@ class ClickableLabel(QtWidgets.QLabel):
     def leaveEvent(self, event: QEvent):
         event.accept()
         self.left.emit()
+
+    def focusInEvent(self, event: QtGui.QFocusEvent):
+        event.accept()
+        self.entered.emit()
+
+    def focusOutEvent(self, event: QtGui.QFocusEvent):
+        event.accept()
+        self.left.emit()
+
+    def keyReleaseEvent(self, event: QtGui.QKeyEvent):
+        key = event.key()
+        if key == QtCore.Qt.Key.Key_Return or key == QtCore.Qt.Key.Key_Space:
+            event.accept()
+            self.clicked.emit()
