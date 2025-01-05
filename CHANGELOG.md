@@ -18,6 +18,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
 - Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
 
+### Metroid: Samus Returns
+
+#### Logic Database
+
+##### Area 4 Central Caverns
+
+- Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
+
+
 ## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
