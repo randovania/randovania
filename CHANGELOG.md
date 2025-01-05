@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.9.x] - 2025-02-??
 
 - Changed: Wording on the Door Locks preset tab to be clearer.
+- Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
 
 ## [8.8.0] - 2025-01-02
 
@@ -16,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
+- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.
 
 #### Logic Database
 
