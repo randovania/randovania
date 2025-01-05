@@ -2,7 +2,7 @@ import logging
 import uuid
 from collections import defaultdict
 
-from qasync import asyncSlot  # type: ignore[import-untyped]
+from qasync import asyncSlot
 
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.connector.remote_connector import (
