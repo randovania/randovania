@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Wording on the Door Locks preset tab to be clearer.
 - Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
 
+### Metroid: Samus Returns
+
+- Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
+- Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
+- Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
+- Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
+
 ## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.

@@ -115,7 +115,7 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
     connector.in_cooldown = False
     remote_pickup = (
         ("Dummy 1", msr_ice_beam_pickup, None),
-        ("Dummy 2", msr_ice_beam_pickup, None),
+        ("Dummy 2", msr_ice_beam_pickup, PickupIndex(10)),
     )
     connector.remote_pickups = remote_pickup
     connector.executor.run_lua_code = AsyncMock()
@@ -145,13 +145,32 @@ async def test_receive_remote_pickups(connector: MSRRemoteConnector, msr_ice_bea
         "MultiworldPickup = MultiworldPickup or {}\\\n    "
         "function MultiworldPickup.main()\\\n    "
         "end\\\n\\\n    "
-        "function MultiworldPickup.OnPickedUp(progression, actorOrName)\\\n        "
-        "RandomizerPowerup.OnPickedUp(progression, actorOrName)\\\n    "
+        "function MultiworldPickup.OnPickedUp(progression, actorOrName, regionName)\\\n        "
+        "RandomizerPowerup.OnPickedUp(progression, actorOrName, regionName)\\\n    "
         "end\\\n    \\\n"
         'MultiworldPickup.OnPickedUp({\\\n{\\\n{\\\nitem_id = "ITEM_WEAPON_ICE_BEAM",\\\nquantity = 1,\\\n},\\\n},\\\n}'
-        ", nil)',0,2)"
+        ',nil,"")\',0,2)'
     )
     connector.executor.run_lua_code.assert_called_once_with(execute_string)
+
+    connector.in_cooldown = False
+    connector.received_pickups = 1
+    connector.inventory_index = 3
+    await connector.receive_remote_pickups()
+    assert connector.in_cooldown is True
+    execute_string = (
+        "RL.ReceivePickup('Received Ice Beam from Dummy 2.','\\\n    "
+        'Game.ImportLibrary("actors/items/randomizerpowerup/scripts/randomizerpowerup.lc", false)\\\n    '
+        "MultiworldPickup = MultiworldPickup or {}\\\n    "
+        "function MultiworldPickup.main()\\\n    "
+        "end\\\n\\\n    "
+        "function MultiworldPickup.OnPickedUp(progression, actorOrName, regionName)\\\n        "
+        "RandomizerPowerup.OnPickedUp(progression, actorOrName, regionName)\\\n    "
+        "end\\\n    \\\n"
+        'MultiworldPickup.OnPickedUp({\\\n{\\\n{\\\nitem_id = "ITEM_WEAPON_ICE_BEAM",\\\nquantity = 1,\\\n},\\\n},\\\n}'
+        ',nil,"s000_surface")\',1,3)'
+    )
+    connector.executor.run_lua_code.assert_called_with(execute_string)
 
 
 @pytest.mark.parametrize("is_coop", [False, True])
