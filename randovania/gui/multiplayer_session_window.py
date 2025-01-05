@@ -376,7 +376,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.allow_coop_check.setText(
             "Enable Co-Op" + ("" if not_genned_yet else " (can only be changed before generation)")
         )
-        self.allow_coop_check.setVisible(not randovania.is_frozen())
+        self.allow_coop_check.setVisible(randovania.is_dev_version())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -927,7 +927,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 QtWidgets.QMessageBox.Icon.Information,
                 "Information",
                 (
-                    "Co-op is still *very* experimental and may have issues.\nFor Prime 1 and Echoes in particular, "
+                    "Co-op is still in the testing period and may have issues.\nFor Prime 1 and Echoes in particular, "
                     "please ensure that Randovania is always connected to the game before you collect items, as "
                     "otherwise they will be lost permanently!"
                 ),
