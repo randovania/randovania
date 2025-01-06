@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Wording on the Door Locks preset tab to be clearer.
 
+### AM2R
+
+#### Logic Database
+
+##### Main Caves
+
+- Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
+
 ## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
