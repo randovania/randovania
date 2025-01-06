@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Wording on the Door Locks preset tab to be clearer.
 - Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
 
+### AM2R
+
+#### Logic Database
+
+##### Main Caves
+
+- Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
+
 ### Metroid: Samus Returns
 
 - Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
