@@ -7,7 +7,6 @@ import uuid
 from typing import TYPE_CHECKING
 
 from open_prime_rando.dol_patching import all_prime_dol_patches
-from ppc_asm import assembler  # type: ignore[import-untyped]
 from retro_data_structures.game_check import Game as RDSGame
 
 from randovania.game.game_enum import RandovaniaGame
@@ -29,15 +28,16 @@ from randovania.interface_common.players_configuration import INVALID_UUID
 from randovania.lib.infinite_timer import InfiniteTimer
 
 if TYPE_CHECKING:
+    from ppc_asm import assembler  # type: ignore[import-untyped]
+
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
     from randovania.network_common.remote_pickup import RemotePickup
 
-
-PatchInstructions = list[assembler.BaseInstruction]
-PickupPatches = tuple[list[PatchInstructions], str]
+    PatchInstructions = list[assembler.BaseInstruction]
+    PickupPatches = tuple[list[PatchInstructions], str]
 
 
 @dataclasses.dataclass(frozen=True)

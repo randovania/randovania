@@ -3,7 +3,7 @@ from __future__ import annotations
 import platform
 
 import dolphin_memory_engine  # type: ignore[import-untyped]
-import pid  # type: ignore[import-untyped]
+import pid
 from dolphin_memory_engine._dolphin_memory_engine import DolphinStatus  # type: ignore[import-untyped]
 
 from randovania.game_connection.executor.memory_operation import (
