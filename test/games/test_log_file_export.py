@@ -123,12 +123,12 @@ def pytest_generate_tests(metafunc: _pytest.python.Metafunc) -> None:
         "prime1_crazy_seed_one_way_door.rdvgame",  # same as above but 1-way doors
         "prime1_refills.rdvgame",  # Refill items + custom artifact count
         # Samus Returns
-        "samus_returns/starter_preset.rdvgame",  # starter preset
-        "samus_returns/start_inventory.rdvgame",  # test for starting inventory and export ids
+        "samus_returns/arachnus_boss_start_inventory.rdvgame",  # arachnus final boss + starting inventory + export ids
+        "samus_returns/diggernaut_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
         "samus_returns/door_lock.rdvgame",  # starter preset + door lock
         "samus_returns/door_lock_access_open.rdvgame",  # door lock + access open doors
-        "samus_returns/custom_required_dna.rdvgame",  # custom required dna 20/30
-        "samus_returns/custom_final_boss_free_placement_dna.rdvgame",  # diggernaut final boss + 7/15 dna anywhere
+        "samus_returns/queen_boss_custom_required_dna.rdvgame",  # quuen final boss + custom required dna 20/30
+        "samus_returns/starter_preset.rdvgame",  # starter preset
         # Super Metroid
         "sdm_test_game.rdvgame",
     ]

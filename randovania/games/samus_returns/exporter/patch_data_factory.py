@@ -360,28 +360,51 @@ class MSRPatchDataFactory(PatchDataFactory):
 
         return hints
 
-    def _create_baby_metroid_hint(self) -> str:
+    def _create_final_boss_hint(self) -> str:
         hint_namer = MSRHintNamer(self.description.all_patches, self.players_config)
         hint_config = self.configuration.hints
 
-        baby_metroid = [(self.game.resource_database.get_item("Baby"))]
-        baby_metroid_hint: str = ""
-        if hint_config.baby_metroid != ItemHintMode.DISABLED:
-            temp_baby_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+        if self.configuration.final_boss == FinalBossConfiguration.RIDLEY:
+            final_boss_item = "Baby"
+            disabled_hint = f"Continue searching for the {final_boss_item} Metroid!"
+        elif self.configuration.final_boss == FinalBossConfiguration.QUEEN:
+            final_boss_item = "Ice"
+            disabled_hint = f"Continue searching for the {final_boss_item} Beam!"
+        elif self.configuration.final_boss == FinalBossConfiguration.DIGGERNAUT:
+            final_boss_item = "Bomb"
+            disabled_hint = f"Continue searching for the {final_boss_item}!"
+        # FIXME: correct for Arachnus but not for Random. Needs to actually check for the misc resources?
+        else:
+            return ""
+
+        final_boss_resource = [(self.game.resource_database.get_item(final_boss_item))]
+        final_boss_hint: str = ""
+
+        if hint_config.final_boss_item != ItemHintMode.DISABLED:
+            temp_final_boss_hint = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
                 self.players_config,
                 hint_namer,
-                hint_config.baby_metroid == ItemHintMode.HIDE_AREA,
-                baby_metroid,
+                hint_config.final_boss_item == ItemHintMode.HIDE_AREA,
+                final_boss_resource,
                 False,
             )
-            baby_metroid_hint = "A " + temp_baby_hint[baby_metroid[0]].replace(
-                " Metroid is located in ", "'s Cry can be heard echoing from|"
-            )
+            if final_boss_item == "Baby":
+                final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
+                    " Metroid is located in ", "'s Cry can be heard echoing from|"
+                )
+            elif final_boss_item == "Bomb":
+                final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
+                    "Bomb is located in ", "small explosion can be heard detonating from|"
+                )
+            elif final_boss_item == "Ice":
+                final_boss_hint = "A " + temp_final_boss_hint[final_boss_resource[0]].replace(
+                    "Ice Beam is located in ", "frosty breeze can be felt blowing in from|"
+                )
         else:
-            baby_metroid_hint = "Continue searching for the Baby Metroid!"
+            final_boss_hint = disabled_hint
 
-        return baby_metroid_hint
+        return final_boss_hint
 
     def _node_for(self, identifier: NodeIdentifier) -> Node:
         return self.game.region_list.node_by_identifier(identifier)
@@ -690,7 +713,7 @@ class MSRPatchDataFactory(PatchDataFactory):
             "text_patches": dict(sorted(self._static_text_changes().items())),
             "spoiler_log": self._credits_spoiler() if self.description.has_spoiler else {},
             "hints": self._encode_hints(self.rng),
-            "baby_metroid_hint": self._create_baby_metroid_hint(),
+            "final_boss_hint": self._create_final_boss_hint(),
             "cosmetic_patches": self._create_cosmetics(
                 self.description.get_seed_for_player(self.players_config.player_index)
             ),
