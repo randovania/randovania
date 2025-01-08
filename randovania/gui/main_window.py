@@ -177,6 +177,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.intro_play_solo_button.clicked.connect(partial(self._set_main_tab, self.tab_game_list))
         self.intro_play_multiworld_button.clicked.connect(partial(self._set_main_tab, self.tab_multiworld))
         self.intro_play_existing_button.clicked.connect(partial(self._set_main_tab, self.tab_play_existing))
+        self.intro_item_tracker_button.clicked.connect(self._open_auto_tracker)
         self.intro_about_button.clicked.connect(self._on_menu_action_about)
         self.intro_changelog_button.clicked.connect(self._on_menu_action_changelog)
         self.intro_help_button.clicked.connect(self._on_menu_action_help)
