@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.9.x] - 2025-02-??
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
+- Changed: Revised the welcome page.
+- Changed: The Multiworld-Tab and the "Import Game"-Tab have switched positions.
 - Changed: Wording on the Door Locks preset tab to be clearer.
 - Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
 
