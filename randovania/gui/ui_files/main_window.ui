@@ -91,92 +91,6 @@
              </widget>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="intro_games_layout">
-              <property name="spacing">
-               <number>6</number>
-              </property>
-              <property name="sizeConstraint">
-               <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
-              </property>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_2">
-                <item>
-                 <widget class="Foldable" name="intro_games_supported_foldable" native="true">
-                  <property name="title" stdset="0">
-                   <string>Supported Games</string>
-                  </property>
-                  <property name="folded" stdset="0">
-                   <bool>true</bool>
-                  </property>
-                  <layout class="QVBoxLayout" name="intro_games_supported_foldable_layout">
-                   <item>
-                    <widget class="QLabel" name="games_supported_label">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="text">
-                      <string>Supported</string>
-                     </property>
-                     <property name="textFormat">
-                      <enum>Qt::TextFormat::MarkdownText</enum>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="intro_top_spacer">
-              <property name="orientation">
-               <enum>Qt::Orientation::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>30</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="Foldable" name="intro_games_experimental_foldable" native="true">
-              <property name="title" stdset="0">
-               <string>Experimental Games</string>
-              </property>
-              <property name="folded" stdset="0">
-               <bool>true</bool>
-              </property>
-              <layout class="QVBoxLayout" name="intro_games_experimental_foldable_layout">
-               <item>
-                <widget class="QLabel" name="games_experimental_label">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Experimental</string>
-                 </property>
-                 <property name="textFormat">
-                  <enum>Qt::TextFormat::MarkdownText</enum>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
              <widget class="QLabel" name="intro_welcome_label">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
@@ -893,12 +807,6 @@ For more information, check [Randovania Help](help://tab_multiworld)!</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
-  <customwidget>
-   <class>Foldable</class>
-   <extends>QWidget</extends>
-   <header>randovania/gui/lib/foldable.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>GamesHelpWidget</class>
    <extends>QTabWidget</extends>

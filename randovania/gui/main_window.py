@@ -837,17 +837,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
         welcome = get_readme_section("WELCOME")
-        supported = get_readme_section("SUPPORTED")
-        experimental = get_readme_section("EXPERIMENTAL")
-
-        self.games_supported_label.setText(supported)
-        if randovania.is_dev_version():
-            self.intro_games_experimental_foldable.setVisible(True)
-            self.games_experimental_label.setText(experimental)
-        else:
-            self.intro_games_experimental_foldable.setVisible(False)
-            self.games_experimental_label.setText("Foobar")
-
         self.intro_welcome_label.setText(welcome)
 
     def _create_generic_window(self, widget: QtWidgets.QWidget, title: str | None = None) -> QtWidgets.QMainWindow:
