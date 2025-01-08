@@ -834,8 +834,6 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         )
 
     def setup_welcome_text(self):
-        self.intro_label.setText(self.intro_label.text().format(version=VERSION))
-
         welcome = get_readme_section("WELCOME")
         self.intro_welcome_label.setText(welcome)
 
