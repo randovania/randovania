@@ -43,6 +43,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
 
+### Metroid Dread
+
+#### Logic Database
+
+- Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
+
 ## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
