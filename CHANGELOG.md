@@ -17,7 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Main Caves
 
+- Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
 - Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
+
+### Metroid Dread
+
+#### Logic Database
+
+- Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
 
 ### Metroid: Samus Returns
 
@@ -26,28 +33,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
 - Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
 
-### Metroid: Samus Returns
-
 #### Logic Database
 
 ##### Area 4 Central Caverns
 
 - Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
-
-
-### AM2R
-
-#### Logic Database
-
-##### Main Caves
-
-- Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
-
-### Metroid Dread
-
-#### Logic Database
-
-- Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
 
 ## [8.8.0] - 2025-01-02
 
