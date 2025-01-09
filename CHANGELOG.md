@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
 - Changed: Wording on the Door Locks preset tab to be clearer.
+- Changed: The main Randovania window now doesn't have an unnecessary border.
 - Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
 
 ### AM2R
