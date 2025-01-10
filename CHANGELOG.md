@@ -21,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
 - Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
 
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
+
 ### Metroid Dread
 
 #### Logic Database
