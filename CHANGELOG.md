@@ -38,6 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
 - Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
 
+##### Ghavoran
+
+- Changed: It is now logical to go back to the event node for flipping the Super Missile Rotatable from the tunnel under it.
+
 ### Metroid Prime 2: Echoes
 
 - Fixed: Typo in the Differences tab.
