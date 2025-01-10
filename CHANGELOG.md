@@ -27,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
 
+### Metroid Prime 2: Echoes
+
+- Fixed: Typo in the Differences tab.
+
 ### Metroid: Samus Returns
 
 - Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
