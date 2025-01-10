@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Changed: Double Damage is now classified as a Beam for precise hints instead of a Suit.
+- Changed: Double Damage is now classified as a Beam instead of a Suit.
 - Fixed: Typo in the Differences tab.
 
 ### Metroid: Samus Returns
