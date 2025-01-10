@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ##### Area 5 Tower Exterior
 
-- Added: Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
 
 ### Metroid Dread
 
