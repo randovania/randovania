@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ##### Ghavoran
 
 - Changed: It is now logical to go back to the event node for flipping the Super Missile Rotatable from the tunnel under it.
+- Changed: It is now logical to go back to the event node for lowering the Super Missile Spider Magnet from the tunnel under it.
 
 ### Metroid Prime 2: Echoes
 
