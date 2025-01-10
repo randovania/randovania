@@ -56,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Double Damage is now classified as a Beam instead of a Suit.
 - Fixed: Typo in the Differences tab.
+- Added: FAQ entry for light beam transport requirements.
 
 ### Metroid: Samus Returns
 
