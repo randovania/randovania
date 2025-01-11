@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import platform
 
 import dolphin_memory_engine  # type: ignore[import-untyped]
@@ -24,10 +25,24 @@ def _validate_range(address: int, size: int) -> None:
 
 
 class DolphinExecutor(MemoryOperationExecutor):
-    def __init__(self) -> None:
+    dolphin_comm: str
+
+    def __init__(self, dolphin_comm: str) -> None:
         super().__init__()
         self.dolphin = dolphin_memory_engine
+        self.dolphin_comm = dolphin_comm
         self._pid = pid.PidFile("randovania-dolphin-backend")
+
+        # Do we have a custom process name to search for? If so, use this envar to
+        # override pyDME's internal defaults.
+        if self.dolphin_comm:
+            os.environ["DME_DOLPHIN_PROCESS_NAME"] = self.dolphin_comm
+
+        # Otherwise, clear it -- this is stateful, so if the user has been experimenting
+        # with Dolphin settings, it may be set from an earlier DolphinExecutor, which
+        # would result in pyDME looking for the wrong thing.
+        elif "DME_DOLPHIN_PROCESS_NAME" in os.environ:
+            del os.environ["DME_DOLPHIN_PROCESS_NAME"]
 
     @property
     def lock_identifier(self) -> str | None:

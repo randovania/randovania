@@ -13,11 +13,15 @@ import randovania
 from randovania.game.game_enum import RandovaniaGame
 from randovania.game_connection.builder.connector_builder_option import ConnectorBuilderOption
 from randovania.game_connection.builder.debug_connector_builder import DebugConnectorBuilder
+from randovania.game_connection.builder.dolphin_connector_builder import DolphinConnectorBuilder
 from randovania.game_connection.builder.nintendont_connector_builder import NintendontConnectorBuilder
 from randovania.game_connection.connector.debug_remote_connector import DebugRemoteConnector
 from randovania.game_connection.connector.remote_connector import ImportantStatusMessage, RemoteConnector
 from randovania.game_connection.connector_builder_choice import ConnectorBuilderChoice
 from randovania.games.cave_story.gui.dialog.cs_connector_prompt_dialog import CSConnectorPromptDialog
+from randovania.games.common.prime_family.gui.dolphin_connector_prompt_dialog import (
+    DolphinConnectorPromptDialog,
+)
 from randovania.games.dread.gui.dialog.dread_connector_prompt_dialog import (
     DreadConnectorPromptDialog,
 )
@@ -238,6 +242,13 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
                 return
             args["ip"] = new_ip
 
+        if choice == ConnectorBuilderChoice.DOLPHIN:
+            dolphin_settings = await DolphinConnectorPromptDialog.prompt(parent=self, is_modal=True)
+            if dolphin_settings is None:
+                return
+            args["dolphin_cmd"] = dolphin_settings[0]
+            args["dolphin_comm"] = dolphin_settings[1]
+
         if choice == ConnectorBuilderChoice.DREAD:
             new_ip = await DreadConnectorPromptDialog.prompt(
                 parent=self,
@@ -367,6 +378,17 @@ class GameConnectionWindow(QtWidgets.QMainWindow, Ui_GameConnectionWindow):
             action = QtGui.QAction(ui.menu)
             action.setText("Open debug interface")
             action.triggered.connect(functools.partial(self.open_debug_connector_window, builder))
+            ui.menu.addAction(action)
+
+        if isinstance(builder, DolphinConnectorBuilder) and builder.dolphin_cmd:
+            ui.menu.addSeparator()
+            action = QtGui.QAction(ui.menu)
+            action.setText("Start Dolphin")
+            action.triggered.connect(builder.start_dolphin)
+            ui.menu.addAction(action)
+            action = QtGui.QAction(ui.menu)
+            action.setText("Force Quit Dolphin")
+            action.triggered.connect(builder.stop_dolphin)
             ui.menu.addAction(action)
 
         if not randovania.is_frozen():
