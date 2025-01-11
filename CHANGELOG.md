@@ -39,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The logic surrounding the Single Use Slide in EMMI Zone Dome now makes it so that the event nodes remain logically accessible after collecting the event.
 - Changed: It is now logical to go back to the event node for blowing up the Proto EMMI Blob from the right.
 
+##### Cataris
+
+- Changed: It is now considered logical to go back into Kraid's area using the normal entrance after defeating Kraid, if all the blobs necessary to go around have been blown up.
+
 ##### Dairon
 
 - Changed: The logic in the Freezer is changed so that traversing the right part of the room ignores the dangerousness of turning on the Freezer generator. Meanwhile, all connections in the left part of the room that can be used before turning on the generator now require Highly Dangerous Logic.
