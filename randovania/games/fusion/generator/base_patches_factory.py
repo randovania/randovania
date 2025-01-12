@@ -33,9 +33,9 @@ class FusionBasePatchesFactory(BasePatchesFactory):
         dock_weakness: list[tuple[DockNode, DockWeakness]] = []
         open_transition_door = game.dock_weakness_database.get_by_weakness("Door", "Open Hatch")
 
-        if configuration.open_save_hatches:
+        if configuration.open_save_recharge_hatches:
             for area in game.region_list.all_areas:
-                if configuration.open_save_hatches and area.extra.get("unlocked_save_station"):
+                if configuration.open_save_recharge_hatches and area.extra.get("unlocked_save_recharge_station"):
                     for node in area.nodes:
                         if isinstance(node, DockNode) and node.dock_type.short_name == "Door":
                             if node.default_dock_weakness != open_transition_door:

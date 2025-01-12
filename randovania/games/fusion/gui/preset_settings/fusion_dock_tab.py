@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.preset import Preset
 
-_CHECKBOX_FIELDS = ["open_save_hatches"]
+_CHECKBOX_FIELDS = ["open_save_recharge_hatches"]
 
 
 class PresetFusionDocks(PresetDockRando):
@@ -28,11 +28,11 @@ class PresetFusionDocks(PresetDockRando):
         self.changes_layout = QtWidgets.QVBoxLayout(self.changes_box)
 
         extra_widgets: list[tuple[type[QtWidgets.QCheckBox | QtWidgets.QLabel], str, str]] = [
-            (QtWidgets.QCheckBox, "open_save_hatches_check", "Unlock Save Station Hatches"),
+            (QtWidgets.QCheckBox, "open_save_recharge_hatches_check", "Unlock Save and Recharge Station Hatches"),
             (
                 QtWidgets.QLabel,
-                "open_save_hatches_label",
-                "Ensures all Save Station doors are open hatches, even with door lock rando enabled.",
+                "open_save_recharge_hatches_label",
+                "Ensures all Save and Recharge Station doors are open hatches, even with Door Lock Rando enabled.",
             ),
         ]
 
