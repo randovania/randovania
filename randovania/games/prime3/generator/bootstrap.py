@@ -15,8 +15,9 @@ if TYPE_CHECKING:
 
 class CorruptionBootstrap(Bootstrap):
     def _get_enabled_misc_resources(
-        self, configuration: CorruptionConfiguration, resource_database: ResourceDatabase
+        self, configuration: BaseConfiguration, resource_database: ResourceDatabase
     ) -> set[str]:
+        assert isinstance(configuration, CorruptionConfiguration)
         enabled_resources = set()
         if configuration.teleporters.skip_final_bosses:
             enabled_resources.add("PhaazeSkip")
