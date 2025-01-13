@@ -21,6 +21,7 @@ combined_resources = {
     "ShinesparkTrick": ("SpeedBooster",),
     "JBJ": ("MorphBall", "MorphBallBombData"),
     "MidAirMorph": ("MorphBall",),
+    "CanSWJ": ("WallJump",),
 }
 
 
