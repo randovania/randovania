@@ -1740,7 +1740,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Charge Beam can kill the Geron because the beam cannon can be stuck inside the shell and fire past it without touching the shell",
+                                            "comment": "Charge Beam flare can kill the Geron without touching the shell: https://youtu.be/EYzjWUclb_0",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1809,11 +1809,28 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Missiles can be used for damage by bumping into Geron: https://youtu.be/Mp9YwFW3dLM",
+                                            "comment": "Missiles/Charge Beam can be used for damage by bumping into Geron: https://youtu.be/Mp9YwFW3dLM",
                                             "items": [
                                                 {
-                                                    "type": "template",
-                                                    "data": "10+ DMG Missiles"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "10+ DMG Missiles"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "ChargeBeam",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 },
                                                 {
                                                     "type": "resource",
@@ -2980,15 +2997,32 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Get high enough",
                                                         "items": [
                                                             {
                                                                 "type": "template",
                                                                 "data": "Have Any Jump Upgrade"
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Can Screw Single Walljump"
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Can Screw Single Walljump"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -9453,7 +9487,7 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": "Damage Boost. Holding into the ladder makes you able to climb it",
+                                            "comment": "Damage Boost through pirates. Holding into the ladder makes you able to climb it",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9470,6 +9504,15 @@
                                                         "type": "damage",
                                                         "name": "NormalDamage",
                                                         "amount": 131,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -9570,7 +9613,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": "Get past Rippers - TODO: health for damage runs",
+                                            "comment": "Get past Rippers",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -9582,12 +9625,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "DamageRuns",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": "Run and jump through acid: https://youtu.be/2HZNcwNVLH0",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "DamageRuns",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "NormalDamage",
+                                                                    "amount": 90,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
