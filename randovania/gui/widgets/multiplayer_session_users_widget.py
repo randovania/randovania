@@ -280,8 +280,7 @@ class MultiplayerSessionUsersWidget(QtWidgets.QTreeWidget):
                 self,
                 QtWidgets.QMessageBox.Icon.Information,
                 "Multiworld FAQ",
-                "Have you read the Multiworld FAQ?\n"
-                "It can be found in the main Randovania window → Help → Multiworld",
+                "Have you read the Multiworld FAQ?\nIt can be found in the main Randovania window → Help → Multiworld",
             )
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
 

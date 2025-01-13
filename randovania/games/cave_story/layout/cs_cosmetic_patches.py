@@ -75,8 +75,7 @@ class MusicRandoType(BitPackEnum, Enum):
             )
         if self == MusicRandoType.RANDOM:
             return (
-                "Remap every cue to a new song. "
-                "For example, entering the Egg Corridor by any means plays *Meltdown 2*."
+                "Remap every cue to a new song. For example, entering the Egg Corridor by any means plays *Meltdown 2*."
             )
         if self == MusicRandoType.CHAOS:
             return (
