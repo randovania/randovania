@@ -198,22 +198,28 @@ class FusionPatchDataFactory(PatchDataFactory):
             else ""
         )
         metroid_location_text = "anywhere" if self.configuration.artifacts.prefer_anywhere else "at bosses"
+        long_intro = (
+            f"{starting_items_text}Your objective is as follows: the [COLOR=3]SA-X[/COLOR] "
+            f"has discovered and destroyed a top secret [COLOR=3]Metroid[/COLOR] breeding facility. "
+            f"It released {self.configuration.artifacts.placed_artifacts} "
+            "infant Metroids into the station. "
+            f"Initial scans indicate that they are hiding {metroid_location_text}. "
+            f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
+            "to lure out the SA-X. "
+            "Then initiate the station's self-destruct sequence. "
+            "Uplink at [COLOR=2]Navigation Rooms[/COLOR] along the way. "
+            "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
+        )
+        short_intro = (
+            f"{starting_items_text}" "Gather Infant Metroids to lure out the SA-X"
+            if self.configuration.artifacts.required_artifacts > 0
+            else "Equip yourself to battle the SA-X"
+        )
         for lang in hint_lang_list:
             nav_text_json[lang] = {
                 "NavigationTerminals": hints,
                 "ShipText": {
-                    "InitialText": (
-                        f"{starting_items_text}Your objective is as follows: the [COLOR=3]SA-X[/COLOR] "
-                        f"has discovered and destroyed a top secret [COLOR=3]Metroid[/COLOR] breeding facility. "
-                        f"It released {self.configuration.artifacts.placed_artifacts} "
-                        "infant Metroids into the station. "
-                        f"Initial scans indicate that they are hiding {metroid_location_text}. "
-                        f"Find and capture {self.configuration.artifacts.required_artifacts} of them, "
-                        "to lure out the SA-X. "
-                        "Then initiate the station's self-destruct sequence. "
-                        "Uplink at [COLOR=2]Navigation Rooms[/COLOR] along the way. "
-                        "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
-                    ),
+                    "InitialText": short_intro if self.configuration.short_intro_text else long_intro,
                     "ConfirmText": "Any Objections, Lady?",
                 },
             }
