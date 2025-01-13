@@ -360,6 +360,8 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.advanced_options_tool.setEnabled(session.users[self.network_client.current_user.id].admin)
         # self.customize_user_preferences_button.setEnabled(self.current_player_game is not None)
 
+        not_genned_yet = self._session.game_details is None and self._session.generation_in_progress is None
+
         self.setWindowTitle(f"Multiworld Session: {self._session.name}")
         self.users_widget.update_state(self._session)
         self.sync_background_process_to_session()
@@ -370,12 +372,11 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
         self.everyone_can_claim_check.setChecked(session.allow_everyone_claim_world)
         self.everyone_can_claim_check.setEnabled(self.users_widget.is_admin())
         self.allow_coop_check.setChecked(session.allow_coop)
-        self.allow_coop_check.setEnabled(
-            self.users_widget.is_admin()
-            and self._session.game_details is None
-            and self._session.generation_in_progress is None
+        self.allow_coop_check.setEnabled(self.users_widget.is_admin() and not_genned_yet)
+        self.allow_coop_check.setText(
+            "Enable Co-Op" + ("" if not_genned_yet else " (can only be changed before generation)")
         )
-        self.allow_coop_check.setVisible(not randovania.is_frozen())
+        self.allow_coop_check.setVisible(randovania.is_dev_version())
 
     @asyncSlot(MultiplayerSessionActions)
     async def on_actions_update(self, actions: MultiplayerSessionActions):
@@ -926,7 +927,7 @@ class MultiplayerSessionWindow(QtWidgets.QMainWindow, Ui_MultiplayerSessionWindo
                 QtWidgets.QMessageBox.Icon.Information,
                 "Information",
                 (
-                    "Co-op is still *very* experimental and may have issues.\nFor Prime 1 and Echoes in particular, "
+                    "Co-op is still in the testing period and may have issues.\nFor Prime 1 and Echoes in particular, "
                     "please ensure that Randovania is always connected to the game before you collect items, as "
                     "otherwise they will be lost permanently!"
                 ),

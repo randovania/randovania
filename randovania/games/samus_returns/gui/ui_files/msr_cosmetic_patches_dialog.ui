@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>490</width>
-        <height>684</height>
+        <height>838</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -82,10 +82,10 @@
                <bool>false</bool>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::Shape::StyledPanel</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+               <enum>QFrame::Shadow::Raised</enum>
               </property>
               <property name="lineWidth">
                <number>1</number>
@@ -123,10 +123,10 @@
                <bool>false</bool>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::Shape::StyledPanel</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+               <enum>QFrame::Shadow::Raised</enum>
               </property>
               <property name="lineWidth">
                <number>1</number>
@@ -177,10 +177,10 @@
                <bool>false</bool>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::Shape::StyledPanel</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+               <enum>QFrame::Shadow::Raised</enum>
               </property>
               <property name="lineWidth">
                <number>1</number>
@@ -205,10 +205,10 @@
                <bool>false</bool>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::Shape::StyledPanel</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+               <enum>QFrame::Shadow::Raised</enum>
               </property>
               <property name="lineWidth">
                <number>1</number>
@@ -269,10 +269,10 @@
                <bool>false</bool>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::Shape::StyledPanel</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+               <enum>QFrame::Shadow::Raised</enum>
               </property>
               <property name="lineWidth">
                <number>1</number>
@@ -324,10 +324,10 @@
                <bool>false</bool>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::Shape::StyledPanel</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+               <enum>QFrame::Shadow::Raised</enum>
               </property>
               <property name="lineWidth">
                <number>1</number>
@@ -349,7 +349,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="2" alignment="Qt::AlignHCenter">
+          <item row="0" column="0" colspan="2" alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Color choices may appear differently in-game than what is selected.</string>
@@ -412,10 +412,10 @@
                <bool>false</bool>
               </property>
               <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
+               <enum>QFrame::Shape::StyledPanel</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
+               <enum>QFrame::Shadow::Raised</enum>
               </property>
               <property name="lineWidth">
                <number>1</number>
@@ -451,7 +451,7 @@
                <number>100</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -482,7 +482,7 @@
                <number>100</number>
               </property>
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
              </widget>
             </item>
@@ -517,7 +517,7 @@
              <string>Changes how music is shuffled.</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -547,7 +547,7 @@
              <string>Only shuffles songs within certain types, those being &quot;combat&quot;, &quot;exploration&quot; and &quot;fanfares&quot;. This ensures that you won't be hearing boss music while trying to explore an area. Certain songs, such as the Credits song are exempt from shuffling.</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -585,6 +585,9 @@
     <widget class="QPushButton" name="accept_button">
      <property name="text">
       <string>Accept</string>
+     </property>
+     <property name="default">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

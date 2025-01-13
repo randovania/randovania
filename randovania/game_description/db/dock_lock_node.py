@@ -58,7 +58,7 @@ class DockLockNode(ResourceNode):
     def should_collect(self, context: NodeContext) -> bool:
         dock = self.dock
 
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         front_weak = patches.get_dock_weakness_for(dock)
         if not context.has_resource(self.resource(context)):
             if front_weak.lock is not None:
@@ -79,7 +79,7 @@ class DockLockNode(ResourceNode):
         dock_resource = self.resource(context)
         target_resource = NodeResourceInfo.from_node(dock.get_target_node(context), context)
 
-        patches: GamePatches = context.patches  # type: ignore
+        patches: GamePatches = context.patches  # type: ignore[assignment]
         front_weak = patches.get_dock_weakness_for(dock)
         if not context.has_resource(dock_resource) and front_weak.lock is not None:
             yield dock_resource, 1

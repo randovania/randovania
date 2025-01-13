@@ -5,14 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [8.8.x] - 2025-01-??
+## [8.9.x] - 2025-02-??
+
+- Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
+- Changed: Wording on the Door Locks preset tab to be clearer.
+- Changed: The main Randovania window now doesn't have an unnecessary border.
+- Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
+- Changed: Node details in the Data Visualizer now have word wrap.
+
+### AM2R
+
+#### Logic Database
+
+##### Main Caves
+
+- Added: Mining Facility Alpha Nest Access now has a Spider Ball method of crossing the room from either side.
+- Added: Mining Facility Gamma Nest Access now has a Spider Ball method of crossing the room from either side.
+
+##### Area 5 Tower Exterior
+
+- Added: Tower Exterior Spider Ball Clip added to traverse from Next to Teleporter to Pickup (Super Missile Tank Bottom).
+
+### Metroid Dread
+
+#### Logic Database
+
+- Fixed: A typo in the event name Artaria - Prepare Speedboost in Map Station has been changed from Prepare Speeboost in Map Station.
+
+### Metroid Prime 2: Echoes
+
+- Changed: Double Damage is now classified as a Beam instead of a Suit.
+- Fixed: Typo in the Differences tab.
+
+### Metroid: Samus Returns
+
+- Changed: The hinted item after collecting the last required DNA is now dependent on the final boss. The Baby Metroid is hinted for Proteus Ridley, the Ice Beam for Metroid Queen and the Bomb for Diggernaut.
+- Fixed: Prevented the block with a hidden item in Area 4 Central Caves - Transit Tunnel from being destroyed from another area, causing the item disappear.
+- Fixed: Incorrect rotation of a progressive item if the previous stage of the progressive item was received without leaving the area.
+- Fixed: Once you have collected all Metroid DNA, when traveling from Surface West to Surface East, a message will always appear asking if you want to fight Proteus Ridley or not. Canceling the message will load Surface East like normal. This is to prevent Surface East from being potentially inaccessible if the only entry point is from Surface West.
+
+#### Logic Database
+
+##### Area 4 Central Caverns
+
+- Added: Transport to Area 3 and Crystal Mines: A beginner Spider Ball Clip to reach the elevator to Crystal Mines from the bottom Chozo Seal with Space Jump.
+
+## [8.8.0] - 2025-01-02
 
 - Added: Experimental preset option to place all majors or pickups logically. This makes sure pickups that are not required can be collected.
 - Fixed: The map tracker no longer opens if the starting location prompt was cancelled.
 
 ### Metroid Prime
 
-- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.  
+- Changed: The refill pickups don't show the irrelevant explanation about how much underlying ammo will be provided.
 
 #### Logic Database
 

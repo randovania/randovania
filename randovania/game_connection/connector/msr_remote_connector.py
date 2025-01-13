@@ -36,7 +36,7 @@ class MSRRemoteConnector(MercuryConnector):
 
         from open_samus_returns_rando.multiworld_integration import get_lua_for_item
 
-        lua_code = get_lua_for_item(items_list)
+        lua_code = get_lua_for_item(items_list, f'"{scenario_id}"')
         execute_string = f"RL.ReceivePickup({repr(message)},'{lua_code}'," f"{num_pickups},{self.inventory_index})"
         await self.executor.run_lua_code(execute_string)
 

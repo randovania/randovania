@@ -10,7 +10,7 @@ from randovania.games.samus_returns.layout.msr_cosmetic_patches import MSRCosmet
 from randovania.gui.lib.signal_handling import set_combo_with_value
 
 if TYPE_CHECKING:
-    import pytestqt.qtbot  # type: ignore[import]
+    import pytestqt.qtbot
 
 
 @pytest.mark.parametrize(

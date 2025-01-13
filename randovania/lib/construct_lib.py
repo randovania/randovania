@@ -4,7 +4,7 @@ import json
 import typing
 from typing import Any
 
-import construct  # type: ignore[import-untyped]
+import construct
 from construct import CString, Flag, If, PascalString, PrefixedArray, Rebuild, Struct, VarInt
 
 if typing.TYPE_CHECKING:
@@ -14,11 +14,11 @@ String = PascalString(VarInt, "utf-8")
 
 
 def add_emit_build(con: construct.Construct, emit: typing.Callable[[CodeGen], str]) -> None:
-    con._emitbuild = emit  # type: ignore[attr-defined]
+    con._emitbuild = emit
 
 
 def compile_build_struct(con: construct.Construct, code: CodeGen) -> str:
-    return con._compilebuild(code)  # type: ignore[attr-defined]
+    return con._compilebuild(code)
 
 
 def varint_emitbuild(code: CodeGen) -> str:
