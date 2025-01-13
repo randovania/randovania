@@ -746,6 +746,10 @@
             "MenuMod": {
                 "long_name": "Equipment Manipulation",
                 "extra": {}
+            },
+            "CanSWJ": {
+                "long_name": "Single Wall Jumping Physics",
+                "extra": {}
             }
         },
         "requirement_template": {
@@ -1325,7 +1329,17 @@
                                 "type": "or",
                                 "data": {
                                     "comment": null,
-                                    "items": []
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "misc",
+                                                "name": "CanSWJ",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         ]
