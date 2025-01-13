@@ -11,6 +11,7 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.pickup.pickup_entry import PickupEntry
 from randovania.game_description.resources.inventory import Inventory, InventoryItem
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.network_common.remote_pickup import RemotePickup
 
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.prime1.dol_patches import Prime1DolVersion
@@ -54,7 +55,7 @@ async def test_patches_for_pickup(
 
     pickup = PickupEntry(
         "Pickup",
-        0,
+        MagicMock(),
         generic_pickup_category,
         generic_pickup_category,
         progression=(),
@@ -113,7 +114,7 @@ async def test_multiworld_interaction_missing_remote_pickups(has_cooldown: bool,
     inventory.get = MagicMock()
     inventory.get.return_value = magic_item
 
-    remote_pickups = [("", MagicMock(), None)] if has_patches else []
+    remote_pickups: tuple[RemotePickup, ...] = (RemotePickup("", MagicMock(), None),) if has_patches else ()
 
     # Run
     await connector.receive_remote_pickups(inventory, remote_pickups)
@@ -163,6 +164,8 @@ async def test_multiworld_interaction(connector: Prime1RemoteConnector, depth: i
 @pytest.mark.parametrize("depth", [0, 1, 2, 3])
 async def test_interact_with_game(connector: Prime1RemoteConnector, depth: int, failure_at: int | None):
     # Setup
+    assert isinstance(connector.executor, AsyncMock)
+
     connector.message_cooldown = 0.0
     connector.executor.is_connected.return_value = True
     connector.executor.disconnect = MagicMock()

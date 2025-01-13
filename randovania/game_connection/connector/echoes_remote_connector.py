@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import struct
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, TypeGuard
 
 from open_prime_rando.dol_patching import all_prime_dol_patches
 
@@ -13,6 +13,7 @@ from randovania.games.prime2.patcher import echoes_items
 if TYPE_CHECKING:
     from open_prime_rando.dol_patching.echoes.dol_patches import EchoesDolVersion
 
+    from randovania.game_connection.connector.prime_remote_connector import PickupPatches
     from randovania.game_description.db.region import Region
     from randovania.game_description.pickup.pickup_entry import PickupEntry
     from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -48,7 +49,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     def __init__(self, version: EchoesDolVersion, executor: MemoryOperationExecutor):
         super().__init__(version, executor)
 
-    def _asset_id_format(self):
+    def _asset_id_format(self) -> str:
         return ">I"
 
     @property
@@ -92,7 +93,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             for item in items
         ]
 
-    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory):
+    async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory) -> PickupPatches:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
 
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
@@ -126,6 +127,9 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         # mapWorldInfoAreas.areas: + 0x4
         # mapWorldInfoAreas.areas.data: +0xc
 
+        def all_ops_successful(ops: list[bytes | None]) -> TypeGuard[list[bytes]]:
+            return all(op is not None for op in ops)
+
         # multiple passes are required, as 128 bytes is too much at once for Nintendont
         PASSES = 2
         arr_raws = [
@@ -138,6 +142,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
             )
             for i in range(PASSES)
         ]
+        assert all_ops_successful(arr_raws)
         arr = struct.unpack(">32L", b"".join(arr_raws))
 
         count = 0
