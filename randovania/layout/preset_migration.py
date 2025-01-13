@@ -1240,17 +1240,15 @@ def _migrate_v94(preset: dict) -> dict:
 
 
 def _migrate_v95(preset: dict) -> dict:
-
     if preset["game"] == "samus_returns":
         hints = preset["configuration"]["hints"]
         hints["final_boss_item"] = hints["baby_metroid"]
         hints.pop("baby_metroid")
-        
+
     return preset
 
-  
+
 def _migrate_v96(preset: dict) -> dict:
-  
     if preset["game"] == "prime3":
         preset["configuration"]["teleporters"] = {
             "mode": "vanilla",
@@ -1261,7 +1259,7 @@ def _migrate_v96(preset: dict) -> dict:
         }
     return preset
 
-  
+
 _MIGRATIONS = [
     _migrate_v1,  # v1.1.1-247-gaf9e4a69
     _migrate_v2,  # v1.2.2-71-g0fbabe91
