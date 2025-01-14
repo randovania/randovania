@@ -94,6 +94,29 @@ def _migrate_v9(pickup_data: dict, game: RandovaniaGame) -> None:
     pickup_data["generated_pickups"] = generated["pickups"]
 
 
+def _migrate_v10(pickup_data: dict, game: RandovaniaGame) -> None:
+    categories = pickup_data["pickup_categories"]
+
+    for pickup in pickup_data["standard_pickups"].values():
+        category = categories[pickup["pickup_category"]]
+        pickup["show_in_credits_spoiler"] = category["hinted_as_major"]
+
+    for pickup in pickup_data["generated_pickups"].values():
+        pickup["show_in_credits_spoiler"] = True
+        pickup["is_key"] = True
+
+    for category in categories.values():
+        category.pop("hinted_as_major", None)
+        category.pop("is_key", None)
+
+
+# broad_to_category = {
+#     "beam_related": "beam",
+#     "morph_ball_related": "morph_ball",
+#     "missile_related": "missile",
+# }
+
+
 _MIGRATIONS = [
     None,
     _migrate_v2,
@@ -104,6 +127,7 @@ _MIGRATIONS = [
     _migrate_v7,
     _migrate_v8,
     _migrate_v9,
+    _migrate_v10,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

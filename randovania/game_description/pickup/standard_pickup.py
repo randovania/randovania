@@ -53,6 +53,11 @@ class StandardPickupDefinition(JsonDataclass, DataclassPostInitTypeCheck):
     is enabled, and for when this pickup is referenced by a major/minor hint.
     """
 
+    show_in_credits_spoiler: bool = dataclasses.field(default=True, metadata=EXCLUDE_DEFAULT)
+    """
+    Whether the pickup should be displayed in the standard credits spoiler used by many games.
+    """
+
     expected_case_for_describer: StandardPickupStateCase = dataclasses.field(default=StandardPickupStateCase.SHUFFLED)
     """What the expected case for the Preset Describer should be."""
 

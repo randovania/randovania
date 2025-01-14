@@ -69,6 +69,7 @@ def create_standard_pickup(
             probability_multiplier=pickup.probability_multiplier * state.priority,
             index_age_impact=pickup.index_age_impact,
         ),
+        show_in_credits_spoiler=pickup.show_in_credits_spoiler,
     )
 
 
@@ -108,6 +109,8 @@ def create_ammo_pickup(
             probability_multiplier=ammo.probability_multiplier,
             index_age_impact=ammo.index_age_impact,
         ),
+        show_in_credits_spoiler=False,
+        is_expansion=True,
     )
 
 
@@ -177,6 +180,7 @@ def create_nothing_pickup(resource_database: ResourceDatabase, model_name: str =
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
+        show_in_credits_spoiler=False,
     )
 
 
@@ -200,4 +204,5 @@ def create_visual_nothing(game: RandovaniaGame, model_name: str, pickup_name: st
         generator_params=PickupGeneratorParams(
             preferred_location_category=LocationCategory.MAJOR,  # TODO
         ),
+        show_in_credits_spoiler=False,
     )

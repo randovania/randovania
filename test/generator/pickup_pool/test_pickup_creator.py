@@ -30,7 +30,9 @@ def test_create_pickup_for(echoes_resource_database, generic_pickup_category):
     ammo_b = echoes_resource_database.get_item("DarkAmmo")
 
     less_generic_pickup_category = PickupCategory(
-        name="the_category", long_name="The Category", hint_details=("a ", " wonderful item"), hinted_as_major=True
+        name="the_category",
+        long_name="The Category",
+        hint_details=("a ", " wonderful item"),
     )
 
     standard_pickup = StandardPickupDefinition(

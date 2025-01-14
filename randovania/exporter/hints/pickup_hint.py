@@ -83,6 +83,7 @@ def create_pickup_hint(
     :return:
     """
     if target is None:
+        # FIXME: adjust per game
         target = PickupTarget(
             pickup=PickupEntry(
                 name="Energy Transfer Module",
@@ -96,6 +97,7 @@ def create_pickup_hint(
                 generator_params=PickupGeneratorParams(
                     preferred_location_category=LocationCategory.MAJOR,
                 ),
+                show_in_credits_spoiler=False,
             ),
             player=players_config.player_index,
         )

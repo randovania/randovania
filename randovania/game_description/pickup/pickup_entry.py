@@ -85,6 +85,8 @@ class PickupEntry:
     offworld_models: frozendict[RandovaniaGame, str] = dataclasses.field(
         default_factory=typing.cast(typing.Callable[[], frozendict[RandovaniaGame, str]], frozendict),
     )
+    show_in_credits_spoiler: bool = True
+    is_expansion: bool = False
 
     def __post_init__(self) -> None:
         if not isinstance(self.progression, tuple):

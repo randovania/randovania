@@ -86,5 +86,7 @@ class AmmoPickupDefinition(JsonDataclass):
 
 
 AMMO_PICKUP_CATEGORY = PickupCategory(
-    name="expansion", long_name="Expansion", hint_details=("an ", "expansion"), hinted_as_major=False
+    name="expansion",
+    long_name="Expansion",
+    hint_details=("an ", "expansion"),
 )

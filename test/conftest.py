@@ -287,7 +287,6 @@ def generic_pickup_category() -> PickupCategory:
         name="generic",
         long_name="Generic Item Category",
         hint_details=("an ", "unspecified item"),
-        hinted_as_major=False,
     )
 
 

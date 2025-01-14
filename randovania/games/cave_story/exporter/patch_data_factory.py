@@ -111,6 +111,7 @@ class CSPatchDataFactory(PatchDataFactory):
                 generator_params=PickupGeneratorParams(
                     preferred_location_category=LocationCategory.MAJOR,  # TODO
                 ),
+                show_in_credits_spoiler=False,
             ),
             self.players_config.player_index,
         )

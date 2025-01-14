@@ -172,7 +172,7 @@ class HintDistributor(ABC):
         raise NotImplementedError
 
     def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
-        return pickup.pickup_category.hinted_as_major
+        return pickup.show_in_credits_spoiler  # FIXME
 
     def fill_unassigned_hints(
         self,
@@ -322,8 +322,7 @@ class HintDistributor(ABC):
                 t = patches.pickup_assignment.get(index)
                 # FIXME: None should be ok, but this must be called after junk has been filled
                 if t is not None:
-                    cat = t.pickup.pickup_category
-                    if cat.hinted_as_major or (not cat.is_expansion and target_precision == HintItemPrecision.DETAILED):
+                    if t.pickup.show_in_credits_spoiler:  # FIXME
                         yield index
 
         area_choices = {

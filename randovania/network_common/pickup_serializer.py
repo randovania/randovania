@@ -87,8 +87,6 @@ def _encode_pickup_category(category: PickupCategory):
     yield from bitpacking.encode_string(category.long_name)
     yield from bitpacking.encode_string(category.hint_details[0])
     yield from bitpacking.encode_string(category.hint_details[1])
-    yield from bitpacking.encode_bool(category.hinted_as_major)
-    yield from bitpacking.encode_bool(category.is_key)
 
 
 def _decode_pickup_category(decoder: BitPackDecoder) -> PickupCategory:
@@ -96,8 +94,6 @@ def _decode_pickup_category(decoder: BitPackDecoder) -> PickupCategory:
         name=bitpacking.decode_string(decoder),
         long_name=bitpacking.decode_string(decoder),
         hint_details=(bitpacking.decode_string(decoder), bitpacking.decode_string(decoder)),
-        hinted_as_major=bitpacking.decode_bool(decoder),
-        is_key=bitpacking.decode_bool(decoder),
     )
 
 
@@ -133,6 +129,8 @@ class BitPackPickupEntry:
             _PROBABILITY_MULTIPLIER_META
         )
         yield from bitpacking.encode_big_int(self.value.generator_params.required_progression)
+        yield from bitpacking.encode_bool(self.value.show_in_credits_spoiler)
+        yield from bitpacking.encode_bool(self.value.is_expansion)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, database: ResourceDatabase) -> PickupEntry:
@@ -158,6 +156,9 @@ class BitPackPickupEntry:
         probability_multiplier = BitPackFloat.bit_pack_unpack(decoder, _PROBABILITY_MULTIPLIER_META)
         required_progression = bitpacking.decode_big_int(decoder)
 
+        show_in_credits_spoiler = bitpacking.decode_bool(decoder)
+        is_expansion = bitpacking.decode_bool(decoder)
+
         return PickupEntry(
             name=name,
             model=model,
@@ -174,4 +175,6 @@ class BitPackPickupEntry:
                 probability_multiplier=probability_multiplier,
                 required_progression=required_progression,
             ),
+            show_in_credits_spoiler=show_in_credits_spoiler,
+            is_expansion=is_expansion,
         )

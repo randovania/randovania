@@ -258,13 +258,11 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
             name="weapon",
             long_name="Weapon",
             hint_details=("a ", "weapon"),
-            hinted_as_major=True,
         ),
         "ammo-based": PickupCategory(
             name="ammo-based",
             long_name="Ammo-Based",
             hint_details=("an ", "ammo-based item"),
-            hinted_as_major=False,
         ),
     }
     pickup_db = PickupDatabase(
@@ -292,6 +290,7 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
                 offworld_models=frozendict(),
                 progression=("Weapon",),
                 preferred_location_category=LocationCategory.MAJOR,
+                show_in_credits_spoiler=True,
             ),
         },
         ammo_pickups={},
