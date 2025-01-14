@@ -119,7 +119,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
                     lines.append(
                         f'<p><a href="data-editor://{region.correct_name(area.in_dark_aether)}/{area.name}">'
                         f"{region.correct_name(area.in_dark_aether)} - {area.name}</a>"
-                        f'<br />{"<br />".join(used_tricks)}</p>'
+                        f"<br />{'<br />'.join(used_tricks)}</p>"
                     )
 
         self.area_list_label.setText("".join(lines))

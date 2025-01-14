@@ -871,7 +871,7 @@ def _migrate_v58(preset: dict) -> dict:
         mapping = migration_data.get_raw_data(RandovaniaGame(game))["rename_teleporter_nodes"]
 
         def replace_location(old_location):
-            identifier = f'{old_location["region"]}/{old_location["area"]}/{old_location["node"]}'
+            identifier = f"{old_location['region']}/{old_location['area']}/{old_location['node']}"
             new_node_name = mapping.get(identifier, None)
             if new_node_name is not None:
                 old_location["node"] = new_node_name

@@ -316,8 +316,7 @@ class CSPatchDataFactory(PatchDataFactory):
                 }
 
                 starting_msg += (
-                    f"<IT+0014<GIT1014{flags}<SNP0136:0000:0000:0000\r\n"
-                    f"Got {words[num_puppies]}!<WAI0010<NOD\r\n<CLR"
+                    f"<IT+0014<GIT1014{flags}<SNP0136:0000:0000:0000\r\nGot {words[num_puppies]}!<WAI0010<NOD\r\n<CLR"
                 )
                 continue
 

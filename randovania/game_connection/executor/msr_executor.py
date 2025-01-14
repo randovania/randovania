@@ -151,7 +151,7 @@ class MSRExecutor:
             response = typing.cast(bytes, await self._read_response())
             (api_version, buffer_size, self.layout_uuid_str) = response.decode("ascii").split(",")
             self.logger.debug(
-                "Remote replied with API level %s, buffer_size %s and layout_uuid %s, " "connection successful.",
+                "Remote replied with API level %s, buffer_size %s and layout_uuid %s, connection successful.",
                 api_version,
                 buffer_size,
                 self.layout_uuid_str,
