@@ -193,10 +193,12 @@ class FusionPatchDataFactory(PatchDataFactory):
             self.patches.configuration, self.patches.game, self.patches
         )
         starting_items_text = (
-            "HQ has provided you with the following starting items: " + ", ".join(starting_items_list) + ". "
-            if len(starting_items_list) > 0
-            else ""
+            "Starting items: " + ", ".join(starting_items_list) + ". "
+            if self.configuration.short_intro_text
+            else "HQ has provided you with the following starting items: " + ", ".join(starting_items_list) + ". "
         )
+        if len(starting_items_list) == 0:
+            starting_items_text = ""
         metroid_location_text = "anywhere" if self.configuration.artifacts.prefer_anywhere else "at bosses"
         long_intro = (
             f"{starting_items_text}Your objective is as follows: the [COLOR=3]SA-X[/COLOR] "
@@ -211,9 +213,11 @@ class FusionPatchDataFactory(PatchDataFactory):
             "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
         )
         short_intro = (
-            f"{starting_items_text}" "Gather Infant Metroids to lure out the SA-X"
+            f"{starting_items_text}Gather {self.configuration.artifacts.required_artifacts}"
+            f"/{self.configuration.artifacts.placed_artifacts} Infant Metroids to lure out "
+            "the [COLOR=3]SA-X[/COLOR] and prepare for battle."
             if self.configuration.artifacts.required_artifacts > 0
-            else "Equip yourself to battle the SA-X"
+            else f"{starting_items_text}Equip yourself to battle the [COLOR=3]SA-X[/COLOR]."
         )
         for lang in hint_lang_list:
             nav_text_json[lang] = {
