@@ -38,12 +38,8 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
     }
 
     generated_pickups = {
-        group_name: StandardPickupDefinition.from_json(
-            pickup,
-            name=pickup.pop("name_template"),
-            game=game,
-            pickup_category=pickup_categories.get("pickup_category", GENERIC_KEY_CATEGORY),
-            broad_category=pickup_categories.get("broad_category", GENERIC_KEY_CATEGORY),
+        group_name: StandardPickupDefinition.from_json_with_categories(
+            pickup.pop("name_template"), game, pickup_categories, pickup, default_category=GENERIC_KEY_CATEGORY
         )
         for group_name, pickup in database_data["generated_pickups"].items()
     }

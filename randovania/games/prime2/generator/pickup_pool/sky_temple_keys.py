@@ -51,7 +51,7 @@ def add_sky_temple_key_distribution_logic(
     first_automatic_key = keys_to_place
 
     starting = [
-        create_generated_pickup("Sky Temple Key", resource_database, automatic_key_number)
+        create_generated_pickup("Sky Temple Key", resource_database, automatic_key_number + 1)
         for automatic_key_number in range(first_automatic_key, 9)
     ]
 

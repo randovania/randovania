@@ -269,6 +269,7 @@ def create_pickup_database(game_enum: RandovaniaGame) -> PickupDatabase:
     }
     pickup_db = PickupDatabase(
         pickup_categories=pickup_categories,
+        generated_pickups={},
         standard_pickups={
             "Powerful Weapon": StandardPickupDefinition(
                 game=game_enum,

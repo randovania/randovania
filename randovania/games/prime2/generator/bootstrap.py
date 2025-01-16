@@ -10,7 +10,6 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_reduction import DamageReduction
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.resolver.bootstrap import Bootstrap
@@ -115,7 +114,7 @@ class EchoesBootstrap(Bootstrap):
 
         if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
             locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_boss_location)
-            self.pre_place_items(rng, locations, pool_results, sky_temple_keys.SKY_TEMPLE_KEY_CATEGORY)
+            self.pre_place_items(rng, locations, pool_results, "sky_temple_key", patches.game.game)
 
         return super().assign_pool_results(rng, patches, pool_results)
 

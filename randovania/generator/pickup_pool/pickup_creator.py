@@ -154,8 +154,6 @@ def create_generated_pickup(
             index_age_impact=pickup.index_age_impact,
             required_progression=minimum_progression,
         ),
-        show_in_credits_spoiler=True,
-        is_expansion=False,
     )
 
 
