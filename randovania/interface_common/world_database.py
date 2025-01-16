@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 _MIGRATIONS = [
-    # lambda data: data,
+    # lambda data: None,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 

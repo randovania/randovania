@@ -105,7 +105,7 @@ class VersionedPreset:
         if not self._converted:
             try:
                 self._preset = Preset.from_json_dict(
-                    preset_migration.convert_to_current_version(copy.deepcopy(self.data))
+                    preset_migration.convert_to_current_version(copy.deepcopy(self.data), self.game)
                 )
             except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)

@@ -11,21 +11,21 @@ if TYPE_CHECKING:
 _FIRST_VERSION_IN_SUBFOLDER = 18
 
 
-def _convert_v11(options: dict) -> dict:
+def _only_new_fields(options: dict) -> None:
+    pass
+
+
+def _convert_v11(options: dict) -> None:
     options.pop("layout_configuration", None)
     options.pop("patcher_configuration", None)
 
-    return options
 
-
-def _convert_v12(options: dict) -> dict:
+def _convert_v12(options: dict) -> None:
     if "cosmetic_patches" in options:
         options["cosmetic_patches"]["unvisited_room_names"] = True
 
-    return options
 
-
-def _convert_v13(options: dict) -> dict:
+def _convert_v13(options: dict) -> None:
     cosmetic_patches = options.pop("cosmetic_patches", None)
     output_directory = options.pop("output_directory", None)
 
@@ -64,60 +64,38 @@ def _convert_v13(options: dict) -> dict:
             }
         }
 
-    return options
 
-
-def _convert_v14(options: dict) -> dict:
+def _convert_v14(options: dict) -> None:
     for game_options in options.get("per_game_options", {}).values():
         game_options["output_format"] = None
 
-    return options
 
-
-def _convert_v15(options: dict) -> dict:
+def _convert_v15(options: dict) -> None:
     per_game_options = options.get("per_game_options", {})
     if "prime1" in per_game_options and "cosmetic_patches" in per_game_options["prime1"]:
         per_game_options["prime1"]["cosmetic_patches"].pop("debug_pickups", None)
 
-    return options
 
-
-def _convert_v16(options: dict) -> dict:
+def _convert_v16(options: dict) -> None:
     per_game_options = options.pop("per_game_options", {})
 
     for game_name in ["prime1", "prime2", "cave_story"]:
         if game_name in per_game_options:
             options[f"game_{game_name}"] = per_game_options[game_name]
 
-    return options
 
-
-def _convert_v17(options: dict) -> dict:
+def _convert_v17(options: dict) -> None:
     for game_name in ["prime1", "prime2"]:
         if f"game_{game_name}" in options:
             options[f"game_{game_name}"]["use_external_models"] = []
 
-    return options
 
-
-def _convert_v18(options: dict) -> dict:
-    # added parent_for_presets, but we don't have to change anything.
-    # we added a new version to split the file
-    return options
-
-
-def _convert_v19(options: dict) -> dict:
-    # added Dread's show_death_counter
-    return options
-
-
-def _convert_v20(options: dict) -> dict:
+def _convert_v20(options: dict) -> None:
     # added experimental settings
     options.get("game_prime1", {}).get("cosmetic_patches", {}).pop("qol_cosmetic", None)
-    return options
 
 
-def _convert_v21(options: dict) -> dict:
+def _convert_v21(options: dict) -> None:
     # multiple connectors
     options["connector_builders"] = []
 
@@ -137,70 +115,38 @@ def _convert_v21(options: dict) -> dict:
             }
         )
 
-    return options
 
-
-def _convert_v22(options: dict) -> dict:
-    # added preset order
-    return options
-
-
-def _convert_v23(options: dict) -> dict:
+def _convert_v23(options: dict) -> None:
     if "cosmetic_patches" in options.get("game_prime2", {}):
         options["game_prime2"]["cosmetic_patches"].pop("teleporter_sounds", None)
 
-    return options
 
-
-def _convert_v24(options: dict) -> dict:
-    # added Dread's missile pack recolor
-    return options
-
-
-def _convert_v25(options: dict) -> dict:
-    # added Dread's auto tracker
-    return options
-
-
-def _only_new_fields(options: dict) -> dict:
-    return options
-
-
-def _dread_linux_ryujinx_path(options: dict) -> dict:
+def _dread_linux_ryujinx_path(options: dict) -> None:
     if "game_dread" in options:
         options["game_dread"]["linux_ryujinx_path"] = "flatpak"
-    return options
 
 
-def _msr_cosmetic_laser_color(options: dict) -> dict:
+def _msr_cosmetic_laser_color(options: dict) -> None:
     if "cosmetic_patches" in options.get("game_samus_returns", {}):
         options["game_samus_returns"]["cosmetic_patches"].pop("use_grapple_laser_color")
 
-    return options
 
-
-def _msr_exheader_path(options: dict) -> dict:
+def _msr_exheader_path(options: dict) -> None:
     if "game_samus_returns" in options:
         options["game_samus_returns"]["input_exheader"] = None
 
-    return options
 
-
-def _msr_room_names_visible(options: dict) -> dict:
+def _msr_room_names_visible(options: dict) -> None:
     if "game_samus_returns" in options:
         options["game_samus_returns"]["cosmetic_patches"]["show_room_names"] = "ALWAYS"
 
-    return options
 
-
-def _remove_msr_fields(options: dict) -> dict:
+def _remove_msr_fields(options: dict) -> None:
     if "game_samus_returns" in options:
         options["game_samus_returns"].pop("input_directory", None)
         options["game_samus_returns"].pop("input_exheader", None)
         options["game_samus_returns"].pop("target_version", None)
         options["game_samus_returns"]["input_file"] = None
-
-    return options
 
 
 _CONVERTER_FOR_VERSION = [
@@ -221,14 +167,14 @@ _CONVERTER_FOR_VERSION = [
     _convert_v15,
     _convert_v16,
     _convert_v17,
-    _convert_v18,
-    _convert_v19,
+    _only_new_fields,  # added parent_for_presets
+    _only_new_fields,  # added Dread's show_death_counter
     _convert_v20,
     _convert_v21,
-    _convert_v22,
+    _only_new_fields,  # added preset order
     _convert_v23,
-    _convert_v24,
-    _convert_v25,
+    _only_new_fields,  # added Dread's missile pack recolor
+    _only_new_fields,  # added Dread's auto tracker
     _only_new_fields,  # added allow_crash_reporting
     _only_new_fields,  # added DebugConnectorBuilder's layout_uuid
     _only_new_fields,  # added Dread's music sliders

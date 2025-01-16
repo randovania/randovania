@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from randovania.game_description.pickup import migrations
+from randovania.game_description.pickup import pickup_migration
 from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
 from randovania.game_description.pickup.pickup_category import PickupCategory
 from randovania.game_description.pickup.standard_pickup import StandardPickupDefinition
@@ -30,7 +30,7 @@ def read_database(database_data: dict, game: RandovaniaGame) -> PickupDatabase:
     :param game:
     :return:
     """
-    migrations.migrate_current(database_data)
+    pickup_migration.migrate_current(database_data, game)
 
     pickup_categories = {
         name: PickupCategory.from_json(name, category) for name, category in database_data["pickup_categories"].items()
@@ -81,7 +81,7 @@ def write_database(database: PickupDatabase) -> dict:
     default_offworld_model = database.default_offworld_model
 
     return {
-        "schema_version": migrations.CURRENT_VERSION,
+        "schema_version": pickup_migration.CURRENT_VERSION,
         "pickup_categories": pickup_categories,
         "standard_pickups": standard_pickups,
         "ammo_pickups": ammo_pickups,
