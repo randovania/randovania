@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from frozendict import frozendict
+
+from randovania.game_description import default_database
 from randovania.game_description.pickup import pickup_category
 from randovania.game_description.pickup.pickup_entry import PickupEntry, PickupGeneratorParams, PickupModel
 from randovania.game_description.resources.location_category import LocationCategory
@@ -25,7 +28,7 @@ def create_standard_pickup(
     ammo_requires_main_item: bool,
 ) -> PickupEntry:
     """
-    Creates a Pickup for the given MajorItem
+    Creates a PickupEntry for the given StandardPickup
     :param state:
     :param pickup:
     :param resource_database:
@@ -75,7 +78,7 @@ def create_ammo_pickup(
     resource_database: ResourceDatabase,
 ) -> PickupEntry:
     """
-    Creates a Pickup for an expansion of the given ammo.
+    Creates a PickupEntry for an expansion of the given ammo.
     :param ammo:
     :param ammo_count:
     :param requires_main_item:
@@ -104,6 +107,55 @@ def create_ammo_pickup(
             probability_multiplier=ammo.probability_multiplier,
             index_age_impact=ammo.index_age_impact,
         ),
+    )
+
+
+def create_generated_pickup(
+    pickup_group: str,
+    resource_database: ResourceDatabase,
+    identifier: str | int | None = None,
+    minimum_progression: int = 0,
+) -> PickupEntry:
+    """
+    Creates a concrete PickupEntry given a generated pickup group and an identifier
+    :param pickup_group:
+    :param resource_database:
+    :param identifier:
+    :param minimum_progression:
+    :return:
+    """
+
+    pickup_database = default_database.pickup_database_for_game(resource_database.game_enum)
+    pickup = pickup_database.generated_pickups[pickup_group]
+
+    assert not pickup.ammo
+    assert not pickup.unlocks_ammo
+
+    def _create_resources(base_resource: str, count: int = 1) -> tuple[ItemResourceInfo, int]:
+        return resource_database.get_item(base_resource.format(i=identifier)), count
+
+    return PickupEntry(
+        name=pickup.name.format(i=identifier),
+        progression=tuple(_create_resources(progression) for progression in pickup.progression),
+        extra_resources=tuple(_create_resources(item, count) for item, count in pickup.additional_resources.items()),
+        model=PickupModel(
+            game=resource_database.game_enum,
+            name=pickup.model_name.format(i=identifier),
+        ),
+        offworld_models=frozendict(
+            {game: model_name.format(i=identifier) for game, model_name in pickup.offworld_models.items()}
+        ),
+        pickup_category=pickup.pickup_category,
+        broad_category=pickup.broad_category,
+        generator_params=PickupGeneratorParams(
+            preferred_location_category=pickup.preferred_location_category,
+            probability_offset=pickup.probability_offset,
+            probability_multiplier=pickup.probability_multiplier,
+            index_age_impact=pickup.index_age_impact,
+            required_progression=minimum_progression,
+        ),
+        show_in_credits_spoiler=True,
+        is_expansion=False,
     )
 
 
