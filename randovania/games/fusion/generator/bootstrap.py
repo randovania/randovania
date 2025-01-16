@@ -3,7 +3,6 @@ from __future__ import annotations
 import dataclasses
 from typing import TYPE_CHECKING
 
-from randovania.games.fusion.generator.pool_creator import INFANT_METROID_CATEGORY
 from randovania.games.fusion.layout import FusionConfiguration
 from randovania.resolver.bootstrap import Bootstrap
 from randovania.resolver.energy_tank_damage_state import EnergyTankDamageState
@@ -72,5 +71,5 @@ class FusionBootstrap(Bootstrap):
             return super().assign_pool_results(rng, patches, pool_results)
 
         locations = self.all_preplaced_item_locations(patches.game, patches.configuration, is_metroid_location)
-        self.pre_place_items(rng, locations, pool_results, INFANT_METROID_CATEGORY)
+        self.pre_place_items(rng, locations, pool_results, "InfantMetroid", patches.game.game)
         return super().assign_pool_results(rng, patches, pool_results)

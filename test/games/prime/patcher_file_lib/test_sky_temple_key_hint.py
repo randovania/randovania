@@ -10,7 +10,7 @@ from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
-from randovania.games.prime2.generator.pickup_pool import sky_temple_keys
+from randovania.generator.pickup_pool.pickup_creator import create_generated_pickup
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
@@ -63,7 +63,7 @@ def test_create_hints_all_placed(
         [
             (
                 PickupIndex(17 + key),
-                PickupTarget(sky_temple_keys.create_sky_temple_key(key, echoes_game.resource_database), 0),
+                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, i=key + 1), 0),
             )
             for key in range(5 if multiworld else 9)
         ]
@@ -74,7 +74,7 @@ def test_create_hints_all_placed(
         [
             (
                 PickupIndex(17 + key),
-                PickupTarget(sky_temple_keys.create_sky_temple_key(key, echoes_game.resource_database), 0),
+                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, i=key + 1), 0),
             )
             for key in range(5, 9)
         ]
@@ -141,7 +141,10 @@ def test_create_hints_all_starting(
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
 
     patches = empty_patches.assign_extra_starting_pickups(
-        [(sky_temple_keys.create_sky_temple_key(key, echoes_game_description.resource_database)) for key in range(9)]
+        [
+            (create_generated_pickup("Sky Temple Key", echoes_game_description.resource_database, i=key + 1))
+            for key in range(9)
+        ]
     )
     patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
     namer = EchoesHintNamer({0: patches}, players_config)

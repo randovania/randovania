@@ -1,5 +1,5 @@
 {
-    "schema_version": 9,
+    "schema_version": 10,
     "pickup_categories": {
         "visor": {
             "long_name": "Visors",
@@ -112,6 +112,82 @@
                 "HUD system"
             ],
             "hinted_as_major": false
+        },
+        "temple_key": {
+            "long_name": "Dark Temple Key",
+            "hint_details": [
+                "a ",
+                "red Temple Key"
+            ],
+            "hinted_as_major": false,
+            "is_key": true
+        },
+        "sky_temple_key": {
+            "long_name": "Sky Temple Key",
+            "hint_details": [
+                "a ",
+                "Sky Temple Key"
+            ],
+            "hinted_as_major": false,
+            "is_key": true
+        }
+    },
+    "generated_pickups": {
+        "Sky Temple Key": {
+            "name_template": "Sky Temple Key {i}",
+            "pickup_category": "sky_temple_key",
+            "model_name": "SkyTempleKey",
+            "offworld_models": {
+                "am2r": "sItemSkyTempleKeyEchoes"
+            },
+            "progression": [
+                "TempleKey{i}"
+            ],
+            "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "probability_offset": 3.0
+        },
+        "Dark Agon Key": {
+            "name_template": "Dark Agon Key {i}",
+            "pickup_category": "temple_key",
+            "model_name": "DarkTempleKey",
+            "offworld_models": {
+                "am2r": "sItemDarkAgonKeyEchoes"
+            },
+            "progression": [
+                "AgonKey{i}"
+            ],
+            "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "probability_offset": 3.0
+        },
+        "Dark Torvus Key": {
+            "name_template": "Dark Torvus Key {i}",
+            "pickup_category": "temple_key",
+            "model_name": "DarkTempleKey",
+            "offworld_models": {
+                "am2r": "sItemDarkTorvusKeyEchoes"
+            },
+            "progression": [
+                "TorvusKey{i}"
+            ],
+            "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "probability_offset": 3.0
+        },
+        "Ing Hive Key": {
+            "name_template": "Ing Hive Key {i}",
+            "pickup_category": "temple_key",
+            "model_name": "DarkTempleKey",
+            "offworld_models": {
+                "am2r": "sItemIngHiveKeyEchoes"
+            },
+            "progression": [
+                "HiveKey{i}"
+            ],
+            "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "probability_offset": 3.0
         }
     },
     "standard_pickups": {
@@ -273,7 +349,8 @@
                 "Percent": 1
             },
             "original_locations": [
-                43, 24
+                43,
+                24
             ]
         },
         "Power Beam": {
@@ -652,7 +729,8 @@
                 "Percent": 1
             },
             "original_locations": [
-                86, 112
+                86,
+                112
             ],
             "probability_offset": 0.5
         },

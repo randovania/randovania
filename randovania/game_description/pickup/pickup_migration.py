@@ -3,6 +3,7 @@ from __future__ import annotations
 import itertools
 
 from randovania.game.game_enum import RandovaniaGame
+from randovania.game_description import migration_data
 from randovania.lib import migration_lib
 
 
@@ -87,6 +88,12 @@ def _migrate_v8(pickup_data: dict, game: RandovaniaGame) -> None:
             pickup["original_locations"] = [pickup.pop("original_location")]
 
 
+def _migrate_v9(pickup_data: dict, game: RandovaniaGame) -> None:
+    generated = migration_data.get_generated_pickups(game)
+    pickup_data["pickup_categories"].update(generated["categories"])
+    pickup_data["generated_pickups"] = generated["pickups"]
+
+
 _MIGRATIONS = [
     None,
     _migrate_v2,
@@ -96,6 +103,7 @@ _MIGRATIONS = [
     _migrate_v6,
     _migrate_v7,
     _migrate_v8,
+    _migrate_v9,
 ]
 CURRENT_VERSION = migration_lib.get_version(_MIGRATIONS)
 
