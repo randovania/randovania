@@ -1,5 +1,5 @@
 {
-    "schema_version": 9,
+    "schema_version": 10,
     "pickup_categories": {
         "beam": {
             "long_name": "Beams",
@@ -104,6 +104,31 @@
                 "life support system"
             ],
             "hinted_as_major": false
+        },
+        "dna": {
+            "long_name": "Metroid DNA",
+            "hint_details": [
+                "some ",
+                "Metroid DNA"
+            ],
+            "hinted_as_major": false,
+            "is_key": true
+        }
+    },
+    "generated_pickups": {
+        "Metroid DNA": {
+            "name_template": "Metroid DNA {i}",
+            "pickup_category": "dna",
+            "model_name": "adn",
+            "offworld_models": {
+                "am2r": "sItemDNA"
+            },
+            "progression": [
+                "Metroid DNA {i}"
+            ],
+            "preferred_location_category": "major",
+            "expected_case_for_describer": "shuffled",
+            "probability_offset": 0.25
         }
     },
     "standard_pickups": {
