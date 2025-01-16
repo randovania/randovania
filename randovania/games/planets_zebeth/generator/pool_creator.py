@@ -24,7 +24,9 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 
 
 def artifact_pool(game: GameDescription, config: PlanetsZebethArtifactConfig) -> PoolResults:
-    keys: list[PickupEntry] = [create_generated_pickup("Tourian Key", game.resource_database, i + 1) for i in range(9)]
+    keys: list[PickupEntry] = [
+        create_generated_pickup("Tourian Key", game.resource_database, i=i + 1) for i in range(9)
+    ]
 
     # Check if we have vanilla tourian keys checked
     if config.vanilla_tourian_keys:

@@ -32,8 +32,8 @@ def add_artifacts(
             create_generated_pickup(
                 "Chozo Artifact",
                 resource_database,
-                prime_items.ARTIFACT_ITEMS[i],
-                artifact_minimum_progression,
+                name=prime_items.ARTIFACT_ITEMS[i],
+                minimum_progression=artifact_minimum_progression,
             )
         )
 
@@ -43,8 +43,8 @@ def add_artifacts(
         create_generated_pickup(
             "Chozo Artifact",
             resource_database,
-            prime_items.ARTIFACT_ITEMS[automatic_artifact],
-            artifact_minimum_progression,
+            name=prime_items.ARTIFACT_ITEMS[automatic_artifact],
+            minimum_progression=artifact_minimum_progression,
         )
         for automatic_artifact in range(first_automatic_artifact, 12)
     ]

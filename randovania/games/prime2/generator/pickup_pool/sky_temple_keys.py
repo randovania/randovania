@@ -47,11 +47,11 @@ def add_sky_temple_key_distribution_logic(
             raise InvalidConfiguration(f"Unknown Sky Temple Key mode: {mode}")
 
     for key_number in range(keys_to_place):
-        item_pool.append(create_generated_pickup("Sky Temple Key", resource_database, key_number + 1))
+        item_pool.append(create_generated_pickup("Sky Temple Key", resource_database, i=key_number + 1))
     first_automatic_key = keys_to_place
 
     starting = [
-        create_generated_pickup("Sky Temple Key", resource_database, automatic_key_number + 1)
+        create_generated_pickup("Sky Temple Key", resource_database, i=automatic_key_number + 1)
         for automatic_key_number in range(first_automatic_key, 9)
     ]
 

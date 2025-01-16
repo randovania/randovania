@@ -63,7 +63,7 @@ def test_create_hints_all_placed(
         [
             (
                 PickupIndex(17 + key),
-                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, key + 1), 0),
+                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, i=key + 1), 0),
             )
             for key in range(5 if multiworld else 9)
         ]
@@ -74,7 +74,7 @@ def test_create_hints_all_placed(
         [
             (
                 PickupIndex(17 + key),
-                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, key + 1), 0),
+                PickupTarget(create_generated_pickup("Sky Temple Key", echoes_game.resource_database, i=key + 1), 0),
             )
             for key in range(5, 9)
         ]
@@ -142,7 +142,7 @@ def test_create_hints_all_starting(
 
     patches = empty_patches.assign_extra_starting_pickups(
         [
-            (create_generated_pickup("Sky Temple Key", echoes_game_description.resource_database, key + 1))
+            (create_generated_pickup("Sky Temple Key", echoes_game_description.resource_database, i=key + 1))
             for key in range(9)
         ]
     )

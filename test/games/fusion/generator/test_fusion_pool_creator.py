@@ -27,9 +27,9 @@ def test_fusion_pool_creator(fusion_game_description, required_metroids, placed_
 
     # Assert
     assert results == PoolResults(
-        [create_generated_pickup("Infant Metroid", db, i + 1) for i in range(required_metroids)],
+        [create_generated_pickup("Infant Metroid", db, i=i + 1) for i in range(required_metroids)],
         {},
-        [create_generated_pickup("Infant Metroid", db, i + 1) for i in range(required_metroids, 20)],
+        [create_generated_pickup("Infant Metroid", db, i=i + 1) for i in range(required_metroids, 20)],
     )
 
 

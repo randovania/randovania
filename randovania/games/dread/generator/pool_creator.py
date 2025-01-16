@@ -18,7 +18,7 @@ def pool_creator(results: PoolResults, configuration: BaseConfiguration, game: G
 
 
 def artifact_pool(game: GameDescription, config: DreadArtifactConfig) -> PoolResults:
-    keys = [create_generated_pickup("Metroid DNA", game.resource_database, i + 1) for i in range(12)]
+    keys = [create_generated_pickup("Metroid DNA", game.resource_database, i=i + 1) for i in range(12)]
     keys_to_shuffle = keys[: config.required_artifacts]
     starting_keys = keys[config.required_artifacts :]
 

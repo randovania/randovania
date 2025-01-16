@@ -13,7 +13,7 @@ from randovania.generator.pickup_pool.pickup_creator import create_generated_pic
 def prime1_hint_text():
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME)
 
-    artifact = create_generated_pickup("Chozo Artifact", db, "Truth", 0)
+    artifact = create_generated_pickup("Chozo Artifact", db, name="Truth")
 
     result = [
         (
@@ -31,7 +31,7 @@ def prime2_hint_text():
     result = []
 
     for temple_key in ("Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"):
-        key = create_generated_pickup(temple_key, db, 1)
+        key = create_generated_pickup(temple_key, db, i=1)
         result.append(
             (
                 key.name.replace(" 1", "").strip(),
@@ -40,7 +40,7 @@ def prime2_hint_text():
             )
         )
 
-    key = create_generated_pickup("Sky Temple Key", db, 1)
+    key = create_generated_pickup("Sky Temple Key", db, i=1)
     result.append(
         (
             "Sky Temple Key",
@@ -55,7 +55,7 @@ def prime2_hint_text():
 def prime3_hint_text():
     db = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
 
-    cell = create_generated_pickup("Energy Cell", db, 1)
+    cell = create_generated_pickup("Energy Cell", db, i=1)
 
     result = [
         (

@@ -11,6 +11,7 @@ from randovania.game_description.resources.location_category import LocationCate
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
+    from typing import Any
 
     from randovania.game.game_enum import RandovaniaGame
     from randovania.game_description.pickup.ammo_pickup import AmmoPickupDefinition
@@ -113,14 +114,14 @@ def create_ammo_pickup(
 def create_generated_pickup(
     pickup_group: str,
     resource_database: ResourceDatabase,
-    identifier: str | int | None = None,
+    *,
     minimum_progression: int = 0,
+    **format_kwargs: Any,
 ) -> PickupEntry:
     """
     Creates a concrete PickupEntry given a generated pickup group and an identifier
     :param pickup_group:
     :param resource_database:
-    :param identifier:
     :param minimum_progression:
     :return:
     """
@@ -132,18 +133,18 @@ def create_generated_pickup(
     assert not pickup.unlocks_ammo
 
     def _create_resources(base_resource: str, count: int = 1) -> tuple[ItemResourceInfo, int]:
-        return resource_database.get_item(base_resource.format(i=identifier)), count
+        return resource_database.get_item(base_resource.format(**format_kwargs)), count
 
     return PickupEntry(
-        name=pickup.name.format(i=identifier),
+        name=pickup.name.format(**format_kwargs),
         progression=tuple(_create_resources(progression) for progression in pickup.progression),
         extra_resources=tuple(_create_resources(item, count) for item, count in pickup.additional_resources.items()),
         model=PickupModel(
             game=resource_database.game_enum,
-            name=pickup.model_name.format(i=identifier),
+            name=pickup.model_name.format(**format_kwargs),
         ),
         offworld_models=frozendict(
-            {game: model_name.format(i=identifier) for game, model_name in pickup.offworld_models.items()}
+            {game: model_name.format(**format_kwargs) for game, model_name in pickup.offworld_models.items()}
         ),
         pickup_category=pickup.pickup_category,
         broad_category=pickup.broad_category,

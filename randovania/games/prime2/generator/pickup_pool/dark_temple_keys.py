@@ -21,6 +21,6 @@ def add_dark_temple_keys(
 
     for temple_key in ("Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"):
         for i in range(3):
-            item_pool.append(create_generated_pickup(temple_key, resource_database, i + 1))
+            item_pool.append(create_generated_pickup(temple_key, resource_database, i=i + 1))
 
     return PoolResults(item_pool, {}, [])

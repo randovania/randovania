@@ -17,9 +17,9 @@ def test_planets_zebeth_pool_creator(planets_zebeth_game_description, keys_count
 
     # Assert
     assert results == PoolResults(
-        [create_generated_pickup("Tourian Key", db, i + 1) for i in range(keys_count)],
+        [create_generated_pickup("Tourian Key", db, i=i + 1) for i in range(keys_count)],
         {},
-        [create_generated_pickup("Tourian Key", db, i + 1) for i in range(keys_count, 9)],
+        [create_generated_pickup("Tourian Key", db, i=i + 1) for i in range(keys_count, 9)],
     )
 
 

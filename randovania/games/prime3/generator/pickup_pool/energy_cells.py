@@ -20,6 +20,6 @@ def add_energy_cells(
     item_pool: list[PickupEntry] = []
 
     for i in range(9):
-        item_pool.append(create_generated_pickup("Energy Cell", resource_database, i + 1))
+        item_pool.append(create_generated_pickup("Energy Cell", resource_database, i=i + 1))
 
     return PoolResults(item_pool, {}, [])
