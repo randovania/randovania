@@ -307,6 +307,10 @@ Extra - asset_id: collision_camera_003
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Pickup (Missile Tank 2)
       Trivial
+  > Event - Proto EMMI Blob (East Side)
+      Any of the following:
+          After Artaria - Proto EMMI Blob or Shoot Diffusion or Wave
+          Morph Ball and Wide Beam and Pseudo-Wave Beam (Intermediate) and Shoot Charge Beam
   > West of Blob
       Morph Ball and After Artaria - Proto EMMI Blob
 
@@ -2903,10 +2907,12 @@ Extra - asset_id: collision_camera_048
           Spider Magnet or Simple IBJ or Use Spin Boost
           Grapple Beam and Grapple Movement (Beginner)
           Speed Booster and Disabled Door Lock Randomizer
-  > Event - EMMI Single Use Slide
+  > Event - EMMI Single Use Slide Down
       Before Artaria - EMMI Single Use Slide and Can Slide
   > Start Point
       Trivial
+  > Event - EMMI Single Use Slide Up
+      After Artaria - EMMI Single Use Slide
 
 > Door to EMMI Zone Exit Northwest; Heals? False
   * Layers: default
@@ -2944,7 +2950,9 @@ Extra - asset_id: collision_camera_048
       Shoot Beam
   > Tunnel to EMMI Zone Exit North
       Morph Ball and After Artaria - Slide Alternative Blob
-  > Event - EMMI Single Use Slide
+  > Event - EMMI Single Use Slide Down
+      After Artaria - EMMI Single Use Slide and Can Slide
+  > Event - EMMI Single Use Slide Up
       Morph Ball and Before Artaria - EMMI Single Use Slide
 
 > Tunnel to EMMI Zone Exit North; Heals? False
@@ -2953,11 +2961,9 @@ Extra - asset_id: collision_camera_048
   > Below Slide
       Morph Ball and After Artaria - Slide Alternative Blob
 
-> Event - EMMI Single Use Slide; Heals? False
+> Event - EMMI Single Use Slide Down; Heals? False
   * Layers: default
   * Event Artaria - EMMI Single Use Slide
-  > Door to EMMI Zone Exit North
-      Morph Ball
   > Below Slide
       Can Slide
 
@@ -2975,6 +2981,12 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_def: actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad
   > Start Point
       Trivial
+
+> Event - EMMI Single Use Slide Up; Heals? False
+  * Layers: default
+  * Event Artaria - EMMI Single Use Slide
+  > Door to EMMI Zone Exit North
+      Morph Ball
 
 ----------------
 Central Unit Access
