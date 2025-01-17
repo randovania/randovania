@@ -4,9 +4,11 @@ import collections
 import datetime
 import enum
 import json
+import typing
 import uuid
 import zlib
 from typing import TYPE_CHECKING, Any, Self
+from uuid import UUID
 
 import cachetools
 import peewee
@@ -16,12 +18,12 @@ from randovania.game.game_enum import RandovaniaGame
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.network_common import error, multiplayer_session
+from randovania.network_common import async_race_room, error, multiplayer_session
 from randovania.network_common.game_connection_status import GameConnectionStatus
+from randovania.network_common.game_details import GameDetails
 from randovania.network_common.multiplayer_session import (
     MAX_SESSION_NAME_LENGTH,
     MAX_WORLD_NAME_LENGTH,
-    GameDetails,
     MultiplayerSessionAuditEntry,
     MultiplayerSessionAuditLog,
     MultiplayerUser,
@@ -31,7 +33,22 @@ from randovania.network_common.multiplayer_session import (
 from randovania.network_common.session_visibility import MultiplayerSessionVisibility
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Iterable, Iterator
+
+    from randovania.lib.json_lib import JsonObject
+
+    T = typing.TypeVar("T")
+
+    class TypedModelSelect(typing.Protocol[T]):
+        def where(self, *expressions: Any) -> Self: ...
+
+        def order_by(self, *values: Any) -> Self: ...
+
+        def join(self, dest: Any, join_type: Any = None, on: Any = None) -> Any: ...
+
+        def count(self, clear_limit: bool = False) -> int: ...
+
+        def __iter__(self) -> Iterator[T]: ...
 
 
 class MonitoredDb(peewee.SqliteDatabase):
@@ -43,7 +60,7 @@ class MonitoredDb(peewee.SqliteDatabase):
 db = MonitoredDb(None, pragmas={"foreign_keys": 1})
 
 
-def is_boolean(field, value: bool):
+def is_boolean(field: Any, value: bool):
     return field == value
 
 
@@ -55,20 +72,24 @@ class BaseModel(peewee.Model):
         legacy_table_names = False
 
     @classmethod
-    def create(cls, **query) -> Self:
+    def create(cls, **query: Any) -> Self:
         return super().create(**query)
 
     @classmethod
-    def get(cls, *query, **filters) -> Self:
+    def get(cls, *query: Any, **filters: Any) -> Self:
         return super().get(*query, **filters)
 
     @classmethod
-    def get_by_id(cls, pk) -> Self:
+    def get_by_id(cls, pk: int) -> Self:
         return super().get_by_id(pk)
 
     @classmethod
-    def get_or_create(cls, **kwargs) -> tuple[Self, bool]:
+    def get_or_create(cls, **kwargs: Any) -> tuple[Self, bool]:
         return super().get_or_create(**kwargs)
+
+    @classmethod
+    def select(cls, *fields: Any) -> TypedModelSelect[Self]:
+        return super().select(*fields)
 
 
 class EnumField(peewee.CharField):
@@ -95,7 +116,7 @@ class User(BaseModel):
     admin: bool = peewee.BooleanField(default=False)
 
     @property
-    def as_json(self):
+    def as_json(self) -> JsonObject:
         return {
             "id": self.id,
             "name": self.name,
@@ -103,7 +124,7 @@ class User(BaseModel):
         }
 
 
-def _datetime_now():
+def _datetime_now() -> datetime.datetime:
     return datetime.datetime.now(datetime.UTC)
 
 
@@ -139,7 +160,7 @@ class MultiplayerSession(BaseModel):
     layout_description_json: bytes | None = peewee.BlobField(null=True)
     game_details_json: str | None = peewee.CharField(null=True)
     creator: User = peewee.ForeignKeyField(User)
-    creation_date = peewee.DateTimeField(default=_datetime_now)
+    creation_date: str = peewee.DateTimeField(default=_datetime_now)
     generation_in_progress: User | None = peewee.ForeignKeyField(User, null=True)
     dev_features: str | None = peewee.CharField(null=True)
 
@@ -374,7 +395,7 @@ class World(BaseModel):
         name: str,
         preset: VersionedPreset,
         *,
-        uid: uuid.UUID | None = None,
+        uid: UUID | None = None,
         order: int | None = None,
     ) -> Self:
         if uid is None:
@@ -494,6 +515,132 @@ class MultiplayerAuditEntry(BaseModel):
         )
 
 
+class AsyncRaceRoom(BaseModel):
+    id: int
+    name: str = peewee.CharField(max_length=MAX_SESSION_NAME_LENGTH)
+    password: str | None = peewee.CharField(null=True)
+    visibility: MultiplayerSessionVisibility = EnumField(
+        choices=MultiplayerSessionVisibility, default=MultiplayerSessionVisibility.VISIBLE
+    )
+    layout_description_json: bytes = peewee.BlobField()
+    game_details_json: str = peewee.CharField()
+    creator: User = peewee.ForeignKeyField(User)
+    creation_date: str = peewee.DateTimeField(default=_datetime_now)
+    start_date: str = peewee.DateTimeField()
+    end_date: str = peewee.DateTimeField()
+    entries: list[AsyncRaceEntry]
+
+    @property
+    def layout_description(self) -> LayoutDescription:
+        return LayoutDescription.from_bytes(self.layout_description_json)
+
+    @layout_description.setter
+    def layout_description(self, description: LayoutDescription) -> None:
+        encoded = description.as_binary(force_spoiler=True)
+        self.layout_description_json = encoded
+        self.game_details_json = json.dumps(GameDetails.from_layout(description).as_json)
+
+    def game_details(self) -> GameDetails:
+        return GameDetails.from_json(json.loads(self.game_details_json))
+
+    @property
+    def creation_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.creation_date)
+
+    @property
+    def start_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.start_date)
+
+    @property
+    def end_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.end_date)
+
+    def create_session_entry(self, for_user: User) -> async_race_room.AsyncRaceRoomEntry:
+        game_details = self.game_details()
+
+        if (entry := AsyncRaceEntry.entry_for(self, for_user)) is not None:
+            status = entry.user_status()
+        elif self.start_datetime <= _datetime_now():
+            status = async_race_room.AsyncRaceRoomUserStatus.NOT_MEMBER
+        else:
+            status = async_race_room.AsyncRaceRoomUserStatus.ROOM_NOT_OPEN
+
+        return async_race_room.AsyncRaceRoomEntry(
+            id=self.id,
+            name=self.name,
+            visibility=self.visibility,
+            has_password=self.password is not None,
+            creator=self.creator.name,
+            creation_date=self.creation_datetime,
+            start_date=self.start_datetime,
+            end_date=self.end_datetime,
+            game_details=game_details,
+            presets_raw=[
+                VersionedPreset.with_preset(preset).as_bytes() for preset in self.layout_description.all_presets
+            ],
+            self_status=status,
+            leaderboard=None,
+        )
+
+
+class AsyncRaceEntry(BaseModel):
+    room: AsyncRaceRoom = peewee.ForeignKeyField(AsyncRaceRoom, backref="entries")
+    user: User = peewee.ForeignKeyField(User)
+    user_id: int
+    join_date = peewee.DateTimeField(default=_datetime_now)
+    start_date = peewee.DateTimeField(null=True)
+    finish_date = peewee.DateTimeField(null=True)
+    forfeit: bool = peewee.BooleanField(default=False)
+    submission_notes: str = peewee.CharField(max_length=200)
+    proof_url: str | None = peewee.CharField(null=True)
+
+    @classmethod
+    def entry_for(cls, room: AsyncRaceRoom, user: User) -> Self | None:
+        """
+        Returns the entry a given user has for the given room, or None if it doesn't exist.
+        """
+        for entry in cls.select().where(AsyncRaceEntry.room == room, AsyncRaceEntry.user == user):
+            return entry
+        return None
+
+    def user_status(self) -> async_race_room.AsyncRaceRoomUserStatus:
+        """
+        Calculates a AsyncRaceRoomUserStatus based on the presence of dates and forfeit flags.
+        """
+        if self.start_date is None:
+            return async_race_room.AsyncRaceRoomUserStatus.JOINED
+        elif self.finish_date is None:
+            return async_race_room.AsyncRaceRoomUserStatus.STARTED
+        elif self.forfeit:
+            return async_race_room.AsyncRaceRoomUserStatus.FORFEITED
+        else:
+            return async_race_room.AsyncRaceRoomUserStatus.FINISHED
+
+    @property
+    def join_datetime(self) -> datetime.datetime:
+        return datetime.datetime.fromisoformat(self.join_date)
+
+    @property
+    def start_datetime(self) -> datetime.datetime | None:
+        if self.start_date is not None:
+            return datetime.datetime.fromisoformat(self.start_date)
+        return None
+
+    @start_datetime.setter
+    def start_datetime(self, value: datetime.datetime | None) -> None:
+        self.start_date = value
+
+    @property
+    def finish_datetime(self) -> datetime.datetime | None:
+        if self.finish_date is not None:
+            return datetime.datetime.fromisoformat(self.finish_date)
+        return None
+
+    @finish_datetime.setter
+    def finish_datetime(self, value: datetime.datetime | None) -> None:
+        self.finish_date = value
+
+
 class DatabaseMigrations(enum.Enum):
     ADD_READY_TO_MEMBERSHIP = "ready_membership"
     SESSION_STATE_TO_VISIBILITY = "session_state_to_visibility"
@@ -512,5 +659,7 @@ all_classes = [
     MultiplayerMembership,
     WorldAction,
     MultiplayerAuditEntry,
+    AsyncRaceRoom,
+    AsyncRaceEntry,
     PerformedDatabaseMigrations,
 ]
