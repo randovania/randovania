@@ -73,6 +73,8 @@ async def check_if_beatable(patches: GamePatches, pool: PoolResults) -> bool:
             return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=1000) is not None
         except exceptions.ResolverTimeoutError:
             return False
+        finally:
+            patches.reset_cached_dock_connections_from()
 
 
 async def create_player_pool(
