@@ -95,7 +95,7 @@ class FusionPatchDataFactory(PatchDataFactory):
                 continue
             # Special Case for E-Tanks
             elif category == "Energy":
-                starting_dict[category] += self.configuration.energy_per_tank
+                starting_dict[category] += self.configuration.energy_per_tank * quantity
                 continue
             # Normal Case
             starting_dict[category].append(item.extra["StartingItemName"])
