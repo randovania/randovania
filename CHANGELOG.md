@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [8.9.x] - 2025-02-??
 
 - Added: It is now possible to focus the game images in the "Games" tab via a Keyboard.
+- Added: Experimental option under Generation -> Logic Settings that makes an early check if the game is unbeatable due to options such as starting location, transports etc.
 - Changed: Wording on the Door Locks preset tab to be clearer.
 - Changed: The main Randovania window now doesn't have an unnecessary border.
 - Changed: The highlighted button in the cosmetic options is now `Accept` instead of `Reset to Defaults`.
