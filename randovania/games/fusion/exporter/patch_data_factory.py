@@ -213,7 +213,7 @@ class FusionPatchDataFactory(PatchDataFactory):
             "I can scan the station for useful equipment from there.[OBJECTIVE]Good. Move out."
         )
         short_intro = (
-            f"{starting_items_text} "
+            f"{starting_items_text}"
             f"{
                 (
                     (
