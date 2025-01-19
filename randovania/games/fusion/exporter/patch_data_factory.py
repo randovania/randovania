@@ -218,7 +218,8 @@ class FusionPatchDataFactory(PatchDataFactory):
                 (
                     (
                         f'Gather {self.configuration.artifacts.required_artifacts}/'
-                        f'{self.configuration.artifacts.placed_artifacts} Infant Metroids to lure out the '
+                        f'{self.configuration.artifacts.placed_artifacts} Infant Metroids hiding '
+                        f'{metroid_location_text} to lure out the '
                         f'{colorize_text(FusionColor.YELLOW, "SA-X", True)} and prepare for battle.'
                     )
                     if self.configuration.artifacts.required_artifacts > 0
