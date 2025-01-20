@@ -280,7 +280,7 @@ class FusionPatchDataFactory(PatchDataFactory):
     def _create_nav_locks(self) -> dict:
         locks = {
             "MainDeckWest": "RED",
-            "MainDeckEast": "Blue",
+            "MainDeckEast": "BLUE",
             "OperationsDeck": "GREY",
             "Sector1Entrance": "GREEN",
             "Sector2Entrance": "GREEN",
